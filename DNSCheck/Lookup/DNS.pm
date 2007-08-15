@@ -416,6 +416,50 @@ sub _find_authority {
 
 ######################################################################
 
+sub find_mail_destination {
+	my $self   = shift;
+	my $domain = shift;
+
+    my $packet;
+	my @dest = ();
+
+ 	$packet = $self->query_resolver($domain, "MX", "IN");
+	if ($packet->header->ancount > 0) {
+		foreach my $rr ($packet->answer) {
+			if ($rr->type eq "MX") {
+	            push @dest, $rr->exchange;
+	        }	        
+		}
+		goto DONE if (scalar @dest);
+	}
+
+	$packet = $self->query_resolver($domain, "A", "IN");
+	if ($packet->header->ancount > 0) {
+		foreach my $rr ($packet->answer) {
+			if ($rr->type eq "A") {
+				push @dest, $domain;
+				goto DONE;
+	        }	        
+		}
+	}
+
+ 	$packet = $self->query_resolver($domain, "AAAA", "IN");
+	if ($packet->header->ancount > 0) {
+		foreach my $rr ($packet->answer) {
+			if ($rr->type eq "AAAA") {
+				push @dest, $domain;
+				goto DONE;
+	        }	        
+		}
+	}
+	
+DONE:
+	return @dest;
+}
+
+
+######################################################################
+
 1;
 
 __END__

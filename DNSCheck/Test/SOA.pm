@@ -55,7 +55,7 @@ sub test {
     # REQUIRE: SOA record must exist
     unless ($packet->header->ancount) {
         $logger->error("SOA:NOT_FOUND", $zone);
-        return $errors;
+        $errors++;
         goto DONE;
     } else {
         ## TODO: add positives
@@ -64,7 +64,7 @@ sub test {
     # REQUIRE: only ONE SOA record may exist
     unless ($packet->header->ancount == 1) {
         $logger->error("SOA:MULTIPLE_SOA", $zone);
-        return $errors;
+        $errors++;
         goto DONE;
     }
 
@@ -74,12 +74,14 @@ sub test {
     # REQUIRE: SOA MNAME must exist as a valid hostname
     if (DNSCheck::Test::Host::test($context, $soa->mname) > 0) {
         $logger->error("SOA:MNAME_ERROR", $zone);
+        $errors++;
     }
 
     $packet = $context->dns->query_resolver($zone, $qclass, "NS");
 
     unless ($packet->header->ancount) {
         $logger->error("SOA:NS_NOT_FOUND", $zone);
+        $errors++;
         goto DONE;
     }
 

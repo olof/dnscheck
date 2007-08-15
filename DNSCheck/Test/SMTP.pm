@@ -28,81 +28,90 @@
 #
 ######################################################################
 
-package DNSCheck::Test::Mail;
+package DNSCheck::Test::SMTP;
 
 require 5.8.0;
 use warnings;
 use strict;
 
-use DNSCheck::Test::Host;
+use Net::SMTP;
 
 ######################################################################
 
 sub test {
     my $context = shift;
+    my $host    = shift;
     my $email   = shift;
 
     my $logger = $context->logger;
     my $errors = 0;
+    my $message;
 
-    $logger->info("MAIL:BEGIN", $email);
+    $logger->info("SMTP:BEGIN", $host, $email);
 
-    my ($localpart, $domain) = split(/@/, $email);
+    my $smtp = Net::SMTP->new(
+        Host  => $host,
+        Hello => $context->hostname
+    );
 
-    unless ($localpart && $domain) {
-        $logger->error("MAIL:ADDRESS_SYNTAX", $email);
+    unless ($smtp) {
+        $logger->error("SMTP:CONNECT_FAILED");
         $errors++;
         goto DONE;
     }
 
-    # REQUIRE: MX or A must exist for domain
-    my @mailhosts = $context->dns->find_mail_destination($domain);
+    $message = $smtp->banner;
+    chomp $message;
+    $logger->debug("SMTP:BANNER", $message);
 
-    if (@mailhosts) {
-        $logger->error("MAIL:MAIL_EXCHANGER", join(",", @mailhosts));
-    }
-
-    unless (scalar @mailhosts) {
-        $logger->error("MAIL:DOMAIN_NOT_FOUND", $domain);
+    unless ($smtp->status == 2) {
+        $logger->error("SMTP:HELLO_FAILED");
         $errors++;
         goto DONE;
     }
 
-    # REQUIRE: MX points to valid hostname
-    foreach my $hostname (@mailhosts) {
-        if (DNSCheck::Test::Host::test($context, $hostname) > 0) {
-            $logger->error("MAIL:HOST_ERROR", $hostname);
-            $errors++;
-            goto DONE;
-        }
+    $logger->debug("SMTP:MAIL_FROM", "<>");
+    $smtp->mail("<>");
+    $message = $smtp->message;
+    chomp $message;
+    $logger->debug("SMTP:RAW", $message);
 
-        my $ipv4 = $context->dns->query_resolver($hostname, "IN", "A");
-        my $ipv6 = $context->dns->query_resolver($hostname, "IN", "AAAA");
+    unless ($smtp->status == 2) {
+        $logger->error("SMTP:MAIL_FROM_REJECTED", "<>");
+        $errors++;
+        goto RESET;
+    }
 
-        # REQUIRE: Warn if a mail exchanger is reachable by IPv6 only
-        if ($ipv4->header->ancount == 0 && $ipv6->header->ancount > 0) {
-            $logger->warning("MAIL:IPV6_ONLY", $hostname);
-        }
+    $logger->debug("SMTP:RCPT_TO", $email);
+    $smtp->recipient($email);
+    $message = $smtp->message;
+    chomp $message;
+    $logger->debug("SMTP:RAW", $message);
 
-        foreach my $rr ($ipv4->answer) {
-            next unless ($rr->type eq "A");
-            if (DNSCheck::Test::SMTP::test($context, $rr->address, $email)) {
-                $errors++;
-            }
-        }
+    unless ($smtp->status == 2 || $smtp->status == 4) {
+        $logger->info("SMTP:RECIPIENT_REJECTED", $email);
+        $errors++;
+    }
 
-        foreach my $rr ($ipv6->answer) {
-            next unless ($rr->type eq "AAAA");
+  RESET:
+    $logger->debug("SMTP:RSET");
+    $smtp->reset;
+    $message = $smtp->message;
+    chomp $message;
+    $logger->debug("SMTP:RAW", $message);
 
-            # FIXME: Do not connect to IPv6 hosts for now
-            #if (DNSCheck::Test::SMTP::test($context, $rr->address, $email)) {
-            #    $errors++;
-            #}
-        }
+    $logger->debug("SMTP:QUIT");
+    $smtp->quit;
+    $message = $smtp->message;
+    chomp $message;
+    $logger->debug("SMTP:RAW", $message);
+
+    unless ($errors) {
+        $logger->info("SMTP:OK", $email);
     }
 
   DONE:
-    $logger->info("MAIL:END", $email);
+    $logger->info("SMTP:END", $host, $email);
 
     return $errors;
 }

@@ -47,6 +47,9 @@ sub new {
 
     $self->{debug} = 1;
 
+	# FIXME: perhaps do this some other way
+    $self->{hostname} = `hostname`;
+
     $self->{qclass} = shift;
 
     $self->{logger} = new DNSCheck::Logger;
@@ -54,6 +57,11 @@ sub new {
     $self->{asn}    = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
 
     bless $self, $class;
+}
+
+sub hostname {
+    my $self = shift;
+    return $self->{hostname};
 }
 
 sub dns {

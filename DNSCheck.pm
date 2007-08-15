@@ -44,6 +44,8 @@ use DNSCheck::Test::Serial;
 use DNSCheck::Test::Delegation;
 use DNSCheck::Test::Nameserver;
 use DNSCheck::Test::DNSSEC;
+use DNSCheck::Test::Mail;
+use DNSCheck::Test::SMTP;
 
 ######################################################################
 
@@ -111,6 +113,16 @@ sub nameserver {
 sub dnssec {
     my $self = shift;
     DNSCheck::Test::DNSSEC::test($self->{context}, @_);
+}
+
+sub mail {
+    my $self = shift;
+    DNSCheck::Test::Mail::test($self->{context}, @_);
+}
+
+sub smtp {
+    my $self = shift;
+    DNSCheck::Test::SMTP::test($self->{context}, @_);
 }
 
 
