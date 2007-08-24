@@ -38,15 +38,18 @@ use Net::IP;
 
 ######################################################################
 
+our @private_ipv4 = ();
 our @reserved_ipv4 = ();
 our @reserved_ipv6 = ();
 
 INIT {
 
+    # REQUIRE: Private IPv4 Addresses (RFC 1918)
+    push @private_ipv4, new Net::IP("10.0.0.0/8");
+    push @private_ipv4, new Net::IP("172.16.0.0/12");
+    push @private_ipv4, new Net::IP("192.168.0.0/16");
+
     # REQUIRE: Special-Use IPv4 Addresses (RFC 3330)
-    push @reserved_ipv4, new Net::IP("10.0.0.0/8");
-    push @reserved_ipv4, new Net::IP("172.16.0.0/12");
-    push @reserved_ipv4, new Net::IP("192.168.0.0/16");
     push @reserved_ipv4, new Net::IP("127.0.0.0/8");
     push @reserved_ipv4, new Net::IP("224.0.0.0/4");
     push @reserved_ipv4, new Net::IP("0.0.0.0/8");
@@ -86,6 +89,17 @@ sub test {
         $logger->error("ADDRESS:INVALID", $address);
         $errors++;
         goto DONE;
+    }
+
+    # REQUIRE: Do not allow private IPv4 Addresses
+    if ($ip->version == 4) {
+        foreach my $prefix (@private_ipv4) {
+            if ($ip->overlaps($prefix)) {
+                $logger->error("ADDRESS:PRIVATE", $address);
+                $errors++;
+                goto DONE;
+            }
+        }
     }
 
     # REQUIRE: Do not allow reserved IPv4 Addresses

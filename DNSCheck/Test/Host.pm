@@ -69,8 +69,7 @@ sub test {
     }
 
     my $ipv4 = $context->dns->query_resolver($hostname, $qclass, "A");
-    my $ipv6 =
-      $context->dns->query_resolver($hostname, $qclass, "AAAA");
+    my $ipv6 = $context->dns->query_resolver($hostname, $qclass, "AAAA");
 
     # REQUIRE: Host address must exist
     unless ($ipv4->header->ancount || $ipv6->header->ancount) {
@@ -79,14 +78,23 @@ sub test {
         goto DONE;
     }
 
-    my @addresses = ();
-    push @addresses, $ipv4->answer if ($ipv4->header->ancount);
-    push @addresses, $ipv6->answer if ($ipv6->header->ancount);
+    my @answers = ();
+    push @answers, $ipv4->answer if ($ipv4->header->ancount);
+    push @answers, $ipv6->answer if ($ipv6->header->ancount);
+
+    # REQUIRE: Host must not point to a CNAME
+    foreach my $rr (@answers) {
+        if ($rr->type eq "CNAME") {
+            $logger->error("HOST:CNAME_FOUND", $hostname);
+            $errors++;
+            goto DONE;
+        }
+    }
 
     # REQUIRE: All host addresses must be valid
-    foreach my $address (@addresses) {
-        if ($address) {
-            DNSCheck::Test::Address::test($context, $address->address);
+    foreach my $rr (@answers) {
+        if ($rr->type eq "A" or $rr->type eq "AAAA") {
+            DNSCheck::Test::Address::test($context, $rr->address);
         }
     }
 

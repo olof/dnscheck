@@ -47,24 +47,37 @@ sub test {
 
     my %as_set;
 
-	# Fetch IPv4 nameservers
-	# FIXME: AS lookup for IPv6 addresses
+    # Fetch IPv4 nameservers
+    # FIXME: AS lookup for IPv6 addresses
     my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
 
     foreach my $address (@{$ipv4}) {
-        foreach my $asn (@{ $context->asn->lookup($address) }) {
+        my @as_list = @{ $context->asn->lookup($address) };
+
+        foreach my $asn (@as_list) {
             $as_set{$asn} = $asn;
+        }
+
+        $logger->info("CONNECTIVITY:ANNOUNCED_BY_ASN",
+            $address, join(",", @as_list));
+
+        # REQUIRE: A name server should not be announce by more than one AS
+        # REQUIRE: A name server must be announced
+        if (scalar @as_list > 1) {
+            $logger->warning("CONNECTIVITY:MULTIPLE_ASN", $address);
+        } elsif (scalar @as_list < 1) {
+            $logger->error("CONNECTIVITY:NOT_ANNOUNCED", $address);
         }
     }
 
-    $logger->info("CONNECTIVITY:ANNOUNCED_BY_AS", join(",", keys(%as_set)));
+    $logger->info("CONNECTIVITY:ASN_LIST", join(",", keys(%as_set)));
 
     # REQUIRE: Domain name servers should live in more than one AS
     my $as_count = scalar keys %as_set;
-    if ($as_count > 1) {
-	    $logger->info("CONNECTIVITY:ANNOUNCED_BY_OK", $as_count);
+    if ($as_count <= 1) {
+        $logger->warning("CONNECTIVITY:TOO_FEW_ASN", $as_count);
     } else {
-	    $logger->warning("CONNECTIVITY:ANNOUNCED_BY_TOO_FEW", $as_count);
+        $logger->info("CONNECTIVITY:ASN_COUNT_OK", $as_count);
     }
 
   DONE:

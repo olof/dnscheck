@@ -43,27 +43,38 @@ sub test {
 
     my $qclass = $context->qclass;
     my $logger = $context->logger;
+    my $errors = 0;
 
     $logger->info("NAMESERVER:BEGIN", $zone, $nameserver);
 
-    $logger->info("NAMESERVER:NOT_IMPLEMENTED");
+    # TODO: implement fully
+    $logger->info("NAMESERVER:NOT_COMPLETELY_IMPLEMENTED");
 
-    # TODO: implement
-    #
-    # NS points to valid hostname
-    # NS should not be recursive
-    # Routing information
-    #  - report ASN or unannounced address
-    #  - report inconsistent AS as-path
-    # notice ICMP echo (ping) unreachability
+    # REQUIRE: Nameserver must be a valid hostname
+    if (DNSCheck::Test::Host::test($context, $nameserver)) {
+        $logger->error("NAMESERVER:HOST_ERROR", $nameserver);
+        $errors++;
+        goto DONE;
+    }
 
-    #*** nameserver for zone
-    #
-    # NS must be authoritative for zone [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
-    # NS must not point to CNAME
-    # SOA fetchable over any protocol (UDP/TCP)
-    # SOA fetchable over any listed transport (IPv4/IPv6)
-    # inform whether AXFR is enabled or not
+    # REQUIRE: Nameserver should not be recursive
+    # TODO: Nameserver should not be recursive
+
+    # REQUIRE: Nameserver must be authoritative for the zone
+    #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
+	if ($context->dns->hostname_is_auth($nameserver, $qclass, $zone)) {
+        $logger->error("NAMESERVER:NOT_AUTH", $nameserver);
+        $errors++;
+        goto DONE;
+	} else {
+        $logger->info("NAMESERVER:AUTH", $nameserver);
+	}
+
+    # REQUIRE: SOA must be fetchable over any protocol (UDP/TCP)
+
+    # REQUIRE: SOA must be fetchable over any listed transport (IPv4/IPv6)
+
+    # REQUIRE: SOA may provide AXFR
 
   DONE:
     $logger->info("NAMESERVER:END", $zone, $nameserver);

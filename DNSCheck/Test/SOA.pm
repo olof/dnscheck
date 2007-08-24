@@ -49,7 +49,6 @@ sub test {
 
     $logger->info("SOA:BEGIN", $zone);
 
-    # FIXME: this query should be directed to a child
     my $packet = $context->dns->query_child($zone, $qclass, "SOA");
 
     # REQUIRE: SOA record must exist
@@ -58,7 +57,7 @@ sub test {
         $errors++;
         goto DONE;
     } else {
-        ## TODO: add positives
+        $logger->info("SOA:FOUND", $zone);
     }
 
     # REQUIRE: only ONE SOA record may exist
@@ -73,8 +72,10 @@ sub test {
 
     # REQUIRE: SOA MNAME must exist as a valid hostname
     if (DNSCheck::Test::Host::test($context, $soa->mname) > 0) {
-        $logger->error("SOA:MNAME_ERROR", $zone);
+        $logger->error("SOA:MNAME_ERROR", $zone, $soa->mname);
         $errors++;
+    } else {
+        $logger->info("SOA:MNAME_VALID", $zone, $soa->mname);
     }
 
     $packet = $context->dns->query_resolver($zone, $qclass, "NS");
@@ -97,6 +98,8 @@ sub test {
     #if ($context->dns->mname_is_auth($zone, $qclass) > 0) {
     if (mname_is_auth($soa, $context) > 0) {
         $logger->warning("SOA:MNAME_NOT_AUTH", $zone, $soa->mname);
+    } else {
+        $logger->info("SOA:MNAME_IS_AUTH", $zone, $soa->mname);
     }
 
     # REQUIRE: SOA RNAME must have a valid syntax (@ vs .)
@@ -107,8 +110,10 @@ sub test {
         $mailaddr =~ s/\\\././g;
 
         if (DNSCheck::Test::Mail::test($context, $mailaddr)) {
-            $logger->warning("SOA:RNAME_DELIVER", $zone, $soa->rname,
-                $mailaddr);
+            $logger->warning("SOA:RNAME_UNDELIVERABLE",
+                $zone, $soa->rname, $mailaddr);
+        } else {
+            $logger->info("SOA:RNAME_DELIVERABLE", $zone, $soa->rname);
         }
     } else {
         $logger->error("SOA:RNAME_SYNTAX", $zone, $soa->rname);
@@ -118,30 +123,41 @@ sub test {
     # REQUIRE: SOA TTL advistory, min 1 hour
     my $min_soa_ttl = 3600;
     if ($soa->ttl < $min_soa_ttl) {
-        $logger->warning("SOA:TTL", $zone, $min_soa_ttl);
+        $logger->warning("SOA:TTL_SMALL", $zone, $soa->ttl, $min_soa_ttl);
+    } else {
+        $logger->info("SOA:TTL_OK", $zone, $soa->ttl, $min_soa_ttl);
     }
 
     # REQUIRE: SOA 'refresh' at least 4 hours
     my $min_soa_refresh = 4 * 3600;
     if ($soa->refresh < $min_soa_refresh) {
-        $logger->warning("SOA:REFRESH", $zone, $min_soa_refresh);
+        $logger->warning("SOA:REFRESH_SMALL", $zone, $soa->refresh,
+            $min_soa_refresh);
+    } else {
+        $logger->info("SOA:REFRESH_OK", $zone, $soa->refresh, $min_soa_refresh);
     }
 
     # REQUIRE: SOA 'retry' lower than 'refresh'
     unless ($soa->retry < $soa->refresh) {
-        $logger->warning("SOA:RETRY_LOWER_REFRESH", $zone);
+        $logger->warning("SOA:RETRY_LOWER_REFRESH", $zone, $soa->retry,
+            $soa->refresh);
     }
 
     # REQUIRE: SOA 'retry' at least 1 hour
     my $min_soa_retry = 3600;
     if ($soa->retry < $min_soa_retry) {
-        $logger->warning("SOA:RETRY", $zone, $min_soa_retry);
+        $logger->warning("SOA:RETRY_SMALL", $zone, $soa->retry, $min_soa_retry);
+    } else {
+        $logger->info("SOA:RETRY_OK", $zone, $soa->retry, $min_soa_retry);
     }
 
     # REQUIRE: SOA 'expire' at least 7 days
     my $min_soa_expire = 7 * 24 * 3600;
     if ($soa->expire < $min_soa_expire) {
-        $logger->warning("SOA:EXPIRE", $zone, $min_soa_expire);
+        $logger->warning("SOA:EXPIRE_SMALL", $zone, $soa->expire,
+            $min_soa_expire);
+    } else {
+        $logger->warning("SOA:EXPIRE_OK", $zone, $soa->expire, $min_soa_expire);
     }
 
     # REQUIRE: SOA 'expire' at least 7 times 'refresh'
@@ -152,7 +168,10 @@ sub test {
     # REQUIRE: SOA 'minimum' less than 1 day
     my $max_soa_minimum = 24 * 3600;
     if ($soa->minimum > $max_soa_minimum) {
-        $logger->warning("SOA:MINIMUM", $zone, $max_soa_minimum);
+        $logger->warning("SOA:MINIMUM_SMALL", $zone, $soa->minimum,
+            $max_soa_minimum);
+    } else {
+        $logger->info("SOA:MINIMUM_OK", $zone, $soa->minimum, $max_soa_minimum);
     }
 
   DONE:
@@ -179,50 +198,8 @@ sub mname_is_auth {
     my $context = shift;
 
     my $dns    = $context->{dns};
-    my $logger = $context->{logger};
-    my $errors = 0;
 
-    my $ipv4 = $dns->query_resolver($soa->mname, $soa->class, "A");
-    my $ipv6 = $dns->query_resolver($soa->mname, $soa->class, "AAAA");
-
-    unless ($ipv4->header->ancount || $ipv6->header->ancount) {
-        $errors++;
-        goto DONE;
-    }
-
-    my $resolver = new Net::DNS::Resolver;
-    $resolver->recurse(0);
-
-    my @addresses = ();
-    push @addresses, $ipv4->answer if ($ipv4->header->ancount);
-    push @addresses, $ipv6->answer if ($ipv6->header->ancount);
-
-    foreach my $address (@addresses) {
-        if ($address) {
-            $resolver->nameservers($address->address);
-            $logger->debug("SOA:MNAME_QUERY", $soa->name, $address->address);
-
-            my $answer = $resolver->send($soa->name, "SOA", $soa->class);
-
-            unless ($answer) {
-                $logger->debug("SOA:MNAME_QUERY_TIMEOUT");
-
-                # FIXME: should query timeout be an error?
-                # $errors++;
-                next;
-            }
-
-            unless ($answer->header->aa) {
-                $errors++;
-                $logger->debug("SOA:MNAME_QUERY_NOT_AUTH", $address->address);
-            }
-
-            $logger->debug("SOA:MNAME_QUERY_AUTH", $address->address);
-        }
-    }
-
-  DONE:
-    return $errors;
+	return $dns->hostname_is_auth($soa->mname, $soa->class, $soa->name);
 }
 
 1;

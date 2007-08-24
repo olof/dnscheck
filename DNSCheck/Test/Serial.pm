@@ -46,34 +46,34 @@ sub test {
 
     $logger->info("SERIAL:BEGIN", $zone);
 
-    # TODO: implement
-
     # Fetch IPv4/IPv6 nameservers
     my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
     my $ipv6 = $context->dns->get_nameservers_ipv6($zone, $qclass);
 
     my %serial_counter;
 
+	# FIXME: implement IPv6 support as well
     foreach my $address (@{$ipv4}) {
         my $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address);
 
         next unless ($packet);
-        next unless ($packet->header->ancount == 1);
-        my @rr_set = $packet->answer;
-        next unless ($rr_set[0]->type eq "SOA");
 
-        my $serial = $rr_set[0]->serial;
+        foreach my $rr ($packet->answer) {
+            next unless ($rr->type eq "SOA");
 
-        $logger->debug("SERIAL:SOA_AT_ADDRESS", $address, $serial);
+            my $serial = $rr->serial;
 
-        $serial_counter{$serial}++;
+            $logger->info("SERIAL:SOA_AT_ADDRESS", $address, $serial);
+
+            $serial_counter{$serial}++;
+        }
     }
 
-    my $different = scalar keys %serial_counter;
+    my $unique_serials = scalar keys %serial_counter;
 
-    if ($different > 1) {
-        $logger->warning("SERIAL:DIFFERENT", $different);
+    if ($unique_serials > 1) {
+        $logger->warning("SERIAL:DIFFERENT", $unique_serials);
     }
 
   DONE:

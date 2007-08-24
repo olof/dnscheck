@@ -16,6 +16,3 @@ my $check = new DNSCheck("IN");
 
 $check->connectivity("kirei.se");
 $check->report();
-
-$check->connectivity("pin.se");
-$check->report();

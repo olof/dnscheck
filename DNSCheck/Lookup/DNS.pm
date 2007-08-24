@@ -79,8 +79,7 @@ sub DESTROY {
 ######################################################################
 
 sub query_resolver {
-    my $self = shift;
-
+    my $self   = shift;
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
@@ -170,7 +169,6 @@ sub _query_parent_helper {
 ######################################################################
 
 sub query_child {
-
     my $self   = shift;
     my $qname  = shift;
     my $qclass = shift;
@@ -189,7 +187,6 @@ sub query_child {
         sprintf("%d answer(s)", $packet->header->ancount));
 
     return $packet;
-
 }
 
 sub _query_child_helper {
@@ -231,16 +228,29 @@ sub query_explicit {
     my $qtype     = shift;
     my $address   = shift;
     my $transport = shift;
+    my $flags     = shift;
 
-	$transport = "udp" unless($transport);
+    $transport = "udp" unless ($transport);
 
-    $self->{logger}->debug("DNS:QUERY_EXPLICIT", $qname, $qclass, $qtype, $address, $transport);
+    $self->{logger}
+      ->debug("DNS:QUERY_EXPLICIT", $qname, $qclass, $qtype, $address,
+        $transport);
 
     # set up resolver
     my $resolver = new Net::DNS::Resolver;
     $resolver->debug($self->{debug});
     $resolver->recurse(0);
     $resolver->nameserver($address);
+
+    if ($flags->{dnssec}) {
+        $self->{logger}->debug("DNS:SET_FLAG_DO");
+        $resolver->dnssec(1);
+    }
+
+    if ($transport eq "udp" && $flags->{bufsize}) {
+        $self->{logger}->debug("DNS:SET_BUFSIZE", $flags->{bufsize});
+        $resolver->udppacketsize($flags->{bufsize});
+    }
 
     if ($transport eq "udp") {
         $resolver->usevc(0);
@@ -252,8 +262,32 @@ sub query_explicit {
 
     my $packet = $resolver->send($qname, $qtype, $qclass);
 
+    unless ($packet) {
+        $self->{logger}->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
+        return undef;
+    }
+
+    if ($packet->header->rcode eq "FORMERR") {
+        $self->{logger}->error("DNS:NO_EDNS", $address);
+        return undef;
+    }
+
+    if ($packet->header->rcode ne "NOERROR") {
+        $self->{logger}->error("DNS:NO_ANSWER");
+        return undef;
+    }
+
+    unless ($packet->header->aa) {
+        $self->{logger}->debug("DNS:NOT_AUTH", $address->address);
+        return undef;
+    }
+
     $self->{logger}->debug("DNS:EXPLICIT_RESPONSE",
         sprintf("%d answer(s)", $packet->header->ancount));
+
+    foreach my $rr ($packet->answer) {
+        $self->{logger}->debug("DNS:DUMP", _rr2string($rr));
+    }
 
     return $packet;
 }
@@ -324,11 +358,11 @@ sub init_nameservers {
     my $qclass = shift;
 
     unless ($self->{nameservers}{$qname}{$qclass}{ns}) {
-        $self->_init_nameservers($qname, $qclass);
+        $self->_init_nameservers_helper($qname, $qclass);
     }
 }
 
-sub _init_nameservers {
+sub _init_nameservers_helper {
     my $self   = shift;
     my $qname  = shift;
     my $qclass = shift;
@@ -417,46 +451,115 @@ sub _find_authority {
 ######################################################################
 
 sub find_mail_destination {
-	my $self   = shift;
-	my $domain = shift;
+    my $self   = shift;
+    my $domain = shift;
 
     my $packet;
-	my @dest = ();
+    my @dest = ();
 
- 	$packet = $self->query_resolver($domain, "MX", "IN");
-	if ($packet->header->ancount > 0) {
-		foreach my $rr ($packet->answer) {
-			if ($rr->type eq "MX") {
-	            push @dest, $rr->exchange;
-	        }	        
-		}
-		goto DONE if (scalar @dest);
-	}
+    $packet = $self->query_resolver($domain, "MX", "IN");
+    if ($packet->header->ancount > 0) {
+        foreach my $rr ($packet->answer) {
+            if ($rr->type eq "MX") {
+                push @dest, $rr->exchange;
+            }
+        }
+        goto DONE if (scalar @dest);
+    }
 
-	$packet = $self->query_resolver($domain, "A", "IN");
-	if ($packet->header->ancount > 0) {
-		foreach my $rr ($packet->answer) {
-			if ($rr->type eq "A") {
-				push @dest, $domain;
-				goto DONE;
-	        }	        
-		}
-	}
+    $packet = $self->query_resolver($domain, "A", "IN");
+    if ($packet->header->ancount > 0) {
+        foreach my $rr ($packet->answer) {
+            if ($rr->type eq "A") {
+                push @dest, $domain;
+                goto DONE;
+            }
+        }
+    }
 
- 	$packet = $self->query_resolver($domain, "AAAA", "IN");
-	if ($packet->header->ancount > 0) {
-		foreach my $rr ($packet->answer) {
-			if ($rr->type eq "AAAA") {
-				push @dest, $domain;
-				goto DONE;
-	        }	        
-		}
-	}
-	
-DONE:
-	return @dest;
+    $packet = $self->query_resolver($domain, "AAAA", "IN");
+    if ($packet->header->ancount > 0) {
+        foreach my $rr ($packet->answer) {
+            if ($rr->type eq "AAAA") {
+                push @dest, $domain;
+                goto DONE;
+            }
+        }
+    }
+
+  DONE:
+    return @dest;
 }
 
+######################################################################
+
+sub hostname_is_auth {
+    my $self   = shift;
+    my $qname  = shift;
+    my $qclass = shift;
+    my $domain = shift;
+
+    my $logger = $self->{logger};
+    my $errors = 0;
+
+    my $ipv4 = $self->query_resolver($qname, $qclass, "A");
+    my $ipv6 = $self->query_resolver($qname, $qclass, "AAAA");
+
+    unless ($ipv4 && $ipv6) {
+
+        # FIXME: error
+        $errors++;
+        goto DONE;
+    }
+
+    unless ($ipv4->header->ancount || $ipv6->header->ancount) {
+
+        # FIXME: error
+        $errors++;
+        goto DONE;
+    }
+
+    my @answers = ();
+    push @answers, $ipv4->answer if ($ipv4->header->ancount);
+    push @answers, $ipv6->answer if ($ipv6->header->ancount);
+
+    foreach my $rr (@answers) {
+        if ($rr->type eq "A" or $rr->type eq "AAAA") {
+            my $packet =
+              $self->query_explicit($domain, $qclass, "SOA", $rr->address);
+
+            unless ($packet) {
+
+                # FIXME: should query timeout be an error?
+                $errors++;
+                next;
+            }
+        }
+    }
+
+  DONE:
+    return $errors;
+}
+
+######################################################################
+
+sub _rr2string {
+    my $rr = shift;
+    my $rdatastr;
+
+    if ($rr->type eq "SOA") {
+        $rdatastr = sprintf(
+            "%s %s %d %d %d %d %d",
+            $rr->mname, $rr->rname,  $rr->serial, $rr->refresh,
+            $rr->retry, $rr->expire, $rr->minimum
+        );
+    } else {
+        $rdatastr = $rr->rdatastr;
+    }
+
+    return sprintf("%s %d %s %s %s",
+        $rr->name, $rr->ttl, $rr->class, $rr->type, $rdatastr);
+}
 
 ######################################################################
 

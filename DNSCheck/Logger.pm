@@ -109,6 +109,12 @@ sub debug {
     $self->{debugs}++;
 }
 
+sub critical {
+    my $self = shift;
+    $self->add("CRITICAL", @_);
+    $self->{errors}++;
+}
+
 sub dump {
     my $self = shift;
 

@@ -14,6 +14,8 @@ use DNSCheck;
 
 my $check = new DNSCheck("IN");
 
+$check->host("forastero.schlyter.se");
+$check->host("t.schlyter.se");
 $check->host("ns.schlyter.se");
 $check->host("ns.kirei.se");
 $check->host("ns1.kirei.se");

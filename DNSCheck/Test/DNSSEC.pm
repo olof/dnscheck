@@ -34,6 +34,12 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use Net::DNS 0.57;
+use Net::DNS::SEC 0.14;
+use Data::Dumper;
+use Date::Parse;
+use POSIX qw(strftime);
+
 ######################################################################
 
 sub test {
@@ -42,10 +48,23 @@ sub test {
 
     my $qclass = $context->qclass;
     my $logger = $context->logger;
+    my $errors = 0;
+
+    my $packet;
 
     $logger->info("DNSSEC:BEGIN", $zone);
 
-    $logger->info("DNSSEC:NOT_IMPLEMENTED");
+    my $child_ns = $context->dns->get_nameservers_ipv4($zone, $qclass);
+
+    $errors += _test_child($context, $zone, $child_ns->[0]);
+
+    if ($errors) {
+        goto DONE;
+    }
+
+    #my $parent    = $context->dns->find_parent($zone, $qclass);
+    #my $parent_ns = $context->dns->get_nameservers_ipv4($parent, $qclass);
+    #$errors += _test_parent($context, $zone, $parent_ns->[0]);
 
     # TODO: implement
     #
@@ -64,6 +83,76 @@ sub test {
 
   DONE:
     $logger->info("DNSSEC:END", $zone);
+    return $errors;
+}
+
+sub _test_child {
+    my $context = shift;
+    my $zone    = shift;
+    my $ns      = shift;
+
+    my $qclass = $context->qclass;
+    my $logger = $context->logger;
+    my $errors = 0;
+
+    my %flags = (dnssec => 1);
+
+    my $packet =
+      $context->dns->query_explicit($zone, $qclass, "DNSKEY", $ns, "tcp",
+        \%flags);
+
+    return unless ($packet);
+
+    my $answer = _dissect($packet, "DNSKEY");
+
+   # REQUIRE: there may exist a DNSKEY at the child (or we are not doing DNSSEC)
+    if ($#{ @{ $answer->{DNSKEY} } } >= 0) {
+        $logger->info("DNSSEC:DNSKEY_FOUND");
+    } else {
+        $logger->info("DNSSEC:NO_DNSKEY_FOUND");
+        $errors++;
+        goto DONE;
+    }
+
+  DONE:
+    return $errors;
+}
+
+sub _test_parent {
+    my $context = shift;
+    my $zone    = shift;
+    my $ns      = shift;
+
+    return 0;
+}
+
+sub _dissect {
+    my $packet = shift;
+    my $qtype  = shift;
+
+    my %response = ();
+
+    foreach my $rr ($packet->answer) {
+        if (    $rr->type eq "RRSIG"
+            and $qtype ne "RRSIG"
+            and $rr->typecovered eq $qtype)
+        {
+            push @{ $response{RRSIG} }, $rr;
+            next;
+        }
+
+        if ($rr->type eq $qtype) {
+            push @{ $response{$qtype} }, $rr;
+            next;
+        }
+    }
+
+    if ($#{ $response{$qtype} } < 0) {
+        return undef;
+    }
+
+    return \%response;
+
 }
 
 1;
