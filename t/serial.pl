@@ -14,5 +14,7 @@ use DNSCheck;
 
 my $check = new DNSCheck("IN");
 
-$check->serial("kirei.se");
+die "syntax error" unless ($ARGV[0]);
+
+$check->serial($ARGV[0]);
 $check->report();

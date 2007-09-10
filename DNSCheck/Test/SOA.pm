@@ -49,7 +49,7 @@ sub test {
 
     $logger->info("SOA:BEGIN", $zone);
 
-    my $packet = $context->dns->query_child($zone, $qclass, "SOA");
+    my $packet = $context->dns->query_child($zone, $zone, $qclass, "SOA");
 
     # REQUIRE: SOA record must exist
     unless ($packet->header->ancount) {

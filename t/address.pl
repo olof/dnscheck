@@ -14,15 +14,16 @@ use DNSCheck;
 
 my $check = new DNSCheck("IN");
 
-$check->address("195.47.254.10");
-$check->address("195.47.254.256");
-$check->address("195.47.254.4");
-$check->address("10.0.0.1");
-$check->address("224.1.2.3");
-$check->address("::1");
-$check->address("fe80::1");
-$check->address("::ffff:10.0.0.1");
-$check->address("2001:0db8::dead:beef");
-$check->address("2001:670:87:11::182");
+my @addresses = (
+    "195.47.254.10",        "195.47.254.256",
+    "195.47.254.4",         "10.0.0.1",
+    "224.1.2.3",            "::1",
+    "fe80::1",              "::ffff:10.0.0.1",
+    "2001:0db8::dead:beef", "2001:670:87:11::182",
+);
+
+foreach my $a (@addresses) {
+    $check->address($a);
+}
 
 $check->report();

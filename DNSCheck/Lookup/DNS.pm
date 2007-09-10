@@ -103,18 +103,19 @@ sub query_resolver {
 
 sub query_parent {
     my $self   = shift;
+    my $zone   = shift;
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
 
-    $self->{logger}->debug("DNS:QUERY_PARENT", $qname, $qclass, $qtype);
+    $self->{logger}->debug("DNS:QUERY_PARENT", $zone, $qname, $qclass, $qtype);
 
-    unless ($self->{cache}{parent}{$qname}{$qclass}{$qtype}) {
-        $self->{cache}{parent}{$qname}{$qclass}{$qtype} =
-          $self->_query_parent_helper($qname, $qclass, $qtype);
+    unless ($self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype}) {
+        $self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype} =
+          $self->_query_parent_helper($zone, $qname, $qclass, $qtype);
     }
 
-    my $packet = $self->{cache}{parent}{$qname}{$qclass}{$qtype};
+    my $packet = $self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype};
 
     $self->{logger}->debug(
         "DNS:PARENT_RESPONSE",
@@ -129,28 +130,32 @@ sub query_parent {
 
 sub _query_parent_helper {
     my $self   = shift;
+    my $zone   = shift;
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
 
     # find parent
-    my $parent = $self->find_parent($qname, $qclass);
+    $self->{logger}->debug("DNS:FIND_PARENT", $qname, $qclass);
+    my $parent = $self->find_parent($zone, $qclass);
     unless ($parent) {
-        $self->{logger}->error("DNS:NO_PARENT", $qname, $qclass);
+        $self->{logger}->error("DNS:NO_PARENT", $zone, $qclass);
         return undef;
     } else {
-        $self->{logger}->debug("DNS:PARENT_OF", $qname, $qclass, $parent);
+        $self->{logger}->debug("DNS:PARENT_OF", $zone, $qclass, $parent);
     }
 
     # initialize parent nameservers
-    $self->init_nameservers($parent, $qclass, $qtype);
+    $self->init_nameservers($parent, $qclass);
 
-    # find possible targets to query
+	# find parent to query
+	my $ipv4 = $self->get_nameservers_ipv4($parent, $qclass);
+	my $ipv6 = $self->get_nameservers_ipv6($parent, $qclass);
     my @target = ();
-    @target = (@target, @{ $self->{nameservers}{$parent}{$qclass}{ipv4} });
-    @target = (@target, @{ $self->{nameservers}{$parent}{$qclass}{ipv6} });
+    @target = (@target, @{$ipv4}) if ($ipv4);
+    @target = (@target, @{$ipv6}) if ($ipv6);
     unless (scalar @target) {
-        $self->{logger}->error("DNS:NO_PARENT_NS", $qname, $qclass, $parent);
+        $self->{logger}->error("DNS:NO_PARENT_NS", $zone, $qclass, $parent);
         return undef;
     }
 
@@ -170,18 +175,19 @@ sub _query_parent_helper {
 
 sub query_child {
     my $self   = shift;
+    my $zone   = shift;
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
 
-    $self->{logger}->debug("DNS:QUERY_CHILD", $qname, $qclass, $qtype);
+    $self->{logger}->debug("DNS:QUERY_CHILD", $zone, $qname, $qclass, $qtype);
 
-    unless ($self->{cache}{child}{$qname}{$qclass}{$qtype}) {
-        $self->{cache}{child}{$qname}{$qclass}{$qtype} =
-          $self->_query_child_helper($qname, $qclass, $qtype);
+    unless ($self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype}) {
+        $self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype} =
+          $self->_query_child_helper($zone, $qname, $qclass, $qtype);
     }
 
-    my $packet = $self->{cache}{child}{$qname}{$qclass}{$qtype};
+    my $packet = $self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype};
 
     $self->{logger}->debug("DNS:CHILD_RESPONSE",
         sprintf("%d answer(s)", $packet->header->ancount));
@@ -191,19 +197,22 @@ sub query_child {
 
 sub _query_child_helper {
     my $self   = shift;
+    my $zone   = shift;
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
 
     # initialize child nameservers
-    $self->init_nameservers($qname, $qclass, $qtype);
+    $self->init_nameservers($zone, $qclass);
 
-    # find possible targets to query
+	# find child to query
+	my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
+	my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
     my @target = ();
-    @target = (@target, @{ $self->{nameservers}{$qname}{$qclass}{ipv4} });
-    @target = (@target, @{ $self->{nameservers}{$qname}{$qclass}{ipv6} });
+    @target = (@target, @{$ipv4}) if ($ipv4);
+    @target = (@target, @{$ipv6}) if ($ipv6);
     unless (scalar @target) {
-        $self->{logger}->error("DNS:NO_CHILD_NS", $qname, $qclass);
+        $self->{logger}->error("DNS:NO_CHILD_NS", $zone, $qclass);
         return undef;
     }
 
@@ -321,7 +330,9 @@ sub get_nameservers_at_parent {
 
     my @ns;
 
-    my $packet = $self->query_parent($qname, $qclass, "NS");
+    $self->{logger}->debug("DNS:GET_NS_AT_PARENT", $qname, $qclass);
+
+    my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
 
     foreach my $rr ($packet->authority) {
         if ($rr->type eq "NS") {
@@ -339,7 +350,9 @@ sub get_nameservers_at_child {
 
     my @ns;
 
-    my $packet = $self->query_child($qname, $qclass, "NS");
+    $self->{logger}->debug("DNS:GET_NS_AT_CHILD", $qname, $qclass);
+
+    my $packet = $self->query_child($qname, $qname, $qclass, "NS");
 
     foreach my $rr ($packet->answer) {
         if ($rr->type eq "NS") {
@@ -367,6 +380,8 @@ sub _init_nameservers_helper {
     my $qname  = shift;
     my $qclass = shift;
 
+    $self->{logger}->debug("DNS:INITIALIZING_NAMESERVERS", $qname, $qclass);
+
     $self->{nameservers}{$qname}{$qclass}{ns}   = ();
     $self->{nameservers}{$qname}{$qclass}{ipv4} = ();
     $self->{nameservers}{$qname}{$qclass}{ipv6} = ();
@@ -387,6 +402,9 @@ sub _init_nameservers_helper {
             if ($rr->type eq "A") {
                 push @{ $self->{nameservers}{$qname}{$qclass}{ipv4} },
                   $rr->address;
+                $self->{logger}
+                  ->debug("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
+                    $rr->address);
             }
         }
 
@@ -396,9 +414,14 @@ sub _init_nameservers_helper {
             if ($rr->type eq "AAAA") {
                 push @{ $self->{nameservers}{$qname}{$qclass}{ipv6} },
                   $rr->address;
+                $self->{logger}
+                  ->debug("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
+                    $rr->address);
             }
         }
     }
+
+    $self->{logger}->debug("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
 }
 
 ######################################################################
@@ -413,7 +436,9 @@ sub find_parent {
           $self->_find_parent_helper($qname, $qclass);
     }
 
-    return $self->{parent}{$qname}{$qclass};
+    my $parent = $self->{parent}{$qname}{$qclass};
+
+    return $parent;
 }
 
 sub _find_parent_helper {

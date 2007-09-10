@@ -18,7 +18,8 @@ my $logger = new DNSCheck::Logger;
 my $dns    = new DNSCheck::Lookup::DNS($logger);
 my $asn    = new DNSCheck::Lookup::ASN($logger, $dns);
 
-$asn->lookup("195.47.254.10");
-$asn->lookup("195.47.254.10");
+die "syntax error" unless ($ARGV[0]);
+
+$asn->lookup($ARGV[0]);
 
 $logger->dump();

@@ -14,7 +14,11 @@ use DNSCheck;
 
 my $check = new DNSCheck("IN");
 
-$check->mail("hostmaster\@kirei.se");
-$check->mail("hostmaster\@n6.schlyter.se");
+my @email = ("jakob\@kirei.se", "hostmaster\@n6.schlyter.se",
+    "invalid-user\@schlyter.se");
+
+foreach my $x (@email) {
+    $check->mail($x);
+}
 
 $check->report();

@@ -75,21 +75,50 @@ sub test {
     # REQUIRE: all NS at child may exist at parent
     foreach my $ns (@ns_at_child) {
         unless (scalar grep(/^$ns$/, @ns_at_parent)) {
-            $logger->warning("DELEGATION:EXTRA_NS_CHILD+", $ns);
+            $logger->warning("DELEGATION:EXTRA_NS_CHILD", $ns);
             $errors++;
         }
     }
 
     # REQUIRE: at least two (2) NS records at parent [IIS.KVSE.001.01/r1]
-	unless (scalar @ns_at_parent >= 2) {
-		$logger->error("DELEGATION:TOO_FEW_NS", $zone);
-	}
+    unless (scalar @ns_at_parent >= 2) {
+        $logger->error("DELEGATION:TOO_FEW_NS", $zone);
+    }
 
-	# TODO: check for inconsistent glue
+    # REQUIRE: check for inconsistent glue
+    my @glue = _get_glue($context, $zone);
+    foreach my $g (@glue) {
+        $logger->info("DELEGATION:MATCHING_GLUE", $zone, $g->name, $g->address);
 
-	# TODO: check for loop in glue record chain (i.e. unresolvable)
-	
-	# TODO: warning if glue chain is longer than 3 lookups
+        my $c =
+          $context->dns->query_child($zone, $g->name, $g->class, $g->type);
+
+        if ($c and $c->header->ancount > 0) {
+            my $found = 0;
+
+            foreach my $rr ($c->answer) {
+                if (    $rr->name eq $g->name
+                    and $rr->class   eq $g->class
+                    and $rr->type    eq $g->type
+                    and $rr->address eq $g->address)
+                {
+                    $logger->info("DELEGATION:GLUE_FOUND_AT_CHILD",
+                        $zone, $g->name, $g->address);
+                    $found++;
+                }
+            }
+
+            unless ($found) {
+                $logger->error("DELEGATION:INCONSISTENT_GLUE", $zone, $g->name);
+            }
+        } else {
+            $logger->error("DELEGATION:GLUE_MISSING_AT_CHILD", $zone, $g->name);
+        }
+    }
+
+    # TODO: check for loop in glue record chain (i.e. unresolvable)
+
+    # TODO: warning if glue chain is longer than 3 lookups
 
   DONE:
     $logger->info("DELEGATION:END", $zone);
@@ -99,40 +128,40 @@ sub test {
 
 ######################################################################
 
-sub _get_ns_at_parent {
+sub _get_glue {
     my $context = shift;
     my $zone    = shift;
 
     my $qclass = $context->qclass;
-    my @ns;
+    my $logger = $context->logger;
 
-    my $packet = $context->dns->query_parent($zone, $qclass, "NS");
+    my @glue = ();
 
-    foreach my $rr ($packet->authority) {
-        if ($rr->type eq "NS") {
-            push @ns, $rr->nsdname;
+    my @ns = $context->dns->get_nameservers_at_parent($zone, $qclass);
+
+    foreach my $nameserver (@ns) {
+        my $ipv4 =
+          $context->dns->query_parent($zone, $nameserver, $qclass, "A");
+        my $ipv6 =
+          $context->dns->query_parent($zone, $nameserver, $qclass, "A");
+
+        foreach my $rr ($ipv4->answer, $ipv4->additional) {
+            if ($rr->type eq "A" and $rr->name =~ /\.$zone$/) {
+                $logger->info("DELEGATION:GLUE_FOUND_AT_PARENT",
+                    $zone, $rr->name, $rr->address);
+                push @glue, $rr;
+            }
+        }
+        foreach my $rr ($ipv6->answer, $ipv6->additional) {
+            if ($rr->type eq "AAAA" and $rr->name =~ /\.$zone$/) {
+                $logger->info("DELEGATION:GLUE_FOUND_AT_PARENT",
+                    $zone, $rr->name, $rr->address);
+                push @glue, $rr;
+            }
         }
     }
 
-    return sort(@ns);
-}
-
-sub _get_ns_at_child {
-    my $context = shift;
-    my $zone    = shift;
-
-    my $qclass = $context->qclass;
-    my @ns;
-
-    my $packet = $context->dns->query_child($zone, $qclass, "NS");
-
-    foreach my $rr ($packet->answer) {
-        if ($rr->type eq "NS") {
-            push @ns, $rr->nsdname;
-        }
-    }
-
-    return sort(@ns);
+    return @glue;
 }
 
 1;
