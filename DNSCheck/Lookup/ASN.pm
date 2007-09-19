@@ -104,7 +104,7 @@ sub _asn_helper {
         return undef;
     }
 
-    foreach my $rr (@{$packet->{answer}}) {
+    foreach my $rr (@{ $packet->{answer} }) {
         if ($rr->rdatastr =~ /^\"(\d+)\"/) {
             if ($1 eq $asn_magic) {
                 ## IP address not announced
@@ -120,8 +120,42 @@ sub _asn_helper {
     return \@asn_list;
 }
 
-######################################################################
-
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Lookup::ASN - AS Number Lookup
+
+=head1 DESCRIPTION
+
+Helper functions for looking up AS (Autonomous System) numbers using 
+B<asn.cymru.com>.
+
+=head1 METHODS
+
+new(I<logger>, I<dns>);
+
+my $n = $asn->lookup(I<address>);
+
+=head1 EXAMPLES
+
+    use DNSCheck::Logger;
+    use DNSCheck::Lookup::DNS;
+    use DNSCheck::Lookup::ASN;
+
+    my $logger = new DNSCheck::Logger;
+    my $dns    = new DNSCheck::Lookup::DNS($logger);
+    my $asn    = new DNSCheck::Lookup::ASN($logger, $dns);
+
+    $asn->lookup("64.233.183.99");
+
+    $logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck::Logger>, L<DNSCheck::Lookup::DNS>
+
+=cut

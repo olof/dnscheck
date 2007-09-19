@@ -158,3 +158,31 @@ sub _dissect {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::DNSSEC - Test DNSSEC
+
+=head1 DESCRIPTION
+
+...
+
+=head1 METHODS
+
+test(I<context>, I<zone>);
+
+=head1 EXAMPLES
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::DNSSEC;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::DNSSEC::test($context, "example.com");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+
+=cut

@@ -77,7 +77,9 @@ Test a zone using all DNSCheck modules.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<zone>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::Zone;

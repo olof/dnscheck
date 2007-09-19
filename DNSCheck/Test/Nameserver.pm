@@ -73,7 +73,7 @@ sub test {
         # REQUIRE: Nameserver must be authoritative for the zone
         #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
         $logger->debug("NAMESERVER:CHECKING_AUTH", $nameserver, $address);
-        if ($context->dns->address_is_auth($address, $zone, $qclass)) {
+        if ($context->dns->address_is_authoritative($address, $zone, $qclass)) {
             $logger->error("NAMESERVER:NOT_AUTH", $nameserver, $address, $zone);
             $errors++;
             next ADDRESS;
@@ -143,7 +143,9 @@ The nameserver may provide AXFR for the zone.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<zone>, I<nameserver>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::Nameserver;

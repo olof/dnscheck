@@ -129,3 +129,47 @@ sub dump {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Looger - Logger Subsystem
+
+=head1 DESCRIPTION
+
+Helper functions for logging support.
+
+=head1 METHODS
+
+new();
+
+$logger->logname(I<string>);
+
+$logger->add(I<level>, I<tag>, I<arg1>, I<arg2>, ..., I<argN>);
+
+$logger->info(I<arg1>, I<arg2>, ..., I<argN>);
+
+$logger->notice(I<arg1>, I<arg2>, ..., I<argN>);
+
+$logger->warning(I<arg1>, I<arg2>, ..., I<argN>);
+
+$logger->error(I<arg1>, I<arg2>, ..., I<argN>);
+
+$logger->debug(I<arg1>, I<arg2>, ..., I<argN>);
+
+$logger->critical(I<arg1>, I<arg2>, ..., I<argN>);
+
+$logger->dump();
+
+=head1 EXAMPLES
+
+    use DNSCheck::Logger;
+
+	my $logger = new DNSCheck::Logger;
+
+	$logger->add("foo", 1, 2, 3);
+	$logger->add("bar", 4, 5, 6);
+
+	$logger->dump;
+
+=cut

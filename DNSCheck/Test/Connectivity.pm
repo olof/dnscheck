@@ -112,7 +112,9 @@ Domain name servers should live in more than one AS.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<zone>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::Connectivity;

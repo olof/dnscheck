@@ -189,7 +189,9 @@ The hostname(s) pointed to by the PTR record(s) should exist.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<address>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::Address;

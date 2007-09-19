@@ -138,7 +138,9 @@ All host addresses (IPv4 and IPv6) must be valid.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<hostname>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::Host;

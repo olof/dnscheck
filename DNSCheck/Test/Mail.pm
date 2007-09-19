@@ -139,7 +139,9 @@ Mail for the email address must be deliverable via SMTP.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<emailaddress>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::Mail;

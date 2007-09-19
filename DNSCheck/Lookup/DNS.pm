@@ -558,7 +558,7 @@ sub find_addresses {
 
 ######################################################################
 
-sub address_is_auth {
+sub address_is_authoritative {
     my $self    = shift;
     my $address = shift;
     my $qname   = shift;
@@ -640,3 +640,63 @@ sub _rr2string {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Lookup::DNS - DNS Lookup
+
+=head1 DESCRIPTION
+
+Helper functions for looking up information in the DNS (Domain Name System).
+
+=head1 METHODS
+
+new(I<logger>);
+
+my $packet = $dns->query_resolver(I<qname>, I<qclass>, I<qtype>);
+
+my $packet = $dns->query_parent(I<zone>, I<qname>, I<qclass>, I<qtype>);
+
+my $packet = $dns->query_child(I<zone>, I<qname>, I<qclass>, I<qtype>);
+
+my $packet = $dns->query_explicit(I<qname>, I<qclass>, I<qtype>, I<address>, I<transport>, I<flags>);
+
+my $addrs = $dns->get_nameservers_ipv4(I<qname>, I<qclass>);
+
+my $addrs = $dns->get_nameservers_ipv6(I<qname>, I<qclass>);
+
+my $ns = $dns->get_nameservers_at_parent(I<qname>, I<qclass>);
+
+my $ns = $dns->get_nameservers_at_child(I<qname>, I<qclass>);
+
+$dns->init_nameservers(I<qname>, I<qclass>);
+
+my $parent = $dns->find_parent(I<qname>, I<qclass>);
+
+my @mx = $dns->find_mail_destination(I<domain>);
+
+my @addresses = $dns->find_addresses(I<qname>, I<qclass>);
+
+my $bool = $dns->address_is_authoritative(I<address>, I<qname>, I<qtype>);
+
+my $bool = $dns->address_is_recursive(I<address>, I<qtype>);
+
+
+=head1 EXAMPLES
+
+    use DNSCheck::Logger;
+    use DNSCheck::Lookup::DNS;
+
+    my $logger = new DNSCheck::Logger;
+    my $dns    = new DNSCheck::Lookup::DNS($logger);
+
+    my $parent = $dns->query_parent("nic.se", "ns.nic.se", "IN", "A");
+
+    $logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck::Logger>, L<DNSCheck::Lookup::DNS>
+
+=cut

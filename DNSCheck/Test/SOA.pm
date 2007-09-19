@@ -281,7 +281,9 @@ SOA 'minimum' should be less than 1 day.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<zone>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::SOA;

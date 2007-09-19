@@ -195,7 +195,9 @@ Nameservers at child may exist at parent.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<zone>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::Delegation;

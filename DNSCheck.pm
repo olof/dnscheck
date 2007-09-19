@@ -129,3 +129,51 @@ sub smtp {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck - DNS Check Tools
+
+=head1 DESCRIPTION
+
+...
+
+=head1 METHODS
+
+new(I<class>);
+
+$dns->report();
+
+$dns->zone(I<zone>);
+
+$dns->host(I<hostname>);
+
+$dns->address(I<address>);
+
+$dns->soa(I<zone>);
+
+$dns->connectivity(I<zone>);
+
+$dns->serial(I<zone>);
+
+$dns->delegation(I<zone>);
+
+$dns->nameserver(I<zone>, I<nameserver>));
+
+$dns->dnssec(I<zone>);
+
+$dns->mail(I<emailaddress>);
+
+$dns->smtp(I<mailhost>, I<emailaddress>);
+
+=head1 EXAMPLES
+
+    use DNSCheck;
+
+	my $check = new DNSCheck("IN");
+
+	$check->zone("example.com");
+	$check->report();
+
+=cut

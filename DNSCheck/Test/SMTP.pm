@@ -131,7 +131,9 @@ Test if an email address is deliverable using SMTP.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<mailhost>, I<emailaddress>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::SMTP;

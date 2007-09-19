@@ -104,7 +104,9 @@ The serial number of the zone must be the same at all listed name servers.
 
 =head1 METHODS
 
-=head2 test
+test(I<context>, I<zone>);
+
+=head1 EXAMPLES
 
     use DNSCheck::Context;
     use DNSCheck::Test::Serial;
