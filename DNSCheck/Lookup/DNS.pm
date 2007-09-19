@@ -39,6 +39,10 @@ use List::Util 'shuffle';
 use Data::Dumper;
 use Net::DNS;
 
+use Crypt::OpenSSL::Random qw(random_bytes);
+use Digest::SHA1 qw(sha1);
+use Digest::BubbleBabble qw(bubblebabble);
+
 ######################################################################
 
 sub new {
@@ -148,9 +152,9 @@ sub _query_parent_helper {
     # initialize parent nameservers
     $self->init_nameservers($parent, $qclass);
 
-	# find parent to query
-	my $ipv4 = $self->get_nameservers_ipv4($parent, $qclass);
-	my $ipv6 = $self->get_nameservers_ipv6($parent, $qclass);
+    # find parent to query
+    my $ipv4 = $self->get_nameservers_ipv4($parent, $qclass);
+    my $ipv6 = $self->get_nameservers_ipv6($parent, $qclass);
     my @target = ();
     @target = (@target, @{$ipv4}) if ($ipv4);
     @target = (@target, @{$ipv6}) if ($ipv6);
@@ -205,9 +209,9 @@ sub _query_child_helper {
     # initialize child nameservers
     $self->init_nameservers($zone, $qclass);
 
-	# find child to query
-	my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
-	my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
+    # find child to query
+    my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
+    my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
     my @target = ();
     @target = (@target, @{$ipv4}) if ($ipv4);
     @target = (@target, @{$ipv6}) if ($ipv6);
@@ -248,8 +252,8 @@ sub query_explicit {
     # set up resolver
     my $resolver = new Net::DNS::Resolver;
     $resolver->debug($self->{debug});
-    $resolver->recurse(0);
     $resolver->nameserver($address);
+    $resolver->recurse(0);
 
     if ($flags->{dnssec}) {
         $self->{logger}->debug("DNS:SET_FLAG_DO");
@@ -262,8 +266,10 @@ sub query_explicit {
     }
 
     if ($transport eq "udp") {
+        $self->{logger}->debug("DNS:FORCE_UDP");
         $resolver->usevc(0);
     } elsif ($transport eq "tcp") {
+        $self->{logger}->debug("DNS:FORCE_TCP");
         $resolver->usevc(1);
     } else {
         die "unknown transport";
@@ -516,31 +522,23 @@ sub find_mail_destination {
     return @dest;
 }
 
-######################################################################
-
-sub hostname_is_auth {
+sub find_addresses {
     my $self   = shift;
     my $qname  = shift;
     my $qclass = shift;
-    my $domain = shift;
 
-    my $logger = $self->{logger};
-    my $errors = 0;
+    my @addresses = ();
 
     my $ipv4 = $self->query_resolver($qname, $qclass, "A");
     my $ipv6 = $self->query_resolver($qname, $qclass, "AAAA");
 
     unless ($ipv4 && $ipv6) {
-
-        # FIXME: error
-        $errors++;
+        ## FIXME: error
         goto DONE;
     }
 
     unless ($ipv4->header->ancount || $ipv6->header->ancount) {
-
-        # FIXME: error
-        $errors++;
+        ## FIXME: error
         goto DONE;
     }
 
@@ -550,17 +548,68 @@ sub hostname_is_auth {
 
     foreach my $rr (@answers) {
         if ($rr->type eq "A" or $rr->type eq "AAAA") {
-            my $packet =
-              $self->query_explicit($domain, $qclass, "SOA", $rr->address);
-
-            unless ($packet) {
-
-                # FIXME: should query timeout be an error?
-                $errors++;
-                next;
-            }
+            push @addresses, $rr->address;
         }
     }
+
+  DONE:
+    return @addresses;
+}
+
+######################################################################
+
+sub address_is_auth {
+    my $self    = shift;
+    my $address = shift;
+    my $qname   = shift;
+    my $qclass  = shift;
+
+    my $logger = $self->{logger};
+    my $errors = 0;
+
+    my $packet = $self->query_explicit($qname, $qclass, "SOA", $address);
+
+    unless ($packet) {
+        ## FIXME: should query timeout be an error?
+        $errors++;
+    }
+
+  DONE:
+    return $errors;
+}
+
+sub address_is_recursive {
+    my $self    = shift;
+    my $address = shift;
+    my $qclass  = shift;
+
+    my $logger = $self->{logger};
+    my $errors = 0;
+
+    my $resolver = new Net::DNS::Resolver;
+    $resolver->debug($self->{debug});
+    $resolver->recurse(1);
+    $resolver->nameserver($address);
+
+    # create nonexisting domain name
+    my $nxdomain = "nxdomain.example.com";
+    my @tmp = split(/-/, bubblebabble(Digest => sha1(random_bytes(64))));
+    my $nonexisting = sprintf("%s.%s", join("", @tmp[1 .. 6]), $nxdomain);
+
+    my $packet = $resolver->send($nonexisting, "SOA", $qclass);
+
+    goto DONE unless $packet;
+
+    ## refused is ok
+    goto DONE if ($packet->header->rcode eq "REFUSED");
+
+    ## referral is ok
+    goto DONE
+      if (  $packet->header->rcode eq "NOERROR"
+        and $packet->header->ancount == 0
+        and $packet->header->nscount > 0);
+
+    $errors++;
 
   DONE:
     return $errors;

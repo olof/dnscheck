@@ -38,7 +38,7 @@ use Net::IP;
 
 ######################################################################
 
-our @private_ipv4 = ();
+our @private_ipv4  = ();
 our @reserved_ipv4 = ();
 our @reserved_ipv6 = ();
 
@@ -60,7 +60,7 @@ INIT {
     push @reserved_ipv4, new Net::IP("240.0.0.0/4");
 
     # REQUIRE: Special-Use IPv6 Addresses
-    # (draft-ietf-v6ops-rfc3330-for-ipv6-00.txt)
+    # (draft-ietf-v6ops-rfc3330-for-ipv6-01.txt)
     push @reserved_ipv6, new Net::IP("::1/128");
     push @reserved_ipv6, new Net::IP("ff00::/8");
     push @reserved_ipv6, new Net::IP("::/128");
@@ -129,7 +129,7 @@ sub test {
     my $ptr = $context->dns->query_resolver($reverse, $qclass, "PTR");
 
     unless ($ptr->header->ancount) {
-        $logger->error("ADDRESS:PTR_NOT_FOUND", $address, $reverse);
+        $logger->warning("ADDRESS:PTR_NOT_FOUND", $address, $reverse);
         $errors++;
     }
 
@@ -140,7 +140,7 @@ sub test {
         my $ipv6 = $context->{dns}->query_resolver($hostname, $qclass, "AAAA");
 
         unless ($ipv4->header->ancount || $ipv6->header->ancount) {
-            $logger->error("ADDRESS:PTR_HOSTNAME_NOT_FOUND", $hostname);
+            $logger->warning("ADDRESS:PTR_HOSTNAME_NOT_FOUND", $hostname);
             $errors++;
             goto DONE;
         }
@@ -155,3 +155,51 @@ sub test {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::Address - Test for valid IP addresses
+
+=head1 DESCRIPTION
+
+Tests for valid (and resonable) IP addresses. The following tests are made:
+
+=over 4
+
+=item *
+Addresses must be syntactically correct.
+
+=item *
+Private IPv4 Addresses (RFC 1918) must not be used.
+
+=item *
+Special-Use IPv4 Addresses (RFC 3330)  must not be used.
+
+=item *
+Special-Use IPv6 Addresses must not be used.
+
+=item *
+There should exist a PTR record for the address.
+
+=item *
+The hostname(s) pointed to by the PTR record(s) should exist.
+
+=back
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::Address;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::Address::test($context, "127.0.0.1");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+
+=cut

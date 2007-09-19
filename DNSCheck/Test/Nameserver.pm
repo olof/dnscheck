@@ -34,6 +34,8 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use DNSCheck::Test::Host;
+
 ######################################################################
 
 sub test {
@@ -45,10 +47,9 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
-    $logger->info("NAMESERVER:BEGIN", $zone, $nameserver);
+    my $packet;
 
-    # TODO: implement fully
-    $logger->info("NAMESERVER:NOT_COMPLETELY_IMPLEMENTED");
+    $logger->info("NAMESERVER:BEGIN", $zone, $nameserver);
 
     # REQUIRE: Nameserver must be a valid hostname
     if (DNSCheck::Test::Host::test($context, $nameserver)) {
@@ -57,29 +58,103 @@ sub test {
         goto DONE;
     }
 
-    # REQUIRE: Nameserver should not be recursive
-    # TODO: Nameserver should not be recursive
+    my @addresses = $context->dns->find_addresses($nameserver, $qclass);
 
-    # REQUIRE: Nameserver must be authoritative for the zone
-    #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
-	if ($context->dns->hostname_is_auth($nameserver, $qclass, $zone)) {
-        $logger->error("NAMESERVER:NOT_AUTH", $nameserver);
-        $errors++;
-        goto DONE;
-	} else {
-        $logger->info("NAMESERVER:AUTH", $nameserver);
-	}
+  ADDRESS: foreach my $address (@addresses) {
 
-    # REQUIRE: SOA must be fetchable over any protocol (UDP/TCP)
+        # REQUIRE: Nameserver should not be recursive
+        $logger->debug("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
+        if ($context->dns->address_is_recursive($address, $qclass)) {
+            $logger->warning("NAMESERVER:RECURSIVE", $nameserver, $address);
+        } else {
+            $logger->info("NAMESERVER:NOT_RECURSIVE", $nameserver, $address);
+        }
 
-    # REQUIRE: SOA must be fetchable over any listed transport (IPv4/IPv6)
+        # REQUIRE: Nameserver must be authoritative for the zone
+        #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
+        $logger->debug("NAMESERVER:CHECKING_AUTH", $nameserver, $address);
+        if ($context->dns->address_is_auth($address, $zone, $qclass)) {
+            $logger->error("NAMESERVER:NOT_AUTH", $nameserver, $address, $zone);
+            $errors++;
+            next ADDRESS;
+        } else {
+            $logger->info("NAMESERVER:AUTH", $nameserver, $address, $zone);
+        }
 
-    # REQUIRE: SOA may provide AXFR
+        # REQUIRE: SOA must be fetchable over any protocol (UDP/TCP)
+        $logger->debug("NAMESERVER:CHECKING_UDP", $nameserver, $address);
+        $packet =
+          $context->dns->query_explicit($zone, $qclass, "SOA", $address, "udp");
+        if ($packet) {
+            $logger->info("NAMESERVER:UDP_OK", $nameserver, $address, $zone);
+        } else {
+            $logger->error("NAMESERVER:NO_UDP", $nameserver, $address, $zone);
+            $errors++;
+        }
 
-  DONE:
-    $logger->info("NAMESERVER:END", $zone, $nameserver);
+        $logger->debug("NAMESERVER:CHECKING_TCP", $nameserver, $address);
+        $packet =
+          $context->dns->query_explicit($zone, $qclass, "SOA", $address, "tcp");
+        if ($packet) {
+            $logger->info("NAMESERVER:TCP_OK", $nameserver, $address, $zone);
+        } else {
+            $logger->error("NAMESERVER:NO_TCP", $nameserver, $address, $zone);
+            $errors++;
+        }
+
+        # REQUIRE: SOA may provide AXFR
+        # TODO: SOA may provide AXFR
+    }
+
+  DONE: $logger->info("NAMESERVER:END", $zone, $nameserver);
 }
 
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::Nameserver - Test a single nameserver
+
+=head1 DESCRIPTION
+
+Test a single name server for a specific zone. The following tests are made:
+
+=over 4
+
+=item *
+The nameserver must be a valid hostname.
+
+=item *
+The nameserver should not be recursive.
+
+=item *
+The nameserver must be authoritative for the zone.
+
+=item *
+The SOA record for the zone must be fetchable over both UDP and TCP.
+
+=item *
+The nameserver may provide AXFR for the zone.
+
+=back
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::Nameserver;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::Nameserver::test($context, "se", "a.ns.se");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
+L<DNSCheck::Test::Host>
+
+=cut

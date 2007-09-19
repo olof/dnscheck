@@ -52,7 +52,7 @@ sub test {
 
     my %serial_counter;
 
-	# FIXME: implement IPv6 support as well
+    # FIXME: implement IPv6 support as well
     foreach my $address (@{$ipv4}) {
         my $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address);
@@ -85,3 +85,36 @@ sub test {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::Serial - Test zone serial number
+
+=head1 DESCRIPTION
+
+Test the zone serial number. The following tests are made:
+
+=over 4
+
+=item *
+The serial number of the zone must be the same at all listed name servers.
+
+=back
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::Serial;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::Serial::test($context, "se");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+
+=cut

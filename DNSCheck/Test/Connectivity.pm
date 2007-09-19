@@ -61,7 +61,7 @@ sub test {
         $logger->info("CONNECTIVITY:ANNOUNCED_BY_ASN",
             $address, join(",", @as_list));
 
-        # REQUIRE: A name server should not be announce by more than one AS
+        # REQUIRE: A name server should not be announced by more than one AS
         # REQUIRE: A name server must be announced
         if (scalar @as_list > 1) {
             $logger->warning("CONNECTIVITY:MULTIPLE_ASN", $address);
@@ -87,3 +87,42 @@ sub test {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::Connectivity - Test zone connectivity
+
+=head1 DESCRIPTION
+
+Test connectivity for a zone's nameservers. The following tests are made:
+
+=over 4
+
+=item *
+A name server should not be announced by more than one AS.
+
+=item *
+A name server must be announced.
+
+=item *
+Domain name servers should live in more than one AS.
+
+=back
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::Connectivity;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::Connectivity::test($context, "iis.se");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+
+=cut

@@ -197,11 +197,102 @@ sub mname_is_auth {
     my $soa     = shift;
     my $context = shift;
 
-    my $dns    = $context->{dns};
+    my $dns = $context->{dns};
 
-	return $dns->hostname_is_auth($soa->mname, $soa->class, $soa->name);
+    my $errors = 0;
+
+    my @addresses = $dns->find_addresses($soa->mname, $soa->class);
+
+    foreach my $a (@addresses) {
+        my $packet = $dns->query_explicit($soa->mname, $soa->class, "SOA", $a);
+
+        unless ($packet) {
+            ## FIXME: should query timeout be an error?
+            $errors++;
+            next;
+        }
+    }
+
+  DONE:
+    return $errors;
 }
 
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::SOA - Test SOA record
+
+=head1 DESCRIPTION
+
+Test the zone SOA record. The following tests are made:
+
+=over 4
+
+=item *
+The SOA record must exist.
+
+=item *
+Only ONE SOA record may exist.
+
+=item *
+SOA MNAME must exist as a valid hostname.
+
+=item *
+SOA MNAME does not have to be in the list of nameservers.
+
+=item *
+SOA MNAME does not have to be reachable.
+
+=item *
+SOA MNAME must be authoritative for the zone.
+
+=item *
+SOA RNAME must have a valid syntax .
+
+=item *
+SOA RNAME address should be deliverable.
+
+=item *
+SOA TTL should be at least 1 hour.
+
+=item *
+SOA 'refresh' should be at least 4 hours.
+
+=item *
+SOA 'retry' should be lower than SOA 'refresh'.
+
+=item *
+SOA 'retry' shoule be at least 1 hour.
+
+=item *
+SOA 'expire' should be at least 7 days.
+
+=item *
+SOA 'expire' should be at least 7 times SOA 'refresh'.
+
+=item *
+SOA 'minimum' should be less than 1 day.
+
+=back
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::SOA;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::SOA::test($context, "example.com");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
+L<DNSCheck::Test::Host>, L<DNSCheck::Test::Mail>
+
+=cut

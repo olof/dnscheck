@@ -35,6 +35,7 @@ use warnings;
 use strict;
 
 use DNSCheck::Test::Host;
+use DNSCheck::Test::SMTP;
 
 ######################################################################
 
@@ -110,3 +111,46 @@ sub test {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::Mail - Test email addresses
+
+=head1 DESCRIPTION
+
+Test email address. The following tests are made:
+
+=over 4
+
+=item *
+An MX or A record must exist for the domain name of the email address.
+
+=item *
+The MX record must point to a valid hostname.
+
+=item *
+The mail exchanger should be reachable by IPv4.
+
+=item *
+Mail for the email address must be deliverable via SMTP.
+
+=back
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::Mail;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::Mail::test($context, "hostmaster\@example.com");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
+L<DNSCheck::Test::Host>, L<DNSCheck::Test::SMTP>
+
+=cut

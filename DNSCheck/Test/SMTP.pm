@@ -119,3 +119,29 @@ sub test {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::SMTP - Test SMTP delivery
+
+=head1 DESCRIPTION
+
+Test if an email address is deliverable using SMTP.
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::SMTP;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::SMTP::test($context, "mail.example.com", "user\@example.com");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>, L<Net::SMTP>
+
+=cut

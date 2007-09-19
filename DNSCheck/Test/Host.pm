@@ -107,3 +107,49 @@ sub test {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::Host - Test host names and addresses
+
+=head1 DESCRIPTION
+
+Test host names and addresses. The following tests are made:
+
+=over 4
+
+=item *
+Hostnames may contain the characters a-z, 0-9 and -.
+
+=item *
+Last character of hostname must not be a minus sign.
+
+=item *
+Host address must exist.
+
+=item *
+Hostname must nu point to a CNAME.
+
+=item *
+All host addresses (IPv4 and IPv6) must be valid.
+
+=back
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::Host;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::Host::test($context, "a.ns.se");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
+L<DNSCheck::Test::Address>
+
+=cut

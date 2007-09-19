@@ -65,3 +65,32 @@ sub test {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::Zone - Test a zone
+
+=head1 DESCRIPTION
+
+Test a zone using all DNSCheck modules.
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::Zone;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::Zone::test($context, "example.com");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
+L<DNSCheck::Test::Delegation>, L<DNSCheck::Test::Nameserver>,
+L<DNSCheck::Test::Serial>, L<DNSCheck::Test::SOA>,
+L<DNSCheck::Test::Connectivity>, L<DNSCheck::Test::DNSSEC>
+
+=cut

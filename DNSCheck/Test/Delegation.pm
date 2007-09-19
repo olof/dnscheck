@@ -167,3 +167,45 @@ sub _get_glue {
 1;
 
 __END__
+
+
+=head1 NAME
+
+DNSCheck::Test::Delegation - Test zone delegation
+
+=head1 DESCRIPTION
+
+Test zone delegation. The following tests are made:
+
+=over 4
+
+=item *
+All nameservers at parent must exist at child.
+
+=item *
+Nameservers at child may exist at parent.
+
+=item *
+# REQUIRE: at least two (2) NS records at parent [IIS.KVSE.001.01/r1]
+
+=item *
+# REQUIRE: check for inconsistent glue
+
+=back
+
+=head1 METHODS
+
+=head2 test
+
+    use DNSCheck::Context;
+    use DNSCheck::Test::Delegation;
+
+    my $context = new DNSCheck::Context("IN");
+    DNSCheck::Test::Delegation::test($context, "iis.se");
+    $context->logger->dump();
+
+=head1 SEE ALSO
+
+L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+
+=cut
