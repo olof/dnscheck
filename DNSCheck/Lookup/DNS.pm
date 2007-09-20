@@ -116,7 +116,7 @@ sub query_parent {
 
     unless ($self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype}) {
         $self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype} =
-          $self->_query_parent_helper($zone, $qname, $qclass, $qtype);
+          $self->query_parent_nocache($zone, $qname, $qclass, $qtype);
     }
 
     my $packet = $self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype};
@@ -132,12 +132,15 @@ sub query_parent {
     return $packet;
 }
 
-sub _query_parent_helper {
+sub query_parent_nocache {
     my $self   = shift;
     my $zone   = shift;
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
+    my $flags  = shift;
+
+    $self->{logger}->debug("DNS:QUERY_PARENT_NOCACHE", $zone, $qname, $qclass, $qtype);
 
     # find parent
     $self->{logger}->debug("DNS:FIND_PARENT", $qname, $qclass);
@@ -167,9 +170,7 @@ sub _query_parent_helper {
     @target = shuffle(@target);
 
     # set up resolver
-    my $resolver = new Net::DNS::Resolver;
-    $resolver->debug($self->{debug});
-    $resolver->recurse(0);
+    my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver(@target);
 
     return $resolver->send($qname, $qtype, $qclass);
@@ -188,7 +189,7 @@ sub query_child {
 
     unless ($self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype}) {
         $self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype} =
-          $self->_query_child_helper($zone, $qname, $qclass, $qtype);
+          $self->query_child_nocache($zone, $qname, $qclass, $qtype);
     }
 
     my $packet = $self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype};
@@ -199,12 +200,15 @@ sub query_child {
     return $packet;
 }
 
-sub _query_child_helper {
+sub query_child_nocache {
     my $self   = shift;
     my $zone   = shift;
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
+    my $flags  = shift;
+
+    $self->{logger}->debug("DNS:QUERY_CHILD_NOCACHE", $zone, $qname, $qclass, $qtype);
 
     # initialize child nameservers
     $self->init_nameservers($zone, $qclass);
@@ -223,10 +227,7 @@ sub _query_child_helper {
     # randomize name server addresses
     @target = shuffle(@target);
 
-    # set up resolver
-    my $resolver = new Net::DNS::Resolver;
-    $resolver->debug($self->{debug});
-    $resolver->recurse(0);
+    my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver(@target);
 
     return $resolver->send($qname, $qtype, $qclass);
@@ -235,45 +236,18 @@ sub _query_child_helper {
 ######################################################################
 
 sub query_explicit {
-    my $self      = shift;
-    my $qname     = shift;
-    my $qclass    = shift;
-    my $qtype     = shift;
-    my $address   = shift;
-    my $transport = shift;
-    my $flags     = shift;
-
-    $transport = "udp" unless ($transport);
+    my $self    = shift;
+    my $qname   = shift;
+    my $qclass  = shift;
+    my $qtype   = shift;
+    my $address = shift;
+    my $flags   = shift;
 
     $self->{logger}
-      ->debug("DNS:QUERY_EXPLICIT", $qname, $qclass, $qtype, $address,
-        $transport);
+      ->debug("DNS:QUERY_EXPLICIT", $qname, $qclass, $qtype, $address);
 
-    # set up resolver
-    my $resolver = new Net::DNS::Resolver;
-    $resolver->debug($self->{debug});
+    my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver($address);
-    $resolver->recurse(0);
-
-    if ($flags->{dnssec}) {
-        $self->{logger}->debug("DNS:SET_FLAG_DO");
-        $resolver->dnssec(1);
-    }
-
-    if ($transport eq "udp" && $flags->{bufsize}) {
-        $self->{logger}->debug("DNS:SET_BUFSIZE", $flags->{bufsize});
-        $resolver->udppacketsize($flags->{bufsize});
-    }
-
-    if ($transport eq "udp") {
-        $self->{logger}->debug("DNS:FORCE_UDP");
-        $resolver->usevc(0);
-    } elsif ($transport eq "tcp") {
-        $self->{logger}->debug("DNS:FORCE_TCP");
-        $resolver->usevc(1);
-    } else {
-        die "unknown transport";
-    }
 
     my $packet = $resolver->send($qname, $qtype, $qclass);
 
@@ -305,6 +279,65 @@ sub query_explicit {
     }
 
     return $packet;
+}
+
+######################################################################
+
+sub _setup_resolver {
+    my $self  = shift;
+    my $flags = shift;
+
+    $self->{logger}->debug("DNS:SETUP_RESOLVER");
+
+    # set up resolver
+    my $resolver = new Net::DNS::Resolver;
+    $resolver->debug($self->{debug});
+    $resolver->recurse(0);
+    $resolver->dnssec(0);
+    $resolver->usevc(0);
+
+    if ($flags) {
+        if ($flags->{transport} eq "udp") {
+            $resolver->usevc(0);
+        } elsif ($flags->{transport} eq "tcp") {
+            $resolver->usevc(1);
+        } else {
+            die "unknown transport";
+        }
+
+        if ($flags->{recurse}) {
+            $resolver->recurse(1);
+        }
+
+        if ($flags->{dnssec}) {
+            $resolver->dnssec(1);
+        }
+
+        if ($flags->{transport} eq "udp" && $flags->{bufsize}) {
+            $self->{logger}->debug("DNS:SET_BUFSIZE", $flags->{bufsize});
+            $resolver->udppacketsize($flags->{bufsize});
+        }
+    }
+
+    if ($resolver->usevc) {
+        $self->{logger}->debug("DNS:TRANSPORT_TCP");
+    } else {
+        $self->{logger}->debug("DNS:TRANSPORT_UDP");
+    }
+
+    if ($resolver->recurse) {
+        $self->{logger}->debug("DNS:RECURSION_DESIRED");
+    } else {
+        $self->{logger}->debug("DNS:RECURSION_DISABLED");
+    }
+
+    if ($resolver->dnssec) {
+        $self->{logger}->debug("DNS:DNSSEC_DESIRED");
+    } else {
+        $self->{logger}->debug("DNS:DNSSEC_DISABLED");
+    }
+
+    return $resolver;
 }
 
 ######################################################################
@@ -627,6 +660,19 @@ sub _rr2string {
             $rr->mname, $rr->rname,  $rr->serial, $rr->refresh,
             $rr->retry, $rr->expire, $rr->minimum
         );
+    } elsif ($rr->type eq "DS") {
+        $rdatastr = sprintf("%d %d %d %s",
+            $rr->keytag, $rr->algorithm, $rr->digtype, $rr->digest);
+    } elsif ($rr->type eq "RRSIG") {
+        $rdatastr = sprintf(
+            "%s %d %d %d %s %s %d %s %s",
+            $rr->typecovered, $rr->algorithm,     $rr->labels,
+            $rr->orgttl,      $rr->sigexpiration, $rr->siginception,
+            $rr->keytag,      $rr->signame,       "..."
+        );
+    } elsif ($rr->type eq "DNSKEY") {
+        $rdatastr = sprintf("%d %d %d %s",
+            $rr->flags, $rr->protocol, $rr->algorithm, "...");
     } else {
         $rdatastr = $rr->rdatastr;
     }
@@ -660,7 +706,7 @@ my $packet = $dns->query_parent(I<zone>, I<qname>, I<qclass>, I<qtype>);
 
 my $packet = $dns->query_child(I<zone>, I<qname>, I<qclass>, I<qtype>);
 
-my $packet = $dns->query_explicit(I<qname>, I<qclass>, I<qtype>, I<address>, I<transport>, I<flags>);
+my $packet = $dns->query_explicit(I<qname>, I<qclass>, I<qtype>, I<address>, I<flags>);
 
 my $addrs = $dns->get_nameservers_ipv4(I<qname>, I<qclass>);
 

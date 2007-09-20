@@ -84,7 +84,8 @@ sub test {
         # REQUIRE: SOA must be fetchable over any protocol (UDP/TCP)
         $logger->debug("NAMESERVER:CHECKING_UDP", $nameserver, $address);
         $packet =
-          $context->dns->query_explicit($zone, $qclass, "SOA", $address, "udp");
+          $context->dns->query_explicit($zone, $qclass, "SOA", $address,
+            { transport => "udp" });
         if ($packet) {
             $logger->info("NAMESERVER:UDP_OK", $nameserver, $address, $zone);
         } else {
@@ -94,7 +95,8 @@ sub test {
 
         $logger->debug("NAMESERVER:CHECKING_TCP", $nameserver, $address);
         $packet =
-          $context->dns->query_explicit($zone, $qclass, "SOA", $address, "tcp");
+          $context->dns->query_explicit($zone, $qclass, "SOA", $address,
+            { transport => "tcp" });
         if ($packet) {
             $logger->info("NAMESERVER:TCP_OK", $nameserver, $address, $zone);
         } else {
