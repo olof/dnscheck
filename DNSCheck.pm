@@ -54,7 +54,7 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-	my $qclass = shift;
+    my $qclass = shift;
 
     $self->{context} = new DNSCheck::Context($qclass);
 
@@ -124,7 +124,6 @@ sub smtp {
     my $self = shift;
     DNSCheck::Test::SMTP::test($self->{context}, @_);
 }
-
 
 1;
 

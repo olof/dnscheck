@@ -16,11 +16,11 @@ use DNSCheck::Lookup::DNS;
 my $logger = new DNSCheck::Logger;
 my $dns    = new DNSCheck::Lookup::DNS($logger);
 
-my $zone = "schlyter.se";
+my $zone   = "schlyter.se";
 my $domain = "ns.schlyter.se";
 
 my $parent = $dns->query_parent($zone, $domain, "IN", "A");
-my $child = $dns->query_child($zone, $domain, "IN", "A");
+my $child  = $dns->query_child($zone,  $domain, "IN", "A");
 
 $logger->dump();
 

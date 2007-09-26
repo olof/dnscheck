@@ -47,7 +47,7 @@ sub new {
 
     $self->{debug} = 1;
 
-	# FIXME: perhaps do this some other way
+    # FIXME: perhaps do this some other way
     $self->{hostname} = `hostname`;
 
     $self->{qclass} = shift;

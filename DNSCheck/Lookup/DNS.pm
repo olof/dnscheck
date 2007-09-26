@@ -140,7 +140,8 @@ sub query_parent_nocache {
     my $qtype  = shift;
     my $flags  = shift;
 
-    $self->{logger}->debug("DNS:QUERY_PARENT_NOCACHE", $zone, $qname, $qclass, $qtype);
+    $self->{logger}
+      ->debug("DNS:QUERY_PARENT_NOCACHE", $zone, $qname, $qclass, $qtype);
 
     # find parent
     $self->{logger}->debug("DNS:FIND_PARENT", $qname, $qclass);
@@ -208,7 +209,8 @@ sub query_child_nocache {
     my $qtype  = shift;
     my $flags  = shift;
 
-    $self->{logger}->debug("DNS:QUERY_CHILD_NOCACHE", $zone, $qname, $qclass, $qtype);
+    $self->{logger}
+      ->debug("DNS:QUERY_CHILD_NOCACHE", $zone, $qname, $qclass, $qtype);
 
     # initialize child nameservers
     $self->init_nameservers($zone, $qclass);
@@ -295,6 +297,7 @@ sub _setup_resolver {
     $resolver->recurse(0);
     $resolver->dnssec(0);
     $resolver->usevc(0);
+    $resolver->defnames(0);
 
     if ($flags) {
         if ($flags->{transport} eq "udp") {

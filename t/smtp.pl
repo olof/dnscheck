@@ -14,5 +14,5 @@ use DNSCheck;
 
 my $check = new DNSCheck("IN");
 
-$check->smtp("mail.schlyter.se","jakob\@schlyter.se");
+$check->smtp("mail.schlyter.se", "jakob\@schlyter.se");
 $check->report();
