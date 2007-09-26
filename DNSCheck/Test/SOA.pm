@@ -157,7 +157,7 @@ sub test {
         $logger->warning("SOA:EXPIRE_SMALL", $zone, $soa->expire,
             $min_soa_expire);
     } else {
-        $logger->warning("SOA:EXPIRE_OK", $zone, $soa->expire, $min_soa_expire);
+        $logger->info("SOA:EXPIRE_OK", $zone, $soa->expire, $min_soa_expire);
     }
 
     # REQUIRE: SOA 'expire' at least 7 times 'refresh'
