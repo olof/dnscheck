@@ -34,7 +34,7 @@ require 5.8.0;
 use warnings;
 use strict;
 
-use Net::DNS 0.57;
+use Net::DNS 0.59;
 use Net::DNS::SEC 0.14;
 use Data::Dumper;
 use Date::Parse;

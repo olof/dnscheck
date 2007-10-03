@@ -34,7 +34,7 @@ require 5.8.0;
 use warnings;
 use strict;
 
-use Net::SMTP;
+use Net::SMTP 2.29;
 
 ######################################################################
 

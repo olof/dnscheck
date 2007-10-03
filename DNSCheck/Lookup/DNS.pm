@@ -37,7 +37,7 @@ use strict;
 use List::Util 'shuffle';
 
 use Data::Dumper;
-use Net::DNS;
+use Net::DNS 0.59;
 
 use Crypt::OpenSSL::Random qw(random_bytes);
 use Digest::SHA1 qw(sha1);
