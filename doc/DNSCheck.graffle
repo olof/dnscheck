@@ -240,7 +240,7 @@
 		</dict>
 	</array>
 	<key>ModificationDate</key>
-	<string>2007-09-24 10:22:23 +0200</string>
+	<string>2007-10-22 10:09:32 +0200</string>
 	<key>Modifier</key>
 	<string>Jakob Schlyter</string>
 	<key>NotesVisible</key>
@@ -383,7 +383,7 @@
 					<key>OrthogonalBarAutomatic</key>
 					<true/>
 					<key>OrthogonalBarPosition</key>
-					<real>14.815963745117188</real>
+					<real>14.815948486328125</real>
 					<key>Points</key>
 					<array>
 						<string>{343.949, 416.381}</string>
@@ -666,7 +666,7 @@ Database}</string>
 					<key>OrthogonalBarAutomatic</key>
 					<true/>
 					<key>OrthogonalBarPosition</key>
-					<real>14.816055297851562</real>
+					<real>14.815948486328125</real>
 					<key>Points</key>
 					<array>
 						<string>{343.949, 225.618}</string>
@@ -705,7 +705,7 @@ Database}</string>
 					<key>OrthogonalBarAutomatic</key>
 					<true/>
 					<key>OrthogonalBarPosition</key>
-					<real>14.816055297851562</real>
+					<real>14.815963745117188</real>
 					<key>Points</key>
 					<array>
 						<string>{343.949, 143.24}</string>
@@ -743,7 +743,7 @@ Database}</string>
 					<integer>17</integer>
 					<key>Points</key>
 					<array>
-						<string>{189.318, 161.24}</string>
+						<string>{189.318, 161.74}</string>
 						<string>{189.318, 207.618}</string>
 					</array>
 					<key>Style</key>
@@ -774,7 +774,7 @@ Database}</string>
 					<integer>16</integer>
 					<key>Points</key>
 					<array>
-						<string>{111.193, 143.24}</string>
+						<string>{110.693, 143.24}</string>
 						<string>{144.318, 143.24}</string>
 					</array>
 					<key>Style</key>
@@ -1035,7 +1035,7 @@ Log}</string>
 			<key>RowSpacing</key>
 			<real>36</real>
 			<key>SheetTitle</key>
-			<string>Översikt</string>
+			<string>Data Flow</string>
 			<key>UniqueID</key>
 			<integer>3</integer>
 			<key>VPages</key>
@@ -2460,7 +2460,7 @@ Log}</string>
 								</dict>
 								<dict>
 									<key>Bounds</key>
-									<string>{{566.929, 170.08}, {113.386, 14.1732}}</string>
+									<string>{{566.929, 170.08}, {113.386, 14.173}}</string>
 									<key>Class</key>
 									<string>ShapedGraphic</string>
 									<key>FontInfo</key>
@@ -2818,7 +2818,7 @@ Log}</string>
 								</dict>
 								<dict>
 									<key>Bounds</key>
-									<string>{{396.85, 212.601}, {113.386, 14.1727}}</string>
+									<string>{{396.85, 212.601}, {113.386, 14.1729}}</string>
 									<key>Class</key>
 									<string>ShapedGraphic</string>
 									<key>FontInfo</key>
@@ -2858,7 +2858,7 @@ Log}</string>
 								</dict>
 								<dict>
 									<key>Bounds</key>
-									<string>{{396.85, 226.774}, {113.386, 14.1732}}</string>
+									<string>{{396.85, 226.774}, {113.386, 14.1734}}</string>
 									<key>Class</key>
 									<string>ShapedGraphic</string>
 									<key>FontInfo</key>
@@ -3288,7 +3288,7 @@ Log}</string>
 								</dict>
 								<dict>
 									<key>Bounds</key>
-									<string>{{56.6929, 269.293}, {113.386, 14.1747}}</string>
+									<string>{{56.6929, 269.293}, {113.386, 14.1749}}</string>
 									<key>Class</key>
 									<string>ShapedGraphic</string>
 									<key>FontInfo</key>
@@ -3743,7 +3743,7 @@ Log}</string>
 	<key>WindowInfo</key>
 	<dict>
 		<key>CurrentSheet</key>
-		<integer>0</integer>
+		<integer>2</integer>
 		<key>DrawerOpen</key>
 		<true/>
 		<key>DrawerTab</key>
@@ -3751,7 +3751,7 @@ Log}</string>
 		<key>DrawerWidth</key>
 		<real>209</real>
 		<key>Frame</key>
-		<string>{{262, 382}, {833, 675}}</string>
+		<string>{{245, 83}, {833, 675}}</string>
 		<key>VisibleRegion</key>
 		<string>{{0, 0}, {818, 570}}</string>
 		<key>Zoom</key>
