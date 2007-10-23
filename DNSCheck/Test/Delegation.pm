@@ -56,6 +56,8 @@ sub test {
         $errors++;
     }
 
+    goto DONE if ($errors);
+
     my @ns_at_child = $context->dns->get_nameservers_at_child($zone, $qclass);
     if (scalar @ns_at_child) {
         $logger->info("DELEGATION:NS_AT_CHILD", join(",", @ns_at_child));
