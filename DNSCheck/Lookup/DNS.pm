@@ -97,8 +97,10 @@ sub query_resolver {
 
     my $packet = $self->{cache}{resolver}{$qname}{$qclass}{$qtype};
 
-    $self->{logger}->debug("DNS:RESOLVER_RESPONSE",
-        sprintf("%d answer(s)", $packet->header->ancount));
+    if ($packet) {
+        $self->{logger}->debug("DNS:RESOLVER_RESPONSE",
+            sprintf("%d answer(s)", $packet->header->ancount));
+    }
 
     return $packet;
 }
@@ -121,13 +123,15 @@ sub query_parent {
 
     my $packet = $self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype};
 
-    $self->{logger}->debug(
-        "DNS:PARENT_RESPONSE",
-        sprintf(
-            "%d answer(s), %d authority",
-            $packet->header->ancount, $packet->header->nscount
-        )
-    );
+    if ($packet) {
+        $self->{logger}->debug(
+            "DNS:PARENT_RESPONSE",
+            sprintf(
+                "%d answer(s), %d authority",
+                $packet->header->ancount, $packet->header->nscount
+            )
+        );
+    }
 
     return $packet;
 }
@@ -174,7 +178,13 @@ sub query_parent_nocache {
     my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver(@target);
 
-    return $resolver->send($qname, $qtype, $qclass);
+    my $packet = $resolver->send($qname, $qtype, $qclass);
+
+    unless ($packet) {
+        $self->{logger}->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
+    }
+
+    return $packet;
 }
 
 ######################################################################
@@ -195,8 +205,10 @@ sub query_child {
 
     my $packet = $self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype};
 
-    $self->{logger}->debug("DNS:CHILD_RESPONSE",
-        sprintf("%d answer(s)", $packet->header->ancount));
+    if ($packet) {
+        $self->{logger}->debug("DNS:CHILD_RESPONSE",
+            sprintf("%d answer(s)", $packet->header->ancount));
+    }
 
     return $packet;
 }
@@ -232,7 +244,13 @@ sub query_child_nocache {
     my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver(@target);
 
-    return $resolver->send($qname, $qtype, $qclass);
+    my $packet = $resolver->send($qname, $qtype, $qclass);
+
+    unless ($packet) {
+        $self->{logger}->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
+    }
+
+    return $packet;
 }
 
 ######################################################################
