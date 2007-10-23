@@ -42,24 +42,29 @@ sub test {
 
     my $qclass = $context->qclass;
     my $logger = $context->logger;
+    my $errors = 0;
 
     $logger->logname($zone);
 
     $logger->info("ZONE:BEGIN", $zone);
 
-    DNSCheck::Test::Delegation::test($context, $zone);
+    $errors += DNSCheck::Test::Delegation::test($context, $zone);
+
+    goto DONE if ($errors);
 
     foreach my $ns ($context->dns->get_nameservers_at_child($zone, $qclass)) {
-        DNSCheck::Test::Nameserver::test($context, $zone, $ns);
+        $errors += DNSCheck::Test::Nameserver::test($context, $zone, $ns);
     }
 
-    DNSCheck::Test::Serial::test($context, $zone);
-    DNSCheck::Test::SOA::test($context, $zone);
-    DNSCheck::Test::Connectivity::test($context, $zone);
-    DNSCheck::Test::DNSSEC::test($context, $zone);
+    $errors += DNSCheck::Test::Serial::test($context, $zone);
+    $errors += DNSCheck::Test::SOA::test($context, $zone);
+    $errors += DNSCheck::Test::Connectivity::test($context, $zone);
+    $errors += DNSCheck::Test::DNSSEC::test($context, $zone);
 
   DONE:
     $logger->info("ZONE:END", $zone);
+
+    return $errors;
 }
 
 1;
