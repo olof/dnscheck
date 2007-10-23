@@ -376,6 +376,8 @@ sub get_nameservers_at_parent {
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
 
+    return undef unless ($packet);
+
     foreach my $rr ($packet->authority) {
         if ($rr->type eq "NS") {
             push @ns, $rr->nsdname;
@@ -494,6 +496,8 @@ sub _find_parent_helper {
     do {
         shift @labels;
         $try = join(".", @labels);
+
+        $try = "." if ($try eq "");
 
         my $auth = $self->_find_authority($try, $qclass);
         return $auth unless ($try eq $auth);
