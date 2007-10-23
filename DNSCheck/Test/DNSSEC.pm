@@ -65,7 +65,7 @@ sub test {
     $packet =
       $context->dns->query_parent_nocache($zone, $zone, $qclass, "DS", \%flags);
     $ds = _dissect($packet, "DS");
-    if ($ds && $#{ @{ $dnskey->{DS} } } >= 0) {
+    if ($ds && $#{ @{ $ds->{DS} } } >= 0) {
         $logger->info("DNSSEC:DS_FOUND", $zone);
     } else {
         $logger->info("DNSSEC:NO_DS_FOUND", $zone);
