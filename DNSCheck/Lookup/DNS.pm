@@ -675,6 +675,32 @@ sub address_is_recursive {
 
 ######################################################################
 
+sub check_axfr {
+    my $self       = shift;
+    my $nameserver = shift;
+    my $qname      = shift;
+    my $qclass     = shift;
+
+    # set up resolver
+    my $resolver = new Net::DNS::Resolver;
+    $resolver->debug($self->{debug});
+    $resolver->recurse(0);
+    $resolver->dnssec(0);
+    $resolver->usevc(0);
+    $resolver->defnames(0);
+
+    $resolver->nameservers($nameserver);
+    $resolver->axfr_start($qname, $qclass);
+
+    if ($resolver->axfr_next) {
+        return 1;
+    }
+
+    return 0;
+}
+
+######################################################################
+
 sub _rr2string {
     my $rr = shift;
     my $rdatastr;
@@ -752,6 +778,8 @@ my @addresses = $dns->find_addresses(I<qname>, I<qclass>);
 my $bool = $dns->address_is_authoritative(I<address>, I<qname>, I<qtype>);
 
 my $bool = $dns->address_is_recursive(I<address>, I<qtype>);
+
+my $bool = $dns->check_axfr(I<address>, I<qname>, I<qclass>);
 
 
 =head1 EXAMPLES
