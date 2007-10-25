@@ -276,6 +276,7 @@ sub query_explicit {
         return undef;
     }
 
+	# FIXME: improve; see RFC 2671 section 5.3
     if ($packet->header->rcode eq "FORMERR") {
         $self->{logger}->error("DNS:NO_EDNS", $address);
         return undef;
