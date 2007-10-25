@@ -396,21 +396,20 @@ sub get_nameservers_at_parent {
 
     return undef unless ($packet);
 
-    foreach my $rr ($packet->authority) {
-        if ($packet->authority > 0) {
-            foreach my $rr ($packet->authority) {
-                if ($rr->type eq "NS") {
-                    push @ns, $rr->nsdname;
-                }
+    if ($packet->authority > 0) {
+        foreach my $rr ($packet->authority) {
+            if ($rr->type eq "NS") {
+                push @ns, $rr->nsdname;
             }
-        } else {
-            foreach my $rr ($packet->answer) {
-                if ($rr->type eq "NS") {
-                    push @ns, $rr->nsdname;
-                }
+        }
+    } else {
+        foreach my $rr ($packet->answer) {
+            if ($rr->type eq "NS") {
+                push @ns, $rr->nsdname;
             }
         }
     }
+
     return sort(@ns);
 }
 
