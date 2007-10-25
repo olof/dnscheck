@@ -95,6 +95,7 @@ sub test {
 
     # REQUIRE: SOA MNAME may be unreachable
     # REQUIRE: SOA MNAME must be authoritative
+	# FIXME: discuss how to handle timeouts
     #if ($context->dns->mname_is_auth($zone, $qclass) > 0) {
     if (mname_is_auth($soa, $context) > 0) {
         $logger->warning("SOA:MNAME_NOT_AUTH", $zone, $soa->mname);
