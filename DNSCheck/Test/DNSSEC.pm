@@ -254,6 +254,8 @@ sub _check_child {
         $logger->warning("DNSSEC:SOA_NO_VALID_SIGNATURES", $zone);
     }
 
+    # FIXME: check signature validation?
+
   DONE:
     $logger->info("DNSSEC:CHILD_CHECKED", $zone);
     return ($errors, \%result);
