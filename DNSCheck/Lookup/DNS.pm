@@ -777,7 +777,7 @@ my @addresses = $dns->find_addresses(I<qname>, I<qclass>);
 
 my $bool = $dns->address_is_authoritative(I<address>, I<qname>, I<qtype>);
 
-my $bool = $dns->address_is_recursive(I<address>, I<qtype>);
+my $bool = $dns->address_is_recursive(I<address>, I<qclass>);
 
 my $bool = $dns->check_axfr(I<address>, I<qname>, I<qclass>);
 
