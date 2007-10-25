@@ -67,6 +67,7 @@ sub test {
             $logger->warning("CONNECTIVITY:MULTIPLE_ASN", $address);
         } elsif (scalar @as_list < 1) {
             $logger->error("CONNECTIVITY:NOT_ANNOUNCED", $address);
+            $errors++;
         }
     }
 
@@ -82,6 +83,8 @@ sub test {
 
   DONE:
     $logger->info("CONNECTIVITY:END", $zone);
+
+    return $errors;
 }
 
 1;
