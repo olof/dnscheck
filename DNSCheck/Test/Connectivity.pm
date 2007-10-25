@@ -42,6 +42,7 @@ sub test {
 
     my $qclass = $context->qclass;
     my $logger = $context->logger;
+    my $errors = 0;
 
     $logger->info("CONNECTIVITY:BEGIN", $zone);
 
