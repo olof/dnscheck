@@ -62,6 +62,7 @@ sub test {
     $logger->info("DNSSEC:BEGIN", $zone);
 
     # Query parent for DS
+    $logger->debug("DNSSEC:CHECKING_DS_AT_PARENT", $zone);
     $packet =
       $context->dns->query_parent_nocache($zone, $zone, $qclass, "DS", \%flags);
     $ds = _dissect($packet, "DS");
@@ -72,6 +73,7 @@ sub test {
     }
 
     # Query child for DNSKEY
+    $logger->debug("DNSSEC:CHECKING_DNSKEY_AT_CHILD", $zone);
     $packet =
       $context->dns->query_child_nocache($zone, $zone, $qclass, "DNSKEY",
         \%flags);
@@ -83,6 +85,7 @@ sub test {
     }
 
     # Determine security status
+    $logger->debug("DNSSEC:DETERMINE_SECURITY_STATUS", $zone);
     if ($ds and !$dnskey) {
         $logger->error("DNSSEC:INCONSISTENT_SECURITY", $zone);
         $errors++;
