@@ -517,20 +517,47 @@ sub _find_parent_helper {
     my $qname  = shift;
     my $qclass = shift;
 
+    my $parent = undef;
+
+    $self->{logger}->debug("DNS:FIND_PARENT_BEGIN", $qname, $qclass);
+
     my $try = $self->_find_authority($qname, $qclass);
+    $self->{logger}->debug("DNS:FIND_PARENT_DOMAIN", $try);
+
     my @labels = split(/\./, $try);
 
     do {
         shift @labels;
         $try = join(".", @labels);
-
         $try = "." if ($try eq "");
 
-        my $auth = $self->_find_authority($try, $qclass);
-        return $auth unless ($try eq $auth);
+        $self->{logger}->debug("DNS:FIND_PARENT_TRY", $try);
+
+        $parent = $self->_find_upper($try, $qclass);
+        $self->{logger}->debug("DNS:FIND_PARENT_UPPER", $parent);
+
+        goto DONE if ($try eq $parent);
     } while ($#labels > 0);
 
-    return $try;
+    $parent = $try;
+
+  DONE:
+    $self->{logger}->debug("DNS:FIND_PARENT_RESULT", $qname, $qclass, $parent);
+
+    return $parent;
+}
+
+sub _find_upper {
+    my $self   = shift;
+    my $qname  = shift;
+    my $qclass = shift;
+
+    my $answer = $self->{resolver}->send($qname, "SOA", $qclass);
+    foreach my $rr ($answer->answer) {
+        return $rr->name if ($rr->type eq "SOA");
+    }
+
+    return $qname;
 }
 
 sub _find_authority {
