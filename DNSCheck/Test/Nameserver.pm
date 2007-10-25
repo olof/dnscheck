@@ -108,7 +108,10 @@ sub test {
         # TODO: SOA may provide AXFR
     }
 
-  DONE: $logger->info("NAMESERVER:END", $zone, $nameserver);
+  DONE:
+    $logger->info("NAMESERVER:END", $zone, $nameserver);
+
+    return $errors;
 }
 
 1;
