@@ -42,12 +42,14 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    $self->{debug} = 1;
+	my $config = shift;
+
+	if ($config->{interactive}) {
+	    $self->{interactive} = 1;
+	}
 
     $self->{logname} = undef;
-
     $self->{messages} = ();
-
     $self->{errors}   = 0;
     $self->{warnings} = 0;
     $self->{debugs}   = 0;
@@ -77,7 +79,7 @@ sub add {
 
     push @{ $self->{messages} }, $entry;
 
-    if ($self->{debug}) {
+    if ($self->{interactive}) {
         $self->dump();
         $self->{messages} = ();
     }
