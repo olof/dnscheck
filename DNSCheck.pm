@@ -56,13 +56,11 @@ sub new {
 
     my $config = shift;
 
-	if ($config->{class}) {
-		$self->{qclass} = $config->{class};
-	} else {
-		$self->{qclass} = "IN";
-	}
+    unless ($config->{class}) {
+        $config->{class} = "IN";
+    }
 
-    $self->{context} = new DNSCheck::Context($self->{qclass}, $config);
+    $self->{context} = new DNSCheck::Context($config);
 
     bless $self, $class;
 }
