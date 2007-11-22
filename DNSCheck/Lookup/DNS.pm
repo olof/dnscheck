@@ -51,12 +51,7 @@ sub new {
     my $self  = {};
 
     $self->{logger} = shift;
-
-    $self->{debug} = 0;
-
-    $self->{resolver} = new Net::DNS::Resolver;
-    $self->{resolver}->persistent_tcp(0);
-    $self->{resolver}->debug($self->{debug});
+    $self->{debug}  = 0;
 
     # hash PACKET at resolver indexed by QNAME,QTYPE,QCLASS
     $self->{cache}{resolver} = ();
@@ -72,6 +67,24 @@ sub new {
 
     # hash of PARENT indexed by CHILD,QCLASS
     $self->{parent} = ();
+
+    # hash of SOMETHING indexed by ADDRESSES
+    $self->{blacklist} = ();
+
+    # default parameters
+    $self->{default}{udp_timeout} = undef;
+    $self->{default}{tcp_timeout} = 10;
+    $self->{default}{retry}       = 3;
+    $self->{default}{retrans}     = 2;
+
+    # set up global resolver
+    $self->{resolver} = new Net::DNS::Resolver;
+    $self->{resolver}->persistent_tcp(0);
+    $self->{resolver}->debug($self->{debug});
+    $self->{resolver}->udp_timeout($self->{default}{udp_timeout});
+    $self->{resolver}->tcp_timeout($self->{default}{tcp_timeout});
+    $self->{resolver}->retry($self->{default}{retry});
+    $self->{resolver}->retrans($self->{default}{retrans});
 
     bless $self, $class;
 }
@@ -93,6 +106,11 @@ sub query_resolver {
     unless ($self->{cache}{resolver}{$qname}{$qclass}{$qtype}) {
         $self->{cache}{resolver}{$qname}{$qclass}{$qtype} =
           $self->{resolver}->send($qname, $qtype, $qclass);
+
+        if ($self->check_timeout($self->{resolver})) {
+            $self->{logger}->error("DNS:RESOLVER_QUERY_TIMEOUT");
+            return undef;
+        }
     }
 
     my $packet = $self->{cache}{resolver}{$qname}{$qclass}{$qtype};
@@ -179,6 +197,10 @@ sub query_parent_nocache {
     $resolver->nameserver(@target);
 
     my $packet = $resolver->send($qname, $qtype, $qclass);
+    if ($self->check_timeout($resolver)) {
+        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target));
+        return undef;
+    }
 
     unless ($packet) {
         $self->{logger}->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
@@ -245,6 +267,10 @@ sub query_child_nocache {
     $resolver->nameserver(@target);
 
     my $packet = $resolver->send($qname, $qtype, $qclass);
+    if ($self->check_timeout($resolver)) {
+        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target));
+        return undef;
+    }
 
     unless ($packet) {
         $self->{logger}->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
@@ -269,14 +295,23 @@ sub query_explicit {
     my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver($address);
 
+    if ($self->check_blacklist($address)) {
+        $self->{logger}->error("DNS:ADDRESS_BLACKLISTED", $address);
+        return undef;
+    }
     my $packet = $resolver->send($qname, $qtype, $qclass);
+    if ($self->check_timeout($resolver)) {
+        $self->{logger}->error("DNS:QUERY_TIMEOUT", $address);
+        $self->add_blacklist($address);
+        return undef;
+    }
 
     unless ($packet) {
         $self->{logger}->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
         return undef;
     }
 
-	# FIXME: improve; see RFC 2671 section 5.3
+    # FIXME: improve; see RFC 2671 section 5.3
     if ($packet->header->rcode eq "FORMERR") {
         $self->{logger}->error("DNS:NO_EDNS", $address);
         return undef;
@@ -312,7 +347,13 @@ sub _setup_resolver {
 
     # set up resolver
     my $resolver = new Net::DNS::Resolver;
+
     $resolver->debug($self->{debug});
+    $resolver->udp_timeout($self->{default}{udp_timeout});
+    $resolver->tcp_timeout($self->{default}{tcp_timeout});
+    $resolver->retry($self->{default}{retry});
+    $resolver->retrans($self->{default}{retrans});
+
     $resolver->recurse(0);
     $resolver->dnssec(0);
     $resolver->usevc(0);
@@ -682,6 +723,12 @@ sub address_is_recursive {
 
     my $resolver = new Net::DNS::Resolver;
     $resolver->debug($self->{debug});
+
+    $resolver->udp_timeout($self->{default}{udp_timeout});
+    $resolver->tcp_timeout($self->{default}{tcp_timeout});
+    $resolver->retry($self->{default}{retry});
+    $resolver->retrans($self->{default}{retrans});
+
     $resolver->recurse(1);
     $resolver->nameserver($address);
 
@@ -690,7 +737,12 @@ sub address_is_recursive {
     my @tmp = split(/-/, bubblebabble(Digest => sha1(random_bytes(64))));
     my $nonexisting = sprintf("%s.%s", join("", @tmp[1 .. 6]), $nxdomain);
 
+    # no blacklisting here, since some nameservers ignore recursive queries
     my $packet = $resolver->send($nonexisting, "SOA", $qclass);
+    if ($self->check_timeout($resolver)) {
+        $self->{logger}->error("DNS:QUERY_TIMEOUT", $address);
+        goto DONE;
+    }
 
     goto DONE unless $packet;
 
@@ -766,6 +818,31 @@ sub _rr2string {
 
     return sprintf("%s %d %s %s %s",
         $rr->name, $rr->ttl, $rr->class, $rr->type, $rdatastr);
+}
+
+######################################################################
+
+sub add_blacklist {
+    my $self    = shift;
+    my $address = shift;
+
+    $self->{blacklist}{$address} = 1;
+}
+
+sub check_blacklist {
+    my $self    = shift;
+    my $address = shift;
+
+    return 1 if ($self->{blacklist}{$address});
+    return 0;
+}
+
+sub check_timeout {
+    my $self = shift;
+    my $res  = shift;
+
+    return 1 if ($res->errorstring eq "query timed out");
+    return 0;
 }
 
 ######################################################################
