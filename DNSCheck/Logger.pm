@@ -120,13 +120,35 @@ sub critical {
 sub dump {
     my $self = shift;
 
-    my $prefix = $self->{logname} ? sprintf("%s", $self->{logname}) : "";
+    my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
 
     foreach my $e (@{ $self->{messages} }) {
-        printf("%s:%s %s [%s] %s\n",
-            $e->{timestamp}, $prefix, $e->{level}, $e->{tag},
+        printf("%s:%s%s [%s] %s\n",
+            $e->{timestamp}, $context, $e->{level}, $e->{tag},
             join(",", @{ $e->{arg} }));
     }
+}
+
+sub export {
+    my $self = shift;
+
+    my @buffer = ();
+
+    my $context = $self->{logname} ? $self->{logname} : "";
+
+    foreach my $e (@{ $self->{messages} }) {
+        push @buffer,
+          join(
+            ";",
+            (
+                $e->{timestamp}, $context,
+                $e->{level},     $e->{tag},
+                join(",", @{ $e->{arg} })
+            )
+          );
+    }
+
+	return @buffer;
 }
 
 1;
@@ -163,6 +185,8 @@ $logger->debug(I<arg1>, I<arg2>, ..., I<argN>);
 $logger->critical(I<arg1>, I<arg2>, ..., I<argN>);
 
 $logger->dump();
+
+my @logmessages = $logger->export();
 
 =head1 EXAMPLES
 
