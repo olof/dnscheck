@@ -45,8 +45,13 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    $self->{qclass} = shift;
     my $config = shift;
+
+	if ($config->{class}) {
+		$self->{qclass} = $config->{class};
+	} else {
+		$self->{qclass} = "IN";
+	}
 
     # FIXME: perhaps do this some other way
     $self->{hostname} = `hostname`;
