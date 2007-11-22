@@ -51,7 +51,13 @@ sub new {
     my $self  = {};
 
     $self->{logger} = shift;
-    $self->{debug}  = 0;
+	my $config = shift;
+	
+	if ($config->{debug}) {
+	    $self->{debug}  = 1;
+	} else {
+		$self->{debug}  = 0;
+	}
 
     # hash PACKET at resolver indexed by QNAME,QTYPE,QCLASS
     $self->{cache}{resolver} = ();
