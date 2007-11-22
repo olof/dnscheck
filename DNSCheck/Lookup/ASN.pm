@@ -52,6 +52,9 @@ sub new {
     $self->{logger} = shift;
     $self->{dns}    = shift;
 
+    die "missing logger" unless $self->{logger};
+    die "missing dns"    unless $self->{dns};
+
     # hash of ASN indexed by IP
     $self->{asn} = ();
 
