@@ -54,10 +54,15 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    my $qclass = shift;
     my $config = shift;
 
-    $self->{context} = new DNSCheck::Context($qclass, $config);
+	if ($config->{class}) {
+		$self->{qclass} = $config->{class};
+	} else {
+		$self->{qclass} = "IN";
+	}
+
+    $self->{context} = new DNSCheck::Context($self->{qclass}, $config);
 
     bless $self, $class;
 }
@@ -141,7 +146,7 @@ DNSCheck - DNS Check Tools
 
 =head1 METHODS
 
-new(I<class>);
+new(I<config>);
 
 $dns->report();
 
@@ -171,7 +176,7 @@ $dns->smtp(I<mailhost>, I<emailaddress>);
 
     use DNSCheck;
 
-	my $check = new DNSCheck("IN");
+	my $check = new DNSCheck({ class => "IN" });
 
 	$check->zone("example.com");
 	$check->report();
