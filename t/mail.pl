@@ -12,7 +12,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck("IN");
+my $check = new DNSCheck({ interactive => 1 });
 
 my @email = ("jakob\@kirei.se", "hostmaster\@n6.schlyter.se",
     "invalid-user\@schlyter.se");

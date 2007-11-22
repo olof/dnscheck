@@ -14,7 +14,7 @@ use DNSCheck::Lookup::ASN;
 
 ######################################################################
 
-my $logger = new DNSCheck::Logger;
+my $logger = new DNSCheck::Logger({ interactive => 1 });
 my $dns    = new DNSCheck::Lookup::DNS($logger);
 my $asn    = new DNSCheck::Lookup::ASN($logger, $dns);
 

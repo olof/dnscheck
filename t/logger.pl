@@ -17,4 +17,8 @@ my $logger = new DNSCheck::Logger;
 $logger->add("foo", 1, 2, 3);
 $logger->add("bar", 4, 5, 6);
 
-$logger->dump;
+my @log = $logger->export();
+
+foreach my $line (@log) {
+	print $line, "\n";
+}

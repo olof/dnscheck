@@ -12,7 +12,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck("IN");
+my $check = new DNSCheck({ interactive => 1 });
 
 $check->smtp("mail.schlyter.se", "jakob\@schlyter.se");
 $check->report();

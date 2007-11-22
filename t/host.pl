@@ -12,7 +12,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck("IN");
+my $check = new DNSCheck({ interactive => 1 });
 
 $check->host("forastero.schlyter.se");
 $check->host("t.schlyter.se");

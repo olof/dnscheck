@@ -13,8 +13,8 @@ use DNSCheck::Lookup::DNS;
 
 ######################################################################
 
-my $logger = new DNSCheck::Logger;
-my $dns    = new DNSCheck::Lookup::DNS($logger);
+my $logger = new DNSCheck::Logger({ interactive => 1 });
+my $dns = new DNSCheck::Lookup::DNS($logger);
 
 die "syntax error" unless ($ARGV[0]);
 
