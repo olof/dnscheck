@@ -68,7 +68,7 @@ sub test {
 
     # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
     foreach my $ns (@ns_at_parent) {
-        unless (scalar grep(/^$ns$/, @ns_at_child)) {
+        unless (scalar grep(/^$ns$/i, @ns_at_child)) {
             $logger->error("DELEGATION:EXTRA_NS_PARENT", $ns);
             $errors++;
         }
@@ -76,7 +76,7 @@ sub test {
 
     # REQUIRE: all NS at child may exist at parent
     foreach my $ns (@ns_at_child) {
-        unless (scalar grep(/^$ns$/, @ns_at_parent)) {
+        unless (scalar grep(/^$ns$/i, @ns_at_parent)) {
             $logger->warning("DELEGATION:EXTRA_NS_CHILD", $ns);
             $errors++;
         }
@@ -99,7 +99,7 @@ sub test {
             my $found = 0;
 
             foreach my $rr ($c->answer) {
-                if (    $rr->name eq $g->name
+                if (    lc($rr->name) eq lc($g->name)
                     and $rr->class   eq $g->class
                     and $rr->type    eq $g->type
                     and $rr->address eq $g->address)
