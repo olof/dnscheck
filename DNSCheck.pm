@@ -55,8 +55,9 @@ sub new {
     my $self  = {};
 
     my $qclass = shift;
+    my $config = shift;
 
-    $self->{context} = new DNSCheck::Context($qclass);
+    $self->{context} = new DNSCheck::Context($qclass, $config);
 
     bless $self, $class;
 }
