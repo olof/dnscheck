@@ -45,13 +45,11 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    $self->{debug} = 1;
+    $self->{qclass} = shift;
+    my $config = shift;
 
     # FIXME: perhaps do this some other way
     $self->{hostname} = `hostname`;
-
-    $self->{qclass} = shift;
-	my $config = shift;
 
     $self->{logger} = new DNSCheck::Logger($config);
     $self->{dns}    = new DNSCheck::Lookup::DNS($self->{logger}, $config);
