@@ -15,4 +15,5 @@ use DNSCheck;
 my $check = new DNSCheck("IN");
 
 $check->nameserver("schlyter.se", "ns.schlyter.se");
+$check->nameserver("se", "a.ns.se");
 $check->report();

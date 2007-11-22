@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: dns.pl 3754 2007-09-26 12:06:22Z jakob $
+# $Id$
 
 require 5.8.0;
 use warnings;
