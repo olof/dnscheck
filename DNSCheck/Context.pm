@@ -51,9 +51,10 @@ sub new {
     $self->{hostname} = `hostname`;
 
     $self->{qclass} = shift;
+	my $config = shift;
 
-    $self->{logger} = new DNSCheck::Logger;
-    $self->{dns}    = new DNSCheck::Lookup::DNS($self->{logger});
+    $self->{logger} = new DNSCheck::Logger($config);
+    $self->{dns}    = new DNSCheck::Lookup::DNS($self->{logger}, $config);
     $self->{asn}    = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
 
     bless $self, $class;
