@@ -111,7 +111,7 @@ test(I<context>, I<zone>);
     use DNSCheck::Context;
     use DNSCheck::Test::Serial;
 
-    my $context = new DNSCheck::Context("IN");
+    my $context = new DNSCheck::Context();
     DNSCheck::Test::Serial::test($context, "se");
     $context->logger->dump();
 

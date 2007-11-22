@@ -289,7 +289,7 @@ test(I<context>, I<zone>);
     use DNSCheck::Context;
     use DNSCheck::Test::SOA;
 
-    my $context = new DNSCheck::Context("IN");
+    my $context = new DNSCheck::Context();
     DNSCheck::Test::SOA::test($context, "example.com");
     $context->logger->dump();
 

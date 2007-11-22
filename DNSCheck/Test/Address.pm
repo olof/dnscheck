@@ -198,7 +198,7 @@ test(I<context>, I<address>);
     use DNSCheck::Context;
     use DNSCheck::Test::Address;
 
-    my $context = new DNSCheck::Context("IN");
+    my $context = new DNSCheck::Context();
     DNSCheck::Test::Address::test($context, "127.0.0.1");
     $context->logger->dump();
 

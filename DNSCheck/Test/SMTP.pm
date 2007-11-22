@@ -139,7 +139,7 @@ test(I<context>, I<mailhost>, I<emailaddress>);
     use DNSCheck::Context;
     use DNSCheck::Test::SMTP;
 
-    my $context = new DNSCheck::Context("IN");
+    my $context = new DNSCheck::Context();
     DNSCheck::Test::SMTP::test($context, "mail.example.com", "user\@example.com");
     $context->logger->dump();
 

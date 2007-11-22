@@ -146,7 +146,7 @@ test(I<context>, I<emailaddress>);
     use DNSCheck::Context;
     use DNSCheck::Test::Mail;
 
-    my $context = new DNSCheck::Context("IN");
+    my $context = new DNSCheck::Context();
     DNSCheck::Test::Mail::test($context, "hostmaster\@example.com");
     $context->logger->dump();
 

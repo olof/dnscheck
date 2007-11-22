@@ -161,7 +161,7 @@ test(I<context>, I<zone>, I<nameserver>);
     use DNSCheck::Context;
     use DNSCheck::Test::Nameserver;
 
-    my $context = new DNSCheck::Context("IN");
+    my $context = new DNSCheck::Context();
     DNSCheck::Test::Nameserver::test($context, "se", "a.ns.se");
     $context->logger->dump();
 

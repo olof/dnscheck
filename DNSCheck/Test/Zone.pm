@@ -89,7 +89,7 @@ test(I<context>, I<zone>);
     use DNSCheck::Context;
     use DNSCheck::Test::Zone;
 
-    my $context = new DNSCheck::Context("IN");
+    my $context = new DNSCheck::Context();
     DNSCheck::Test::Zone::test($context, "example.com");
     $context->logger->dump();
 

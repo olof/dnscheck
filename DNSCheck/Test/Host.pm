@@ -145,7 +145,7 @@ test(I<context>, I<hostname>);
     use DNSCheck::Context;
     use DNSCheck::Test::Host;
 
-    my $context = new DNSCheck::Context("IN");
+    my $context = new DNSCheck::Context();
     DNSCheck::Test::Host::test($context, "a.ns.se");
     $context->logger->dump();
 
