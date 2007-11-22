@@ -33,6 +33,7 @@ package DNSCheck::Logger;
 require 5.8.0;
 use warnings;
 use strict;
+use Time::HiRes qw(gettimeofday);
 
 ######################################################################
 
@@ -69,9 +70,10 @@ sub add {
     my $self = shift;
 
     my $entry;
-    $entry->{level} = shift;
-    $entry->{tag}   = shift;
-    $entry->{arg}   = [@_];
+    $entry->{timestamp} = join(".", gettimeofday);
+    $entry->{level}     = shift;
+    $entry->{tag}       = shift;
+    $entry->{arg}       = [@_];
 
     push @{ $self->{messages} }, $entry;
 
@@ -118,11 +120,12 @@ sub critical {
 sub dump {
     my $self = shift;
 
-    my $prefix = $self->{logname} ? sprintf("%s  ", $self->{logname}) : "";
+    my $prefix = $self->{logname} ? sprintf("%s", $self->{logname}) : "";
 
     foreach my $e (@{ $self->{messages} }) {
-        printf("%s%-7s [%s] %s\n",
-            $prefix, $e->{level}, $e->{tag}, join(",", @{ $e->{arg} }));
+        printf("%s:%s %s [%s] %s\n",
+            $e->{timestamp}, $prefix, $e->{level}, $e->{tag},
+            join(",", @{ $e->{arg} }));
     }
 }
 
