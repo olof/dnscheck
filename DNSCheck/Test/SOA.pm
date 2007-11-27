@@ -95,7 +95,7 @@ sub test {
 
     # REQUIRE: SOA MNAME may be unreachable
     # REQUIRE: SOA MNAME must be authoritative
-	# FIXME: discuss how to handle timeouts
+    # FIXME: discuss how to handle timeouts
     #if ($context->dns->mname_is_auth($zone, $qclass) > 0) {
     if (mname_is_auth($soa, $context) > 0) {
         $logger->warning("SOA:MNAME_NOT_AUTH", $zone, $soa->mname);
@@ -124,7 +124,7 @@ sub test {
     # REQUIRE: SOA TTL advistory, min 1 hour
     my $min_soa_ttl = 3600;
     if ($soa->ttl < $min_soa_ttl) {
-        $logger->warning("SOA:TTL_SMALL", $zone, $soa->ttl, $min_soa_ttl);
+        $logger->notice("SOA:TTL_SMALL", $zone, $soa->ttl, $min_soa_ttl);
     } else {
         $logger->info("SOA:TTL_OK", $zone, $soa->ttl, $min_soa_ttl);
     }
@@ -132,7 +132,7 @@ sub test {
     # REQUIRE: SOA 'refresh' at least 4 hours
     my $min_soa_refresh = 4 * 3600;
     if ($soa->refresh < $min_soa_refresh) {
-        $logger->warning("SOA:REFRESH_SMALL", $zone, $soa->refresh,
+        $logger->notice("SOA:REFRESH_SMALL", $zone, $soa->refresh,
             $min_soa_refresh);
     } else {
         $logger->info("SOA:REFRESH_OK", $zone, $soa->refresh, $min_soa_refresh);
@@ -140,14 +140,14 @@ sub test {
 
     # REQUIRE: SOA 'retry' lower than 'refresh'
     unless ($soa->retry < $soa->refresh) {
-        $logger->warning("SOA:RETRY_LOWER_REFRESH", $zone, $soa->retry,
+        $logger->notice("SOA:RETRY_LOWER_REFRESH", $zone, $soa->retry,
             $soa->refresh);
     }
 
     # REQUIRE: SOA 'retry' at least 1 hour
     my $min_soa_retry = 3600;
     if ($soa->retry < $min_soa_retry) {
-        $logger->warning("SOA:RETRY_SMALL", $zone, $soa->retry, $min_soa_retry);
+        $logger->notice("SOA:RETRY_SMALL", $zone, $soa->retry, $min_soa_retry);
     } else {
         $logger->info("SOA:RETRY_OK", $zone, $soa->retry, $min_soa_retry);
     }
@@ -155,7 +155,7 @@ sub test {
     # REQUIRE: SOA 'expire' at least 7 days
     my $min_soa_expire = 7 * 24 * 3600;
     if ($soa->expire < $min_soa_expire) {
-        $logger->warning("SOA:EXPIRE_SMALL", $zone, $soa->expire,
+        $logger->notice("SOA:EXPIRE_SMALL", $zone, $soa->expire,
             $min_soa_expire);
     } else {
         $logger->info("SOA:EXPIRE_OK", $zone, $soa->expire, $min_soa_expire);
@@ -163,13 +163,13 @@ sub test {
 
     # REQUIRE: SOA 'expire' at least 7 times 'refresh'
     if ($soa->expire < $soa->refresh * 7) {
-        $logger->warning("SOA:EXPIRE_VS_REFRESH", $zone);
+        $logger->notice("SOA:EXPIRE_VS_REFRESH", $zone);
     }
 
     # REQUIRE: SOA 'minimum' less than 1 day
     my $max_soa_minimum = 24 * 3600;
     if ($soa->minimum > $max_soa_minimum) {
-        $logger->warning("SOA:MINIMUM_SMALL", $zone, $soa->minimum,
+        $logger->notice("SOA:MINIMUM_SMALL", $zone, $soa->minimum,
             $max_soa_minimum);
     } else {
         $logger->info("SOA:MINIMUM_OK", $zone, $soa->minimum, $max_soa_minimum);
