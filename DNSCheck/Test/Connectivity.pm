@@ -49,9 +49,11 @@ sub test {
     my %as_set;
 
     # Fetch IPv4 nameservers
-    # FIXME: AS lookup for IPv6 addresses
     my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
 
+    # FIXME: AS lookup for IPv6 addresses
+
+	# FIXME: test for ASN lookup failure
     foreach my $address (@{$ipv4}) {
         my @as_list = @{ $context->asn->lookup($address) };
 
