@@ -90,7 +90,7 @@ sub test {
     $logger->debug("SMTP:RAW", $message);
 
     unless ($smtp->status == 2 || $smtp->status == 4) {
-        $logger->info("SMTP:RECIPIENT_REJECTED", $email);
+        $logger->error("SMTP:RECIPIENT_REJECTED", $email);
         $errors++;
     }
 
