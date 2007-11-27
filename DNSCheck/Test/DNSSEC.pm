@@ -128,15 +128,13 @@ sub _check_child {
     my %result;
 
     my $mandatory_algorithm = 0;
-    my $ksk                 = 0;
-    my $zsk                 = 0;
+    my $sep                 = 0;
 
     # initialize result set
     $result{rr}      = undef;
     $result{allkeys} = undef;
     $result{anchors} = ();
-    $result{ksk}     = ();
-    $result{zsk}     = ();
+    $result{sep}     = ();
 
     $logger->info("DNSSEC:CHECKING_CHILD", $zone);
 
@@ -152,16 +150,24 @@ sub _check_child {
             $mandatory_algorithm++;
         }
 
+        # REQUIRE: a DNSKEY used for RRSIGs MUST have protocol DNSSEC (3)
+        if ($key->protocol != 3) {
+            $logger->warning("DNSSEC:DNSKEY_SKIP_PROTOCOL", $zone, $key->keytag);
+			next;
+        }
+
+        # REQUIRE: a DNSKEY used for RRSIGs MUST be a zone key
+        unless ($key->flags & 0x0100) {
+            $logger->warning("DNSSEC:DNSKEY_SKIP_TYPE", $zone, $key->keytag);
+			next;
+        }
+
         $keyhash{ $key->keytag } = $key;
 
-        if ($key->flags & 0x01) {
-            $logger->info("DNSSEC:DNSKEY_KSK", $zone, $key->keytag);
-            push @{ $result{ksk} }, $key->keytag;
-            $ksk++;
-        } else {
-            $logger->info("DNSSEC:DNSKEY_ZSK", $zone, $key->keytag);
-            push @{ $result{zsk} }, $key->keytag;
-            $zsk++;
+        if ($key->is_sep) {
+            $logger->info("DNSSEC:DNSKEY_SEP", $zone, $key->keytag);
+            push @{ $result{sep} }, $key->keytag;
+            $sep++;
         }
     }
 
@@ -175,12 +181,6 @@ sub _check_child {
     } else {
         $logger->error("DNSSEC:DNSKEY_MANDATORY_NOT_FOUND", $zone);
         $errors++;
-    }
-
-    # REQUIRE: there MAY exist a KSK at the child
-    # REQUIRE: if KSK is used, there should be a ZSK
-    if ($ksk > 0 and $zsk == 0) {
-        $logger->warning("DNSSEC:DNSKEY_KSK_NO_ZSK", $zone);
     }
 
     unless ($#{ @{ $dnskey->{RRSIG} } } >= 0) {
@@ -301,14 +301,14 @@ sub _check_parent {
             $logger->info("DNSSEC:DS_KEYREF_INVALID", $zone, $ds_message);
         }
 
-        # REQUIRE: the DS MAY point to a KSK at the child
-        if ($#{ $child_result->{ksk} } >= 0) {
-            if (_count_in_list($rr->keytag, $child_result->{ksk}) > 0) {
-                ## Child is using KSK/ZSK and DS refers to a KSK
-                $logger->info("DNSSEC:DS_TO_KSK", $zone, $ds_message);
+        # REQUIRE: the DS MAY point to a SEP at the child
+        if ($#{ $child_result->{sep} } >= 0) {
+            if (_count_in_list($rr->keytag, $child_result->{sep}) > 0) {
+                ## Child is using SEP and DS refers to a SEP
+                $logger->info("DNSSEC:DS_TO_SEP", $zone, $ds_message);
             } else {
-                ## Child is using KSK/ZSK and DS refers to a ZSK
-                $logger->warning("DNSSEC:DS_TO_ZSK", $zone, $ds_message);
+                ## Child is using SEP and DS refers to a non-SEP
+                $logger->warning("DNSSEC:DS_TO_NOSEP", $zone, $ds_message);
             }
         }
     }
@@ -436,22 +436,19 @@ A DNSSEC key should not be of type RSA/MD5.
 At least one DNSKEY should be of type RSA/SHA1.
 
 =item *
-There may exist a KSK at the child.
+There may exist a SEP at the child.
 
 =item *
-If a KSK is used at the child, there should be a ZSK.
+RRSIG(DNSKEY) must be valid and created by a valid DNSKEY.
 
 =item *
-RRSIG(DNSKEY) must be valid and created by a valid DNSKEY (inklusive KSK).
-
-=item *
-RRSIG(SOA) must be valid and created by a valid DNSKEY (ZSK if KSK used).
+RRSIG(SOA) must be valid and created by a valid DNSKEY.
 
 =item *
 The DS must point to a DNSKEY signing the child's DNSKEY RRset.
 
 =item *
-The DS may point to a KSK at the child.
+The DS may point to a SEP at the child.
 
 =item *
 At least one DS algorithm should be of type RSA/SHA1.
