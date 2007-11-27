@@ -152,14 +152,15 @@ sub _check_child {
 
         # REQUIRE: a DNSKEY used for RRSIGs MUST have protocol DNSSEC (3)
         if ($key->protocol != 3) {
-            $logger->warning("DNSSEC:DNSKEY_SKIP_PROTOCOL", $zone, $key->keytag);
-			next;
+            $logger->warning("DNSSEC:DNSKEY_SKIP_PROTOCOL", $zone,
+                $key->keytag);
+            next;
         }
 
         # REQUIRE: a DNSKEY used for RRSIGs MUST be a zone key
         unless ($key->flags & 0x0100) {
             $logger->warning("DNSSEC:DNSKEY_SKIP_TYPE", $zone, $key->keytag);
-			next;
+            next;
         }
 
         $keyhash{ $key->keytag } = $key;
