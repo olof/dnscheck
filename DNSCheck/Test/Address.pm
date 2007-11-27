@@ -128,13 +128,13 @@ sub test {
     my $reverse = $ip->reverse_ip();
     my $ptr = $context->dns->query_resolver($reverse, $qclass, "PTR");
 
-    unless ($ptr->header->ancount) {
+    unless ($ptr && $ptr->header->ancount) {
         $logger->warning("ADDRESS:PTR_NOT_FOUND", $address, $reverse);
         $errors++;
     }
 
     # REQUIRE: Hostname in PTR should exist
-	# FIXME: check that at least one name points back to $address
+    # FIXME: check that at least one name points back to $address
     foreach my $p ($ptr->answer) {
         next unless ($p->type eq "PTR");
 
@@ -142,7 +142,9 @@ sub test {
         my $ipv4 = $context->{dns}->query_resolver($hostname, $qclass, "A");
         my $ipv6 = $context->{dns}->query_resolver($hostname, $qclass, "AAAA");
 
-        unless ($ipv4->header->ancount || $ipv6->header->ancount) {
+        unless (($ipv4 && $ipv4->header->ancount)
+            || ($ipv6 && $ipv6->header->ancount))
+        {
             $logger->warning("ADDRESS:PTR_HOSTNAME_NOT_FOUND", $hostname);
             $errors++;
             goto DONE;

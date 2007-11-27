@@ -53,7 +53,7 @@ sub test {
 
     # FIXME: AS lookup for IPv6 addresses
 
-	# FIXME: test for ASN lookup failure
+    # FIXME: test for ASN lookup failure
     foreach my $address (@{$ipv4}) {
         my @as_list = @{ $context->asn->lookup($address) };
 

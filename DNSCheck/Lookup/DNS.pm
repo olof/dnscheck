@@ -678,7 +678,9 @@ sub find_addresses {
         goto DONE;
     }
 
-    unless ($ipv4->header->ancount || $ipv6->header->ancount) {
+    unless (($ipv4 && $ipv4->header->ancount)
+        || ($ipv6 && $ipv6->header->ancount))
+    {
         ## FIXME: error
         goto DONE;
     }

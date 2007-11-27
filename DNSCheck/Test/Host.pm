@@ -72,7 +72,9 @@ sub test {
     my $ipv6 = $context->dns->query_resolver($hostname, $qclass, "AAAA");
 
     # REQUIRE: Host address must exist
-    unless ($ipv4->header->ancount || $ipv6->header->ancount) {
+    unless (($ipv4 && $ipv4->header->ancount)
+        || ($ipv6 && $ipv6->header->ancount))
+    {
         $logger->error("HOST:NOT_FOUND", $hostname);
         $errors++;
         goto DONE;

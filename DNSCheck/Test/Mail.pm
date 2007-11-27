@@ -81,7 +81,9 @@ sub test {
         my $ipv6 = $context->dns->query_resolver($hostname, "IN", "AAAA");
 
         # REQUIRE: Warn if a mail exchanger is reachable by IPv6 only
-        if ($ipv4->header->ancount == 0 && $ipv6->header->ancount > 0) {
+        if (   ($ipv4 && $ipv4->header->ancount == 0)
+            && ($ipv6 && $ipv6->header->ancount > 0))
+        {
             $logger->warning("MAIL:IPV6_ONLY", $hostname);
         }
 
