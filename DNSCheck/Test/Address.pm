@@ -95,7 +95,7 @@ sub test {
     if ($ip->version == 4) {
         foreach my $prefix (@private_ipv4) {
             if ($ip->overlaps($prefix)) {
-                $logger->error("ADDRESS:PRIVATE", $address);
+                $logger->error("ADDRESS:PRIVATE_IPV4", $address);
                 $errors++;
                 goto DONE;
             }
@@ -106,7 +106,7 @@ sub test {
     if ($ip->version == 4) {
         foreach my $prefix (@reserved_ipv4) {
             if ($ip->overlaps($prefix)) {
-                $logger->error("ADDRESS:RESERVED", $address);
+                $logger->error("ADDRESS:RESERVED_IPV4", $address);
                 $errors++;
                 goto DONE;
             }
@@ -117,7 +117,7 @@ sub test {
     if ($ip->version == 6) {
         foreach my $prefix (@reserved_ipv6) {
             if ($ip->overlaps($prefix)) {
-                $logger->error("ADDRESS:RESERVED", $address);
+                $logger->error("ADDRESS:RESERVED_IPV6", $address);
                 $errors++;
                 goto DONE;
             }
@@ -134,6 +134,7 @@ sub test {
     }
 
     # REQUIRE: Hostname in PTR should exist
+	# FIXME: check that at least one name points back to $address
     foreach my $p ($ptr->answer) {
         next unless ($p->type eq "PTR");
 
