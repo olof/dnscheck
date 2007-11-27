@@ -107,7 +107,7 @@ sub test {
         # REQUIRE: Nameserver may provide AXFR
         $logger->debug("NAMESERVER:CHECKING_AXFR", $nameserver, $address);
         if ($context->dns->check_axfr($address, $zone, $qclass)) {
-            $logger->warning("NAMESERVER:AXFR_OPEN", $nameserver, $address,
+            $logger->notice("NAMESERVER:AXFR_OPEN", $nameserver, $address,
                 $zone);
         } else {
             $logger->info("NAMESERVER:AXFR_CLOSED",
