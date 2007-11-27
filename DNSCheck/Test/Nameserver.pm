@@ -114,12 +114,45 @@ sub test {
                 $nameserver, $address, $zone);
         }
 
+        # Check for possible identification
+        $logger->debug("NAMESERVER:CHECKING_ID", $nameserver, $address);
+        _check_id($context, $nameserver, $address);
     }
 
   DONE:
     $logger->info("NAMESERVER:END", $zone, $nameserver);
 
     return $errors;
+}
+
+sub _check_id {
+    my $context    = shift;
+    my $nameserver = shift;
+    my $address    = shift;
+
+    my $qclass = $context->qclass;
+    my $logger = $context->logger;
+
+    my @domains =
+      ("hostname.bind", "version.bind", "id.server", "version.server");
+
+    my $packet;
+
+    for my $domain (@domains) {
+        $packet =
+          $context->dns->query_explicit($domain, "CH", "TXT", $address);
+
+        if ($packet) {
+            next unless ($packet);
+
+            foreach my $rr ($packet->answer) {
+                next unless ($rr->type eq "TXT");
+
+                $logger->info("NAMESERVER:ID", $nameserver, $address, $domain,
+                    $rr->txtdata);
+            }
+        }
+    }
 }
 
 1;
