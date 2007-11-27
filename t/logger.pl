@@ -20,5 +20,5 @@ $logger->add("bar", 4, 5, 6);
 my @log = $logger->export();
 
 foreach my $line (@log) {
-	print $line, "\n";
+    print $line, "\n";
 }

@@ -135,7 +135,7 @@ sub test {
 
     # REQUIRE: Hostname in PTR should exist
     foreach my $p ($ptr->answer) {
-		next unless ($p->type eq "PTR");
+        next unless ($p->type eq "PTR");
 
         my $hostname = $p->ptrdname;
         my $ipv4 = $context->{dns}->query_resolver($hostname, $qclass, "A");

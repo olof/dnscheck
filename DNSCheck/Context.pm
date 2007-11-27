@@ -47,11 +47,11 @@ sub new {
 
     my $config = shift;
 
-	if ($config->{class}) {
-		$self->{qclass} = $config->{class};
-	} else {
-		$self->{qclass} = "IN";
-	}
+    if ($config->{class}) {
+        $self->{qclass} = $config->{class};
+    } else {
+        $self->{qclass} = "IN";
+    }
 
     # FIXME: perhaps do this some other way
     $self->{hostname} = `hostname`;

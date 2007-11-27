@@ -42,13 +42,13 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-	my $config = shift;
+    my $config = shift;
 
-	if ($config->{interactive}) {
-	    $self->{interactive} = 1;
-	}
+    if ($config->{interactive}) {
+        $self->{interactive} = 1;
+    }
 
-    $self->{logname} = undef;
+    $self->{logname}  = undef;
     $self->{messages} = ();
     $self->{errors}   = 0;
     $self->{warnings} = 0;
@@ -150,7 +150,7 @@ sub export {
           );
     }
 
-	return @buffer;
+    return @buffer;
 }
 
 1;

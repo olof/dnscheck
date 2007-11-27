@@ -82,7 +82,7 @@ sub test {
         goto RESET;
     }
 
-	# FIXME: handle timeouts?
+    # FIXME: handle timeouts?
     $logger->debug("SMTP:RCPT_TO", $email);
     $smtp->recipient($email);
     $message = $smtp->message;
