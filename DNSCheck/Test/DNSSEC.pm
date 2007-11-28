@@ -309,7 +309,7 @@ sub _check_parent {
                 $logger->info("DNSSEC:DS_TO_SEP", $zone, $ds_message);
             } else {
                 ## Child is using SEP and DS refers to a non-SEP
-                $logger->warning("DNSSEC:DS_TO_NOSEP", $zone, $ds_message);
+                $logger->warning("DNSSEC:DS_TO_NONSEP", $zone, $ds_message);
             }
         }
     }
