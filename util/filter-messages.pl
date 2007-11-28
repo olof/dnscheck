@@ -33,14 +33,15 @@ sub analyze {
     if ($buffer =~
         /logger.*->(info|notice|warning|error|debug|critical)\((.*)\);/)
     {
-		my @args = split(",", $2);
-		
-		my $tag = shift	@args;
-		my $num = $#args + 1;
-		
-		return unless ($tag =~ /:/);
-		
-        printf("%s,%d\n",$tag,$num);
+        my @args = split(",", $2);
+
+        my $tag = shift @args;
+        my $num = $#args + 1;
+
+        return unless ($tag =~ /:/);
+
+        printf("INSERT INTO messages (tag,arguments) VALUES (%s,%d);\n",
+            $tag, $num);
     }
 }
 
