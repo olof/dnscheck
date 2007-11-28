@@ -10,7 +10,7 @@ CREATE TABLE `messages` (
   `formatstring` varchar(255) default NULL,
   `description` text default NULL,
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `tag` (`tag`)
+  UNIQUE KEY `langtag` (`tag`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `queue` (
