@@ -43,8 +43,10 @@ CREATE TABLE `tests` (
   `domain` varchar(255) NOT NULL default '',
   `begin` datetime default NULL,
   `end` datetime default NULL,
-  `errors` int(10) unsigned default '0',
-  `warnings` int(10) unsigned default '0',
+  `count_error` int(10) unsigned default '0',
+  `count_warning` int(10) unsigned default '0',
+  `count_notice` int(10) unsigned default '0',
+  `count_info` int(10) unsigned default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;
 
