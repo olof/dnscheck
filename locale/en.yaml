@@ -6,7 +6,7 @@ locale_id: en
 messages:
  ASN:LOOKUP:
   args: 1
-  format: ~
+  format: Looking up AS number for %s
   descr: ~
  ASN:INVALID_ADDRESS:
   args: 1
