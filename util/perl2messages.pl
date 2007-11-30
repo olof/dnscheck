@@ -40,8 +40,7 @@ sub analyze {
 
         return unless ($tag =~ /:/);
 
-        printf("INSERT INTO messages (tag,arguments) VALUES (%s,%d);\n",
-            $tag, $num);
+        printf("%s;%s\n", $tag, $num);
     }
 }
 
