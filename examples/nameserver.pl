@@ -16,4 +16,3 @@ my $check = new DNSCheck({ interactive => 1 });
 
 $check->nameserver("schlyter.se", "ns.schlyter.se");
 $check->nameserver("se",          "a.ns.se");
-$check->report();

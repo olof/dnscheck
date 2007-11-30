@@ -20,5 +20,3 @@ my @email = ("jakob\@kirei.se", "hostmaster\@n6.schlyter.se",
 foreach my $x (@email) {
     $check->mail($x);
 }
-
-$check->report();

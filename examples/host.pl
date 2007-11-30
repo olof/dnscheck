@@ -23,5 +23,3 @@ $check->host("ns_1.kirei.se");
 $check->host("ns1-.kirei.se");
 $check->host("1a.KIREI.se");
 $check->host("ns4..kirei.se");
-
-$check->report();

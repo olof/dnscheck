@@ -26,5 +26,3 @@ my @addresses = (
 foreach my $a (@addresses) {
     $check->address($a);
 }
-
-$check->report();

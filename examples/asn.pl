@@ -21,5 +21,3 @@ my $asn    = new DNSCheck::Lookup::ASN($logger, $dns);
 die "syntax error" unless ($ARGV[0]);
 
 $asn->lookup($ARGV[0]);
-
-$logger->dump();
