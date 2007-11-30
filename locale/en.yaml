@@ -6,23 +6,23 @@ locale_id: en
 messages:
  ASN:LOOKUP:
   args: 1
-  format: Looking up AS number for %s
+  format: Looking up AS number for %s.
   descr: ~
  ASN:INVALID_ADDRESS:
   args: 1
-  format: ~
+  format: %s is an invalid IP address.
   descr: ~
  ASN:ANNOUNCE_BY:
-  args: 3
-  format: ~
+  args: 2
+  format: %s announced by AS %s.
   descr: ~
  ASN:NOT_ANNOUNCE:
   args: 1
-  format: ~
+  format: %s not announced.
   descr: ~
  ASN:LOOKUP_ERROR:
   args: 1
-  format: ~
+  format: Error looking up AS number for %s.
   descr: ~
  DNS:QUERY_RESOLVER:
   args: 3
