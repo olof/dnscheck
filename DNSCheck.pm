@@ -67,9 +67,14 @@ sub new {
 
 ######################################################################
 
-sub report {
+sub dump {
     my $self = shift;
-    $self->{context}->logger->dump();
+    return $self->{context}->logger->dump();
+}
+
+sub export {
+    my $self = shift;
+    return $self->{context}->logger->export();
 }
 
 ######################################################################
