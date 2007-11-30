@@ -34,6 +34,7 @@ require 5.8.0;
 use warnings;
 use strict;
 use Time::HiRes qw(gettimeofday);
+use DNSCheck::Locale;
 
 ######################################################################
 
@@ -46,6 +47,10 @@ sub new {
 
     if ($config->{interactive}) {
         $self->{interactive} = 1;
+    }
+
+    if ($config->{locale}) {
+        $self->{locale} = new DNSCheck::Locale($config->{locale});
     }
 
     $self->{logname}  = undef;
@@ -125,9 +130,16 @@ sub dump {
     my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
 
     foreach my $e (@{ $self->{messages} }) {
-        printf("%s:%s%s [%s] %s\n",
-            $e->{timestamp}, $context, $e->{level}, $e->{tag},
-            join(",", @{ $e->{arg} }));
+        if ($self->{locale}) {
+            printf("%s:%s%s %s\n",
+                $e->{timestamp}, $context, $e->{level},
+                $self->{locale}->expand($e->{tag}, @{ $e->{arg} }));
+
+        } else {
+            printf("%s:%s%s [%s] %s\n",
+                $e->{timestamp}, $context, $e->{level}, $e->{tag},
+                join(",", @{ $e->{arg} }));
+        }
     }
 }
 
