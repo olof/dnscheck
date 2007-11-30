@@ -329,7 +329,7 @@ sub query_explicit {
     }
 
     unless ($packet->header->aa) {
-        $self->{logger}->debug("DNS:NOT_AUTH", $address->address);
+        $self->{logger}->debug("DNS:NOT_AUTH", $address);
         return undef;
     }
 
