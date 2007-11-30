@@ -80,7 +80,7 @@ sub lookup {
 
     if ($asn) {
         if (scalar @{$asn} > 0) {
-            $self->{logger}->debug("ASN:ANNOUNCE_BY", join(",", @{$asn}));
+            $self->{logger}->debug("ASN:ANNOUNCE_BY", $ip, join(",", @{$asn}));
         } else {
             $self->{logger}->debug("ASN:NOT_ANNOUNCE", $ip);
         }
