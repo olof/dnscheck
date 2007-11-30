@@ -797,6 +797,46 @@ sub check_axfr {
 
 ######################################################################
 
+sub query_nsid {
+    my $self       = shift;
+    my $nameserver = shift;
+    my $qname      = shift;
+    my $qclass     = shift;
+	my $qtype      = shift;
+
+    my $resolver = $self->_setup_resolver();
+    $resolver->nameservers($nameserver);
+
+	$resolver->debug(1);
+
+    my $optrr = new Net::DNS::RR {
+        name          => "",
+        type          => "OPT",
+        class         => 1024,
+        extendedrcode => 0x00,
+        ednsflags     => 0x0000,
+        optioncode    => 0x03,
+        optiondata    => 0x00,
+    };
+	
+	print Dumper($optrr);
+	
+    my $query = Net::DNS::Packet->new($qname, $qtype, $qclass);
+    $query->push(additional => $optrr);
+	$query->header->rd(0);
+	$query->{'optadded'}=1;
+
+	print Dumper($query);
+
+    my $response = $resolver->send($query);
+
+	# FIXME: incomplete implementation
+
+	return undef;
+}
+
+######################################################################
+
 sub _rr2string {
     my $rr = shift;
     my $rdatastr;
@@ -901,6 +941,8 @@ my $bool = $dns->address_is_authoritative(I<address>, I<qname>, I<qtype>);
 my $bool = $dns->address_is_recursive(I<address>, I<qclass>);
 
 my $bool = $dns->check_axfr(I<address>, I<qname>, I<qclass>);
+
+my $string = $dns->query_nsid(I<address>, I<qname>, I<qclass>, I<qtype>);
 
 
 =head1 EXAMPLES
