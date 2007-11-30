@@ -115,8 +115,15 @@ sub test {
         }
 
         # Check for possible identification
-        $logger->debug("NAMESERVER:CHECKING_ID", $nameserver, $address);
+        $logger->debug("NAMESERVER:CHECKING_LEGACY_ID", $nameserver, $address);
         _check_id($context, $nameserver, $address);
+
+		# FIXME: remove comment once query_nsid is complete
+        #$logger->debug("NAMESERVER:CHECKING_NSID", $nameserver, $address);
+        #my $nsid = $context->dns->query_nsid($address, $zone, $qclass, "SOA");
+        #if ($nsid) {
+        #    $logger->info("NAMESERVER:NSID", $nameserver, $address);
+        #}
     }
 
   DONE:
@@ -139,8 +146,7 @@ sub _check_id {
     my $packet;
 
     for my $domain (@domains) {
-        $packet =
-          $context->dns->query_explicit($domain, "CH", "TXT", $address);
+        $packet = $context->dns->query_explicit($domain, "CH", "TXT", $address);
 
         if ($packet) {
             next unless ($packet);
@@ -148,8 +154,8 @@ sub _check_id {
             foreach my $rr ($packet->answer) {
                 next unless ($rr->type eq "TXT");
 
-                $logger->info("NAMESERVER:ID", $nameserver, $address, $domain,
-                    $rr->txtdata);
+                $logger->info("NAMESERVER:LEGACY_ID", $nameserver, $address,
+                    $domain, $rr->txtdata);
             }
         }
     }
