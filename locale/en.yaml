@@ -1,0 +1,742 @@
+# $Id$
+
+locale_name: English
+locale_id: en
+
+messages:
+ ASN:LOOKUP:
+  args: 1
+  format: ~
+  descr: ~
+ ASN:INVALID_ADDRESS:
+  args: 1
+  format: ~
+  descr: ~
+ ASN:ANNOUNCE_BY:
+  args: 3
+  format: ~
+  descr: ~
+ ASN:NOT_ANNOUNCE:
+  args: 1
+  format: ~
+  descr: ~
+ ASN:LOOKUP_ERROR:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:QUERY_RESOLVER:
+  args: 3
+  format: ~
+  descr: ~
+ DNS:RESOLVER_QUERY_TIMEOUT:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:QUERY_PARENT:
+  args: 4
+  format: ~
+  descr: ~
+ DNS:FIND_PARENT:
+  args: 2
+  format: ~
+  descr: ~
+ DNS:NO_PARENT:
+  args: 2
+  format: ~
+  descr: ~
+ DNS:PARENT_OF:
+  args: 3
+  format: ~
+  descr: ~
+ DNS:NO_PARENT_NS:
+  args: 3
+  format: ~
+  descr: ~
+ DNS:QUERY_TIMEOUT:
+  args: 3
+  format: ~
+  descr: ~
+ DNS:LOOKUP_ERROR:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:QUERY_CHILD:
+  args: 4
+  format: ~
+  descr: ~
+ DNS:NO_CHILD_NS:
+  args: 2
+  format: ~
+  descr: ~
+ DNS:QUERY_TIMEOUT:
+  args: 3
+  format: ~
+  descr: ~
+ DNS:LOOKUP_ERROR:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:ADDRESS_BLACKLISTED:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:QUERY_TIMEOUT:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:LOOKUP_ERROR:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:NO_EDNS:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:NO_ANSWER:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:NOT_AUTH:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:DUMP:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:SETUP_RESOLVER:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:SET_BUFSIZE:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:TRANSPORT_TCP:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:TRANSPORT_UDP:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:RECURSION_DESIRED:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:RECURSION_DISABLED:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:DNSSEC_DESIRED:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:DNSSEC_DISABLED:
+  args: 0
+  format: ~
+  descr: ~
+ DNS:GET_NS_AT_PARENT:
+  args: 2
+  format: ~
+  descr: ~
+ DNS:GET_NS_AT_CHILD:
+  args: 2
+  format: ~
+  descr: ~
+ DNS:INITIALIZING_NAMESERVERS:
+  args: 2
+  format: ~
+  descr: ~
+ DNS:FIND_PARENT_BEGIN:
+  args: 2
+  format: ~
+  descr: ~
+ DNS:FIND_PARENT_DOMAIN:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:FIND_PARENT_TRY:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:FIND_PARENT_UPPER:
+  args: 1
+  format: ~
+  descr: ~
+ DNS:FIND_PARENT_RESULT:
+  args: 3
+  format: ~
+  descr: ~
+ DNS:QUERY_TIMEOUT:
+  args: 1
+  format: ~
+  descr: ~
+ ADDRESS:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ ADDRESS:INVALID:
+  args: 1
+  format: ~
+  descr: ~
+ ADDRESS:PRIVATE_IPV4:
+  args: 1
+  format: ~
+  descr: ~
+ ADDRESS:RESERVED_IPV4:
+  args: 1
+  format: ~
+  descr: ~
+ ADDRESS:RESERVED_IPV6:
+  args: 1
+  format: ~
+  descr: ~
+ ADDRESS:PTR_NOT_FOUND:
+  args: 2
+  format: ~
+  descr: ~
+ ADDRESS:PTR_HOSTNAME_NOT_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ ADDRESS:END:
+  args: 1
+  format: ~
+  descr: ~
+ CONNECTIVITY:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ CONNECTIVITY:MULTIPLE_ASN:
+  args: 1
+  format: ~
+  descr: ~
+ CONNECTIVITY:NOT_ANNOUNCED:
+  args: 1
+  format: ~
+  descr: ~
+ CONNECTIVITY:ASN_LIST:
+  args: 3
+  format: ~
+  descr: ~
+ CONNECTIVITY:TOO_FEW_ASN:
+  args: 1
+  format: ~
+  descr: ~
+ CONNECTIVITY:ASN_COUNT_OK:
+  args: 1
+  format: ~
+  descr: ~
+ CONNECTIVITY:END:
+  args: 1
+  format: ~
+  descr: ~
+ DELEGATION:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ DELEGATION:NS_AT_PARENT:
+  args: 3
+  format: ~
+  descr: ~
+ DELEGATION:NOT_FOUND_AT_PARENT:
+  args: 1
+  format: ~
+  descr: ~
+ DELEGATION:NS_AT_CHILD:
+  args: 3
+  format: ~
+  descr: ~
+ DELEGATION:NOT_FOUND_AT_CHILD:
+  args: 1
+  format: ~
+  descr: ~
+ DELEGATION:EXTRA_NS_PARENT:
+  args: 1
+  format: ~
+  descr: ~
+ DELEGATION:EXTRA_NS_CHILD:
+  args: 1
+  format: ~
+  descr: ~
+ DELEGATION:TOO_FEW_NS:
+  args: 1
+  format: ~
+  descr: ~
+ DELEGATION:MATCHING_GLUE:
+  args: 3
+  format: ~
+  descr: ~
+ DELEGATION:INCONSISTENT_GLUE:
+  args: 2
+  format: ~
+  descr: ~
+ DELEGATION:GLUE_MISSING_AT_CHILD:
+  args: 2
+  format: ~
+  descr: ~
+ DELEGATION:END:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:CHECKING_DS_AT_PARENT:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DS_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:NO_DS_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:CHECKING_DNSKEY_AT_CHILD:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_NOT_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DETERMINE_SECURITY_STATUS:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:INCONSISTENT_SECURITY:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:CONSISTENT_SECURITY:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:MISSING_DS:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:END:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:CHECKING_CHILD:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_SKIP_TYPE:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_SEP:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_MANDATORY_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_MANDATORY_NOT_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:NO_SIGNATURES:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:CHILD_CHECK_ABORTED:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_SIGNATURE_OK:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_VALID_SIGNATURES:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DNSKEY_NO_VALID_SIGNATURES:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:SOA_SIGNATURE_OK:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:SOA_VALID_SIGNATURES:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:SOA_NO_VALID_SIGNATURES:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:CHILD_CHECKED:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:CHECKING_PARENT:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:PARENT_DS:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:DS_KEYREF_OK:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:DS_KEYREF_INVALID:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:DS_TO_SEP:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:DS_TO_NONSEP:
+  args: 2
+  format: ~
+  descr: ~
+ DNSSEC:DS_MANDATORY_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:DS_MANDATORY_NOT_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:PARENT_CHECKED:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:RRSIG_NOT_YET_VALID:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:RRSIG_EXPIRED:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:RRSIG_VALID:
+  args: 1
+  format: ~
+  descr: ~
+ HOST:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ HOST:ILLEGAL_NAME:
+  args: 2
+  format: ~
+  descr: ~
+ HOST:ILLEGAL_NAME:
+  args: 2
+  format: ~
+  descr: ~
+ HOST:NOT_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ HOST:CNAME_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ HOST:END:
+  args: 1
+  format: ~
+  descr: ~
+ MAIL:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ MAIL:ADDRESS_SYNTAX:
+  args: 1
+  format: ~
+  descr: ~
+ MAIL:MAIL_EXCHANGER:
+  args: 3
+  format: ~
+  descr: ~
+ MAIL:DOMAIN_NOT_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ MAIL:HOST_ERROR:
+  args: 1
+  format: ~
+  descr: ~
+ MAIL:IPV6_ONLY:
+  args: 1
+  format: ~
+  descr: ~
+ MAIL:END:
+  args: 1
+  format: ~
+  descr: ~
+ NAMESERVER:BEGIN:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:HOST_ERROR:
+  args: 1
+  format: ~
+  descr: ~
+ NAMESERVER:CHECKING_RECURSION:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:RECURSIVE:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:NOT_RECURSIVE:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:CHECKING_AUTH:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:NOT_AUTH:
+  args: 3
+  format: ~
+  descr: ~
+ NAMESERVER:AUTH:
+  args: 3
+  format: ~
+  descr: ~
+ NAMESERVER:CHECKING_UDP:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:UDP_OK:
+  args: 3
+  format: ~
+  descr: ~
+ NAMESERVER:NO_UDP:
+  args: 3
+  format: ~
+  descr: ~
+ NAMESERVER:CHECKING_TCP:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:TCP_OK:
+  args: 3
+  format: ~
+  descr: ~
+ NAMESERVER:NO_TCP:
+  args: 3
+  format: ~
+  descr: ~
+ NAMESERVER:CHECKING_AXFR:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:CHECKING_LEGACY_ID:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:CHECKING_NSID:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:NSID:
+  args: 2
+  format: ~
+  descr: ~
+ NAMESERVER:END:
+  args: 2
+  format: ~
+  descr: ~
+ SERIAL:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ SERIAL:SOA_AT_ADDRESS:
+  args: 2
+  format: ~
+  descr: ~
+ SERIAL:DIFFERENT:
+  args: 1
+  format: ~
+  descr: ~
+ SERIAL:END:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:BEGIN:
+  args: 2
+  format: ~
+  descr: ~
+ SMTP:CONNECT_FAILED:
+  args: 0
+  format: ~
+  descr: ~
+ SMTP:BANNER:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:HELLO_FAILED:
+  args: 0
+  format: ~
+  descr: ~
+ SMTP:MAIL_FROM:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:RAW:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:MAIL_FROM_REJECTED:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:RCPT_TO:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:RAW:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:RECIPIENT_REJECTED:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:RSET:
+  args: 0
+  format: ~
+  descr: ~
+ SMTP:RAW:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:QUIT:
+  args: 0
+  format: ~
+  descr: ~
+ SMTP:RAW:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:OK:
+  args: 1
+  format: ~
+  descr: ~
+ SMTP:END:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ SOA:NOT_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ SOA:FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ SOA:MULTIPLE_SOA:
+  args: 1
+  format: ~
+  descr: ~
+ SOA:MNAME_ERROR:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:MNAME_VALID:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:NS_NOT_FOUND:
+  args: 1
+  format: ~
+  descr: ~
+ SOA:MNAME_STEALTH:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:MNAME_PUBLIC:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:MNAME_NOT_AUTH:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:MNAME_IS_AUTH:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:RNAME_DELIVERABLE:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:RNAME_SYNTAX:
+  args: 2
+  format: ~
+  descr: ~
+ SOA:TTL_SMALL:
+  args: 3
+  format: ~
+  descr: ~
+ SOA:TTL_OK:
+  args: 3
+  format: ~
+  descr: ~
+ SOA:REFRESH_OK:
+  args: 3
+  format: ~
+  descr: ~
+ SOA:RETRY_SMALL:
+  args: 3
+  format: ~
+  descr: ~
+ SOA:RETRY_OK:
+  args: 3
+  format: ~
+  descr: ~
+ SOA:EXPIRE_OK:
+  args: 3
+  format: ~
+  descr: ~
+ SOA:EXPIRE_VS_REFRESH:
+  args: 1
+  format: ~
+  descr: ~
+ SOA:MINIMUM_OK:
+  args: 3
+  format: ~
+  descr: ~
+ SOA:END:
+  args: 1
+  format: ~
+  descr: ~
+ ZONE:BEGIN:
+  args: 1
+  format: ~
+  descr: ~
+ ZONE:END:
+  args: 1
+  format: ~
+  descr: ~
