@@ -114,7 +114,7 @@ sub query_resolver {
           $self->{resolver}->send($qname, $qtype, $qclass);
 
         if ($self->check_timeout($self->{resolver})) {
-            $self->{logger}->error("DNS:RESOLVER_QUERY_TIMEOUT");
+            $self->{logger}->error("DNS:RESOLVER_QUERY_TIMEOUT", $qname, $qclass, $qtype);
             return undef;
         }
     }
@@ -172,13 +172,13 @@ sub query_parent_nocache {
       ->debug("DNS:QUERY_PARENT_NOCACHE", $zone, $qname, $qclass, $qtype);
 
     # find parent
-    $self->{logger}->debug("DNS:FIND_PARENT", $qname, $qclass);
+    $self->{logger}->debug("DNS:FIND_PARENT", $zone, $qclass);
     my $parent = $self->find_parent($zone, $qclass);
     unless ($parent) {
         $self->{logger}->error("DNS:NO_PARENT", $zone, $qclass);
         return undef;
     } else {
-        $self->{logger}->debug("DNS:PARENT_OF", $zone, $qclass, $parent);
+        $self->{logger}->debug("DNS:PARENT_OF", $parent, $zone, $qclass);
     }
 
     # initialize parent nameservers
@@ -191,7 +191,7 @@ sub query_parent_nocache {
     @target = (@target, @{$ipv4}) if ($ipv4);
     @target = (@target, @{$ipv6}) if ($ipv6);
     unless (scalar @target) {
-        $self->{logger}->error("DNS:NO_PARENT_NS", $zone, $qclass, $parent);
+        $self->{logger}->error("DNS:NO_PARENT_NS", $parent, $zone, $qclass);
         return undef;
     }
 
@@ -204,7 +204,8 @@ sub query_parent_nocache {
 
     my $packet = $resolver->send($qname, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target));
+        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target),
+$qname, $qclass, $qtype);
         return undef;
     }
 
@@ -274,7 +275,7 @@ sub query_child_nocache {
 
     my $packet = $resolver->send($qname, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target));
+        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target), $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -296,7 +297,7 @@ sub query_explicit {
     my $flags   = shift;
 
     $self->{logger}
-      ->debug("DNS:QUERY_EXPLICIT", $qname, $qclass, $qtype, $address);
+      ->debug("DNS:QUERY_EXPLICIT", $address, $qname, $qclass, $qtype);
 
     my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver($address);
@@ -307,8 +308,9 @@ sub query_explicit {
     }
     my $packet = $resolver->send($qname, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-        $self->{logger}->error("DNS:QUERY_TIMEOUT", $address);
+	    $self->{logger}->error("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
         $self->add_blacklist($address);
+	    $self->{logger}->info("DNS:ADDRESS_BLACKLIST_ADD", $address);
         return undef;
     }
 
@@ -324,12 +326,12 @@ sub query_explicit {
     }
 
     if ($packet->header->rcode ne "NOERROR") {
-        $self->{logger}->error("DNS:NO_ANSWER");
+        $self->{logger}->error("DNS:NO_ANSWER", $address);
         return undef;
     }
 
     unless ($packet->header->aa) {
-        $self->{logger}->debug("DNS:NOT_AUTH", $address);
+        $self->{logger}->debug("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -337,7 +339,7 @@ sub query_explicit {
         sprintf("%d answer(s)", $packet->header->ancount));
 
     foreach my $rr ($packet->answer) {
-        $self->{logger}->debug("DNS:DUMP", _rr2string($rr));
+        $self->{logger}->debug("DNS:ANSWER_DUMP", _rr2string($rr));
     }
 
     return $packet;
@@ -746,9 +748,10 @@ sub address_is_recursive {
     my $nonexisting = sprintf("%s.%s", join("", @tmp[1 .. 6]), $nxdomain);
 
     # no blacklisting here, since some nameservers ignore recursive queries
-    my $packet = $resolver->send($nonexisting, "SOA", $qclass);
+	my $qtype = "SOA";
+    my $packet = $resolver->send($nonexisting, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-        $self->{logger}->error("DNS:QUERY_TIMEOUT", $address);
+	    $self->{logger}->error("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
         goto DONE;
     }
 
