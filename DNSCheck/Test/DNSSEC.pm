@@ -93,6 +93,12 @@ sub test {
     } else {
         $logger->info("DNSSEC:CONSISTENT_SECURITY", $zone);
     }
+
+    if (!$dnskey) {
+        $logger->info("DNSSEC:SKIPPED_NO_KEYS", $zone);
+        goto DONE;
+    }
+
     if (!$ds and $dnskey) {
         $logger->warning("DNSSEC:MISSING_DS", $zone);
         $errors++;
