@@ -24,129 +24,133 @@ messages:
   args: 1
   format: Error looking up AS number for %s.
   descr: ~
+ DNS:QUERY_EXPLICIT:
+  args: 4
+  format: Query %s for %s/%s/%s.
+  descr: ~
+ DNS:QUERY_TIMEOUT:
+  args: 1
+  format: ~
+  descr: ~  
  DNS:QUERY_RESOLVER:
   args: 3
-  format: ~
+  format: DNS query for %s/%s/%s.
   descr: ~
  DNS:RESOLVER_QUERY_TIMEOUT:
   args: 0
-  format: ~
+  format: DNS resolver timed out in query for %s/%s/5s.
   descr: ~
  DNS:QUERY_PARENT:
   args: 4
-  format: ~
+  format: Query parent of %s for %s/%s/%s.
   descr: ~
  DNS:FIND_PARENT:
   args: 2
-  format: ~
+  format: Find parent of %s/%s.
   descr: ~
  DNS:NO_PARENT:
   args: 2
-  format: ~
+  format: Failed to find parent of %s/%s.
   descr: ~
  DNS:PARENT_OF:
   args: 3
-  format: ~
+  format: Found %s as parent of %s/%s.
   descr: ~
  DNS:NO_PARENT_NS:
   args: 3
-  format: ~
+  format: Failed to find nameservers for %s (parent of %s/%s). 
   descr: ~
  DNS:QUERY_TIMEOUT:
   args: 3
-  format: ~
-  descr: ~
- DNS:LOOKUP_ERROR:
-  args: 1
-  format: ~
+  format: DNS server %s timed out in query for %s/%s/%s.
   descr: ~
  DNS:QUERY_CHILD:
   args: 4
-  format: ~
+  format: Query any nameeserver of %s for %s/%s/%s.
   descr: ~
  DNS:NO_CHILD_NS:
   args: 2
-  format: ~
+  format: Failed to find namesevers of %s/%s.
   descr: ~
- DNS:QUERY_TIMEOUT:
-  args: 3
-  format: ~
-  descr: ~
- DNS:LOOKUP_ERROR:
+ DNS:ADDRESS_BLACKLIST_ADD:
   args: 1
-  format: ~
+  format: Adding DNS server %s to blacklist.
   descr: ~
  DNS:ADDRESS_BLACKLISTED:
   args: 1
-  format: ~
-  descr: ~
- DNS:QUERY_TIMEOUT:
-  args: 1
-  format: ~
+  format: DNS server %s blacklisted.
   descr: ~
  DNS:LOOKUP_ERROR:
   args: 1
-  format: ~
+  format: DNS lookup error (%s).
   descr: ~
  DNS:NO_EDNS:
   args: 1
-  format: ~
+  format: EDNS not supported by %s.
   descr: ~
  DNS:NO_ANSWER:
   args: 0
-  format: ~
+  format: No answer received from %s.
   descr: ~
  DNS:NOT_AUTH:
-  args: 1
-  format: ~
+  args: 4
+  format: DNS server %s not authoritative for %s/%s/%s.
   descr: ~
- DNS:DUMP:
+ DNS:ANSWER_DUMP:
   args: 1
-  format: ~
+  format: DNS query returned: %s
   descr: ~
  DNS:SETUP_RESOLVER:
   args: 0
-  format: ~
+  format: DNS resolver set up.
   descr: ~
  DNS:SET_BUFSIZE:
   args: 1
-  format: ~
+  format: DNS resolver EDNS buffer size set to %s.
   descr: ~
  DNS:TRANSPORT_TCP:
   args: 0
-  format: ~
+  format: DNS resolver transport set to TCP.
   descr: ~
  DNS:TRANSPORT_UDP:
   args: 0
-  format: ~
+  format: DNS resolver transport set to UDP.
   descr: ~
  DNS:RECURSION_DESIRED:
   args: 0
-  format: ~
+  format: DNS resolver recursion desired.
   descr: ~
  DNS:RECURSION_DISABLED:
   args: 0
-  format: ~
+  format: DNS resolver recursion disabled.
   descr: ~
  DNS:DNSSEC_DESIRED:
   args: 0
-  format: ~
+  format: DNS resolver DNSSEC desired.
   descr: ~
  DNS:DNSSEC_DISABLED:
   args: 0
-  format: ~
+  format: DNS resolver DNSSEC disabled.
   descr: ~
  DNS:GET_NS_AT_PARENT:
   args: 2
-  format: ~
+  format: DNS query for NS of %s/%s at parent.
   descr: ~
  DNS:GET_NS_AT_CHILD:
   args: 2
-  format: ~
+  format: DNS query for NS of %s/%s at child.
   descr: ~
  DNS:INITIALIZING_NAMESERVERS:
   args: 2
-  format: ~
+  format: Initializing nameservers for %s/%s.
+  descr: ~
+ DNS:NAMESERVERS_INITIALIZED:
+  args: 2
+  format: Nameservers for %s/%s initialized.
+  descr: ~
+ DNS:NAMESERVER_FOUND:
+  args: 4
+  format: Found nameserver for %s/%s: %s (%s)
   descr: ~
  DNS:FIND_PARENT_BEGIN:
   args: 2
@@ -166,10 +170,6 @@ messages:
   descr: ~
  DNS:FIND_PARENT_RESULT:
   args: 3
-  format: ~
-  descr: ~
- DNS:QUERY_TIMEOUT:
-  args: 1
   format: ~
   descr: ~
  ADDRESS:BEGIN:
@@ -317,6 +317,10 @@ messages:
   format: ~
   descr: ~
  DNSSEC:CONSISTENT_SECURITY:
+  args: 1
+  format: ~
+  descr: ~
+ DNSSEC:SKIPPED_NO_KEYS:
   args: 1
   format: ~
   descr: ~
