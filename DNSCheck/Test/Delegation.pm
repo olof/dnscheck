@@ -77,8 +77,7 @@ sub test {
     # REQUIRE: all NS at child may exist at parent
     foreach my $ns (@ns_at_child) {
         unless (scalar grep(/^$ns$/i, @ns_at_parent)) {
-            $logger->warning("DELEGATION:EXTRA_NS_CHILD", $ns);
-            $errors++;
+            $logger->("DELEGATION:EXTRA_NS_CHILD", $ns);
         }
     }
 
