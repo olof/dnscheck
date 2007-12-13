@@ -145,7 +145,8 @@ sub test {
         unless (($ipv4 && $ipv4->header->ancount)
             || ($ipv6 && $ipv6->header->ancount))
         {
-            $logger->warning("ADDRESS:PTR_HOSTNAME_NOT_FOUND", $hostname);
+            $logger->warning("ADDRESS:PTR_HOSTNAME_NOT_FOUND",
+                $address, $hostname);
             $errors++;
             goto DONE;
         }

@@ -186,35 +186,35 @@ messages:
   descr: ~
  ADDRESS:BEGIN:
   args: 1
-  format: ~
+  format: Testing address %s begin.
   descr: ~
  ADDRESS:INVALID:
   args: 1
-  format: ~
+  format: Adress %s is not valid.
   descr: ~
  ADDRESS:PRIVATE_IPV4:
   args: 1
-  format: ~
+  format: %s is a private IPv4 address.
   descr: ~
  ADDRESS:RESERVED_IPV4:
   args: 1
-  format: ~
+  format: %s is a reserved IPv4 address.
   descr: ~
  ADDRESS:RESERVED_IPV6:
   args: 1
-  format: ~
+  format: %s is a reserved IPv6 address.
   descr: ~
  ADDRESS:PTR_NOT_FOUND:
   args: 2
-  format: ~
+  format: Could not find reverse address for %s (%s).
   descr: ~
  ADDRESS:PTR_HOSTNAME_NOT_FOUND:
-  args: 1
-  format: ~
+  args: 2
+  format: Reverse for %s points to an unknown hostname (%s).
   descr: ~
  ADDRESS:END:
   args: 1
-  format: ~
+  format: Testing address %s end.
   descr: ~
  CONNECTIVITY:BEGIN:
   args: 1
