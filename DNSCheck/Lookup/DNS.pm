@@ -635,7 +635,7 @@ sub find_mx {
     my $packet;
     my @dest = ();
 
-    $self->{logger}->debug("DNS:FIND_MX_BEGIN", $domain, $qclass);
+    $self->{logger}->debug("DNS:FIND_MX_BEGIN", $domain);
 
     $packet = $self->query_resolver($domain, "MX", "IN");
     if ($packet->header->ancount > 0) {
