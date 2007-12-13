@@ -57,7 +57,7 @@ sub test {
     }
 
     # REQUIRE: MX or A must exist for domain
-    my @mailhosts = $context->dns->find_mail_destination($domain);
+    my @mailhosts = $context->dns->find_mx($domain);
 
     if (@mailhosts) {
         $logger->info("MAIL:MAIL_EXCHANGER", join(",", @mailhosts));

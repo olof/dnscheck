@@ -114,7 +114,8 @@ sub query_resolver {
           $self->{resolver}->send($qname, $qtype, $qclass);
 
         if ($self->check_timeout($self->{resolver})) {
-            $self->{logger}->error("DNS:RESOLVER_QUERY_TIMEOUT", $qname, $qclass, $qtype);
+            $self->{logger}
+              ->error("DNS:RESOLVER_QUERY_TIMEOUT", $qname, $qclass, $qtype);
             return undef;
         }
     }
@@ -205,7 +206,7 @@ sub query_parent_nocache {
     my $packet = $resolver->send($qname, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
         $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target),
-$qname, $qclass, $qtype);
+            $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -275,7 +276,8 @@ sub query_child_nocache {
 
     my $packet = $resolver->send($qname, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target), $qname, $qclass, $qtype);
+        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target),
+            $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -308,9 +310,10 @@ sub query_explicit {
     }
     my $packet = $resolver->send($qname, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-	    $self->{logger}->error("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
+        $self->{logger}
+          ->error("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
         $self->add_blacklist($address);
-	    $self->{logger}->info("DNS:ADDRESS_BLACKLIST_ADD", $address);
+        $self->{logger}->info("DNS:ADDRESS_BLACKLIST_ADD", $address);
         return undef;
     }
 
@@ -331,7 +334,8 @@ sub query_explicit {
     }
 
     unless ($packet->header->aa) {
-        $self->{logger}->debug("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
+        $self->{logger}
+          ->debug("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -591,7 +595,7 @@ sub _find_parent_helper {
     $parent = $try;
 
   DONE:
-    $self->{logger}->debug("DNS:FIND_PARENT_RESULT", $qname, $qclass, $parent);
+    $self->{logger}->debug("DNS:FIND_PARENT_RESULT", $parent, $qname, $qclass);
 
     return $parent;
 }
@@ -624,12 +628,14 @@ sub _find_authority {
 
 ######################################################################
 
-sub find_mail_destination {
+sub find_mx {
     my $self   = shift;
     my $domain = shift;
 
     my $packet;
     my @dest = ();
+
+    $self->{logger}->debug("DNS:FIND_MX_BEGIN", $domain, $qclass);
 
     $packet = $self->query_resolver($domain, "MX", "IN");
     if ($packet->header->ancount > 0) {
@@ -662,6 +668,8 @@ sub find_mail_destination {
     }
 
   DONE:
+    $self->{logger}->debug("DNS:FIND_MX_RESULT", $domain, join(",", @dest));
+
     return @dest;
 }
 
@@ -671,6 +679,8 @@ sub find_addresses {
     my $qclass = shift;
 
     my @addresses = ();
+
+    $self->{logger}->debug("DNS:FIND_ADDRESSES", $qname, $qclass);
 
     my $ipv4 = $self->query_resolver($qname, $qclass, "A");
     my $ipv6 = $self->query_resolver($qname, $qclass, "AAAA");
@@ -698,6 +708,9 @@ sub find_addresses {
     }
 
   DONE:
+    $self->{logger}->debug("DNS:FIND_ADDRESSES_RESULT", $qname, $qclass,
+        join(",", @addresses));
+
     return @addresses;
 }
 
@@ -748,10 +761,11 @@ sub address_is_recursive {
     my $nonexisting = sprintf("%s.%s", join("", @tmp[1 .. 6]), $nxdomain);
 
     # no blacklisting here, since some nameservers ignore recursive queries
-	my $qtype = "SOA";
+    my $qtype = "SOA";
     my $packet = $resolver->send($nonexisting, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-	    $self->{logger}->error("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
+        $self->{logger}
+          ->error("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
         goto DONE;
     }
 
@@ -805,12 +819,12 @@ sub query_nsid {
     my $nameserver = shift;
     my $qname      = shift;
     my $qclass     = shift;
-	my $qtype      = shift;
+    my $qtype      = shift;
 
     my $resolver = $self->_setup_resolver();
     $resolver->nameservers($nameserver);
 
-	$resolver->debug(1);
+    $resolver->debug(1);
 
     my $optrr = new Net::DNS::RR {
         name          => "",
@@ -821,21 +835,21 @@ sub query_nsid {
         optioncode    => 0x03,
         optiondata    => 0x00,
     };
-	
-	print Dumper($optrr);
-	
+
+    print Dumper($optrr);
+
     my $query = Net::DNS::Packet->new($qname, $qtype, $qclass);
     $query->push(additional => $optrr);
-	$query->header->rd(0);
-	$query->{'optadded'}=1;
+    $query->header->rd(0);
+    $query->{'optadded'} = 1;
 
-	print Dumper($query);
+    print Dumper($query);
 
     my $response = $resolver->send($query);
 
-	# FIXME: incomplete implementation
+    # FIXME: incomplete implementation
 
-	return undef;
+    return undef;
 }
 
 ######################################################################
