@@ -28,17 +28,13 @@ messages:
   args: 4
   format: Query %s for %s/%s/%s.
   descr: ~
- DNS:QUERY_TIMEOUT:
-  args: 1
-  format: ~
-  descr: ~  
  DNS:QUERY_RESOLVER:
   args: 3
   format: DNS query for %s/%s/%s.
   descr: ~
  DNS:RESOLVER_QUERY_TIMEOUT:
   args: 0
-  format: DNS resolver timed out in query for %s/%s/5s.
+  format: DNS resolver timed out in query for %s/%s/%s.
   descr: ~
  DNS:QUERY_PARENT:
   args: 4
@@ -154,23 +150,39 @@ messages:
   descr: ~
  DNS:FIND_PARENT_BEGIN:
   args: 2
-  format: ~
+  format: Trying to find parent of %s/%s
   descr: ~
  DNS:FIND_PARENT_DOMAIN:
   args: 1
-  format: ~
+  format: Using %s as a start for parent trace.
   descr: ~
  DNS:FIND_PARENT_TRY:
   args: 1
-  format: ~
+  format: Checking %s as parent domain.
   descr: ~
  DNS:FIND_PARENT_UPPER:
   args: 1
-  format: ~
+  format: Parent might be %s.
   descr: ~
  DNS:FIND_PARENT_RESULT:
   args: 3
-  format: ~
+  format: Resolved %s as parent of %s/%s.
+  descr: ~
+ DNS:FIND_MX_BEGIN:
+  args: 
+  format: Lookup up mail exchanger for %s
+  descr: ~
+ DNS:FIND_MX_RESULT:
+  args: 
+  format: Found mail exchanger for %s: %s
+  descr: ~ 
+ DNS:FIND_ADDRESSES:
+  args: 
+  format: Found addresses of %s/%s
+  descr: ~ 
+ DNS:FIND_ADDRESSES_RESULT:
+  args: 
+  format: Addresses for %s/%s: %s
   descr: ~
  ADDRESS:BEGIN:
   args: 1
