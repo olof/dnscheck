@@ -186,7 +186,7 @@ messages:
   descr: ~
  ADDRESS:BEGIN:
   args: 1
-  format: Testing address %s begin.
+  format: Begin testing address %s.
   descr: ~
  ADDRESS:INVALID:
   args: 1
@@ -214,35 +214,35 @@ messages:
   descr: ~
  ADDRESS:END:
   args: 1
-  format: Testing address %s end.
+  format: Done testing address %s.
   descr: ~
  CONNECTIVITY:BEGIN:
   args: 1
-  format: ~
+  format: Begin testing connectivity for %s.
   descr: ~
  CONNECTIVITY:MULTIPLE_ASN:
   args: 1
-  format: ~
+  format: Nameserver %s announce by multiple AS.
   descr: ~
  CONNECTIVITY:NOT_ANNOUNCED:
   args: 1
-  format: ~
+  format: Nameserver %s not announced by any AS.
   descr: ~
  CONNECTIVITY:ASN_LIST:
-  args: 3
-  format: ~
+  args: 1
+  format: Zone announced by ASN: %s 
   descr: ~
  CONNECTIVITY:TOO_FEW_ASN:
   args: 1
-  format: ~
+  format: Zone announced by too few ASN (%s).
   descr: ~
  CONNECTIVITY:ASN_COUNT_OK:
   args: 1
-  format: ~
+  format: Zone announced by more than one ASN (%s).
   descr: ~
  CONNECTIVITY:END:
   args: 1
-  format: ~
+  format: Done testing connectivity for %s.
   descr: ~
  DELEGATION:BEGIN:
   args: 1
