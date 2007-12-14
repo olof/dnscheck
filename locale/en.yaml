@@ -754,9 +754,9 @@ messages:
   descr: ~
  ZONE:BEGIN:
   args: 1
-  format: ~
+  format: Begin testing zone %s.
   descr: ~
  ZONE:END:
   args: 1
-  format: ~
+  format: Begin testing zone %s.
   descr: ~
