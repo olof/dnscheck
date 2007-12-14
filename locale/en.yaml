@@ -458,27 +458,23 @@ messages:
   descr: ~
  HOST:BEGIN:
   args: 1
-  format: ~
+  format: Begin testing host %s.
   descr: ~
  HOST:ILLEGAL_NAME:
   args: 2
-  format: ~
-  descr: ~
- HOST:ILLEGAL_NAME:
-  args: 2
-  format: ~
+  format: Hostname %s is illegal (syntax error at %s)
   descr: ~
  HOST:NOT_FOUND:
   args: 1
-  format: ~
+  format: No address found for %s.
   descr: ~
  HOST:CNAME_FOUND:
   args: 1
-  format: ~
+  format: Hostname %s refers to a CNAME.
   descr: ~
  HOST:END:
   args: 1
-  format: ~
+  format: Done testing host %s.
   descr: ~
  MAIL:BEGIN:
   args: 1
