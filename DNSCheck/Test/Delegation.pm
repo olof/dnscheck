@@ -52,7 +52,7 @@ sub test {
     if (scalar @ns_at_parent) {
         $logger->info("DELEGATION:NS_AT_PARENT", join(",", @ns_at_parent));
     } else {
-        $logger->error("DELEGATION:NOT_FOUND_AT_PARENT", $zone);
+        $logger->error("DELEGATION:NOT_FOUND_AT_PARENT");
         $errors++;
     }
 
@@ -77,19 +77,19 @@ sub test {
     # REQUIRE: all NS at child may exist at parent
     foreach my $ns (@ns_at_child) {
         unless (scalar grep(/^$ns$/i, @ns_at_parent)) {
-            $logger->("DELEGATION:EXTRA_NS_CHILD", $ns);
+            $logger->notice("DELEGATION:EXTRA_NS_CHILD", $ns);
         }
     }
 
     # REQUIRE: at least two (2) NS records at parent [IIS.KVSE.001.01/r1]
     unless (scalar @ns_at_parent >= 2) {
-        $logger->error("DELEGATION:TOO_FEW_NS", $zone);
+        $logger->error("DELEGATION:TOO_FEW_NS", scalar @ns_at_parent);
     }
 
     # REQUIRE: check for inconsistent glue
     my @glue = _get_glue($context, $zone);
     foreach my $g (@glue) {
-        $logger->info("DELEGATION:MATCHING_GLUE", $zone, $g->name, $g->address);
+        $logger->info("DELEGATION:MATCHING_GLUE", $g->name, $g->address);
 
         my $c =
           $context->dns->query_child($zone, $g->name, $g->class, $g->type);
@@ -104,16 +104,16 @@ sub test {
                     and $rr->address eq $g->address)
                 {
                     $logger->info("DELEGATION:GLUE_FOUND_AT_CHILD",
-                        $zone, $g->name, $g->address);
+                        $g->name, $g->address);
                     $found++;
                 }
             }
 
             unless ($found) {
-                $logger->error("DELEGATION:INCONSISTENT_GLUE", $zone, $g->name);
+                $logger->error("DELEGATION:INCONSISTENT_GLUE", $g->name);	
             }
         } else {
-            $logger->error("DELEGATION:GLUE_MISSING_AT_CHILD", $zone, $g->name);
+            $logger->error("DELEGATION:GLUE_MISSING_AT_CHILD", $g->name);
         }
     }
 

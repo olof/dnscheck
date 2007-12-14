@@ -246,51 +246,55 @@ messages:
   descr: ~
  DELEGATION:BEGIN:
   args: 1
-  format: ~
+  format: Begin testing delegation for %s.
   descr: ~
  DELEGATION:NS_AT_PARENT:
-  args: 3
-  format: ~
+  args: 1
+  format: Nameservers listed at parent: %s
   descr: ~
  DELEGATION:NOT_FOUND_AT_PARENT:
-  args: 1
-  format: ~
+  args: 0
+  format: Delegation not found at parent.
   descr: ~
  DELEGATION:NS_AT_CHILD:
-  args: 3
-  format: ~
+  args: 1
+  format: Nameservers listed at child: %s
   descr: ~
  DELEGATION:NOT_FOUND_AT_CHILD:
-  args: 1
-  format: ~
+  args: 0
+  format: No nameservers found at child.
   descr: ~
  DELEGATION:EXTRA_NS_PARENT:
   args: 1
-  format: ~
+  format: Superfluous nameserver listed at parent: %s
   descr: ~
  DELEGATION:EXTRA_NS_CHILD:
   args: 1
-  format: ~
+  format: Additional nameserver listed at child: %s
   descr: ~
  DELEGATION:TOO_FEW_NS:
   args: 1
-  format: ~
+  format: Too new nameservers (%s).
   descr: ~
  DELEGATION:MATCHING_GLUE:
-  args: 3
-  format: ~
-  descr: ~
- DELEGATION:INCONSISTENT_GLUE:
   args: 2
-  format: ~
+  format: Checking glue for %s (%s).
+  descr: ~
+ DELEGATION:GLUE_FOUND_AT_CHILD:
+  args: 2
+  format: Glue for %s found at child: %s
+  descr:
+ DELEGATION:INCONSISTENT_GLUE:
+  args: 1
+  format: Inconsistent glue for nameserver %s.
   descr: ~
  DELEGATION:GLUE_MISSING_AT_CHILD:
-  args: 2
-  format: ~
+  args: 1
+  format: Missing glue at child: %s
   descr: ~
  DELEGATION:END:
   args: 1
-  format: ~
+  format: Done testing delegation for %s.
   descr: ~
  DNSSEC:BEGIN:
   args: 1
