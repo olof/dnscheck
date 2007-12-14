@@ -282,7 +282,7 @@ messages:
   descr: ~
  DELEGATION:GLUE_FOUND_AT_CHILD:
   args: 2
-  format: Glue for %s found at child: %s
+  format: Child glue for %s found: %s
   descr:
  DELEGATION:INCONSISTENT_GLUE:
   args: 1
