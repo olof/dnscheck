@@ -478,31 +478,31 @@ messages:
   descr: ~
  MAIL:BEGIN:
   args: 1
-  format: ~
+  format: Begin testing email address %s.
   descr: ~
  MAIL:ADDRESS_SYNTAX:
   args: 1
-  format: ~
+  format: %s in not a valid email address.
   descr: ~
  MAIL:MAIL_EXCHANGER:
-  args: 3
-  format: ~
+  args: 1
+  format: Mail exchangers for %s found %s.
   descr: ~
  MAIL:DOMAIN_NOT_FOUND:
   args: 1
-  format: ~
+  format: No mail exchanger found for domain %s.
   descr: ~
  MAIL:HOST_ERROR:
   args: 1
-  format: ~
+  format: Invalid hostname for mail exchanger %s.
   descr: ~
  MAIL:IPV6_ONLY:
   args: 1
-  format: ~
+  format: Mail exchanger %s is reachable by IPv6 only.
   descr: ~
  MAIL:END:
   args: 1
-  format: ~
+  format: Done testing email address %s.
   descr: ~
  NAMESERVER:BEGIN:
   args: 2

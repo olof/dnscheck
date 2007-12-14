@@ -60,7 +60,7 @@ sub test {
     my @mailhosts = $context->dns->find_mx($domain);
 
     if (@mailhosts) {
-        $logger->info("MAIL:MAIL_EXCHANGER", join(",", @mailhosts));
+        $logger->info("MAIL:MAIL_EXCHANGER", $email, join(",", @mailhosts));
     }
 
     unless (scalar @mailhosts) {
