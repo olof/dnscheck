@@ -74,6 +74,8 @@ sub test {
 
     if ($unique_serials > 1) {
         $logger->warning("SERIAL:DIFFERENT", $unique_serials);
+    } else {
+        $logger->info("SERIAL:CONSISTENT");
     }
 
   DONE:

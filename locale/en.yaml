@@ -582,19 +582,23 @@ messages:
   descr: ~
  SERIAL:BEGIN:
   args: 1
-  format: ~
+  format: Begin testing serial numbers for %s.
   descr: ~
  SERIAL:SOA_AT_ADDRESS:
   args: 2
-  format: ~
+  format: SOA at address %s has serial %s.
   descr: ~
  SERIAL:DIFFERENT:
   args: 1
-  format: ~
+  format: %s different serials found.
+  descr: ~
+ SERIAL:CONSISTENT:
+  args: 1
+  format: All SOA records has consistent serial numbers.
   descr: ~
  SERIAL:END:
   args: 1
-  format: ~
+  format: Done testing serial numbers for %s.
   descr: ~
  SMTP:BEGIN:
   args: 2
