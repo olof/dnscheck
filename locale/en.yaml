@@ -505,80 +505,92 @@ messages:
   format: Done testing email address %s.
   descr: ~
  NAMESERVER:BEGIN:
-  args: 2
-  format: ~
+  args: 1
+  format: Begin testing nameserver %s.
   descr: ~
  NAMESERVER:HOST_ERROR:
   args: 1
-  format: ~
+  format: Hostname error for %s.
   descr: ~
  NAMESERVER:CHECKING_RECURSION:
   args: 2
-  format: ~
+  format: Checking recursion for %s at address %s.
   descr: ~
  NAMESERVER:RECURSIVE:
   args: 2
-  format: ~
+  format: Nameserver %s (%s) is recursive.
   descr: ~
  NAMESERVER:NOT_RECURSIVE:
-  args: 2
-  format: ~
+  args: 2(%s)
+  format: Nameserver %s (%s) is not recursive.
   descr: ~
  NAMESERVER:CHECKING_AUTH:
   args: 2
-  format: ~
+  format: Checking authority for %s (%s).
   descr: ~
  NAMESERVER:NOT_AUTH:
   args: 3
-  format: ~
+  format: Nameserver %s (%s) not authoritative for %s.
   descr: ~
  NAMESERVER:AUTH:
   args: 3
-  format: ~
+  format: Nameserver %s (%s) authoritative for %s.
   descr: ~
- NAMESERVER:CHECKING_UDP:
+ NAMESERVER:TESTING_UDP:
   args: 2
-  format: ~
+  format: Testing UDP queries to nameserver %s at addrress %s.
   descr: ~
  NAMESERVER:UDP_OK:
   args: 3
-  format: ~
+  format: Nameserver %s (%s) answers queries over UDP.
   descr: ~
  NAMESERVER:NO_UDP:
   args: 3
-  format: ~
+  format: Nameserver %s (%s) does not answer queries over UDP.
   descr: ~
- NAMESERVER:CHECKING_TCP:
+ NAMESERVER:TESTING_TCP:
   args: 2
-  format: ~
+  format: Testing TCP queries to nameserver %s at addrress %s.
   descr: ~
  NAMESERVER:TCP_OK:
   args: 3
-  format: ~
+  format: Nameserver %s (%s) answers queries over TCP.
   descr: ~
  NAMESERVER:NO_TCP:
   args: 3
-  format: ~
+  format: Nameserver %s (%s) does not answer queries over TCP.
   descr: ~
- NAMESERVER:CHECKING_AXFR:
+ NAMESERVER:TESTING_AXFR:
   args: 2
-  format: ~
+  format: Testing zone transfer for nameserver %s (%s).
+  descr: ~
+ NAMESERVER:AXFR_OPEN:
+  args: 3
+  format: Nameserver %s (%s) open for zone transfer of %s.
+  descr: ~
+ NAMESERVER:AXFR_CLOSED:
+  args: 3
+  format: Nameserver %s (%s) closed for zone transfer of %s.
   descr: ~
  NAMESERVER:CHECKING_LEGACY_ID:
   args: 2
-  format: ~
+  format: Checking for legacy name server ID of %s (%s).
+  descr: ~
+ NAMESERVER:LEGACY_ID:
+  args: 4
+  format: Legacy name server ID for %s (%s): %s = %s
   descr: ~
  NAMESERVER:CHECKING_NSID:
   args: 2
-  format: ~
+  format: Checking for name server ID of %s (%s).
   descr: ~
  NAMESERVER:NSID:
-  args: 2
-  format: ~
+  args: 3
+  format: Name server ID for %s (%s): %s
   descr: ~
  NAMESERVER:END:
-  args: 2
-  format: ~
+  args: 1
+  format: Done testing nameserver %s.
   descr: ~
  SERIAL:BEGIN:
   args: 1

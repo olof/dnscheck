@@ -49,7 +49,7 @@ sub test {
 
     my $packet;
 
-    $logger->info("NAMESERVER:BEGIN", $zone, $nameserver);
+    $logger->info("NAMESERVER:BEGIN", $nameserver);
 
     # REQUIRE: Nameserver must be a valid hostname
     if (DNSCheck::Test::Host::test($context, $nameserver)) {
@@ -82,7 +82,7 @@ sub test {
         }
 
         # REQUIRE: SOA must be fetchable over any protocol (UDP/TCP)
-        $logger->debug("NAMESERVER:CHECKING_UDP", $nameserver, $address);
+        $logger->debug("NAMESERVER:TESTING_UDP", $nameserver, $address);
         $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address,
             { transport => "udp" });
@@ -93,7 +93,7 @@ sub test {
             $errors++;
         }
 
-        $logger->debug("NAMESERVER:CHECKING_TCP", $nameserver, $address);
+        $logger->debug("NAMESERVER:TESTING_TCP", $nameserver, $address);
         $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address,
             { transport => "tcp" });
@@ -105,7 +105,7 @@ sub test {
         }
 
         # REQUIRE: Nameserver may provide AXFR
-        $logger->debug("NAMESERVER:CHECKING_AXFR", $nameserver, $address);
+        $logger->debug("NAMESERVER:TESTING_AXFR", $nameserver, $address);
         if ($context->dns->check_axfr($address, $zone, $qclass)) {
             $logger->notice("NAMESERVER:AXFR_OPEN", $nameserver, $address,
                 $zone);
@@ -122,12 +122,12 @@ sub test {
         #$logger->debug("NAMESERVER:CHECKING_NSID", $nameserver, $address);
         #my $nsid = $context->dns->query_nsid($address, $zone, $qclass, "SOA");
         #if ($nsid) {
-        #    $logger->info("NAMESERVER:NSID", $nameserver, $address);
+        #    $logger->info("NAMESERVER:NSID", $nameserver, $address, $nsid);
         #}
     }
 
   DONE:
-    $logger->info("NAMESERVER:END", $zone, $nameserver);
+    $logger->info("NAMESERVER:END", $nameserver);
 
     return $errors;
 }
