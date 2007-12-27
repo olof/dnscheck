@@ -40,6 +40,10 @@ messages:
   args: 4
   format: Query parent of %s for %s/%s/%s.
   descr: ~
+ DNS:QUERY_PARENT_NOCACHE:
+  args: 4
+  format: Query parent (wihtout cache) of %s for %s/%s/%s.
+  descr: ~
  DNS:FIND_PARENT:
   args: 2
   format: Find parent of %s/%s.
@@ -71,6 +75,10 @@ messages:
  DNS:QUERY_CHILD:
   args: 4
   format: Query any nameeserver of %s for %s/%s/%s.
+  descr: ~
+ DNS:QUERY_CHILD_NOCACHE:
+  args: 4
+  format: Query any nameeserver (withoutcache) of %s for %s/%s/%s.
   descr: ~
  DNS:NO_CHILD_NS:
   args: 2
