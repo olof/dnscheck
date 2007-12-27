@@ -60,9 +60,17 @@ messages:
   args: 1
   format: DNS server response: %s
   descr: ~
+ DNS:PARENT_RESPONSE:
+  args: 1
+  format: DNS response from parent: %s
+  descr: ~
+ DNS:CHILD_RESPONSE:
+  args: 1
+  format: DNS response from child: %s
+  descr: ~
  DNS:RESOLVER_RESPONSE:
   args: 1
-  format: DNS resolver response: %s
+  format: DNS response from resolver: %s
   descr: ~
  DNS:NO_PARENT_NS:
   args: 3
