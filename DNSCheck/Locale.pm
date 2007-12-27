@@ -68,7 +68,7 @@ sub expand {
     if ($format) {
         return sprintf($format, @args);
     } else {
-        return sprintf("%s %s", $tag, join(",", @args));
+        return sprintf("[MISSING LOCALE] %s %s", $tag, join(",", @args));
     }
 }
 
