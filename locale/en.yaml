@@ -365,7 +365,7 @@ messages:
   format: Checking DNSSEC at child (%s).
   descr: ~
  DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
-  args: 2
+  args: 3
   format: DNSKEY %s (tag %s) is using a not recommended algorithm: %s
   descr: ~
  DNSSEC:DNSKEY_SKIP_PROTOCOL:
