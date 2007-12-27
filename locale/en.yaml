@@ -521,7 +521,7 @@ messages:
   format: Nameserver %s (%s) is recursive.
   descr: ~
  NAMESERVER:NOT_RECURSIVE:
-  args: 2(%s)
+  args: 2
   format: Nameserver %s (%s) is not recursive.
   descr: ~
  NAMESERVER:CHECKING_AUTH:
@@ -614,67 +614,55 @@ messages:
   descr: ~
  SMTP:BEGIN:
   args: 2
-  format: ~
+  format: Begin testing mail server %s with %s.
   descr: ~
  SMTP:CONNECT_FAILED:
-  args: 0
-  format: ~
+  args: 1
+  format: Failed to connect to %s.
   descr: ~
  SMTP:BANNER:
   args: 1
-  format: ~
+  format: SMTP banner: %s
   descr: ~
  SMTP:HELLO_FAILED:
-  args: 0
-  format: ~
+  args: 1
+  format: SMTP HELO failed while talking to %s.
   descr: ~
  SMTP:MAIL_FROM:
   args: 1
-  format: ~
+  format: Using %s as SMTP from (MAIL_FROM).
   descr: ~
  SMTP:RAW:
   args: 1
-  format: ~
+  format: SMTP Response: %s
   descr: ~
  SMTP:MAIL_FROM_REJECTED:
   args: 1
-  format: ~
+  format: Host did not accept %s as SMTP destination.
   descr: ~
  SMTP:RCPT_TO:
   args: 1
-  format: ~
-  descr: ~
- SMTP:RAW:
-  args: 1
-  format: ~
+  format: Using %s as SMTP recipient (RCPT_TO).
   descr: ~
  SMTP:RECIPIENT_REJECTED:
   args: 1
-  format: ~
+  format: Host did not accept %s as SMTP recipient.
   descr: ~
  SMTP:RSET:
   args: 0
-  format: ~
-  descr: ~
- SMTP:RAW:
-  args: 1
-  format: ~
+  format: Sending SMTP reset (RSET).
   descr: ~
  SMTP:QUIT:
   args: 0
-  format: ~
-  descr: ~
- SMTP:RAW:
-  args: 1
-  format: ~
+  format: Sending SMTP quit (QUIT).
   descr: ~
  SMTP:OK:
-  args: 1
-  format: ~
+  args: 2
+  format: SMTP testing of %s with %s succeeded without errors.
   descr: ~
  SMTP:END:
   args: 2
-  format: ~
+  format: Done testing mail server %s with %s.
   descr: ~
  SOA:BEGIN:
   args: 1

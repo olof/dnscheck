@@ -55,7 +55,7 @@ sub test {
     );
 
     unless ($smtp) {
-        $logger->error("SMTP:CONNECT_FAILED");
+        $logger->error("SMTP:CONNECT_FAILED", $host);
         $errors++;
         goto DONE;
     }
@@ -108,7 +108,7 @@ sub test {
     $logger->debug("SMTP:RAW", $message);
 
     unless ($errors) {
-        $logger->info("SMTP:OK", $email);
+        $logger->info("SMTP:OK", $host, $email);
     }
 
   DONE:
