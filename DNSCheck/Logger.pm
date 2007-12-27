@@ -62,6 +62,11 @@ sub new {
     bless $self, $class;
 }
 
+sub clear {
+    my $self = shift;
+    $self->{messages} = ();
+}
+
 sub logname {
     my $self = shift;
     my $arg  = shift;
@@ -181,6 +186,8 @@ Helper functions for logging support.
 =head1 METHODS
 
 new();
+
+$logger->clear();
 
 $logger->logname(I<string>);
 
