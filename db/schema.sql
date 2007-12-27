@@ -24,6 +24,7 @@ CREATE TABLE `results` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `line` int(10) unsigned NOT NULL,
   `timestamp` datetime default NULL,
+  `level` varchar(16) default NULL,
   `message` varchar(255) NOT NULL default '',
   `arg0` varchar(255) default NULL,
   `arg1` varchar(255) default NULL,
