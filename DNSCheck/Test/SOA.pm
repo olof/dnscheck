@@ -114,7 +114,8 @@ sub test {
             $logger->warning("SOA:RNAME_UNDELIVERABLE",
                 $zone, $soa->rname, $mailaddr);
         } else {
-            $logger->info("SOA:RNAME_DELIVERABLE", $zone, $soa->rname);
+            $logger->info("SOA:RNAME_DELIVERABLE",
+                $zone, $soa->rname, $mailaddr);
         }
     } else {
         $logger->error("SOA:RNAME_SYNTAX", $zone, $soa->rname);
