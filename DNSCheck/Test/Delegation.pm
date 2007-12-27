@@ -104,13 +104,13 @@ sub test {
                     and $rr->address eq $g->address)
                 {
                     $logger->info("DELEGATION:GLUE_FOUND_AT_CHILD",
-                        $g->name, $g->address);
+                        $zone, $g->name, $g->address);
                     $found++;
                 }
             }
 
             unless ($found) {
-                $logger->error("DELEGATION:INCONSISTENT_GLUE", $g->name);	
+                $logger->error("DELEGATION:INCONSISTENT_GLUE", $g->name);
             }
         } else {
             $logger->error("DELEGATION:GLUE_MISSING_AT_CHILD", $g->name);
