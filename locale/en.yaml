@@ -52,6 +52,10 @@ messages:
   args: 3
   format: Found %s as parent of %s/%s.
   descr: ~
+ DNS:RESOLVER_RESPONSE:
+  args: 1
+  format: Resolver response: %s
+  descr: ~
  DNS:NO_PARENT_NS:
   args: 3
   format: Failed to find nameservers for %s (parent of %s/%s). 
@@ -169,19 +173,19 @@ messages:
   format: Resolved %s as parent of %s/%s.
   descr: ~
  DNS:FIND_MX_BEGIN:
-  args: 
+  args: 1
   format: Lookup up mail exchanger for %s
   descr: ~
  DNS:FIND_MX_RESULT:
-  args: 
+  args: 2
   format: Found mail exchanger for %s: %s
   descr: ~ 
  DNS:FIND_ADDRESSES:
-  args: 
+  args: 2
   format: Found addresses of %s/%s
   descr: ~ 
  DNS:FIND_ADDRESSES_RESULT:
-  args: 
+  args: 3
   format: Addresses for %s/%s: %s
   descr: ~
  ADDRESS:BEGIN:
@@ -485,7 +489,7 @@ messages:
   format: %s in not a valid email address.
   descr: ~
  MAIL:MAIL_EXCHANGER:
-  args: 1
+  args: 2
   format: Mail exchangers for %s found %s.
   descr: ~
  MAIL:DOMAIN_NOT_FOUND:
