@@ -446,11 +446,11 @@ messages:
   descr: ~
  DNSSEC:DS_KEYREF_OK:
   args: 2
-  format: Parent DS(%s) referes to valid key at child: %s
+  format: Parent DS(%s) refers to valid key at child: %s
   descr: ~
  DNSSEC:DS_KEYREF_INVALID:
   args: 2
-  format: Parent DS(%s) referes to invalid key at child: %s
+  format: Parent DS(%s) refers to invalid key at child: %s
   descr: ~
  DNSSEC:DS_TO_SEP:
   args: 2
