@@ -109,7 +109,7 @@ messages:
   format: EDNS not supported by %s.
   descr: ~
  DNS:NO_ANSWER:
-  args: 0
+  args: 1
   format: No answer received from %s.
   descr: ~
  DNS:NOT_AUTH:
@@ -244,6 +244,10 @@ messages:
   args: 1
   format: Begin testing connectivity for %s.
   descr: ~
+ CONNECTIVITY:ANNOUNCED_BY_ASN:
+  args: 1
+  format: Nameserver %s announced by: %s
+  descr: ~
  CONNECTIVITY:MULTIPLE_ASN:
   args: 1
   format: Nameserver %s announce by multiple AS.
@@ -304,9 +308,13 @@ messages:
   args: 2
   format: Checking glue for %s (%s).
   descr: ~
+ DELEGATION:GLUE_FOUND_AT_PARENT:
+  args: 3
+  format: Parent glue for %s found: %s (%s)
+  descr:
  DELEGATION:GLUE_FOUND_AT_CHILD:
-  args: 2
-  format: Child glue for %s found: %s
+  args: 3
+  format: Child glue for %s found: %s (%s)
   descr:
  DELEGATION:INCONSISTENT_GLUE:
   args: 1
@@ -645,7 +653,7 @@ messages:
   format: %s different serials found.
   descr: ~
  SERIAL:CONSISTENT:
-  args: 1
+  args: 0
   format: All SOA records has consistent serial numbers.
   descr: ~
  SERIAL:END:
