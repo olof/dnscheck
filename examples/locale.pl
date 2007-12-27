@@ -8,17 +8,17 @@ use strict;
 
 use Data::Dumper;
 
-use DNSCheck;
+use DNSCheck::Logger;
+use DNSCheck::Lookup::DNS;
+use DNSCheck::Lookup::ASN;
 
 ######################################################################
 
-my $check = new DNSCheck(
-    {
-        interactive => 1,
-        locale      => "locale/en.yaml"
-    }
-);
+my $logger =
+  new DNSCheck::Logger({ interactive => 1, locale => "locale/en.yaml" });
+my $dns = new DNSCheck::Lookup::DNS($logger);
+my $asn = new DNSCheck::Lookup::ASN($logger, $dns);
 
 die "syntax error" unless ($ARGV[0]);
 
-$check->zone($ARGV[0]);
+$asn->lookup($ARGV[0]);
