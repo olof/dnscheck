@@ -149,7 +149,7 @@ sub _check_child {
         # REQUIRE: a DNSKEY SHOULD NOT be of type RSA/MD5
         if ($key->algorithm == Net::DNS::SEC->algorithm("RSAMD5")) {
             $logger->warning("DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED",
-                $zone, "RSA/MD5");
+                $zone, $key->keytag, "RSA/MD5");
         }
 
         if ($key->algorithm == Net::DNS::SEC->algorithm("RSASHA1")) {
@@ -159,7 +159,7 @@ sub _check_child {
         # REQUIRE: a DNSKEY used for RRSIGs MUST have protocol DNSSEC (3)
         if ($key->protocol != 3) {
             $logger->warning("DNSSEC:DNSKEY_SKIP_PROTOCOL", $zone,
-                $key->keytag);
+                $key->keytag, $key->protocol);
             next;
         }
 
