@@ -173,15 +173,12 @@ sub print {
 sub export {
     my $self = shift;
 
-    my @buffer = ();
-
+    my @buffer= ();
     my $context = $self->{logname} ? $self->{logname} : "";
 
     foreach my $e (@{ $self->{messages} }) {
-        my @logentry = (
-            $e->{timestamp}, $context, $e->{level}, $e->{tag},
-            @{ $e->{arg} }
-        );
+        my @logentry =
+          ($e->{timestamp}, $context, $e->{level}, $e->{tag}, @{ $e->{arg} });
 
         push @buffer, \@logentry;
     }
