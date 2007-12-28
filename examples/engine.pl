@@ -19,7 +19,9 @@ my $engine = new DNSCheck::Engine(
         db_database => "dnscheckng",
         db_username => "dnscheckng",
         db_password => "engine",
+        debug       => 0,
+        verbose     => 1,
     }
 );
 
-$engine->process(1);
+$engine->process(10);

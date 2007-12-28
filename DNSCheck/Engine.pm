@@ -37,6 +37,7 @@ use strict;
 use Date::Format;
 use DBI;
 use DNSCheck;
+use Data::Dumper;
 
 ######################################################################
 
@@ -81,6 +82,9 @@ sub new {
       DBI->connect($source, $config->{db_username}, $config->{db_password})
       || die "can't connect to database $source";
 
+    $self->{verbose} = $config->{verbose};
+    $self->{debug}   = $config->{debug};
+
     $self->{dnscheck} = new DNSCheck($config);
 
     bless $self, $class;
@@ -96,37 +100,72 @@ sub process {
     my $self  = shift;
     my $count = shift;
 
+    my $dbh = $self->{dbh};
+
+    my $batch = _dequeue($dbh, $count);
+
+    printf("Got %d entries from queue\n", scalar(@$batch))
+      if ($self->{verbose});
+
+    foreach my $q (@$batch) {
+        printf("Testing %s (id=%d)\n", $q->{domain}, $q->{id})
+          if ($self->{verbose});
+
+        $self->test($q->{domain});
+
+        printf("Deleting %s (id=%d) from queue\n", $q->{domain},
+            $q->{id})
+          if ($self->{verbose});
+
+        $dbh->do(sprintf("DELETE FROM queue WHERE id=%d ", $q->{id}));
+    }
+}
+
+sub _dequeue {
+    my $dbh   = shift;
+    my $count = shift;
+
     my $limit = "";
 
-    if ($count) {
-        $limit = sprintf(" LIMIT %d", $count);
-    }
+    $limit = sprintf(" LIMIT %d", $count) if ($count);
 
-    my $domains =
-      $self->{dbh}->selectcol_arrayref(
-        "SELECT domain FROM queue ORDER BY priority " . $limit);
+    # FIXME: check integrity of dequeueing
 
-    foreach my $z (@$domains) {
-        $self->test($z);
+    $dbh->begin_work;
 
-        $self->{dbh}->do(
-            sprintf("DELETE FROM queue WHERE domain = %s",
-                $self->{dbh}->quote($z))
+    my $batch = $dbh->selectall_arrayref(
+        " SELECT id, domain FROM queue "
+          . " WHERE inprogress IS NULL "
+          . " ORDER BY priority "
+          . $limit,
+        { Slice => {} }
+    );
+
+    foreach my $q (@$batch) {
+        $dbh->do(
+            sprintf(
+                " UPDATE queue SET inprogress = NOW() WHERE id =
+              %d ", $q->{id}
+            )
         );
     }
+
+    $dbh->commit;
+
+    return $batch;
 }
 
 sub test {
     my $self = shift;
     my $zone = shift;
 
-    my $logger = $self->{dnscheck}->{context}->{logger};
+    my $logger = $self->{dnscheck}->logger;
     my $dbh    = $self->{dbh};
 
     $logger->clear($zone);
     $logger->logname($zone);
 
-    my $timeformat = "%Y-%m-%d %H:%m:%S";
+    my $timeformat = " % Y- %m - %d % H : %m : %S ";
 
     my $count_error   = 0;
     my $count_warning = 0;
@@ -134,7 +173,7 @@ sub test {
     my $count_info    = 0;
 
     $dbh->do(
-        sprintf("INSERT INTO tests (domain,begin) VALUES (%s,NOW())",
+        sprintf(" INSERT INTO tests(domain, begin) VALUES(%s, NOW()) ",
             $dbh->quote($zone))
     );
 
@@ -142,7 +181,7 @@ sub test {
 
     DNSCheck::zone($self->{dnscheck}, $zone);
 
-    $dbh->do(sprintf("UPDATE tests SET end=NOW() WHERE id=%d", $id));
+    $dbh->do(sprintf(" UPDATE tests SET end = NOW() WHERE id = %d ", $id));
 
     my $line = 0;
 
@@ -152,20 +191,24 @@ sub test {
 
         $line++;
 
-        $count_error++   if ($tag eq "ERROR");
-        $count_warning++ if ($tag eq "WARNING");
-        $count_notice++  if ($tag eq "NOTICE");
-        $count_info++    if ($tag eq "INFO");
+        $count_error++   if ($level eq "ERROR");
+        $count_warning++ if ($level eq "WARNING");
+        $count_notice++  if ($level eq "NOTICE");
+        $count_info++    if ($level eq "INFO");
 
         $dbh->do(
             sprintf(
-                "INSERT INTO results "
-                  . "(test_id,line,timestamp,level,message,"
-                  . "arg0,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9"
-                  . ") VALUES (%d,%d,%s,%s,%s,"
-                  . "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                " INSERT INTO results " . "
+              (test_id, line, timestamp, level, message, "
+                  . " arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,
+                arg9 "
+                  . "
+              ) VALUES(
+                %d, %d, %s, %s, %s, "
+                  . " % s,%s,%s, % s,%s,%s, % s,%s,%s, % s)",
                 $id, $line,
-                $dbh->quote(time2str($timeformat, $ts)), $dbh->quote($level),
+                $dbh->quote(time2str($timeformat, $ts)),
+                $dbh->quote($level),
                 $dbh->quote($tag),    $dbh->quote($arg[0]),
                 $dbh->quote($arg[1]), $dbh->quote($arg[2]),
                 $dbh->quote($arg[3]), $dbh->quote($arg[4]),
