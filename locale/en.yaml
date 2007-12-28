@@ -109,8 +109,8 @@ messages:
   format: EDNS not supported by %s.
   descr: ~
  DNS:NO_ANSWER:
-  args: 1
-  format: No answer received from %s.
+  args: 4
+  format: No answer received from %s when querying for %s/%s/%s.
   descr: ~
  DNS:NOT_AUTH:
   args: 4

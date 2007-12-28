@@ -331,7 +331,7 @@ sub query_explicit {
     }
 
     if ($packet->header->rcode ne "NOERROR") {
-        $self->{logger}->error("DNS:NO_ANSWER", $address);
+        $self->{logger}->error("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
         return undef;
     }
 
