@@ -17,6 +17,7 @@ CREATE TABLE `queue` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) default NULL,
   `priority` tinyint(3) unsigned NOT NULL default '0',
+  `inprogress` datetime default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii;
 
