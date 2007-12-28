@@ -136,7 +136,6 @@ sub critical {
     $self->{errors}++;
 }
 
-
 sub dump {
     my $self = shift;
 
@@ -146,14 +145,14 @@ sub dump {
         printf STDERR (
             "%s:%s%s [%s] %s\n",
             $e->{timestamp}, $context, $e->{level}, $e->{tag},
-            join(",", @{ $e->{arg} })
+            join(";", @{ $e->{arg} })
         );
     }
 }
 
 sub print {
-    my $self = shift;
-	my $locale = shift;
+    my $self   = shift;
+    my $locale = shift;
 
     my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
 
@@ -166,7 +165,7 @@ sub print {
         } else {
             printf("%s:%s%s [%s] %s\n",
                 $e->{timestamp}, $context, $e->{level}, $e->{tag},
-                join(",", @{ $e->{arg} }));
+                join(";", @{ $e->{arg} }));
         }
     }
 }
@@ -179,18 +178,15 @@ sub export {
     my $context = $self->{logname} ? $self->{logname} : "";
 
     foreach my $e (@{ $self->{messages} }) {
-        push @buffer,
-          join(
-            ";",
-            (
-                $e->{timestamp}, $context,
-                $e->{level},     $e->{tag},
-                join(",", @{ $e->{arg} })
-            )
-          );
+        my @logentry = (
+            $e->{timestamp}, $context, $e->{level}, $e->{tag},
+            @{ $e->{arg} }
+        );
+
+        push @buffer, \@logentry;
     }
 
-    return @buffer;
+    return \@buffer;
 }
 
 1;

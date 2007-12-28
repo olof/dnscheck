@@ -14,11 +14,12 @@ use DNSCheck::Logger;
 
 my $logger = new DNSCheck::Logger;
 
-$logger->add("foo", 1, 2, 3);
-$logger->add("bar", 4, 5, 6);
+$logger->add("level1", "tag1", 1, 2, 3);
+$logger->add("level2", "tag2", 4, 5, 6);
 
-my @log = $logger->export();
+my $log = $logger->export();
 
-foreach my $line (@log) {
-    print $line, "\n";
+foreach my $line (@{$log}) {
+	print Dumper($line);
+	print "---\n";
 }
