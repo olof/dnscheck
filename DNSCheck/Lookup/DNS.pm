@@ -53,10 +53,12 @@ sub new {
     $self->{logger} = shift;
     my $config = shift;
 
-    if ($config->{debug}) {
-        $self->{debug} = 1;
+    $self->{debug} = $config->{debug};
+
+    if ($config->{debug} && $config->{debug} >= 2) {
+        $self->{debug_resolver} = 1;
     } else {
-        $self->{debug} = 0;
+        $self->{debug_resolver} = 0;
     }
 
     # hash PACKET at resolver indexed by QNAME,QTYPE,QCLASS
@@ -86,7 +88,7 @@ sub new {
     # set up global resolver
     $self->{resolver} = new Net::DNS::Resolver;
     $self->{resolver}->persistent_tcp(0);
-    $self->{resolver}->debug($self->{debug});
+    $self->{resolver}->debug($self->{debug_resolver});
     $self->{resolver}->udp_timeout($self->{default}{udp_timeout});
     $self->{resolver}->tcp_timeout($self->{default}{tcp_timeout});
     $self->{resolver}->retry($self->{default}{retry});
@@ -360,7 +362,7 @@ sub _setup_resolver {
     # set up resolver
     my $resolver = new Net::DNS::Resolver;
 
-    $resolver->debug($self->{debug});
+    $resolver->debug($self->{debug_resolver});
     $resolver->udp_timeout($self->{default}{udp_timeout});
     $resolver->tcp_timeout($self->{default}{tcp_timeout});
     $resolver->retry($self->{default}{retry});
