@@ -118,8 +118,10 @@ sub test {
         }
     }
 
-    # Test old namservers
-    _history($context, $zone, \@ns_at_parent, $history);
+    # Test old namservers if we have history
+    if ($history) {
+        _history($context, $zone, \@ns_at_parent, $history);
+    }
 
     # TODO: check for loop in glue record chain (i.e. unresolvable)
 
