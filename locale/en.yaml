@@ -324,6 +324,14 @@ messages:
   args: 1
   format: Missing glue at child: %s
   descr: ~
+ DELEGATION:NS_HISTORY
+  args: 2
+  format: Previously used nameservers for %s: %s
+  descr: ~
+ DELEGATION:STILL_AUTH:
+  args: 3
+  format: Previously used nameserver %s (%s) is still authoritative for %s.
+  descr: ~
  DELEGATION:END:
   args: 1
   format: Done testing delegation for %s.
