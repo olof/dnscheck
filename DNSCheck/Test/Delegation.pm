@@ -148,7 +148,7 @@ sub _get_glue {
         my $ipv4 =
           $context->dns->query_parent($zone, $nameserver, $qclass, "A");
         my $ipv6 =
-          $context->dns->query_parent($zone, $nameserver, $qclass, "A");
+          $context->dns->query_parent($zone, $nameserver, $qclass, "AAAA");
 
         foreach my $rr ($ipv4->answer, $ipv4->additional) {
             if ($rr->type eq "A" and $rr->name =~ /\.$zone$/) {
