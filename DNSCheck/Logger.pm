@@ -45,6 +45,8 @@ sub new {
 
     my $config = shift;
 
+    $self->{debug} = $config->{debug};
+
     if ($config->{interactive}) {
         $self->{interactive} = 1;
     }
@@ -89,8 +91,13 @@ sub add {
 
     push @{ $self->{messages} }, $entry;
 
-    if ($self->{interactive}) {
+    if ($self->{debug}) {
         $self->dump();
+        $self->{messages} = ();
+    }
+
+    if ($self->{interactive}) {
+        $self->print();
         $self->{messages} = ();
     }
 }
@@ -129,8 +136,24 @@ sub critical {
     $self->{errors}++;
 }
 
+
 sub dump {
     my $self = shift;
+
+    my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
+
+    foreach my $e (@{ $self->{messages} }) {
+        printf STDERR (
+            "%s:%s%s [%s] %s\n",
+            $e->{timestamp}, $context, $e->{level}, $e->{tag},
+            join(",", @{ $e->{arg} })
+        );
+    }
+}
+
+sub print {
+    my $self = shift;
+	my $locale = shift;
 
     my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
 
@@ -206,6 +229,10 @@ $logger->debug(I<arg1>, I<arg2>, ..., I<argN>);
 $logger->critical(I<arg1>, I<arg2>, ..., I<argN>);
 
 $logger->dump();
+
+$logger->print();
+
+$logger->export();
 
 my @logmessages = $logger->export();
 
