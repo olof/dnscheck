@@ -164,7 +164,7 @@ sub test {
     $logger->clear($zone);
     $logger->logname($zone);
 
-    my $timeformat = " % Y- %m - %d % H : %m : %S ";
+    my $timeformat = "%Y-%m-%d %H:%m:%S";
 
     my $count_error   = 0;
     my $count_warning = 0;
