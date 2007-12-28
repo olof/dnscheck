@@ -324,7 +324,7 @@ messages:
   args: 1
   format: Missing glue at child: %s
   descr: ~
- DELEGATION:NS_HISTORY
+ DELEGATION:NS_HISTORY:
   args: 2
   format: Previously used nameservers for %s: %s
   descr: ~
