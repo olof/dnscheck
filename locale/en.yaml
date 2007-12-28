@@ -245,7 +245,7 @@ messages:
   format: Begin testing connectivity for %s.
   descr: ~
  CONNECTIVITY:ANNOUNCED_BY_ASN:
-  args: 1
+  args: 2
   format: Nameserver %s announced by: %s
   descr: ~
  CONNECTIVITY:MULTIPLE_ASN:
