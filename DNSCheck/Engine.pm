@@ -113,8 +113,7 @@ sub process {
 
         $self->test($q->{domain});
 
-        printf("Deleting %s (id=%d) from queue\n", $q->{domain},
-            $q->{id})
+        printf("Deleting %s (id=%d) from queue\n", $q->{domain}, $q->{id})
           if ($self->{verbose});
 
         $dbh->do(sprintf("DELETE FROM queue WHERE id=%d ", $q->{id}));
@@ -173,7 +172,7 @@ sub test {
     my $count_info    = 0;
 
     $dbh->do(
-        sprintf(" INSERT INTO tests(domain, begin) VALUES(%s, NOW()) ",
+        sprintf("INSERT INTO tests(domain,begin) VALUES(%s,NOW())",
             $dbh->quote($zone))
     );
 
@@ -181,7 +180,7 @@ sub test {
 
     DNSCheck::zone($self->{dnscheck}, $zone);
 
-    $dbh->do(sprintf(" UPDATE tests SET end = NOW() WHERE id = %d ", $id));
+    $dbh->do(sprintf("UPDATE tests SET end=NOW() WHERE id=%d", $id));
 
     my $line = 0;
 
@@ -198,17 +197,12 @@ sub test {
 
         $dbh->do(
             sprintf(
-                " INSERT INTO results " . "
-              (test_id, line, timestamp, level, message, "
-                  . " arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,
-                arg9 "
-                  . "
-              ) VALUES(
-                %d, %d, %s, %s, %s, "
-                  . " % s,%s,%s, % s,%s,%s, % s,%s,%s, % s)",
+                "INSERT INTO results "
+                  . "(test_id,line,timestamp,level,message,"
+                  . "arg0,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9) "
+                  . "VALUES(%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                 $id, $line,
-                $dbh->quote(time2str($timeformat, $ts)),
-                $dbh->quote($level),
+                $dbh->quote(time2str($timeformat, $ts)), $dbh->quote($level),
                 $dbh->quote($tag),    $dbh->quote($arg[0]),
                 $dbh->quote($arg[1]), $dbh->quote($arg[2]),
                 $dbh->quote($arg[3]), $dbh->quote($arg[4]),
@@ -222,8 +216,8 @@ sub test {
     $dbh->do(
         sprintf(
             "UPDATE tests SET "
-              . "count_error=%d, count_warning=%d, "
-              . "count_notice=%d, count_info=%d "
+              . "count_error=%d,count_warning=%d,"
+              . "count_notice=%d,count_info=%d "
               . "WHERE id=%d",
             $count_error, $count_warning, $count_notice, $count_info, $id
         )
