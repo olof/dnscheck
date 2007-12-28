@@ -192,9 +192,12 @@ sub test {
 
     my $line = 0;
 
-    foreach my $r ($logger->export) {
-        my ($ts, $context, $level, $tag, $args) = split(/;/, $r);
-        my @arg = split(/,/, $args);
+    foreach my $logentry (@{ $logger->export }) {
+        my $timestamp = shift @$logentry;
+        my $context   = shift @$logentry;
+        my $level     = shift @$logentry;
+        my $tag       = shift @$logentry;
+        my @arg       = @$logentry;
 
         $line++;
 
@@ -209,13 +212,20 @@ sub test {
                   . "(test_id,line,timestamp,level,message,"
                   . "arg0,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9) "
                   . "VALUES(%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-                $id, $line,
-                $dbh->quote(time2str($timeformat, $ts)), $dbh->quote($level),
-                $dbh->quote($tag),    $dbh->quote($arg[0]),
-                $dbh->quote($arg[1]), $dbh->quote($arg[2]),
-                $dbh->quote($arg[3]), $dbh->quote($arg[4]),
-                $dbh->quote($arg[5]), $dbh->quote($arg[6]),
-                $dbh->quote($arg[7]), $dbh->quote($arg[8]),
+                $id,
+                $line,
+                $dbh->quote(time2str($timeformat, $timestamp)),
+                $dbh->quote($level),
+                $dbh->quote($tag),
+                $dbh->quote($arg[0]),
+                $dbh->quote($arg[1]),
+                $dbh->quote($arg[2]),
+                $dbh->quote($arg[3]),
+                $dbh->quote($arg[4]),
+                $dbh->quote($arg[5]),
+                $dbh->quote($arg[6]),
+                $dbh->quote($arg[7]),
+                $dbh->quote($arg[8]),
                 $dbh->quote($arg[9])
             )
         );
