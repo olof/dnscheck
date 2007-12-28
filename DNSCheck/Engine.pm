@@ -96,11 +96,17 @@ sub process {
     my $self  = shift;
     my $count = shift;
 
-    my $domains = $self->{dbh}->selectcol_arrayref("SELECT domain FROM queue");
+    my $limit = "";
+
+    if ($count) {
+        $limit = sprintf(" LIMIT %d", $count);
+    }
+
+    my $domains =
+      $self->{dbh}->selectcol_arrayref(
+        "SELECT domain FROM queue ORDER BY priority " . $limit);
 
     foreach my $z (@$domains) {
-		print STDERR "Testing $z...\n";
-		
         $self->test($z);
 
         $self->{dbh}->do(
