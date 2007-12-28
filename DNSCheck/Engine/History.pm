@@ -39,7 +39,12 @@ use strict;
 #
 # this module will implement the delegation history tracking
 #
-
+#
+# TODO: implement
+#
+# given the current set of nameservers AND a list off all historic
+# nameservers, report any not current nameservers that answers authoritative
+# for the zone.
 
 1;
 
