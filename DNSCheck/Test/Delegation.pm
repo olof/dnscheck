@@ -39,6 +39,7 @@ use strict;
 sub test {
     my $context = shift;
     my $zone    = shift;
+    my $history = shift;
 
     my $qclass = $context->qclass;
     my $logger = $context->logger;
@@ -117,6 +118,9 @@ sub test {
         }
     }
 
+    # Test old namservers
+    _history($context, $zone, \@ns_at_parent, $history);
+
     # TODO: check for loop in glue record chain (i.e. unresolvable)
 
     # TODO: warning if glue chain is longer than 3 lookups
@@ -163,6 +167,43 @@ sub _get_glue {
     }
 
     return @glue;
+}
+
+sub _history {
+    my $context  = shift;
+    my $zone     = shift;
+    my $current  = shift;
+    my $previous = shift;
+
+    my $qclass = $context->qclass;
+    my $logger = $context->logger;
+
+    my @old = ();
+
+    foreach my $ns (@$previous) {
+        unless (grep(/^$ns$/, @$current)) {
+            push @old, $ns;
+        }
+    }
+
+    $logger->debug("DELEGATION:NS_HISTORY", $zone, join(",", @old));
+
+    foreach my $ns (@old) {
+        my @addresses = $context->dns->find_addresses($ns, $qclass);
+
+        foreach my $address (@addresses) {
+            if (
+                !$context->dns->address_is_authoritative(
+                    $address, $zone, $qclass
+                )
+              )
+            {
+                $logger->notice("DELEGATION:STILL_AUTH", $ns, $address, $zone);
+            }
+        }
+    }
+
+    return;
 }
 
 1;

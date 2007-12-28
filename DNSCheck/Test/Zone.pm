@@ -39,6 +39,7 @@ use strict;
 sub test {
     my $context = shift;
     my $zone    = shift;
+    my $history = shift;
 
     my $qclass = $context->qclass;
     my $logger = $context->logger;
@@ -48,7 +49,7 @@ sub test {
 
     $logger->info("ZONE:BEGIN", $zone);
 
-    $errors += DNSCheck::Test::Delegation::test($context, $zone);
+    $errors += DNSCheck::Test::Delegation::test($context, $zone, $history);
 
     goto DONE if ($errors);
 

@@ -178,7 +178,15 @@ sub test {
 
     my $id = $dbh->{'mysql_insertid'};
 
-    DNSCheck::zone($self->{dnscheck}, $zone);
+    my $history = $dbh->selectcol_arrayref(
+        sprintf(
+            "SELECT DISTINCT nameserver FROM delegation_history "
+              . "WHERE domain=%s",
+            $dbh->quote($zone)
+        )
+    );
+
+    DNSCheck::zone($self->{dnscheck}, $zone, $history);
 
     $dbh->do(sprintf("UPDATE tests SET end=NOW() WHERE id=%d", $id));
 
