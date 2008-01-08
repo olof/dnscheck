@@ -608,7 +608,7 @@ sub _find_upper {
     my $qclass = shift;
 
     my $answer = $self->{resolver}->send($qname, "SOA", $qclass);
-    foreach my $rr ($answer->answer) {
+    foreach my $rr ($answer->authority) {
         return $rr->name if ($rr->type eq "SOA");
     }
 
