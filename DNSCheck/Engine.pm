@@ -48,6 +48,9 @@ sub new {
 
     my $config = shift;
 
+
+	# TODO: move database configuration to MySQL configuration file?
+	
     unless ($config->{db_driver}) {
         $config->{db_driver} = "mysql";
     }
