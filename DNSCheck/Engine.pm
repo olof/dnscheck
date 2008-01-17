@@ -37,8 +37,10 @@ use strict;
 use Date::Format;
 use DBI;
 use DBD::mysql;
-use DNSCheck;
+use Sys::Syslog;
 use Data::Dumper;
+
+use DNSCheck;
 
 ######################################################################
 
@@ -53,10 +55,22 @@ sub new {
         $config->{db_config} = "./dnscheck.conf";
     }
 
-    my $dsn =
-      sprintf("DBI:mysql:database="
+    if ($config->{syslog_facility}) {
+        $self->{syslog} = 1;
+    } else {
+        $self->{syslog} = 0;
+    }
+
+    if ($self->{syslog}) {
+        openlog("dnscheck", "pid", $config->{syslog_facility});
+    }
+
+    my $dsn = sprintf(
+        "DBI:mysql:database="
           . ";mysql_read_default_group=dnscheck"
-          . ";mysql_read_default_file=%s", $config->{db_config});
+          . ";mysql_read_default_file=%s",
+        $config->{db_config}
+    );
 
     $self->{dbh} = DBI->connect($dsn)
       || die "can't connect to database $dsn";
@@ -75,6 +89,22 @@ sub DESTROY {
     $self->{dbh}->disconnect();
 }
 
+sub message {
+    my $self = shift;
+    my $prio = shift @_;
+    my @args = @_;
+
+    if ($self->{syslog}) {
+        syslog($prio, @args);
+    }
+
+    if ($self->{verbose}) {
+        print("dnscheck: ");
+        printf(@args);
+        print "\n";
+    }
+}
+
 sub process {
     my $self  = shift;
     my $count = shift;
@@ -83,20 +113,20 @@ sub process {
 
     my $batch = _dequeue($dbh, $count);
 
-    printf("Got %d entries from queue\n", scalar(@$batch))
-      if ($self->{verbose});
+    $self->message("info", "Got %d entries from queue", scalar(@$batch));
 
     foreach my $q (@$batch) {
-        printf("Testing %s (id=%d)\n", $q->{domain}, $q->{id})
-          if ($self->{verbose});
+        $self->message("info", "Testing %s (id=%d)\n", $q->{domain}, $q->{id});
 
         $self->test($q->{domain});
 
-        printf("Deleting %s (id=%d) from queue\n", $q->{domain}, $q->{id})
-          if ($self->{verbose});
+        $self->message("info", "Deleting %s (id=%d) from queue",
+            $q->{domain}, $q->{id});
 
         $dbh->do(sprintf("DELETE FROM queue WHERE id=%d ", $q->{id}));
     }
+
+    return scalar(@$batch);
 }
 
 sub _dequeue {
