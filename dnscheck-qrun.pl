@@ -7,6 +7,7 @@ use warnings;
 use strict;
 
 use Getopt::Long;
+use Pod::Usage;
 use Unix::Syslog qw(:subs);
 use DNSCheck::Engine;
 
