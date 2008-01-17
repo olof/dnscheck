@@ -36,6 +36,7 @@ use strict;
 
 use Date::Format;
 use DBI;
+use DBD::mysql;
 use DNSCheck;
 use Data::Dumper;
 
@@ -48,42 +49,17 @@ sub new {
 
     my $config = shift;
 
-
-	# TODO: move database configuration to MySQL configuration file?
-	
-    unless ($config->{db_driver}) {
-        $config->{db_driver} = "mysql";
+    unless ($config->{db_config}) {
+        $config->{db_config} = "./dnscheck.conf";
     }
 
-    unless ($config->{db_host}) {
-        $config->{db_dhost} = "localhost";
-    }
+    my $dsn =
+      sprintf("DBI:mysql:database="
+          . ";mysql_read_default_group=dnscheck"
+          . ";mysql_read_default_file=%s", $config->{db_config});
 
-    unless ($config->{db_port}) {
-        $config->{db_port} = 3306;
-    }
-
-    unless ($config->{db_database}) {
-        $config->{db_database} = "dnscheck";
-    }
-
-    unless ($config->{db_username}) {
-        $config->{db_username} = "engine";
-    }
-
-    unless ($config->{db_password}) {
-        $config->{db_password} = "";
-    }
-
-    my $source = sprintf(
-        "DBI:%s:database=%s;host=%s;port=%d",
-        $config->{db_driver}, $config->{db_database},
-        $config->{db_host},   $config->{db_port}
-    );
-
-    $self->{dbh} =
-      DBI->connect($source, $config->{db_username}, $config->{db_password})
-      || die "can't connect to database $source";
+    $self->{dbh} = DBI->connect($dsn)
+      || die "can't connect to database $dsn";
 
     $self->{verbose} = $config->{verbose};
     $self->{debug}   = $config->{debug};

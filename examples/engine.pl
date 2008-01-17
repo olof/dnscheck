@@ -14,13 +14,9 @@ use DNSCheck::Engine;
 
 my $engine = new DNSCheck::Engine(
     {
-        db_host     => "127.0.0.1",
-        db_port     => 13317,
-        db_database => "dnscheckng",
-        db_username => "dnscheckng",
-        db_password => "engine",
-        debug       => 0,
-        verbose     => 1,
+        db_config => "./dnscheck.conf",
+        debug     => 0,
+        verbose   => 1,
     }
 );
 
