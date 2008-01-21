@@ -330,8 +330,9 @@ sub query_explicit {
         return undef;
     }
 
+	# FIXME: notice, warning, error?
     if ($packet->header->rcode ne "NOERROR") {
-        $self->{logger}->error("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
+        $self->{logger}->notice("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
         return undef;
     }
 
