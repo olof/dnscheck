@@ -48,10 +48,21 @@ sub test {
 
     $logger->info("HOST:BEGIN", $hostname);
 
-    foreach my $label (split(/\./, $hostname)) {
+    my @labels = split(/\./, $hostname);
+
+    # REQUIRE: RFC 952 says first component must begin with a-z
+    if (scalar @labels > 0
+        && $labels[0] !~ /^[A-Za-z][A-Za-z0-9-]*$/)
+    {
+        $logger->error("HOST:ILLEGAL_NAME", $hostname, $labels[0]);
+        $errors++;
+        goto DONE;
+    }
+
+    foreach my $label (@labels) {
 
         # REQUIRE: RFC 952 says hostnames may contain a-z, 0-9 or -
-        if ($label !~ /^[A-Za-z][A-Za-z0-9-]*$/) {
+        if ($label !~ /^[A-Za-z0-9][A-Za-z0-9-]*$/) {
             $label = "<NULL>" if ($label eq "");
             $logger->error("HOST:ILLEGAL_NAME", $hostname, $label);
             $errors++;
