@@ -194,6 +194,8 @@ sub _history {
     foreach my $ns (@old) {
         my @addresses = $context->dns->find_addresses($ns, $qclass);
 
+		# FIXME: also skip current IP addresses
+
         foreach my $address (@addresses) {
             if (
                 !$context->dns->address_is_authoritative(
