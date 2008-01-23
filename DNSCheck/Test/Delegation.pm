@@ -182,6 +182,7 @@ sub _history {
 
     my @old = ();
 
+	# do not check current nameservers
     foreach my $ns (@$previous) {
         unless (grep(/^$ns$/, @$current)) {
             push @old, $ns;
