@@ -206,13 +206,8 @@ sub mname_is_auth {
     my @addresses = $dns->find_addresses($soa->mname, $soa->class);
 
     foreach my $a (@addresses) {
-        my $packet = $dns->query_explicit($soa->mname, $soa->class, "SOA", $a);
-
-        unless ($packet) {
-            ## FIXME: should query timeout be an error?
-            $errors++;
-            next;
-        }
+        $errors +=
+          $context->dns->address_is_authoritative($a, $soa->name, $soa->class);
     }
 
   DONE:
