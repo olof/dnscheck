@@ -137,7 +137,7 @@ sub _dequeue {
 
     $limit = sprintf(" LIMIT %d", $count) if ($count);
 
-    # FIXME: check integrity of dequeueing
+    # FIXME: check integrity of dequeueing (read-lock)
 
     $dbh->begin_work;
 
