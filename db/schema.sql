@@ -25,6 +25,8 @@ CREATE TABLE `results` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `test_id` int(10) unsigned NOT NULL,
   `line` int(10) unsigned NOT NULL,
+  `module_id` int(10) unsigned NOT NULL,
+  `parent_module_id` int(10) unsigned NOT NULL,
   `timestamp` datetime default NULL,
   `level` varchar(16) default NULL,
   `message` varchar(255) NOT NULL default '',

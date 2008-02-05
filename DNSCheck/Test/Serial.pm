@@ -44,6 +44,7 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
+    $logger->module_stack_push();
     $logger->info("SERIAL:BEGIN", $zone);
 
     # Fetch IPv4/IPv6 nameservers
@@ -80,6 +81,7 @@ sub test {
 
   DONE:
     $logger->info("SERIAL:END", $zone);
+    $logger->module_stack_pop();
 
     return 0;
 }

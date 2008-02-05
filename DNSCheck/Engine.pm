@@ -206,7 +206,11 @@ sub test {
         my $context   = shift @$logentry;
         my $level     = shift @$logentry;
         my $tag       = shift @$logentry;
-        my @arg       = @$logentry;
+        my $module_id =
+          shift @$logentry;    # Id of the module that logged the current entry
+        my $parent_module_id =
+          shift @$logentry; # Id of the parent module that called current module
+        my @arg = @$logentry;
 
         $line++;
 
@@ -218,11 +222,13 @@ sub test {
         $dbh->do(
             sprintf(
                 "INSERT INTO results "
-                  . "(test_id,line,timestamp,level,message,"
+                  . "(test_id,line,module_id,parent_module_id,timestamp,level,message,"
                   . "arg0,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9) "
-                  . "VALUES(%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                  . "VALUES(%d,%d,%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                 $id,
                 $line,
+                $module_id,
+                $parent_module_id,
                 $dbh->quote(time2str($timeformat, $timestamp)),
                 $dbh->quote($level),
                 $dbh->quote($tag),

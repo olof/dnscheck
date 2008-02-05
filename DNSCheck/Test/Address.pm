@@ -81,6 +81,7 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
+    $logger->module_stack_push();
     $logger->info("ADDRESS:BEGIN", $address);
 
     # REQUIRE: Address must be syntactically correct
@@ -154,6 +155,7 @@ sub test {
 
   DONE:
     $logger->info("ADDRESS:END", $address);
+    $logger->module_stack_pop();
 
     return $errors;
 }

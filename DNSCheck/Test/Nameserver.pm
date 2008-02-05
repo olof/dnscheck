@@ -49,6 +49,7 @@ sub test {
 
     my $packet;
 
+    $logger->module_stack_push();
     $logger->info("NAMESERVER:BEGIN", $nameserver);
 
     # REQUIRE: Nameserver must be a valid hostname
@@ -118,7 +119,7 @@ sub test {
         $logger->debug("NAMESERVER:CHECKING_LEGACY_ID", $nameserver, $address);
         _check_id($context, $nameserver, $address);
 
-		# FIXME: remove comment once query_nsid is complete
+        # FIXME: remove comment once query_nsid is complete
         #$logger->debug("NAMESERVER:CHECKING_NSID", $nameserver, $address);
         #my $nsid = $context->dns->query_nsid($address, $zone, $qclass, "SOA");
         #if ($nsid) {
@@ -128,6 +129,7 @@ sub test {
 
   DONE:
     $logger->info("NAMESERVER:END", $nameserver);
+    $logger->module_stack_pop();
 
     return $errors;
 }

@@ -47,6 +47,7 @@ sub test {
 
     $logger->logname($zone);
 
+    $logger->module_stack_push();
     $logger->info("ZONE:BEGIN", $zone);
 
     $errors += DNSCheck::Test::Delegation::test($context, $zone, $history);
@@ -64,6 +65,7 @@ sub test {
 
   DONE:
     $logger->info("ZONE:END", $zone);
+    $logger->module_stack_pop();
 
     return $errors;
 }

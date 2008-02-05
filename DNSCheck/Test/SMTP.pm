@@ -47,6 +47,7 @@ sub test {
     my $errors = 0;
     my $message;
 
+    $logger->module_stack_push();
     $logger->info("SMTP:BEGIN", $host, $email);
 
     my $smtp = Net::SMTP->new(
@@ -113,6 +114,7 @@ sub test {
 
   DONE:
     $logger->info("SMTP:END", $host, $email);
+    $logger->module_stack_pop();
 
     return $errors;
 }

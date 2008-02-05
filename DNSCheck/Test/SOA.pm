@@ -47,6 +47,7 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
+    $logger->module_stack_push();
     $logger->info("SOA:BEGIN", $zone);
 
     my $packet = $context->dns->query_child($zone, $zone, $qclass, "SOA");
@@ -178,6 +179,7 @@ sub test {
 
   DONE:
     $logger->info("SOA:END", $zone);
+    $logger->module_stack_pop();
 
     return $errors;
 }

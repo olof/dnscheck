@@ -61,12 +61,17 @@ sub new {
     $self->{warnings} = 0;
     $self->{debugs}   = 0;
 
+    @{ $self->{module_stack} } = (0);
+    $self->{module_id} = 0;
+
     bless $self, $class;
 }
 
 sub clear {
     my $self = shift;
     $self->{messages} = ();
+    @{ $self->{module_stack} } = (0);
+    $self->{module_id} = 0;
 }
 
 sub logname {
@@ -83,11 +88,23 @@ sub logname {
 sub add {
     my $self = shift;
 
+    my @module_stack     = @{ $self->{module_stack} };
+    my $module_id        = -1;
+    my $parent_module_id = -1;
+
+    if ($#module_stack > 0) {
+        $module_id        = $module_stack[$#module_stack];
+        $parent_module_id = $module_stack[$#module_stack - 1];
+    }
+
     my $entry;
     $entry->{timestamp} = join(".", gettimeofday);
     $entry->{level}     = shift;
     $entry->{tag}       = shift;
-    $entry->{arg}       = [@_];
+    $entry->{module_id} = $module_id;    # Id of module that logged entry
+    $entry->{parent_module_id} =
+      $parent_module_id;                 # Id of module that called current one
+    $entry->{arg} = [@_];
 
     push @{ $self->{messages} }, $entry;
 
@@ -173,17 +190,43 @@ sub print {
 sub export {
     my $self = shift;
 
-    my @buffer= ();
+    my @buffer = ();
     my $context = $self->{logname} ? $self->{logname} : "";
 
     foreach my $e (@{ $self->{messages} }) {
-        my @logentry =
-          ($e->{timestamp}, $context, $e->{level}, $e->{tag}, @{ $e->{arg} });
+        my @logentry = (
+            $e->{timestamp}, $context, $e->{level}, $e->{tag}, $e->{module_id},
+            $e->{parent_module_id},
+            @{ $e->{arg} }
+        );
 
         push @buffer, \@logentry;
     }
 
     return \@buffer;
+}
+
+# module_stack_push() creates a unique (autoincrement) identifier for the
+# module that called the function, and saves it in module stack - an array
+# of module ids
+#
+# module_stack_pop() removes one module id from the top of the stack
+#
+# This way, by calling module_stack_push when entering the module, and
+# module_stack_pop when exiting, it is ensured that in module_stack there
+# is a valid list of module ids that called the current module. On top of
+# the stack is the current module id, and the next one is id of the parent
+# module.
+
+sub module_stack_push {
+    my $self = shift;
+    $self->{module_id}++;
+    push @{ $self->{module_stack} }, $self->{module_id};
+}
+
+sub module_stack_pop {
+    my $self = shift;
+    pop @{ $self->{module_stack} };
 }
 
 1;

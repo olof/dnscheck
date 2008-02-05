@@ -59,6 +59,7 @@ sub test {
     my $child_result;
     my $parent_errors;
 
+    $logger->module_stack_push();
     $logger->info("DNSSEC:BEGIN", $zone);
 
     # Query parent for DS
@@ -113,6 +114,7 @@ sub test {
 
   DONE:
     $logger->info("DNSSEC:END", $zone);
+    $logger->module_stack_pop();
     return $errors;
 }
 
@@ -158,8 +160,8 @@ sub _check_child {
 
         # REQUIRE: a DNSKEY used for RRSIGs MUST have protocol DNSSEC (3)
         if ($key->protocol != 3) {
-            $logger->warning("DNSSEC:DNSKEY_SKIP_PROTOCOL", $zone,
-                $key->keytag, $key->protocol);
+            $logger->warning("DNSSEC:DNSKEY_SKIP_PROTOCOL",
+                $zone, $key->keytag, $key->protocol);
             next;
         }
 

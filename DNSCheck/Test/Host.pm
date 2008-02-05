@@ -46,6 +46,7 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
+    $logger->module_stack_push();
     $logger->info("HOST:BEGIN", $hostname);
 
     my @labels = split(/\./, $hostname);
@@ -113,6 +114,7 @@ sub test {
 
   DONE:
     $logger->info("HOST:END", $hostname);
+    $logger->module_stack_pop();
 
     return $errors;
 }

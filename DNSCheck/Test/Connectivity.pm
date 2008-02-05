@@ -44,6 +44,7 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
+    $logger->module_stack_push();
     $logger->info("CONNECTIVITY:BEGIN", $zone);
 
     my %as_set;
@@ -86,6 +87,7 @@ sub test {
 
   DONE:
     $logger->info("CONNECTIVITY:END", $zone);
+    $logger->module_stack_pop();
 
     return $errors;
 }

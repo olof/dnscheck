@@ -46,6 +46,7 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
+    $logger->module_stack_push();
     $logger->info("MAIL:BEGIN", $email);
 
     my ($localpart, $domain) = split(/@/, $email);
@@ -106,6 +107,7 @@ sub test {
 
   DONE:
     $logger->info("MAIL:END", $email);
+    $logger->module_stack_pop();
 
     return $errors;
 }

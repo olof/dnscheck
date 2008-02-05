@@ -45,6 +45,7 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
+    $logger->module_stack_push();
     $logger->info("DELEGATION:BEGIN", $zone);
 
     my $packet;
@@ -129,6 +130,7 @@ sub test {
 
   DONE:
     $logger->info("DELEGATION:END", $zone);
+    $logger->module_stack_pop();
 
     return $errors;
 }
@@ -182,7 +184,7 @@ sub _history {
 
     my @old = ();
 
-	# do not check current nameservers
+    # do not check current nameservers
     foreach my $ns (@$previous) {
         unless (grep(/^$ns$/, @$current)) {
             push @old, $ns;
@@ -194,7 +196,7 @@ sub _history {
     foreach my $ns (@old) {
         my @addresses = $context->dns->find_addresses($ns, $qclass);
 
-		# FIXME: also skip current IP addresses
+        # FIXME: also skip current IP addresses
 
         foreach my $address (@addresses) {
             if (
