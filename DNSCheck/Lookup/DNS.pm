@@ -330,9 +330,10 @@ sub query_explicit {
         return undef;
     }
 
-	# FIXME: notice, warning, error?
+    # FIXME: notice, warning, error?
     if ($packet->header->rcode ne "NOERROR") {
-        $self->{logger}->notice("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
+        $self->{logger}
+          ->notice("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -730,8 +731,8 @@ sub address_is_authoritative {
 
     my $packet = $self->query_explicit($qname, $qclass, "SOA", $address);
 
-    unless ($packet) {
-        ## FIXME: should query timeout be an error?
+    ## timeout is not considered an error
+    if ($packet && $packet->header->ancount == 0) {
         $errors++;
     }
 
@@ -891,7 +892,7 @@ sub _rr2string {
 ######################################################################
 
 sub clear_blacklist {
-    my $self    = shift;
+    my $self = shift;
 
     $self->{blacklist} = ();
 }
