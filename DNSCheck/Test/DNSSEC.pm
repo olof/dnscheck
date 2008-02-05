@@ -108,9 +108,12 @@ sub test {
     ($child_errors, $child_result) = _check_child($context, $zone, $dnskey);
     $errors += $child_errors;
 
-    $parent_errors =
-      _check_parent($context, $zone, $ds, $dnskey, $child_result);
-    $errors += $parent_errors;
+	# Only check parent if we've found a DS
+    if ($ds) {
+        $parent_errors =
+          _check_parent($context, $zone, $ds, $dnskey, $child_result);
+        $errors += $parent_errors;
+    }
 
   DONE:
     $logger->info("DNSSEC:END", $zone);
