@@ -890,6 +890,12 @@ sub _rr2string {
 
 ######################################################################
 
+sub clear_blacklist {
+    my $self    = shift;
+
+    $self->{blacklist} = ();
+}
+
 sub add_blacklist {
     my $self    = shift;
     my $address = shift;
