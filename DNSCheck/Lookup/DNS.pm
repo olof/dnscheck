@@ -452,7 +452,7 @@ sub get_nameservers_at_parent {
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
 
-    return undef unless ($packet);
+    return () unless ($packet);
 
     if ($packet->authority > 0) {
         foreach my $rr ($packet->authority) {
@@ -579,6 +579,9 @@ sub _find_parent_helper {
     $self->{logger}->debug("DNS:FIND_PARENT_BEGIN", $qname, $qclass);
 
     my $try = $self->_find_authority($qname, $qclass);
+
+    goto DONE unless ($try);
+
     $self->{logger}->debug("DNS:FIND_PARENT_DOMAIN", $try);
 
     my @labels = split(/\./, $try);
@@ -599,7 +602,12 @@ sub _find_parent_helper {
     $parent = $try;
 
   DONE:
-    $self->{logger}->debug("DNS:FIND_PARENT_RESULT", $parent, $qname, $qclass);
+    if ($parent) {
+        $self->{logger}
+          ->debug("DNS:FIND_PARENT_RESULT", $parent, $qname, $qclass);
+    } else {
+        $self->{logger}->error("DNS:NXDOMAIN", $qname, $qclass);
+    }
 
     return $parent;
 }
@@ -610,6 +618,7 @@ sub _find_upper {
     my $qclass = shift;
 
     my $answer = $self->{resolver}->send($qname, "SOA", $qclass);
+
     foreach my $rr ($answer->authority) {
         return $rr->name if ($rr->type eq "SOA");
     }
@@ -623,6 +632,9 @@ sub _find_authority {
     my $qclass = shift;
 
     my $answer = $self->{resolver}->send($qname, "SOA", $qclass);
+
+    return undef if ($answer->header->rcode eq "NXDOMAIN");
+
     foreach my $rr ($answer->authority) {
         return $rr->name if ($rr->type eq "SOA");
     }

@@ -176,6 +176,10 @@ messages:
   args: 2
   format: Trying to find parent of %s/%s
   descr: ~
+ DNS:NXDOMAIN:
+  args: 2
+  format: Domain %s/%s does not exist.
+  descr: ~
  DNS:FIND_PARENT_DOMAIN:
   args: 1
   format: Using %s as a start for parent trace.
