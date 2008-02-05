@@ -758,11 +758,11 @@ messages:
   descr: ~
  SOA:MNAME_NOT_AUTH:
   args: 2
-  format: SOA MNAME for %s not authoritative for %s.
+  format: SOA MNAME for %s (%s) not authoritative.
   descr: ~
  SOA:MNAME_IS_AUTH:
   args: 2
-  format: SOA MNAME for %s authoritative for %s.
+  format: SOA MNAME for %s (%s) authoritative.
   descr: ~
  SOA:RNAME_UNDELIVERABLE:
   args: 3
