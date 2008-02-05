@@ -69,7 +69,7 @@ sub new {
 
 sub logger {
     my $self = shift;
-	return $self->{context}->logger;
+    return $self->{context}->logger;
 }
 
 ######################################################################

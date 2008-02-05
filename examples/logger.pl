@@ -20,6 +20,6 @@ $logger->add("level2", "tag2", 4, 5, 6);
 my $log = $logger->export();
 
 foreach my $line (@{$log}) {
-	print Dumper($line);
-	print "---\n";
+    print Dumper($line);
+    print "---\n";
 }

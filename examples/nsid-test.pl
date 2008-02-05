@@ -13,7 +13,7 @@ my $optrr = new Net::DNS::RR {
     class         => 1024,
     extendedrcode => 0x00,
     ednsflags     => 0x0000,
-    optioncode    => 0x03, # NSID, RFC 5001
+    optioncode    => 0x03,     # NSID, RFC 5001
     optiondata    => 0x00,
 };
 

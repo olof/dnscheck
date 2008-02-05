@@ -28,7 +28,7 @@
 #
 ######################################################################
 
-package DNSCheck::Engine::NSP;
+package DNSCheck::NSP;
 
 require 5.8.0;
 use warnings;
