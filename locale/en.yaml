@@ -82,11 +82,11 @@ messages:
   descr: ~
  DNS:QUERY_CHILD:
   args: 4
-  format: Query any nameeserver of %s for %s/%s/%s.
+  format: Query any nameserver of %s for %s/%s/%s.
   descr: ~
  DNS:QUERY_CHILD_NOCACHE:
   args: 4
-  format: Query any nameeserver (withoutcache) of %s for %s/%s/%s.
+  format: Query any nameserver (without cache) of %s for %s/%s/%s.
   descr: ~
  DNS:NO_CHILD_NS:
   args: 2
