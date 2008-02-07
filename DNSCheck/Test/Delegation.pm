@@ -191,7 +191,7 @@ sub _history {
         }
     }
 
-    $logger->debug("DELEGATION:NS_HISTORY", $zone, join(",", @old));
+    $logger->info("DELEGATION:NS_HISTORY", $zone, join(",", @old));
 
     foreach my $ns (@old) {
         my @addresses = $context->dns->find_addresses($ns, $qclass);
