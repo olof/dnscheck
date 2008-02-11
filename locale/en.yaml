@@ -183,23 +183,23 @@ messages:
  ADDRESS:PRIVATE_IPV4:
   args: 1
   format: %s is a private IPv4 address.
-  descr: ~
+  descr: A private IP address should normally not be exposed in the public DNS, since it's not reachable from the Internet.
  ADDRESS:RESERVED_IPV4:
   args: 1
   format: %s is a reserved IPv4 address.
-  descr: ~
+  descr: Reserved IPv4 addresses should not be used on the public Internet.
  ADDRESS:RESERVED_IPV6:
   args: 1
   format: %s is a reserved IPv6 address.
-  descr: ~
+  descr: Reserved IPv6 addresses should not be used on the public Internet.
  ADDRESS:PTR_NOT_FOUND:
   args: 2
   format: Could not find reverse address for %s (%s).
-  descr: ~
+  descr: A PTR records for the address could not be found in in-addr.arpa.
  ADDRESS:PTR_HOSTNAME_NOT_FOUND:
   args: 2
   format: Reverse for %s points to an unknown hostname (%s).
-  descr: ~
+  descr: The PTR record for the address points to an unknown hostname.
  ADDRESS:END:
   args: 1
   format: Done testing address %s.
