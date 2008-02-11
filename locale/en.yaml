@@ -4,26 +4,23 @@ locale_name: English
 locale_id: en
 
 messages:
+
  ASN:LOOKUP:
   args: 1
   format: Looking up AS number for %s.
-  descr: ~
  ASN:INVALID_ADDRESS:
   args: 1
   format: %s is an invalid IP address.
-  descr: ~
  ASN:ANNOUNCE_BY:
   args: 2
   format: %s announced by AS %s.
-  descr: ~
  ASN:NOT_ANNOUNCE:
   args: 1
   format: %s not announced.
-  descr: ~
  ASN:LOOKUP_ERROR:
   args: 1
   format: Error looking up AS number for %s.
-  descr: ~
+
  DNS:QUERY_EXPLICIT:
   args: 4
   format: Query %s for %s/%s/%s.
@@ -31,7 +28,6 @@ messages:
  DNS:QUERY_RESOLVER:
   args: 3
   format: DNS query for %s/%s/%s.
-  descr: ~
  DNS:RESOLVER_QUERY_TIMEOUT:
   args: 0
   format: DNS resolver timed out in query for %s/%s/%s.
@@ -39,39 +35,31 @@ messages:
  DNS:QUERY_PARENT:
   args: 4
   format: Query parent of %s for %s/%s/%s.
-  descr: ~
  DNS:QUERY_PARENT_NOCACHE:
   args: 4
   format: Query parent (wihtout cache) of %s for %s/%s/%s.
-  descr: ~
  DNS:FIND_PARENT:
   args: 2
   format: Find parent of %s/%s.
-  descr: ~
  DNS:NO_PARENT:
   args: 2
   format: Failed to find parent of %s/%s.
-  descr: ~
+  descr: DNSCheck failed to find the parent of zone.
  DNS:PARENT_OF:
   args: 3
   format: Found %s as parent of %s/%s.
-  descr: ~
  DNS:EXPLICIT_RESPONSE:
   args: 1
   format: DNS server response: %s
-  descr: ~
  DNS:PARENT_RESPONSE:
   args: 1
   format: DNS response from parent: %s
-  descr: ~
  DNS:CHILD_RESPONSE:
   args: 1
   format: DNS response from child: %s
-  descr: ~
  DNS:RESOLVER_RESPONSE:
   args: 1
   format: DNS response from resolver: %s
-  descr: ~
  DNS:NO_PARENT_NS:
   args: 3
   format: Failed to find nameservers for %s (parent of %s/%s). 
@@ -83,11 +71,9 @@ messages:
  DNS:QUERY_CHILD:
   args: 4
   format: Query any nameserver of %s for %s/%s/%s.
-  descr: ~
  DNS:QUERY_CHILD_NOCACHE:
   args: 4
   format: Query any nameserver (without cache) of %s for %s/%s/%s.
-  descr: ~
  DNS:NO_CHILD_NS:
   args: 2
   format: Failed to find namesevers of %s/%s.
@@ -95,11 +81,9 @@ messages:
  DNS:ADDRESS_BLACKLIST_ADD:
   args: 1
   format: Adding DNS server %s to blacklist.
-  descr: ~
  DNS:ADDRESS_BLACKLISTED:
   args: 1
   format: DNS server %s blacklisted.
-  descr: ~
  DNS:LOOKUP_ERROR:
   args: 1
   format: DNS lookup error (%s).
@@ -107,7 +91,7 @@ messages:
  DNS:NO_EDNS:
   args: 1
   format: EDNS not supported by %s.
-  descr: ~
+  descr: EDNS is an extension to the DNS protocol. The major change is that the 512-byte size limit of the query/answer packet has been removed, which allows more information to be provided.  EDNS is essential for newer protocols and technologies that requires larger packets like DNSSEC and IPv6.
  DNS:NO_ANSWER:
   args: 4
   format: No answer received from %s when querying for %s/%s/%s.
@@ -115,67 +99,51 @@ messages:
  DNS:NOT_AUTH:
   args: 4
   format: DNS server %s not authoritative for %s/%s/%s.
-  descr: ~
  DNS:ANSWER_DUMP:
   args: 1
   format: DNS query returned: %s
-  descr: ~
  DNS:SETUP_RESOLVER:
   args: 0
   format: DNS resolver set up.
-  descr: ~
  DNS:SET_BUFSIZE:
   args: 1
   format: DNS resolver EDNS buffer size set to %s.
-  descr: ~
  DNS:TRANSPORT_TCP:
   args: 0
   format: DNS resolver transport set to TCP.
-  descr: ~
  DNS:TRANSPORT_UDP:
   args: 0
   format: DNS resolver transport set to UDP.
-  descr: ~
  DNS:RECURSION_DESIRED:
   args: 0
   format: DNS resolver recursion desired.
-  descr: ~
  DNS:RECURSION_DISABLED:
   args: 0
   format: DNS resolver recursion disabled.
-  descr: ~
  DNS:DNSSEC_DESIRED:
   args: 0
   format: DNS resolver DNSSEC desired.
-  descr: ~
  DNS:DNSSEC_DISABLED:
   args: 0
   format: DNS resolver DNSSEC disabled.
-  descr: ~
  DNS:GET_NS_AT_PARENT:
   args: 2
   format: DNS query for NS of %s/%s at parent.
-  descr: ~
  DNS:GET_NS_AT_CHILD:
   args: 2
   format: DNS query for NS of %s/%s at child.
-  descr: ~
  DNS:INITIALIZING_NAMESERVERS:
   args: 2
   format: Initializing nameservers for %s/%s.
-  descr: ~
  DNS:NAMESERVERS_INITIALIZED:
   args: 2
   format: Nameservers for %s/%s initialized.
-  descr: ~
  DNS:NAMESERVER_FOUND:
   args: 4
   format: Found nameserver for %s/%s: %s (%s)
-  descr: ~
  DNS:FIND_PARENT_BEGIN:
   args: 2
   format: Trying to find parent of %s/%s
-  descr: ~
  DNS:NXDOMAIN:
   args: 2
   format: Domain %s/%s does not exist.
@@ -183,35 +151,28 @@ messages:
  DNS:FIND_PARENT_DOMAIN:
   args: 1
   format: Using %s as a start for parent trace.
-  descr: ~
  DNS:FIND_PARENT_TRY:
   args: 1
   format: Checking %s as parent domain.
-  descr: ~
  DNS:FIND_PARENT_UPPER:
   args: 1
   format: Parent might be %s.
-  descr: ~
  DNS:FIND_PARENT_RESULT:
   args: 3
   format: Resolved %s as parent of %s/%s.
-  descr: ~
  DNS:FIND_MX_BEGIN:
   args: 1
   format: Lookup up mail exchanger for %s
-  descr: ~
  DNS:FIND_MX_RESULT:
   args: 2
   format: Found mail exchanger for %s: %s
-  descr: ~ 
  DNS:FIND_ADDRESSES:
   args: 2
   format: Found addresses of %s/%s
-  descr: ~ 
  DNS:FIND_ADDRESSES_RESULT:
   args: 3
   format: Addresses for %s/%s: %s
-  descr: ~
+
  ADDRESS:BEGIN:
   args: 1
   format: Begin testing address %s.
@@ -244,6 +205,7 @@ messages:
   args: 1
   format: Done testing address %s.
   descr: ~
+
  CONNECTIVITY:BEGIN:
   args: 1
   format: Begin testing connectivity for %s.
@@ -251,7 +213,7 @@ messages:
  CONNECTIVITY:ANNOUNCED_BY_ASN:
   args: 2
   format: Nameserver %s announced by: %s
-  descr: ~
+  descr: The IP address is announced by an autonomous system (AS).
  CONNECTIVITY:MULTIPLE_ASN:
   args: 1
   format: Nameserver %s announce by multiple AS.
@@ -259,7 +221,7 @@ messages:
  CONNECTIVITY:NOT_ANNOUNCED:
   args: 1
   format: Nameserver %s not announced by any AS.
-  descr: ~
+  descr: The IP address not announce by any autonomous system and is most probably not reachable on the Internet.
  CONNECTIVITY:ASN_LIST:
   args: 1
   format: Zone announced by ASN: %s 
@@ -276,6 +238,7 @@ messages:
   args: 1
   format: Done testing connectivity for %s.
   descr: ~
+
  DELEGATION:BEGIN:
   args: 1
   format: Begin testing delegation for %s.
@@ -340,6 +303,7 @@ messages:
   args: 1
   format: Done testing delegation for %s.
   descr: ~
+
  DNSSEC:BEGIN:
   args: 1
   format: Begin testing DNSSEC for %s.
@@ -516,6 +480,7 @@ messages:
   args: 1
   format: Done testing DNSSEC for %s.
   descr: ~
+
  HOST:BEGIN:
   args: 1
   format: Begin testing host %s.
@@ -536,6 +501,7 @@ messages:
   args: 1
   format: Done testing host %s.
   descr: ~
+
  MAIL:BEGIN:
   args: 1
   format: Begin testing email address %s.
@@ -564,6 +530,7 @@ messages:
   args: 1
   format: Done testing email address %s.
   descr: ~
+
  NAMESERVER:BEGIN:
   args: 1
   format: Begin testing nameserver %s.
@@ -652,6 +619,7 @@ messages:
   args: 1
   format: Done testing nameserver %s.
   descr: ~
+
  SERIAL:BEGIN:
   args: 1
   format: Begin testing serial numbers for %s.
@@ -672,6 +640,7 @@ messages:
   args: 1
   format: Done testing serial numbers for %s.
   descr: ~
+
  SMTP:BEGIN:
   args: 2
   format: Begin testing mail server %s with %s.
@@ -724,6 +693,7 @@ messages:
   args: 2
   format: Done testing mail server %s with %s.
   descr: ~
+
  SOA:BEGIN:
   args: 1
   format: Begin testing SOA parameters for %s.
@@ -832,6 +802,7 @@ messages:
   args: 1
   format: Done testing SOA parameters for %s.
   descr: ~
+
  ZONE:BEGIN:
   args: 1
   format: Begin testing zone %s.
