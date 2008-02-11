@@ -495,23 +495,21 @@ messages:
  MAIL:ADDRESS_SYNTAX:
   args: 1
   format: %s in not a valid email address.
-  descr: ~
  MAIL:MAIL_EXCHANGER:
   args: 2
   format: Mail exchangers for %s found %s.
-  descr: ~
  MAIL:DOMAIN_NOT_FOUND:
   args: 1
   format: No mail exchanger found for domain %s.
-  descr: ~
+  descr: No mail exchanger was found for the domain.  This makes it impossible to deliver mail to any recipient within the domain.
  MAIL:HOST_ERROR:
   args: 1
   format: Invalid hostname for mail exchanger %s.
-  descr: ~
+  descr: The hostname for the mail exchanger is invalid.  A common error is to point the mail exchanger to an alias (CNAME) or directly to an IP address.
  MAIL:IPV6_ONLY:
   args: 1
   format: Mail exchanger %s is reachable by IPv6 only.
-  descr: ~
+  descr: The mail exchanger is only reachable via IPv6, making it impossible for most hosts on the Interhet to deliver mail to the domain.
  MAIL:END:
   args: 1
   format: Done testing email address %s.
@@ -609,16 +607,14 @@ messages:
  SERIAL:SOA_AT_ADDRESS:
   args: 2
   format: SOA at address %s has serial %s.
-  descr: ~
  SERIAL:DIFFERENT:
   args: 1
   format: %s different serials found.
-  descr: ~
+  descr: The SOA serial are not the same among all nameservers. This is usually due to mis-configuration, but can sometimes be a result of slow zone propagtion to secondary nameservers.
  SERIAL:CONSISTENT:
   args: 0
   format: All SOA records has consistent serial numbers.
-  descr: ~
- SERIAL:END:
+  SERIAL:END:
   args: 1
   format: Done testing serial numbers for %s.
 
