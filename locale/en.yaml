@@ -214,7 +214,7 @@ messages:
  CONNECTIVITY:MULTIPLE_ASN:
   args: 1
   format: Nameserver %s announce by multiple AS.
-  descr: ~
+  descr: The nameserver is announce my more than one autonomous system (AS).
  CONNECTIVITY:NOT_ANNOUNCED:
   args: 1
   format: Nameserver %s not announced by any AS.
@@ -222,15 +222,14 @@ messages:
  CONNECTIVITY:ASN_LIST:
   args: 1
   format: Zone announced by ASN: %s 
-  descr: ~
  CONNECTIVITY:TOO_FEW_ASN:
   args: 1
   format: Zone announced by too few ASN (%s).
-  descr: ~
+  descr: The zone's nameservers are all located within the same autonomous system.
  CONNECTIVITY:ASN_COUNT_OK:
   args: 1
   format: Zone announced by more than one ASN (%s).
-  descr: ~
+  descr: The zone's nameserves are located within more than one autonomous system.
  CONNECTIVITY:END:
   args: 1
   format: Done testing connectivity for %s.
@@ -241,59 +240,57 @@ messages:
  DELEGATION:NS_AT_PARENT:
   args: 1
   format: Nameservers listed at parent: %s
-  descr: ~
+  descr: This is the list of nameservers that are listed at the parent. and should include all nameservers listed at the child.
  DELEGATION:NOT_FOUND_AT_PARENT:
   args: 0
   format: Delegation not found at parent.
-  descr: ~
+  descr: No delegation could be found at the parent, making your zone unreachable from the Internet.
  DELEGATION:NS_AT_CHILD:
   args: 1
   format: Nameservers listed at child: %s
-  descr: ~
+  descr: This is the list of nameservers that are listed at the child and must include all nameservers listed at the parent.
  DELEGATION:NOT_FOUND_AT_CHILD:
   args: 0
   format: No nameservers found at child.
-  descr: ~
+  descr: No nameservers could be found at the child. This usually means that the no child is configured to answer queries about the zone.
  DELEGATION:EXTRA_NS_PARENT:
   args: 1
   format: Superfluous nameserver listed at parent: %s
-  descr: ~
+  descr: A nameserver listed at the parent, but not at the child, was found. This is most likely a administrative error and you should update the parent to match the nameservers the the child as soon as possible.
  DELEGATION:EXTRA_NS_CHILD:
   args: 1
   format: Additional nameserver listed at child: %s
-  descr: ~
+  descr: A nameserver listed at the child, but not at the parent, was found. This is is most likely a configuration error, but there are sometimes reasons for setting up zone this way.
  DELEGATION:TOO_FEW_NS:
   args: 1
   format: Too new nameservers (%s).
-  descr: ~
+  descr: Only one nameserver was found for the zone. You should always have at least two nameservers for a zone to be able to handle transient connectivity problems.
  DELEGATION:MATCHING_GLUE:
   args: 2
   format: Checking glue for %s (%s).
-  descr: ~
  DELEGATION:GLUE_FOUND_AT_PARENT:
   args: 3
   format: Parent glue for %s found: %s (%s)
-  descr:
+  descr: The IP address of the nameserver was found at the parent.
  DELEGATION:GLUE_FOUND_AT_CHILD:
   args: 3
   format: Child glue for %s found: %s (%s)
-  descr:
+  descr: The IP address of the nameserver was found at the child.
  DELEGATION:INCONSISTENT_GLUE:
   args: 1
   format: Inconsistent glue for nameserver %s.
-  descr: ~
+  descr: The address of a nameservers was different at the child and at the parent.  This is a configuration error and should be fixed as soon as possible.
  DELEGATION:GLUE_MISSING_AT_CHILD:
   args: 1
   format: Missing glue at child: %s
-  descr: ~
+  descr: The IP address of the nameservers was not found at the child. This is a configuration error and should be fixed as soon as possible.
  DELEGATION:NS_HISTORY:
   args: 2
   format: Previously used nameservers for %s: %s
-  descr: ~
  DELEGATION:STILL_AUTH:
   args: 3
   format: Previously used nameserver %s (%s) is still authoritative for %s.
-  descr: ~
+  descr: A previously used nameserver is still answering authoritative for the zone.  This is probably due to old zone data still being served by a no longer used server.  To fix this problem, contact the administrator of the nameserver and have them remove the zone for their configuration.
  DELEGATION:END:
   args: 1
   format: Done testing delegation for %s.
