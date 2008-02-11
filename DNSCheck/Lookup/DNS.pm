@@ -307,7 +307,7 @@ sub query_explicit {
     $resolver->nameserver($address);
 
     if ($self->check_blacklist($address)) {
-        $self->{logger}->error("DNS:ADDRESS_BLACKLISTED", $address);
+        $self->{logger}->debug("DNS:ADDRESS_BLACKLISTED", $address);
         return undef;
     }
     my $packet = $resolver->send($qname, $qtype, $qclass);
@@ -315,7 +315,7 @@ sub query_explicit {
         $self->{logger}
           ->error("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
         $self->add_blacklist($address);
-        $self->{logger}->info("DNS:ADDRESS_BLACKLIST_ADD", $address);
+        $self->{logger}->debug("DNS:ADDRESS_BLACKLIST_ADD", $address);
         return undef;
     }
 
