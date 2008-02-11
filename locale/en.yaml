@@ -176,7 +176,6 @@ messages:
  ADDRESS:BEGIN:
   args: 1
   format: Begin testing address %s.
-  descr: ~
  ADDRESS:INVALID:
   args: 1
   format: Adress %s is not valid.
@@ -204,12 +203,10 @@ messages:
  ADDRESS:END:
   args: 1
   format: Done testing address %s.
-  descr: ~
 
  CONNECTIVITY:BEGIN:
   args: 1
   format: Begin testing connectivity for %s.
-  descr: ~
  CONNECTIVITY:ANNOUNCED_BY_ASN:
   args: 2
   format: Nameserver %s announced by: %s
@@ -237,12 +234,10 @@ messages:
  CONNECTIVITY:END:
   args: 1
   format: Done testing connectivity for %s.
-  descr: ~
 
  DELEGATION:BEGIN:
   args: 1
   format: Begin testing delegation for %s.
-  descr: ~
  DELEGATION:NS_AT_PARENT:
   args: 1
   format: Nameservers listed at parent: %s
@@ -302,12 +297,10 @@ messages:
  DELEGATION:END:
   args: 1
   format: Done testing delegation for %s.
-  descr: ~
 
  DNSSEC:BEGIN:
   args: 1
   format: Begin testing DNSSEC for %s.
-  descr: ~
  DNSSEC:CHECKING_DS_AT_PARENT:
   args: 1
   format: Checking DS records for %s at parent.
@@ -479,12 +472,10 @@ messages:
  DNSSEC:END:
   args: 1
   format: Done testing DNSSEC for %s.
-  descr: ~
 
  HOST:BEGIN:
   args: 1
   format: Begin testing host %s.
-  descr: ~
  HOST:ILLEGAL_NAME:
   args: 2
   format: Hostname %s is illegal (syntax error at %s)
@@ -500,12 +491,10 @@ messages:
  HOST:END:
   args: 1
   format: Done testing host %s.
-  descr: ~
 
  MAIL:BEGIN:
   args: 1
   format: Begin testing email address %s.
-  descr: ~
  MAIL:ADDRESS_SYNTAX:
   args: 1
   format: %s in not a valid email address.
@@ -529,12 +518,10 @@ messages:
  MAIL:END:
   args: 1
   format: Done testing email address %s.
-  descr: ~
 
  NAMESERVER:BEGIN:
   args: 1
   format: Begin testing nameserver %s.
-  descr: ~
  NAMESERVER:HOST_ERROR:
   args: 1
   format: Hostname error for %s.
@@ -618,12 +605,10 @@ messages:
  NAMESERVER:END:
   args: 1
   format: Done testing nameserver %s.
-  descr: ~
 
  SERIAL:BEGIN:
   args: 1
   format: Begin testing serial numbers for %s.
-  descr: ~
  SERIAL:SOA_AT_ADDRESS:
   args: 2
   format: SOA at address %s has serial %s.
@@ -639,12 +624,10 @@ messages:
  SERIAL:END:
   args: 1
   format: Done testing serial numbers for %s.
-  descr: ~
 
  SMTP:BEGIN:
   args: 2
   format: Begin testing mail server %s with %s.
-  descr: ~
  SMTP:CONNECT_FAILED:
   args: 1
   format: Failed to connect to %s.
@@ -692,12 +675,10 @@ messages:
  SMTP:END:
   args: 2
   format: Done testing mail server %s with %s.
-  descr: ~
 
  SOA:BEGIN:
   args: 1
   format: Begin testing SOA parameters for %s.
-  descr: ~
  SOA:NOT_FOUND:
   args: 1
   format: No SOA record found for %s.
@@ -801,13 +782,10 @@ messages:
  SOA:END:
   args: 1
   format: Done testing SOA parameters for %s.
-  descr: ~
 
  ZONE:BEGIN:
   args: 1
   format: Begin testing zone %s.
-  descr: ~
  ZONE:END:
   args: 1
   format: Begin testing zone %s.
-  descr: ~
