@@ -16,5 +16,5 @@ my $check = new DNSCheck();
 
 ######################################################################
 
-ok($check->mail("info\@iis.se") == 0);
-ok($check->mail("info\@6f3899904701b0ce2835d82493c0212babf875c7.se") == 1);
+ok($check->mail("postmaster\@iis.se") == 0);
+ok($check->mail("postmaster\@6f3899904701b0ce2835d82493c0212babf875c7.se") == 1);
