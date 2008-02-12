@@ -11,7 +11,7 @@ CREATE TABLE `messages` (
   `description` text default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `langtag` (`tag`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `queue` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -19,7 +19,7 @@ CREATE TABLE `queue` (
   `priority` tinyint(3) unsigned NOT NULL default '0',
   `inprogress` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 CREATE TABLE `results` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -41,7 +41,7 @@ CREATE TABLE `results` (
   `arg8` varchar(255) default NULL,
   `arg9` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 CREATE TABLE `tests` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -53,7 +53,7 @@ CREATE TABLE `tests` (
   `count_notice` int(10) unsigned default '0',
   `count_info` int(10) unsigned default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 
 -- Name Service Providers
@@ -63,14 +63,14 @@ CREATE TABLE `nameservers` (
   `nsp_id` int(10) unsigned NOT NULL,
   `nameserver` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 CREATE TABLE `nsp` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(255) default '',
   `email` varchar(255) default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- Domains and History
@@ -79,12 +79,13 @@ CREATE TABLE `domains` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 CREATE TABLE `delegation_history` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) NOT NULL default '',
   `nameserver` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY (`domain`,`nameserver`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
