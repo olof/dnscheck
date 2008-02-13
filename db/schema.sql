@@ -78,7 +78,8 @@ CREATE TABLE `nsp` (
 CREATE TABLE `domains` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY (`domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 CREATE TABLE `delegation_history` (
