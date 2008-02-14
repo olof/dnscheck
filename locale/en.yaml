@@ -301,171 +301,151 @@ messages:
  DNSSEC:CHECKING_DS_AT_PARENT:
   args: 1
   format: Checking DS records for %s at parent.
-  descr: ~
  DNSSEC:DS_FOUND:
   args: 1
   format: Found DS record for %s at parent.
-  descr: ~
+  descr: A DS (delegation signer) RRset was found at the parent.  This indicates a secure delegation, i.e. the child must be signed.
  DNSSEC:NO_DS_FOUND:
   args: 1
   format: Did not find DS record for %s at parent.
-  descr: ~
+  descr: A DS (delegation signer) RRset could not be found at the parent.  This indicates an insecure delegation, i.e. the child does not have to be signed.
  DNSSEC:CHECKING_DNSKEY_AT_CHILD:
   args: 1
-  format: Dhecking DNSKEY records for %s at child.
-  descr: ~
+  format: Checking DNSKEY records for %s at child.
  DNSSEC:DNSKEY_FOUND:
   args: 1
   format: Found DNSKEY record for %s at child.
-  descr: ~
+  descr: A DNSKEY RRset was found at the child, indicating that the child probably uses DNSSEC.
  DNSSEC:DNSKEY_NOT_FOUND:
   args: 1
   format: Did not find DNSKEY record for %s at child.
-  descr: ~
+  descr: A DNSKEY RRset could not be found at the child, indicating that the child probably not uses DNSSEC.
  DNSSEC:DETERMINE_SECURITY_STATUS:
   args: 1
   format: Determining security status for %s.
-  descr: ~
  DNSSEC:INCONSISTENT_SECURITY:
   args: 1
   format: Inconsistent security for %s - DS found at parent, but no DNSKEY found at child.
-  descr: ~
+  descr: The parent has a secure delegation to the child (indicated by DS RRset at the parent), but the child has no DNSKEY.  This is probably due to a previously signed zone that became unsigned without requesting the parent to remove the secure delegation.
  DNSSEC:CONSISTENT_SECURITY:
   args: 1
   format: Consistent security for %s - DS found at parent and DNSKEY found at child.
-  descr: ~
  DNSSEC:SKIPPED_NO_KEYS:
   args: 1
   format: No DNSKEY(s) found at child, skipping other tests.
-  descr: ~
  DNSSEC:MISSING_DS:
   args: 1
   format: Chain of trust broken for %s - DNSKEY found at child, but no DS was found at parent.
-  descr: ~
+  descr: The child seems to use DNSSEC, but the parent has no secure delegation.  Because of this, the chain of trust between the parent and the child is broken and validating resolver will not be able to validate answers from the child.
  DNSSEC:CHECKING_CHILD:
   args: 1
   format: Checking DNSSEC at child (%s).
-  descr: ~
  DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
   args: 3
   format: DNSKEY %s (tag %s) is using a not recommended algorithm: %s
-  descr: ~
+  descr: A DNSKEY using an not recommended algorithm was found - consider stop using not recommended algorithms unless you have a good reason to use them.
  DNSSEC:DNSKEY_SKIP_PROTOCOL:
   args: 3
   format: DNSKEY %s (tag %s) is not a DNSSEC key (protocol=%s).
-  descr: ~
+  descr: DNSKEYs must have a protocol value of DNSSEC (3).
  DNSSEC:DNSKEY_SKIP_TYPE:
   args: 2
   format: DNSKEY %s (tag %s) is not a zone key.
-  descr: ~
+  descr: DNSKEYs must be a zone key.
  DNSSEC:DNSKEY_SEP:
   args: 2
   format: DNSKEY %s (tag %s) is marked as a secure entry point (SEP).
-  descr: ~
+  descr: A secure entry point (SEP) is used as part of the chain of trust from the parent to the child.
  DNSSEC:DNSKEY_MANDATORY_FOUND:
   args: 1
   format: At least one manadatory algorithm found for DNSKEY %s.
-  descr: ~
  DNSSEC:DNSKEY_MANDATORY_NOT_FOUND:
   args: 1
-  format: No manadatory algorithm found for DNSKEY %s.
-  descr: ~
+  format: No mandatory algorithm found for DNSKEY %s.
+  descr: At least one DNSKEY should be of type RSA/SHA1.
  DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
   args: 1
   format: DNSSEC additional processing broken for %s.
-  descr: ~
+  descr: No DNSSEC signatures where included in replys from the nameserver.  This is probably due to a misconfiguration at the nameserver.
  DNSSEC:NO_SIGNATURES:
   args: 1
   format: No signatures found for %s.
-  descr: ~
+  descr: No DNSSEC signatures was found when querying the zone. Perhaps the zone is not signed?
  DNSSEC:CHILD_CHECK_ABORTED:
   args: 1
   format: DNSSEC child checks aborted for %s.
-  descr: ~
  DNSSEC:DNSKEY_SIGNATURE_OK:
   args: 2
   format: Found RRSIG(DNSKEY %s) created by published key (tag %s).
-  descr: ~
  DNSSEC:DNSKEY_SIGNER_UNPUBLISHED:
   args: 2
   format: Found RRSIG(DNSKEY %s) created by unpublished key (tag %s).
-  descr: ~
+  descr: DNSSEC signatures created by unpublished keys can't be validated by validating resolvers.  All keys used to sign data must be published.
  DNSSEC:DNSKEY_VALID_SIGNATURES:
   args: 1
   format: Enough valid signatures found for %s.
-  descr: ~
  DNSSEC:DNSKEY_NO_VALID_SIGNATURES:
   args: 1
   format: Not enough valid signatures found for %s.
-  descr: ~
+  descr: No valid signatures for the DNSKEY RRset for the zone was found - make sure the zone is signed with a valid and published key.
  DNSSEC:SOA_SIGNATURE_OK:
   args: 2
   format: RRSIG(SOA %s) created by DNSKEY (tag %s) OK.
-  descr: ~
  DNSSEC:SOA_SIGNATURE_UNPUBLISHED:
   args: 2
   format: Found RRSIG(SOA %s) created by published key (tag %s).
-  descr: ~
+  descr: DNSSEC signatures created by unpublished keys can't be validated by validating resolvers.  All keys used to sign data must be published.
  DNSSEC:SOA_VALID_SIGNATURES:
   args: 1
   format: Enough valid signatures over SOA RRset found for %s.
-  descr: ~
  DNSSEC:SOA_NO_VALID_SIGNATURES:
   args: 1
   format: Not enough valid signatures over SOA RRset for %s.
-  descr: ~
+  descr: No valid signatures for the SOA RRset for the zone was found - make sure the zone is signed with a valid and published key.
  DNSSEC:CHILD_CHECKED:
   args: 1
   format: DNSSEC child checks for %s complete.
-  descr: ~
  DNSSEC:CHECKING_PARENT:
   args: 1
   format: Checking DNSSEC at parent of %s.
-  descr: ~
  DNSSEC:PARENT_DS:
   args: 2
   format: Found DS(%s) at parent: %s
-  descr: ~
  DNSSEC:DS_KEYREF_OK:
   args: 2
   format: Parent DS(%s) refers to valid key at child: %s
-  descr: ~
  DNSSEC:DS_KEYREF_INVALID:
   args: 2
   format: Parent DS(%s) refers to invalid key at child: %s
-  descr: ~
+  descr: The DS RRset must refer to a valid DNSKEY at the child, or the chain of trust between the parent and the child is broken and validating resolver will not be able to validate answers from the child.
  DNSSEC:DS_TO_SEP:
   args: 2
   format: Parent DS(%s) refers to secure entry point at child: %s
-  descr: ~
  DNSSEC:DS_TO_NONSEP:
   args: 2
   format: Parent DS(%s) does not refer to secure entry point at child: %s
-  descr: ~
+  descr: The DS RRset refers to a DNSKEY at the child, but the key is not marked as a secure entry point.
  DNSSEC:DS_MANDATORY_FOUND:
   args: 1
   format: At least one mandatory DS algorithm found for %s.
-  descr: ~
  DNSSEC:DS_MANDATORY_NOT_FOUND:
   args: 1
   format: No mandatory DS algorithm found for %s.
-  descr: ~
+  descr: Since none of the hash algorithms published in the DS RRset are mandatory, some validating resolvers will not be able to follow the chain of trust from the parent to the child.
  DNSSEC:PARENT_CHECKED:
   args: 1
   format: DNSSEC parent checks for %s complete.
-  descr: ~
  DNSSEC:RRSIG_NOT_YET_VALID:
   args: 1
   format: DNSSEC signature not yet valid: %s
-  descr: ~
+  descr: Not yet valid signatures will be ignored by validating resolvers.
  DNSSEC:RRSIG_EXPIRED:
   args: 1
   format: DNSSEC signature expired: %s
-  descr: ~
+  descr: Expired signatures will be ignored by validating resolvers.
  DNSSEC:RRSIG_VALID:
   args: 1
   format: DNSSEC signature valid: %s
-  descr: ~
  DNSSEC:END:
   args: 1
   format: Done testing DNSSEC for %s.
