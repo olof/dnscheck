@@ -739,7 +739,7 @@ messages:
   args: 1
   format: SOA expire for %s lower that refresh (%s vs %s).
   descr: ~
- SOA:MINIMUM_OK:
+ SOA:MINIMUM_SMALL:
   args: 3
   format: SOA minimum for %s too small (%s) - recommended >= %s.
   descr: ~
