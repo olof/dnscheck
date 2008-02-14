@@ -654,55 +654,51 @@ messages:
  SOA:NOT_FOUND:
   args: 1
   format: No SOA record found for %s.
-  descr: ~
+  descr: No SOA record was found when querying the nameserver.  This is most probably due to a misconfiguration at the nameserver - a zone must have a SOA record.
  SOA:FOUND:
   args: 1
   format: Found SOA record for %s.
-  descr: ~
  SOA:MULTIPLE_SOA:
   args: 1
   format: Multiple SOA records found for %s.
-  descr: ~
+  descr: Multiple SOA records found when querying the nameservers. This is very broken and definately due to a misconfiguration.
  SOA:MNAME_ERROR:
   args: 2
   format: Error while checking SOA MNAME for %s (%s).
-  descr: ~
+  descr: The SOA MNAME was not a valid host name.
  SOA:MNAME_VALID:
   args: 2
   format: SOA MNAME for %s valid (%s).
-  descr: ~
  SOA:NS_NOT_FOUND:
   args: 1
   format: No NS record(s) found for %s.
-  descr: ~
+  descr: No nameserver records for the zone was found. This is very broken and definately due to a misconfiguration.
  SOA:MNAME_STEALTH:
   args: 2
   format: SOA MNAME for %s (%s) not listed as NS.
-  descr: ~
+  descr: The nameserver listed as the SOA MNAME is not listed as a nameserver.
  SOA:MNAME_PUBLIC:
   args: 2
   format: SOA MNAME for %s (%s) listed as NS.
-  descr: ~
+  descr: The nameserver listed as the SOA MNAME is listed as a nameserver.
  SOA:MNAME_NOT_AUTH:
   args: 2
   format: SOA MNAME for %s (%s) not authoritative.
-  descr: ~
+  descr: The nameserver listed as the original or primary source of data for this zone does not answer authoriative.  This is probably due to a misconfiguration - perhaps the SOA MNAME is not set up as nameserver for the zone.
  SOA:MNAME_IS_AUTH:
   args: 2
   format: SOA MNAME for %s (%s) authoritative.
-  descr: ~
  SOA:RNAME_UNDELIVERABLE:
   args: 3
   format: Failed to deliver email for SOA MNAME of %s (%s) using %s. 
-  descr: ~
+  descr: DNSCheck failed to deliver email to the email address listed as the person responsible for the zone.
  SOA:RNAME_DELIVERABLE:
   args: 3
   format: Successfull attempt to deliver email for SOA MNAME of %s (%s) using %s. 
-  descr: ~
  SOA:RNAME_SYNTAX:
   args: 2
   format: Invalid SOA RNAME syntax for %s: %s
-  descr: ~
+  descr: The email address specified in SOA RNAME is not correctly specified.  A common error is to use @ in the address field - an address like hostmaster@example.com must be specified as hostmaster.example.com.
  SOA:TTL_SMALL:
   args: 3
   format: SOA TTL for %s too small (%s) - recommended >= %s.
