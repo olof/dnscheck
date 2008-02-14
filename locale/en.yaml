@@ -624,47 +624,40 @@ messages:
  SMTP:CONNECT_FAILED:
   args: 1
   format: Failed to connect to %s.
-  descr: ~
+  descr: DNSCheck failed to connect to the mail server.  The server could be down or unreachable due to misconfigured routing and/or filtering.
  SMTP:BANNER:
   args: 1
   format: SMTP banner: %s
-  descr: ~
  SMTP:HELLO_FAILED:
   args: 1
   format: SMTP HELO failed while talking to %s.
-  descr: ~
+  descr: The mail server did not accept our polite greeting.  This is probably due to misconfiguration.
  SMTP:MAIL_FROM:
   args: 1
   format: Using %s as SMTP from (MAIL_FROM).
-  descr: ~
  SMTP:RAW:
   args: 1
   format: SMTP Response: %s
-  descr: ~
  SMTP:MAIL_FROM_REJECTED:
   args: 1
   format: Host did not accept %s as SMTP destination.
-  descr: ~
+  descr: THe mail server did not accept our sender address.  DNSCheck uses a standard null sender address which must be accepted by mail servers.
  SMTP:RCPT_TO:
   args: 1
   format: Using %s as SMTP recipient (RCPT_TO).
-  descr: ~
  SMTP:RECIPIENT_REJECTED:
   args: 1
   format: Host did not accept %s as SMTP recipient.
-  descr: ~
+  descr: The mail server did no accept mail to the recipient address.  This is probably due to an unknown address.
  SMTP:RSET:
   args: 0
   format: Sending SMTP reset (RSET).
-  descr: ~
  SMTP:QUIT:
   args: 0
   format: Sending SMTP quit (QUIT).
-  descr: ~
  SMTP:OK:
   args: 2
   format: SMTP testing of %s with %s succeeded without errors.
-  descr: ~
  SMTP:END:
   args: 2
   format: Done testing mail server %s with %s.
