@@ -702,51 +702,46 @@ messages:
  SOA:TTL_SMALL:
   args: 3
   format: SOA TTL for %s too small (%s) - recommended >= %s.
-  descr: ~
+  descr: The smaller the SOA TTL value, the more often resolver need to requery for SOA record.
  SOA:TTL_OK:
   args: 3
   format: SOA TTL for %s OK (%s).
-  descr: ~
  SOA:REFRESH_SMALL:
   args: 3
   format: SOA refresh for %s too small (%s) - recommended >= %s.
-  descr: ~
+  descr: SOA refresh decides how often a secondary nameserver should check the  the primary nameserver for zone updates.
  SOA:REFRESH_OK:
   args: 3
   format: SOA refresh for %s OK (%s).
-  descr: ~
- SOA:RETRY_LOWER_REFRESH:
+ SOA:RETRY_VS_REFRESH:
   args: 3
-  format: SOA retry for %s lower that refresh (%s vs %s).
-  descr: ~
+  format: SOA refresh for %s lower that retry (%s vs %s).
+  descr: The retry value is the amount of time your secondary nameservers will wait to contact the master nameserver again if the last attempt failed.  If the refresh value is lower than the retry value, it's' useless.
  SOA:RETRY_SMALL:
   args: 3
   format: SOA retry for %s too small (%s) - recommended >= %s.
-  descr: ~
+  descr: The retry value is the amount of time your secondary nameservers will wait to contact the master nameserver again if the last attempt failed. If the retry value is too small, the secondary nameserver will retry too frequently.
  SOA:RETRY_OK:
   args: 3
   format: SOA retry for %s OK (%s).
-  descr: ~
  SOA:EXPIRE_SMALL:
   args: 3
   format: SOA expire for %s too small (%s) - recommended >= %s.
-  descr: ~
+  descr: The SOA expire value tells how long a secondary nameserver will wait before considering DNS data for a zone to be too old to serve in case it failed to reach the primary nameserver.
  SOA:EXPIRE_OK:
   args: 3
   format: SOA expire for %s OK (%s).
-  descr: ~
  SOA:EXPIRE_VS_REFRESH:
   args: 1
   format: SOA expire for %s lower that refresh (%s vs %s).
-  descr: ~
+  descr: The SOA expire value should be at least 7 times the SOA refresh value, to give secondary name servers a fair change of refreshing their copy of the zone before the data is considered too old to serve.
  SOA:MINIMUM_SMALL:
   args: 3
   format: SOA minimum for %s too small (%s) - recommended >= %s.
-  descr: ~
+  descr: The SOA minimum is used to tell caching resolvers how long they may cache negative answers. If the value is too small, negative caching will not work and resolvers will re-query frequently.
  SOA:MINIMUM_OK:
   args: 3
   format: SOA minimum for %s OK (%s).
-  descr: ~
  SOA:END:
   args: 1
   format: Done testing SOA parameters for %s.
