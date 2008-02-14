@@ -142,8 +142,8 @@ sub test {
 
     # REQUIRE: SOA 'retry' lower than 'refresh'
     unless ($soa->retry < $soa->refresh) {
-        $logger->notice("SOA:RETRY_LOWER_REFRESH", $zone, $soa->retry,
-            $soa->refresh);
+        $logger->notice("SOA:RETRY_VS_REFRESH", $zone, $soa->refresh,
+            $soa->retry);
     }
 
     # REQUIRE: SOA 'retry' at least 1 hour
