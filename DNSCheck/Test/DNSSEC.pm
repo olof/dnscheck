@@ -208,6 +208,7 @@ sub _check_child {
             $errors++;
         } else {
             $logger->error("DNSSEC:NO_SIGNATURES", $zone);
+            $errors++;
         }
 
         $logger->info("DNSSEC:CHILD_CHECK_ABORTED", $zone);
