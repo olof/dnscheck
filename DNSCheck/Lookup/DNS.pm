@@ -80,10 +80,26 @@ sub new {
     $self->{blacklist} = ();
 
     # default parameters
-    $self->{default}{udp_timeout} = undef;
-    $self->{default}{tcp_timeout} = 10;
-    $self->{default}{retry}       = 3;
-    $self->{default}{retrans}     = 2;
+    if ($config->{udp_timeout}) {
+        $self->{default}{udp_timeout} = $config->{udp_timeout};
+    } else {
+        $self->{default}{udp_timeout} = undef;
+    }
+    if ($config->{tcp_timeout}) {
+        $self->{default}{tcp_timeout} = $config->{tcp_timeout};
+    } else {
+        $self->{default}{tcp_timeout} = 10;
+    }
+    if ($config->{retry}) {
+        $self->{default}{retry} = $config->{retry};
+    } else {
+        $self->{default}{retry} = 3;
+    }
+    if ($config->{retrans}) {
+        $self->{default}{retrans} = $config->{retrans};
+    } else {
+        $self->{default}{retrans} = 2;
+    }
 
     # set up global resolver
     $self->{resolver} = new Net::DNS::Resolver;
