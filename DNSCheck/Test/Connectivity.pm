@@ -48,14 +48,18 @@ sub test {
     $logger->info("CONNECTIVITY:BEGIN", $zone);
 
     my %as_set;
+    my @nameservers = ();
 
     # Fetch IPv4 nameservers
-    my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
+    if ($context->{ipv4}) {
+        my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
+        push @nameservers, @{$ipv4};
+    }
 
     # FIXME: AS lookup for IPv6 addresses
 
     # FIXME: test for ASN lookup failure
-    foreach my $address (@{$ipv4}) {
+    foreach my $address (@nameservers) {
         my @as_list = @{ $context->asn->lookup($address) };
 
         foreach my $asn (@as_list) {

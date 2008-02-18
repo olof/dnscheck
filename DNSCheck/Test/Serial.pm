@@ -47,14 +47,20 @@ sub test {
     $logger->module_stack_push();
     $logger->info("SERIAL:BEGIN", $zone);
 
-    # Fetch IPv4/IPv6 nameservers
-    my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
-    my $ipv6 = $context->dns->get_nameservers_ipv6($zone, $qclass);
-
     my %serial_counter;
+	my @nameservers = ();
 
-    # FIXME: implement IPv6 support as well
-    foreach my $address (@{$ipv4}) {
+    if ($context->{ipv4}) {
+        my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
+        push @nameservers, @{$ipv4};
+    }
+
+    if ($context->{ipv6}) {
+        my $ipv6 = $context->dns->get_nameservers_ipv6($zone, $qclass);
+        push @nameservers, @{$ipv6};
+    }
+
+    foreach my $address (@nameservers) {
         my $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address);
 

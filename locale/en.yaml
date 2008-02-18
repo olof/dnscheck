@@ -563,6 +563,12 @@ messages:
  NAMESERVER:NSID:
   args: 3
   format: Name server ID for %s (%s): %s
+ NAMESERVER:SKIPPED_IPV4:
+  args: 1
+  format: IPv4 disabled - will not test nameserver at %s
+ NAMESERVER:SKIPPED_IPV6:
+  args: 1
+  format: IPv6 disabled - will not test nameserver at %s
  NAMESERVER:END:
   args: 1
   format: Done testing nameserver %s.

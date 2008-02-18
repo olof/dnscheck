@@ -34,6 +34,8 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use Net::IP 1.25 qw(ip_get_version);
+
 use DNSCheck::Test::Host;
 
 ######################################################################
@@ -62,6 +64,16 @@ sub test {
     my @addresses = $context->dns->find_addresses($nameserver, $qclass);
 
   ADDRESS: foreach my $address (@addresses) {
+
+		if (ip_get_version($address) == 4 && ! $context->{ipv4}) {
+			$logger->info("NAMESERVER:SKIPPED_IPV4", $address);
+			next ADDRESS;
+		}
+
+		if (ip_get_version($address) == 6 && ! $context->{ipv6}) {
+			$logger->info("NAMESERVER:SKIPPED_IPV6", $address);
+			next ADDRESS;
+		}
 
         # REQUIRE: Nameserver should not be recursive
         $logger->debug("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
