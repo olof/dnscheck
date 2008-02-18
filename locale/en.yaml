@@ -586,7 +586,7 @@ messages:
  SERIAL:CONSISTENT:
   args: 0
   format: All SOA records has consistent serial numbers.
-  SERIAL:END:
+ SERIAL:END:
   args: 1
   format: Done testing serial numbers for %s.
 
