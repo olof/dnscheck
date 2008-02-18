@@ -35,6 +35,8 @@ sub main {
             tcp_timeout     => 5,
             retry           => 3,
             retrans         => 2,
+            disable_ipv4    => 0,
+            disable_ipv6    => 0,
         }
     );
 

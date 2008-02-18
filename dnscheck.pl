@@ -14,8 +14,11 @@ use DNSCheck;
 
 my $check = new DNSCheck(
     {
-        interactive => 1,
-        locale      => "locale/en.yaml"
+        interactive  => 1,
+        locale       => "locale/en.yaml",
+        disable_ipv4 => 0,
+        disable_ipv6 => 0,
+
     }
 );
 
