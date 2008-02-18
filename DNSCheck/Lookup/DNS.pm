@@ -803,8 +803,9 @@ sub address_is_recursive {
 
     goto DONE unless $packet;
 
-    ## refused is ok
+    ## refused and servfail is ok
     goto DONE if ($packet->header->rcode eq "REFUSED");
+    goto DONE if ($packet->header->rcode eq "SERVFAIL");
 
     ## referral is ok
     goto DONE
