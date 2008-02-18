@@ -52,12 +52,12 @@ sub test {
 
     if ($context->{ipv4}) {
         my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
-        push @nameservers, @{$ipv4};
+        push @nameservers, @{$ipv4} if ($ipv4);
     }
 
     if ($context->{ipv6}) {
         my $ipv6 = $context->dns->get_nameservers_ipv6($zone, $qclass);
-        push @nameservers, @{$ipv6};
+        push @nameservers, @{$ipv6} if ($ipv6);
     }
 
     foreach my $address (@nameservers) {

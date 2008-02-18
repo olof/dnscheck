@@ -53,7 +53,7 @@ sub test {
     # Fetch IPv4 nameservers
     if ($context->{ipv4}) {
         my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
-        push @nameservers, @{$ipv4};
+        push @nameservers, @{$ipv4} if ($ipv4);
     }
 
     # FIXME: AS lookup for IPv6 addresses
