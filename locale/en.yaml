@@ -548,6 +548,10 @@ messages:
  NAMESERVER:TESTING_AXFR:
   args: 2
   format: Testing zone transfer for nameserver %s (%s).
+ NAMESERVER:AXFR_SKIP:
+  args: 3
+  format: Nameserver %s (%s) not checked for zone transfer of %s.
+  descr: The nameserver was not tested for zone transfer, since it did not answer queries over TCP.
  NAMESERVER:AXFR_OPEN:
   args: 3
   format: Nameserver %s (%s) open for zone transfer of %s.

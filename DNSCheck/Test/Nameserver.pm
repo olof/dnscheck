@@ -65,15 +65,17 @@ sub test {
 
   ADDRESS: foreach my $address (@addresses) {
 
-		if (ip_get_version($address) == 4 && ! $context->{ipv4}) {
-			$logger->info("NAMESERVER:SKIPPED_IPV4", $address);
-			next ADDRESS;
-		}
+        my $skip_tcp = undef;
 
-		if (ip_get_version($address) == 6 && ! $context->{ipv6}) {
-			$logger->info("NAMESERVER:SKIPPED_IPV6", $address);
-			next ADDRESS;
-		}
+        if (ip_get_version($address) == 4 && !$context->{ipv4}) {
+            $logger->info("NAMESERVER:SKIPPED_IPV4", $address);
+            next ADDRESS;
+        }
+
+        if (ip_get_version($address) == 6 && !$context->{ipv6}) {
+            $logger->info("NAMESERVER:SKIPPED_IPV6", $address);
+            next ADDRESS;
+        }
 
         # REQUIRE: Nameserver should not be recursive
         $logger->debug("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
@@ -115,16 +117,22 @@ sub test {
         } else {
             $logger->error("NAMESERVER:NO_TCP", $nameserver, $address, $zone);
             $errors++;
+            $skip_tcp = 1;
         }
 
         # REQUIRE: Nameserver may provide AXFR
+
         $logger->debug("NAMESERVER:TESTING_AXFR", $nameserver, $address);
-        if ($context->dns->check_axfr($address, $zone, $qclass)) {
-            $logger->notice("NAMESERVER:AXFR_OPEN", $nameserver, $address,
-                $zone);
+        if ($skip_tcp) {
+            $logger->info("NAMESERVER:AXFR_SKIP", $nameserver, $address, $zone);
         } else {
-            $logger->info("NAMESERVER:AXFR_CLOSED",
-                $nameserver, $address, $zone);
+            if ($context->dns->check_axfr($address, $zone, $qclass)) {
+                $logger->notice("NAMESERVER:AXFR_OPEN", $nameserver, $address,
+                    $zone);
+            } else {
+                $logger->info("NAMESERVER:AXFR_CLOSED",
+                    $nameserver, $address, $zone);
+            }
         }
 
         # Check for possible identification
