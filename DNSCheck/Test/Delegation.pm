@@ -64,7 +64,7 @@ sub test {
     if (scalar @ns_at_child) {
         $logger->info("DELEGATION:NS_AT_CHILD", join(",", @ns_at_child));
     } else {
-        $logger->error("DELEGATION:NOT_FOUND_AT_CHILD", $zone);
+        $logger->error("DELEGATION:NOT_FOUND_AT_CHILD");
         $errors++;
     }
 
