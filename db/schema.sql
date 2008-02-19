@@ -40,7 +40,8 @@ CREATE TABLE `results` (
   `arg7` varchar(255) default NULL,
   `arg8` varchar(255) default NULL,
   `arg9` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  CONSTRAINT `tests` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 CREATE TABLE `tests` (
