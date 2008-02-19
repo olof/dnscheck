@@ -256,6 +256,11 @@ sub test {
         )
     );
 
+    $dbh->do(
+        sprintf("UPDATE domains SET last_test=NOW() WHERE domain=%s",
+            $dbh->quote($zone))
+    );
+
     $logger->clear($zone);
 }
 
