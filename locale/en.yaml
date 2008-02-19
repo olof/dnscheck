@@ -329,7 +329,7 @@ messages:
   descr: The parent has a secure delegation to the child (indicated by DS RRset at the parent), but the child has no DNSKEY.  This is probably due to a previously signed zone that became unsigned without requesting the parent to remove the secure delegation.
  DNSSEC:CONSISTENT_SECURITY:
   args: 1
-  format: Consistent security for %s - DS found at parent and DNSKEY found at child.
+  format: Consistent security for %s.
  DNSSEC:SKIPPED_NO_KEYS:
   args: 1
   format: No DNSKEY(s) found at child, skipping other tests.
