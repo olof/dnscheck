@@ -498,6 +498,8 @@ sub get_nameservers_at_child {
 
     my $packet = $self->query_child($qname, $qname, $qclass, "NS");
 
+    return () unless ($packet);
+
     foreach my $rr ($packet->answer) {
         if ($rr->type eq "NS") {
             push @ns, $rr->nsdname;
