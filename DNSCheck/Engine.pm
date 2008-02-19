@@ -137,9 +137,8 @@ sub _dequeue {
 
     $limit = sprintf(" LIMIT %d", $count) if ($count);
 
-    # FIXME: check integrity of dequeueing (read-lock)
-
-    $dbh->begin_work;
+	# this is ugly, but a man has to do what a man has to do
+    $dbh->do("LOCK TABLES queue WRITE");
 
     my $batch = $dbh->selectall_arrayref(
         " SELECT id, domain FROM queue "
@@ -158,7 +157,7 @@ sub _dequeue {
         );
     }
 
-    $dbh->commit;
+    $dbh->do("UNLOCK TABLES");
 
     return $batch;
 }
