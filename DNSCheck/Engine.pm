@@ -137,7 +137,7 @@ sub _dequeue {
 
     $limit = sprintf(" LIMIT %d", $count) if ($count);
 
-	# this is ugly, but a man has to do what a man has to do
+    # this is ugly, but a man has to do what a man has to do
     $dbh->do("LOCK TABLES queue WRITE");
 
     my $batch = $dbh->selectall_arrayref(
@@ -194,7 +194,10 @@ sub test {
         )
     );
 
-    DNSCheck::zone($self->{dnscheck}, $zone, $history);
+    eval { DNSCheck::zone($self->{dnscheck}, $zone, $history); };
+    if ($@) {
+        $logger->critical("ENGINE:CRASH");
+    }
 
     $dbh->do(sprintf("UPDATE tests SET end=NOW() WHERE id=%d", $id));
 

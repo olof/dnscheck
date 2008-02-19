@@ -5,6 +5,10 @@ locale_id: en
 
 messages:
 
+ ENGINE:CRASH:
+  args: 0
+  format: DNSCheck engine crashed
+
  ASN:LOOKUP:
   args: 1
   format: Looking up AS number for %s.
