@@ -143,7 +143,7 @@ sub _dequeue {
     my $batch = $dbh->selectall_arrayref(
         " SELECT id, domain FROM queue "
           . " WHERE inprogress IS NULL "
-          . " ORDER BY priority "
+          . " ORDER BY priority DESC "
           . $limit,
         { Slice => {} }
     );
