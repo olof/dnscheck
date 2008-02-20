@@ -49,6 +49,7 @@ CREATE TABLE `tests` (
   `domain` varchar(255) NOT NULL default '',
   `begin` datetime default NULL,
   `end` datetime default NULL,
+  `count_critical` int(10) unsigned default '0',
   `count_error` int(10) unsigned default '0',
   `count_warning` int(10) unsigned default '0',
   `count_notice` int(10) unsigned default '0',

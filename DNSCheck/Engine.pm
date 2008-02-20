@@ -174,13 +174,14 @@ sub test {
 
     my $timeformat = "%Y-%m-%d %H:%m:%S";
 
-    my $count_error   = 0;
-    my $count_warning = 0;
-    my $count_notice  = 0;
-    my $count_info    = 0;
+    my $count_critical = 0;
+    my $count_error    = 0;
+    my $count_warning  = 0;
+    my $count_notice   = 0;
+    my $count_info     = 0;
 
     $dbh->do(
-        sprintf("INSERT INTO tests(domain,begin) VALUES(%s,NOW())",
+        sprintf("INSERT INTO tests (domain,begin,end) VALUES(%s,NOW(),NULL)",
             $dbh->quote($zone))
     );
 
@@ -216,10 +217,11 @@ sub test {
 
         $line++;
 
-        $count_error++   if ($level eq "ERROR");
-        $count_warning++ if ($level eq "WARNING");
-        $count_notice++  if ($level eq "NOTICE");
-        $count_info++    if ($level eq "INFO");
+        $count_critical++ if ($level eq "CRITICAL");
+        $count_error++    if ($level eq "ERROR");
+        $count_warning++  if ($level eq "WARNING");
+        $count_notice++   if ($level eq "NOTICE");
+        $count_info++     if ($level eq "INFO");
 
         $dbh->do(
             sprintf(
@@ -251,10 +253,14 @@ sub test {
     $dbh->do(
         sprintf(
             "UPDATE tests SET "
-              . "count_error=%d,count_warning=%d,"
-              . "count_notice=%d,count_info=%d "
+              . "count_critical=%d,"
+              . "count_error=%d,"
+              . "count_warning=%d,"
+              . "count_notice=%d,"
+              . "count_info=%d "
               . "WHERE id=%d",
-            $count_error, $count_warning, $count_notice, $count_info, $id
+            $count_critical, $count_error, $count_warning,
+            $count_notice,   $count_info,  $id
         )
     );
 
