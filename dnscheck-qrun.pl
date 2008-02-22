@@ -37,6 +37,7 @@ sub main {
             retrans         => 2,
             disable_ipv4    => 0,
             disable_ipv6    => 0,
+            ignore_debug    => 1,
         }
     );
 

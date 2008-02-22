@@ -75,8 +75,9 @@ sub new {
     $self->{dbh} = DBI->connect($dsn)
       || die "can't connect to database $dsn";
 
-    $self->{verbose} = $config->{verbose};
-    $self->{debug}   = $config->{debug};
+    $self->{verbose}      = $config->{verbose};
+    $self->{debug}        = $config->{debug};
+    $self->{ignore_debug} = $config->{ignore_debug};
 
     $self->{dnscheck} = new DNSCheck($config);
 
@@ -214,6 +215,8 @@ sub test {
         my $parent_module_id =
           shift @$logentry; # Id of the parent module that called current module
         my @arg = @$logentry;
+
+        next if ($level eq "DEBUG" && $self->{ignore_debug});
 
         $line++;
 
