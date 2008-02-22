@@ -778,6 +778,11 @@ sub address_is_recursive {
     my $logger = $self->{logger};
     my $errors = 0;
 
+    if ($self->check_blacklist($address)) {
+        $self->{logger}->debug("DNS:ADDRESS_BLACKLISTED", $address);
+        goto DONE;
+    }
+
     my $resolver = new Net::DNS::Resolver;
     $resolver->debug($self->{debug});
 
