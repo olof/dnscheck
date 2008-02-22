@@ -69,7 +69,7 @@ messages:
   format: Failed to find nameservers for %s (parent of %s/%s). 
   descr: ~
  DNS:QUERY_TIMEOUT:
-  args: 3
+  args: 4
   format: DNS server %s timed out in query for %s/%s/%s.
   descr: ~
  DNS:QUERY_CHILD:
