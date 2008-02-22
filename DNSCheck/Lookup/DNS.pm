@@ -804,7 +804,7 @@ sub address_is_recursive {
     my $packet = $resolver->send($nonexisting, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
         $self->{logger}
-          ->error("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
+          ->notice("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
         goto DONE;
     }
 
