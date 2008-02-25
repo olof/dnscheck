@@ -106,6 +106,21 @@ sub message {
     }
 }
 
+sub daemon {
+    my $self      = shift;
+    my $chunksize = shift;
+    my $sleep     = shift;
+
+    $self->message("info", "Starting DNSCheck Engine Daemon");
+
+    while (1) {
+        if ($self->process($chunksize, $sleep) == 0) {
+            $self->message("info", "zzz...");
+            sleep($sleep);
+        }
+    }
+}
+
 sub process {
     my $self  = shift;
     my $count = shift;

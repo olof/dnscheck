@@ -17,7 +17,7 @@ my $config = "/etc/dnscheck.conf";
 sub main {
     my $help      = 0;
     my $chunksize = 10;
-    my $sleep     = 30;
+    my $sleep     = 10;
     my $facility  = "daemon";
 
     GetOptions(
@@ -41,11 +41,9 @@ sub main {
         }
     );
 
-    while (1) {
-        my $n = $engine->process($chunksize);
-        sleep($sleep) unless ($n);
-    }
+	$engine->daemon($chunksize, $sleep);
 }
+
 
 main();
 
