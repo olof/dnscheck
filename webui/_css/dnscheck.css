@@ -56,10 +56,14 @@ body {
 	color: #ff6b00;
 }
 
-#searchbox p {
+p#testtext {
 	margin: 0 0 15px 0;
 	color: #666;
 	font-size: 0.8em;
+}
+
+p#testinput {
+	margin: 0;
 }
 
 #domaininput {

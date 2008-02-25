@@ -13,7 +13,7 @@
 <head>
 <script type="text/javascript" src="_js/jquery-1.2.2.min.js"></script>
 <script type="text/javascript" src="_js/DNSCheck.js?20080218_1622"></script>
-<script>
+<script type="text/javascript">
 	var domainDoesNotExistHeader = "<?php echo(translate("Domain doesn't exist"));?>";
 	var domainDoesNotExistLabel = "<?php echo(translate("The domain you entered doesn't seem to be registered"));?>";
 	var loadingHeader = "<?php echo(translate("Loading"));?>";
@@ -37,10 +37,10 @@
 		<h2 id="logo_se"><a href="#se"><?php echo(translate("A service from .SE"));?></a></h2>
 			<div id="searchbox">
 				<h3 id="searchhead"><?php echo(translate("Test your DNS-server and find errors"));?></h3>
-				<p><?php echo(translate("Enter your domain name in the field below to test the DNS-servers that are used."));?></p>
-				<form id="mainform">
-					<input name="" type="text" id="domaininput" />
-					<a href="javascript:void(0);" id="testnow" class="button"><?php echo(translate("Test now"));?></a>
+				<p id="testtext"><?php echo(translate("Enter your domain name in the field below to test the DNS-servers that are used."));?></p>
+				<form id="mainform" action="">
+					<p id="testinput"><input name="" type="text" id="domaininput" />
+					<a href="javascript:void(0);" id="testnow" class="button"><?php echo(translate("Test now"));?></a></p>
 				</form>
 			</div>
 	</div>
@@ -79,6 +79,7 @@
 			<p id="pager_error" style="display: none"><img src="_img/icon_warning.gif" alt="Error" width="16" height="14" /> <?php echo(translate("Error loading history"));?></p>
 			<p id="pager_no_history" style="display: none"><?php echo(translate("No test history exist"));?></p>
 			<ul id="pagerlist">
+				<li style="display:none"><?php echo(translate("Test history"));?></li>
 			</ul>
 			</div>
 			<div class="pager" id="pagerbuttonsdiv">
