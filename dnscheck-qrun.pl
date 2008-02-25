@@ -8,6 +8,7 @@ use strict;
 
 use Getopt::Long;
 use Pod::Usage;
+use POSIX qw(setsid);
 use DNSCheck::Engine;
 
 ######################################################################
@@ -41,9 +42,21 @@ sub main {
         }
     );
 
-	$engine->daemon($chunksize, $sleep);
+    daemonize() if ($facility);
+
+    $engine->daemon($chunksize, $sleep);
 }
 
+sub daemonize {
+    chdir '/' or die "Can't chdir to /: $!";
+    open STDIN,  '/dev/null'   or die "Can't read /dev/null: $!";
+    open STDOUT, '>>/dev/null' or die "Can't write to /dev/null: $!";
+    open STDERR, '>>/dev/null' or die "Can't write to /dev/null: $!";
+    defined(my $pid = fork) or die "Can't fork: $!";
+    exit if $pid;
+    setsid or die "Can't start a new session: $!";
+    umask 0;
+}
 
 main();
 
