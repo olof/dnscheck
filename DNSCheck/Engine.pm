@@ -61,6 +61,12 @@ sub new {
         $self->{syslog} = 0;
     }
 
+    if ($config->{realtime}) {
+        $self->{realtime} = 1;
+    } else {
+        $self->{realtime} = 0;
+    }
+
     if ($self->{syslog}) {
         openlog("dnscheck", "pid", $config->{syslog_facility});
     }
@@ -127,7 +133,7 @@ sub process {
 
     my $dbh = $self->{dbh};
 
-    my $batch = _dequeue($dbh, $count);
+    my $batch = _dequeue($dbh, $count, $self->{realtime});
 
     $self->message("info", "Got %d entries from queue", scalar(@$batch));
 
@@ -146,8 +152,9 @@ sub process {
 }
 
 sub _dequeue {
-    my $dbh   = shift;
-    my $count = shift;
+    my $dbh      = shift;
+    my $count    = shift;
+    my $realtime = shift;
 
     my $limit = "";
 
@@ -158,7 +165,8 @@ sub _dequeue {
 
     my $batch = $dbh->selectall_arrayref(
         " SELECT id, domain FROM queue "
-          . " WHERE inprogress IS NULL "
+          . " WHERE inprogress IS NULL " . " AND "
+          . ($realtime ? "priority=0" : "priority > 0")
           . " ORDER BY priority DESC "
           . $limit,
         { Slice => {} }
