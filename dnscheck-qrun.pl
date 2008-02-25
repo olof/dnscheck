@@ -19,12 +19,15 @@ sub main {
     my $help      = 0;
     my $chunksize = 10;
     my $sleep     = 10;
+    my $realtime  = 0;
     my $facility  = "daemon";
 
     GetOptions(
         'help|?'      => \$help,
         'config=s'    => \$config,
         'chunksize=i' => \$chunksize,
+        'sleep=i'     => \$sleep,
+        'realtime'    => \$realtime,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -39,6 +42,7 @@ sub main {
             disable_ipv4    => 0,
             disable_ipv6    => 0,
             ignore_debug    => 1,
+            realtime        => $realtime,
         }
     );
 
@@ -73,6 +77,7 @@ dnscheck-qrun [options]
 Options:
 
  --help                brief help message
+ --realtime            enable realtime processing
  --config=FILE         database configuration file
  --chunksize=N         number of domains to test per run
  --facility=FACILITY   syslog facility
