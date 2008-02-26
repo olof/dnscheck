@@ -24,6 +24,9 @@ sub main {
     my $facility  = "daemon";
     my $debug     = 0;
 
+    my $prio_low  = undef;
+    my $prio_high = undef;
+
     GetOptions(
         'help|?'      => \$help,
         'config=s'    => \$config,
@@ -39,6 +42,16 @@ sub main {
         $facility = undef;
     }
 
+    # realtime process handles only priority 5-10
+    # non-realtime process handles only priority 0-4
+    if ($realtime) {
+        $prio_low  = 5;
+        $prio_high = 10;
+    } else {
+        $prio_low  = 0;
+        $prio_high = 4;
+    }
+
     daemonize() if ($facility);
 
     my $n = $processes;
@@ -48,26 +61,27 @@ sub main {
 
         my $pid = fork;
 
-		if ($pid) {
-			print STDERR "Engine $pid forked\n" if ($debug);
-			next;
-		}
-    
-	    my $engine = new DNSCheck::Engine(
-	        {
-	            syslog_facility => $facility,
-	            db_config       => $config,
-	            udp_timeout     => 2,
-	            tcp_timeout     => 5,
-	            retry           => 3,
-	            retrans         => 2,
-	            disable_ipv4    => 0,
-	            disable_ipv6    => 0,
-	            ignore_debug    => 1,
-	            debug           => $debug,
-	            realtime        => $realtime,
-	        }
-	    );
+        if ($pid) {
+            print STDERR "Engine $pid forked\n" if ($debug);
+            next;
+        }
+
+        my $engine = new DNSCheck::Engine(
+            {
+                syslog_facility => $facility,
+                db_config       => $config,
+                udp_timeout     => 2,
+                tcp_timeout     => 5,
+                retry           => 3,
+                retrans         => 2,
+                disable_ipv4    => 0,
+                disable_ipv6    => 0,
+                ignore_debug    => 1,
+                debug           => $debug,
+                prio_low        => $prio_low,
+                prio_high       => $prio_high,
+            }
+        );
 
         $engine->daemon($chunksize, $sleep);
     }
@@ -105,5 +119,5 @@ Options:
  --config=FILE         database configuration file
  --facility=FACILITY   syslog facility
  --processes=N         number of processes to start
- --realtime            enable realtime processing (process priority=0 only)
+ --realtime            process realtime priorities only
  --sleep=SECONDS       seconds between empty batches
