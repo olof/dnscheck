@@ -57,14 +57,22 @@ sub main {
 
     daemonize() if ($facility);
 
-    while ($processes) {
-        $processes--;
+    my $n = $processes;
+
+    while ($n) {
+        $n--;
 
         my $pid = fork;
-        next if $pid;
 
+		if ($pid) {
+			print STDERR "Engine $pid forked\n" if ($debug);
+			next;
+		}
+    
         $engine->daemon($chunksize, $sleep);
     }
+
+    print STDERR "Forked $processes engine processes\n" if ($debug);
 }
 
 sub daemonize {
