@@ -79,10 +79,10 @@ sub new {
         $config->{db_config}
     );
 
-    $self->{dbh} = DBI->connect($dsn)
+    $self->{dbh} =
+      DBI->connect($dsn, undef, undef, { RaiseError => 1, AutoCommit => 1 })
       || die "can't connect to database $dsn";
 
-    $self->{verbose}      = $config->{verbose};
     $self->{debug}        = $config->{debug};
     $self->{ignore_debug} = $config->{ignore_debug};
 
@@ -106,10 +106,10 @@ sub message {
         syslog($prio, @args);
     }
 
-    if ($self->{verbose}) {
-        print("dnscheck: ");
+    if ($self->{debug}) {
+        printf("dnscheck[%d] ", $$);
         printf(@args);
-        print "\n";
+        printf("\n");
     }
 }
 
@@ -120,7 +120,7 @@ sub daemon {
 
     $self->message("info", "Starting DNSCheck Engine Daemon");
 
-    usleep(int(random($sleep * 1000)));
+    usleep(int(rand($sleep * 1000)));
 
     while (1) {
         if ($self->process($chunksize, $sleep) == 0) {
@@ -140,7 +140,12 @@ sub process {
 
     my $batch = _dequeue($dbh, $count, $self->{realtime});
 
-    $self->message("info", "Got %d entries from queue", scalar(@$batch));
+    if ($batch) {
+        $self->message("info", "Got %d entries from queue", scalar(@$batch));
+    } else {
+        $self->message("critical", "Queue error");
+        return 0;
+    }
 
     foreach my $q (@$batch) {
         $self->message("info", "Testing %s (id=%d)\n", $q->{domain}, $q->{id});
