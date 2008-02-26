@@ -20,16 +20,24 @@ sub main {
     my $chunksize = 10;
     my $sleep     = 10;
     my $realtime  = 0;
+    my $processes = 1;
     my $facility  = "daemon";
+    my $debug     = 0;
 
     GetOptions(
         'help|?'      => \$help,
         'config=s'    => \$config,
         'chunksize=i' => \$chunksize,
         'sleep=i'     => \$sleep,
+        'processes=i' => \$processes,
         'realtime'    => \$realtime,
+        'debug'       => \$debug,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
+
+    if ($debug) {
+        $facility = undef;
+    }
 
     my $engine = new DNSCheck::Engine(
         {
@@ -42,13 +50,21 @@ sub main {
             disable_ipv4    => 0,
             disable_ipv6    => 0,
             ignore_debug    => 1,
+            debug           => $debug,
             realtime        => $realtime,
         }
     );
 
     daemonize() if ($facility);
 
-    $engine->daemon($chunksize, $sleep);
+    while ($processes) {
+        $processes--;
+
+        my $pid = fork;
+        next if $pid;
+
+        $engine->daemon($chunksize, $sleep);
+    }
 }
 
 sub daemonize {
@@ -77,8 +93,9 @@ dnscheck-qrun [options]
 Options:
 
  --help                brief help message
- --realtime            enable realtime processing
- --config=FILE         database configuration file
  --chunksize=N         number of domains to test per run
+ --config=FILE         database configuration file
  --facility=FACILITY   syslog facility
+ --processes=N         number of processes to start
+ --realtime            enable realtime processing
  --sleep=SECONDS       seconds between empty batches
