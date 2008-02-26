@@ -128,6 +128,8 @@ sub daemon {
             sleep($sleep);
         }
     }
+
+    exit(0);    # never reached
 }
 
 sub process {
