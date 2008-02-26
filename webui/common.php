@@ -23,7 +23,7 @@
 		
 		$rawOutput = implode("\r\n", $commandOutput) . "\r\n";
 		
-		return (false !== strpos($rawOutput, 'ANSWER SECTION'));
+		return (false === strpos($rawOutput, 'status: NXDOMAIN'));
 	}
 
 	class DatabasePackage
