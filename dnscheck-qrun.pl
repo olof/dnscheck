@@ -39,22 +39,6 @@ sub main {
         $facility = undef;
     }
 
-    my $engine = new DNSCheck::Engine(
-        {
-            syslog_facility => $facility,
-            db_config       => $config,
-            udp_timeout     => 2,
-            tcp_timeout     => 5,
-            retry           => 3,
-            retrans         => 2,
-            disable_ipv4    => 0,
-            disable_ipv6    => 0,
-            ignore_debug    => 1,
-            debug           => $debug,
-            realtime        => $realtime,
-        }
-    );
-
     daemonize() if ($facility);
 
     my $n = $processes;
@@ -69,6 +53,22 @@ sub main {
 			next;
 		}
     
+	    my $engine = new DNSCheck::Engine(
+	        {
+	            syslog_facility => $facility,
+	            db_config       => $config,
+	            udp_timeout     => 2,
+	            tcp_timeout     => 5,
+	            retry           => 3,
+	            retrans         => 2,
+	            disable_ipv4    => 0,
+	            disable_ipv6    => 0,
+	            ignore_debug    => 1,
+	            debug           => $debug,
+	            realtime        => $realtime,
+	        }
+	    );
+
         $engine->daemon($chunksize, $sleep);
     }
 
