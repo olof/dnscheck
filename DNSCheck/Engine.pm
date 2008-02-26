@@ -74,11 +74,8 @@ sub new {
         $self->{syslog} = 0;
     }
 
-    if ($config->{realtime}) {
-        $self->{realtime} = 1;
-    } else {
-        $self->{realtime} = 0;
-    }
+    $self->{prio_low}  = $config->{prio_low};
+    $self->{prio_high} = $config->{prio_high};
 
     if ($self->{syslog}) {
         openlog("dnscheck", "pid", $config->{syslog_facility});
@@ -136,7 +133,7 @@ sub daemon {
 
     $SIG{'QUIT'} = \&sighandler;
 
-    while ($continue) {	
+    while ($continue) {
         if ($self->process($chunksize, $sleep) == 0) {
             $self->message("debug", "zzz...");
             sleep($sleep);
@@ -154,7 +151,7 @@ sub process {
 
     my $dbh = $self->{dbh};
 
-    my $batch = _dequeue($dbh, $count, $self->{realtime});
+    my $batch = _dequeue($dbh, $count, $self->{prio_low}, $self->{prio_high});
 
     if ($batch) {
         $self->message("info", "Got %d entries from queue", scalar(@$batch));
@@ -178,9 +175,10 @@ sub process {
 }
 
 sub _dequeue {
-    my $dbh      = shift;
-    my $count    = shift;
-    my $realtime = shift;
+    my $dbh       = shift;
+    my $count     = shift;
+    my $prio_low  = shift;
+    my $prio_high = shift;
 
     my $limit = "";
 
@@ -191,8 +189,9 @@ sub _dequeue {
 
     my $batch = $dbh->selectall_arrayref(
         " SELECT id, domain FROM queue "
-          . " WHERE inprogress IS NULL " . " AND "
-          . ($realtime ? "priority=0" : "priority > 0")
+          . " WHERE inprogress IS NULL "
+          . ($prio_low  ? " AND priority >= $prio_low "  : "")
+          . ($prio_high ? " AND priority <= $prio_high " : "")
           . " ORDER BY priority DESC "
           . $limit,
         { Slice => {} }
