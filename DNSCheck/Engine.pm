@@ -43,7 +43,19 @@ use Time::HiRes qw(usleep);
 
 use DNSCheck;
 
+my $continue = 1;
+
 ######################################################################
+
+sub sighandler {
+    my $signame = shift;
+
+    if ($signame eq "QUIT") {
+        $continue = 0;
+    } else {
+        die "Got unconfigured signal $signame";
+    }
+}
 
 sub new {
     my $proto = shift;
@@ -122,14 +134,18 @@ sub daemon {
 
     usleep(int(rand($sleep * 1000)));
 
-    while (1) {
+    $SIG{'QUIT'} = \&sighandler;
+
+    while ($continue) {	
         if ($self->process($chunksize, $sleep) == 0) {
             $self->message("debug", "zzz...");
             sleep($sleep);
         }
     }
 
-    exit(0);    # never reached
+    $self->message("info", "Got SIGHUP, exiting.");
+
+    exit(0);
 }
 
 sub process {
