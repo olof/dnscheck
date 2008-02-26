@@ -105,5 +105,5 @@ Options:
  --config=FILE         database configuration file
  --facility=FACILITY   syslog facility
  --processes=N         number of processes to start
- --realtime            enable realtime processing
+ --realtime            enable realtime processing (process priority=0 only)
  --sleep=SECONDS       seconds between empty batches
