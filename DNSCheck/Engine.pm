@@ -135,7 +135,7 @@ sub daemon {
 
     while ($continue) {
         if ($self->process($chunksize, $sleep) == 0) {
-            $self->message("debug", "zzz...");
+            $self->message("debug", "zzz...") if ($debug);
             sleep($sleep);
         }
     }
