@@ -214,13 +214,7 @@ sub test {
     my $count_notice   = 0;
     my $count_info     = 0;
 
-    $dbh->do(
-        sprintf("INSERT INTO tests (domain,begin,end) VALUES(%s,NOW(),NULL)",
-            $dbh->quote($zone))
-    );
-
-    my $id = $dbh->{'mysql_insertid'};
-
+    # fetch history
     my $history = $dbh->selectcol_arrayref(
         sprintf(
             "SELECT DISTINCT nameserver FROM delegation_history "
@@ -228,6 +222,13 @@ sub test {
             $dbh->quote($zone)
         )
     );
+
+    $dbh->do(
+        sprintf("INSERT INTO tests (domain,begin,end) VALUES(%s,NOW(),NULL)",
+            $dbh->quote($zone))
+    );
+
+    my $id = $dbh->{'mysql_insertid'};
 
     eval { DNSCheck::zone($self->{dnscheck}, $zone, $history); };
     if ($@) {
