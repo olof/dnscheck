@@ -218,16 +218,7 @@ sub test {
     my $logger = $self->{dnscheck}->logger;
     my $dbh    = $self->{dbh};
 
-    $logger->clear($zone);
-    $logger->logname($zone);
-
     my $timeformat = "%Y-%m-%d %H:%m:%S";
-
-    my $count_critical = 0;
-    my $count_error    = 0;
-    my $count_warning  = 0;
-    my $count_notice   = 0;
-    my $count_info     = 0;
 
     # fetch history
     my $history = $dbh->selectcol_arrayref(
@@ -238,90 +229,110 @@ sub test {
         )
     );
 
-    $dbh->do(
-        sprintf("INSERT INTO tests (domain,begin,end) VALUES(%s,NOW(),NULL)",
-            $dbh->quote($zone))
-    );
+    $dbh->begin_work();
+    eval {
+        my $count_critical = 0;
+        my $count_error    = 0;
+        my $count_warning  = 0;
+        my $count_notice   = 0;
+        my $count_info     = 0;
 
-    my $id = $dbh->{'mysql_insertid'};
-
-    eval { DNSCheck::zone($self->{dnscheck}, $zone, $history); };
-    if ($@) {
-        $logger->critical("ENGINE:CRASH");
-    }
-
-    $dbh->do(sprintf("UPDATE tests SET end=NOW() WHERE id=%d", $id));
-
-    my $line = 0;
-
-    foreach my $logentry (@{ $logger->export }) {
-        my $timestamp = shift @$logentry;
-        my $context   = shift @$logentry;
-        my $level     = shift @$logentry;
-        my $tag       = shift @$logentry;
-        my $module_id =
-          shift @$logentry;    # Id of the module that logged the current entry
-        my $parent_module_id =
-          shift @$logentry; # Id of the parent module that called current module
-        my @arg = @$logentry;
-
-        next if ($level eq "DEBUG" && $self->{ignore_debug});
-
-        $line++;
-
-        $count_critical++ if ($level eq "CRITICAL");
-        $count_error++    if ($level eq "ERROR");
-        $count_warning++  if ($level eq "WARNING");
-        $count_notice++   if ($level eq "NOTICE");
-        $count_info++     if ($level eq "INFO");
+        $logger->clear($zone);
+        $logger->logname($zone);
 
         $dbh->do(
             sprintf(
-                "INSERT DELAYED INTO results "
-                  . "(test_id,line,module_id,parent_module_id,timestamp,level,message,"
-                  . "arg0,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9) "
-                  . "VALUES(%d,%d,%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-                $id,
-                $line,
-                $module_id,
-                $parent_module_id,
-                $dbh->quote(time2str($timeformat, $timestamp)),
-                $dbh->quote($level),
-                $dbh->quote($tag),
-                $dbh->quote($arg[0]),
-                $dbh->quote($arg[1]),
-                $dbh->quote($arg[2]),
-                $dbh->quote($arg[3]),
-                $dbh->quote($arg[4]),
-                $dbh->quote($arg[5]),
-                $dbh->quote($arg[6]),
-                $dbh->quote($arg[7]),
-                $dbh->quote($arg[8]),
-                $dbh->quote($arg[9])
+                "INSERT INTO tests (domain,begin,end) VALUES(%s,NOW(),NULL)",
+                $dbh->quote($zone))
+        );
+
+        my $id = $dbh->{'mysql_insertid'};
+
+        DNSCheck::zone($self->{dnscheck}, $zone, $history);
+
+        $dbh->do(sprintf("UPDATE tests SET end=NOW() WHERE id=%d", $id));
+
+        my $line = 0;
+
+        print STDERR Dumper($logger);
+
+        foreach my $logentry (@{ $logger->export }) {
+	
+            my $timestamp = shift @$logentry;
+            my $context   = shift @$logentry;
+            my $level     = shift @$logentry;
+            my $tag       = shift @$logentry;
+            my $module_id =
+              shift @$logentry; # Id of the module that logged the current entry
+            my $parent_module_id = shift
+              @$logentry;   # Id of the parent module that called current module
+            my @arg = @$logentry;
+
+            next if ($level eq "DEBUG" && $self->{ignore_debug});
+
+            $line++;
+
+            $count_critical++ if ($level eq "CRITICAL");
+            $count_error++    if ($level eq "ERROR");
+            $count_warning++  if ($level eq "WARNING");
+            $count_notice++   if ($level eq "NOTICE");
+            $count_info++     if ($level eq "INFO");
+
+            $dbh->do(
+                sprintf(
+                    "INSERT INTO results "
+                      . "(test_id,line,module_id,parent_module_id,timestamp,level,message,"
+                      . "arg0,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9) "
+                      . "VALUES(%d,%d,%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                    $id,
+                    $line,
+                    $module_id,
+                    $parent_module_id,
+                    $dbh->quote(time2str($timeformat, $timestamp)),
+                    $dbh->quote($level),
+                    $dbh->quote($tag),
+                    $dbh->quote($arg[0]),
+                    $dbh->quote($arg[1]),
+                    $dbh->quote($arg[2]),
+                    $dbh->quote($arg[3]),
+                    $dbh->quote($arg[4]),
+                    $dbh->quote($arg[5]),
+                    $dbh->quote($arg[6]),
+                    $dbh->quote($arg[7]),
+                    $dbh->quote($arg[8]),
+                    $dbh->quote($arg[9])
+                )
+            );
+        }
+
+        $dbh->do(
+            sprintf(
+                "UPDATE tests SET "
+                  . "count_critical=%d,"
+                  . "count_error=%d,"
+                  . "count_warning=%d,"
+                  . "count_notice=%d,"
+                  . "count_info=%d "
+                  . "WHERE id=%d",
+                $count_critical, $count_error, $count_warning,
+                $count_notice,   $count_info,  $id
             )
         );
+
+        $dbh->do(
+            sprintf("UPDATE domains SET last_test=NOW() WHERE domain=%s",
+                $dbh->quote($zone))
+        );
+
+        $logger->clear($zone);
+    };
+
+    if ($@) {
+        $dbh->rollback;
+        $self->message("critical", "Engine crashed while testing %s", $zone);
+    } else {
+        $dbh->commit;
     }
-
-    $dbh->do(
-        sprintf(
-            "UPDATE tests SET "
-              . "count_critical=%d,"
-              . "count_error=%d,"
-              . "count_warning=%d,"
-              . "count_notice=%d,"
-              . "count_info=%d "
-              . "WHERE id=%d",
-            $count_critical, $count_error, $count_warning,
-            $count_notice,   $count_info,  $id
-        )
-    );
-
-    $dbh->do(
-        sprintf("UPDATE domains SET last_test=NOW() WHERE domain=%s",
-            $dbh->quote($zone))
-    );
-
-    $logger->clear($zone);
 }
 
 1;
