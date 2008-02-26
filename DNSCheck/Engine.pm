@@ -261,7 +261,7 @@ sub test {
 
         $dbh->do(
             sprintf(
-                "INSERT INTO results "
+                "INSERT DELAYED INTO results "
                   . "(test_id,line,module_id,parent_module_id,timestamp,level,message,"
                   . "arg0,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9) "
                   . "VALUES(%d,%d,%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
