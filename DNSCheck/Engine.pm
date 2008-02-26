@@ -39,6 +39,7 @@ use DBI;
 use DBD::mysql;
 use Sys::Syslog;
 use Data::Dumper;
+use Time::HiRes qw(usleep);
 
 use DNSCheck;
 
@@ -118,6 +119,8 @@ sub daemon {
     my $sleep     = shift;
 
     $self->message("info", "Starting DNSCheck Engine Daemon");
+
+    usleep(int(random($sleep * 1000)));
 
     while (1) {
         if ($self->process($chunksize, $sleep) == 0) {
