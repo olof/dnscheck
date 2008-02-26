@@ -45,8 +45,6 @@ sub new {
 
     my $config = shift;
 
-    $self->{debug} = $config->{debug};
-
     if ($config->{interactive}) {
         $self->{interactive} = 1;
     }
@@ -57,9 +55,6 @@ sub new {
 
     $self->{logname}  = undef;
     $self->{messages} = ();
-    $self->{errors}   = 0;
-    $self->{warnings} = 0;
-    $self->{debugs}   = 0;
 
     @{ $self->{module_stack} } = (0);
     $self->{module_id} = 0;
@@ -108,11 +103,6 @@ sub add {
 
     push @{ $self->{messages} }, $entry;
 
-    if ($self->{debug}) {
-        $self->dump();
-        $self->{messages} = ();
-    }
-
     if ($self->{interactive}) {
         $self->print();
         $self->{messages} = ();
@@ -132,25 +122,21 @@ sub notice {
 sub warning {
     my $self = shift;
     $self->add("WARNING", @_);
-    $self->{warnings}++;
 }
 
 sub error {
     my $self = shift;
     $self->add("ERROR", @_);
-    $self->{errors}++;
 }
 
 sub debug {
     my $self = shift;
     $self->add("DEBUG", @_);
-    $self->{debugs}++;
 }
 
 sub critical {
     my $self = shift;
     $self->add("CRITICAL", @_);
-    $self->{errors}++;
 }
 
 sub dump {
