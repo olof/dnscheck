@@ -15,13 +15,13 @@ use DNSCheck;
 sub main {
     my $help    = 0;
     my $timeout = 2;
-    my $debug   = 0;
+    my $raw     = 0;
     my $locale  = "locale/en.yaml";
 
     GetOptions(
         'help|?'    => \$help,
         'timeout=i' => \$timeout,
-        'debug'     => \$debug,
+        'raw'       => \$raw,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -31,7 +31,7 @@ sub main {
         pod2usage(2);
     }
 
-    $locale = undef if ($debug);
+    $locale = undef if ($raw);
 
     my $check = new DNSCheck(
         {
@@ -60,5 +60,5 @@ dnscheck [options] zone
 Options:
 
  --help                brief help message
- --debug               debug
+ --raw                 raw log output, suitable for automatic processing
  --timeout=SECONDS     set UDP/TCP timeout
