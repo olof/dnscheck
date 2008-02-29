@@ -93,10 +93,16 @@ a.button:link, a.button:visited {
 #result_status {
 	clear: both;
 	margin: 25px 0;
-	background: #333 url(../_img/bg_status.png) no-repeat;
+	background: #000 url(../_img/bg_status1.png) no-repeat top;
 	width: 425px;
-	height: 64px;
 	margin-left: 170px;
+}
+
+#status_bottom {
+	clear: both;
+	background: #000 url(../_img/bg_status2.png) no-repeat top;
+	font-size: 1px;
+	height: 6px;
 }
 
 #status_light {
@@ -104,26 +110,26 @@ a.button:link, a.button:visited {
 }
 
 .mainok {
-	height: 64px;
+	height: 58px;
 	width: 74px;
 	background: url(../_img/status_ok.png) no-repeat 10px 0;
 }
 
 .mainwarn {
-	height: 64px;
+	height: 58px;
 	width: 74px;
 	background: url(../_img/status_warn.png) no-repeat 10px 0;
 }
 
 .mainerror {
-	height: 64px;
+	height: 58px;
 	width: 74px;
 	background: url(../_img/status_error.png) no-repeat 10px 0;
 }
 
 .mainload {
 	background: url(../_img/status_loading.gif) no-repeat 21px 15px;
-	height: 64px;
+	height: 58px;
 	width: 74px;
 }
 
@@ -212,18 +218,24 @@ a.button:link, a.button:visited {
 }
 
 .maintest h4.ok {
-	background: url(../_img/status_ok_14.png) no-repeat 0 13px;
+	background: url(../_img/status_ok_14.gif) no-repeat 0 13px;
 	padding-left: 20px;
 }
 
 .maintest h4.warn {
-	background: url(../_img/status_warn_14.png) no-repeat 0 13px;
+	background: url(../_img/status_warn_14.gif) no-repeat 0 13px;
 	padding-left: 20px;
 }
 
 .maintest h4.error {
-	background: url(../_img/status_error_14.png) no-repeat 0 13px;
+	background: url(../_img/status_error_14.gif) no-repeat 0 13px;
 	padding-left: 20px;
+}
+
+.maintest h4.off {
+	background: url(../_img/status_off_14.gif) no-repeat 0 13px;
+	padding-left: 20px;
+	color: #66c5dc;
 }
 
 .maintest h4 a {
@@ -350,6 +362,10 @@ ul.subtests li.testinfo2 {
 	padding-left: 15px;
 }
 
+.topmargin {
+	margin: 15px 0 0 0;
+}
+
 .smallbox {
 	border: 1px solid #cceaf2;
 	background: #ecf6f9;
@@ -360,6 +376,30 @@ ul.subtests li.testinfo2 {
 	color: #666;
 	font-size: 0.8em;
 	margin: 0 0 15px 0;
+}
+
+.smallbox p.testok {
+	background: url(../_img/status_ok_14.gif) no-repeat left 2px;
+	padding-left: 20px;
+	margin: 0 0 5px 0;
+}
+
+.smallbox p.testwarn {
+	background: url(../_img/status_warn_14.gif) no-repeat left 2px;
+	padding-left: 20px;
+	margin: 0 0 5px 0;
+}
+
+.smallbox p.testerror {
+	background: url(../_img/status_error_14.gif) no-repeat left 2px;
+	padding-left: 20px;
+	margin: 0 0 5px 0;
+}
+
+.smallbox p.testoff {
+	background: url(../_img/status_off_14.gif) no-repeat left 2px;
+	padding-left: 20px;
+	margin: 0 0 5px 0;
 }
 
 .smallbox ul {
@@ -493,4 +533,9 @@ a:hover {
 
 .clear {
 	clear: both;
+}
+
+#permalink {
+	font-size: 0.8em;
+	color: #999;
 }

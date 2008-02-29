@@ -1,11 +1,32 @@
 <?php
 	require_once('constants.php');
+	require_once('common.php');
 	require_once('multilanguage.php');
 	
 	$languageId = DEFAULT_LANGUAGE_ID;
 	if ((isset($_GET['lang'])) && (isset($translationMap[$_GET['lang']])))
 	{
 		$languageId = $_GET['lang'];
+	}
+	
+	$permalinkId = 0;
+	$permalinkView = 0;
+	$permalinkDomain = '';
+	if ((isset($_GET['id'])) && (isset($_GET['time'])) && (isset($_GET['view'])) && (in_array($_GET['view'], array('basic', 'advanced'))))
+	{
+		$testId = intval($_GET['id']);
+		$testTime = intval($_GET['time']);
+		
+		$query = "SELECT id, domain FROM tests WHERE id = $testId AND UNIX_TIMESTAMP(begin) = $testTime";
+		$result = null;
+		$status = DatabasePackage::query($query, $result);
+		if ((true === $status) && (1 == count($result)))
+		{
+			$permalinkId = intval($result[0]['id']);
+			$permalinkDomain = $result[0]['domain'];
+			
+			$permalinkView = (('basic' == $_GET['view']) ? 1 : 2);
+		}
 	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -22,8 +43,10 @@
 	var warningHeader = "<?php echo(translate("Warnings found in test"));?>";
 	var errorHeader = "<?php echo(translate("Errors found in test"));?>";
 	var languageId = "<?php echo($languageId)?>";
+	var permalinkId = <?php echo((0 < $permalinkId) ? $permalinkId : 'null');?>;
+	var permalinkView = <?php echo($permalinkView)?>;
 </script>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DNSCheck</title>
 <link href="_css/dnscheck.css" rel="stylesheet" type="text/css" />
 </head>
@@ -39,7 +62,7 @@
 				<h3 id="searchhead"><?php echo(translate("Test your DNS-server and find errors"));?></h3>
 				<p id="testtext"><?php echo(translate("Enter your domain name in the field below to test the DNS-servers that are used."));?></p>
 				<form id="mainform" action="">
-					<p id="testinput"><input name="" type="text" id="domaininput" />
+					<p id="testinput"><input name="" type="text" id="domaininput" value="<?php echo(htmlentities($permalinkDomain));?>" />
 					<a href="javascript:void(0);" id="testnow" class="button"><?php echo(translate("Test now"));?></a></p>
 				</form>
 			</div>
@@ -58,6 +81,7 @@
 		<div id="status_light" class="mainload">&nbsp;</div>
 		<h3 id="status_header"></h3>
 		<p id="status_text"></p>
+		<div id="status_bottom"> </div>
 	</div>
 	
 
@@ -90,6 +114,15 @@
 			<a href="javascript:void(0);"><img src="_img/pager_end_on.png" alt="End" id="pagerend" /></a>
 			<div class="clear"> </div>
 			</div>
+
+			<h3 class="smalltop topmargin"><?php echo(translate("Explanation"));?></h3>
+			<div class="smallbox">
+				<p class="testok"><?php echo(translate("Test was ok"));?></p>
+				<p class="testwarn"><?php echo(translate("Test contains warnings"));?></p>
+				<p class="testerror"><?php echo(translate("Test contains errors"));?></p>
+				<p class="testoff"><?php echo(translate("Test was not performed"));?></p>
+			</div>
+
 		</div>	
 	</div>
 

@@ -193,7 +193,7 @@
 			var li = document.createElement("li");
 			var a = document.createElement("a");
 			
-			a.href = "javascript:void(0);";
+			a.href = "?time=" + response['history'][i]['time'] + "&id=" + response['history'][i]['id'] + "&view=basic";
 			a.className = response['history'][i]['class'];
 			a.innerHTML = formatDate(response['history'][i]['time']);
 			a.historyId = response['history'][i]['id'];
@@ -254,6 +254,8 @@
 		$("#result_loader").show();
 		statusLoading();
 		getResult(historyId);
+		
+		return false;
 	}
 	
 	function getResult(historyId)
@@ -283,8 +285,12 @@
 					return;
 				}
 				
+				var baseUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+				
 				populateTree(response['tree'], $("#treediv")[0], true);
+				appendPermalink($("#treediv")[0], baseUrl + "?time=" + response['time'] + "&id=" + response['id'] + "&view=basic");
 				populateTree(response['list'], $("#listdiv")[0], false);
+				appendPermalink($("#listdiv")[0], baseUrl + "?time=" + response['time'] + "&id=" + response['id'] + "&view=advanced");
 				$("#result_loader").hide();
 				
 				switch(response['result'])
@@ -302,6 +308,15 @@
 			}
 		});
 		
+	}
+	
+	function appendPermalink(parentElement, permalink)
+	{
+		var p = document.createElement('p');
+		p.id = 'permalink';
+		p.innerHTML = "<strong>Link to this test:</strong><br /><a href=\"" + permalink + "\">" + permalink + "</a>";
+		
+		parentElement.appendChild(p);
 	}
 	
 	function activateSimpleTab()
@@ -367,13 +382,16 @@
 		searchDomain = $("#domaininput").attr("value");
 		currentPage = 1;
 		totalPages = 1;
+		
+		var permalinkIdTemp = permalinkId;
+		permalinkId = null;
 		$("#startwrapper").slideUp("slow", function(){
 			$("#resultwrapper").slideUp("slow", function(){
 				statusLoading();
 				refreshPager(currentPage, function()
 					{
 						$("#result").show();
-						getResult(null);
+						getResult(permalinkIdTemp);
 						$("#resultwrapper").slideDown("slow");
 					}
 				);
@@ -389,4 +407,17 @@
 		$("#pagerforward").click(function() { if (currentPage < totalPages) { refreshPager(currentPage + 1, null); } });
 		$("#pagerend").click(function() { if (currentPage < totalPages) { refreshPager(totalPages, null); } });
 		
+		if (null != permalinkId)
+		{
+			startTest();
+			if (1 == permalinkView)
+			{
+				activateSimpleTab();
+			}
+			else
+			{
+				activateAdvancedTab();
+			}
+		}
+			
 	});

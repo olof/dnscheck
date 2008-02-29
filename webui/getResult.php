@@ -161,7 +161,16 @@
 						break;	
 					case 'DNSSEC:BEGIN':
 						$result = flattenTree($rootNode, 2, $allMessages, $flattenedArray);
-						$finalTree[5]['class'] = $showRootStatuses ? $result : '';
+						
+						$skipped = false;
+						foreach ($rootNode as $treeNode)
+						{
+							if (isset($treeNode['message']) && ('DNSSEC:SKIPPED_NO_KEYS' == $treeNode['message']))
+							{
+								$skipped = true;
+							}
+						}
+						$finalTree[5]['class'] = $showRootStatuses ? ($skipped ? 'off' : $result) : '';
 						$finalTree[5]['subtree'] = $flattenedArray;
 						break;	
 				}
@@ -185,6 +194,7 @@
 	{
 		global $time;
 		global $domain;
+		global $testId;
 		
 		$domain = trim(strtolower($_REQUEST['domain']));
 		
@@ -270,6 +280,7 @@
 	$domain = null;
 	$time = null;
 	$tree = null;
+	$testId = null;
 	$list = null;
 	$result = STATUS_INTERNAL_ERROR;
 	
@@ -283,6 +294,7 @@
 		array(
 			'result' => $result,
 			'domain' => $domain,
+			'id' => $testId,
 			'time' => $time,
 			'tree' => $tree,
 			'list' => $list
