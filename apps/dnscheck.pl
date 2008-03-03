@@ -10,13 +10,15 @@ use Getopt::Long;
 use Pod::Usage;
 use DNSCheck;
 
+my $LOCALE_DIR = '@@LOCALE_DIR@@';
+
 ######################################################################
 
 sub main {
-    my $help    = 0;
-    my $timeout = 2;
-    my $raw     = 0;
-    my $locale  = "locale/en.yaml";
+    my $help      = 0;
+    my $timeout   = 2;
+    my $raw       = 0;
+    my $locale    = "locale/en.yaml";
 
     GetOptions(
         'help|?'    => \$help,
@@ -29,6 +31,10 @@ sub main {
 
     unless ($zone) {
         pod2usage(2);
+    }
+
+    unless (-f $locale) {
+        $locale = $LOCALE_DIR . "/en.yaml";
     }
 
     $locale = undef if ($raw);
