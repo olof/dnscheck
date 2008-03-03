@@ -1,13 +1,15 @@
 <?php
 	require_once('constants.php');
 	require_once('common.php');
+	require_once('idna_convert.class.php');
 	
 	$status = STATUS_OK;
 	$pageNumber = intval($_REQUEST['page']);
 	$totalPages = 0;
 	$history = array();
 	
-	$domain = trim(strtolower($_REQUEST['domain']));
+	$IDN = new idna_convert();
+	$domain = $IDN->encode(trim(strtolower($_REQUEST['domain'])));
 	
 	function getDomainHistory($domain, $pageNumber)
 	{

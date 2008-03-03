@@ -71,7 +71,7 @@
 			"Historiken kunde ej laddas",
 			"Ingen historik finns",
 			"Sida",
-			".SE (Stiftelsen för Internetinfrastruktur)",
+			".SE (Stiftelsen f&ouml;r Internetinfrastruktur)",
 			"Dom&auml;nen finns inte",
 			"Dom&auml;nen du angav verkar inte vara registrerad",
 			"Laddar",

@@ -153,7 +153,7 @@
 		getPagerXMLHTTPRequest = $.ajax({
 				type: "POST",
 				url: "getPager.php",
-				data: "domain=" + escape(searchDomain) + "&page=" + pageNumber,
+				data: "domain=" + searchDomain + "&page=" + pageNumber,
 				success: function(msg) { getPagerResponse(msg, callback); }
 			});			
 	}
@@ -274,7 +274,7 @@
 		getResultXMLHTTPRequest = $.ajax({
 			type: "POST",
 			url: "getResult.php",
-			data: "domain=" + escape(searchDomain) + "&lang=" + languageId + ((null != historyId) ? "&historyId=" + historyId : ""),
+			data: "domain=" + searchDomain + "&lang=" + languageId + ((null != historyId) ? "&historyId=" + historyId : ""),
 			success: function(msg)
 			{
 				var response = eval("(" + msg + ")");

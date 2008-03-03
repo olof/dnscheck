@@ -1,11 +1,13 @@
 <?php
 	require_once('constants.php');
 	require_once('common.php');
+	require_once('idna_convert.class.php');
 
 	function flattenTree($rootNode, $type, $allMessages, &$flattenedTree)
 	{
 		$status = 'ok';
 		$flattenedTree = array();
+		$IDN = new idna_convert();
 		foreach ($rootNode as $treeNode)
 		{
 			if (!isset($treeNode['message']))
@@ -33,8 +35,8 @@
 				}
 				else
 				{
-					$caption = sprintf($treeNode['formatstring'], $treeNode['arg0'], $treeNode['arg1'], $treeNode['arg2'], $treeNode['arg3'],
-						$treeNode['arg4'], $treeNode['arg5'], $treeNode['arg6'], $treeNode['arg7'], $treeNode['arg8'], $treeNode['arg9']);
+					$caption = sprintf($treeNode['formatstring'], $IDN->decode($treeNode['arg0']), $IDN->decode($treeNode['arg1']), $IDN->decode($treeNode['arg2']), $IDN->decode($treeNode['arg3']),
+						$IDN->decode($treeNode['arg4']), $IDN->decode($treeNode['arg5']), $IDN->decode($treeNode['arg6']), $IDN->decode($treeNode['arg7']), $IDN->decode($treeNode['arg8']), $IDN->decode($treeNode['arg9']));
 				}
 				
 				$flattenedTreeItem = array('type' => $type, 'class' => (($treeNode['level'] == 'WARNING') ? 'warn' : ($treeNode['level'] == 'ERROR' ? 'error' : '')), 'caption' => $caption, 'subtree' => array());
@@ -196,7 +198,8 @@
 		global $domain;
 		global $testId;
 		
-		$domain = trim(strtolower($_REQUEST['domain']));
+		$IDN = new idna_convert();
+		$domain = $IDN->encode(trim(strtolower($_REQUEST['domain'])));
 		
 		$testId = 0;
 		if (isset($_REQUEST['historyId']))
@@ -290,10 +293,13 @@
 	}
 	catch (Exception $e){}
 	
+	$IDN = new idna_convert();
+	$decodedDomain = $IDN->decode($domain);
+	
 	$result =
 		array(
 			'result' => $result,
-			'domain' => $domain,
+			'domain' => $decodedDomain,
 			'id' => $testId,
 			'time' => $time,
 			'tree' => $tree,

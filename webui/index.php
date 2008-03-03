@@ -2,6 +2,7 @@
 	require_once('constants.php');
 	require_once('common.php');
 	require_once('multilanguage.php');
+	require_once('idna_convert.class.php');
 	
 	$languageId = DEFAULT_LANGUAGE_ID;
 	if ((isset($_GET['lang'])) && (isset($translationMap[$_GET['lang']])))
@@ -23,7 +24,9 @@
 		if ((true === $status) && (1 == count($result)))
 		{
 			$permalinkId = intval($result[0]['id']);
-			$permalinkDomain = $result[0]['domain'];
+			
+			$IDN = new idna_convert();
+			$permalinkDomain = $IDN->decode($result[0]['domain']);
 			
 			$permalinkView = (('basic' == $_GET['view']) ? 1 : 2);
 		}
@@ -62,7 +65,7 @@
 				<h3 id="searchhead"><?php echo(translate("Test your DNS-server and find errors"));?></h3>
 				<p id="testtext"><?php echo(translate("Enter your domain name in the field below to test the DNS-servers that are used."));?></p>
 				<form id="mainform" action="">
-					<p id="testinput"><input name="" type="text" id="domaininput" value="<?php echo(htmlentities($permalinkDomain));?>" />
+					<p id="testinput"><input name="" type="text" id="domaininput" value="<?php echo($permalinkDomain);?>" />
 					<a href="javascript:void(0);" id="testnow" class="button"><?php echo(translate("Test now"));?></a></p>
 				</form>
 			</div>
