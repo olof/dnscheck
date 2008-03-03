@@ -596,9 +596,13 @@ sub _find_parent_helper {
 
     $self->{logger}->debug("DNS:FIND_PARENT_BEGIN", $qname, $qclass);
 
-    my $try = $self->_find_authority($qname, $qclass);
+    # start by finding the SOA for the qname
+    my $try = $self->_find_soa($qname, $qclass);
 
-    goto DONE unless ($try);
+    # if we get an NXDOMAIN back, we're done
+    unless ($try) {
+        goto DONE;
+    }
 
     $self->{logger}->debug("DNS:FIND_PARENT_DOMAIN", $try);
 
@@ -611,7 +615,11 @@ sub _find_parent_helper {
 
         $self->{logger}->debug("DNS:FIND_PARENT_TRY", $try);
 
-        $parent = $self->_find_upper($try, $qclass);
+        $parent = $self->_find_soa($try, $qclass);
+
+	    # if we get an NXDOMAIN back, we're done
+        goto DONE unless ($parent);
+
         $self->{logger}->debug("DNS:FIND_PARENT_UPPER", $parent);
 
         goto DONE if ($try eq $parent);
@@ -630,27 +638,14 @@ sub _find_parent_helper {
     return $parent;
 }
 
-sub _find_upper {
+sub _find_soa {
     my $self   = shift;
     my $qname  = shift;
     my $qclass = shift;
 
     my $answer = $self->{resolver}->send($qname, "SOA", $qclass);
 
-    foreach my $rr ($answer->authority) {
-        return $rr->name if ($rr->type eq "SOA");
-    }
-
-    return $qname;
-}
-
-sub _find_authority {
-    my $self   = shift;
-    my $qname  = shift;
-    my $qclass = shift;
-
-    my $answer = $self->{resolver}->send($qname, "SOA", $qclass);
-
+    return $qname unless ($answer);
     return undef if ($answer->header->rcode eq "NXDOMAIN");
 
     foreach my $rr ($answer->authority) {
@@ -804,7 +799,8 @@ sub address_is_recursive {
     my $packet = $resolver->send($nonexisting, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
         $self->{logger}
-          ->notice("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
+          ->notice("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass,
+            $qtype);
         goto DONE;
     }
 
