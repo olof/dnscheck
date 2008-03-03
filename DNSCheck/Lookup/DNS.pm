@@ -533,8 +533,12 @@ sub _init_nameservers_helper {
     $self->{nameservers}{$qname}{$qclass}{ipv6} = ();
 
     # Lookup name servers
-    my $parent_ns = $self->query_resolver($qname, $qclass, "NS");
-    foreach my $rr ($parent_ns->answer) {
+    my $ns = $self->query_resolver($qname, $qclass, "NS");
+
+    # If we cannot find any nameservers, we're done
+    goto DONE unless ($ns);
+
+    foreach my $rr ($ns->answer) {
         if ($rr->type eq "NS") {
             push @{ $self->{nameservers}{$qname}{$qclass}{ns} }, $rr->nsdname;
         }
@@ -567,6 +571,7 @@ sub _init_nameservers_helper {
         }
     }
 
+  DONE:
     $self->{logger}->debug("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
 }
 
@@ -617,7 +622,7 @@ sub _find_parent_helper {
 
         $parent = $self->_find_soa($try, $qclass);
 
-	    # if we get an NXDOMAIN back, we're done
+        # if we get an NXDOMAIN back, we're done
         goto DONE unless ($parent);
 
         $self->{logger}->debug("DNS:FIND_PARENT_UPPER", $parent);
