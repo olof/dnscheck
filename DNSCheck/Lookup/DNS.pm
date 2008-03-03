@@ -341,8 +341,16 @@ sub query_explicit {
     }
 
     # FIXME: improve; see RFC 2671 section 5.3
-    if ($packet->header->rcode eq "FORMERR") {
+    if ($packet->header->rcode eq "FORMERR"
+        && ($flags->{bufsize} || $flags->{dnssec}))
+    {
         $self->{logger}->error("DNS:NO_EDNS", $address);
+        return undef;
+    }
+
+    # FIXME: improve; see RFC 2671 section 5.3
+    if ($packet->header->rcode eq "FORMERR") {
+        $self->{logger}->notice("DNS:LOOKUP_ERROR", $resolver->errorstring);
         return undef;
     }
 
