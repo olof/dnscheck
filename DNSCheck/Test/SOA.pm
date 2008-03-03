@@ -53,12 +53,12 @@ sub test {
     my $packet = $context->dns->query_child($zone, $zone, $qclass, "SOA");
 
     # REQUIRE: SOA record must exist
-    unless ($packet->header->ancount) {
+    if ($packet && $packet->header->ancount) {
+        $logger->info("SOA:FOUND", $zone);
+    } else {
         $logger->error("SOA:NOT_FOUND", $zone);
         $errors++;
         goto DONE;
-    } else {
-        $logger->info("SOA:FOUND", $zone);
     }
 
     # REQUIRE: only ONE SOA record may exist
