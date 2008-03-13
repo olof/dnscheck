@@ -43,16 +43,18 @@ sub test {
 
     my $qclass = $context->qclass;
     my $logger = $context->logger;
-    my $errors = 0;
 
     $logger->logname($zone);
 
     $logger->module_stack_push();
     $logger->info("ZONE:BEGIN", $zone);
 
-    $errors += DNSCheck::Test::Delegation::test($context, $zone, $history);
+	my ($errors,$testable) = DNSCheck::Test::Delegation::test($context, $zone, $history);
 
-    goto DONE if ($errors);
+	unless ($testable) {
+	    $logger->critical("ZONE:FATAL", $zone);
+		goto DONE;
+	}
 
     foreach my $ns ($context->dns->get_nameservers_at_child($zone, $qclass)) {
         $errors += DNSCheck::Test::Nameserver::test($context, $zone, $ns);

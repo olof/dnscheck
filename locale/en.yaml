@@ -33,7 +33,7 @@ messages:
   args: 3
   format: DNS query for %s/%s/%s.
  DNS:RESOLVER_QUERY_TIMEOUT:
-  args: 0
+  args: 3
   format: DNS resolver timed out in query for %s/%s/%s.
   descr: ~
  DNS:QUERY_PARENT:
@@ -743,6 +743,9 @@ messages:
  ZONE:BEGIN:
   args: 1
   format: Begin testing zone %s.
+ ZONE:FATAL:
+  args: 1
+  format: Fatal error testing zone %s.
  ZONE:END:
   args: 1
   format: Begin testing zone %s.

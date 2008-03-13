@@ -45,6 +45,8 @@ sub test {
     my $logger = $context->logger;
     my $errors = 0;
 
+    my $testable = undef;
+
     $logger->module_stack_push();
     $logger->info("DELEGATION:BEGIN", $zone);
 
@@ -53,8 +55,10 @@ sub test {
     my @ns_at_parent = $context->dns->get_nameservers_at_parent($zone, $qclass);
     if (scalar @ns_at_parent) {
         $logger->info("DELEGATION:NS_AT_PARENT", join(",", @ns_at_parent));
+		$testable = 1;
     } else {
         $logger->error("DELEGATION:NOT_FOUND_AT_PARENT");
+		$testable = 0;
         $errors++;
     }
 
@@ -132,7 +136,7 @@ sub test {
     $logger->info("DELEGATION:END", $zone);
     $logger->module_stack_pop();
 
-    return $errors;
+    return ($errors, $testable);
 }
 
 ######################################################################
