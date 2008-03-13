@@ -217,22 +217,7 @@ sub query_parent_nocache {
     # randomize name server addresses
     @target = shuffle(@target);
 
-    # set up resolver
-    my $resolver = $self->_setup_resolver($flags);
-    $resolver->nameserver(@target);
-
-    my $packet = $resolver->send($qname, $qtype, $qclass);
-    if ($self->check_timeout($resolver)) {
-        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target),
-            $qname, $qclass, $qtype);
-        return undef;
-    }
-
-    unless ($packet) {
-        $self->{logger}->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
-    }
-
-    return $packet;
+    return $self->_query_multiple($qname, $qclass, $qtype, $flags, @target);
 }
 
 ######################################################################
@@ -289,21 +274,7 @@ sub query_child_nocache {
     # randomize name server addresses
     @target = shuffle(@target);
 
-    my $resolver = $self->_setup_resolver($flags);
-    $resolver->nameserver(@target);
-
-    my $packet = $resolver->send($qname, $qtype, $qclass);
-    if ($self->check_timeout($resolver)) {
-        $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target),
-            $qname, $qclass, $qtype);
-        return undef;
-    }
-
-    unless ($packet) {
-        $self->{logger}->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
-    }
-
-    return $packet;
+    return $self->_query_multiple($qname, $qclass, $qtype, $flags, @target);
 }
 
 ######################################################################
@@ -372,6 +343,46 @@ sub query_explicit {
 
     foreach my $rr ($packet->answer) {
         $self->{logger}->debug("DNS:ANSWER_DUMP", _rr2string($rr));
+    }
+
+    return $packet;
+}
+
+######################################################################
+
+sub _query_multiple {
+    my $self   = shift;
+    my $qname  = shift;
+    my $qclass = shift;
+    my $qtype  = shift;
+    my $flags  = shift;
+    my @target = @_;
+
+    # set up resolver
+    my $resolver = $self->_setup_resolver($flags);
+
+    my $packet  = undef;
+    my $timeout = 0;
+
+    for my $ns (@target) {
+        $resolver->nameserver($ns);
+        $packet = $resolver->send($qname, $qtype, $qclass);
+
+        last if ($packet);
+
+        if ($self->check_timeout($resolver)) {
+            $timeout++;
+        }
+    }
+
+    unless ($packet) {
+        if ($timeout) {
+            $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target),
+                $qname, $qclass, $qtype);
+        } else {
+            $self->{logger}
+              ->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
+        }
     }
 
     return $packet;
