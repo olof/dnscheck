@@ -33,7 +33,7 @@ messages:
   args: 3
   format: DNS query for %s/%s/%s.
  DNS:RESOLVER_QUERY_TIMEOUT:
-  args: 3
+  args: 0
   format: DNS resolver timed out in query for %s/%s/%s.
   descr: ~
  DNS:QUERY_PARENT:
@@ -41,7 +41,7 @@ messages:
   format: Query parent of %s for %s/%s/%s.
  DNS:QUERY_PARENT_NOCACHE:
   args: 4
-  format: Query parent (wihtout cache) of %s for %s/%s/%s.
+  format: Query parent (without cache) of %s for %s/%s/%s.
  DNS:FIND_PARENT:
   args: 2
   format: Find parent of %s/%s.
@@ -54,7 +54,7 @@ messages:
   format: Found %s as parent of %s/%s.
  DNS:EXPLICIT_RESPONSE:
   args: 1
-  format: DNS server response: %s
+  format: Name server response: %s
  DNS:PARENT_RESPONSE:
   args: 1
   format: DNS response from parent: %s
@@ -66,28 +66,28 @@ messages:
   format: DNS response from resolver: %s
  DNS:NO_PARENT_NS:
   args: 3
-  format: Failed to find nameservers for %s (parent of %s/%s). 
+  format: Failed to find name servers for %s (parent of %s/%s). 
   descr: ~
  DNS:QUERY_TIMEOUT:
   args: 4
-  format: DNS server %s timed out in query for %s/%s/%s.
+  format: Name server %s timed out in query for %s/%s/%s.
   descr: ~
  DNS:QUERY_CHILD:
   args: 4
-  format: Query any nameserver of %s for %s/%s/%s.
+  format: Query any name server of %s for %s/%s/%s.
  DNS:QUERY_CHILD_NOCACHE:
   args: 4
-  format: Query any nameserver (without cache) of %s for %s/%s/%s.
+  format: Query any name server (without cache) of %s for %s/%s/%s.
  DNS:NO_CHILD_NS:
   args: 2
-  format: Failed to find namesevers of %s/%s.
+  format: Failed to find name servers of %s/%s.
   descr: ~
  DNS:ADDRESS_BLACKLIST_ADD:
   args: 1
-  format: Adding DNS server %s to blacklist.
+  format: Adding name server %s to blacklist.
  DNS:ADDRESS_BLACKLISTED:
   args: 1
-  format: DNS server %s blacklisted.
+  format: Name server %s blacklisted.
  DNS:LOOKUP_ERROR:
   args: 1
   format: DNS lookup error (%s).
@@ -95,14 +95,14 @@ messages:
  DNS:NO_EDNS:
   args: 1
   format: EDNS not supported by %s.
-  descr: EDNS is an extension to the DNS protocol. The major change is that the 512-byte size limit of the query/answer packet has been removed, which allows more information to be provided.  EDNS is essential for newer protocols and technologies that requires larger packets like DNSSEC and IPv6.
+  descr: EDNS is an extension to the DNS protocol. The major change is that the 512 byte size limit of the query/answer packet has been removed, which allows more information to be provided.  EDNS is essential for newer protocols and technologies that requires larger packet size like DNSSEC and IPv6.
  DNS:NO_ANSWER:
   args: 4
   format: No answer received from %s when querying for %s/%s/%s.
   descr: ~
  DNS:NOT_AUTH:
   args: 4
-  format: DNS server %s not authoritative for %s/%s/%s.
+  format: Name server %s not authoritative for %s/%s/%s.
  DNS:ANSWER_DUMP:
   args: 1
   format: DNS query returned: %s
@@ -138,13 +138,13 @@ messages:
   format: DNS query for NS of %s/%s at child.
  DNS:INITIALIZING_NAMESERVERS:
   args: 2
-  format: Initializing nameservers for %s/%s.
+  format: Initializing name servers for %s/%s.
  DNS:NAMESERVERS_INITIALIZED:
   args: 2
-  format: Nameservers for %s/%s initialized.
+  format: Name servers for %s/%s initialized.
  DNS:NAMESERVER_FOUND:
   args: 4
-  format: Found nameserver for %s/%s: %s (%s)
+  format: Found name server for %s/%s: %s (%s)
  DNS:FIND_PARENT_BEGIN:
   args: 2
   format: Trying to find parent of %s/%s
@@ -182,7 +182,7 @@ messages:
   format: Begin testing address %s.
  ADDRESS:INVALID:
   args: 1
-  format: Adress %s is not valid.
+  format: Adress %s is invalid or incorrect
   descr: ~
  ADDRESS:PRIVATE_IPV4:
   args: 1
@@ -202,8 +202,8 @@ messages:
   descr: A PTR records for the address could not be found in in-addr.arpa.
  ADDRESS:PTR_HOSTNAME_NOT_FOUND:
   args: 2
-  format: Reverse for %s points to an unknown hostname (%s).
-  descr: The PTR record for the address points to an unknown hostname.
+  format: Reverse for %s points to an unknown host name (%s).
+  descr: The PTR record for the address points to an unknown host name.
  ADDRESS:END:
   args: 1
   format: Done testing address %s.
@@ -213,27 +213,27 @@ messages:
   format: Begin testing connectivity for %s.
  CONNECTIVITY:ANNOUNCED_BY_ASN:
   args: 2
-  format: Nameserver %s announced by: %s
+  format: Name server %s announced by: %s
   descr: The IP address is announced by an autonomous system (AS).
  CONNECTIVITY:MULTIPLE_ASN:
   args: 1
-  format: Nameserver %s announce by multiple AS.
-  descr: The nameserver is announce my more than one autonomous system (AS).
+  format: Name server %s announced by multiple AS.
+  descr: The name server is announced my more than one autonomous system (AS).
  CONNECTIVITY:NOT_ANNOUNCED:
   args: 1
-  format: Nameserver %s not announced by any AS.
-  descr: The IP address not announce by any autonomous system and is most probably not reachable on the Internet.
+  format: Name server %s not announced by any AS.
+  descr: The IP address is not announced by any autonomous system and is most probably not reachable on the Internet.
  CONNECTIVITY:ASN_LIST:
   args: 1
-  format: Zone announced by ASN: %s 
+  format: Zone announced by ASN: %s
  CONNECTIVITY:TOO_FEW_ASN:
   args: 1
-  format: Zone announced by too few ASN (%s).
-  descr: The zone's nameservers are all located within the same autonomous system.
+  format: Zone announced by only one ASN (%s).
+  descr: The zone's name servers are all located within the same autonomous system.
  CONNECTIVITY:ASN_COUNT_OK:
   args: 1
   format: Zone announced by more than one ASN (%s).
-  descr: The zone's nameserves are located within more than one autonomous system.
+  descr: The zone's name serves are located within more than one autonomous system.
  CONNECTIVITY:END:
   args: 1
   format: Done testing connectivity for %s.
@@ -243,58 +243,58 @@ messages:
   format: Begin testing delegation for %s.
  DELEGATION:NS_AT_PARENT:
   args: 1
-  format: Nameservers listed at parent: %s
-  descr: This is the list of nameservers that are listed at the parent. and should include all nameservers listed at the child.
+  format: Name servers listed at parent: %s
+  descr: This is the list of name servers that are listed at the parent. It should include all name servers listed at the child.
  DELEGATION:NOT_FOUND_AT_PARENT:
   args: 0
   format: Delegation not found at parent.
   descr: No delegation could be found at the parent, making your zone unreachable from the Internet.
  DELEGATION:NS_AT_CHILD:
   args: 1
-  format: Nameservers listed at child: %s
-  descr: This is the list of nameservers that are listed at the child and must include all nameservers listed at the parent.
+  format: Name servers listed at child: %s
+  descr: This is the list of name servers that are listed at the child . It must include all name servers listed at the parent.
  DELEGATION:NOT_FOUND_AT_CHILD:
   args: 0
-  format: No nameservers found at child.
-  descr: No nameservers could be found at the child. This usually means that the no child is configured to answer queries about the zone.
+  format: No name servers found at child.
+  descr: No name servers could be found at the child. This usually means that the child is not configured to answer queries about the zone.
  DELEGATION:EXTRA_NS_PARENT:
   args: 1
-  format: Superfluous nameserver listed at parent: %s
-  descr: A nameserver listed at the parent, but not at the child, was found. This is most likely a administrative error and you should update the parent to match the nameservers the the child as soon as possible.
+  format: Superfluous name server listed at parent: %s
+  descr: A name server listed at the parent, but not at the child, was found. This is most likely an administrative error. You should update the parent to match the name servers at the child as soon as possible.
  DELEGATION:EXTRA_NS_CHILD:
   args: 1
-  format: Additional nameserver listed at child: %s
-  descr: A nameserver listed at the child, but not at the parent, was found. This is is most likely a configuration error, but there are sometimes reasons for setting up zone this way.
+  format: Additional name server listed at child: %s
+  descr: A name server listed at the child, but not at the parent, was found. This is most likely a configuration error, but there are sometimes reasons for setting up a zone this way.
  DELEGATION:TOO_FEW_NS:
   args: 1
-  format: Too new nameservers (%s).
-  descr: Only one nameserver was found for the zone. You should always have at least two nameservers for a zone to be able to handle transient connectivity problems.
+  format: Too few name servers (%s).
+  descr: Only one name server was found for the zone. You should always have at least two name servers for a zone to be able to handle transient connectivity problems.
  DELEGATION:MATCHING_GLUE:
   args: 2
   format: Checking glue for %s (%s).
  DELEGATION:GLUE_FOUND_AT_PARENT:
   args: 3
   format: Parent glue for %s found: %s (%s)
-  descr: The IP address of the nameserver was found at the parent.
+  descr: The IP address of the name server was found at the parent.
  DELEGATION:GLUE_FOUND_AT_CHILD:
   args: 3
   format: Child glue for %s found: %s (%s)
-  descr: The IP address of the nameserver was found at the child.
+  descr: The IP address of the name server was found at the child.
  DELEGATION:INCONSISTENT_GLUE:
   args: 1
-  format: Inconsistent glue for nameserver %s.
-  descr: The address of a nameservers was different at the child and at the parent.  This is a configuration error and should be fixed as soon as possible.
+  format: Inconsistent glue for name server %s.
+  descr: The address of a name server differed from the child and the parent.  This is a configuration error and should be corrected as soon as possible.
  DELEGATION:GLUE_MISSING_AT_CHILD:
   args: 1
   format: Missing glue at child: %s
-  descr: The IP address of the nameservers was not found at the child. This is a configuration error and should be fixed as soon as possible.
+  descr: The IP address of the name servers was not found at the child. This is a configuration error and should be corrected as soon as possible.
  DELEGATION:NS_HISTORY:
   args: 2
-  format: Previously used nameservers for %s: %s
+  format: Previously used name servers for %s: %s
  DELEGATION:STILL_AUTH:
   args: 3
-  format: Previously used nameserver %s (%s) is still authoritative for %s.
-  descr: A previously used nameserver is still answering authoritative for the zone.  This is probably due to old zone data still being served by a no longer used server.  To fix this problem, contact the administrator of the nameserver and have them remove the zone for their configuration.
+  format: Previously used name server %s (%s) is still authoritative for %s.
+  descr: A previously used name server is still answering authoritative for the zone.  This is probably due to old zone data still being served by a no longer used server.  To correct this problem, contact the administrator of the name server and have them remove the zone in their configuration.
  DELEGATION:END:
   args: 1
   format: Done testing delegation for %s.
@@ -336,18 +336,18 @@ messages:
   format: Consistent security for %s.
  DNSSEC:SKIPPED_NO_KEYS:
   args: 1
-  format: No DNSKEY(s) found at child, skipping other tests.
+  format: No DNSKEY(s) found at child, other tests skipped.
  DNSSEC:MISSING_DS:
   args: 1
-  format: Chain of trust broken for %s - DNSKEY found at child, but no DS was found at parent.
-  descr: The child seems to use DNSSEC, but the parent has no secure delegation.  Because of this, the chain of trust between the parent and the child is broken and validating resolver will not be able to validate answers from the child.
+  format: Broken chain of trust for %s - DNSKEY found at child, but no DS was found at parent.
+  descr: The child seems to use DNSSEC, but the parent has no secure delegation.  Because of this, the chain of trust between the parent and the child is broken and validating resolvers will not be able to validate answers from the child.
  DNSSEC:CHECKING_CHILD:
   args: 1
   format: Checking DNSSEC at child (%s).
  DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
   args: 3
   format: DNSKEY %s (tag %s) is using a not recommended algorithm: %s
-  descr: A DNSKEY using an not recommended algorithm was found - consider stop using not recommended algorithms unless you have a good reason to use them.
+  descr: A DNSKEY using a not recommended algorithm was found - you should consider stop using not recommended algorithms unless you have a very good reason for using them.
  DNSSEC:DNSKEY_SKIP_PROTOCOL:
   args: 3
   format: DNSKEY %s (tag %s) is not a DNSSEC key (protocol=%s).
@@ -362,7 +362,7 @@ messages:
   descr: A secure entry point (SEP) is used as part of the chain of trust from the parent to the child.
  DNSSEC:DNSKEY_MANDATORY_FOUND:
   args: 1
-  format: At least one manadatory algorithm found for DNSKEY %s.
+  format: At least one mandatory algorithm found for DNSKEY %s.
  DNSSEC:DNSKEY_MANDATORY_NOT_FOUND:
   args: 1
   format: No mandatory algorithm found for DNSKEY %s.
@@ -370,11 +370,11 @@ messages:
  DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
   args: 1
   format: DNSSEC additional processing broken for %s.
-  descr: No DNSSEC signatures where included in replys from the nameserver.  This is probably due to a misconfiguration at the nameserver.
+  descr: No DNSSEC signatures were included in replies from the name server.  This is probably due to a misconfiguration at the name server.
  DNSSEC:NO_SIGNATURES:
   args: 1
   format: No signatures found for %s.
-  descr: No DNSSEC signatures was found when querying the zone. Perhaps the zone is not signed?
+  descr: No DNSSEC signatures was found when querying the zone. Perhaps the zone isn't signed?
  DNSSEC:CHILD_CHECK_ABORTED:
   args: 1
   format: DNSSEC child checks aborted for %s.
@@ -404,7 +404,7 @@ messages:
   format: Enough valid signatures over SOA RRset found for %s.
  DNSSEC:SOA_NO_VALID_SIGNATURES:
   args: 1
-  format: Not enough valid signatures over SOA RRset for %s.
+  format: Not enough valid signatures over SOA RRset found for %s.
   descr: No valid signatures for the SOA RRset for the zone was found - make sure the zone is signed with a valid and published key.
  DNSSEC:CHILD_CHECKED:
   args: 1
@@ -424,10 +424,10 @@ messages:
   descr: The DS RRset must refer to a valid DNSKEY at the child, or the chain of trust between the parent and the child is broken and validating resolver will not be able to validate answers from the child.
  DNSSEC:DS_TO_SEP:
   args: 2
-  format: Parent DS(%s) refers to secure entry point at child: %s
+  format: Parent DS(%s) refers to secure entry point (SEP) at child: %s
  DNSSEC:DS_TO_NONSEP:
   args: 2
-  format: Parent DS(%s) does not refer to secure entry point at child: %s
+  format: Parent DS(%s) does not refer to secure entry point (SEP) at child: %s
   descr: The DS RRset refers to a DNSKEY at the child, but the key is not marked as a secure entry point.
  DNSSEC:DS_MANDATORY_FOUND:
   args: 1
@@ -459,16 +459,16 @@ messages:
   format: Begin testing host %s.
  HOST:ILLEGAL_NAME:
   args: 2
-  format: Hostname %s is illegal (syntax error at %s)
-  descr: The hostname is not syntactially correct according to RFC 952.  A common error is to begin the hostname with a non-letter (a-z) or use invalid characters (only a-z,0-9 and - are allowed).
+  format: Host name %s is illegal (syntax error at %s)
+  descr: The hostname is not syntactially correct according to RFC 952.  A common error is to begin the hostname with a non-letter (a-z) or use invalid characters (only a-z, 0-9 and - are allowed).
  HOST:NOT_FOUND:
   args: 1
   format: No address found for %s.
-  descr: No IPv4 or IPv6 address was found the hostname.
+  descr: No IPv4 or IPv6 address was found the host name.
  HOST:CNAME_FOUND:
   args: 1
-  format: Hostname %s refers to a CNAME.
-  descr: The hostname is an alias (CNAME), which is not allowed.  Hostnames must be published with as an A or AAAA record.
+  format: Host name %s refers to a CNAME.
+  descr: The host name is an alias (CNAME), which is not allowed.  Host names must be published with an A or AAAA record.
  HOST:END:
   args: 1
   format: Done testing host %s.
@@ -478,87 +478,87 @@ messages:
   format: Begin testing email address %s.
  MAIL:ADDRESS_SYNTAX:
   args: 1
-  format: %s in not a valid email address.
+  format: %s is not a valid email address.
  MAIL:MAIL_EXCHANGER:
   args: 2
   format: Mail exchangers for %s found %s.
  MAIL:DOMAIN_NOT_FOUND:
   args: 1
   format: No mail exchanger found for domain %s.
-  descr: No mail exchanger was found for the domain.  This makes it impossible to deliver mail to any recipient within the domain.
+  descr: No mail exchanger was found for the domain.  This makes it impossible to deliver email to any recipient within the domain.
  MAIL:HOST_ERROR:
   args: 1
-  format: Invalid hostname for mail exchanger %s.
+  format: Invalid host name for mail exchanger %s.
   descr: The hostname for the mail exchanger is invalid.  A common error is to point the mail exchanger to an alias (CNAME) or directly to an IP address.
  MAIL:IPV6_ONLY:
   args: 1
   format: Mail exchanger %s is reachable by IPv6 only.
-  descr: The mail exchanger is only reachable via IPv6, making it impossible for most hosts on the Interhet to deliver mail to the domain.
+  descr: The mail exchanger is only reachable via IPv6, making it impossible for most hosts on the Interhet to deliver email to the domain.
  MAIL:END:
   args: 1
   format: Done testing email address %s.
 
  NAMESERVER:BEGIN:
   args: 1
-  format: Begin testing nameserver %s.
+  format: Begin testing name server %s.
  NAMESERVER:HOST_ERROR:
   args: 1
-  format: Hostname error for %s.
-  descr: The specified hostname was not a valid host name.
+  format: Host name error for %s.
+  descr: The specified host name was not a valid host name.
  NAMESERVER:CHECKING_RECURSION:
   args: 2
   format: Checking recursion for %s at address %s.
  NAMESERVER:RECURSIVE:
   args: 2
-  format: Nameserver %s (%s) is recursive.
-  descr: The nameserver answers recursive queries for 3rd parties (such as DNSCheck). By making a recursive query to a name server that provides recursion, an attacker can cause a name server to look up and cache information contained in zones under their control. Thus the victim name server is made to query their malicious name servers, resulting in the victim caching and serving bogus data. 
+  format: Name server %s (%s) is recursive.
+  descr: The name server answers recursive queries for 3rd parties (such as DNSCheck). By making a recursive query to a name server that provides recursion, an attacker can cause a name server to look up and cache information contained in zones under their control. Thus the victim name server is made to query the attackers malicious name servers, resulting in the victim caching and serving bogus data. 
  NAMESERVER:NOT_RECURSIVE:
   args: 2
-  format: Nameserver %s (%s) is not recursive.
+  format: Name server %s (%s) is not recursive.
  NAMESERVER:CHECKING_AUTH:
   args: 2
   format: Checking authority for %s (%s).
  NAMESERVER:NOT_AUTH:
   args: 3
-  format: Nameserver %s (%s) not authoritative for %s.
-  descr: The nameserver does not answers authoritatively to queries for the tested domain.  This is probably due to misconfiguration, usually the nameserver is not set up to serve the tested domain. 
+  format: Name server %s (%s) not authoritative for %s.
+  descr: The name server does not answer authoritatively to queries for the tested domain.  This is probably due to misconfiguration, usually the name server is not set up to serve the tested domain. 
  NAMESERVER:AUTH:
   args: 3
-  format: Nameserver %s (%s) authoritative for %s.
+  format: Name server %s (%s) authoritative for %s.
  NAMESERVER:TESTING_UDP:
   args: 2
-  format: Testing UDP queries to nameserver %s at addrress %s.
+  format: Testing UDP queries to name server %s at addrress %s.
  NAMESERVER:UDP_OK:
   args: 3
-  format: Nameserver %s (%s) answers queries over UDP.
+  format: Name server %s (%s) answers queries over UDP.
  NAMESERVER:NO_UDP:
   args: 3
-  format: Nameserver %s (%s) does not answer queries over UDP.
-  descr: The nameserver failed to answer queries sent over UDP.  This is probably due to the nameserver not correctly set up or due to misconfgured filtering in a firewall.
+  format: Name server %s (%s) does not answer queries over UDP.
+  descr: The name server failed to answer queries sent over UDP.  This is probably due to the name server not correctly set up or due to misconfigured filtering in a firewall.
  NAMESERVER:TESTING_TCP:
   args: 2
-  format: Testing TCP queries to nameserver %s at addrress %s.
+  format: Testing TCP queries to name server %s at address %s.
  NAMESERVER:TCP_OK:
   args: 3
-  format: Nameserver %s (%s) answers queries over TCP.
+  format: Name server %s (%s) answers queries over TCP.
  NAMESERVER:NO_TCP:
   args: 3
-  format: Nameserver %s (%s) does not answer queries over TCP.
-  descr: The nameserver failed to answer queries sent over TCP.  This is probably due to the nameserver not correctly set up or due to misconfgured filtering in a firewall. It is a rather common misconception that DNS does not need TCP unless they provide zone transfers - perhaps the nameserver administrator are not aware that TCP is usually a requirement.
+  format: Name server %s (%s) does not answer queries over TCP.
+  descr: The name server failed to answer queries sent over TCP.  This is probably due to the name server not correctly set up or due to misconfgured filtering in a firewall. It is a rather common misconception that DNS does not need TCP unless they provide zone transfers - perhaps the name server administrator is not aware that TCP usually is a requirement.
  NAMESERVER:TESTING_AXFR:
   args: 2
-  format: Testing zone transfer for nameserver %s (%s).
+  format: Testing zone transfer for name server %s (%s).
  NAMESERVER:AXFR_SKIP:
   args: 3
-  format: Nameserver %s (%s) not checked for zone transfer of %s.
-  descr: The nameserver was not tested for zone transfer, since it did not answer queries over TCP.
+  format: Name server %s (%s) not checked for zone transfer of %s.
+  descr: The name server was not tested for zone transfer, since it did not answer queries over TCP.
  NAMESERVER:AXFR_OPEN:
   args: 3
-  format: Nameserver %s (%s) open for zone transfer of %s.
-  descr: This nameserver accepts zone transfer requests from any party.
+  format: Name server %s (%s) open for zone transfer of %s.
+  descr: This name server accepts zone transfer requests from any party.
  NAMESERVER:AXFR_CLOSED:
   args: 3
-  format: Nameserver %s (%s) closed for zone transfer of %s.
+  format: Name server %s (%s) closed for zone transfer of %s.
  NAMESERVER:CHECKING_LEGACY_ID:
   args: 2
   format: Checking for legacy name server ID of %s (%s).
@@ -573,13 +573,13 @@ messages:
   format: Name server ID for %s (%s): %s
  NAMESERVER:SKIPPED_IPV4:
   args: 1
-  format: IPv4 disabled - will not test nameserver at %s
+  format: IPv4 disabled - will not test name server at %s
  NAMESERVER:SKIPPED_IPV6:
   args: 1
-  format: IPv6 disabled - will not test nameserver at %s
+  format: IPv6 disabled - will not test name server at %s
  NAMESERVER:END:
   args: 1
-  format: Done testing nameserver %s.
+  format: Done testing name server %s.
 
  SERIAL:BEGIN:
   args: 1
@@ -590,10 +590,10 @@ messages:
  SERIAL:DIFFERENT:
   args: 1
   format: %s different serials found.
-  descr: The SOA serial are not the same among all nameservers. This is usually due to mis-configuration, but can sometimes be a result of slow zone propagtion to secondary nameservers.
+  descr: The SOA serial are not the same among all name servers. This is usually due to misconfiguration, but can sometimes be the  result of slow zone propagation to secondary name servers.
  SERIAL:CONSISTENT:
   args: 0
-  format: All SOA records has consistent serial numbers.
+  format: All SOA records have consistent serial numbers.
  SERIAL:END:
   args: 1
   format: Done testing serial numbers for %s.
@@ -621,7 +621,7 @@ messages:
  SMTP:MAIL_FROM_REJECTED:
   args: 1
   format: Host did not accept %s as SMTP destination.
-  descr: THe mail server did not accept our sender address.  DNSCheck uses a standard null sender address which must be accepted by mail servers.
+  descr: The mail server did not accept our sender address.  DNSCheck uses a standard null sender address which must be accepted by mail servers.
  SMTP:RCPT_TO:
   args: 1
   format: Using %s as SMTP recipient (RCPT_TO).
@@ -648,14 +648,14 @@ messages:
  SOA:NOT_FOUND:
   args: 1
   format: No SOA record found for %s.
-  descr: No SOA record was found when querying the nameserver.  This is most probably due to a misconfiguration at the nameserver - a zone must have a SOA record.
+  descr: No SOA record was found when querying the name server.  This is most probably due to a misconfiguration at the name server - a zone must have a SOA record.
  SOA:FOUND:
   args: 1
   format: Found SOA record for %s.
  SOA:MULTIPLE_SOA:
   args: 1
   format: Multiple SOA records found for %s.
-  descr: Multiple SOA records found when querying the nameservers. This is very broken and definately due to a misconfiguration.
+  descr: Multiple SOA records found when querying the name servers. This is a serious error and definitely due to a misconfiguration.
  SOA:MNAME_ERROR:
   args: 2
   format: Error while checking SOA MNAME for %s (%s).
@@ -666,76 +666,76 @@ messages:
  SOA:NS_NOT_FOUND:
   args: 1
   format: No NS record(s) found for %s.
-  descr: No nameserver records for the zone was found. This is very broken and definately due to a misconfiguration.
+  descr: No name server records was fould for the zone. This is a serious error and definitely due to a misconfiguration.
  SOA:MNAME_STEALTH:
   args: 2
   format: SOA MNAME for %s (%s) not listed as NS.
-  descr: The nameserver listed as the SOA MNAME is not listed as a nameserver.
+  descr: The name server listed as the SOA MNAME is not listed as a name server.
  SOA:MNAME_PUBLIC:
   args: 2
   format: SOA MNAME for %s (%s) listed as NS.
-  descr: The nameserver listed as the SOA MNAME is listed as a nameserver.
+  descr: The name server listed as the SOA MNAME is listed as a name server.
  SOA:MNAME_NOT_AUTH:
   args: 2
-  format: SOA MNAME for %s (%s) not authoritative.
-  descr: The nameserver listed as the original or primary source of data for this zone does not answer authoriative.  This is probably due to a misconfiguration - perhaps the SOA MNAME is not set up as nameserver for the zone.
+  format: SOA MNAME for %s (%s) is not authoritative.
+  descr: The name server listed as the original or primary source of data for this zone does not answer authoriative.  This is probably due to a misconfiguration - perhaps the SOA MNAME is not set up as name server for the zone.
  SOA:MNAME_IS_AUTH:
   args: 2
-  format: SOA MNAME for %s (%s) authoritative.
+  format: SOA MNAME for %s (%s) is authoritative.
  SOA:RNAME_UNDELIVERABLE:
   args: 3
   format: Failed to deliver email for SOA MNAME of %s (%s) using %s. 
-  descr: DNSCheck failed to deliver email to the email address listed as the person responsible for the zone.
+  descr: DNSCheck failed to deliver email to the email address listed as the one responsible for the zone.
  SOA:RNAME_DELIVERABLE:
   args: 3
-  format: Successfull attempt to deliver email for SOA MNAME of %s (%s) using %s. 
+  format: Successful attempt to deliver email for SOA MNAME of %s (%s) using %s. 
  SOA:RNAME_SYNTAX:
   args: 2
   format: Invalid SOA RNAME syntax for %s: %s
-  descr: The email address specified in SOA RNAME is not correctly specified.  A common error is to use @ in the address field - an address like hostmaster@example.com must be specified as hostmaster.example.com.
+  descr: The email address specified in SOA RNAME is specified incorrectly.  A common error is to use @ in the address field - an address like hostmaster@example.com must be specified as hostmaster.example.com.
  SOA:TTL_SMALL:
   args: 3
   format: SOA TTL for %s too small (%s) - recommended >= %s.
   descr: The smaller the SOA TTL value, the more often resolver need to requery for SOA record.
  SOA:TTL_OK:
   args: 3
-  format: SOA TTL for %s OK (%s) - recommmended >= %s.
+  format: SOA TTL for %s OK (%s) - recommended >= %s.
  SOA:REFRESH_SMALL:
   args: 3
   format: SOA refresh for %s too small (%s) - recommended >= %s.
-  descr: SOA refresh decides how often a secondary nameserver should check the  the primary nameserver for zone updates.
+  descr: SOA refresh decides how often a secondary name server should check the primary name server for zone updates.
  SOA:REFRESH_OK:
   args: 3
-  format: SOA refresh for %s OK (%s) - recommmended >= %s.
+  format: SOA refresh for %s OK (%s) - recommended >= %s.
  SOA:RETRY_VS_REFRESH:
   args: 3
-  format: SOA refresh for %s lower that retry (%s vs %s).
-  descr: The retry value is the amount of time your secondary nameservers will wait to contact the master nameserver again if the last attempt failed.  If the refresh value is lower than the retry value, it's' useless.
+  format: SOA refresh for %s lower than retry (%s vs %s).
+  descr: The retry value is the amount of time your secondary name servers will wait to contact the primary name server again if the last attempt failed.  If the refresh value is lower than the retry value, it's useless.
  SOA:RETRY_SMALL:
   args: 3
   format: SOA retry for %s too small (%s) - recommended >= %s.
-  descr: The retry value is the amount of time your secondary nameservers will wait to contact the master nameserver again if the last attempt failed. If the retry value is too small, the secondary nameserver will retry too frequently.
+  descr: The retry value is the amount of time your secondary name servers will wait to contact the primary name server again if the last attempt failed. If the retry value is too small, the secondary name server will retry too frequently.
  SOA:RETRY_OK:
   args: 3
-  format: SOA retry for %s OK (%s) - recommmended >= %s.
+  format: SOA retry for %s OK (%s) - recommended >= %s.
  SOA:EXPIRE_SMALL:
   args: 3
   format: SOA expire for %s too small (%s) - recommended >= %s.
-  descr: The SOA expire value tells how long a secondary nameserver will wait before considering DNS data for a zone to be too old to serve in case it failed to reach the primary nameserver.
+  descr: The SOA expire value defines how long a secondary name server will wait before considering DNS data for a zone to be too old to serve in case it failed to reach the primary name server.
  SOA:EXPIRE_OK:
   args: 3
-  format: SOA expire for %s OK (%s) - recommmended >= %s.
+  format: SOA expire for %s OK (%s) - recommended >= %s.
  SOA:EXPIRE_VS_REFRESH:
   args: 1
-  format: SOA expire for %s lower that refresh.
-  descr: The SOA expire value should be at least 7 times the SOA refresh value, to give secondary name servers a fair change of refreshing their copy of the zone before the data is considered too old to serve.
+  format: SOA expire for %s lower than refresh.
+  descr: The SOA expire value should be at least 7 times the SOA refresh value, to give secondary name servers a fair chance of refreshing their copy of the zone before the data is considered too old to serve.
  SOA:MINIMUM_SMALL:
   args: 3
   format: SOA minimum for %s too small (%s) - recommended >= %s.
   descr: The SOA minimum is used to tell caching resolvers how long they may cache negative answers. If the value is too small, negative caching will not work and resolvers will re-query frequently.
  SOA:MINIMUM_OK:
   args: 3
-  format: SOA minimum for %s OK (%s) - recommmended >= %s.
+  format: SOA minimum for %s OK (%s) - recommended >= %s.
  SOA:END:
   args: 1
   format: Done testing SOA parameters for %s.
@@ -748,4 +748,4 @@ messages:
   format: Fatal error testing zone %s.
  ZONE:END:
   args: 1
-  format: Begin testing zone %s.
+  format: Test completed for zone %s.
