@@ -41,15 +41,19 @@ my $LOCALE_DIR = '@@LOCALE_DIR@@';
 ######################################################################
 
 sub main {
-    my $help      = 0;
-    my $timeout   = 2;
-    my $raw       = 0;
-    my $locale    = "locale/en.yaml";
+    my $help         = 0;
+    my $timeout      = 2;
+    my $raw          = 0;
+    my $disable_ipv4 = 0;
+    my $disable_ipv6 = 0;
+    my $locale       = "locale/en.yaml";
 
     GetOptions(
-        'help|?'    => \$help,
-        'timeout=i' => \$timeout,
-        'raw'       => \$raw,
+        'help|?'       => \$help,
+        'timeout=i'    => \$timeout,
+        'raw'          => \$raw,
+        'disable-ipv4' => \$disable_ipv4,
+        'disable-ipv6' => \$disable_ipv6,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -67,10 +71,12 @@ sub main {
 
     my $check = new DNSCheck(
         {
-            interactive => 1,
-            locale      => $locale,
-            udp_timeout => $timeout,
-            tcp_timeout => $timeout,
+            interactive  => 1,
+            locale       => $locale,
+            udp_timeout  => $timeout,
+            tcp_timeout  => $timeout,
+            disable_ipv4 => $disable_ipv4,
+            disable_ipv6 => $disable_ipv6,
         }
     );
 
@@ -93,4 +99,6 @@ Options:
 
  --help                brief help message
  --raw                 raw log output, suitable for automatic processing
+ --disable-ipv4        disable IPv4 transport
+ --disable-ipv6        disable IPv6 transport
  --timeout=SECONDS     set UDP/TCP timeout
