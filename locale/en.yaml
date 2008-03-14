@@ -33,7 +33,7 @@ messages:
   args: 3
   format: DNS query for %s/%s/%s.
  DNS:RESOLVER_QUERY_TIMEOUT:
-  args: 0
+  args: 3 
   format: DNS resolver timed out in query for %s/%s/%s.
   descr: ~
  DNS:QUERY_PARENT:
