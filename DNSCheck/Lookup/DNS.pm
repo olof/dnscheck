@@ -813,6 +813,7 @@ sub address_is_recursive {
     $resolver->retrans($self->{default}{retrans});
 
     $resolver->recurse(1);
+    $resolver->cdflag(1);
     $resolver->nameserver($address);
 
     # create nonexisting domain name
