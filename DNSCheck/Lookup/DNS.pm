@@ -104,6 +104,7 @@ sub new {
     # set up global resolver
     $self->{resolver} = new Net::DNS::Resolver;
     $self->{resolver}->persistent_tcp(0);
+    $self->{resolver}->cdflag(1);
     $self->{resolver}->debug($self->{debug_resolver});
     $self->{resolver}->udp_timeout($self->{default}{udp_timeout});
     $self->{resolver}->tcp_timeout($self->{default}{tcp_timeout});
@@ -407,6 +408,7 @@ sub _setup_resolver {
 
     $resolver->recurse(0);
     $resolver->dnssec(0);
+    $resolver->cdflag(1);
     $resolver->usevc(0);
     $resolver->defnames(0);
 
