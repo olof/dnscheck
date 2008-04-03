@@ -21,6 +21,19 @@ CREATE TABLE `queue` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
+CREATE TABLE `tests` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `domain` varchar(255) NOT NULL default '',
+  `begin` datetime default NULL,
+  `end` datetime default NULL,
+  `count_critical` int(10) unsigned default '0',
+  `count_error` int(10) unsigned default '0',
+  `count_warning` int(10) unsigned default '0',
+  `count_notice` int(10) unsigned default '0',
+  `count_info` int(10) unsigned default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
+
 CREATE TABLE `results` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `test_id` int(10) unsigned NOT NULL,
@@ -42,19 +55,6 @@ CREATE TABLE `results` (
   `arg9` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   CONSTRAINT `tests` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=ascii;
-
-CREATE TABLE `tests` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `domain` varchar(255) NOT NULL default '',
-  `begin` datetime default NULL,
-  `end` datetime default NULL,
-  `count_critical` int(10) unsigned default '0',
-  `count_error` int(10) unsigned default '0',
-  `count_warning` int(10) unsigned default '0',
-  `count_notice` int(10) unsigned default '0',
-  `count_info` int(10) unsigned default '0',
-  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 
