@@ -1,4 +1,4 @@
-# $Id$
+# $Id: en.yaml 256 2008-03-14 09:58:16Z el $
 
 locale_name: English
 locale_id: en
@@ -83,10 +83,10 @@ messages:
   format: Failed to find name servers of %s/%s.
   descr: ~
  DNS:ADDRESS_BLACKLIST_ADD:
-  args: 1
+  args: 4
   format: Adding name server %s to blacklist.
  DNS:ADDRESS_BLACKLISTED:
-  args: 1
+  args: 4
   format: Name server %s blacklisted.
  DNS:LOOKUP_ERROR:
   args: 1
