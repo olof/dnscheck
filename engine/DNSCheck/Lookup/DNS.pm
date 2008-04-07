@@ -134,7 +134,7 @@ sub query_resolver {
 
         if ($self->check_timeout($self->{resolver})) {
             $self->{logger}
-              ->error("DNS:RESOLVER_QUERY_TIMEOUT", $qname, $qclass, $qtype);
+              ->debug("DNS:RESOLVER_QUERY_TIMEOUT", $qname, $qclass, $qtype);
             return undef;
         }
     }
@@ -301,7 +301,7 @@ sub query_explicit {
     my $packet = $resolver->send($qname, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
         $self->{logger}
-          ->error("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
+          ->debug("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
         $self->add_blacklist($address);
         $self->{logger}->debug("DNS:ADDRESS_BLACKLIST_ADD", $address);
         return undef;
@@ -378,7 +378,7 @@ sub _query_multiple {
 
     unless ($packet) {
         if ($timeout) {
-            $self->{logger}->error("DNS:QUERY_TIMEOUT", join(",", @target),
+            $self->{logger}->debug("DNS:QUERY_TIMEOUT", join(",", @target),
                 $qname, $qclass, $qtype);
         } else {
             $self->{logger}
@@ -489,7 +489,7 @@ sub get_nameservers_at_parent {
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
 
-    return () unless ($packet);
+    return undef unless ($packet);
 
     if ($packet->authority > 0) {
         foreach my $rr ($packet->authority) {
@@ -519,7 +519,7 @@ sub get_nameservers_at_child {
 
     my $packet = $self->query_child($qname, $qname, $qclass, "NS");
 
-    return () unless ($packet);
+    return undef unless ($packet);
 
     foreach my $rr ($packet->answer) {
         if ($rr->type eq "NS") {
@@ -826,8 +826,7 @@ sub address_is_recursive {
     my $packet = $resolver->send($nonexisting, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
         $self->{logger}
-          ->notice("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass,
-            $qtype);
+          ->debug("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
         goto DONE;
     }
 
