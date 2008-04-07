@@ -294,16 +294,18 @@ sub query_explicit {
     my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver($address);
 
-    if ($self->check_blacklist($address)) {
-        $self->{logger}->debug("DNS:ADDRESS_BLACKLISTED", $address);
+    if ($self->check_blacklist($address, $qname, $qclass, $qtype)) {
+        $self->{logger}
+          ->debug("DNS:ADDRESS_BLACKLISTED", $address, $qname, $qclass, $qtype);
         return undef;
     }
     my $packet = $resolver->send($qname, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
         $self->{logger}
           ->debug("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
-        $self->add_blacklist($address);
-        $self->{logger}->debug("DNS:ADDRESS_BLACKLIST_ADD", $address);
+        $self->add_blacklist($address, $qname, $qclass, $qtype);
+        $self->{logger}->debug("DNS:ADDRESS_BLACKLIST_ADD",
+            $address, $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -799,10 +801,7 @@ sub address_is_recursive {
     my $logger = $self->{logger};
     my $errors = 0;
 
-    if ($self->check_blacklist($address)) {
-        $self->{logger}->debug("DNS:ADDRESS_BLACKLISTED", $address);
-        goto DONE;
-    }
+    # no blacklisting here, since some nameservers ignore recursive queries
 
     my $resolver = new Net::DNS::Resolver;
     $resolver->debug($self->{debug});
@@ -821,7 +820,6 @@ sub address_is_recursive {
     my @tmp = split(/-/, bubblebabble(Digest => sha1(random_bytes(64))));
     my $nonexisting = sprintf("%s.%s", join("", @tmp[1 .. 6]), $nxdomain);
 
-    # no blacklisting here, since some nameservers ignore recursive queries
     my $qtype = "SOA";
     my $packet = $resolver->send($nonexisting, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
@@ -956,17 +954,23 @@ sub clear_blacklist {
 }
 
 sub add_blacklist {
-    my $self    = shift;
-    my $address = shift;
+    my $self   = shift;
+    my $qaddr  = shift;
+    my $qname  = shift;
+    my $qclass = shift;
+    my $qtype  = shift;
 
-    $self->{blacklist}{$address} = 1;
+    $self->{blacklist}{$qaddr}{$qname}{$qclass}{$qtype} = 1;
 }
 
 sub check_blacklist {
-    my $self    = shift;
-    my $address = shift;
+    my $self   = shift;
+    my $qaddr  = shift;
+    my $qname  = shift;
+    my $qclass = shift;
+    my $qtype  = shift;
 
-    return 1 if ($self->{blacklist}{$address});
+    return 1 if ($self->{blacklist}{$qaddr}{$qname}{$qclass}{$qtype});
     return 0;
 }
 
