@@ -132,24 +132,26 @@ sub test {
     unless ($ptr && $ptr->header->ancount) {
         $logger->warning("ADDRESS:PTR_NOT_FOUND", $address, $reverse);
         $errors++;
-    }
+    } else {
 
-    # REQUIRE: Hostname in PTR should exist
-    # FIXME: check that at least one name points back to $address
-    foreach my $p ($ptr->answer) {
-        next unless ($p->type eq "PTR");
+        # REQUIRE: Hostname in PTR should exist
+        # FIXME: check that at least one name points back to $address
+        foreach my $p ($ptr->answer) {
+            next unless ($p->type eq "PTR");
 
-        my $hostname = $p->ptrdname;
-        my $ipv4 = $context->{dns}->query_resolver($hostname, $qclass, "A");
-        my $ipv6 = $context->{dns}->query_resolver($hostname, $qclass, "AAAA");
+            my $hostname = $p->ptrdname;
+            my $ipv4 = $context->{dns}->query_resolver($hostname, $qclass, "A");
+            my $ipv6 =
+              $context->{dns}->query_resolver($hostname, $qclass, "AAAA");
 
-        unless (($ipv4 && $ipv4->header->ancount)
-            || ($ipv6 && $ipv6->header->ancount))
-        {
-            $logger->warning("ADDRESS:PTR_HOSTNAME_NOT_FOUND",
-                $address, $hostname);
-            $errors++;
-            goto DONE;
+            unless (($ipv4 && $ipv4->header->ancount)
+                || ($ipv6 && $ipv6->header->ancount))
+            {
+                $logger->warning("ADDRESS:PTR_HOSTNAME_NOT_FOUND",
+                    $address, $hostname);
+                $errors++;
+                goto DONE;
+            }
         }
     }
 
