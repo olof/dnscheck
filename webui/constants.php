@@ -1,3 +1,5 @@
+<!-- $Id$ -->
+
 <?php
 	define('DB_SERVER', 'localhost');
 	define('DB_PORT', 3306);
