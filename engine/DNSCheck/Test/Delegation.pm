@@ -174,18 +174,20 @@ sub _get_glue {
     foreach my $nameserver (@ns) {
         my $ipv4 =
           $context->dns->query_parent($zone, $nameserver, $qclass, "A");
-        my $ipv6 =
-          $context->dns->query_parent($zone, $nameserver, $qclass, "AAAA");
 
         foreach my $rr ($ipv4->answer, $ipv4->additional) {
-            if ($rr->type eq "A" and $rr->name =~ /\.$zone$/) {
+            if ($rr->type eq "A" and $rr->name eq $nameserver) {
                 $logger->info("DELEGATION:GLUE_FOUND_AT_PARENT",
                     $zone, $rr->name, $rr->address);
                 push @glue, $rr;
             }
         }
+
+        my $ipv6 =
+          $context->dns->query_parent($zone, $nameserver, $qclass, "AAAA");
+
         foreach my $rr ($ipv6->answer, $ipv6->additional) {
-            if ($rr->type eq "AAAA" and $rr->name =~ /\.$zone$/) {
+	        if ($rr->type eq "AAAA" and $rr->name eq $nameserver) {
                 $logger->info("DELEGATION:GLUE_FOUND_AT_PARENT",
                     $zone, $rr->name, $rr->address);
                 push @glue, $rr;
