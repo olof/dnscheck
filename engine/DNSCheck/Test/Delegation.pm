@@ -93,6 +93,24 @@ sub test {
         $logger->error("DELEGATION:TOO_FEW_NS", scalar @ns_at_parent);
     }
 
+    # REQUIRE: at least two IPv4 nameservers must be found
+    my $ipv4_ns = $context->dns->get_nameservers_ipv4($zone, $qclass);
+    if ($ipv4_ns && scalar(@{$ipv4_ns} < 2)) {
+        $logger->warning("DELEGATION:TOO_FEW_NS_IPV4", scalar @{$ipv4_ns});
+    }
+    unless ($ipv4_ns) {
+        $logger->error("DELEGATION:NO_NS_IPV4");
+    }
+
+    # REQUIRE: at least two IPv6 nameservers should be found
+    my $ipv6_ns = $context->dns->get_nameservers_ipv6($zone, $qclass);
+    if ($ipv6_ns && scalar(@{$ipv6_ns} < 2)) {
+        $logger->warning("DELEGATION:TOO_FEW_NS_IPV6", scalar @{$ipv6_ns});
+    }
+    unless ($ipv6_ns) {
+        $logger->notice("DELEGATION:NO_NS_IPV6");
+    }
+
     # REQUIRE: check for inconsistent glue
     my @glue = _get_glue($context, $zone);
     foreach my $g (@glue) {

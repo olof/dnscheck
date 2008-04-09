@@ -265,10 +265,24 @@ messages:
   args: 1
   format: Additional name server listed at child: %s
   descr: A name server listed at the child, but not at the parent, was found. This is most likely a configuration error, but there are sometimes reasons for setting up a zone this way.
- DELEGATION:TOO_FEW_NS:
+  DELEGATION:TOO_FEW_NS:
+   args: 1
+   format: Too few name servers (%s).
+   descr: Only one name server was found for the zone. You should always have at least two name servers for a zone to be able to handle transient connectivity problems.
+ DELEGATION:TOO_FEW_NS_IPV4:
   args: 1
-  format: Too few name servers (%s).
-  descr: Only one name server was found for the zone. You should always have at least two name servers for a zone to be able to handle transient connectivity problems.
+  format: Too few IPv4 name servers (%s).
+  descr: Only one IPv4 name server was found for the zone. You should always have at least two IPv4 name servers for a zone to be able to handle transient connectivity problems.
+ DELEGATION:TOO_FEW_NS_IPV6:
+  args: 1
+  format: Too few IPv6 name servers (%s).
+  descr: Only one IPv6 name server was found for the zone. You should always have at least two IPv6 name servers for a zone to be able to handle transient connectivity problems.
+ DELEGATION:NO_NS_IPV4:
+  args: 0
+  format: No IPv4 name servers found.
+ DELEGATION:NO_NS_IPV6:
+  args: 0
+  format: No IPv4 name servers found.
  DELEGATION:MATCHING_GLUE:
   args: 2
   format: Checking glue for %s (%s).
