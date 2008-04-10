@@ -5,19 +5,6 @@
 	
 	function checkIfDomainExists($domain)
 	{
-		if (".se" == substr($domain, -3))
-		{
-			$query = "SELECT domains.domain FROM domains WHERE domains.domain = '" . DatabasePackage::escape($domain) . "'";
-			$result = null;
-			$status = DatabasePackage::query($query, $result);
-			if (true !== $status)
-			{
-				return false;
-			}
-			
-			return (0 < count($result));
-		}
-		
 		$command = "dig '" . addslashes($domain) . "'";
 		$commandOutput = array();
 		$commandReturnValue = null;
