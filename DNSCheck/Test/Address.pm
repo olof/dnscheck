@@ -135,10 +135,12 @@ sub test {
 
         # REQUIRE: Hostname in PTR should exist
         # FIXME: check that at least one name points back to $address
+        my @ptrlist = ();
         foreach my $p ($ptr->answer) {
             next unless ($p->type eq "PTR");
-
-            my $hostname = $p->ptrdname;
+            push @ptrlist, $p->ptrdname;
+        }
+        foreach my $hostname (sort @ptrlist) {
             my $ipv4 = $context->{dns}->query_resolver($hostname, $qclass, "A");
             my $ipv6 =
               $context->{dns}->query_resolver($hostname, $qclass, "AAAA");
