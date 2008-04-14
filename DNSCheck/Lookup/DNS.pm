@@ -727,7 +727,7 @@ sub find_mx {
   DONE:
     $self->{logger}->debug("DNS:FIND_MX_RESULT", $domain, join(",", @dest));
 
-    return @dest;
+    return sort(@dest);
 }
 
 sub find_addresses {
