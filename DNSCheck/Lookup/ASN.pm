@@ -107,7 +107,7 @@ sub _asn_helper {
         return undef;
     }
 
-    foreach my $rr (@{ $packet->{answer} }) {
+    foreach my $rr ($packet->answer) {
         if ($rr->rdatastr =~ /^\"(\d+)\"/) {
             if ($1 eq $asn_magic) {
                 ## IP address not announced
