@@ -53,11 +53,13 @@ sub new {
         $self->{qclass} = "IN";
     }
 
-	$self->{ipv4} = 1;
-	$self->{ipv6} = 1;
-	
+    $self->{ipv4} = 1;
+    $self->{ipv6} = 1;
+    $self->{smtp} = 1;
+
     $self->{ipv4} = 0 if ($config->{disable_ipv4});
-    $self->{ipv6} = 0 if ($config->{disable_ipv6});	
+    $self->{ipv6} = 0 if ($config->{disable_ipv6});
+    $self->{smtp} = 0 if ($config->{disable_smtp});
 
     # FIXME: perhaps do this some other way
     $self->{hostname} = `hostname`;

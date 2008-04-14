@@ -111,13 +111,16 @@ sub test {
         $mailaddr =~ s/(?<!\\)\./@/;
         $mailaddr =~ s/\\\././g;
 
-        if (DNSCheck::Test::Mail::test($context, $mailaddr)) {
-            $logger->warning("SOA:RNAME_UNDELIVERABLE",
-                $zone, $soa->rname, $mailaddr);
-        } else {
-            $logger->info("SOA:RNAME_DELIVERABLE",
-                $zone, $soa->rname, $mailaddr);
+        if ($context->{smtp}) {
+            if (DNSCheck::Test::Mail::test($context, $mailaddr)) {
+                $logger->warning("SOA:RNAME_UNDELIVERABLE",
+                    $zone, $soa->rname, $mailaddr);
+            } else {
+                $logger->info("SOA:RNAME_DELIVERABLE",
+                    $zone, $soa->rname, $mailaddr);
+            }
         }
+
     } else {
         $logger->error("SOA:RNAME_SYNTAX", $zone, $soa->rname);
         $errors++;

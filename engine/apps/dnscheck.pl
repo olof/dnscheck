@@ -46,6 +46,7 @@ sub main {
     my $raw          = 0;
     my $disable_ipv4 = 0;
     my $disable_ipv6 = 0;
+    my $disable_smtp = 0;
     my $locale       = "locale/en.yaml";
 
     GetOptions(
@@ -54,6 +55,7 @@ sub main {
         'raw'          => \$raw,
         'disable-ipv4' => \$disable_ipv4,
         'disable-ipv6' => \$disable_ipv6,
+        'disable-smtp' => \$disable_smtp,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -77,6 +79,7 @@ sub main {
             tcp_timeout  => $timeout,
             disable_ipv4 => $disable_ipv4,
             disable_ipv6 => $disable_ipv6,
+            disable_smtp => $disable_smtp,
         }
     );
 
@@ -101,4 +104,5 @@ Options:
  --raw                 raw log output, suitable for automatic processing
  --disable-ipv4        disable IPv4 transport
  --disable-ipv6        disable IPv6 transport
+ --disable-smtp        disable SMTP test, suitable if port 25 is filtered
  --timeout=SECONDS     set UDP/TCP timeout
