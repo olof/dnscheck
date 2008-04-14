@@ -49,14 +49,24 @@ sub test {
     $logger->module_stack_push();
     $logger->info("ZONE:BEGIN", $zone);
 
-	my ($errors,$testable) = DNSCheck::Test::Delegation::test($context, $zone, $history);
+    my ($errors, $testable) =
+      DNSCheck::Test::Delegation::test($context, $zone, $history);
 
-	unless ($testable) {
-	    $logger->critical("ZONE:FATAL", $zone);
-		goto DONE;
-	}
+    unless ($testable) {
+        $logger->critical("ZONE:FATAL", $zone);
+        goto DONE;
+    }
 
-    foreach my $ns ($context->dns->get_nameservers_at_child($zone, $qclass)) {
+    my @ns_at_child = $context->dns->get_nameservers_at_child($zone, $qclass);
+
+    unless ($ns_at_child[0]) {
+
+        #FIXME: Different tag in order to detect the cause?
+        $logger->critical("ZONE:FATAL", $zone);
+        goto DONE;
+    }
+
+    foreach my $ns (@ns_at_child) {
         $errors += DNSCheck::Test::Nameserver::test($context, $zone, $ns);
     }
 

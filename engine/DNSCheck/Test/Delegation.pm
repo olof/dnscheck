@@ -53,6 +53,7 @@ sub test {
     my $packet;
 
     my @ns_at_parent = $context->dns->get_nameservers_at_parent($zone, $qclass);
+    @ns_at_parent = () unless $ns_at_parent[0];
     if (scalar @ns_at_parent) {
         $logger->info("DELEGATION:NS_AT_PARENT", join(",", @ns_at_parent));
         $testable = 1;
@@ -65,6 +66,7 @@ sub test {
     goto DONE if ($errors);
 
     my @ns_at_child = $context->dns->get_nameservers_at_child($zone, $qclass);
+    @ns_at_child = () unless $ns_at_child[0];
     if (scalar @ns_at_child) {
         $logger->info("DELEGATION:NS_AT_CHILD", join(",", @ns_at_child));
     } else {
@@ -170,6 +172,7 @@ sub _get_glue {
     my @glue = ();
 
     my @ns = $context->dns->get_nameservers_at_parent($zone, $qclass);
+    @ns = () unless $ns[0];
 
     foreach my $nameserver (@ns) {
         my $ipv4 =
