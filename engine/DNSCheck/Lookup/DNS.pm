@@ -567,7 +567,7 @@ sub _init_nameservers_helper {
         }
     }
 
-    foreach my $ns (@{ $self->{nameservers}{$qname}{$qclass}{ns} }) {
+    foreach my $ns (sort @{ $self->{nameservers}{$qname}{$qclass}{ns} }) {
 
         # Lookup IPv4 addresses for name servers
         my $ipv4 = $self->query_resolver($ns, $qclass, "A");
