@@ -16,52 +16,54 @@
 
 use Config;
 
-
 my %modules = ();
 my %defines = ();
 
 foreach (keys %ENV) {
-  $defines{$_} = $ENV{$_};
+    $defines{$_} = $ENV{$_};
 }
 
 foreach (@ARGV) {
-  if    (/^-M([a-z]+)$/)       { $modules{$1} = 1; }
-  elsif (/^-D([A-Z_]+)=(.*)$/) { $defines{$1} = $2; }
+    if    (/^-M([a-z]+)$/)       { $modules{$1} = 1; }
+    elsif (/^-D([A-Z_]+)=(.*)$/) { $defines{$1} = $2; }
 }
-
 
 my $l = 1;
 foreach (<STDIN>) {
-  # Conditional compiling
-  if ($modules{'conditional'}) {
-    # Comment out lines carrying the REMOVEFORINST tag
-    if(/\bREMOVEFORINST\b/) {
-      s/^(\s*)/$1#/;
-      s/REMOVEFORINST/REMOVEDBYINST/;
+
+    # Conditional compiling
+    if ($modules{'conditional'}) {
+
+        # Comment out lines carrying the REMOVEFORINST tag
+        if (/\bREMOVEFORINST\b/) {
+            s/^(\s*)/$1#/;
+            s/REMOVEFORINST/REMOVEDBYINST/;
+        }
     }
-  }
 
-  # Variable replacement
-  if ($modules{'vars'}) {
-    # Replace all @@VARS@@
-    s/\@\@([A-Z][A-Z0-9_]*)\@\@/$defines{$1}/g;
-  }
+    # Variable replacement
+    if ($modules{'vars'}) {
 
-  # Sharpbang (#!) replacement (see also ExtUtils::MY->fixin)
-  if ($modules{'sharpbang'} && ($l == 1)) {
-    # The perlpath can be overwritten via -DPERL_BIN=<perlpath>
-    my $perl   = $defines{'PERL_BIN'} || $Config{'perlpath'};
-
-    # If we're using a CVS build, add the -w switch to turn on warnings
-    my $minusw = -f 'CVS/Repository' ? ' -w' : '';
-
-    # The warnings can be overwritten via -DPERL_WARN=<1|0>
-    if (defined $defines{'PERL_WARN'}) {
-      $minusw = $defines{'PERL_WARN'} ? ' -w' : '';
+        # Replace all @@VARS@@
+        s/\@\@([A-Z][A-Z0-9_]*)\@\@/$defines{$1}/g;
     }
-    s/^#!.*perl.*$/#!${perl}${minusw}/;
-  }
 
-  print;
-  $l++;
+    # Sharpbang (#!) replacement (see also ExtUtils::MY->fixin)
+    if ($modules{'sharpbang'} && ($l == 1)) {
+
+        # The perlpath can be overwritten via -DPERL_BIN=<perlpath>
+        my $perl = $defines{'PERL_BIN'} || $Config{'perlpath'};
+
+        # If we're using a CVS build, add the -w switch to turn on warnings
+        my $minusw = -f 'CVS/Repository' ? ' -w' : '';
+
+        # The warnings can be overwritten via -DPERL_WARN=<1|0>
+        if (defined $defines{'PERL_WARN'}) {
+            $minusw = $defines{'PERL_WARN'} ? ' -w' : '';
+        }
+        s/^#!.*perl.*$/#!${perl}${minusw}/;
+    }
+
+    print;
+    $l++;
 }

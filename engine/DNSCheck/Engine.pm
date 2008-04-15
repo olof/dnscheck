@@ -257,7 +257,7 @@ sub test {
         print STDERR Dumper($logger);
 
         foreach my $logentry (@{ $logger->export }) {
-	
+
             my $timestamp = shift @$logentry;
             my $context   = shift @$logentry;
             my $level     = shift @$logentry;

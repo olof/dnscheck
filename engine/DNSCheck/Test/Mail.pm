@@ -51,7 +51,7 @@ sub test {
 
     my ($localpart, $domain) = split(/@/, $email);
 
-	# FIXME: stricter checks needed here
+    # FIXME: stricter checks needed here
     unless ($localpart && $domain) {
         $logger->error("MAIL:ADDRESS_SYNTAX", $email);
         $errors++;

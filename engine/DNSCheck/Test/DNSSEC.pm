@@ -108,7 +108,7 @@ sub test {
     ($child_errors, $child_result) = _check_child($context, $zone, $dnskey);
     $errors += $child_errors;
 
-	# Only check parent if we've found a DS
+    # Only check parent if we've found a DS
     if ($ds) {
         $parent_errors =
           _check_parent($context, $zone, $ds, $dnskey, $child_result);
