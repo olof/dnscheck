@@ -4,7 +4,7 @@
 
 TIDYRC=util/perltidyrc
 
-svn st -q | egrep '\.pl$|\.pm$' | awk '{print $2}' |\
+svn status -q | egrep '\.pl$|\.pm$' | awk '{print $2}' |\
 xargs perltidy --profile=${TIDYRC} --backup-and-modify-in-place
 find . \( -name '*.pl.bak' -o -name '*.pm.bak' \) -type f -print |\
 xargs rm
