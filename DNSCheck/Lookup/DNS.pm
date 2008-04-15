@@ -495,13 +495,13 @@ sub get_nameservers_at_parent {
 
     if ($packet->authority > 0) {
         foreach my $rr ($packet->authority) {
-            if ($rr->type eq "NS") {
+            if (($rr->type eq "NS") && $rr->nsdname) {
                 push @ns, $rr->nsdname;
             }
         }
     } else {
         foreach my $rr ($packet->answer) {
-            if ($rr->type eq "NS") {
+            if (($rr->type eq "NS") && $rr->nsdname) {
                 push @ns, $rr->nsdname;
             }
         }
@@ -524,7 +524,7 @@ sub get_nameservers_at_child {
     return undef unless ($packet);
 
     foreach my $rr ($packet->answer) {
-        if ($rr->type eq "NS") {
+        if (($rr->type eq "NS") && $rr->nsdname) {
             push @ns, $rr->nsdname;
         }
     }
@@ -562,17 +562,22 @@ sub _init_nameservers_helper {
     goto DONE unless ($ns);
 
     foreach my $rr ($ns->answer) {
-        if ($rr->type eq "NS") {
+        if (($rr->type eq "NS") && $rr->nsdname) {
             push @{ $self->{nameservers}{$qname}{$qclass}{ns} }, $rr->nsdname;
         }
     }
+
+    goto DONE unless ($self->{nameservers}{$qname}{$qclass}{ns});
 
     foreach my $ns (sort @{ $self->{nameservers}{$qname}{$qclass}{ns} }) {
 
         # Lookup IPv4 addresses for name servers
         my $ipv4 = $self->query_resolver($ns, $qclass, "A");
+
+        goto DONE unless ($ipv4);
+
         foreach my $rr ($ipv4->answer) {
-            if ($rr->type eq "A") {
+            if (($rr->type eq "A") && $rr->address) {
                 push @{ $self->{nameservers}{$qname}{$qclass}{ipv4} },
                   $rr->address;
                 $self->{logger}
@@ -583,8 +588,11 @@ sub _init_nameservers_helper {
 
         # Lookup IPv6 addresses for name servers
         my $ipv6 = $self->query_resolver($ns, $qclass, "AAAA");
+
+        goto DONE unless ($ipv6);
+
         foreach my $rr ($ipv6->answer) {
-            if ($rr->type eq "AAAA") {
+            if (($rr->type eq "AAAA") && $rr->address) {
                 push @{ $self->{nameservers}{$qname}{$qclass}{ipv6} },
                   $rr->address;
                 $self->{logger}
@@ -695,9 +703,9 @@ sub find_mx {
     $self->{logger}->debug("DNS:FIND_MX_BEGIN", $domain);
 
     $packet = $self->query_resolver($domain, "MX", "IN");
-    if ($packet->header->ancount > 0) {
+    if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
-            if ($rr->type eq "MX") {
+            if (($rr->type eq "MX") && $rr->exchange) {
                 push @dest, $rr->exchange;
             }
         }
@@ -705,7 +713,7 @@ sub find_mx {
     }
 
     $packet = $self->query_resolver($domain, "A", "IN");
-    if ($packet->header->ancount > 0) {
+    if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
             if ($rr->type eq "A") {
                 push @dest, $domain;
@@ -715,7 +723,7 @@ sub find_mx {
     }
 
     $packet = $self->query_resolver($domain, "AAAA", "IN");
-    if ($packet->header->ancount > 0) {
+    if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
             if ($rr->type eq "AAAA") {
                 push @dest, $domain;
@@ -759,7 +767,7 @@ sub find_addresses {
     push @answers, $ipv6->answer if ($ipv6->header->ancount);
 
     foreach my $rr (@answers) {
-        if ($rr->type eq "A" or $rr->type eq "AAAA") {
+        if (($rr->type eq "A" or $rr->type eq "AAAA") && $rr->address) {
             push @addresses, $rr->address;
         }
     }

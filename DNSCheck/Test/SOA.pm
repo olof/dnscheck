@@ -81,7 +81,7 @@ sub test {
 
     $packet = $context->dns->query_resolver($zone, $qclass, "NS");
 
-    unless ($packet->header->ancount) {
+    unless ($packet && $packet->header->ancount) {
         $logger->error("SOA:NS_NOT_FOUND", $zone);
         $errors++;
         goto DONE;
