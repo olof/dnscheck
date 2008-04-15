@@ -48,7 +48,7 @@ sub test {
     $logger->info("SERIAL:BEGIN", $zone);
 
     my %serial_counter;
-	my @nameservers = ();
+    my @nameservers = ();
 
     if ($context->{ipv4}) {
         my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
