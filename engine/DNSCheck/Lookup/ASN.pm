@@ -102,7 +102,7 @@ sub _asn_helper {
 
     my $packet = $self->{dns}->query_resolver($qname, "IN", "TXT");
 
-    unless ($packet->header->ancount) {
+    unless ($packet && $packet->header->ancount) {
         ## lookup failure
         return undef;
     }

@@ -174,7 +174,7 @@ sub _check_id {
             next unless ($packet);
 
             foreach my $rr ($packet->answer) {
-                next unless ($rr->type eq "TXT");
+                next unless (($rr->type eq "TXT") && $rr->txtdata);
 
                 $logger->info("NAMESERVER:LEGACY_ID", $nameserver, $address,
                     $domain, $rr->txtdata);

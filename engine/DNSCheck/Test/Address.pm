@@ -137,7 +137,7 @@ sub test {
         # FIXME: check that at least one name points back to $address
         my @ptrlist = ();
         foreach my $p ($ptr->answer) {
-            next unless ($p->type eq "PTR");
+            next unless (($p->type eq "PTR") && $p->ptrdname);
             push @ptrlist, $p->ptrdname;
         }
         foreach my $hostname (sort @ptrlist) {
