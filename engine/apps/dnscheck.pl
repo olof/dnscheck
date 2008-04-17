@@ -101,8 +101,8 @@ dnscheck [options] zone
 Options:
 
  --help                brief help message
- --raw                 raw log output, suitable for automatic processing
  --disable-ipv4        disable IPv4 transport
  --disable-ipv6        disable IPv6 transport
  --disable-smtp        disable SMTP test, suitable if port 25 is filtered
+ --raw                 raw log output, suitable for automatic processing
  --timeout=SECONDS     set UDP/TCP timeout

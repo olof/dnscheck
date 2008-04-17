@@ -42,25 +42,32 @@ use DNSCheck::Engine;
 my $config = "/etc/dnscheck.conf";
 
 sub main {
-    my $help      = 0;
-    my $chunksize = 10;
-    my $sleep     = 10;
-    my $realtime  = 0;
-    my $processes = 1;
-    my $facility  = "daemon";
-    my $debug     = 0;
+    my $help         = 0;
+    my $chunksize    = 10;
+    my $sleep        = 10;
+    my $realtime     = 0;
+    my $processes    = 1;
+    my $facility     = "daemon";
+    my $debug        = 0;
+    my $disable_ipv4 = 0;
+    my $disable_ipv6 = 0;
+    my $disable_smtp = 0;
 
     my $prio_low  = undef;
     my $prio_high = undef;
 
     GetOptions(
-        'help|?'      => \$help,
-        'config=s'    => \$config,
-        'chunksize=i' => \$chunksize,
-        'sleep=i'     => \$sleep,
-        'processes=i' => \$processes,
-        'realtime'    => \$realtime,
-        'debug'       => \$debug,
+        'help|?'       => \$help,
+        'config=s'     => \$config,
+        'chunksize=i'  => \$chunksize,
+        'sleep=i'      => \$sleep,
+        'processes=i'  => \$processes,
+        'facility=s'   => \$facility,
+        'realtime'     => \$realtime,
+        'debug'        => \$debug,
+        'disable-ipv4' => \$disable_ipv4,
+        'disable-ipv6' => \$disable_ipv6,
+        'disable-smtp' => \$disable_smtp,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -100,8 +107,9 @@ sub main {
                 tcp_timeout     => 5,
                 retry           => 3,
                 retrans         => 2,
-                disable_ipv4    => 0,
-                disable_ipv6    => 0,
+                disable_ipv4    => $disable_ipv4,
+                disable_ipv6    => $disable_ipv6,
+                disable_smtp    => $disable_smtp,
                 ignore_debug    => 1,
                 debug           => $debug,
                 prio_low        => $prio_low,
@@ -143,6 +151,9 @@ Options:
  --help                brief help message
  --chunksize=N         number of domains to test per run
  --config=FILE         database configuration file
+ --disable-ipv4        disable IPv4 transport
+ --disable-ipv6        disable IPv6 transport
+ --disable-smtp        disable SMTP test, suitable if port 25 is filtered
  --facility=FACILITY   syslog facility
  --processes=N         number of processes to start
  --realtime            process realtime priorities only
