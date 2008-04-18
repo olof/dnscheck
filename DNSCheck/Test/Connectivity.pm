@@ -58,9 +58,10 @@ sub test {
 
     # FIXME: AS lookup for IPv6 addresses
 
-    # FIXME: test for ASN lookup failure
     foreach my $address (@nameservers) {
-        my @as_list = @{ $context->asn->lookup($address) };
+        my $as_lookup = $context->asn->lookup($address);
+        my @as_list   = ();
+        my @as_list   = @{$as_lookup} if $as_lookup;
 
         foreach my $asn (@as_list) {
             $as_set{$asn} = $asn;
