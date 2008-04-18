@@ -173,9 +173,13 @@ sub test {
 
     # REQUIRE: SOA 'minimum' less than 1 day
     my $max_soa_minimum = 24 * 3600;
+    my $min_soa_minimum = 5 * 60;
     if ($soa->minimum > $max_soa_minimum) {
-        $logger->notice("SOA:MINIMUM_SMALL", $zone, $soa->minimum,
+        $logger->notice("SOA:MINIMUM_LARGE", $zone, $soa->minimum,
             $max_soa_minimum);
+    } elsif ($soa->minimum < $min_soa_minimum) {
+        $logger->notice("SOA:MINIMUM_SMALL", $zone, $soa->minimum,
+            $min_soa_minimum);
     } else {
         $logger->info("SOA:MINIMUM_OK", $zone, $soa->minimum, $max_soa_minimum);
     }
