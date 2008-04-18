@@ -1,4 +1,4 @@
-# $Id: en.yaml 256 2008-03-14 09:58:16Z el $
+# $Id$
 
 locale_name: English
 locale_id: en
@@ -761,9 +761,14 @@ messages:
  ZONE:BEGIN:
   args: 1
   format: Begin testing zone %s.
- ZONE:FATAL:
+ ZONE:FATAL_DELEGATION:
   args: 1
-  format: Fatal error testing zone %s.
+  format: Fatal error in delegation for zone %s. 
+  descr: No nameservers found at child or at parent. No further testing can be performed.
+ ZONE:FATAL_NO_CHILD_NS:
+  args: 1
+  format: Fatal error - no child nameservers for zone %s. 
+  descr: No child nameservers found. No further testing can be performed.
  ZONE:END:
   args: 1
   format: Test completed for zone %s.

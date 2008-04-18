@@ -53,7 +53,7 @@ sub test {
       DNSCheck::Test::Delegation::test($context, $zone, $history);
 
     unless ($testable) {
-        $logger->critical("ZONE:FATAL", $zone);
+        $logger->critical("ZONE:FATAL_DELEGATION", $zone);
         goto DONE;
     }
 
@@ -61,8 +61,9 @@ sub test {
 
     unless ($ns_at_child[0]) {
 
-        #FIXME: Different tag in order to detect the cause?
-        $logger->critical("ZONE:FATAL", $zone);
+        # This shouldn't happen because get_nameservers_at_child was also
+        # called in DNSCheck::Test::Delegation::test
+        $logger->critical("ZONE:FATAL_NO_CHILD_NS", $zone);
         goto DONE;
     }
 
