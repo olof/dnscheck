@@ -51,8 +51,9 @@ sub test {
     $logger->info("SMTP:BEGIN", $host, $email);
 
     my $smtp = Net::SMTP->new(
-        Host  => $host,
-        Hello => $context->hostname
+        Host    => $host,
+        Hello   => $context->hostname,
+        Timeout => $context->{dns}{default}{tcp_timeout}
     );
 
     unless ($smtp) {
