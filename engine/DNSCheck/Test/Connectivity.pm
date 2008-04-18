@@ -84,7 +84,7 @@ sub test {
     # REQUIRE: Domain name servers should live in more than one AS
     my $as_count = scalar keys %as_set;
     if ($as_count <= 1) {
-        $logger->warning("CONNECTIVITY:TOO_FEW_ASN", $as_count);
+        $logger->notice("CONNECTIVITY:TOO_FEW_ASN", $as_count);
     } else {
         $logger->info("CONNECTIVITY:ASN_COUNT_OK", $as_count);
     }
