@@ -156,7 +156,7 @@ sub process {
     if ($batch) {
         $self->message("info", "Got %d entries from queue", scalar(@$batch));
     } else {
-        $self->message("critical", "Queue error");
+        $self->message("crit", "Queue error");
         return 0;
     }
 
@@ -327,9 +327,12 @@ sub test {
         $logger->clear($zone);
     };
 
-    if ($@) {
+    my $err_eval = $@;
+
+    if ($err_eval) {
         $dbh->rollback;
-        $self->message("critical", "Engine crashed while testing %s", $zone);
+        $self->message("crit", "Engine crashed while testing %s. Error: %s",
+            $zone, $err_eval);
     } else {
         $dbh->commit;
     }
