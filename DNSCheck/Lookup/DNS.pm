@@ -120,6 +120,17 @@ sub DESTROY {
 
 ######################################################################
 
+sub flush {
+    my $self = shift;
+
+    $self->{cache}{resolver} = ();
+    $self->{cache}{parent}   = ();
+    $self->{cache}{child}    = ();
+    $self->{blacklist}       = ();
+}
+
+######################################################################
+
 sub query_resolver {
     my $self   = shift;
     my $qname  = shift;
@@ -1008,6 +1019,8 @@ Helper functions for looking up information in the DNS (Domain Name System).
 =head1 METHODS
 
 new(I<logger>);
+
+flush();
 
 my $packet = $dns->query_resolver(I<qname>, I<qclass>, I<qtype>);
 
