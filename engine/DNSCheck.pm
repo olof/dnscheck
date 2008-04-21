@@ -69,6 +69,17 @@ sub new {
 
 ######################################################################
 
+sub flush {
+    my $self = shift;
+
+    $self->{context}->{dns}->flush();
+
+    # should the ASN cache be flushed as well?
+    #$self->{context}->{asn}->flush();
+}
+
+######################################################################
+
 sub logger {
     my $self = shift;
     return $self->{context}->logger;
