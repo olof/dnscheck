@@ -61,6 +61,12 @@ sub new {
     bless $self, $class;
 }
 
+sub flush {
+    my $self = shift;
+
+    $self->{asn} = ();
+}
+
 sub lookup {
     my $self = shift;
     my $ip   = shift;
@@ -140,6 +146,8 @@ B<asn.cymru.com>.
 =head1 METHODS
 
 new(I<logger>, I<dns>);
+
+flush();
 
 my $n = $asn->lookup(I<address>);
 
