@@ -61,7 +61,7 @@ sub test {
     foreach my $address (@nameservers) {
         my $as_lookup = $context->asn->lookup($address);
         my @as_list   = ();
-        my @as_list   = @{$as_lookup} if $as_lookup;
+        @as_list   = @{$as_lookup} if $as_lookup;
 
         foreach my $asn (@as_list) {
             $as_set{$asn} = $asn;
