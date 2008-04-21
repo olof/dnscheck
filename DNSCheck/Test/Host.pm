@@ -93,8 +93,8 @@ sub test {
     }
 
     my @answers = ();
-    push @answers, $ipv4->answer if ($ipv4->header->ancount);
-    push @answers, $ipv6->answer if ($ipv6->header->ancount);
+    push @answers, $ipv4->answer if ($ipv4 && $ipv4->header->ancount);
+    push @answers, $ipv6->answer if ($ipv6 && $ipv6->header->ancount);
 
     # REQUIRE: Host must not point to a CNAME
     foreach my $rr (@answers) {
