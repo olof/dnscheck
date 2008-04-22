@@ -184,7 +184,8 @@ sub test {
         $logger->notice("SOA:MINIMUM_SMALL", $zone, $soa->minimum,
             $min_soa_minimum);
     } else {
-        $logger->info("SOA:MINIMUM_OK", $zone, $soa->minimum, $max_soa_minimum);
+        $logger->info("SOA:MINIMUM_OK", $zone, $soa->minimum,
+		      $min_soa_minimum, $max_soa_minimum);
     }
 
   DONE:

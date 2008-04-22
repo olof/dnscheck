@@ -752,8 +752,8 @@ messages:
   format: SOA minimum for %s too large (%s) - recommended <= %s.
   descr: The SOA minimum is used to tell caching resolvers how long they may cache negative answers. If the value is too large, negative caching will be to aggressive.
  SOA:MINIMUM_OK:
-  args: 3
-  format: SOA minimum for %s OK (%s) - recommended >= %s.
+  args: 4
+  format: SOA minimum for %s OK (%s) - recommended between %s and %s.
  SOA:END:
   args: 1
   format: Done testing SOA parameters for %s.
