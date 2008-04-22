@@ -54,7 +54,7 @@ sub test {
 
     # REQUIRE: SOA record must exist
     if (   $packet
-        && $packet->header->ancount
+        && ($packet->header->ancount == 1)
         && (($packet->answer)[0]->type eq "SOA"))
     {
         $logger->info("SOA:FOUND", $zone);
