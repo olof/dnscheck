@@ -82,6 +82,11 @@ sub test {
         my $ipv4 = $context->dns->query_resolver($hostname, "IN", "A");
         my $ipv6 = $context->dns->query_resolver($hostname, "IN", "AAAA");
 
+        unless ($ipv4 && $ipv6) {
+            ## FIXME: error
+            goto DONE;
+        }
+
         # REQUIRE: Warn if a mail exchanger is reachable by IPv6 only
         if (   ($ipv4 && $ipv4->header->ancount == 0)
             && ($ipv6 && $ipv6->header->ancount > 0))
