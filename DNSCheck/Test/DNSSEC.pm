@@ -101,7 +101,7 @@ sub test {
     }
 
     if (!$ds and $dnskey) {
-        $logger->warning("DNSSEC:MISSING_DS", $zone);
+        $logger->notice("DNSSEC:MISSING_DS", $zone);
         $errors++;
     }
 
