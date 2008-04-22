@@ -250,6 +250,9 @@ sub test {
 
         DNSCheck::zone($self->{dnscheck}, $zone, $history);
 
+        # Flush cached entries after each zone test
+        $self->{dnscheck}->flush();
+
         $dbh->do(sprintf("UPDATE tests SET end=NOW() WHERE id=%d", $id));
 
         my $line = 0;
