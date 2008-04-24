@@ -1,5 +1,3 @@
-<!-- $Id$ -->
-
 <?php
 		$command = "dig 'iis.se'";
 		$commandOutput = array();

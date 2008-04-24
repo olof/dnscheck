@@ -1,5 +1,3 @@
-<!-- $Id$ -->
-
 <?php
 	
 	$translationIndex = array(
