@@ -19,7 +19,7 @@
 		
 		private static function connect()
 		{
-			if (!is_null($dbConnection))
+			if (!is_null(self::$dbConnection))
 			{
 				return true;	
 			}
