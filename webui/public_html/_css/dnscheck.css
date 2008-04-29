@@ -301,6 +301,11 @@ ul.subtests p.error {
 	color: #666;
 }
 
+ul.subtests p.notice {
+	font-weight: bold;
+	color: #666;
+}
+
 ul.subtests a {
 	color: #666;
 	background: url(../_img/arrow_closed.gif) no-repeat center right;

@@ -28,7 +28,7 @@
 					}
 				}
 			}
-			elseif (('WARNING' == $treeNode['level']) || ('ERROR' == $treeNode['level']) || (('INFO' == $treeNode['level']) && ($allMessages)))
+			elseif (('WARNING' == $treeNode['level']) || ('ERROR' == $treeNode['level']) || ((('INFO' == $treeNode['level']) || ('NOTICE' == $treeNode['level'])) && ($allMessages)))
 			{
 				if (is_null($treeNode['formatstring']))
 				{
@@ -40,7 +40,21 @@
 						$IDN->decode($treeNode['arg4']), $IDN->decode($treeNode['arg5']), $IDN->decode($treeNode['arg6']), $IDN->decode($treeNode['arg7']), $IDN->decode($treeNode['arg8']), $IDN->decode($treeNode['arg9']));
 				}
 				
-				$flattenedTreeItem = array('type' => $type, 'class' => (($treeNode['level'] == 'WARNING') ? 'warn' : ($treeNode['level'] == 'ERROR' ? 'error' : '')), 'caption' => $caption, 'subtree' => array());
+				$className = '';
+				switch ($treeNode['level'])
+				{
+					case 'WARNING':
+						$className = 'warn';
+						break;
+					case 'ERROR':
+						$className = 'error';
+						break;
+					case 'NOTICE':
+						$className = 'notice';
+						break;
+				}
+				
+				$flattenedTreeItem = array('type' => $type, 'class' => $className, 'caption' => $caption, 'subtree' => array());
 				if (!is_null($treeNode['description']))
 				{
 					$flattenedTreeItem['description'] = utf8_encode($treeNode['description']);

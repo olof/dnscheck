@@ -132,8 +132,14 @@
 
 	<div id="footer">
 		<p id="f_info"><?php echo(translate(".SE (The Internet Infrastructure Foundation)"));?></p>
-		<?php if('en' != $languageId){?><p id="f_links"><a href="?lang=en" class="lang_en">English version</a><br /></p><?php }?>
+		<?php
+			foreach ($supportedLanguages as $supportedLanguage)
+			{
+				if (($supportedLanguage['id'] != $languageId) && ($supportedLanguage['active'])) { ?><p id="f_links"><a href="?lang=<?php echo($supportedLanguage['id']); ?>" class="lang_<?php echo($supportedLanguage['id']); ?>"><?php echo($supportedLanguage['caption']); ?></a><br /></p><?php } ?>
 		<br class="clear" />
+		<?php		
+			}
+		?>
 	</div>
 
 </div>
