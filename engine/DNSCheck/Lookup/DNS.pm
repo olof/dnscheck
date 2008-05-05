@@ -100,6 +100,11 @@ sub new {
     } else {
         $self->{default}{retrans} = 2;
     }
+    if ($config->{smtp_timeout}) {
+        $self->{default}{smtp_timeout} = $config->{smtp_timeout};
+    } else {
+        $self->{default}{smtp_timeout} = 20;
+    }
 
     # set up global resolver
     $self->{resolver} = new Net::DNS::Resolver;
