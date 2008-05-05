@@ -288,9 +288,6 @@ sub query_child_nocache {
         return undef;
     }
 
-    # randomize name server addresses
-    @target = shuffle(@target);
-
     return $self->_query_multiple($qname, $qclass, $qtype, $flags, @target);
 }
 
