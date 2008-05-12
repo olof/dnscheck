@@ -118,6 +118,9 @@ sub test {
     foreach my $g (@glue) {
         $logger->info("DELEGATION:MATCHING_GLUE", $g->name, $g->address);
 
+        # make sure we only check in-zone-glue
+        next unless ($g->name =~ /$zone/i);
+
         my $c =
           $context->dns->query_child($zone, $g->name, $g->class, $g->type);
 
