@@ -851,6 +851,9 @@ sub address_is_recursive {
 
     goto DONE unless $packet;
 
+    ## recursion available zero is ok
+    goto DONE if ($packet->header->ra == 0);
+
     ## refused and servfail is ok
     goto DONE if ($packet->header->rcode eq "REFUSED");
     goto DONE if ($packet->header->rcode eq "SERVFAIL");
