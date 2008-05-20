@@ -282,7 +282,7 @@ messages:
   format: No IPv4 name servers found.
  DELEGATION:NO_NS_IPV6:
   args: 0
-  format: No IPv4 name servers found.
+  format: No IPv6 name servers found.
  DELEGATION:MATCHING_GLUE:
   args: 2
   format: Checking glue for %s (%s).
