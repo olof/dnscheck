@@ -507,7 +507,7 @@ messages:
  MAIL:IPV6_ONLY:
   args: 1
   format: Mail exchanger %s is reachable by IPv6 only.
-  descr: The mail exchanger is only reachable via IPv6, making it impossible for most hosts on the Interhet to deliver email to the domain.
+  descr: The mail exchanger is only reachable via IPv6, making it impossible for most hosts on the Internet to deliver email to the domain.
  MAIL:END:
   args: 1
   format: Done testing email address %s.
