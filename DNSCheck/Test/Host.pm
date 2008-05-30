@@ -52,8 +52,9 @@ sub test {
     my @labels = split(/\./, $hostname);
 
     # REQUIRE: RFC 952 says first component must begin with a-z
+    # REQUIRE: RFC 1123 allows initial digit
     if (scalar @labels > 0
-        && $labels[0] !~ /^[A-Za-z][A-Za-z0-9-]*$/)
+        && $labels[0] !~ /^[A-Za-z0-9][A-Za-z0-9-]*$/)
     {
         $logger->error("HOST:ILLEGAL_NAME", $hostname, $labels[0]);
         $errors++;
