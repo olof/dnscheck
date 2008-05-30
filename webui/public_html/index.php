@@ -105,7 +105,7 @@
 			<h3 class="smalltop"><img src="_img/mini-loader.gif" style="display: none" id="history_loader" alt="Loading" width="16" height="16" /><?php echo(translate("Test history"));?></h3>
 			<div class="smallbox">
 			<p id="pager_error" style="display: none"><img src="_img/icon_warning.gif" alt="Error" width="16" height="14" /> <?php echo(translate("Error loading history"));?></p>
-			<p id="pager_no_history" style="display: none"><?php echo(translate("No test history exist"));?></p>
+			<p id="pager_no_history" style="display: none"><?php echo(translate("No test history found"));?></p>
 			<ul id="pagerlist">
 				<li style="display:none"><?php echo(translate("Test history"));?></li>
 			</ul>
@@ -132,17 +132,19 @@
 
 	<div id="footer">
 		<p id="f_info"><?php echo(translate(".SE (The Internet Infrastructure Foundation)"));?></p>
-		<?php
-			foreach ($supportedLanguages as $supportedLanguage)
-			{
-				if (($supportedLanguage['id'] != $languageId) && ($supportedLanguage['active'])) { ?><p id="f_links"><a href="?lang=<?php echo($supportedLanguage['id']); ?>" class="lang_<?php echo($supportedLanguage['id']); ?>"><?php echo($supportedLanguage['caption']); ?></a><br /></p><?php } ?>
+		<?php if('en' != $languageId){?><p id="f_links"><a href="?lang=en" class="lang_en">English version</a><br /></p><?php }?>
 		<br class="clear" />
-		<?php		
-			}
-		?>
 	</div>
 
 </div>
+
+<script src="http://www.google-analytics.com/urchin.js"
+type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2736468-7";
+urchinTracker();
+</script>
 
 </body>
 </html>
