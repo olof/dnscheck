@@ -286,6 +286,9 @@ messages:
  DELEGATION:MATCHING_GLUE:
   args: 2
   format: Checking glue for %s (%s).
+ DELEGATION:GLUE_SKIPPED:
+  args: 2
+  format: Skipped glue for %s (%s).
  DELEGATION:GLUE_FOUND_AT_PARENT:
   args: 3
   format: Parent glue for %s found: %s (%s)

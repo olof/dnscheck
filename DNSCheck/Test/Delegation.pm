@@ -119,31 +119,74 @@ sub test {
         $logger->info("DELEGATION:MATCHING_GLUE", $g->name, $g->address);
 
         # make sure we only check in-zone-glue
-        next unless ($g->name =~ /$zone$/i);
+        unless ($g->name =~ /$zone$/i) {
+            $logger->debug("DELEGATION:GLUE_SKIPPED", $g->name,
+                "out-of-zone");
+            next;
+        }
 
         my $c =
           $context->dns->query_child($zone, $g->name, $g->class, $g->type);
 
-        if ($c and $c->header->ancount > 0) {
-            my $found = 0;
+        if ($c and $c->header->rcode eq "NOERROR") {
+            ## got NOERROR, might be good or bad - dunno yet
 
-            foreach my $rr ($c->answer) {
-                if (    lc($rr->name) eq lc($g->name)
-                    and $rr->class   eq $g->class
-                    and $rr->type    eq $g->type
-                    and $rr->address eq $g->address)
-                {
-                    $logger->info("DELEGATION:GLUE_FOUND_AT_CHILD",
-                        $zone, $g->name, $g->address);
-                    $found++;
+            if ($c->header->ancount > 0) {
+                ## got positive answer back, let's see if this makes any sense
+
+                my $found = 0;
+                foreach my $rr ($c->answer) {
+                    if (    lc($rr->name) eq lc($g->name)
+                        and $rr->class   eq $g->class
+                        and $rr->type    eq $g->type
+                        and $rr->address eq $g->address)
+                    {
+                        $logger->info("DELEGATION:GLUE_FOUND_AT_CHILD",
+                            $zone, $g->name, $g->address);
+                        $found++;
+                    }
+                }
+
+                unless ($found) {
+                    $logger->error("DELEGATION:INCONSISTENT_GLUE", $g->name);
+                }
+            } elsif ($c->header->nscount > 0) {
+                ## got referer or nothing, authority section needs study
+
+                my $soa = undef;
+                my $ns  = undef;
+
+                foreach my $rr ($c->authority) {
+                    $soa = $rr if ($rr->type eq "SOA");
+                    $ns  = $rr if ($rr->type eq "NS");
+                }
+
+                ## got NOERROR and NS in authority section -> referer
+                if ($ns) {
+                    $logger->debug("DELEGATION:GLUE_SKIPPED", $g->name,
+                        "referer");
+                    next;
+                }
+
+                ## got NOERROR and SOA in authority section -> not found
+                if ($soa) {
+                    $logger->error("DELEGATION:GLUE_MISSING_AT_CHILD",
+                        $g->name);
+                    next;
                 }
             }
-
-            unless ($found) {
-                $logger->error("DELEGATION:INCONSISTENT_GLUE", $g->name);
-            }
+        } elsif ($c and $c->header->rcode eq "REFUSED") {
+            ## got REFUSED, probably not authoritative
+            $logger->debug("DELEGATION:GLUE_SKIPPED", $g->name, "refused");
+            next;
+        } elsif ($c and $c->header->rcode eq "SERVFAIL") {
+            ## got SERVFAIL, most likely not authoritative
+            $logger->debug("DELEGATION:GLUE_SKIPPED", $g->name, "servfail");
+            next;
         } else {
+            ## got something else, let's blame the user...
             $logger->error("DELEGATION:GLUE_MISSING_AT_CHILD", $g->name);
+            next;
         }
     }
 
