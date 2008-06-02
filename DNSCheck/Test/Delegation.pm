@@ -120,8 +120,7 @@ sub test {
 
         # make sure we only check in-zone-glue
         unless ($g->name =~ /$zone$/i) {
-            $logger->debug("DELEGATION:GLUE_SKIPPED", $g->name,
-                "out-of-zone");
+            $logger->debug("DELEGATION:GLUE_SKIPPED", $g->name, "out-of-zone");
             next;
         }
 
@@ -279,12 +278,9 @@ sub _history {
         # FIXME: also skip current IP addresses
 
         foreach my $address (@addresses) {
-            if (
-                !$context->dns->address_is_authoritative(
-                    $address, $zone, $qclass
-                )
-              )
-            {
+            my $packet =
+              $context->dns->query_explicit($zone, $qclass, "SOA", $address);
+            if ($packet && $packet->header->aa) {
                 $logger->notice("DELEGATION:STILL_AUTH", $ns, $address, $zone);
             }
         }
