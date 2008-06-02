@@ -806,9 +806,9 @@ sub address_is_authoritative {
     my $packet = $self->query_explicit($qname, $qclass, "SOA", $address);
 
     ## timeout is not considered an error
-    if ($packet && $packet->header->ancount == 0) {
-        $errors++;
-    }
+    goto DONE unless ($packet);
+
+    $errors++ if ($packet->header->aa != 1);
 
   DONE:
     return $errors;
