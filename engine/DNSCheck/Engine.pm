@@ -218,7 +218,7 @@ sub test {
     my $logger = $self->{dnscheck}->logger;
     my $dbh    = $self->{dbh};
 
-    my $timeformat = "%Y-%m-%d %H:%m:%S";
+    my $timeformat = "%Y-%m-%d %H:%M:%S";
 
     # fetch history
     my $history = $dbh->selectcol_arrayref(
