@@ -34,6 +34,8 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use Net::IP 1.25 qw(ip_get_version);
+
 use DNSCheck::Test::Host;
 use DNSCheck::Test::Mail;
 
@@ -100,11 +102,28 @@ sub test {
     # REQUIRE: SOA MNAME may be unreachable
     # REQUIRE: SOA MNAME must be authoritative
     # FIXME: discuss how to handle timeouts
-    #if ($context->dns->mname_is_auth($zone, $qclass) > 0) {
-    if (mname_is_auth($soa, $context) > 0) {
-        $logger->warning("SOA:MNAME_NOT_AUTH", $zone, $soa->mname);
-    } else {
-        $logger->info("SOA:MNAME_IS_AUTH", $zone, $soa->mname);
+    my @addresses = $context->{dns}->find_addresses($soa->mname, $soa->class);
+    foreach my $address (@addresses) {
+
+        if (ip_get_version($address) == 4 && !$context->{ipv4}) {
+            $logger->info("SOA:SKIPPED_IPV4", $address);
+            next;
+        }
+
+        if (ip_get_version($address) == 6 && !$context->{ipv6}) {
+            $logger->info("SOA:SKIPPED_IPV6", $address);
+            next;
+        }
+
+        my $error =
+          $context->dns->address_is_authoritative($address, $soa->name,
+            $soa->class);
+
+        if ($error == 0) {
+            $logger->info("SOA:MNAME_IS_AUTH", $zone, $soa->mname);
+        } else {
+            $logger->warning("SOA:MNAME_NOT_AUTH", $zone, $soa->mname);
+        }
     }
 
     # REQUIRE: SOA RNAME must have a valid syntax (@ vs .)
@@ -184,8 +203,8 @@ sub test {
         $logger->notice("SOA:MINIMUM_SMALL", $zone, $soa->minimum,
             $min_soa_minimum);
     } else {
-        $logger->info("SOA:MINIMUM_OK", $zone, $soa->minimum,
-		      $min_soa_minimum, $max_soa_minimum);
+        $logger->info("SOA:MINIMUM_OK", $zone, $soa->minimum, $min_soa_minimum,
+            $max_soa_minimum);
     }
 
   DONE:
@@ -206,25 +225,6 @@ sub mname_is_ns {
     }
 
     return 0;
-}
-
-sub mname_is_auth {
-    my $soa     = shift;
-    my $context = shift;
-
-    my $dns = $context->{dns};
-
-    my $errors = 0;
-
-    my @addresses = $dns->find_addresses($soa->mname, $soa->class);
-
-    foreach my $a (@addresses) {
-        $errors +=
-          $context->dns->address_is_authoritative($a, $soa->name, $soa->class);
-    }
-
-  DONE:
-    return $errors;
 }
 
 1;

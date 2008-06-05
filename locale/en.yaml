@@ -757,6 +757,12 @@ messages:
  SOA:MINIMUM_OK:
   args: 4
   format: SOA minimum for %s OK (%s) - recommended between %s and %s.
+ SOA:SKIPPED_IPV4:
+  args: 1
+  format: IPv4 disabled - will not query SOA MNAME at %s
+ SOA:SKIPPED_IPV6:
+  args: 1
+  format: IPv6 disabled - will not query SOA MNAME at %s
  SOA:END:
   args: 1
   format: Done testing SOA parameters for %s.
