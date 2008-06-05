@@ -63,7 +63,7 @@ sub new {
 
     # FIXME: perhaps do this some other way
     $self->{hostname} = `hostname`;
-    chop $self->{hostname};
+    chomp $self->{hostname};
 
     $self->{logger} = new DNSCheck::Logger($config);
     $self->{dns}    = new DNSCheck::Lookup::DNS($self->{logger}, $config);
