@@ -96,7 +96,7 @@ sub test {
     unless (mname_is_ns($soa, $packet->answer)) {
         $logger->notice("SOA:MNAME_STEALTH", $zone, $soa->mname);
     } else {
-        $logger->notice("SOA:MNAME_PUBLIC", $zone, $soa->mname);
+        $logger->info("SOA:MNAME_PUBLIC", $zone, $soa->mname);
     }
 
     # REQUIRE: SOA MNAME may be unreachable
