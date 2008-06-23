@@ -701,11 +701,11 @@ messages:
   format: SOA MNAME for %s (%s) is authoritative.
  SOA:RNAME_UNDELIVERABLE:
   args: 3
-  format: Failed to deliver email for SOA MNAME of %s (%s) using %s. 
+  format: Failed to deliver email for SOA RNAME of %s (%s) using %s. 
   descr: DNSCheck failed to deliver email to the email address listed as the one responsible for the zone.
  SOA:RNAME_DELIVERABLE:
   args: 3
-  format: Successful attempt to deliver email for SOA MNAME of %s (%s) using %s. 
+  format: Successful attempt to deliver email for SOA RNAME of %s (%s) using %s. 
  SOA:RNAME_SYNTAX:
   args: 2
   format: Invalid SOA RNAME syntax for %s: %s
