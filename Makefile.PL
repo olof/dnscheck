@@ -69,7 +69,7 @@ apps/dnscheck-qrun: apps/dnscheck-qrun.pl
 	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
 
 install_locale:
-	install -d ${LOCALE_DIR}
-	install -m 444 locale/*.yaml ${LOCALE_DIR}
+	install -d ${DESTDIR}/${LOCALE_DIR}
+	install -m 444 locale/*.yaml ${DESTDIR}/${LOCALE_DIR}
 #
 }
