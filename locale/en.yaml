@@ -611,6 +611,16 @@ messages:
  CONSISTENCY:SOA_SERIAL_CONSISTENT:
   args: 0
   format: All SOA records have consistent serial numbers.
+ CONSISTENCY:SOA_DIGEST_AT_ADDRESS:
+  args: 2
+  format: SOA at address %s has digest %s.
+ CONSISTENCY:SOA_DIGEST_DIFFERENT:
+  args: 1
+  format: %s different SOA records found.
+  descr: The SOA record are not the same among all name servers. This is usually due to misconfiguration.
+ CONSISTENCY:SOA_DIGEST_CONSISTENT:
+  args: 0
+  format: All SOA records is consistent among all name servers.
  CONSISTENCY:END:
   args: 1
   format: Done testing zone consistency for %s.
