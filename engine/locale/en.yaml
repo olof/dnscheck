@@ -607,7 +607,7 @@ messages:
  CONSISTENCY:SOA_SERIAL_DIFFERENT:
   args: 1
   format: %s different serials found.
-  descr: The SOA serial are not the same among all name servers. This is usually due to misconfiguration, but can sometimes be the  result of slow zone propagation to secondary name servers.
+  descr: The SOA serial is not the same on all name servers. This is usually due to misconfiguration, but can sometimes be the result of slow zone propagation to secondary name servers.
  CONSISTENCY:SOA_SERIAL_CONSISTENT:
   args: 0
   format: All SOA records have consistent serial numbers.
@@ -620,7 +620,7 @@ messages:
   descr: The SOA record are not the same among all name servers. This is usually due to misconfiguration.
  CONSISTENCY:SOA_DIGEST_CONSISTENT:
   args: 0
-  format: All SOA records is consistent among all name servers.
+  format: All SOA records are consistent among all name servers.
  CONSISTENCY:END:
   args: 1
   format: Done testing zone consistency for %s.
@@ -783,11 +783,11 @@ messages:
  ZONE:FATAL_DELEGATION:
   args: 1
   format: Fatal error in delegation for zone %s. 
-  descr: No nameservers found at child or at parent. No further testing can be performed.
+  descr: No name servers found at child or at parent. No further testing can be performed.
  ZONE:FATAL_NO_CHILD_NS:
   args: 1
-  format: Fatal error - no child nameservers for zone %s. 
-  descr: No child nameservers found. No further testing can be performed.
+  format: Fatal error - no child name servers for zone %s. 
+  descr: No child name servers found. No further testing can be performed.
  ZONE:END:
   args: 1
   format: Test completed for zone %s.
