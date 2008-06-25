@@ -40,7 +40,7 @@ use DNSCheck::Test::Address;
 use DNSCheck::Test::SOA;
 use DNSCheck::Test::Zone;
 use DNSCheck::Test::Connectivity;
-use DNSCheck::Test::Serial;
+use DNSCheck::Test::Consistency;
 use DNSCheck::Test::Delegation;
 use DNSCheck::Test::Nameserver;
 use DNSCheck::Test::DNSSEC;
@@ -112,9 +112,9 @@ sub connectivity {
     DNSCheck::Test::Connectivity::test($self->{context}, @_);
 }
 
-sub serial {
+sub consistency {
     my $self = shift;
-    DNSCheck::Test::Serial::test($self->{context}, @_);
+    DNSCheck::Test::Consistency::test($self->{context}, @_);
 }
 
 sub delegation {
@@ -171,7 +171,7 @@ $dns->soa(I<zone>);
 
 $dns->connectivity(I<zone>);
 
-$dns->serial(I<zone>);
+$dns->consistency(I<zone>);
 
 $dns->delegation(I<zone>);
 

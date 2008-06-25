@@ -28,11 +28,14 @@
 #
 ######################################################################
 
-package DNSCheck::Test::Serial;
+package DNSCheck::Test::Consistency;
 
 require 5.8.0;
 use warnings;
 use strict;
+
+use Net::IP 1.25;
+use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
 
 ######################################################################
 
@@ -45,19 +48,28 @@ sub test {
     my $errors = 0;
 
     $logger->module_stack_push();
-    $logger->info("SERIAL:BEGIN", $zone);
+    $logger->info("CONSISTENCY:BEGIN", $zone);
 
     my %serial_counter;
+    my %digest_counter;
     my @nameservers = ();
 
-    if ($context->{ipv4}) {
-        my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
-        push @nameservers, @{$ipv4} if ($ipv4);
-    }
+    # fetch all nameservers, both from parent and child
+    my @ns_parent = $context->dns->get_nameservers_at_parent($zone, $qclass);
+    my @ns_child  = $context->dns->get_nameservers_at_child($zone,  $qclass);
 
-    if ($context->{ipv6}) {
-        my $ipv6 = $context->dns->get_nameservers_ipv6($zone, $qclass);
-        push @nameservers, @{$ipv6} if ($ipv6);
+    foreach my $ns (@ns_parent, @ns_child) {
+        foreach my $address ($context->dns->find_addresses($ns, $qclass)) {
+            my $ip = new Net::IP($address);
+
+            if ($ip->version == 4 and $context->{ipv4}) {
+                push @nameservers, $address;
+            }
+
+            if ($ip->version == 6 and $context->{ipv6}) {
+                push @nameservers, $address;
+            }
+        }
     }
 
     foreach my $address (@nameservers) {
@@ -71,22 +83,37 @@ sub test {
 
             my $serial = $rr->serial;
 
-            $logger->info("SERIAL:SOA_AT_ADDRESS", $address, $serial);
+            my $digest = sha1_hex(
+                join(':',
+                    $rr->mname, $rr->rname,  $rr->refresh,
+                    $rr->retry, $rr->expire, $rr->minimum)
+            );
+
+            $logger->info("CONSISTENCY:SOA_SERIAL_AT_ADDRESS", $address, $serial);
+            $logger->debug("CONSISTENCY:SOA_DIGEST_AT_ADDRESS", $address, $digest);
 
             $serial_counter{$serial}++;
+            $digest_counter{$digest}++;
         }
     }
 
     my $unique_serials = scalar keys %serial_counter;
+    my $unique_digests = scalar keys %digest_counter;
 
     if ($unique_serials > 1) {
-        $logger->warning("SERIAL:DIFFERENT", $unique_serials);
+        $logger->warning("CONSISTENCY:SOA_SERIAL_DIFFERENT", $unique_serials);
     } else {
-        $logger->info("SERIAL:CONSISTENT");
+        $logger->info("CONSISTENCY:SOA_SERIAL_CONSISTENT");
+    }
+
+    if ($unique_digests > 1) {
+        $logger->error("CONSISTENCY:SOA_DIGEST_DIFFERENT", $unique_digests);
+    } else {
+        $logger->info("CONSISTENCY:SOA_DIGEST_CONSISTENT");
     }
 
   DONE:
-    $logger->info("SERIAL:END", $zone);
+    $logger->info("CONSISTENCY:END", $zone);
     $logger->module_stack_pop();
 
     return 0;
@@ -99,11 +126,11 @@ __END__
 
 =head1 NAME
 
-DNSCheck::Test::Serial - Test zone serial number
+DNSCheck::Test::Consistency - Test zone consistency
 
 =head1 DESCRIPTION
 
-Test the zone serial number. The following tests are made:
+Test zone consistency. The following tests are made:
 
 =over 4
 
@@ -119,10 +146,10 @@ test(I<context>, I<zone>);
 =head1 EXAMPLES
 
     use DNSCheck::Context;
-    use DNSCheck::Test::Serial;
+    use DNSCheck::Test::Consistency;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::Serial::test($context, "se");
+    DNSCheck::Test::CONSISTENCY::test($context, "se");
     $context->logger->dump();
 
 =head1 SEE ALSO
