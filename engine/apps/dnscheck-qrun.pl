@@ -103,7 +103,7 @@ sub main {
             {
                 syslog_facility => $facility,
                 db_config       => $config,
-                udp_timeout     => 2,
+                udp_timeout     => undef,
                 tcp_timeout     => 5,
                 retry           => 3,
                 retrans         => 2,

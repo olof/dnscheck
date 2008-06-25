@@ -42,7 +42,9 @@ my $LOCALE_DIR = '@@LOCALE_DIR@@';
 
 sub main {
     my $help         = 0;
-    my $timeout      = 2;
+    my $timeout      = 0;
+    my $u_timeout    = undef;
+    my $t_timeout    = 5;
     my $raw          = 0;
     my $disable_ipv4 = 0;
     my $disable_ipv6 = 0;
@@ -71,12 +73,17 @@ sub main {
 
     $locale = undef if ($raw);
 
+    if ($timeout) {
+        $u_timeout = $timeout;
+        $t_timeout = $timeout;
+    }
+
     my $check = new DNSCheck(
         {
             interactive  => 1,
             locale       => $locale,
-            udp_timeout  => $timeout,
-            tcp_timeout  => $timeout,
+            udp_timeout  => $u_timeout,
+            tcp_timeout  => $t_timeout,
             disable_ipv4 => $disable_ipv4,
             disable_ipv6 => $disable_ipv6,
             disable_smtp => $disable_smtp,
