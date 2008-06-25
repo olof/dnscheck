@@ -89,8 +89,10 @@ sub test {
                     $rr->retry, $rr->expire, $rr->minimum)
             );
 
-            $logger->info("CONSISTENCY:SOA_SERIAL_AT_ADDRESS", $address, $serial);
-            $logger->debug("CONSISTENCY:SOA_DIGEST_AT_ADDRESS", $address, $digest);
+            $logger->info("CONSISTENCY:SOA_SERIAL_AT_ADDRESS",
+                $address, $serial);
+            $logger->debug("CONSISTENCY:SOA_DIGEST_AT_ADDRESS",
+                $address, $digest);
 
             $serial_counter{$serial}++;
             $digest_counter{$digest}++;
