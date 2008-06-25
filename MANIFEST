@@ -8,6 +8,7 @@ DNSCheck/Lookup/DNS.pm
 DNSCheck/NSP.pm
 DNSCheck/Test/Address.pm
 DNSCheck/Test/Connectivity.pm
+DNSCheck/Test/Consistency.pm
 DNSCheck/Test/DNSSEC.pm
 DNSCheck/Test/Delegation.pm
 DNSCheck/Test/Host.pm
@@ -15,7 +16,6 @@ DNSCheck/Test/Mail.pm
 DNSCheck/Test/Nameserver.pm
 DNSCheck/Test/SMTP.pm
 DNSCheck/Test/SOA.pm
-DNSCheck/Test/Serial.pm
 DNSCheck/Test/Zone.pm
 apps/dnscheck.pl
 apps/dnscheck-qrun.pl

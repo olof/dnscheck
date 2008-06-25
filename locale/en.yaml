@@ -598,22 +598,22 @@ messages:
   args: 1
   format: Done testing name server %s.
 
- SERIAL:BEGIN:
+ CONSISTENCY:BEGIN:
   args: 1
-  format: Begin testing serial numbers for %s.
- SERIAL:SOA_AT_ADDRESS:
+  format: Begin testing zone consistency for %s.
+ CONSISTENCY:SOA_SERIAL_AT_ADDRESS:
   args: 2
   format: SOA at address %s has serial %s.
- SERIAL:DIFFERENT:
+ CONSISTENCY:SOA_SERIAL_DIFFERENT:
   args: 1
   format: %s different serials found.
   descr: The SOA serial are not the same among all name servers. This is usually due to misconfiguration, but can sometimes be the  result of slow zone propagation to secondary name servers.
- SERIAL:CONSISTENT:
+ CONSISTENCY:SOA_SERIAL_CONSISTENT:
   args: 0
   format: All SOA records have consistent serial numbers.
- SERIAL:END:
+ CONSISTENCY:END:
   args: 1
-  format: Done testing serial numbers for %s.
+  format: Done testing zone consistency for %s.
 
  SMTP:BEGIN:
   args: 2

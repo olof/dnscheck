@@ -71,7 +71,7 @@ sub test {
         $errors += DNSCheck::Test::Nameserver::test($context, $zone, $ns);
     }
 
-    $errors += DNSCheck::Test::Serial::test($context, $zone);
+    $errors += DNSCheck::Test::Consistency::test($context, $zone);
     $errors += DNSCheck::Test::SOA::test($context, $zone);
     $errors += DNSCheck::Test::Connectivity::test($context, $zone);
     $errors += DNSCheck::Test::DNSSEC::test($context, $zone);
@@ -113,7 +113,7 @@ test(I<context>, I<zone>);
 
 L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
 L<DNSCheck::Test::Delegation>, L<DNSCheck::Test::Nameserver>,
-L<DNSCheck::Test::Serial>, L<DNSCheck::Test::SOA>,
+L<DNSCheck::Test::Consistency>, L<DNSCheck::Test::SOA>,
 L<DNSCheck::Test::Connectivity>, L<DNSCheck::Test::DNSSEC>
 
 =cut
