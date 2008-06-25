@@ -81,7 +81,7 @@
 		}
 	}
 	
-	if (($validDomainName) && (checkIfDomainExists($domain)))
+	if (($domainLength > 1) && ($validDomainName) && (checkIfDomainExists($domain)))
 	{
 		if (!getDomainHistory($domain, $pageNumber))
 		{
