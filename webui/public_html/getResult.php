@@ -124,7 +124,7 @@
 		$finalTree = array(
 			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Delegation', 'subtree' => array()),
 			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Nameserver', 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Serial', 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Consistency', 'subtree' => array()),
 			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'SOA', 'subtree' => array()),
 			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Connectivity', 'subtree' => array()),
 			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'DNSSEC', 'subtree' => array())
@@ -165,7 +165,7 @@
 							}
 						}
 						break;	
-					case 'SERIAL:BEGIN':
+					case 'CONSISTENCY:BEGIN':
 						$result = flattenTree($rootNode, 2, $allMessages, $flattenedArray);
 						$finalTree[2]['class'] = $showRootStatuses ? $result : '';
 						$finalTree[2]['subtree'] = $flattenedArray;
