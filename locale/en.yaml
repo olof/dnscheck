@@ -481,7 +481,7 @@ messages:
  HOST:NOT_FOUND:
   args: 1
   format: No address found for %s.
-  descr: No IPv4 or IPv6 address was found the host name.
+  descr: No IPv4 or IPv6 address was found for the host name.
  HOST:CNAME_FOUND:
   args: 1
   format: Host name %s refers to a CNAME.
