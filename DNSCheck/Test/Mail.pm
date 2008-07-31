@@ -47,13 +47,13 @@ sub test {
     my $errors = 0;
 
     $logger->module_stack_push();
-    $logger->info("MAIL:BEGIN", $email);
+    $logger->auto("MAIL:BEGIN", $email);
 
     my ($localpart, $domain) = split(/@/, $email);
 
     # FIXME: stricter checks needed here
     unless ($localpart && $domain) {
-        $logger->error("MAIL:ADDRESS_SYNTAX", $email);
+        $logger->auto("MAIL:ADDRESS_SYNTAX", $email);
         $errors++;
         goto DONE;
     }
@@ -62,11 +62,11 @@ sub test {
     my @mailhosts = $context->dns->find_mx($domain);
 
     if (@mailhosts) {
-        $logger->info("MAIL:MAIL_EXCHANGER", $email, join(",", @mailhosts));
+        $logger->auto("MAIL:MAIL_EXCHANGER", $email, join(",", @mailhosts));
     }
 
     unless (scalar @mailhosts) {
-        $logger->error("MAIL:DOMAIN_NOT_FOUND", $domain);
+        $logger->auto("MAIL:DOMAIN_NOT_FOUND", $domain);
         $errors++;
         goto DONE;
     }
@@ -74,7 +74,7 @@ sub test {
     # REQUIRE: MX points to valid hostname
     foreach my $hostname (@mailhosts) {
         if (DNSCheck::Test::Host::test($context, $hostname) > 0) {
-            $logger->error("MAIL:HOST_ERROR", $hostname);
+            $logger->auto("MAIL:HOST_ERROR", $hostname);
             $errors++;
             goto DONE;
         }
@@ -91,7 +91,7 @@ sub test {
         if (   ($ipv4 && $ipv4->header->ancount == 0)
             && ($ipv6 && $ipv6->header->ancount > 0))
         {
-            $logger->warning("MAIL:IPV6_ONLY", $hostname);
+            $logger->auto("MAIL:IPV6_ONLY", $hostname);
         }
 
         foreach my $rr ($ipv4->answer) {
@@ -112,7 +112,7 @@ sub test {
     }
 
   DONE:
-    $logger->info("MAIL:END", $email);
+    $logger->auto("MAIL:END", $email);
     $logger->module_stack_pop();
 
     return $errors;

@@ -45,7 +45,7 @@ sub test {
     my $errors = 0;
 
     $logger->module_stack_push();
-    $logger->info("CONNECTIVITY:BEGIN", $zone);
+    $logger->auto("CONNECTIVITY:BEGIN", $zone);
 
     my %as_set;
     my @nameservers = ();
@@ -67,31 +67,31 @@ sub test {
             $as_set{$asn} = $asn;
         }
 
-        $logger->info("CONNECTIVITY:ANNOUNCED_BY_ASN",
+        $logger->auto("CONNECTIVITY:ANNOUNCED_BY_ASN",
             $address, join(",", @as_list));
 
         # REQUIRE: A name server should not be announced by more than one AS
         # REQUIRE: A name server must be announced
         if (scalar @as_list > 1) {
-            $logger->warning("CONNECTIVITY:MULTIPLE_ASN", $address);
+            $logger->auto("CONNECTIVITY:MULTIPLE_ASN", $address);
         } elsif (scalar @as_list < 1) {
-            $logger->error("CONNECTIVITY:NOT_ANNOUNCED", $address);
+            $logger->auto("CONNECTIVITY:NOT_ANNOUNCED", $address);
             $errors++;
         }
     }
 
-    $logger->info("CONNECTIVITY:ASN_LIST", join(",", keys(%as_set)));
+    $logger->auto("CONNECTIVITY:ASN_LIST", join(",", keys(%as_set)));
 
     # REQUIRE: Domain name servers should live in more than one AS
     my $as_count = scalar keys %as_set;
     if ($as_count <= 1) {
-        $logger->notice("CONNECTIVITY:TOO_FEW_ASN", $as_count);
+        $logger->auto("CONNECTIVITY:TOO_FEW_ASN", $as_count);
     } else {
-        $logger->info("CONNECTIVITY:ASN_COUNT_OK", $as_count);
+        $logger->auto("CONNECTIVITY:ASN_COUNT_OK", $as_count);
     }
 
   DONE:
-    $logger->info("CONNECTIVITY:END", $zone);
+    $logger->auto("CONNECTIVITY:END", $zone);
     $logger->module_stack_pop();
 
     return $errors;

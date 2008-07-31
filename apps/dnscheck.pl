@@ -37,6 +37,7 @@ use Pod::Usage;
 use DNSCheck;
 
 my $LOCALE_DIR = '@@LOCALE_DIR@@';
+my $POLICY_DIR = '@@POLICY_DIR@@';
 
 ######################################################################
 
@@ -48,6 +49,7 @@ sub main {
     my $disable_ipv6 = 0;
     my $disable_smtp = 0;
     my $locale       = "locale/en.yaml";
+    my $loglevel     = "policy/loglevel.yaml";
 
     GetOptions(
         'help|?'       => \$help,
@@ -69,12 +71,17 @@ sub main {
         $locale = $LOCALE_DIR . "/en.yaml";
     }
 
+    unless (-f $loglevel) {
+        $loglevel = $POLICY_DIR . "/loglevel.yaml";
+    }
+
     $locale = undef if ($raw);
 
     my $check = new DNSCheck(
         {
             interactive  => 1,
             locale       => $locale,
+            loglevel     => $loglevel,
             udp_timeout  => $timeout,
             tcp_timeout  => $timeout,
             disable_ipv4 => $disable_ipv4,

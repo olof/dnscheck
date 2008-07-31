@@ -47,7 +47,7 @@ sub test {
     my $errors = 0;
 
     $logger->module_stack_push();
-    $logger->info("HOST:BEGIN", $hostname);
+    $logger->auto("HOST:BEGIN", $hostname);
 
     my @labels = split(/\./, $hostname);
 
@@ -56,7 +56,7 @@ sub test {
     if (scalar @labels > 0
         && $labels[0] !~ /^[A-Za-z0-9][A-Za-z0-9-]*$/)
     {
-        $logger->error("HOST:ILLEGAL_NAME", $hostname, $labels[0]);
+        $logger->auto("HOST:ILLEGAL_NAME", $hostname, $labels[0]);
         $errors++;
         goto DONE;
     }
@@ -66,7 +66,7 @@ sub test {
         # REQUIRE: RFC 952 says hostnames may contain a-z, 0-9 or -
         if ($label !~ /^[A-Za-z0-9][A-Za-z0-9-]*$/) {
             $label = "<NULL>" if ($label eq "");
-            $logger->error("HOST:ILLEGAL_NAME", $hostname, $label);
+            $logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
             $errors++;
             goto DONE;
         }
@@ -75,7 +75,7 @@ sub test {
         # be a minus sign or a period.
         if ($label =~ /[\-\.]$/) {
             $label = "<NULL>" if ($label eq "");
-            $logger->error("HOST:ILLEGAL_NAME", $hostname, $label);
+            $logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
             $errors++;
             goto DONE;
         }
@@ -88,7 +88,7 @@ sub test {
     unless (($ipv4 && $ipv4->header->ancount)
         || ($ipv6 && $ipv6->header->ancount))
     {
-        $logger->error("HOST:NOT_FOUND", $hostname);
+        $logger->auto("HOST:NOT_FOUND", $hostname);
         $errors++;
         goto DONE;
     }
@@ -100,7 +100,7 @@ sub test {
     # REQUIRE: Host must not point to a CNAME
     foreach my $rr (@answers) {
         if ($rr->type eq "CNAME") {
-            $logger->error("HOST:CNAME_FOUND", $hostname);
+            $logger->auto("HOST:CNAME_FOUND", $hostname);
             $errors++;
             goto DONE;
         }
@@ -114,7 +114,7 @@ sub test {
     }
 
   DONE:
-    $logger->info("HOST:END", $hostname);
+    $logger->auto("HOST:END", $hostname);
     $logger->module_stack_pop();
 
     return $errors;

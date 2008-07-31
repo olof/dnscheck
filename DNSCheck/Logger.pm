@@ -34,6 +34,7 @@ require 5.8.0;
 use warnings;
 use strict;
 use Time::HiRes qw(gettimeofday);
+use YAML qw(LoadFile Dump);
 use DNSCheck::Locale;
 
 ######################################################################
@@ -43,7 +44,8 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    my $config = shift;
+    my $config   = shift;
+    my $loglevel = undef;
 
     if ($config->{interactive}) {
         $self->{interactive} = 1;
@@ -51,6 +53,11 @@ sub new {
 
     if ($config->{locale}) {
         $self->{locale} = new DNSCheck::Locale($config->{locale});
+    }
+
+    if ($config->{loglevel}) {
+        my ($hashref, $arrayref, $string) = LoadFile($config->{loglevel});
+        $self->{loglevel} = $hashref;
     }
 
     $self->{logname}  = undef;
@@ -109,34 +116,19 @@ sub add {
     }
 }
 
-sub info {
+sub auto {
     my $self = shift;
-    $self->add("INFO", @_);
-}
 
-sub notice {
-    my $self = shift;
-    $self->add("NOTICE", @_);
-}
+    my $tag   = shift;
+    my $level = undef;
 
-sub warning {
-    my $self = shift;
-    $self->add("WARNING", @_);
-}
+    if ($self->{loglevel}->{$tag}) {
+        $level = uc($self->{loglevel}->{$tag});
+    } else {
+        $level = "DEBUG";
+    }
 
-sub error {
-    my $self = shift;
-    $self->add("ERROR", @_);
-}
-
-sub debug {
-    my $self = shift;
-    $self->add("DEBUG", @_);
-}
-
-sub critical {
-    my $self = shift;
-    $self->add("CRITICAL", @_);
+    $self->add($level, $tag, @_);
 }
 
 sub dump {
@@ -238,17 +230,7 @@ $logger->logname(I<string>);
 
 $logger->add(I<level>, I<tag>, I<arg1>, I<arg2>, ..., I<argN>);
 
-$logger->info(I<arg1>, I<arg2>, ..., I<argN>);
-
-$logger->notice(I<arg1>, I<arg2>, ..., I<argN>);
-
-$logger->warning(I<arg1>, I<arg2>, ..., I<argN>);
-
-$logger->error(I<arg1>, I<arg2>, ..., I<argN>);
-
-$logger->debug(I<arg1>, I<arg2>, ..., I<argN>);
-
-$logger->critical(I<arg1>, I<arg2>, ..., I<argN>);
+$logger->auto(I<tag>, I<arg1>, I<arg2>, ..., I<argN>);
 
 $logger->dump();
 

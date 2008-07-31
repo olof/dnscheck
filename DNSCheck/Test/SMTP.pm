@@ -48,7 +48,7 @@ sub test {
     my $message;
 
     $logger->module_stack_push();
-    $logger->info("SMTP:BEGIN", $host, $email);
+    $logger->auto("SMTP:BEGIN", $host, $email);
 
     my $smtp = Net::SMTP->new(
         Host    => $host,
@@ -57,64 +57,64 @@ sub test {
     );
 
     unless ($smtp) {
-        $logger->error("SMTP:CONNECT_FAILED", $host);
+        $logger->auto("SMTP:CONNECT_FAILED", $host);
         $errors++;
         goto DONE;
     }
 
     $message = $smtp->banner;
     chomp $message;
-    $logger->debug("SMTP:BANNER", $message);
+    $logger->auto("SMTP:BANNER", $message);
 
     unless ($smtp->status == 2) {
-        $logger->error("SMTP:HELLO_FAILED");
+        $logger->auto("SMTP:HELLO_FAILED");
         $errors++;
         goto DONE;
     }
 
-    $logger->debug("SMTP:MAIL_FROM", "<>");
+    $logger->auto("SMTP:MAIL_FROM", "<>");
     $smtp->mail("<>");
     $message = $smtp->message;
     chomp $message;
-    $logger->debug("SMTP:RAW", $message);
+    $logger->auto("SMTP:RAW", $message);
 
     unless ($smtp->status == 2) {
-        $logger->error("SMTP:MAIL_FROM_REJECTED", "<>");
+        $logger->auto("SMTP:MAIL_FROM_REJECTED", "<>");
         $errors++;
         goto RESET;
     }
 
     # FIXME: handle timeouts?
-    $logger->debug("SMTP:RCPT_TO", $email);
+    $logger->auto("SMTP:RCPT_TO", $email);
     $smtp->recipient($email);
     $message = $smtp->message;
     chomp $message;
-    $logger->debug("SMTP:RAW", $message);
+    $logger->auto("SMTP:RAW", $message);
 
     unless ($smtp->status == 2 || $smtp->status == 4) {
-        $logger->error("SMTP:RECIPIENT_REJECTED", $email);
+        $logger->auto("SMTP:RECIPIENT_REJECTED", $email);
         $errors++;
     }
 
   RESET:
-    $logger->debug("SMTP:RSET");
+    $logger->auto("SMTP:RSET");
     $smtp->reset;
     $message = $smtp->message;
     chomp $message;
-    $logger->debug("SMTP:RAW", $message);
+    $logger->auto("SMTP:RAW", $message);
 
-    $logger->debug("SMTP:QUIT");
+    $logger->auto("SMTP:QUIT");
     $smtp->quit;
     $message = $smtp->message;
     chomp $message;
-    $logger->debug("SMTP:RAW", $message);
+    $logger->auto("SMTP:RAW", $message);
 
     unless ($errors) {
-        $logger->info("SMTP:OK", $host, $email);
+        $logger->auto("SMTP:OK", $host, $email);
     }
 
   DONE:
-    $logger->info("SMTP:END", $host, $email);
+    $logger->auto("SMTP:END", $host, $email);
     $logger->module_stack_pop();
 
     return $errors;
