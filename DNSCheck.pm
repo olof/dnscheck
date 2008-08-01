@@ -51,6 +51,18 @@ our $VERSION = "0.62";
 
 ######################################################################
 
+our $default_params = {
+    "SOA:MIN_TTL"           => 3600,
+    "SOA:MIN_REFRESH"       => 4 * 3600,
+    "SOA:MIN_RETRY"         => 3600,
+    "SOA:MIN_EXPIRE"        => 7 * 24 * 3600,
+    "SOA:EXPIRE_VS_REFRESH" => 7,
+    "SOA:MAX_MINIMUM"       => 24 * 3600,
+    "SOA:MIN_MINIMUM"       => 5 * 60,
+};
+
+######################################################################
+
 sub new {
     my $proto = shift;
     my $class = ref($proto) || $proto;

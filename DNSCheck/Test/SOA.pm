@@ -45,6 +45,7 @@ sub test {
     my $context = shift;
     my $zone    = shift;
 
+    my $params = $context->params;
     my $qclass = $context->qclass;
     my $logger = $context->logger;
     my $errors = 0;
@@ -149,7 +150,7 @@ sub test {
     }
 
     # REQUIRE: SOA TTL advistory, min 1 hour
-    my $min_soa_ttl = 3600;
+    my $min_soa_ttl = $params->{"SOA:MIN_TTL"};
     if ($soa->ttl < $min_soa_ttl) {
         $logger->auto("SOA:TTL_SMALL", $zone, $soa->ttl, $min_soa_ttl);
     } else {
@@ -157,7 +158,7 @@ sub test {
     }
 
     # REQUIRE: SOA 'refresh' at least 4 hours
-    my $min_soa_refresh = 4 * 3600;
+    my $min_soa_refresh = $params->{"SOA:MIN_REFRESH"};
     if ($soa->refresh < $min_soa_refresh) {
         $logger->auto("SOA:REFRESH_SMALL", $zone, $soa->refresh,
             $min_soa_refresh);
@@ -172,7 +173,7 @@ sub test {
     }
 
     # REQUIRE: SOA 'retry' at least 1 hour
-    my $min_soa_retry = 3600;
+    my $min_soa_retry = $params->{"SOA:MIN_RETRY"};
     if ($soa->retry < $min_soa_retry) {
         $logger->auto("SOA:RETRY_SMALL", $zone, $soa->retry, $min_soa_retry);
     } else {
@@ -180,7 +181,7 @@ sub test {
     }
 
     # REQUIRE: SOA 'expire' at least 7 days
-    my $min_soa_expire = 7 * 24 * 3600;
+    my $min_soa_expire = $params->{"SOA:MIN_EXPIRE"};
     if ($soa->expire < $min_soa_expire) {
         $logger->auto("SOA:EXPIRE_SMALL", $zone, $soa->expire, $min_soa_expire);
     } else {
@@ -188,13 +189,13 @@ sub test {
     }
 
     # REQUIRE: SOA 'expire' at least 7 times 'refresh'
-    if ($soa->expire < $soa->refresh * 7) {
+    if ($soa->expire < $soa->refresh * $params->{"SOA:EXPIRE_VS_REFRESH"}) {
         $logger->auto("SOA:EXPIRE_VS_REFRESH", $zone);
     }
 
     # REQUIRE: SOA 'minimum' less than 1 day
-    my $max_soa_minimum = 24 * 3600;
-    my $min_soa_minimum = 5 * 60;
+    my $max_soa_minimum = $params->{"SOA:MAX_MINIMUM"};
+    my $min_soa_minimum = $params->{"SOA:MIN_MINIMUM"};
     if ($soa->minimum > $max_soa_minimum) {
         $logger->auto("SOA:MINIMUM_LARGE", $zone, $soa->minimum,
             $max_soa_minimum);

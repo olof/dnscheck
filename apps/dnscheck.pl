@@ -50,6 +50,7 @@ sub main {
     my $disable_smtp = 0;
     my $locale       = "locale/en.yaml";
     my $loglevel     = "policy/loglevel.yaml";
+    my $params       = "policy/params.yaml";
 
     GetOptions(
         'help|?'       => \$help,
@@ -75,6 +76,10 @@ sub main {
         $loglevel = $POLICY_DIR . "/loglevel.yaml";
     }
 
+    unless (-f $params) {
+        $params = $POLICY_DIR . "/params.yaml";
+    }
+
     $locale = undef if ($raw);
 
     my $check = new DNSCheck(
@@ -82,6 +87,7 @@ sub main {
             interactive  => 1,
             locale       => $locale,
             loglevel     => $loglevel,
+            params       => $params,
             udp_timeout  => $timeout,
             tcp_timeout  => $timeout,
             disable_ipv4 => $disable_ipv4,
