@@ -55,9 +55,10 @@ sub new {
         $self->{qclass} = "IN";
     }
 
-    if ($config->{params}) {
-        my ($hashref, $arrayref, $string) = LoadFile($config->{params});
-        $self->{params} = $hashref;
+    if ($config->{policy}) {
+        my ($hashref, $arrayref, $string) = LoadFile($config->{policy});
+        $self->{params}    = $hashref->{params};
+        $self->{loglevels} = $hashref->{loglevels};
     }
 
     # add default parameters
@@ -79,9 +80,9 @@ sub new {
     $self->{hostname} = `hostname`;
     chomp $self->{hostname};
 
-    $self->{logger} = new DNSCheck::Logger($config);
-    $self->{dns}    = new DNSCheck::Lookup::DNS($self->{logger}, $config);
-    $self->{asn}    = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
+    $self->{logger} = new DNSCheck::Logger($config, $self->{loglevels});
+    $self->{dns} = new DNSCheck::Lookup::DNS($self->{logger}, $config);
+    $self->{asn} = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
 
     bless $self, $class;
 }
@@ -114,6 +115,11 @@ sub qclass {
 sub params {
     my $self = shift;
     return $self->{params};
+}
+
+sub loglevels {
+    my $self = shift;
+    return $self->{loglevels};
 }
 
 1;

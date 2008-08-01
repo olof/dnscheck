@@ -34,7 +34,6 @@ require 5.8.0;
 use warnings;
 use strict;
 use Time::HiRes qw(gettimeofday);
-use YAML qw(LoadFile Dump);
 use DNSCheck::Locale;
 
 ######################################################################
@@ -44,8 +43,8 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    my $config   = shift;
-    my $loglevel = undef;
+    my $config    = shift;
+    my $loglevels = shift;
 
     if ($config->{interactive}) {
         $self->{interactive} = 1;
@@ -55,9 +54,8 @@ sub new {
         $self->{locale} = new DNSCheck::Locale($config->{locale});
     }
 
-    if ($config->{loglevel}) {
-        my ($hashref, $arrayref, $string) = LoadFile($config->{loglevel});
-        $self->{loglevel} = $hashref;
+    if ($loglevels) {
+        $self->{loglevels} = $loglevels;
     }
 
     $self->{logname}  = undef;
@@ -122,8 +120,8 @@ sub auto {
     my $tag   = shift;
     my $level = undef;
 
-    if ($self->{loglevel}->{$tag}) {
-        $level = uc($self->{loglevel}->{$tag});
+    if ($self->{loglevels}->{$tag}) {
+        $level = uc($self->{loglevels}->{$tag});
     } else {
         $level = "DEBUG";
     }

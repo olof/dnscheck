@@ -49,8 +49,7 @@ sub main {
     my $disable_ipv6 = 0;
     my $disable_smtp = 0;
     my $locale       = "locale/en.yaml";
-    my $loglevel     = "policy/loglevel.yaml";
-    my $params       = "policy/params.yaml";
+    my $policy       = "policy.yaml";
 
     GetOptions(
         'help|?'       => \$help,
@@ -72,12 +71,8 @@ sub main {
         $locale = $LOCALE_DIR . "/en.yaml";
     }
 
-    unless (-f $loglevel) {
-        $loglevel = $POLICY_DIR . "/loglevel.yaml";
-    }
-
-    unless (-f $params) {
-        $params = $POLICY_DIR . "/params.yaml";
+    unless (-f $policy) {
+        $policy = $POLICY_DIR . "/policy.yaml";
     }
 
     $locale = undef if ($raw);
@@ -86,8 +81,7 @@ sub main {
         {
             interactive  => 1,
             locale       => $locale,
-            loglevel     => $loglevel,
-            params       => $params,
+            policy       => $policy,
             udp_timeout  => $timeout,
             tcp_timeout  => $timeout,
             disable_ipv4 => $disable_ipv4,
