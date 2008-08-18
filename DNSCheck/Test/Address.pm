@@ -81,12 +81,12 @@ sub test {
     my $errors = 0;
 
     $logger->module_stack_push();
-    $logger->info("ADDRESS:BEGIN", $address);
+    $logger->auto("ADDRESS:BEGIN", $address);
 
     # REQUIRE: Address must be syntactically correct
     my $ip = new Net::IP($address);
     unless ($ip) {
-        $logger->error("ADDRESS:INVALID", $address);
+        $logger->auto("ADDRESS:INVALID", $address);
         $errors++;
         goto DONE;
     }
@@ -95,7 +95,7 @@ sub test {
     if ($ip->version == 4) {
         foreach my $prefix (@private_ipv4) {
             if ($ip->overlaps($prefix)) {
-                $logger->error("ADDRESS:PRIVATE_IPV4", $address);
+                $logger->auto("ADDRESS:PRIVATE_IPV4", $address);
                 $errors++;
                 goto DONE;
             }
@@ -106,7 +106,7 @@ sub test {
     if ($ip->version == 4) {
         foreach my $prefix (@reserved_ipv4) {
             if ($ip->overlaps($prefix)) {
-                $logger->error("ADDRESS:RESERVED_IPV4", $address);
+                $logger->auto("ADDRESS:RESERVED_IPV4", $address);
                 $errors++;
                 goto DONE;
             }
@@ -117,7 +117,7 @@ sub test {
     if ($ip->version == 6) {
         foreach my $prefix (@reserved_ipv6) {
             if ($ip->overlaps($prefix)) {
-                $logger->error("ADDRESS:RESERVED_IPV6", $address);
+                $logger->auto("ADDRESS:RESERVED_IPV6", $address);
                 $errors++;
                 goto DONE;
             }
@@ -129,7 +129,7 @@ sub test {
     my $ptr = $context->dns->query_resolver($reverse, $qclass, "PTR");
 
     unless ($ptr && $ptr->header->ancount) {
-        $logger->warning("ADDRESS:PTR_NOT_FOUND", $address, $reverse);
+        $logger->auto("ADDRESS:PTR_NOT_FOUND", $address, $reverse);
         $errors++;
     } else {
 
@@ -148,7 +148,7 @@ sub test {
             unless (($ipv4 && $ipv4->header->ancount)
                 || ($ipv6 && $ipv6->header->ancount))
             {
-                $logger->warning("ADDRESS:PTR_HOSTNAME_NOT_FOUND",
+                $logger->auto("ADDRESS:PTR_HOSTNAME_NOT_FOUND",
                     $address, $hostname);
                 $errors++;
                 goto DONE;
@@ -157,7 +157,7 @@ sub test {
     }
 
   DONE:
-    $logger->info("ADDRESS:END", $address);
+    $logger->auto("ADDRESS:END", $address);
     $logger->module_stack_pop();
 
     return $errors;

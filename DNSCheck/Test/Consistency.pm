@@ -48,7 +48,7 @@ sub test {
     my $errors = 0;
 
     $logger->module_stack_push();
-    $logger->info("CONSISTENCY:BEGIN", $zone);
+    $logger->auto("CONSISTENCY:BEGIN", $zone);
 
     my %serial_counter;
     my %digest_counter;
@@ -89,9 +89,9 @@ sub test {
                     $rr->retry, $rr->expire, $rr->minimum)
             );
 
-            $logger->info("CONSISTENCY:SOA_SERIAL_AT_ADDRESS",
+            $logger->auto("CONSISTENCY:SOA_SERIAL_AT_ADDRESS",
                 $address, $serial);
-            $logger->debug("CONSISTENCY:SOA_DIGEST_AT_ADDRESS",
+            $logger->auto("CONSISTENCY:SOA_DIGEST_AT_ADDRESS",
                 $address, $digest);
 
             $serial_counter{$serial}++;
@@ -103,19 +103,19 @@ sub test {
     my $unique_digests = scalar keys %digest_counter;
 
     if ($unique_serials > 1) {
-        $logger->warning("CONSISTENCY:SOA_SERIAL_DIFFERENT", $unique_serials);
+        $logger->auto("CONSISTENCY:SOA_SERIAL_DIFFERENT", $unique_serials);
     } else {
-        $logger->info("CONSISTENCY:SOA_SERIAL_CONSISTENT");
+        $logger->auto("CONSISTENCY:SOA_SERIAL_CONSISTENT");
     }
 
     if ($unique_digests > 1) {
-        $logger->error("CONSISTENCY:SOA_DIGEST_DIFFERENT", $unique_digests);
+        $logger->auto("CONSISTENCY:SOA_DIGEST_DIFFERENT", $unique_digests);
     } else {
-        $logger->info("CONSISTENCY:SOA_DIGEST_CONSISTENT");
+        $logger->auto("CONSISTENCY:SOA_DIGEST_CONSISTENT");
     }
 
   DONE:
-    $logger->info("CONSISTENCY:END", $zone);
+    $logger->auto("CONSISTENCY:END", $zone);
     $logger->module_stack_pop();
 
     return 0;

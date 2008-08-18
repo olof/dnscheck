@@ -47,13 +47,13 @@ sub test {
     $logger->logname($zone);
 
     $logger->module_stack_push();
-    $logger->info("ZONE:BEGIN", $zone);
+    $logger->auto("ZONE:BEGIN", $zone);
 
     my ($errors, $testable) =
       DNSCheck::Test::Delegation::test($context, $zone, $history);
 
     unless ($testable) {
-        $logger->critical("ZONE:FATAL_DELEGATION", $zone);
+        $logger->auto("ZONE:FATAL_DELEGATION", $zone);
         goto DONE;
     }
 
@@ -63,7 +63,7 @@ sub test {
 
         # This shouldn't happen because get_nameservers_at_child was also
         # called in DNSCheck::Test::Delegation::test
-        $logger->critical("ZONE:FATAL_NO_CHILD_NS", $zone);
+        $logger->auto("ZONE:FATAL_NO_CHILD_NS", $zone);
         goto DONE;
     }
 
@@ -77,7 +77,7 @@ sub test {
     $errors += DNSCheck::Test::DNSSEC::test($context, $zone);
 
   DONE:
-    $logger->info("ZONE:END", $zone);
+    $logger->auto("ZONE:END", $zone);
     $logger->module_stack_pop();
 
     return $errors;

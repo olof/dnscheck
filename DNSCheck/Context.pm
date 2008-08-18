@@ -34,6 +34,8 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use YAML qw(LoadFile Dump);
+
 use DNSCheck::Logger;
 use DNSCheck::Lookup::DNS;
 use DNSCheck::Lookup::ASN;
@@ -53,6 +55,19 @@ sub new {
         $self->{qclass} = "IN";
     }
 
+    if ($config->{policy}) {
+        my ($hashref, $arrayref, $string) = LoadFile($config->{policy});
+        $self->{params}    = $hashref->{params};
+        $self->{loglevels} = $hashref->{loglevels};
+    }
+
+    # add default parameters
+    foreach my $p (keys %{$DNSCheck::default_params}) {
+        unless ($self->{params}->{$p}) {
+            $self->{params}->{$p} = $DNSCheck::default_params->{$p};
+        }
+    }
+
     $self->{ipv4} = 1;
     $self->{ipv6} = 1;
     $self->{smtp} = 1;
@@ -65,9 +80,9 @@ sub new {
     $self->{hostname} = `hostname`;
     chomp $self->{hostname};
 
-    $self->{logger} = new DNSCheck::Logger($config);
-    $self->{dns}    = new DNSCheck::Lookup::DNS($self->{logger}, $config);
-    $self->{asn}    = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
+    $self->{logger} = new DNSCheck::Logger($config, $self->{loglevels});
+    $self->{dns} = new DNSCheck::Lookup::DNS($self->{logger}, $config);
+    $self->{asn} = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
 
     bless $self, $class;
 }
@@ -95,6 +110,16 @@ sub logger {
 sub qclass {
     my $self = shift;
     return $self->{qclass};
+}
+
+sub params {
+    my $self = shift;
+    return $self->{params};
+}
+
+sub loglevels {
+    my $self = shift;
+    return $self->{loglevels};
 }
 
 1;
