@@ -43,8 +43,9 @@ sub test {
     my $context = shift;
     my $email   = shift;
 
-    my $logger = $context->logger;
-    my $errors = 0;
+    my $logger           = $context->logger;
+    my $errors           = 0;
+    my $mail_delivery_ok = 0;
 
     $logger->module_stack_push();
     $logger->auto("MAIL:BEGIN", $email);
@@ -75,8 +76,7 @@ sub test {
     foreach my $hostname (@mailhosts) {
         if (DNSCheck::Test::Host::test($context, $hostname) > 0) {
             $logger->auto("MAIL:HOST_ERROR", $hostname);
-            $errors++;
-            goto DONE;
+            next;
         }
 
         my $ipv4 = $context->dns->query_resolver($hostname, "IN", "A");
@@ -96,8 +96,9 @@ sub test {
 
         foreach my $rr ($ipv4->answer) {
             next unless ($rr->type eq "A");
-            if (DNSCheck::Test::SMTP::test($context, $rr->address, $email)) {
-                $errors++;
+            unless (DNSCheck::Test::SMTP::test($context, $rr->address, $email))
+            {
+                $mail_delivery_ok++;
             }
         }
 
@@ -110,6 +111,9 @@ sub test {
             #}
         }
     }
+
+    # Only flag as undeliverable if no mail deliveries were successful
+    $errors++ unless ($mail_delivery_ok);
 
   DONE:
     $logger->auto("MAIL:END", $email);
