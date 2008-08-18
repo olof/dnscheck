@@ -52,11 +52,11 @@ sub test {
     my $packet;
 
     $logger->module_stack_push();
-    $logger->info("NAMESERVER:BEGIN", $nameserver);
+    $logger->auto("NAMESERVER:BEGIN", $nameserver);
 
     # REQUIRE: Nameserver must be a valid hostname
     if (DNSCheck::Test::Host::test($context, $nameserver)) {
-        $logger->error("NAMESERVER:HOST_ERROR", $nameserver);
+        $logger->auto("NAMESERVER:HOST_ERROR", $nameserver);
         $errors++;
         goto DONE;
     }
@@ -68,87 +68,87 @@ sub test {
         my $skip_tcp = undef;
 
         if (ip_get_version($address) == 4 && !$context->{ipv4}) {
-            $logger->info("NAMESERVER:SKIPPED_IPV4", $address);
+            $logger->auto("NAMESERVER:SKIPPED_IPV4", $address);
             next ADDRESS;
         }
 
         if (ip_get_version($address) == 6 && !$context->{ipv6}) {
-            $logger->info("NAMESERVER:SKIPPED_IPV6", $address);
+            $logger->auto("NAMESERVER:SKIPPED_IPV6", $address);
             next ADDRESS;
         }
 
         # REQUIRE: Nameserver should not be recursive
-        $logger->debug("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
+        $logger->auto("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
         if ($context->dns->address_is_recursive($address, $qclass)) {
-            $logger->warning("NAMESERVER:RECURSIVE", $nameserver, $address);
+            $logger->auto("NAMESERVER:RECURSIVE", $nameserver, $address);
         } else {
-            $logger->info("NAMESERVER:NOT_RECURSIVE", $nameserver, $address);
+            $logger->auto("NAMESERVER:NOT_RECURSIVE", $nameserver, $address);
         }
 
         # REQUIRE: Nameserver must be authoritative for the zone
         #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
-        $logger->debug("NAMESERVER:CHECKING_AUTH", $nameserver, $address);
+        $logger->auto("NAMESERVER:CHECKING_AUTH", $nameserver, $address);
         if ($context->dns->address_is_authoritative($address, $zone, $qclass)) {
-            $logger->error("NAMESERVER:NOT_AUTH", $nameserver, $address, $zone);
+            $logger->auto("NAMESERVER:NOT_AUTH", $nameserver, $address, $zone);
             $errors++;
             next ADDRESS;
         } else {
-            $logger->info("NAMESERVER:AUTH", $nameserver, $address, $zone);
+            $logger->auto("NAMESERVER:AUTH", $nameserver, $address, $zone);
         }
 
         # REQUIRE: SOA must be fetchable over any protocol (UDP/TCP)
-        $logger->debug("NAMESERVER:TESTING_UDP", $nameserver, $address);
+        $logger->auto("NAMESERVER:TESTING_UDP", $nameserver, $address);
         $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address,
             { transport => "udp" });
         if ($packet) {
-            $logger->info("NAMESERVER:UDP_OK", $nameserver, $address, $zone);
+            $logger->auto("NAMESERVER:UDP_OK", $nameserver, $address, $zone);
         } else {
-            $logger->error("NAMESERVER:NO_UDP", $nameserver, $address, $zone);
+            $logger->auto("NAMESERVER:NO_UDP", $nameserver, $address, $zone);
             $errors++;
         }
 
-        $logger->debug("NAMESERVER:TESTING_TCP", $nameserver, $address);
+        $logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
         $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address,
             { transport => "tcp" });
         if ($packet) {
-            $logger->info("NAMESERVER:TCP_OK", $nameserver, $address, $zone);
+            $logger->auto("NAMESERVER:TCP_OK", $nameserver, $address, $zone);
         } else {
-            $logger->error("NAMESERVER:NO_TCP", $nameserver, $address, $zone);
+            $logger->auto("NAMESERVER:NO_TCP", $nameserver, $address, $zone);
             $errors++;
             $skip_tcp = 1;
         }
 
         # REQUIRE: Nameserver may provide AXFR
 
-        $logger->debug("NAMESERVER:TESTING_AXFR", $nameserver, $address);
+        $logger->auto("NAMESERVER:TESTING_AXFR", $nameserver, $address);
         if ($skip_tcp) {
-            $logger->info("NAMESERVER:AXFR_SKIP", $nameserver, $address, $zone);
+            $logger->auto("NAMESERVER:AXFR_SKIP", $nameserver, $address, $zone);
         } else {
             if ($context->dns->check_axfr($address, $zone, $qclass)) {
-                $logger->notice("NAMESERVER:AXFR_OPEN", $nameserver, $address,
+                $logger->auto("NAMESERVER:AXFR_OPEN", $nameserver, $address,
                     $zone);
             } else {
-                $logger->info("NAMESERVER:AXFR_CLOSED",
+                $logger->auto("NAMESERVER:AXFR_CLOSED",
                     $nameserver, $address, $zone);
             }
         }
 
         # Check for possible identification
-        $logger->debug("NAMESERVER:CHECKING_LEGACY_ID", $nameserver, $address);
+        $logger->auto("NAMESERVER:CHECKING_LEGACY_ID", $nameserver, $address);
         _check_id($context, $nameserver, $address);
 
         # FIXME: remove comment once query_nsid is complete
-        #$logger->debug("NAMESERVER:CHECKING_NSID", $nameserver, $address);
+        #$logger->auto("NAMESERVER:CHECKING_NSID", $nameserver, $address);
         #my $nsid = $context->dns->query_nsid($address, $zone, $qclass, "SOA");
         #if ($nsid) {
-        #    $logger->info("NAMESERVER:NSID", $nameserver, $address, $nsid);
+        #    $logger->auto("NAMESERVER:NSID", $nameserver, $address, $nsid);
         #}
     }
 
   DONE:
-    $logger->info("NAMESERVER:END", $nameserver);
+    $logger->auto("NAMESERVER:END", $nameserver);
     $logger->module_stack_pop();
 
     return $errors;
@@ -176,7 +176,7 @@ sub _check_id {
             foreach my $rr ($packet->answer) {
                 next unless (($rr->type eq "TXT") && $rr->txtdata);
 
-                $logger->info("NAMESERVER:LEGACY_ID", $nameserver, $address,
+                $logger->auto("NAMESERVER:LEGACY_ID", $nameserver, $address,
                     $domain, $rr->txtdata);
             }
         }

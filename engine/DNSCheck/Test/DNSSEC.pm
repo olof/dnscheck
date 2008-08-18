@@ -60,48 +60,48 @@ sub test {
     my $parent_errors;
 
     $logger->module_stack_push();
-    $logger->info("DNSSEC:BEGIN", $zone);
+    $logger->auto("DNSSEC:BEGIN", $zone);
 
     # Query parent for DS
-    $logger->debug("DNSSEC:CHECKING_DS_AT_PARENT", $zone);
+    $logger->auto("DNSSEC:CHECKING_DS_AT_PARENT", $zone);
     $packet =
       $context->dns->query_parent_nocache($zone, $zone, $qclass, "DS", \%flags);
     $ds = _dissect($packet, "DS");
     if ($ds && $#{ @{ $ds->{DS} } } >= 0) {
-        $logger->info("DNSSEC:DS_FOUND", $zone);
+        $logger->auto("DNSSEC:DS_FOUND", $zone);
     } else {
-        $logger->info("DNSSEC:NO_DS_FOUND", $zone);
+        $logger->auto("DNSSEC:NO_DS_FOUND", $zone);
     }
 
     # Query child for DNSKEY
-    $logger->debug("DNSSEC:CHECKING_DNSKEY_AT_CHILD", $zone);
+    $logger->auto("DNSSEC:CHECKING_DNSKEY_AT_CHILD", $zone);
     $packet =
       $context->dns->query_child_nocache($zone, $zone, $qclass, "DNSKEY",
         \%flags);
     $dnskey = _dissect($packet, "DNSKEY");
     if ($dnskey && $#{ @{ $dnskey->{DNSKEY} } } >= 0) {
-        $logger->info("DNSSEC:DNSKEY_FOUND", $zone);
+        $logger->auto("DNSSEC:DNSKEY_FOUND", $zone);
     } else {
-        $logger->info("DNSSEC:DNSKEY_NOT_FOUND", $zone);
+        $logger->auto("DNSSEC:DNSKEY_NOT_FOUND", $zone);
     }
 
     # Determine security status
-    $logger->debug("DNSSEC:DETERMINE_SECURITY_STATUS", $zone);
+    $logger->auto("DNSSEC:DETERMINE_SECURITY_STATUS", $zone);
     if ($ds and !$dnskey) {
-        $logger->error("DNSSEC:INCONSISTENT_SECURITY", $zone);
+        $logger->auto("DNSSEC:INCONSISTENT_SECURITY", $zone);
         $errors++;
         goto DONE;
     } else {
-        $logger->info("DNSSEC:CONSISTENT_SECURITY", $zone);
+        $logger->auto("DNSSEC:CONSISTENT_SECURITY", $zone);
     }
 
     if (!$dnskey) {
-        $logger->info("DNSSEC:SKIPPED_NO_KEYS", $zone);
+        $logger->auto("DNSSEC:SKIPPED_NO_KEYS", $zone);
         goto DONE;
     }
 
     if (!$ds and $dnskey) {
-        $logger->notice("DNSSEC:MISSING_DS", $zone);
+        $logger->auto("DNSSEC:MISSING_DS", $zone);
         $errors++;
     }
 
@@ -116,7 +116,7 @@ sub test {
     }
 
   DONE:
-    $logger->info("DNSSEC:END", $zone);
+    $logger->auto("DNSSEC:END", $zone);
     $logger->module_stack_pop();
     return $errors;
 }
@@ -147,13 +147,13 @@ sub _check_child {
     $result{anchors} = ();
     $result{sep}     = ();
 
-    $logger->info("DNSSEC:CHECKING_CHILD", $zone);
+    $logger->auto("DNSSEC:CHECKING_CHILD", $zone);
 
     foreach my $key (@{ $dnskey->{DNSKEY} }) {
 
         # REQUIRE: a DNSKEY SHOULD NOT be of type RSA/MD5
         if ($key->algorithm == Net::DNS::SEC->algorithm("RSAMD5")) {
-            $logger->warning("DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED",
+            $logger->auto("DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED",
                 $zone, $key->keytag, "RSA/MD5");
         }
 
@@ -163,21 +163,21 @@ sub _check_child {
 
         # REQUIRE: a DNSKEY used for RRSIGs MUST have protocol DNSSEC (3)
         if ($key->protocol != 3) {
-            $logger->warning("DNSSEC:DNSKEY_SKIP_PROTOCOL",
+            $logger->auto("DNSSEC:DNSKEY_SKIP_PROTOCOL",
                 $zone, $key->keytag, $key->protocol);
             next;
         }
 
         # REQUIRE: a DNSKEY used for RRSIGs MUST be a zone key
         unless ($key->flags & 0x0100) {
-            $logger->warning("DNSSEC:DNSKEY_SKIP_TYPE", $zone, $key->keytag);
+            $logger->auto("DNSSEC:DNSKEY_SKIP_TYPE", $zone, $key->keytag);
             next;
         }
 
         $keyhash{ $key->keytag } = $key;
 
         if ($key->is_sep) {
-            $logger->info("DNSSEC:DNSKEY_SEP", $zone, $key->keytag);
+            $logger->auto("DNSSEC:DNSKEY_SEP", $zone, $key->keytag);
             push @{ $result{sep} }, $key->keytag;
             $sep++;
         }
@@ -189,9 +189,9 @@ sub _check_child {
 
     # REQUIRE: at least one DNSKEY SHOULD be RSA/SHA1
     if ($mandatory_algorithm > 0) {
-        $logger->info("DNSSEC:DNSKEY_MANDATORY_FOUND", $zone);
+        $logger->auto("DNSSEC:DNSKEY_MANDATORY_FOUND", $zone);
     } else {
-        $logger->error("DNSSEC:DNSKEY_MANDATORY_NOT_FOUND", $zone);
+        $logger->auto("DNSSEC:DNSKEY_MANDATORY_NOT_FOUND", $zone);
         $errors++;
     }
 
@@ -204,14 +204,14 @@ sub _check_child {
         if (    $packet->header->rcode eq "NOERROR"
             and $packet->header->ancount > 0)
         {
-            $logger->error("DNSSEC:ADDITIONAL_PROCESSING_BROKEN", $zone);
+            $logger->auto("DNSSEC:ADDITIONAL_PROCESSING_BROKEN", $zone);
             $errors++;
         } else {
-            $logger->error("DNSSEC:NO_SIGNATURES", $zone);
+            $logger->auto("DNSSEC:NO_SIGNATURES", $zone);
             $errors++;
         }
 
-        $logger->info("DNSSEC:CHILD_CHECK_ABORTED", $zone);
+        $logger->auto("DNSSEC:CHILD_CHECK_ABORTED", $zone);
 
         goto DONE;
     }
@@ -226,18 +226,18 @@ sub _check_child {
         if (_count_in_list($sig->keytag, $result{allkeys}) == 1) {
             $valid_dnskey_signatures += $valid;
 
-            $logger->debug("DNSSEC:DNSKEY_SIGNATURE_OK", $zone, $sig->keytag);
+            $logger->auto("DNSSEC:DNSKEY_SIGNATURE_OK", $zone, $sig->keytag);
         } else {
-            $logger->warning("DNSSEC:DNSKEY_SIGNER_UNPUBLISHED",
+            $logger->auto("DNSSEC:DNSKEY_SIGNER_UNPUBLISHED",
                 $zone, $sig->keytag);
         }
     }
     if ($valid_dnskey_signatures > 0) {
         ## Enough valid signatures over DNSKEY RRset
-        $logger->info("DNSSEC:DNSKEY_VALID_SIGNATURES", $zone);
+        $logger->auto("DNSSEC:DNSKEY_VALID_SIGNATURES", $zone);
     } else {
         ## No valid signatures over the DNSKEY RRset
-        $logger->warning("DNSSEC:DNSKEY_NO_VALID_SIGNATURES", $zone);
+        $logger->auto("DNSSEC:DNSKEY_NO_VALID_SIGNATURES", $zone);
     }
 
     # REQUIRE: RRSIG(SOA) MUST be valid and created by a valid DNSKEY
@@ -253,24 +253,23 @@ sub _check_child {
 
         if (_count_in_list($sig->keytag, $result{allkeys}) == 1) {
             $valid_soa_signatures += $valid;
-            $logger->debug("DNSSEC:SOA_SIGNATURE_OK", $zone, $sig->keytag);
+            $logger->auto("DNSSEC:SOA_SIGNATURE_OK", $zone, $sig->keytag);
         } else {
-            $logger->warning("DNSSEC:SOA_SIGNER_UNPUBLISHED",
-                $zone, $sig->keytag);
+            $logger->auto("DNSSEC:SOA_SIGNER_UNPUBLISHED", $zone, $sig->keytag);
         }
     }
     if ($valid_soa_signatures > 0) {
         ## Enough valid signatures over SOA RRset
-        $logger->info("DNSSEC:SOA_VALID_SIGNATURES", $zone);
+        $logger->auto("DNSSEC:SOA_VALID_SIGNATURES", $zone);
     } else {
         ## No valid signatures over the SOA RRset
-        $logger->warning("DNSSEC:SOA_NO_VALID_SIGNATURES", $zone);
+        $logger->auto("DNSSEC:SOA_NO_VALID_SIGNATURES", $zone);
     }
 
     # FIXME: check signature validation?
 
   DONE:
-    $logger->info("DNSSEC:CHILD_CHECKED", $zone);
+    $logger->auto("DNSSEC:CHILD_CHECKED", $zone);
     return ($errors, \%result);
 }
 
@@ -291,14 +290,14 @@ sub _check_parent {
 
     my %flags = (transport => "tcp", dnssec => 1);
 
-    $logger->info("DNSSEC:CHECKING_PARENT", $zone);
+    $logger->auto("DNSSEC:CHECKING_PARENT", $zone);
 
     foreach my $rr (@{ $ds->{DS} }) {
 
         my $ds_message = sprintf("DS(%s/%d/%d/%d)",
             $zone, $rr->algorithm, $rr->digtype, $rr->keytag);
 
-        $logger->debug("DNSSEC:PARENT_DS", $zone, $ds_message);
+        $logger->auto("DNSSEC:PARENT_DS", $zone, $ds_message);
 
         if ($rr->algorithm == Net::DNS::SEC->algorithm("RSASHA1")) {
             $mandatory_algorithm++;
@@ -308,34 +307,34 @@ sub _check_parent {
         # signing the child's DNSKEY RRset
         if (_count_in_list($rr->keytag, $child_result->{anchors}) >= 1) {
             ## DS refers to key signing the DNSKEY RRset
-            $logger->info("DNSSEC:DS_KEYREF_OK", $zone, $ds_message);
+            $logger->auto("DNSSEC:DS_KEYREF_OK", $zone, $ds_message);
         } else {
             ## DS refers to key not signing the DNSKEY RRset
-            $logger->info("DNSSEC:DS_KEYREF_INVALID", $zone, $ds_message);
+            $logger->auto("DNSSEC:DS_KEYREF_INVALID", $zone, $ds_message);
         }
 
         # REQUIRE: the DS MAY point to a SEP at the child
         if ($#{ $child_result->{sep} } >= 0) {
             if (_count_in_list($rr->keytag, $child_result->{sep}) > 0) {
                 ## Child is using SEP and DS refers to a SEP
-                $logger->info("DNSSEC:DS_TO_SEP", $zone, $ds_message);
+                $logger->auto("DNSSEC:DS_TO_SEP", $zone, $ds_message);
             } else {
                 ## Child is using SEP and DS refers to a non-SEP
-                $logger->warning("DNSSEC:DS_TO_NONSEP", $zone, $ds_message);
+                $logger->auto("DNSSEC:DS_TO_NONSEP", $zone, $ds_message);
             }
         }
     }
 
     # REQUIRE: at least one DS algorithm SHOULD be of type RSA/SHA1
     if ($mandatory_algorithm > 0) {
-        $logger->info("DNSSEC:DS_MANDATORY_FOUND", $zone);
+        $logger->auto("DNSSEC:DS_MANDATORY_FOUND", $zone);
     } else {
-        $logger->error("DNSSEC:DS_MANDATORY_NOT_FOUND", $zone);
+        $logger->auto("DNSSEC:DS_MANDATORY_NOT_FOUND", $zone);
         $errors++;
     }
 
   DONE:
-    $logger->info("DNSSEC:PARENT_CHECKED", $zone);
+    $logger->auto("DNSSEC:PARENT_CHECKED", $zone);
     return $errors;
 }
 
@@ -389,13 +388,13 @@ sub _check_signature ($$) {
         $rrsig->name, $rrsig->class, $rrsig->typecovered, $rrsig->keytag);
 
     if ($inception > $now) {
-        $logger->warning("DNSSEC:RRSIG_NOT_YET_VALID", $message);
+        $logger->auto("DNSSEC:RRSIG_NOT_YET_VALID", $message);
         return 0;
     } elsif ($expiration < $now) {
-        $logger->warning("DNSSEC:RRSIG_EXPIRED", $message);
+        $logger->auto("DNSSEC:RRSIG_EXPIRED", $message);
         return 0;
     } else {
-        $logger->info("DNSSEC:RRSIG_VALID", $message);
+        $logger->auto("DNSSEC:RRSIG_VALID", $message);
         return 1;
     }
 }

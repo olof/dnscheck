@@ -54,12 +54,14 @@ sub MY::postamble {
 
     return qq#
 
+POLICY_DIR = $instprefix/share/dnscheck
 LOCALE_DIR = $instprefix/share/dnscheck/locale
 
 # . q#
 
 FIXVARS = \
 	-Mvars \
+	-DPOLICY_DIR="$(POLICY_DIR)" \
 	-DLOCALE_DIR="$(LOCALE_DIR)"
 
 apps/dnscheck: apps/dnscheck.pl
@@ -69,6 +71,8 @@ apps/dnscheck-qrun: apps/dnscheck-qrun.pl
 	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
 
 install_locale:
+	install -d ${DESTDIR}/${POLICY_DIR}
+	install -m 444 policy.yaml ${DESTDIR}/${POLICY_DIR}
 	install -d ${DESTDIR}/${LOCALE_DIR}
 	install -m 444 locale/*.yaml ${DESTDIR}/${LOCALE_DIR}
 #

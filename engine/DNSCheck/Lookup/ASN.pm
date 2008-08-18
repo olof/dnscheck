@@ -71,10 +71,10 @@ sub lookup {
     my $self = shift;
     my $ip   = shift;
 
-    $self->{logger}->debug("ASN:LOOKUP", $ip);
+    $self->{logger}->auto("ASN:LOOKUP", $ip);
 
     if ($ip !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
-        $self->{logger}->debug("ASN:INVALID_ADDRESS", $ip);
+        $self->{logger}->auto("ASN:INVALID_ADDRESS", $ip);
         return undef;
     }
 
@@ -86,12 +86,12 @@ sub lookup {
 
     if ($asn) {
         if (scalar @{$asn} > 0) {
-            $self->{logger}->debug("ASN:ANNOUNCE_BY", $ip, join(",", @{$asn}));
+            $self->{logger}->auto("ASN:ANNOUNCE_BY", $ip, join(",", @{$asn}));
         } else {
-            $self->{logger}->debug("ASN:NOT_ANNOUNCE", $ip);
+            $self->{logger}->auto("ASN:NOT_ANNOUNCE", $ip);
         }
     } else {
-        $self->{logger}->debug("ASN:LOOKUP_ERROR", $ip);
+        $self->{logger}->auto("ASN:LOOKUP_ERROR", $ip);
     }
 
     return $asn;
