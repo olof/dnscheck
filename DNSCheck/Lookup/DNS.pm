@@ -397,8 +397,7 @@ sub _query_multiple {
             $self->{logger}->auto("DNS:QUERY_TIMEOUT", join(",", @target),
                 $qname, $qclass, $qtype);
         } else {
-            $self->{logger}
-              ->critical("DNS:LOOKUP_ERROR", $resolver->errorstring);
+            $self->{logger}->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
         }
     }
 
