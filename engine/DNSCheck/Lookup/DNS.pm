@@ -385,6 +385,9 @@ sub _query_multiple {
         $resolver->nameserver($ns);
         $packet = $resolver->send($qname, $qtype, $qclass);
 
+        # skip nameserver on servfail
+        next if ($packet && $packet->header->rcode ne "SERVFAIL");
+
         last if ($packet);
 
         if ($self->check_timeout($resolver)) {
