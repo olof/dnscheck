@@ -3,14 +3,21 @@
 	
 	function checkIfDomainExists($domain)
 	{
-		$command = "dig '" . addslashes($domain) . "'";
+		$command = "dig +nssearch '" . addslashes($domain) . "'";
 		$commandOutput = array();
 		$commandReturnValue = null;
 		@exec($command, $commandOutput, $commandReturnValue);
 		
 		$rawOutput = implode("\r\n", $commandOutput) . "\r\n";
 		
-		return (false === strpos($rawOutput, 'status: NXDOMAIN'));
+		if (false === strpos($rawOutput, 'SOA'))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 	class DatabasePackage
