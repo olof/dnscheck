@@ -37,6 +37,8 @@ use Pod::Usage;
 use POSIX qw(setsid);
 use DNSCheck::Engine;
 
+my $POLICY_DIR = '@@POLICY_DIR@@';
+
 ######################################################################
 
 my $config = "/etc/dnscheck.conf";
@@ -52,9 +54,9 @@ sub main {
     my $disable_ipv4 = 0;
     my $disable_ipv6 = 0;
     my $disable_smtp = 0;
-
-    my $prio_low  = undef;
-    my $prio_high = undef;
+    my $prio_low     = undef;
+    my $prio_high    = undef;
+    my $policy       = "policy.yaml";
 
     GetOptions(
         'help|?'       => \$help,
@@ -99,6 +101,10 @@ sub main {
             next;
         }
 
+        unless (-f $policy) {
+            $policy = $POLICY_DIR . "/policy.yaml";
+        }
+
         my $engine = new DNSCheck::Engine(
             {
                 syslog_facility => $facility,
@@ -114,6 +120,7 @@ sub main {
                 debug           => $debug,
                 prio_low        => $prio_low,
                 prio_high       => $prio_high,
+                policy          => $policy,
             }
         );
 
