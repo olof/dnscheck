@@ -385,7 +385,6 @@ sub _query_multiple {
         $resolver->nameserver($ns);
         $packet = $resolver->send($qname, $qtype, $qclass);
 
-        # skip nameserver on servfail
         last if ($packet && $packet->header->rcode ne "SERVFAIL");
 
         if ($self->check_timeout($resolver)) {
@@ -393,7 +392,7 @@ sub _query_multiple {
         }
     }
 
-    unless ($packet) {
+    unless ($packet && $packet->header->rcode ne "SERVFAIL") {
         if ($timeout) {
             $self->{logger}->auto("DNS:QUERY_TIMEOUT", join(",", @target),
                 $qname, $qclass, $qtype);
