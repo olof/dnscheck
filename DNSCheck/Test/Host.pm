@@ -110,9 +110,9 @@ sub test {
     foreach my $rr (@answers) {
         if ($rr->type eq "A" or $rr->type eq "AAAA") {
             if (DNSCheck::Test::Address::test($context, $rr->address)) {
-		$errors++;
-		goto DONE;
-	    }
+                $errors++;
+                goto DONE;
+            }
         }
     }
 
