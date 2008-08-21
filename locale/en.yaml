@@ -268,10 +268,10 @@ messages:
   args: 1
   format: Additional name server listed at child: %s
   descr: A name server listed at the child, but not at the parent, was found. This is most likely a configuration error, but there are sometimes reasons for setting up a zone this way.
-  DELEGATION:TOO_FEW_NS:
-   args: 1
-   format: Too few name servers (%s).
-   descr: Only one name server was found for the zone. You should always have at least two name servers for a zone to be able to handle transient connectivity problems.
+ DELEGATION:TOO_FEW_NS:
+  args: 1
+  format: Too few name servers (%s).
+  descr: Only one name server was found for the zone. You should always have at least two name servers for a zone to be able to handle transient connectivity problems.
  DELEGATION:TOO_FEW_NS_IPV4:
   args: 1
   format: Too few IPv4 name servers (%s).
