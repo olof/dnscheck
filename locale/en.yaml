@@ -523,8 +523,8 @@ messages:
   format: Begin testing name server %s.
  NAMESERVER:HOST_ERROR:
   args: 1
-  format: Host name error for %s.
-  descr: The specified host name was not a valid host name.
+  format: Host name or address error for %s.
+  descr: The specified host name is not a valid host name or the host name points to an invalid IP address, e.g. a private or reserved IP address.
  NAMESERVER:CHECKING_RECURSION:
   args: 2
   format: Checking recursion for %s at address %s.
