@@ -103,6 +103,9 @@ messages:
  DNS:NOT_AUTH:
   args: 4
   format: Name server %s not authoritative for %s/%s/%s.
+ DNS:SOA_SERVFAIL:
+  args: 1
+  format: DNS SERVFAIL when querying %s for SOA
  DNS:ANSWER_DUMP:
   args: 1
   format: DNS query returned: %s

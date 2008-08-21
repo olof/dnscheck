@@ -329,6 +329,8 @@ sub query_explicit {
     }
 
     # FIXME: improve; see RFC 2671 section 5.3
+    # FIXME: Can FORMERR appear when called from Nameserver.pm?
+    #        I.e. returning undef would generate NO_TCP/NO_UDP
     if ($packet->header->rcode eq "FORMERR"
         && ($flags->{bufsize} || $flags->{dnssec}))
     {
@@ -340,6 +342,16 @@ sub query_explicit {
     if ($packet->header->rcode eq "FORMERR") {
         $self->{logger}->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
         return undef;
+    }
+
+    # FIXME: Returns $packet since we don't want NAMESERVER:NO_TCP/NO_UDP
+    if ($packet->header->rcode eq "SERVFAIL" && uc($qtype) eq "SOA") {
+        $self->{logger}->auto("DNS:SOA_SERVFAIL", $address);
+        $self->add_blacklist($address, $qname, $qclass, $qtype);
+        $self->{logger}
+          ->auto("DNS:ADDRESS_BLACKLIST_ADD", $address, $qname, $qclass,
+            $qtype);
+        return $packet;
     }
 
     # FIXME: notice, warning, error?
