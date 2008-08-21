@@ -109,7 +109,10 @@ sub test {
     # REQUIRE: All host addresses must be valid
     foreach my $rr (@answers) {
         if ($rr->type eq "A" or $rr->type eq "AAAA") {
-            DNSCheck::Test::Address::test($context, $rr->address);
+            if (DNSCheck::Test::Address::test($context, $rr->address)) {
+		$errors++;
+		goto DONE;
+	    }
         }
     }
 
