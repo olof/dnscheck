@@ -902,13 +902,13 @@ sub address_is_recursive {
 ######################################################################
 
 sub check_axfr {
-    my $self       = shift;
-    my $nameserver = shift;
-    my $qname      = shift;
-    my $qclass     = shift;
+    my $self    = shift;
+    my $address = shift;
+    my $qname   = shift;
+    my $qclass  = shift;
 
-    unless (_querible($nameserver)) {
-        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $nameserver);
+    unless (_querible($address)) {
+        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return 0;
     }
 
@@ -920,7 +920,7 @@ sub check_axfr {
     $resolver->usevc(0);
     $resolver->defnames(0);
 
-    $resolver->nameservers($nameserver);
+    $resolver->nameservers($address);
     $resolver->axfr_start($qname, $qclass);
 
     if ($resolver->axfr_next) {
@@ -933,19 +933,19 @@ sub check_axfr {
 ######################################################################
 
 sub query_nsid {
-    my $self       = shift;
-    my $nameserver = shift;
-    my $qname      = shift;
-    my $qclass     = shift;
-    my $qtype      = shift;
+    my $self    = shift;
+    my $address = shift;
+    my $qname   = shift;
+    my $qclass  = shift;
+    my $qtype   = shift;
 
-    unless (_querible($nameserver)) {
-        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $nameserver);
+    unless (_querible($address)) {
+        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return undef;
     }
 
     my $resolver = $self->_setup_resolver();
-    $resolver->nameservers($nameserver);
+    $resolver->nameservers($address);
 
     $resolver->debug(1);
 
