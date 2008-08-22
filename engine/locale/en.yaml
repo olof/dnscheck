@@ -179,6 +179,9 @@ messages:
  DNS:FIND_ADDRESSES_RESULT:
   args: 3
   format: Addresses for %s/%s: %s
+ DNS:UNQUERIBLE_ADDRESS:
+  args: 1
+  format: Unable to send queries to %s.
 
  ADDRESS:BEGIN:
   args: 1
