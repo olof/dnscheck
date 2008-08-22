@@ -721,6 +721,11 @@ sub _find_soa {
     return $qname unless ($answer);
     return undef if ($answer->header->rcode eq "NXDOMAIN");
 
+    # "Handle" CNAMEs at zone apex
+    foreach my $rr ($answer->answer) {
+        return $qname if ($rr->type eq "CNAME");
+    }
+
     foreach my $rr ($answer->authority) {
         return $rr->name if ($rr->type eq "SOA");
     }
