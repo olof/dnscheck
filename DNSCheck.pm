@@ -49,6 +49,31 @@ use DNSCheck::Test::SMTP;
 
 our $VERSION = "0.65";
 
+our $default = {
+    config => {
+        class        => "IN",
+        ipv4         => 1,
+        ipv6         => 1,
+        smtp         => 1,
+        hostname     => `hostname`,
+        udp_timeout  => 5,
+        tcp_timeout  => 5,
+        retry        => 3,
+        retrans      => 2,
+        smtp_timeout => 20,
+    },
+
+    params => {
+        'SOA:EXPIRE_VS_REFRESH' => 7,
+        'SOA:MAX_MINIMUM'       => 86400,
+        'SOA:MIN_EXPIRE'        => 604800,
+        'SOA:MIN_MINIMUM'       => 300,
+        'SOA:MIN_REFRESH'       => 1440,
+        'SOA:MIN_RETRY'         => 3600,
+        'SOA:MIN_TTL'           => 3600,
+    },
+};
+
 ######################################################################
 
 sub new {
