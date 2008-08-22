@@ -38,6 +38,7 @@ use List::Util 'shuffle';
 
 use Data::Dumper;
 use Net::DNS 0.59;
+use Net::IP 1.25;
 
 use Crypt::OpenSSL::Random qw(random_bytes);
 use Digest::SHA1 qw(sha1);
@@ -304,6 +305,11 @@ sub query_explicit {
     $self->{logger}
       ->auto("DNS:QUERY_EXPLICIT", $address, $qname, $qclass, $qtype);
 
+    unless (_querible($address)) {
+        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
+        return undef;
+    }
+
     my $resolver = $self->_setup_resolver($flags);
     $resolver->nameserver($address);
 
@@ -394,7 +400,13 @@ sub _query_multiple {
     my $timeout = 0;
 
     for my $ns (@target) {
+        unless (_querible($ns)) {
+            $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $ns);
+            next;
+        }
+
         $resolver->nameserver($ns);
+
         $packet = $resolver->send($qname, $qtype, $qclass);
 
         last if ($packet && $packet->header->rcode ne "SERVFAIL");
@@ -836,6 +848,11 @@ sub address_is_recursive {
 
     # no blacklisting here, since some nameservers ignore recursive queries
 
+    unless (_querible($address)) {
+        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
+        goto DONE;
+    }
+
     my $resolver = new Net::DNS::Resolver;
     $resolver->debug($self->{debug});
 
@@ -890,6 +907,11 @@ sub check_axfr {
     my $qname      = shift;
     my $qclass     = shift;
 
+    unless (_querible($nameserver)) {
+        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $nameserver);
+        return 0;
+    }
+
     # set up resolver
     my $resolver = new Net::DNS::Resolver;
     $resolver->debug($self->{debug});
@@ -916,6 +938,11 @@ sub query_nsid {
     my $qname      = shift;
     my $qclass     = shift;
     my $qtype      = shift;
+
+    unless (_querible($nameserver)) {
+        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $nameserver);
+        return undef;
+    }
 
     my $resolver = $self->_setup_resolver();
     $resolver->nameservers($nameserver);
@@ -979,6 +1006,16 @@ sub _rr2string {
 
     return sprintf("%s %d %s %s %s",
         $rr->name, $rr->ttl, $rr->class, $rr->type, $rdatastr);
+}
+
+sub _querible {
+    my $address = shift;
+
+    my $ip = new Net::IP($address);
+
+    return 1 if ($ip->iptype eq "PUBLIC");            # IPv4
+    return 1 if ($ip->iptype eq "GLOBAL-UNICAST");    # IPv6
+    return 0;
 }
 
 ######################################################################
