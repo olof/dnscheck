@@ -75,8 +75,7 @@ sub test {
         if (scalar @as_list > 1) {
             $logger->auto("CONNECTIVITY:MULTIPLE_ASN", $address);
         } elsif (scalar @as_list < 1) {
-            $logger->auto("CONNECTIVITY:NOT_ANNOUNCED", $address);
-            $errors++;
+            $errors += $logger->auto("CONNECTIVITY:NOT_ANNOUNCED", $address);
         }
     }
 

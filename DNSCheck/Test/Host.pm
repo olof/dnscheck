@@ -56,8 +56,7 @@ sub test {
     if (scalar @labels > 0
         && $labels[0] !~ /^[A-Za-z0-9][A-Za-z0-9-]*$/)
     {
-        $logger->auto("HOST:ILLEGAL_NAME", $hostname, $labels[0]);
-        $errors++;
+        $errors += $logger->auto("HOST:ILLEGAL_NAME", $hostname, $labels[0]);
         goto DONE;
     }
 
@@ -66,8 +65,7 @@ sub test {
         # REQUIRE: RFC 952 says hostnames may contain a-z, 0-9 or -
         if ($label !~ /^[A-Za-z0-9][A-Za-z0-9-]*$/) {
             $label = "<NULL>" if ($label eq "");
-            $logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
-            $errors++;
+            $errors += $logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
             goto DONE;
         }
 
@@ -75,8 +73,7 @@ sub test {
         # be a minus sign or a period.
         if ($label =~ /[\-\.]$/) {
             $label = "<NULL>" if ($label eq "");
-            $logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
-            $errors++;
+            $errors += $logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
             goto DONE;
         }
     }
@@ -88,8 +85,7 @@ sub test {
     unless (($ipv4 && $ipv4->header->ancount)
         || ($ipv6 && $ipv6->header->ancount))
     {
-        $logger->auto("HOST:NOT_FOUND", $hostname);
-        $errors++;
+        $errors += $logger->auto("HOST:NOT_FOUND", $hostname);
         goto DONE;
     }
 
@@ -100,8 +96,7 @@ sub test {
     # REQUIRE: Host must not point to a CNAME
     foreach my $rr (@answers) {
         if ($rr->type eq "CNAME") {
-            $logger->auto("HOST:CNAME_FOUND", $hostname);
-            $errors++;
+            $errors += $logger->auto("HOST:CNAME_FOUND", $hostname);
             goto DONE;
         }
     }

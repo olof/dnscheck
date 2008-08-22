@@ -58,9 +58,8 @@ sub test {
         $logger->auto("DELEGATION:NS_AT_PARENT", join(",", @ns_at_parent));
         $testable = 1;
     } else {
-        $logger->auto("DELEGATION:NOT_FOUND_AT_PARENT");
+        $errors += $logger->auto("DELEGATION:NOT_FOUND_AT_PARENT");
         $testable = 0;
-        $errors++;
     }
 
     goto DONE if ($errors);
@@ -70,16 +69,14 @@ sub test {
     if (scalar @ns_at_child) {
         $logger->auto("DELEGATION:NS_AT_CHILD", join(",", @ns_at_child));
     } else {
-        $logger->auto("DELEGATION:NOT_FOUND_AT_CHILD");
+        $errors += $logger->auto("DELEGATION:NOT_FOUND_AT_CHILD");
         $testable = 0;
-        $errors++;
     }
 
     # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
     foreach my $ns (@ns_at_parent) {
         unless (scalar grep(/^$ns$/i, @ns_at_child)) {
-            $logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
-            $errors++;
+            $errors += $logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
         }
     }
 

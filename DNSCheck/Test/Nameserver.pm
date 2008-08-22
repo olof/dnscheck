@@ -56,8 +56,7 @@ sub test {
 
     # REQUIRE: Nameserver must be a valid hostname
     if (DNSCheck::Test::Host::test($context, $nameserver)) {
-        $logger->auto("NAMESERVER:HOST_ERROR", $nameserver);
-        $errors++;
+        $errors += $logger->auto("NAMESERVER:HOST_ERROR", $nameserver);
         goto DONE;
     }
 
@@ -89,8 +88,7 @@ sub test {
         #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
         $logger->auto("NAMESERVER:CHECKING_AUTH", $nameserver, $address);
         if ($context->dns->address_is_authoritative($address, $zone, $qclass)) {
-            $logger->auto("NAMESERVER:NOT_AUTH", $nameserver, $address, $zone);
-            $errors++;
+            $errors += $logger->auto("NAMESERVER:NOT_AUTH", $nameserver, $address, $zone);
             next ADDRESS;
         } else {
             $logger->auto("NAMESERVER:AUTH", $nameserver, $address, $zone);
@@ -104,8 +102,7 @@ sub test {
         if ($packet) {
             $logger->auto("NAMESERVER:UDP_OK", $nameserver, $address, $zone);
         } else {
-            $logger->auto("NAMESERVER:NO_UDP", $nameserver, $address, $zone);
-            $errors++;
+            $errors += $logger->auto("NAMESERVER:NO_UDP", $nameserver, $address, $zone);
         }
 
         $logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
@@ -115,8 +112,7 @@ sub test {
         if ($packet) {
             $logger->auto("NAMESERVER:TCP_OK", $nameserver, $address, $zone);
         } else {
-            $logger->auto("NAMESERVER:NO_TCP", $nameserver, $address, $zone);
-            $errors++;
+            $errors += $logger->auto("NAMESERVER:NO_TCP", $nameserver, $address, $zone);
             $skip_tcp = 1;
         }
 

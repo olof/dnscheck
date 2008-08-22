@@ -86,8 +86,7 @@ sub test {
     # REQUIRE: Address must be syntactically correct
     my $ip = new Net::IP($address);
     unless ($ip) {
-        $logger->auto("ADDRESS:INVALID", $address);
-        $errors++;
+        $errors += $logger->auto("ADDRESS:INVALID", $address);
         goto DONE;
     }
 
@@ -95,8 +94,7 @@ sub test {
     if ($ip->version == 4) {
         foreach my $prefix (@private_ipv4) {
             if ($ip->overlaps($prefix)) {
-                $logger->auto("ADDRESS:PRIVATE_IPV4", $address);
-                $errors++;
+                $errors += $logger->auto("ADDRESS:PRIVATE_IPV4", $address);
                 goto DONE;
             }
         }
@@ -106,8 +104,7 @@ sub test {
     if ($ip->version == 4) {
         foreach my $prefix (@reserved_ipv4) {
             if ($ip->overlaps($prefix)) {
-                $logger->auto("ADDRESS:RESERVED_IPV4", $address);
-                $errors++;
+                $errors += $logger->auto("ADDRESS:RESERVED_IPV4", $address);
                 goto DONE;
             }
         }
@@ -117,8 +114,7 @@ sub test {
     if ($ip->version == 6) {
         foreach my $prefix (@reserved_ipv6) {
             if ($ip->overlaps($prefix)) {
-                $logger->auto("ADDRESS:RESERVED_IPV6", $address);
-                $errors++;
+                $errors += $logger->auto("ADDRESS:RESERVED_IPV6", $address);
                 goto DONE;
             }
         }
