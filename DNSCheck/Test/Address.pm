@@ -130,7 +130,6 @@ sub test {
 
     unless ($ptr && $ptr->header->ancount) {
         $logger->auto("ADDRESS:PTR_NOT_FOUND", $address, $reverse);
-        $errors++;
     } else {
 
         # REQUIRE: Hostname in PTR should exist
@@ -150,7 +149,6 @@ sub test {
             {
                 $logger->auto("ADDRESS:PTR_HOSTNAME_NOT_FOUND",
                     $address, $hostname);
-                $errors++;
                 goto DONE;
             }
         }
