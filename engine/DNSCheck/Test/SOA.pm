@@ -62,15 +62,13 @@ sub test {
     {
         $logger->auto("SOA:FOUND", $zone);
     } else {
-        $logger->auto("SOA:NOT_FOUND", $zone);
-        $errors++;
+        $errors += $logger->auto("SOA:NOT_FOUND", $zone);
         goto DONE;
     }
 
     # REQUIRE: only ONE SOA record may exist
     unless ($packet->header->ancount == 1) {
-        $logger->auto("SOA:MULTIPLE_SOA", $zone);
-        $errors++;
+        $errors += $logger->auto("SOA:MULTIPLE_SOA", $zone);
         goto DONE;
     }
 
@@ -79,8 +77,7 @@ sub test {
 
     # REQUIRE: SOA MNAME must exist as a valid hostname
     if (DNSCheck::Test::Host::test($context, $soa->mname) > 0) {
-        $logger->auto("SOA:MNAME_ERROR", $zone, $soa->mname);
-        $errors++;
+        $errors += $logger->auto("SOA:MNAME_ERROR", $zone, $soa->mname);
     } else {
         $logger->auto("SOA:MNAME_VALID", $zone, $soa->mname);
     }
@@ -88,8 +85,7 @@ sub test {
     $packet = $context->dns->query_resolver($zone, $qclass, "NS");
 
     unless ($packet && $packet->header->ancount) {
-        $logger->auto("SOA:NS_NOT_FOUND", $zone);
-        $errors++;
+        $errors += $logger->auto("SOA:NS_NOT_FOUND", $zone);
         goto DONE;
     }
 
@@ -145,8 +141,7 @@ sub test {
         }
 
     } else {
-        $logger->auto("SOA:RNAME_SYNTAX", $zone, $soa->rname);
-        $errors++;
+        $errors += $logger->auto("SOA:RNAME_SYNTAX", $zone, $soa->rname);
     }
 
     # REQUIRE: SOA TTL advistory, min 1 hour

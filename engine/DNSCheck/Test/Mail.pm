@@ -54,8 +54,7 @@ sub test {
 
     # FIXME: stricter checks needed here
     unless ($localpart && $domain) {
-        $logger->auto("MAIL:ADDRESS_SYNTAX", $email);
-        $errors++;
+        $errors += $logger->auto("MAIL:ADDRESS_SYNTAX", $email);
         goto DONE;
     }
 
@@ -67,8 +66,7 @@ sub test {
     }
 
     unless (scalar @mailhosts) {
-        $logger->auto("MAIL:DOMAIN_NOT_FOUND", $domain);
-        $errors++;
+        $errors += $logger->auto("MAIL:DOMAIN_NOT_FOUND", $domain);
         goto DONE;
     }
 

@@ -127,6 +127,13 @@ sub auto {
     }
 
     $self->add($level, $tag, @_);
+
+    # return 1 for ERROR or CRITICAL
+    if ($level eq "ERROR" or $level eq "CRITICAL") {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 sub dump {

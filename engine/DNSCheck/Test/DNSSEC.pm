@@ -88,8 +88,7 @@ sub test {
     # Determine security status
     $logger->auto("DNSSEC:DETERMINE_SECURITY_STATUS", $zone);
     if ($ds and !$dnskey) {
-        $logger->auto("DNSSEC:INCONSISTENT_SECURITY", $zone);
-        $errors++;
+        $errors += $logger->auto("DNSSEC:INCONSISTENT_SECURITY", $zone);
         goto DONE;
     } else {
         $logger->auto("DNSSEC:CONSISTENT_SECURITY", $zone);
@@ -101,8 +100,7 @@ sub test {
     }
 
     if (!$ds and $dnskey) {
-        $logger->auto("DNSSEC:MISSING_DS", $zone);
-        $errors++;
+        $errors += $logger->auto("DNSSEC:MISSING_DS", $zone);
     }
 
     ($child_errors, $child_result) = _check_child($context, $zone, $dnskey);
@@ -191,8 +189,7 @@ sub _check_child {
     if ($mandatory_algorithm > 0) {
         $logger->auto("DNSSEC:DNSKEY_MANDATORY_FOUND", $zone);
     } else {
-        $logger->auto("DNSSEC:DNSKEY_MANDATORY_NOT_FOUND", $zone);
-        $errors++;
+        $errors += $logger->auto("DNSSEC:DNSKEY_MANDATORY_NOT_FOUND", $zone);
     }
 
     unless ($#{ @{ $dnskey->{RRSIG} } } >= 0) {
@@ -204,11 +201,9 @@ sub _check_child {
         if (    $packet->header->rcode eq "NOERROR"
             and $packet->header->ancount > 0)
         {
-            $logger->auto("DNSSEC:ADDITIONAL_PROCESSING_BROKEN", $zone);
-            $errors++;
+            $errors += $logger->auto("DNSSEC:ADDITIONAL_PROCESSING_BROKEN", $zone);
         } else {
-            $logger->auto("DNSSEC:NO_SIGNATURES", $zone);
-            $errors++;
+            $errors += $logger->auto("DNSSEC:NO_SIGNATURES", $zone);
         }
 
         $logger->auto("DNSSEC:CHILD_CHECK_ABORTED", $zone);
@@ -329,8 +324,7 @@ sub _check_parent {
     if ($mandatory_algorithm > 0) {
         $logger->auto("DNSSEC:DS_MANDATORY_FOUND", $zone);
     } else {
-        $logger->auto("DNSSEC:DS_MANDATORY_NOT_FOUND", $zone);
-        $errors++;
+        $errors += $logger->auto("DNSSEC:DS_MANDATORY_NOT_FOUND", $zone);
     }
 
   DONE:
