@@ -107,20 +107,23 @@ sub main {
 
         my $engine = new DNSCheck::Engine(
             {
-                syslog_facility => $facility,
-                db_config       => $config,
-                udp_timeout     => 5,
-                tcp_timeout     => 5,
-                retry           => 3,
-                retrans         => 2,
-                disable_ipv4    => $disable_ipv4,
-                disable_ipv6    => $disable_ipv6,
-                disable_smtp    => $disable_smtp,
-                ignore_debug    => 1,
-                debug           => $debug,
-                prio_low        => $prio_low,
-                prio_high       => $prio_high,
-                policy          => $policy,
+                dns => {
+                    debug        => $debug,
+                    udp_timeout  => 5,
+                    tcp_timeout  => 5,
+                    retry        => 3,
+                    retrans      => 2,
+                    disable_ipv4 => $disable_ipv4,
+                    disable_ipv6 => $disable_ipv6,
+                },
+                smtp => { enable => ($disable_smtp ? 0 : 1), },
+                engine => {
+                    syslog_facility => $facility,
+                    mysql_file      => $config,
+                    ignore_debug    => 1,
+                    prio_low        => $prio_low,
+                    prio_high       => $prio_high,
+                }
             }
         );
 

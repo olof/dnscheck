@@ -35,6 +35,7 @@ use warnings;
 use strict;
 
 use YAML qw(LoadFile Dump);
+use Data::Dumper;
 
 use DNSCheck::Logger;
 use DNSCheck::Lookup::DNS;
@@ -49,47 +50,15 @@ sub new {
 
     my $config = shift;
 
-    if ($config->{class}) {
-        $self->{qclass} = $config->{class};
-    } else {
-        $self->{qclass} = "IN";
-    }
+    $self->{config} = $config;
 
-    if ($config->{policy}) {
-        my ($hashref, $arrayref, $string) = LoadFile($config->{policy});
-        $self->{params}    = $hashref->{params};
-        $self->{loglevels} = $hashref->{loglevels};
-    }
+    $self->{logger} =
+      new DNSCheck::Logger($config->{logging}, $config->{policy}->{loglevels});
 
-    # add default parameters
-    foreach my $p (keys %{$DNSCheck::default_params}) {
-        unless ($self->{params}->{$p}) {
-            $self->{params}->{$p} = $DNSCheck::default_params->{$p};
-        }
-    }
-
-    $self->{ipv4} = 1;
-    $self->{ipv6} = 1;
-    $self->{smtp} = 1;
-
-    $self->{ipv4} = 0 if ($config->{disable_ipv4});
-    $self->{ipv6} = 0 if ($config->{disable_ipv6});
-    $self->{smtp} = 0 if ($config->{disable_smtp});
-
-    # FIXME: perhaps do this some other way
-    $self->{hostname} = `hostname`;
-    chomp $self->{hostname};
-
-    $self->{logger} = new DNSCheck::Logger($config, $self->{loglevels});
-    $self->{dns} = new DNSCheck::Lookup::DNS($self->{logger}, $config);
+    $self->{dns} = new DNSCheck::Lookup::DNS($self->{logger}, $config->{dns});
     $self->{asn} = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
 
     bless $self, $class;
-}
-
-sub hostname {
-    my $self = shift;
-    return $self->{hostname};
 }
 
 sub dns {
@@ -109,17 +78,12 @@ sub logger {
 
 sub qclass {
     my $self = shift;
-    return $self->{qclass};
+    return $self->{config}->{dns}->{class};
 }
 
 sub params {
     my $self = shift;
-    return $self->{params};
-}
-
-sub loglevels {
-    my $self = shift;
-    return $self->{loglevels};
+    return $self->{config}->{policy}->{params};
 }
 
 1;

@@ -66,12 +66,12 @@ sub test {
 
         my $skip_tcp = undef;
 
-        if (ip_get_version($address) == 4 && !$context->{ipv4}) {
+        if (ip_get_version($address) == 4 && !$context->{config}->{ipv4}) {
             $logger->auto("NAMESERVER:SKIPPED_IPV4", $address);
             next ADDRESS;
         }
 
-        if (ip_get_version($address) == 6 && !$context->{ipv6}) {
+        if (ip_get_version($address) == 6 && !$context->{config}->{ipv6}) {
             $logger->auto("NAMESERVER:SKIPPED_IPV6", $address);
             next ADDRESS;
         }

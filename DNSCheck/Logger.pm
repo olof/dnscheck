@@ -35,6 +35,7 @@ use warnings;
 use strict;
 use Time::HiRes qw(gettimeofday);
 use DNSCheck::Locale;
+use Data::Dumper;
 
 ######################################################################
 
@@ -46,9 +47,7 @@ sub new {
     my $config    = shift;
     my $loglevels = shift;
 
-    if ($config->{interactive}) {
-        $self->{interactive} = 1;
-    }
+    $self->{interactive} = $config->{interactive};
 
     if ($config->{locale}) {
         $self->{locale} = new DNSCheck::Locale($config->{locale});
@@ -56,6 +55,8 @@ sub new {
 
     if ($loglevels) {
         $self->{loglevels} = $loglevels;
+    } else {
+        $self->{loglevels} = undef;
     }
 
     $self->{logname}  = undef;

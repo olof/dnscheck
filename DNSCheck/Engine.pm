@@ -45,6 +45,20 @@ use DNSCheck;
 
 my $continue = 1;
 
+our $default = {
+    engine => {
+        debug           => 0,
+        mysql_file      => "./dnscheck.conf",
+        mysql_group     => "dnscheck",
+        syslog_facility => undef,
+        ignore_debug    => 0,
+        processes       => 1,
+        chunksize       => 10,
+        prio_low        => undef,
+        prio_high       => undef,
+    },
+};
+
 ######################################################################
 
 sub sighandler {
@@ -62,38 +76,50 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
+
     my $config = shift;
 
-    unless ($config->{db_config}) {
-        $config->{db_config} = "./dnscheck.conf";
+    # apply default ENGINE configuration
+    foreach my $p (keys %{ $default->{engine} }) {
+        $config->{engine}->{$p} = $default->{engine}->{$p}
+          unless $config->{engine}->{$p};
     }
 
-    if ($config->{syslog_facility}) {
+    # set logging
+    if ($config->{engine}->{syslog_facility}) {
         $self->{syslog} = 1;
     } else {
         $self->{syslog} = 0;
     }
 
-    $self->{prio_low}  = $config->{prio_low};
-    $self->{prio_high} = $config->{prio_high};
-
+	# open syslog if applicable
     if ($self->{syslog}) {
-        openlog("dnscheck", "pid", $config->{syslog_facility});
+        openlog("dnscheck", "pid", $config->{engine}->{syslog_facility});
     }
 
+    # set debugging
+    $self->{engine_degug} = $config->{engine}->{debug};
+    $self->{ignore_debug} = $config->{engine}->{ignore_debug};
+
+    # set priorities
+    $self->{prio_low}  = $config->{engine}->{prio_low};
+    $self->{prio_high} = $config->{engine}->{prio_high};
+
+    # build database connection
     my $dsn = sprintf(
         "DBI:mysql:database="
-          . ";mysql_read_default_group=dnscheck"
-          . ";mysql_read_default_file=%s",
-        $config->{db_config}
+          . ";mysql_read_default_file=%s"
+          . ";mysql_read_default_group=%s",
+        $config->{engine}->{mysql_file},
+        $config->{engine}->{mysql_group}
     );
+
+    print Dumper($config);
+    exit(1);
 
     $self->{dbh} =
       DBI->connect($dsn, undef, undef, { RaiseError => 1, AutoCommit => 1 })
       || die "can't connect to database $dsn";
-
-    $self->{debug}        = $config->{debug};
-    $self->{ignore_debug} = $config->{ignore_debug};
 
     $self->{dnscheck} = new DNSCheck($config);
 
@@ -115,7 +141,7 @@ sub message {
         syslog($prio, @args);
     }
 
-    if ($self->{debug}) {
+    if ($self->{engine_debug}) {
         printf("dnscheck[%d] ", $$);
         printf(@args);
         printf("\n");
@@ -135,7 +161,7 @@ sub daemon {
 
     while ($continue) {
         if ($self->process($chunksize, $sleep) == 0) {
-            $self->message("debug", "zzz...") if ($self->{debug});
+            $self->message("debug", "zzz...") if ($self->{engine_debug});
             sleep($sleep);
         }
     }

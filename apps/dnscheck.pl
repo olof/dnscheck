@@ -34,30 +34,26 @@ use strict;
 
 use Getopt::Long;
 use Pod::Usage;
+use YAML qw(LoadFile Dump);
+use Data::Dumper;
 use DNSCheck;
 
-my $LOCALE_DIR = '@@LOCALE_DIR@@';
+my $CONFIG_DIR = '@@CONFIG_DIR@@';
 my $POLICY_DIR = '@@POLICY_DIR@@';
+my $LOCALE_DIR = '@@LOCALE_DIR@@';
 
 ######################################################################
 
 sub main {
-    my $help         = 0;
-    my $timeout      = 5;
-    my $raw          = 0;
-    my $disable_ipv4 = 0;
-    my $disable_ipv6 = 0;
-    my $disable_smtp = 0;
-    my $locale       = "locale/en.yaml";
-    my $policy       = "policy.yaml";
+    my $help        = 0;
+    my $raw         = 0;
+    my $config_file = "config.yaml";
+    my $policy_file = "policy.yaml";
+    my $locale_file = "locale/en.yaml";
 
     GetOptions(
-        'help|?'       => \$help,
-        'timeout=i'    => \$timeout,
-        'raw'          => \$raw,
-        'disable-ipv4' => \$disable_ipv4,
-        'disable-ipv6' => \$disable_ipv6,
-        'disable-smtp' => \$disable_smtp,
+        'help|?' => \$help,
+        'raw'    => \$raw,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -67,28 +63,45 @@ sub main {
         pod2usage(2);
     }
 
-    unless (-f $locale) {
-        $locale = $LOCALE_DIR . "/en.yaml";
+    $config_file = $CONFIG_DIR . "/config.yaml"
+      unless (-r $config_file);
+    $policy_file = $POLICY_DIR . "/policy.yaml"
+      unless (-r $policy_file);
+    $locale_file = $LOCALE_DIR . "/en.yaml"
+      unless (-r $locale_file);
+
+    # read configuration
+    my $config;
+    if (-r $config_file) {
+        my ($hashref, $arrayref, $string) = LoadFile($config_file);
+        $config = $hashref;
+    } else {
+        warn "Failed to read config from $config_file";
     }
 
-    unless (-f $policy) {
-        $policy = $POLICY_DIR . "/policy.yaml";
+    # read policy
+    my $policy;
+    if (-r $policy_file) {
+        my ($hashref, $arrayref, $string) = LoadFile($policy_file);
+        $config->{policy} = $hashref;
+    } else {
+        warn "Failed to read policy from $policy_file";
     }
 
-    $locale = undef if ($raw);
+    $config->{logging}->{interactive} = 1;
+    $config->{dns}->{debug} = 1;
 
-    my $check = new DNSCheck(
-        {
-            interactive  => 1,
-            locale       => $locale,
-            policy       => $policy,
-            udp_timeout  => $timeout,
-            tcp_timeout  => $timeout,
-            disable_ipv4 => $disable_ipv4,
-            disable_ipv6 => $disable_ipv6,
-            disable_smtp => $disable_smtp,
+    # read locale
+    unless ($raw) {
+        if (-r $locale_file) {
+            my ($hashref, $arrayref, $string) = LoadFile($locale_file);
+            $config->{logging}->{locale} = $hashref;
+        } else {
+            warn "Failed to read locale from $locale_file";
         }
-    );
+    }
+
+    my $check = new DNSCheck($config);
 
     $check->zone($zone);
 }
@@ -108,8 +121,4 @@ dnscheck [options] zone
 Options:
 
  --help                brief help message
- --disable-ipv4        disable IPv4 transport
- --disable-ipv6        disable IPv6 transport
- --disable-smtp        disable SMTP test, suitable if port 25 is filtered
  --raw                 raw log output, suitable for automatic processing
- --timeout=SECONDS     set UDP/TCP timeout
