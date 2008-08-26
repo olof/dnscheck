@@ -10,7 +10,7 @@
 		
 		$rawOutput = implode("\r\n", $commandOutput) . "\r\n";
 		
-		if (false === strpos($rawOutput, 'SOA'))
+		if ((false === strpos($rawOutput, 'SOA')) && (false === strpos($rawOutput, 'CNAME')))
 		{
 			return false;
 		}
