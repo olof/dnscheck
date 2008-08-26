@@ -44,7 +44,7 @@
 			"Page",
 			".SE (The Internet Infrastructure Foundation)",
 			"Domain doesn't exist",
-			"The domain you provided doesn't seem to be registered or was entered incorrectly. You need to enter only the domain name, like &quot;nic.se&quot;, not the name of a subdomain, like &quot;dev.nic.se&quot; or a webserver like &quot;www.nic.se&quot;.",
+			"The domain you provided doesn't seem to be delegated or was entered incorrectly. You need to enter only the domain name, like &quot;iis.se&quot;, not the name of a subdomain, like &quot;dev.iis.se&quot; or a webserver like &quot;www.iis.se&quot;.",
 			"Loading",
 			"Waiting for the test results to be loaded",
 			"All tests are ok",
