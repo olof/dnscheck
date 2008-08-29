@@ -39,25 +39,26 @@ use Net::SMTP 2.29;
 ######################################################################
 
 sub test {
-    my $context = shift;
-    my $host    = shift;
-    my $email   = shift;
+    my $context  = shift;
+    my $hostname = shift;
+    my $address  = shift;
+    my $email    = shift;
 
     my $logger = $context->logger;
     my $errors = 0;
     my $message;
 
     $logger->module_stack_push();
-    $logger->auto("SMTP:BEGIN", $host, $email);
+    $logger->auto("SMTP:BEGIN", $hostname, $address, $email);
 
     my $smtp = Net::SMTP->new(
-        Host    => $host,
+        Host    => $address,
         Hello   => $context->hostname,
         Timeout => $context->{dns}{default}{smtp_timeout}
     );
 
     unless ($smtp) {
-        $logger->auto("SMTP:CONNECT_FAILED", $host);
+        $logger->auto("SMTP:CONNECT_FAILED", $hostname, $address);
         goto DONE;
     }
 
@@ -106,11 +107,11 @@ sub test {
     $logger->auto("SMTP:RAW", $message);
 
     unless ($errors) {
-        $logger->auto("SMTP:OK", $host, $email);
+        $logger->auto("SMTP:OK", $hostname, $address, $email);
     }
 
   DONE:
-    $logger->auto("SMTP:END", $host, $email);
+    $logger->auto("SMTP:END", $hostname, $address, $email);
     $logger->module_stack_pop();
 
     return $errors;
@@ -131,7 +132,7 @@ Test if an email address is deliverable using SMTP.
 
 =head1 METHODS
 
-test(I<context>, I<mailhost>, I<emailaddress>);
+test(I<context>, I<mailhost>, I<address>, I<emailaddress>);
 
 =head1 EXAMPLES
 
@@ -139,7 +140,7 @@ test(I<context>, I<mailhost>, I<emailaddress>);
     use DNSCheck::Test::SMTP;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::SMTP::test($context, "mail.example.com", "user\@example.com");
+    DNSCheck::Test::SMTP::test($context, "mail.example.com", "192.168.0.1", "user\@example.com");
     $context->logger->dump();
 
 =head1 SEE ALSO
