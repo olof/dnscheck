@@ -19,7 +19,7 @@ body {
 #logo_dnscheck {
 	margin: 0;
 	height: 80px;
-	width: 200px;
+	width: 500px;
 	float: left;
 }
 
@@ -33,7 +33,7 @@ body {
 #logo_dnscheck a {
 	display: block;
 	height: 80px;
-	width: 200px;
+	width: 500px;
 	text-indent: -5000px;
 }
 
@@ -45,11 +45,38 @@ body {
 }
 
 #searchbox {
-	clear: both;
+	float: left;
+	clear: left;
 	width: 385px;
 	padding: 20px;
 	margin-left: 170px;
 }
+
+#menu {
+	float: right;
+	width: 150px;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#menu ul li {
+	background: url(../_img/bg_menu.png) no-repeat left;
+	font-size: 0.7em;
+	line-height: 26px;
+	height: 26px;
+	margin-bottom: 2px;
+	padding-left: 7px;
+}
+
+#menu ul li a {
+	background: url(../_img/bg_linkarrow.png) no-repeat left;
+	padding-left: 10px;
+}
+
 
 #searchhead {
 	margin: 0;
@@ -502,6 +529,16 @@ a:hover {
 	font-size: 0.9em;
 	color: #666;
 	margin: 0;
+}
+
+.startbox ol {
+	color: #666;
+	font-size: 0.8em;
+}
+
+.divider {
+	border-top: 1px solid #999;
+	margin-bottom: 15px;
 }
 
 #footer {

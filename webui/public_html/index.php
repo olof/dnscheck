@@ -70,15 +70,28 @@
 					<a href="javascript:void(0);" id="testnow" class="button"><?php echo(translate("Test now"));?></a></p>
 				</form>
 			</div>
+			<div id="menu">
+				<ul>
+					<li><a href="./"><?php echo(translate("Home")); ?></a></li>
+					<li><a href="./?faq=1"><?php echo(translate("FAQ")); ?></a></li>
+				</ul>
+			</div>
 	</div>
 
 	<div id="startwrapper">
-		<h3><?php echo(translate("About DNSCheck"));?></h3>
-		<div class="startbox">
-		<?php echo(translate("DNSCheck info"));?>
-		<h5><?php echo(translate("About DNS"));?></h5>
-		<?php echo(translate("DNS info"));?>
-		</div>
+		<?php if (isset($_GET['faq']) && ("1" == $_GET['faq'])) { ?>
+			<h3><?php echo(translate("DNSCheck FAQ")); ?></h3>
+			<div class="startbox">
+			<?php echo(translate("DNSCheck FAQ contents"));?>
+			</div>
+		<?php } else { ?>
+			<h3><?php echo(translate("About DNSCheck"));?></h3>
+			<div class="startbox">
+			<?php echo(translate("DNSCheck info"));?>
+			<h5><?php echo(translate("About DNS"));?></h5>
+			<?php echo(translate("DNS info"));?>
+			</div>
+		<?php } ?>
 	</div>
 	
 	<div id="result_status" style="display:none">
