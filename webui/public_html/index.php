@@ -41,8 +41,8 @@
 <script type="text/javascript">
 	var domainDoesNotExistHeader = "<?php echo(translate("Domain doesn't exist"));?>";
 	var domainDoesNotExistLabel = "<?php echo(translate("The domain you entered doesn't seem to be registered"));?>";
-	var loadingHeader = "<?php echo(translate("Loading"));?>";
-	var loadingLabel = "<?php echo(translate("Waiting for the test results to be loaded"));?>";
+	var loadingHeader = "<?php echo(translate("Testing"));?>";
+	var loadingLabel = "<?php echo(translate("Testing your domain, please wait!"));?>";
 	var okHeader = "<?php echo(translate("All tests are ok"));?>";
 	var warningHeader = "<?php echo(translate("Warnings found in test"));?>";
 	var errorHeader = "<?php echo(translate("Errors found in test"));?>";
