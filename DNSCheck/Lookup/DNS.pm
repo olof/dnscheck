@@ -455,12 +455,19 @@ sub _setup_resolver {
     $resolver->defnames(0);
 
     if ($flags) {
-        if ($flags->{transport} eq "udp") {
-            $resolver->usevc(0);
-        } elsif ($flags->{transport} eq "tcp") {
-            $resolver->usevc(1);
-        } else {
-            die "unknown transport";
+        if ($flags->{transport}) {
+            if ($flags->{transport} eq "udp") {
+                $resolver->usevc(0);
+            } elsif ($flags->{transport} eq "tcp") {
+                $resolver->usevc(1);
+            } else {
+                die "unknown transport";
+            }
+
+            if ($flags->{transport} eq "udp" && $flags->{bufsize}) {
+                $self->{logger}->auto("DNS:SET_BUFSIZE", $flags->{bufsize});
+                $resolver->udppacketsize($flags->{bufsize});
+            }
         }
 
         if ($flags->{recurse}) {
@@ -469,11 +476,6 @@ sub _setup_resolver {
 
         if ($flags->{dnssec}) {
             $resolver->dnssec(1);
-        }
-
-        if ($flags->{transport} eq "udp" && $flags->{bufsize}) {
-            $self->{logger}->auto("DNS:SET_BUFSIZE", $flags->{bufsize});
-            $resolver->udppacketsize($flags->{bufsize});
         }
     }
 
