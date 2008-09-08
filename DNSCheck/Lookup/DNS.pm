@@ -203,6 +203,7 @@ sub query_parent_nocache {
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
+    my $flags  = shift;
 
     $self->{logger}
       ->auto("DNS:QUERY_PARENT_NOCACHE", $zone, $qname, $qclass, $qtype);
@@ -234,7 +235,7 @@ sub query_parent_nocache {
     # randomize name server addresses
     @target = shuffle(@target);
 
-    return $self->_query_multiple($qname, $qclass, $qtype, undef, @target);
+    return $self->_query_multiple($qname, $qclass, $qtype, $flags, @target);
 }
 
 ######################################################################
@@ -269,6 +270,7 @@ sub query_child_nocache {
     my $qname  = shift;
     my $qclass = shift;
     my $qtype  = shift;
+    my $flags  = shift;
 
     $self->{logger}
       ->auto("DNS:QUERY_CHILD_NOCACHE", $zone, $qname, $qclass, $qtype);
@@ -287,8 +289,9 @@ sub query_child_nocache {
         return undef;
     }
 
-    return $self->_query_multiple($qname, $qclass, $qtype, { aaonly => 1 },
-        @target);
+    $flags->{aaonly} = 1;
+
+    return $self->_query_multiple($qname, $qclass, $qtype, $flags, @target);
 }
 
 ######################################################################
