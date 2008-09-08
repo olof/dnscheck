@@ -100,7 +100,7 @@ sub test {
         $logger->auto("NAMESERVER:TESTING_UDP", $nameserver, $address);
         $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address,
-            { transport => "udp" });
+            { transport => "udp", aaonly => 0 });
         if ($packet) {
             $logger->auto("NAMESERVER:UDP_OK", $nameserver, $address, $zone);
         } else {
@@ -111,7 +111,7 @@ sub test {
         $logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
         $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address,
-            { transport => "tcp" });
+            { transport => "tcp", aaonly => 0 });
         if ($packet) {
             $logger->auto("NAMESERVER:TCP_OK", $nameserver, $address, $zone);
         } else {

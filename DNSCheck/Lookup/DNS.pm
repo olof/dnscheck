@@ -366,10 +366,13 @@ sub query_explicit {
         return undef;
     }
 
+    # ignore non-authoritative answers (unless flag aaonly is unset)
     unless ($packet->header->aa) {
-        $self->{logger}
-          ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
-        return undef;
+        unless ($flags && $flags->{aaonly} == 0) {
+            $self->{logger}
+              ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
+            return undef;
+        }
     }
 
     $self->{logger}->auto("DNS:EXPLICIT_RESPONSE",
@@ -398,23 +401,21 @@ sub _query_multiple {
     my $packet  = undef;
     my $timeout = 0;
 
-    for my $ns (@target) {
-        unless (_querible($ns)) {
-            $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $ns);
+    for my $address (@target) {
+        unless (_querible($address)) {
+            $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
             next;
         }
 
-        $resolver->nameserver($ns);
+        $resolver->nameserver($address);
 
         $packet = $resolver->send($qname, $qtype, $qclass);
 
         # ignore non-authoritative answers (if flag aaonly is set)
-        if ($flags && $flags->{aaonly}) {
-            if ($packet
-                && !$packet->header->aa)
-            {
+        unless ($packet->header->aa) {
+            if ($flags && $flags->{aaonly} == 1) {
                 $self->{logger}
-                  ->auto("DNS:NOT_AUTH", $ns, $qname, $qclass, $qtype);
+                  ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
                 next;
             }
         }
@@ -844,7 +845,8 @@ sub address_is_authoritative {
     my $logger = $self->{logger};
     my $errors = 0;
 
-    my $packet = $self->query_explicit($qname, $qclass, "SOA", $address);
+    my $packet =
+      $self->query_explicit($qname, $qclass, "SOA", $address, { aaonly => 0 });
 
     ## timeout is not considered an error
     goto DONE unless ($packet);
