@@ -409,6 +409,9 @@ sub _query_multiple {
 
         $packet = $resolver->send($qname, $qtype, $qclass);
 
+        # ignore non-authoritative answers
+        next if ($packet && !$packet->header->aa);
+
         last if ($packet && $packet->header->rcode ne "SERVFAIL");
 
         if ($self->check_timeout($resolver)) {
