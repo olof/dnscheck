@@ -287,7 +287,8 @@ sub query_child_nocache {
         return undef;
     }
 
-    return $self->_query_multiple($qname, $qclass, $qtype, undef, @target);
+    return $self->_query_multiple($qname, $qclass, $qtype, { aaonly => 1 },
+        @target);
 }
 
 ######################################################################
@@ -407,8 +408,16 @@ sub _query_multiple {
 
         $packet = $resolver->send($qname, $qtype, $qclass);
 
-        # ignore non-authoritative answers
-        next if ($packet && !$packet->header->aa);
+        # ignore non-authoritative answers (if flag aaonly is set)
+        if ($flags && $flags->{aaonly}) {
+            if ($packet
+                && !$packet->header->aa)
+            {
+                $self->{logger}
+                  ->auto("DNS:NOT_AUTH", $ns, $qname, $qclass, $qtype);
+                next;
+            }
+        }
 
         last if ($packet && $packet->header->rcode ne "SERVFAIL");
 
