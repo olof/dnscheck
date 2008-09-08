@@ -43,6 +43,7 @@ my $POLICY_DIR = '@@POLICY_DIR@@';
 
 sub main {
     my $help         = 0;
+    my $debug        = 0;
     my $timeout      = 5;
     my $raw          = 0;
     my $disable_ipv4 = 0;
@@ -55,6 +56,7 @@ sub main {
         'help|?'       => \$help,
         'timeout=i'    => \$timeout,
         'raw'          => \$raw,
+        'debug+'       => \$debug,
         'disable-ipv4' => \$disable_ipv4,
         'disable-ipv6' => \$disable_ipv6,
         'disable-smtp' => \$disable_smtp,
@@ -80,6 +82,7 @@ sub main {
     my $check = new DNSCheck(
         {
             interactive  => 1,
+            debug        => $debug,
             locale       => $locale,
             policy       => $policy,
             udp_timeout  => $timeout,
@@ -108,6 +111,7 @@ dnscheck [options] zone
 Options:
 
  --help                brief help message
+ --debug               enable debugging. use twice for dns packet dump.
  --disable-ipv4        disable IPv4 transport
  --disable-ipv6        disable IPv6 transport
  --disable-smtp        disable SMTP test, suitable if port 25 is filtered
