@@ -62,9 +62,9 @@ sub new {
     }
 
     # add default parameters
-    foreach my $p (keys %{$DNSCheck::default_params}) {
+    foreach my $p (keys %{$DNSCheck::default}) {
         unless ($self->{params}->{$p}) {
-            $self->{params}->{$p} = $DNSCheck::default_params->{$p};
+            $self->{params}->{$p} = $DNSCheck::default->{$p};
         }
     }
 
