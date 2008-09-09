@@ -284,8 +284,6 @@ sub _check_parent {
 
     my $mandatory_algorithm = 0;
 
-    my $flags = { transport => "tcp", dnssec => 1 };
-
     $logger->auto("DNSSEC:CHECKING_PARENT", $zone);
 
     foreach my $rr (@{ $ds->{DS} }) {
