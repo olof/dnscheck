@@ -371,7 +371,7 @@ sub query_explicit {
 
     # ignore non-authoritative answers (unless flag aaonly is unset)
     unless ($packet && $packet->header->aa) {
-        unless ($flags && $flags->{aaonly} == 0) {
+        unless ($flags && $flags->{aaonly} && $flags->{aaonly} == 0) {
             $self->{logger}
               ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
             return undef;
@@ -416,7 +416,7 @@ sub _query_multiple {
 
         # ignore non-authoritative answers (if flag aaonly is set)
         unless ($packet && $packet->header->aa) {
-            if ($flags && $flags->{aaonly} == 1) {
+            if ($flags && $flags->{aaonly} && $flags->{aaonly} == 1) {
                 $self->{logger}
                   ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
                 next;
