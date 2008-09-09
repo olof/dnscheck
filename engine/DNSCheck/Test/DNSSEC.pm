@@ -49,7 +49,7 @@ sub test {
     my $qclass = $context->qclass;
     my $logger = $context->logger;
     my $errors = 0;
-    my $flags  = { transport => "tcp", dnssec => 1 };
+    my $flags  = { transport => "tcp", dnssec => 1, aaonly => 1 };
     my $packet;
 
     my $ds;
