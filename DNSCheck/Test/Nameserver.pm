@@ -64,6 +64,7 @@ sub test {
 
   ADDRESS: foreach my $address (@addresses) {
 
+        my $skip_udp = undef;
         my $skip_tcp = undef;
 
         if (ip_get_version($address) == 4 && !$context->{ipv4}) {
@@ -106,6 +107,7 @@ sub test {
         } else {
             $errors +=
               $logger->auto("NAMESERVER:NO_UDP", $nameserver, $address, $zone);
+            $skip_udp = 1;
         }
 
         $logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
@@ -121,7 +123,6 @@ sub test {
         }
 
         # REQUIRE: Nameserver may provide AXFR
-
         $logger->auto("NAMESERVER:TESTING_AXFR", $nameserver, $address);
         if ($skip_tcp) {
             $logger->auto("NAMESERVER:AXFR_SKIP", $nameserver, $address, $zone);
@@ -136,8 +137,13 @@ sub test {
         }
 
         # Check for possible identification
-        $logger->auto("NAMESERVER:CHECKING_LEGACY_ID", $nameserver, $address);
-        _check_id($context, $nameserver, $address);
+        if ($skip_tcp && $skip_udp) {
+            $logger->auto("NAMESERVER:CHECKING_LEGACY_ID",
+                $nameserver, $address);
+            _check_id($context, $nameserver, $address);
+        } else {
+            $logger->auto("NAMESERVER:LEGACY_ID_SKIP", $nameserver, $address);
+        }
 
         # FIXME: remove comment once query_nsid is complete
         #$logger->auto("NAMESERVER:CHECKING_NSID", $nameserver, $address);
