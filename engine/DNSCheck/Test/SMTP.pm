@@ -58,7 +58,8 @@ sub test {
     );
 
     unless ($smtp) {
-        $errors += $logger->auto("SMTP:CONNECT_FAILED", $hostname, $address);
+        $logger->auto("SMTP:CONNECT_FAILED", $hostname, $address);
+        $errors++;
         goto DONE;
     }
 
@@ -67,7 +68,8 @@ sub test {
     $logger->auto("SMTP:BANNER", $message);
 
     unless ($smtp->status == 2) {
-        $errors += $logger->auto("SMTP:HELLO_FAILED");
+        $logger->auto("SMTP:HELLO_FAILED");
+        $errors++;
         goto DONE;
     }
 
@@ -78,7 +80,8 @@ sub test {
     $logger->auto("SMTP:RAW", $message);
 
     unless ($smtp->status == 2) {
-        $errors += $logger->auto("SMTP:MAIL_FROM_REJECTED", "<>");
+        $logger->auto("SMTP:MAIL_FROM_REJECTED", "<>");
+        $errors++;
         goto RESET;
     }
 
@@ -90,7 +93,8 @@ sub test {
     $logger->auto("SMTP:RAW", $message);
 
     unless ($smtp->status == 2 || $smtp->status == 4) {
-        $errors += logger->auto("SMTP:RECIPIENT_REJECTED", $email);
+        logger->auto("SMTP:RECIPIENT_REJECTED", $email);
+        $errors++;
     }
 
   RESET:
