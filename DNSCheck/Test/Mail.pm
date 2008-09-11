@@ -104,6 +104,7 @@ sub test {
             }
         }
 
+        # FIXME: mail delivery over IPv6
         foreach my $rr ($ipv6->answer) {
             next unless ($rr->type eq "AAAA");
 
