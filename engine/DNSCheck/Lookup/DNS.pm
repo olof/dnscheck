@@ -320,7 +320,9 @@ sub query_explicit {
           ->auto("DNS:ADDRESS_BLACKLISTED", $address, $qname, $qclass, $qtype);
         return undef;
     }
+
     my $packet = $resolver->send($qname, $qtype, $qclass);
+
     if ($self->check_timeout($resolver)) {
         $self->{logger}
           ->auto("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
@@ -369,12 +371,14 @@ sub query_explicit {
         return undef;
     }
 
-    # ignore non-authoritative answers (unless flag aaonly is unset)
+    # ignore non-authoritative answers unless flag aaonly is unset
     unless ($packet && $packet->header->aa) {
-        unless ($flags && $flags->{aaonly} && $flags->{aaonly} == 0) {
-            $self->{logger}
-              ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
-            return undef;
+        if ($flags && $flags->{aaonly}) {
+            unless ($flags->{aaonly} == 0) {
+                $self->{logger}
+                  ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
+                return undef;
+            }
         }
     }
 
@@ -414,12 +418,14 @@ sub _query_multiple {
 
         $packet = $resolver->send($qname, $qtype, $qclass);
 
-        # ignore non-authoritative answers (if flag aaonly is set)
+        # ignore non-authoritative answers if flag aaonly is set
         unless ($packet && $packet->header->aa) {
-            if ($flags && $flags->{aaonly} && $flags->{aaonly} == 1) {
-                $self->{logger}
-                  ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
-                next;
+            if ($flags && $flags->{aaonly}) {
+                if ($flags->{aaonly} == 1) {
+                    $self->{logger}
+                      ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
+                    next;
+                }
             }
         }
 
