@@ -585,12 +585,18 @@ messages:
  NAMESERVER:CHECKING_LEGACY_ID:
   args: 2
   format: Checking for legacy name server ID of %s (%s).
+ NAMESERVER:LEGACY_ID_SKIP:
+  args: 2
+  format: Name server %s (%s) not checked for legacy name server ID.
  NAMESERVER:LEGACY_ID:
   args: 4
   format: Legacy name server ID for %s (%s): %s = %s
  NAMESERVER:CHECKING_NSID:
   args: 2
   format: Checking for name server ID of %s (%s).
+ NAMESERVER:NSID_SKIP:
+  args: 2
+  format: Name server %s (%s) not checked for name server ID.
  NAMESERVER:NSID:
   args: 3
   format: Name server ID for %s (%s): %s
