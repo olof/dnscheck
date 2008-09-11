@@ -92,6 +92,7 @@ sub test {
     chomp $message;
     $logger->auto("SMTP:RAW", $message);
 
+    # accept 2xx (ok) and 4xx (temporary failure, possible greylisting)
     unless ($smtp->status == 2 || $smtp->status == 4) {
         logger->auto("SMTP:RECIPIENT_REJECTED", $email);
         $errors++;
