@@ -64,8 +64,8 @@ sub test {
 
   ADDRESS: foreach my $address (@addresses) {
 
-        my $skip_udp = undef;
-        my $skip_tcp = undef;
+        my $skip_udp = 0;
+        my $skip_tcp = 0;
 
         if (ip_get_version($address) == 4 && !$context->{ipv4}) {
             $logger->auto("NAMESERVER:SKIPPED_IPV4", $address);
@@ -137,7 +137,7 @@ sub test {
         }
 
         # Check for possible identification
-        if ($skip_tcp && $skip_udp) {
+        unless ($skip_tcp || $skip_udp) {
             $logger->auto("NAMESERVER:CHECKING_LEGACY_ID",
                 $nameserver, $address);
             _check_id($context, $nameserver, $address);
