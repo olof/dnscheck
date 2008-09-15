@@ -94,19 +94,24 @@ sub test {
 
         foreach my $rr ($ipv4->answer) {
             next unless ($rr->type eq "A");
-            unless (DNSCheck::Test::SMTP::test($context, $rr->address, $email))
+            unless (
+                DNSCheck::Test::SMTP::test(
+                    $context, $hostname, $rr->address, $email
+                )
+              )
             {
                 $mail_delivery_ok++;
             }
         }
 
+        # FIXME: mail delivery over IPv6
         foreach my $rr ($ipv6->answer) {
             next unless ($rr->type eq "AAAA");
 
-            # FIXME: Do not connect to IPv6 hosts for now
-            #if (DNSCheck::Test::SMTP::test($context, $rr->address, $email)) {
-            #    $errors++;
-            #}
+   # FIXME: Do not connect to IPv6 hosts for now
+   #if (DNSCheck::Test::SMTP::test($context, $hostname, $rr->address, $email)) {
+   #    $errors++;
+   #}
         }
     }
 

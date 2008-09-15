@@ -45,17 +45,21 @@ my $LOCALE_DIR = '@@LOCALE_DIR@@';
 ######################################################################
 
 sub main {
-    my $help        = 0;
-    my $raw         = 0;
+    my $help    = 0;
+    my $debug   = 0;
+    my $timeout = 5;
+    my $raw     = 0;
+
     my $config_file = $CONFIG_DIR . "/config.yaml";
     my $policy_file = $POLICY_DIR . "/policy.yaml";
     my $locale_file = $LOCALE_DIR . "/locale/en.yaml";
 
     GetOptions(
-        'help|?' => \$help,
-        'raw'    => \$raw,
-		'config=s' => \$config_file,
-		'policy=s' => \$policy_file,		
+        'help|?'   => \$help,
+        'raw'      => \$raw,
+        'debug+'   => \$debug,
+        'config=s' => \$config_file,
+        'policy=s' => \$policy_file,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -84,7 +88,7 @@ sub main {
     }
 
     $config->{logging}->{interactive} = 1;
-    $config->{dns}->{debug} = 1;
+    $config->{dns}->{debug}           = $debug;
 
     # read locale
     unless ($raw) {
@@ -116,4 +120,5 @@ dnscheck [options] zone
 Options:
 
  --help                brief help message
+ --debug               enable debugging. use twice for dns packet dump.
  --raw                 raw log output, suitable for automatic processing

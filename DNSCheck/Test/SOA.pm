@@ -214,7 +214,7 @@ sub mname_is_ns {
     my @ns  = @_;
 
     foreach my $rr (@ns) {
-        if ($rr->nsdname eq $soa->mname) {
+        if (lc($rr->nsdname) eq lc($soa->mname)) {
             return 1;
         }
     }

@@ -64,7 +64,8 @@ sub test {
 
   ADDRESS: foreach my $address (@addresses) {
 
-        my $skip_tcp = undef;
+        my $skip_udp = 0;
+        my $skip_tcp = 0;
 
         if (ip_get_version($address) == 4 && !$context->{config}->{ipv4}) {
             $logger->auto("NAMESERVER:SKIPPED_IPV4", $address);
@@ -100,18 +101,19 @@ sub test {
         $logger->auto("NAMESERVER:TESTING_UDP", $nameserver, $address);
         $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address,
-            { transport => "udp" });
+            { transport => "udp", aaonly => 0 });
         if ($packet) {
             $logger->auto("NAMESERVER:UDP_OK", $nameserver, $address, $zone);
         } else {
             $errors +=
               $logger->auto("NAMESERVER:NO_UDP", $nameserver, $address, $zone);
+            $skip_udp = 1;
         }
 
         $logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
         $packet =
           $context->dns->query_explicit($zone, $qclass, "SOA", $address,
-            { transport => "tcp" });
+            { transport => "tcp", aaonly => 0 });
         if ($packet) {
             $logger->auto("NAMESERVER:TCP_OK", $nameserver, $address, $zone);
         } else {
@@ -121,7 +123,6 @@ sub test {
         }
 
         # REQUIRE: Nameserver may provide AXFR
-
         $logger->auto("NAMESERVER:TESTING_AXFR", $nameserver, $address);
         if ($skip_tcp) {
             $logger->auto("NAMESERVER:AXFR_SKIP", $nameserver, $address, $zone);
@@ -136,8 +137,13 @@ sub test {
         }
 
         # Check for possible identification
-        $logger->auto("NAMESERVER:CHECKING_LEGACY_ID", $nameserver, $address);
-        _check_id($context, $nameserver, $address);
+        unless ($skip_tcp || $skip_udp) {
+            $logger->auto("NAMESERVER:CHECKING_LEGACY_ID",
+                $nameserver, $address);
+            _check_id($context, $nameserver, $address);
+        } else {
+            $logger->auto("NAMESERVER:LEGACY_ID_SKIP", $nameserver, $address);
+        }
 
         # FIXME: remove comment once query_nsid is complete
         #$logger->auto("NAMESERVER:CHECKING_NSID", $nameserver, $address);

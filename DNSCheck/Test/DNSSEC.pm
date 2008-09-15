@@ -49,7 +49,7 @@ sub test {
     my $qclass = $context->qclass;
     my $logger = $context->logger;
     my $errors = 0;
-    my %flags  = (transport => "tcp", dnssec => 1);
+    my $flags  = { transport => "tcp", dnssec => 1, aaonly => 1 };
     my $packet;
 
     my $ds;
@@ -65,7 +65,7 @@ sub test {
     # Query parent for DS
     $logger->auto("DNSSEC:CHECKING_DS_AT_PARENT", $zone);
     $packet =
-      $context->dns->query_parent_nocache($zone, $zone, $qclass, "DS", \%flags);
+      $context->dns->query_parent_nocache($zone, $zone, $qclass, "DS", $flags);
     $ds = _dissect($packet, "DS");
     if ($ds && $#{ @{ $ds->{DS} } } >= 0) {
         $logger->auto("DNSSEC:DS_FOUND", $zone);
@@ -77,7 +77,7 @@ sub test {
     $logger->auto("DNSSEC:CHECKING_DNSKEY_AT_CHILD", $zone);
     $packet =
       $context->dns->query_child_nocache($zone, $zone, $qclass, "DNSKEY",
-        \%flags);
+        $flags);
     $dnskey = _dissect($packet, "DNSKEY");
     if ($dnskey && $#{ @{ $dnskey->{DNSKEY} } } >= 0) {
         $logger->auto("DNSSEC:DNSKEY_FOUND", $zone);
@@ -130,7 +130,7 @@ sub _check_child {
     my $logger = $context->logger;
     my $errors = 0;
 
-    my %flags = (transport => "tcp", dnssec => 1);
+    my $flags = { transport => "tcp", dnssec => 1 };
 
     my $packet;
     my %keyhash;
@@ -196,7 +196,7 @@ sub _check_child {
 
         $packet =
           $context->dns->query_child_nocache($zone, $zone, $qclass, "RRSIG",
-            \%flags);
+            $flags);
 
         if (    $packet->header->rcode eq "NOERROR"
             and $packet->header->ancount > 0)
@@ -238,7 +238,7 @@ sub _check_child {
 
     # REQUIRE: RRSIG(SOA) MUST be valid and created by a valid DNSKEY
     $packet =
-      $context->dns->query_child_nocache($zone, $zone, $qclass, "SOA", \%flags);
+      $context->dns->query_child_nocache($zone, $zone, $qclass, "SOA", $flags);
     goto DONE unless ($packet);
     my $soa = _dissect($packet, "SOA");
     my $valid_soa_signatures = 0;
@@ -283,8 +283,6 @@ sub _check_parent {
     my $errors = 0;
 
     my $mandatory_algorithm = 0;
-
-    my %flags = (transport => "tcp", dnssec => 1);
 
     $logger->auto("DNSSEC:CHECKING_PARENT", $zone);
 

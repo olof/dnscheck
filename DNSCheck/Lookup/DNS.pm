@@ -268,6 +268,8 @@ sub query_child_nocache {
         return undef;
     }
 
+    $flags->{aaonly} = 1;
+
     return $self->_query_multiple($qname, $qclass, $qtype, $flags, @target);
 }
 
@@ -297,7 +299,9 @@ sub query_explicit {
           ->auto("DNS:ADDRESS_BLACKLISTED", $address, $qname, $qclass, $qtype);
         return undef;
     }
+
     my $packet = $resolver->send($qname, $qtype, $qclass);
+
     if ($self->check_timeout($resolver)) {
         $self->{logger}
           ->auto("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
@@ -346,10 +350,15 @@ sub query_explicit {
         return undef;
     }
 
-    unless ($packet->header->aa) {
-        $self->{logger}
-          ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
-        return undef;
+    # ignore non-authoritative answers unless flag aaonly is unset
+    unless ($packet && $packet->header->aa) {
+        if ($flags && $flags->{aaonly}) {
+            unless ($flags->{aaonly} == 0) {
+                $self->{logger}
+                  ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
+                return undef;
+            }
+        }
     }
 
     $self->{logger}->auto("DNS:EXPLICIT_RESPONSE",
@@ -378,15 +387,26 @@ sub _query_multiple {
     my $packet  = undef;
     my $timeout = 0;
 
-    for my $ns (@target) {
-        unless (_querible($ns)) {
-            $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $ns);
+    for my $address (@target) {
+        unless (_querible($address)) {
+            $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
             next;
         }
 
-        $resolver->nameserver($ns);
+        $resolver->nameserver($address);
 
         $packet = $resolver->send($qname, $qtype, $qclass);
+
+        # ignore non-authoritative answers if flag aaonly is set
+        unless ($packet && $packet->header->aa) {
+            if ($flags && $flags->{aaonly}) {
+                if ($flags->{aaonly} == 1) {
+                    $self->{logger}
+                      ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
+                    next;
+                }
+            }
+        }
 
         last if ($packet && $packet->header->rcode ne "SERVFAIL");
 
@@ -431,12 +451,19 @@ sub _setup_resolver {
     $resolver->defnames(0);
 
     if ($flags) {
-        if ($flags->{transport} eq "udp") {
-            $resolver->usevc(0);
-        } elsif ($flags->{transport} eq "tcp") {
-            $resolver->usevc(1);
-        } else {
-            die "unknown transport";
+        if ($flags->{transport}) {
+            if ($flags->{transport} eq "udp") {
+                $resolver->usevc(0);
+            } elsif ($flags->{transport} eq "tcp") {
+                $resolver->usevc(1);
+            } else {
+                die "unknown transport";
+            }
+
+            if ($flags->{transport} eq "udp" && $flags->{bufsize}) {
+                $self->{logger}->auto("DNS:SET_BUFSIZE", $flags->{bufsize});
+                $resolver->udppacketsize($flags->{bufsize});
+            }
         }
 
         if ($flags->{recurse}) {
@@ -445,11 +472,6 @@ sub _setup_resolver {
 
         if ($flags->{dnssec}) {
             $resolver->dnssec(1);
-        }
-
-        if ($flags->{transport} eq "udp" && $flags->{bufsize}) {
-            $self->{logger}->auto("DNS:SET_BUFSIZE", $flags->{bufsize});
-            $resolver->udppacketsize($flags->{bufsize});
         }
     }
 
@@ -811,7 +833,8 @@ sub address_is_authoritative {
     my $logger = $self->{logger};
     my $errors = 0;
 
-    my $packet = $self->query_explicit($qname, $qclass, "SOA", $address);
+    my $packet =
+      $self->query_explicit($qname, $qclass, "SOA", $address, { aaonly => 0 });
 
     ## timeout is not considered an error
     goto DONE unless ($packet);

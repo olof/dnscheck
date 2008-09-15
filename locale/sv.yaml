@@ -1,7 +1,7 @@
-# $Id$
+# $Id: en.yaml 414 2008-09-11 08:55:05Z jakob $
 
-locale_name: English
-locale_id: en
+locale_name: Svenska
+locale_id: sv
 
 messages:
 
