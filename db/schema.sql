@@ -62,8 +62,8 @@ CREATE TABLE `results` (
 
 CREATE TABLE `nameservers` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `nsp_id` int(10) unsigned NOT NULL,
-  `nameserver` varchar(255) NOT NULL default '',
+  `nsp_id` int(10) unsigned NULL,
+  `nameserver` varchar(255) UNIQUE NOT NULL default '',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
