@@ -356,7 +356,9 @@ sub query_explicit {
 
     # FIXME: Returns $packet since we don't want NAMESERVER:NO_TCP/NO_UDP
     if ($packet->header->rcode eq "SERVFAIL" && uc($qtype) eq "SOA") {
-        $self->{logger}->auto("DNS:SOA_SERVFAIL", $address);
+        unless (defined($flags) && $flags->{noservfail}){
+            $self->{logger}->auto("DNS:SOA_SERVFAIL", $address);
+        }
         $self->add_blacklist($address, $qname, $qclass, $qtype);
         $self->{logger}
           ->auto("DNS:ADDRESS_BLACKLIST_ADD", $address, $qname, $qclass,

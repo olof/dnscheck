@@ -281,7 +281,7 @@ sub _history {
 
         foreach my $address (@addresses) {
             my $packet =
-              $context->dns->query_explicit($zone, $qclass, "SOA", $address);
+              $context->dns->query_explicit($zone, $qclass, "SOA", $address, {noservfail => 1});
             if ($packet && $packet->header->aa) {
                 $logger->auto("DELEGATION:STILL_AUTH", $ns, $address, $zone);
             }
