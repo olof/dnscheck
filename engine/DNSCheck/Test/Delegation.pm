@@ -265,6 +265,12 @@ sub _history {
 
     my @old = ();
 
+    # Build a hash with all IP addresses for all current nameservers
+    my %current_addresses = 
+        map {$_ => 1}
+        map {$context->dns->find_addresses($_,$qclass)}
+        @$current;
+    
     # do not check current nameservers
     foreach my $ns (@$previous) {
         unless (grep(/^$ns$/, @$current)) {
@@ -280,6 +286,8 @@ sub _history {
         # FIXME: also skip current IP addresses
 
         foreach my $address (@addresses) {
+            # Skip to next address if this one leads to a current server
+            next if $current_addresses{$address};
             my $packet =
               $context->dns->query_explicit($zone, $qclass, "SOA", $address, {noservfail => 1});
             if ($packet && $packet->header->aa) {
