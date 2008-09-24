@@ -90,7 +90,7 @@ sub new {
 
     $self->{dbh} =
       DBI->connect($dsn, undef, undef, { RaiseError => 1, AutoCommit => 1 })
-      || die "can't connect to database $dsn";
+      || die "can't connect to database $dsn: ". $DBI::errstr;
 
     $self->{debug}        = $config->{debug};
     $self->{ignore_debug} = $config->{ignore_debug};
@@ -168,7 +168,27 @@ sub process {
         $self->message("info", "Deleting %s (id=%d) from queue",
             $q->{domain}, $q->{id});
 
-        $dbh->do(sprintf("DELETE FROM queue WHERE id=%d ", $q->{id}));
+        my $errorcount = 0;
+        my $err;
+        do {
+            $err = undef;
+            eval {
+                $dbh->do("DELETE FROM queue WHERE id=?",undef, $q->{id});
+            };
+            if ($@) {
+                $err = $@;
+                $self->message("crit",
+                sprintf("Queue delete failed (test_id %d, attempt #%d): %s",
+                $q->{id}, $errorcount+1,$err));
+            }
+        } while ($err && ++$errorcount < 5);
+        if ($err && $errorcount >= 5) {
+            my $errstr = sprintf("Error limit reached. Exiting. Domain: %s. Test id: %d\n",
+            $q->{domain},$q->{id});
+            $self->message("crit",$errstr);
+            die($errstr);
+        }
+        
     }
 
     return scalar(@$batch);
@@ -185,30 +205,42 @@ sub _dequeue {
     $limit = sprintf(" LIMIT %d", $count) if ($count);
 
     # this is ugly, but a man has to do what a man has to do
-    $dbh->do("LOCK TABLES queue WRITE");
+    # $dbh->do("LOCK TABLES queue WRITE");
 
-    my $batch = $dbh->selectall_arrayref(
-        " SELECT id, domain FROM queue "
-          . " WHERE inprogress IS NULL "
-          . ($prio_low  ? " AND priority >= $prio_low "  : "")
-          . ($prio_high ? " AND priority <= $prio_high " : "")
-          . " ORDER BY priority DESC "
-          . $limit,
-        { Slice => {} }
-    );
-
-    foreach my $q (@$batch) {
-        $dbh->do(
-            sprintf(
-                " UPDATE queue SET inprogress = NOW() WHERE id =
-              %d ", $q->{id}
-            )
-        );
+    # Attempt to make it less ugly.
+    # Note that for this to be an improvement indexes need to be created for
+    # the columns inprogress and priority in table queue. Without that, all
+    # rows in the table will still be locked, and the low-prio and high-prio
+    # queue-runners will still have to wait for each other.
+    $dbh->begin_work;
+    my $retval = eval {
+        my $batch = $dbh->selectall_arrayref(
+            " SELECT id, domain FROM queue "
+            . " WHERE inprogress IS NULL "
+            . ($prio_low  ? " AND priority >= $prio_low "  : "")
+            . ($prio_high ? " AND priority <= $prio_high " : "")
+            . " ORDER BY priority DESC "
+            . $limit
+            . " for update",
+            { Slice => {} }
+            );
+        my $update_sth = $dbh->prepare(q{
+                update queue set inprogress = now() where id = ?
+            });
+            foreach my $q (@$batch) {
+                $update_sth->execute($q->{id});
+            }
+            $dbh->commit;
+            return $batch;
+        };
+    if ($@) { # Something went wrong. Dump database changes and give caller an
+              # empty arrayref.
+        print STDERR "Database error: " . $@;
+        $dbh->rollback;
+        return [];
+    } else {
+        return $retval;
     }
-
-    $dbh->do("UNLOCK TABLES");
-
-    return $batch;
 }
 
 sub test {
@@ -248,7 +280,7 @@ sub test {
 
         my $id = $dbh->{'mysql_insertid'};
 
-        DNSCheck::zone($self->{dnscheck}, $zone, $history);
+        DNSCheck::zone($self->{dnscheck}, $zone, $history, $dbh);
 
         # Flush cached entries after each zone test
         $self->{dnscheck}->flush();
@@ -257,7 +289,7 @@ sub test {
 
         my $line = 0;
 
-        print STDERR Dumper($logger);
+        # print STDERR Dumper($logger);
 
         foreach my $logentry (@{ $logger->export }) {
 
