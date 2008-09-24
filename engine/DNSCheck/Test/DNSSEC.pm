@@ -388,6 +388,7 @@ sub _check_signature ($$) {
         return 0;
     } else {
         $logger->auto("DNSSEC:RRSIG_VALID", $message);
+        $logger->auto("DNSSEC:RRSIG_EXPIRES_AT", scalar(gmtime($expiration)));
         return 1;
     }
 }
