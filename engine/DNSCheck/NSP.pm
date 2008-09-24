@@ -55,13 +55,15 @@ sub new {
         $config->{db_config} = "./dnscheck.conf";
     }
 
-    $self->{dbh} =
-        DBI->connect("DBI:mysql:database=;".
-        "mysql_read_default_group=dnscheck;".
-        "mysql_read_default_file=".
-        $config->{db_config},
-        undef, undef, {RaiseError => 1, AutoCommit => 1})
-        or die $DBI::errstr;
+    $self->{dbh} = DBI->connect(
+        "DBI:mysql:database=;"
+          . "mysql_read_default_group=dnscheck;"
+          . "mysql_read_default_file="
+          . $config->{db_config},
+        undef,
+        undef,
+        { RaiseError => 1, AutoCommit => 1 }
+    ) or die $DBI::errstr;
 
     unless ($config->{class}) {
         $config->{class} = "IN";
@@ -72,60 +74,64 @@ sub new {
     bless $self, $class;
 }
 
-
 # In: domain name. Out: registrar, contact email (if one exists).
 sub lookup {
-    my $self = shift;
-    my $zone = shift;
+    my $self   = shift;
+    my $zone   = shift;
     my $logger = $self->{context}->logger;
-    
+
     $logger->module_stack_push;
     $logger->auto("NSP:GETTING_CHILD_NAMESERVERS_FOR", $zone);
-    my @servers = $self->{context}->dns
-        ->get_nameservers_at_child($zone,$self->{context}->qclass);
+    my @servers =
+      $self->{context}
+      ->dns->get_nameservers_at_child($zone, $self->{context}->qclass);
     $logger->module_stack_pop;
-    
+
     my %operators;
     foreach my $server (@servers) {
         my ($operator, $email) = $self->ns_operator($server);
         next unless (defined($operator) and defined($email));
         $operators{$operator} = $email;
     }
-    # The following is an if statement in case we want to separate these cases later on.
+
+# The following is an if statement in case we want to separate these cases later on.
     if (scalar keys %operators > 1) {
         return %operators;
     } else {
         return %operators;
     }
-    
+
 }
 
 sub ns_operator {
-    my $self = shift;
+    my $self   = shift;
     my $nsname = shift;
-    
-    my $sth = $self->dbh->prepare(
-        "select nsp.name, nsp.email from nsp, nameservers as ns where nsp.id = ns.nsp_id and ns.nameserver = ?");
+
+    my $sth =
+      $self->dbh->prepare(
+"select nsp.name, nsp.email from nsp, nameservers as ns where nsp.id = ns.nsp_id and ns.nameserver = ?"
+      );
     $sth->execute($nsname);
-    my @res = @{$sth->fetchall_arrayref};
+    my @res = @{ $sth->fetchall_arrayref };
     if (@res == 0) {
-        $self->dbh->do(q{
+        $self->dbh->do(
+            q{
             insert ignore into nameservers (nameserver) values (?)
-        }, undef, $nsname);
+        }, undef, $nsname
+        );
         return ();
     } elsif (@res > 1) {
-        die "More than one operator for nameserver: database broken?"
+        die "More than one operator for nameserver: database broken?";
     } else {
-        return @{$res[0]}; # Two-item list with name and email, hopefully
+        return @{ $res[0] };    # Two-item list with name and email, hopefully
     }
-    die "ns_operator fell through to end: this should be impossible."
+    die "ns_operator fell through to end: this should be impossible.";
 }
-
 
 sub dbh {
     my $self = shift;
-    
-    return $self->{dbh}; 
+
+    return $self->{dbh};
 }
 
 1;
