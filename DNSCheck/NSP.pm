@@ -72,6 +72,17 @@ sub new {
     bless $self, $class;
 }
 
+sub new_with_context {
+    my $proto = shift;
+    my $class = ref($proto) || $proto;
+    my $self = {};
+    
+    $self->{context} = shift;
+    $self->{dbh} = shift;
+    
+    bless $self, $class;
+}
+
 
 # In: domain name. Out: registrar, contact email (if one exists).
 sub lookup {

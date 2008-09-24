@@ -40,6 +40,7 @@ sub test {
     my $context = shift;
     my $zone    = shift;
     my $history = shift;
+    my $dbh     = shift;
 
     my $qclass = $context->qclass;
     my $logger = $context->logger;
@@ -71,6 +72,9 @@ sub test {
         $errors += DNSCheck::Test::Nameserver::test($context, $zone, $ns);
     }
 
+    # NSP::test is not realy a test and will not add to the error count.
+    $errors += DNSCheck::Test::NSP::test($context, $zone, $dbh, @ns_at_child);
+    
     $errors += DNSCheck::Test::Consistency::test($context, $zone);
     $errors += DNSCheck::Test::SOA::test($context, $zone);
     $errors += DNSCheck::Test::Connectivity::test($context, $zone);

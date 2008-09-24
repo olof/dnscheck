@@ -132,6 +132,9 @@ loglevels:
   NAMESERVER:SKIPPED_IPV6: info
   NAMESERVER:TCP_OK: info
   NAMESERVER:UDP_OK: info
+  NSP:BEGIN: info
+  NSP:OPERATOR_FOR_NS: info
+  NSP:END: info
   SMTP:BEGIN: info
   SMTP:CONNECT_FAILED: warning
   SMTP:END: info

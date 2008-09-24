@@ -803,3 +803,13 @@ messages:
  ZONE:END:
   args: 1
   format: Test completed for zone %s.
+  
+ NSP:BEGIN:
+     args: 1
+     format: Begin lookup of nameserver operators for zone %s.
+ NSP:OPERATOR_FOR_NS:
+     args: 3
+     format: Nameserver %s is operated by %s <%s>.
+ NSP:END
+    args: 1
+    format: End lookup of nameserver operators for zone %s.

@@ -46,6 +46,7 @@ use DNSCheck::Test::Nameserver;
 use DNSCheck::Test::DNSSEC;
 use DNSCheck::Test::Mail;
 use DNSCheck::Test::SMTP;
+use DNSCheck::Test::NSP;
 
 our $VERSION = "0.70";
 
