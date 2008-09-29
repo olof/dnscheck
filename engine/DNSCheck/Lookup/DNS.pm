@@ -1087,6 +1087,37 @@ sub check_timeout {
 
 ######################################################################
 
+sub preflight_check {
+    my $self     = shift;
+    my $resolver = $self->{resolver};
+    my $name     = shift;
+
+    my $packet = $resolver->send($name, 'NS');
+
+    # Can we find an NS record?
+    if (defined($packet) and grep { $_->type eq 'NS' } $packet->answer) {
+
+        # Yup, return true
+        return 1;
+    } elsif (!defined($packet)) {
+
+        # The manual doesn't say what errors are possible, just that they are.
+        warn "Unknown error on NS lookup";
+        return 1;
+    }
+
+    $packet = $resolver->send($name, 'SOA');
+    if (defined($packet) and grep { $_->type eq 'SOA' } $packet->answer) {
+        return 1;
+    } elsif (!defined($packet)) {
+        warn "Unknown error on SOA lookup";
+        return 1;
+    }
+
+    # No NS, no SOA, no successful return
+    return undef;
+}
+
 1;
 
 __END__
