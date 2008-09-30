@@ -12,24 +12,24 @@ unless (@ARGV == 2) {
 
 my $debug = 0;
 
-my $left = LoadFile($ARGV[0]);
+my $left  = LoadFile($ARGV[0]);
 my $right = LoadFile($ARGV[1]);
 
 my %res;
 
-foreach my $l (keys %{$left->{messages}}) {
+foreach my $l (keys %{ $left->{messages} }) {
     $res{$l} += 1;
 }
 
-foreach my $r (keys %{$right->{messages}}) {
+foreach my $r (keys %{ $right->{messages} }) {
     $res{$r} -= 1;
 }
 
 foreach my $k (keys %res) {
     if ($res{$k} == 1) {
-        print "$k exists only in $ARGV[0]\n"
+        print "$k exists only in $ARGV[0]\n";
     } elsif ($res{$k} == -1) {
-        print "$k exists only in $ARGV[1]\n"
+        print "$k exists only in $ARGV[1]\n";
     } else {
         print "$k exists in both.\n" if $debug;
     }
