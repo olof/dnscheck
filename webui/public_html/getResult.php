@@ -3,6 +3,7 @@
 	require_once(dirname(__FILE__) . '/../common.php');
 	require_once(dirname(__FILE__) . '/../idna_convert.class.php');
 	require_once(dirname(__FILE__) . '/../stripslashes.php');
+	require_once(dirname(__FILE__) . '/../multilanguage.php');
 	
 	function flattenTree($rootNode, $type, $allMessages, &$flattenedTree)
 	{
@@ -122,12 +123,12 @@
 		$initialRootStatus = $showRootStatuses ? 'off' : '';
 		
 		$finalTree = array(
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Delegation', 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Nameserver', 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Consistency', 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'SOA', 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'Connectivity', 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => 'DNSSEC', 'subtree' => array())
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('Delegation')), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('Nameserver')), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('Consistency')), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('SOA')), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('Connectivity')), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('DNSSEC')), 'subtree' => array())
 		);
 		
 		$finalResult = STATUS_OK;
@@ -146,7 +147,7 @@
 						break;	
 					case 'NAMESERVER:BEGIN':
 						$result = flattenTree($rootNode, 3, $allMessages, $flattenedArray);
-						$nameserverNode = array('type' => 1, 'class' => $showRootStatuses ? $result : '', 'caption' => 'Nameserver ' . $rootNode[0]['arg0'], 'subtree' => $flattenedArray);
+						$nameserverNode = array('type' => 1, 'class' => $showRootStatuses ? $result : '', 'caption' => utf8_encode(translate('Nameserver')) . ' ' . $rootNode[0]['arg0'], 'subtree' => $flattenedArray);
 						$finalTree[1]['subtree'][] = $nameserverNode;
 						
 						if ($showRootStatuses)
@@ -216,6 +217,7 @@
 		global $time;
 		global $domain;
 		global $testId;
+		global $languageId;
 		
 		$IDN = new idna_convert();
 		$domain = $IDN->encode(trim(strtolower($_REQUEST['domain'])));

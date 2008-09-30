@@ -113,6 +113,7 @@
 			</div>
 			<div id="treediv"></div>
 			<div id="listdiv" style="display: none"></div>
+			<span style="display: none" id="link_to_test_label"><?php echo(translate("Link to this test")); ?>:</span>
 		</div>
 		<div id="history">
 			<h3 class="smalltop"><img src="_img/mini-loader.gif" style="display: none" id="history_loader" alt="Loading" width="16" height="16" /><?php echo(translate("Test history"));?></h3>

@@ -31,7 +31,14 @@
 		"Test was ok",
 		"Test contains warnings",
 		"Test contains errors",
-		"Test was not performed"
+		"Test was not performed",
+		"Delegation",
+		"Nameserver",
+		"Consistency",
+		"SOA",
+		"Connectivity",
+		"DNSSEC",
+		"Link to this test"
 	);
 	
 	$translationMap = array(
@@ -176,7 +183,14 @@
 			"Test was ok",
 			"Test contains warnings",
 			"Test contains errors",
-			"Test was not performed"
+			"Test was not performed",
+			"Delegation",
+			"Nameserver",
+			"Consistency",
+			"SOA",
+			"Connectivity",
+			"DNSSEC",
+			"Link to this test"
 		),
 		"se" => array(
 			"Hem",
@@ -316,7 +330,14 @@
 			"Testet var ok",
 			"Testet inneh&ouml;ll varningar",
 			"Testet inneh&ouml;ll fel",
-			"Testet utf&ouml;rdes inte"
+			"Testet utf&ouml;rdes inte",
+			"Delegering",
+			"DNS-server",
+			"Konsekventa inställningar",
+			"SOA",
+			"Uppkoppling",
+			"DNSSEC",
+			"L&auml;nk till det h&auml;r testresultatet"
 		)
 	);
 	

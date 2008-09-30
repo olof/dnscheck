@@ -314,7 +314,7 @@
 	{
 		var p = document.createElement('p');
 		p.id = 'permalink';
-		p.innerHTML = "<strong>Link to this test:</strong><br /><a href=\"" + permalink + "\">" + permalink + "</a>";
+		p.innerHTML = "<strong>" + document.getElementById("link_to_test_label").innerHTML + "</strong><br /><a href=\"" + permalink + "\">" + permalink + "</a>";
 		
 		parentElement.appendChild(p);
 	}
