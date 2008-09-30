@@ -36,8 +36,8 @@
 				}
 				else
 				{
-					$caption = sprintf($treeNode['formatstring'], $IDN->decode($treeNode['arg0']), $IDN->decode($treeNode['arg1']), $IDN->decode($treeNode['arg2']), $IDN->decode($treeNode['arg3']),
-						$IDN->decode($treeNode['arg4']), $IDN->decode($treeNode['arg5']), $IDN->decode($treeNode['arg6']), $IDN->decode($treeNode['arg7']), $IDN->decode($treeNode['arg8']), $IDN->decode($treeNode['arg9']));
+					$caption = utf8_encode(sprintf($treeNode['formatstring'], $IDN->decode($treeNode['arg0']), $IDN->decode($treeNode['arg1']), $IDN->decode($treeNode['arg2']), $IDN->decode($treeNode['arg3']),
+						$IDN->decode($treeNode['arg4']), $IDN->decode($treeNode['arg5']), $IDN->decode($treeNode['arg6']), $IDN->decode($treeNode['arg7']), $IDN->decode($treeNode['arg8']), $IDN->decode($treeNode['arg9'])));
 				}
 				
 				$className = '';

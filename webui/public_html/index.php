@@ -146,6 +146,7 @@
 	<div id="footer">
 		<p id="f_info"><?php echo(translate(".SE (The Internet Infrastructure Foundation)"));?></p>
 		<?php if('en' != $languageId){?><p id="f_links"><a href="?lang=en" class="lang_en">English version</a><br /></p><?php }?>
+		<?php if('se' != $languageId){?><p id="f_links"><a href="?lang=se" class="lang_se">Swedish version</a><br /></p><?php }?>
 		<br class="clear" />
 	</div>
 

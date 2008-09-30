@@ -1,4 +1,8 @@
+<!-- $Id$ -->
+
 <?php
+	require_once('IP2Country.php');
+
 	define('DB_SERVER', 'localhost');
 	define('DB_PORT', 3306);
 	define('DB_NAME', 'dnscheckng');
@@ -27,5 +31,5 @@
 		)
 	);
 	
-	define('DEFAULT_LANGUAGE_ID', 'en');
+	define('DEFAULT_LANGUAGE_ID', getDefaultLanguage());
 ?>

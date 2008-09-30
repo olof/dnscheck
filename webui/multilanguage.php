@@ -179,15 +179,15 @@
 			"Test was not performed"
 		),
 		"se" => array(
-			"Home",
-			"FAQ",
-			"En tj&auml;nst fr&aring;n .se",
+			"Hem",
+			"Vanliga fr&aring;gor",
+			"En tj&auml;nst fr&aring;n .SE",
 			"Testa din DNS-server och uppt&auml;ck fel",
-			"Ange ditt dom&auml;nnamn nedan s&aring; kommer vi att testa DNS-Servrarna som &auml;r kopplade till det.",
+			"Ange ditt dom&auml;nnamn nedan f&ouml;r att testa dess DNS-servrar.",
 			"Testa nu",
 			"F&ouml;renklat resultat",
 			"Avancerat resultat",
-			"Tidigare tester",
+			"Tidigare test",
 			"Historiken kunde ej laddas",
 			"Ingen historik finns",
 			"Sida",
@@ -195,16 +195,123 @@
 			"Dom&auml;nen finns inte",
 			"Dom&auml;nen du angav verkar inte vara registrerad",
 			"Laddar",
-			"V&auml;ntar p&aring; test resultat",
+			"V&auml;ntar p&aring; testresultat",
 			"Alla test &auml;r ok",
 			"Testet inneh&ouml;ll varningar",
 			"Testet inneh&ouml;ll fel",
 			"Om DNSCheck",
-			"<p>DNSCheck info</p>",
+			"<img src='_img/img_trafficlight.png' alt='Trafficlight' class='right' /><p>DNSCheck &auml;r ett program designat f&ouml;r att hj&auml;lpa m&auml;nniskor  att kontrollera, m&auml;ta och f&ouml;rhoppningsvis ocks&aring; b&auml;ttre f&ouml;rst&aring; hur DNS, domain name  system, fungerar. N&auml;r en dom&auml;n (&auml;ven kallad zon) skickas till DNSCheck s&aring;  kommer programmet att unders&ouml;ka dom&auml;nens h&auml;lsotillst&aring;nd genom att g&aring; igenom DNS  fr&aring;n roten (.) till TLD:n (toppdom&auml;nen, till exempel .SE) och till slut de  DNS-servrar som inneh&aring;ller information om den specificerade dom&auml;nen (till  exempel iis.se). DNSCheck utf&ouml;r &auml;ven en hel del andra test, s&aring; som att  kontrollera DNSSEC-signaturer, att de olika v&auml;rdarna g&aring;r att komma &aring;t och att  IP-adresser &auml;r giltiga.</p>",
 			"Om domain name system, DNS",
-			"<p>DNS info</p>",
-			"DNSCheck FAQ",
-			"<h5 id=\"findex\">Index</h5>",
+			"<p>Domain name system (f&ouml;rkortat DNS) skulle kunna kallas  Internets &rdquo;telefonbok&rdquo;. Det ser till att l&auml;sbara namn p&aring; webbsidor (som www.iis.se) kan &ouml;vers&auml;ttas till de mer  sv&aring;rbegripliga IP-adresser som datorerna beh&ouml;ver f&ouml;r att kommunicera med  varandra (i detta fall 212.247.7.229).</p><p>F&ouml;rutom att l&aring;ta dig surfa p&aring; Internet med din webbl&auml;sare  med hj&auml;lp av namn p&aring; webbsidor ist&auml;llet f&ouml;r IP-adresser ser DNS &auml;ven till att  din e-post hittar r&auml;tt. Med andra ord, ett stabilt DNS &auml;r n&ouml;dv&auml;ndigt f&ouml;r att de  flesta f&ouml;retag ska kunna fungera och arbeta effektivt.</p>",
+			"Vanliga fr&aring;gor om DNSCheck",
+			'<h5 id="findex">Index</h5> 
+			<ol>
+
+				<li><a href="#f1">Vad &auml;r DNSCheck?</a></li>
+				<li><a href="#f2">Vad &auml;r DNS?</a></li>
+				<li><a href="#f3">Vad h&auml;nder med www.dnscheck.se?</a></li>
+				<li><a href="#f4">Varf&ouml;r en ny DNSCheck?</a></li>
+				<li><a href="#f5">Hur fungerar DNSCheck?</a></li>
+				<li><a href="#f6">Hur kan DNSCheck hj&auml;lpa mig?</a></li>
+				<li><a href="#f7">DNSCheck visar &rdquo;Fel&rdquo;/&rdquo;Varning&rdquo; f&ouml;r min dom&auml;n.  Vad inneb&auml;r det?</a></li>
+				<li><a href="#f8">Hur kan DNSCheck bed&ouml;ma vad som &auml;r r&auml;tt och fel?</a></li>
+				<li><a href="#f9">Hanterar DNSCheck IPv6?</a></li>
+				<li><a href="#f10">Hanterar DNSCheck DNSSEC?</a></li>
+				<li><a href="#f11">Vad skiljer DNSCheck fr&aring;n annan mjukvara som  testar zoner?</a></li>
+				<li><a href="#f12">Fungerar DNSCheck f&ouml;r dom&auml;nnamn som inte slutar  med .se?</a></li>
+				<li><a href="#f13">DNSCheck och personlig integritet</a></li>
+				<li><a href="#f14">Varf&ouml;r kan jag inte testa min dom&auml;n?</a></li>
+				<li><a href="#f15">Vilka slags anrop genereras av DNSCheck?</a></li>
+
+			</ol>
+			<div class="divider"></div>
+
+			<h5 id="f1">Vad &auml;r DNSCheck?</h5>
+
+			<p>DNSCheck &auml;r ett program designat f&ouml;r att hj&auml;lpa m&auml;nniskor  att kontrollera, m&auml;ta och f&ouml;rhoppningsvis ocks&aring; b&auml;ttre f&ouml;rst&aring; hur DNS, domain  name system, fungerar. N&auml;r en dom&auml;n (&auml;ven kallad zon) skickas till DNSCheck s&aring;  kommer programmet att unders&ouml;ka dom&auml;nens h&auml;lsotillst&aring;nd genom att g&aring; igenom DNS  fr&aring;n roten (.) till TLD:n (toppdom&auml;nen, till exempel .SE) och till slut de  DNS-servrar som inneh&aring;ller information om den specificerade dom&auml;nen (till  exempel iis.se). DNSCheck utf&ouml;r &auml;ven en hel del andra test, s&aring; som att  kontrollera DNSSEC-signaturer, att de olika v&auml;rdarna g&aring;r att komma &aring;t och att  IP-adresser &auml;r giltiga.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f2">Vad &auml;r DNS?</h5>
+
+			<p>Domain name system (f&ouml;rkortat DNS) skulle kunna kallas  Internets &rdquo;telefonbok&rdquo;. Det ser till att l&auml;sbara namn p&aring; webbsidor (som www.iis.se) kan &ouml;vers&auml;ttas till de mer  sv&aring;rbegripliga IP-adresser som datorerna beh&ouml;ver f&ouml;r att kommunicera med  varandra (i detta fall 212.247.7.229).</p>
+			<p>F&ouml;rutom att l&aring;ta dig surfa p&aring; Internet med din webbl&auml;sare  med hj&auml;lp av namn p&aring; webbsidor ist&auml;llet f&ouml;r IP-adresser ser DNS &auml;ven till att  din e-post hittar r&auml;tt. Med andra ord, ett stabilt DNS &auml;r n&ouml;dv&auml;ndigt f&ouml;r att de  flesta f&ouml;retag ska kunna fungera och arbeta effektivt.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f3">Vad h&auml;nder med www.dnscheck.se?</h5>
+
+			<p>Webbadressen <a href="http://www.dnscheck.se">www.dnscheck.se</a> pekar till en tidigare version av DNSCheck som .SE utvecklade tillsammans med  Patrik F&auml;ltstr&ouml;m fr&aring;n Frobbit AB. Den nya versionen av DNSCheck ligger p&aring;  <a href="http://dnscheck.iis.se">dnscheck.iis.se</a> och utvecklades av Jakob Schlyter fr&aring;n Kirei AB.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f4">Varf&ouml;r en ny  DNSCheck?</h5>
+
+			<p>.SE ville ha mer kontroll &ouml;ver koden och kunna &aring;teranv&auml;nda  delar av DNSCheck-koden i andra projekt. Vi kom s&aring;ledes till slutsatsen att det  var b&auml;ttre att b&ouml;rja om fr&aring;n grunden och bygga en modul&auml;r kodbas som vi ocks&aring;  kunde ut&ouml;ka med ny funktionalitet, till exempel IPv6- och DNSSEC-tester.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f5">Hur fungerar  DNSCheck?</h5>
+
+			<p>Om du vill ha den tekniska informationen om hur DNSCheck  fungerar r&aring;der vi dig att kolla den wiki/trac som &auml;r kopplad till  DNSCheck-projektet (som &auml;r &ouml;ppen k&auml;llkod). Du hittar den p&aring; f&ouml;rljande URL: <a href="http://opensource.iis.se/trac/dnscheck/wiki/Architecture">http://opensource.iis.se/trac/dnscheck/wiki/Architecture</a>. Om du &auml;r ute efter ett mindre tekniskt svar b&ouml;r du f&ouml;rst l&auml;sa svaret till fr&aring;gan &quot;Vad &auml;r DNSCheck&quot; p&aring; denna sida.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f6">Hur  kan DNSCheck hj&auml;lpa mig?</h5>
+
+			<p>Den nuvarande versionen av DNSCheck &auml;r avsedd f&ouml;r tekniker  eller &aring;tminstone de som &auml;r intresserade av att l&auml;ra sig mer om hur DNS  fungerar. Om du enbart vill l&aring;ta den som &auml;r ansvarig f&ouml;r din dom&auml;n (tech-c  eller teknisk personal hos din DNS-leverant&ouml;r) veta att det finns problem med  din dom&auml;n kan du anv&auml;nda l&auml;nken som finns l&auml;ngst ner p&aring; resultatsidan efter att  ett test utf&ouml;rts. Om du har k&ouml;rt ett test kan du s&aring;ledes l&auml;nka till just det  specifika testresultatet genom att kopiera l&auml;nken som d&aring; finns l&auml;ngst ner p&aring;  sidan. Till exempel, l&auml;nken h&auml;r nedanf&ouml;r pekar p&aring; ett tidigare utf&ouml;rt test av  &rdquo;iis.se&rdquo;:<br />
+  <a href="http://dnscheck.iis.se/?time=1220357126&amp;id=66&amp;view=basic">http://dnscheck.iis.se/?time=1220357126&amp;id=66&amp;view=basic </a></p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f7">DNSCheck visar  &rdquo;Fel&rdquo;/&rdquo;Varning&rdquo; f&ouml;r min dom&auml;n. Vad inneb&auml;r det?</h5>
+
+			<p>Det beror p&aring; vilket test det g&auml;ller. I de flesta fall kan du  klicka p&aring; fel- eller varningsmeddelandet f&ouml;r att f&aring; mer information om vad det  var f&ouml;r problem.</p>
+			<p>Till exempel, om vi skulle testa dom&auml;nen &rdquo;iis.se&rdquo; och f&aring; ett  felmeddelande som s&auml;ger <strong>&rdquo;DNS-servern  ns.nic.se (212.247.7.228) svarar inte p&aring; anrop &ouml;ver UDP&rdquo;</strong>. Vad inneb&auml;r  detta? Efter att vi klickar p&aring; meddelandet f&aring;r vi mer detaljerad information. I  det h&auml;r fallet: <strong>&rdquo;DNS-servern svarade  inte p&aring; anrop &ouml;ver UDP. Detta beror troligtvis p&aring; att DNS-servern inte &auml;r  korrekt uppsatt eller en felaktigt konfigurerad brandv&auml;gg.&rdquo;</strong> Lyckligtvis var  detta bara ett exempel eftersom det d&auml;r felet i praktiken betyder att en  DNS-server &auml;r otillg&auml;nglig, s&aring; det &auml;r inte direkt ett harml&ouml;st fel.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f8">Hur kan DNSCheck  bed&ouml;ma vad som &auml;r r&auml;tt och fel?</h5>
+
+			<p>Ingen kan ge ett definitivt, slutgiltigt utl&aring;tande om en  dom&auml;ns h&auml;lsa. Detta &auml;r viktigt att po&auml;ngtera. .SE och m&auml;nniskorna bakom  DNSCheck p&aring;st&aring;r inte att DNSCheck alltid har helt r&auml;tt. I vissa fall g&aring;r  &aring;sikter is&auml;r, speciellt mellan olika l&auml;nder, men ibland &auml;ven lokalt. Vi har  haft turen att ha hj&auml;lp av en extremt kompetent grupp DNS-experter h&auml;r i  Sverige. Vi hoppas att deras &aring;sikter i kombination med v&aring;ra egna har resulterat  i en bra kompromiss mellan vad som &auml;r potentiellt farliga fel och vad som bara  beh&ouml;ver en varning eller en anm&auml;rkning.</p>
+			<p>Eftersom DNS utvecklas hela tiden kan situationer som idag  bara kr&auml;ver en varning r&auml;knas som riktiga fel imorgon. Om du tror du hittat  n&aring;got som vi felbed&ouml;mt, tveka d&aring; inte att kontakta oss p&aring; <a href="mailto:dnscheck@iis.se">dnscheck@iis.se</a> med en l&auml;nk till ditt test  och en f&ouml;rklaring av varf&ouml;r du anser att resultatet inte &auml;r korrekt. (Hur man  l&auml;nkar till ett test hittar du i &rdquo;Hur kan DNSCheck hj&auml;lpa mig?&rdquo;-delen av denna  FAQ.)</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f9">Hanterar DNSCheck  IPv6?</h5>
+
+			<p>Ja, fast eftersom .SE f&ouml;r n&auml;rvarande inte har st&ouml;d f&ouml;r IPv6  kan vi inte utf&ouml;ra dessa test. S&aring; snart vi har IPv6-st&ouml;d f&auml;rdigt kommer vi att  testa IPv6 p&aring; samma s&auml;tt som IPv4 testas av DNSCheck idag.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f10">Hanterar DNSCheck  DNSSEC?</h5>
+
+			<p>Ja. Om DNSSEC &auml;r tillg&auml;ngligt f&ouml;r en dom&auml;n som testas av  DNSCheck s&aring; kommer detta att testas automatiskt.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f11">Vad skiljer DNSCheck  fr&aring;n annan mjukvara som testar zoner?</h5>
+
+			<p>F&ouml;rst och fr&auml;mst sparar DNSCheck all testhistoria. Det  inneb&auml;r att du kan g&aring; tillbaka och titta p&aring; ett test du gjorde f&ouml;r en vecka  sedan och j&auml;mf&ouml;ra det med ett test du nyss gjorde.</p>
+			<p>DNSCheck kontrollerar &auml;ven att en zons tidigare anv&auml;nda  (f&ouml;re detta) DNS-servrar inte l&auml;ngre inneh&aring;ller information om zonen du testar.  (Detta g&auml;ller enbart f&ouml;r .SE-dom&auml;ner som &auml;r ompekade efter februari 2007.)</p>
+			<p>DNSCheck f&ouml;rs&ouml;ker ocks&aring; f&ouml;rklara fel och varningar p&aring; ett  tydligt s&auml;tt, &auml;ven om dessa meddelanden kan vara sv&aring;ra att f&ouml;rst&aring; f&ouml;r en  icke-tekniker. N&auml;sta version av DNSCheck, som kommer att lanseras senare detta  &aring;r, kommer att vara mer informativ f&ouml;r mindre tekniska anv&auml;ndare.</p>
+			<p>DNSCheck kollar kontinuerligt igenom .SE-zonen och  rapporterar in dess h&auml;lsa till databasen.</p>
+			<p>Det finns en &rdquo;avancerad&rdquo; flik tillg&auml;nglig f&ouml;r de tekniker  som f&ouml;redrar mer detaljerad testinformation.</p>
+			<p>Den h&auml;r versionen av DNSCheck &auml;r &ouml;ppen k&auml;llkod och &auml;r  modul&auml;rt uppbyggd. Du kan med andra ord &aring;teranv&auml;nda delar av koden i dina egna  system om du vill.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f12">Fungerar DNSCheck f&ouml;r  dom&auml;nnamn som inte slutar med .se?</h5>
+
+			<p>Ja. Alla test som utf&ouml;rs p&aring; .SE-dom&auml;ner kommer utf&ouml;ras p&aring;  din zon ocks&aring;. Det som inte g&ouml;rs f&ouml;r andra dom&auml;ner &auml;n .SE &auml;r dock den  periodiska, automatiska genomg&aring;ngen av alla dom&auml;ner i zonen som vi utf&ouml;r. Allt  annat fungerar exakt likadant.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f13">DNSCheck och personlig  integritet</h5>
+
+                        <p>Eftersom DNSCheck &auml;r tillg&auml;nglig f&ouml;r alla &auml;r det ocks&aring; m&ouml;jligt  f&ouml;r vem som helst att kontrollera din dom&auml;n och ocks&aring; se testhistoria f&ouml;r din  dom&auml;n. Det finns dock inget s&auml;tt att se vem som har gjort ett test eftersom det  enda som loggas &auml;r tidpunken d&aring; testet gjordes.</p>
+                        <p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+
+			<h5 id="f14">Varf&ouml;r kan jag inte  testa min dom&auml;n?</h5>
+                        
+			<p>Om vi utg&aring;r fr&aring;n att dom&auml;nen du f&ouml;rs&ouml;ker testa faktiskt  existerar s&aring; finns det tv&aring; saker som kan orsaka detta:</p>
+			<p>1. F&ouml;r att f&ouml;rhindra att flera test g&ouml;rs samtidigt  p&aring; samma zon fr&aring;n samma IP-adress finns det en p&aring;tvingad f&ouml;rdr&ouml;jning p&aring; 5  minuter mellan identiska test. Detta inneb&auml;r att du inte kan testa en dom&auml;n  oftare &auml;n var 5:e minut. Om du testar din dom&auml;n igen innan 5 minuter f&ouml;rflutit  s&aring; visas det senast sparade resultatet.</p>
+			<p>2. Eftersom DNSCheck &auml;r designad f&ouml;r att testa  dom&auml;ner (som iis.se) och inte v&auml;rdnamn i en dom&auml;n (som www.iis.se) kontrollerar DNSChecks webbsida  dom&auml;nen du skrivit in innan den skickas vidare till DNSChecks testmotor f&ouml;r att  se att det verkligen &auml;r en dom&auml;n. Denna kontroll kan i vissa s&auml;llsynta fall  misslyckas (och zonen s&aring;ledes inte godk&auml;nns som korrekt). De enda g&aring;nger vi  sett detta h&auml;nda &auml;r ifall de DNS-servrar som tillh&ouml;r den zon du f&ouml;rs&ouml;ker testa  &auml;r v&auml;ldigt trasiga. H&ouml;r g&auml;rna av dig ifall detta h&auml;nt dig s&aring; vi f&aring;r mer  information om hur vi kan korrigera hur detta test av dom&auml;nen utf&ouml;rs. Det h&auml;r testet  kommer att f&ouml;rb&auml;ttras, det lovar vi.</p>
+
+                        <p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>
+			
+			<h5 id="f15">Vilka slags anrop genereras av DNSCheck?</h5>
+
+			<p>Det h&auml;r &auml;r en sv&aring;r fr&aring;ga att svara p&aring; eftersom DNSCheck  kommer att generera olika typer av anrop beroende p&aring; hur dina DNS-servrar  svarar. Det enklaste s&auml;ttet att se exakt vad DNSCheck testar &auml;r att k&ouml;ra  &rdquo;dnscheck&rdquo; CLI-kommandot och l&auml;gga till flaggan &rdquo;--raw&rdquo;. Resultatet ger  grundlig information om vad som h&auml;nder under testet. Det b&ouml;r dock n&auml;mnas att  utmatningen fr&aring;n CLI-verktyget &auml;r v&auml;ldigt tekniskt utmanande s&aring; ifall du inte  gillar bits och bytes kanske du vill undvika det.</p>
+			<p><a href="#findex">Tillbaka till b&ouml;rjan</a></p>',
 			"F&ouml;rklaring",
 			"Testet var ok",
 			"Testet inneh&ouml;ll varningar",
