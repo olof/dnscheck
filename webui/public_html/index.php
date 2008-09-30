@@ -6,9 +6,11 @@
 	require_once(dirname(__FILE__) . '/../stripslashes.php');
 	
 	$languageId = DEFAULT_LANGUAGE_ID;
+	$languageSet = false;
 	if ((isset($_GET['lang'])) && (isset($translationMap[$_GET['lang']])))
 	{
 		$languageId = $_GET['lang'];
+		$languageSet = true;
 	}
 	
 	$permalinkId = 0;
@@ -41,12 +43,13 @@
 <script type="text/javascript">
 	var domainDoesNotExistHeader = "<?php echo(translate("Domain doesn't exist"));?>";
 	var domainDoesNotExistLabel = "<?php echo(translate("The domain you entered doesn't seem to be registered"));?>";
-	var loadingHeader = "<?php echo(translate("Testing"));?>";
-	var loadingLabel = "<?php echo(translate("Testing your domain, please wait!"));?>";
+	var loadingHeader = "<?php echo(translate("Loading"));?>";
+	var loadingLabel = "<?php echo(translate("Waiting for the test results to be loaded"));?>";
 	var okHeader = "<?php echo(translate("All tests are ok"));?>";
 	var warningHeader = "<?php echo(translate("Warnings found in test"));?>";
 	var errorHeader = "<?php echo(translate("Errors found in test"));?>";
 	var languageId = "<?php echo($languageId)?>";
+	var languageSet = <?php if ($languageSet) { echo("true"); } else { echo("false"); } ?>;
 	var permalinkId = <?php echo((0 < $permalinkId) ? $permalinkId : 'null');?>;
 	var permalinkView = <?php echo($permalinkView)?>;
 </script>
@@ -72,8 +75,8 @@
 			</div>
 			<div id="menu">
 				<ul>
-					<li><a href="./"><?php echo(translate("Home")); ?></a></li>
-					<li><a href="./?faq=1"><?php echo(translate("FAQ")); ?></a></li>
+					<li><a href="./<?php if ($languageSet) { echo("?lang=" . $languageId); } ?>"><?php echo(translate("Home")); ?></a></li>
+					<li><a href="./?faq=1<?php if ($languageSet) { echo("&lang=" . $languageId); } ?>"><?php echo(translate("FAQ")); ?></a></li>
 				</ul>
 			</div>
 	</div>

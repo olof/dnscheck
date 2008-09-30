@@ -193,7 +193,7 @@
 			var li = document.createElement("li");
 			var a = document.createElement("a");
 			
-			a.href = "?time=" + response['history'][i]['time'] + "&id=" + response['history'][i]['id'] + "&view=basic";
+			a.href = "?time=" + response['history'][i]['time'] + "&id=" + response['history'][i]['id'] + "&view=basic" + (languageSet ? ("&lang=" + languageId) : "");
 			a.className = response['history'][i]['class'];
 			a.innerHTML = formatDate(response['history'][i]['time']);
 			a.historyId = response['history'][i]['id'];
