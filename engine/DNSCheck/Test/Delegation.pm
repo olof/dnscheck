@@ -74,9 +74,12 @@ sub test {
     }
 
     # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
+    my @ns_at_both;
     foreach my $ns (@ns_at_parent) {
         unless (scalar grep(/^$ns$/i, @ns_at_child)) {
             $errors += $logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
+        } else {
+            push @ns_at_both, $ns;
         }
     }
 
@@ -88,8 +91,9 @@ sub test {
     }
 
     # REQUIRE: at least two (2) NS records at parent [IIS.KVSE.001.01/r1]
-    unless (scalar @ns_at_parent >= 2) {
-        $logger->auto("DELEGATION:TOO_FEW_NS", scalar @ns_at_parent);
+    # Modified to check for NS records that exist at both parent and child.
+    unless (scalar @ns_at_both >= 2) {
+        $logger->auto("DELEGATION:TOO_FEW_NS", scalar @ns_at_both);
     }
 
     # REQUIRE: at least two IPv4 nameservers must be found
