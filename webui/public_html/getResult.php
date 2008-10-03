@@ -123,12 +123,12 @@
 		$initialRootStatus = $showRootStatuses ? 'off' : '';
 		
 		$finalTree = array(
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('Delegation')), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('Nameserver')), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('Consistency')), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('SOA')), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('Connectivity')), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => utf8_encode(translate('DNSSEC')), 'subtree' => array())
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('Delegation'), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('Nameserver'), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('Consistency'), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('SOA'), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('Connectivity'), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('DNSSEC'), 'subtree' => array())
 		);
 		
 		$finalResult = STATUS_OK;
@@ -147,7 +147,7 @@
 						break;	
 					case 'NAMESERVER:BEGIN':
 						$result = flattenTree($rootNode, 3, $allMessages, $flattenedArray);
-						$nameserverNode = array('type' => 1, 'class' => $showRootStatuses ? $result : '', 'caption' => utf8_encode(translate('Nameserver')) . ' ' . $rootNode[0]['arg0'], 'subtree' => $flattenedArray);
+						$nameserverNode = array('type' => 1, 'class' => $showRootStatuses ? $result : '', 'caption' => translate('Nameserver') . ' ' . $rootNode[0]['arg0'], 'subtree' => $flattenedArray);
 						$finalTree[1]['subtree'][] = $nameserverNode;
 						
 						if ($showRootStatuses)
