@@ -635,30 +635,30 @@ sub _init_nameservers_helper {
         # Lookup IPv4 addresses for name servers
         my $ipv4 = $self->query_resolver($ns, $qclass, "A");
 
-        goto DONE unless ($ipv4);
-
-        foreach my $rr ($ipv4->answer) {
-            if (($rr->type eq "A") && $rr->address) {
-                push @{ $self->{nameservers}{$qname}{$qclass}{ipv4} },
-                  $rr->address;
-                $self->{logger}
-                  ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
-                    $rr->address);
+        if (defined($ipv4)) {
+            foreach my $rr ($ipv4->answer) {
+                if (($rr->type eq "A") && $rr->address) {
+                    push @{ $self->{nameservers}{$qname}{$qclass}{ipv4} },
+                      $rr->address;
+                    $self->{logger}
+                      ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
+                        $rr->address);
+                }
             }
         }
 
         # Lookup IPv6 addresses for name servers
         my $ipv6 = $self->query_resolver($ns, $qclass, "AAAA");
 
-        goto DONE unless ($ipv6);
-
-        foreach my $rr ($ipv6->answer) {
-            if (($rr->type eq "AAAA") && $rr->address) {
-                push @{ $self->{nameservers}{$qname}{$qclass}{ipv6} },
-                  $rr->address;
-                $self->{logger}
-                  ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
-                    $rr->address);
+        if (defined($ipv6)) {
+            foreach my $rr ($ipv6->answer) {
+                if (($rr->type eq "AAAA") && $rr->address) {
+                    push @{ $self->{nameservers}{$qname}{$qclass}{ipv6} },
+                      $rr->address;
+                    $self->{logger}
+                      ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
+                        $rr->address);
+                }
             }
         }
     }
