@@ -38,35 +38,35 @@ messages:
   descr: ~
  DNS:QUERY_PARENT:
   args: 4
-  format: Anropa moderzon till %s för %s/%s/%s.
+  format: Anropar förälder till %s för %s/%s/%s.
  DNS:QUERY_PARENT_NOCACHE:
   args: 4
-  format: Anropa moderzon (utan cache) till %s för %s/%s/%s.
+  format: Anropar förälder (utan cache) till %s för %s/%s/%s.
  DNS:FIND_PARENT:
   args: 2
-  format: Hitta moderzon till %s/%s.
+  format: Hitta förälder till %s/%s.
  DNS:NO_PARENT:
   args: 2
-  format: Lyckades inte hitta moderzonen till %s/%s.
-  descr: DNSCheck lyckades inte hitta moderzonen.
+  format: Lyckades inte hitta föräldern till %s/%s.
+  descr: DNSCheck lyckades inte hitta föräldern.
  DNS:PARENT_OF:
   args: 3
-  format: Hittade %s som moderzon till %s/%s.
+  format: Hittade %s som förälder till %s/%s.
  DNS:EXPLICIT_RESPONSE:
   args: 1
   format: DNS-server svar: %s
  DNS:PARENT_RESPONSE:
   args: 1
-  format: DNS-svar från moderzon: %s
+  format: DNS-svar från föräldern: %s
  DNS:CHILD_RESPONSE:
   args: 1
-  format: DNS-svar från dotterzonen: %s
+  format: DNS-svar från barnet: %s
  DNS:RESOLVER_RESPONSE:
   args: 1
   format: DNS-svar från resolver: %s
  DNS:NO_PARENT_NS:
   args: 3
-  format: Lyckades inte hitta DNS-server för %s (moderzon till %s/%s).
+  format: Lyckades inte hitta DNS-server för %s (förälder till %s/%s).
   descr: ~
  DNS:QUERY_TIMEOUT:
   args: 4
@@ -111,7 +111,7 @@ messages:
   format: Resultat av DNS-uppslagning: %s
  DNS:SETUP_RESOLVER:
   args: 0
-  format: DNS-resolver inställd.
+  format: DNS-resolver konfigurerad.
  DNS:SET_BUFSIZE:
   args: 1
   format: DNS-resolverns EDNS buffert-storlek satt till %s.
@@ -138,7 +138,7 @@ messages:
   format: DNS-uppslagning av NS för %s/%s hos förälder.
  DNS:GET_NS_AT_CHILD:
   args: 2
-  format: DNS-anrop för NS till %s/%s hos dotterzonen.
+  format: DNS-uppslagning av NS för %s/%s hos barnet.
  DNS:INITIALIZING_NAMESERVERS:
   args: 2
   format: Initialiserar DNS-servrar för %s/%s.
@@ -150,23 +150,23 @@ messages:
   format: Hittade DNS-server för %s/%s: %s (%s)
  DNS:FIND_PARENT_BEGIN:
   args: 2
-  format: Försöker hitta moderzon till %s/%s
+  format: Försöker hitta föräldern till %s/%s
  DNS:NXDOMAIN:
   args: 2
   format: Domänen %s/%s finns inte.
   descr: ~
  DNS:FIND_PARENT_DOMAIN:
   args: 1
-  format: Använder %s som utgångpunkt för att hitta moderzonen.
+  format: Använder %s som utgångpunkt för att hitta föräldrazonen.
  DNS:FIND_PARENT_TRY:
   args: 1
-  format: Testar %s som moderzon.
+  format: Testar %s som föräldrazon.
  DNS:FIND_PARENT_UPPER:
   args: 1
-  format: Moderzonen kan vara %s.
+  format: Föräldrazonen kan vara %s.
  DNS:FIND_PARENT_RESULT:
   args: 3
-  format: Slog upp %s som moderzon till %s/%s.
+  format: Slog upp %s som förälder till %s/%s.
  DNS:FIND_MX_BEGIN:
   args: 1
   format: Slå upp MX-pekare för %s.
@@ -249,28 +249,28 @@ messages:
   format: Börja testa delegering av %s.
  DELEGATION:NS_AT_PARENT:
   args: 1
-  format: DNS-servrar listade i moderzonen: %s
-  descr: Detta är listan DNS-servrar som är listade i moderzonen. Den borde innehålla samtliga DNS-servrar som är listade i dotterzonen.
+  format: DNS-servrar listade i föräldrazonen: %s
+  descr: Detta är listan med DNS-servrar som finns i föräldrazonen. Den borde innehålla samtliga DNS-servrar som är listade i barnzonen.
  DELEGATION:NOT_FOUND_AT_PARENT:
   args: 0
-  format: Delegering ej hittad hos moderzon.
-  descr: Ingen delegering hittades hos moderzonen, vilket gör att din zon inte kan kommas åt från Internet.
+  format: Delegering ej hittad hos föräldern.
+  descr: Ingen delegering hittades i föräldrazonen, vilket gör att din zon inte är nåbar från Internet.
  DELEGATION:NS_AT_CHILD:
   args: 1
-  format: DNS-servrar listade i dotterzonen: %s
-  descr: Detta är listan DNS-servrar som är listade i dotterzonen. Den måste innehålla samtliga DNS-servrar som är listade i moderzonen.
+  format: DNS-servrar listade i barnzonen: %s
+  descr: Detta är listan med DNS-servrar som är listade i barnzonen. Den måste innehålla samtliga DNS-servrar som är listade i föräldrazonen.
  DELEGATION:NOT_FOUND_AT_CHILD:
   args: 0
-  format: Inga DNS-servrar hittade i dotterzonen.
-  descr: Inga DNS-servrar hittades i dotterzonen. Det här betyder vanligtvis att dotterzonen inte är konfigurerad att svara på frågor om zonen.
+  format: Inga DNS-servrar hittades hos barnet.
+  descr: Inga DNS-servrar hittades hos barnet. Det här betyder vanligtvis att barnet inte är konfigurerat att svara på frågor om zonen.
  DELEGATION:EXTRA_NS_PARENT:
   args: 1
-  format: Överflödig DNS-server listad hos förälder: %s
-  descr: En DNS-server är listad i moderzonen men inte i dotterzonen. Det här är troligtvis ett administrationsfel. Du borde uppdatera moderzonen så att den listar samma DNS-servrar som hos dotterzonen så snart som möjligt.
+  format: Extra DNS-server listad hos förälder: %s
+  descr: En DNS-server finns listad i föräldrazonen men inte i barnzonen. Det här är troligtvis ett administrationsfel. Du borde uppdatera föräldrazonen så att den listar samma DNS-servrar som hos barnzonen så snart som möjligt.
  DELEGATION:EXTRA_NS_CHILD:
   args: 1
-  format: Extra DNS-server listad i dotterzon: %s
-  descr: En DNS-server är listan i dotterzonen men inte i moderzonen. Det beror troligtvis på ett konfigurationsfel, men det kan ibland finnas skäl för att konfigurera en zon på det här sättet.
+  format: Extra DNS-server listad hos barnet: %s
+  descr: En DNS-server finns listad i barnzonen men inte i föräldrazonen. Det beror troligtvis på ett konfigurationsfel, men det kan ibland finnas skäl för att konfigurera en zon på det här sättet.
  DELEGATION:TOO_FEW_NS:
   args: 1
   format: För få DNS-servrar (%s).
@@ -297,20 +297,20 @@ messages:
   format: Hoppade över glue för %s (%s).
  DELEGATION:GLUE_FOUND_AT_PARENT:
   args: 3
-  format: Glue i moderzonen för %s hittad: %s (%s)
-  descr: IP-adressen för DNS-servern hittades i moderzonen.
+  format: Glue i föräldrazonen för %s hittad: %s (%s)
+  descr: IP-adressen för DNS-servern hittades i föräldrazonen.
  DELEGATION:GLUE_FOUND_AT_CHILD:
   args: 3
-  format: Glue i dotterzonen för %s hittad: %s (%s)
-  descr: IP-adressen för DNS-servern hittades i dotterzonen.
+  format: Glue i barnzonen för %s hittad: %s (%s)
+  descr: IP-adressen för DNS-servern hittades hos barnet.
  DELEGATION:INCONSISTENT_GLUE:
   args: 1
   format: Ej överensstämmande glue för DNS-servern %s.
-  descr: Adressen för en DNS-server skiljer sig mellan dotterzonen och moderzonen. Detta är ett konfigurationsfel och bör korrigeras så snart som möjligt.
+  descr: Adressen för en DNS-server skiljer sig mellan barnzonen och föräldrazonen. Detta är ett konfigurationsfel och bör korrigeras så snart som möjligt.
  DELEGATION:GLUE_MISSING_AT_CHILD:
   args: 1
-  format: Glue saknas i dotterzon: %s
-  descr: DNS-serverns IP-adress hittades ej i dotterzonen. Detta är ett konfigurationsfel och bör korrigeras så snart som möjligt.
+  format: Glue saknas hos barnet: %s
+  descr: DNS-serverns IP-adress hittades ej hos barnet. Detta är ett konfigurationsfel och bör korrigeras så snart som möjligt.
  DELEGATION:NS_HISTORY:
   args: 2
   format: Tidigare använda DNS-servrar för %s: %s
@@ -327,46 +327,46 @@ messages:
   format: Börja testa DNSSEC för %s.
  DNSSEC:CHECKING_DS_AT_PARENT:
   args: 1
-  format: Kollar DS-poster för %s hos moderzon.
+  format: Kollar DS-poster för %s i föräldrazonen.
  DNSSEC:DS_FOUND:
   args: 1
-  format: Hittade DS-post för %s hos moderzon.
-  descr: En DS (delegation signer) RRset hittades i moderzonen. Det här indikerar en säker delegering, d.v.s. dotterzonen måste vara signerad.
+  format: Hittade DS-post för %s i föräldrazonen.
+  descr: En DS (delegation signer) RRset hittades i föräldrazonen. Det här indikerar en säker delegering, d.v.s. barnzonen måste vara signerad.
  DNSSEC:NO_DS_FOUND:
   args: 1
-  format: Hittade inte DS-pekare för %s i moderzonen.
-  descr: Ingen DS (delegation signer) RRset hittades i moderzonen. Det här indikerar en icke-säker delegering, d.v.s. dotterzonen behöver inte vara signerad.
+  format: Hittade inte DS-pekare för %s i föräldrazonen.
+  descr: Ingen DS (delegation signer) RRset hittades i föräldrazonen. Det här indikerar en icke-säker delegering, d.v.s. barnzonen behöver inte vara signerad.
  DNSSEC:CHECKING_DNSKEY_AT_CHILD:
   args: 1
-  format: Kollar DNSKEY-poster för %s i dotterzonen.
+  format: Kollar DNSKEY-poster för %s i barnzonen.
  DNSSEC:DNSKEY_FOUND:
   args: 1
-  format: Hittade DNSKEY-post för %s i dotterzon.
-  descr: En DNSKEY RRset hittades i dotterzonen, vilket indikerar att dotterzonen troligtvis använder DNSSEC.
+  format: Hittade en DNSKEY-post för %s i barnzonen.
+  descr: En DNSKEY RRset hittades i barnzonen, vilket indikerar att den troligtvis använder DNSSEC.
  DNSSEC:DNSKEY_NOT_FOUND:
   args: 1
-  format: Hittade inte DNSKEY-post för %s i dotterzonen.
-  descr: Ingen DNSKEY RRset hittades i dotterzonen, vilket indikerar att dotterzonen troligtvis inte använder DNSSEC.
+  format: Hittade ingen DNSKEY-post för %s i barnzonen.
+  descr: Inget DNSKEY RRset hittades i barnzonen, vilket indikerar att barnzonen troligtvis inte använder DNSSEC.
  DNSSEC:DETERMINE_SECURITY_STATUS:
   args: 1
   format: Avgör säkerhetsstatus för %s.
  DNSSEC:INCONSISTENT_SECURITY:
   args: 1
-  format: Inkonsekvent säkerhet för %s - DS hittad i moderzonen, men ingen DNSKEY hittad i dotterzonen.
-  descr: Moderzonen har säker delegering till dotterzonen (indikerad av DS RRset i moderzonen), men dotterzonen har ingen DNSKEY. Detta beror troligtvis på att en f.d. signerad zon blev osignerad utan att begära att moderzonen skulle ta bort den säkrade delegeringen.
+  format: Inkonsekvent säkerhet för %s - DS hittad i föräldrazonen, men ingen DNSKEY hittad i barnzonen.
+  descr: Föräldrazonen har en säker delegering till barnzonen (indikerad av DS RRset i föräldrazonen), men barnzonen har ingen DNSKEY. Detta beror troligtvis på att en f.d. signerad zon blev osignerad utan att begära att föräldrazonen skulle ta bort den säkrade delegeringen.
  DNSSEC:CONSISTENT_SECURITY:
   args: 1
   format: Konsekvent säkerhet för %s.
  DNSSEC:SKIPPED_NO_KEYS:
   args: 1
-  format: Inga DNSKEY(s) hittade i dotterzonen. Andra test hoppades över.
+  format: Inga DNSKEY(s) hittade i barnzonen. Andra test hoppades över.
  DNSSEC:MISSING_DS:
   args: 1
-  format: Bruten förtroendekedja för %s - DNSKEY hittad i dotterzonen, men ingen DS hittad i moderzonen.
-  descr: Dotterzonen verkar använda DNSSEC, men moderzonen har ingen säker delegering. På grund av detta är förtroendekedjan mellan moderzonen och dotterzonen bruten och validerande resolvers kommer inte kunna validera svar från dotterzonen.
+  format: Bruten förtroendekedja för %s - DNSKEY hittad i barnzonen, men ingen DS hittad i föräldrazonen.
+  descr: Barnzonen verkar använda DNSSEC, men föräldrazonen har ingen säker delegering. På grund av detta är förtroendekedjan mellan föräldrazonen och barnzonen bruten och validerande resolvers kommer inte kunna validera svar från barnzonen.
  DNSSEC:CHECKING_CHILD:
   args: 1
-  format: Kollar DNSSEC i dotterzonen (%s).
+  format: Kollar DNSSEC i barnzonen (%s).
  DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
   args: 3
   format: DNSKEY %s (tag %s) använder en icke-rekommenderad algoritm: %s
@@ -382,7 +382,7 @@ messages:
  DNSSEC:DNSKEY_SEP:
   args: 2
   format: DNSKEY %s (tag %s) är markerad som en säker startpunkt (SEP).
-  descr: En säker startpunkt (SEP) är en del av förtroendekedjan mellan moderzonen och dotterzonen.
+  descr: En säker startpunkt (Secure Entry Point - SEP) är en del av förtroendekedjan mellan föräldrazonen och barnzonen.
  DNSSEC:DNSKEY_MANDATORY_FOUND:
   args: 1
   format: Minst en obligatorisk algoritm hittad för DNSKEY %s.
@@ -400,7 +400,7 @@ messages:
   descr: Inga DNSSEC-signaturer hittades när zonen kollades. Zonen kanske inte är signerad?
  DNSSEC:CHILD_CHECK_ABORTED:
   args: 1
-  format: Avbröt DNSSEC-tester av dotterzonen för %s.
+  format: Avbröt DNSSEC-tester av barnzonen för %s.
  DNSSEC:DNSKEY_SIGNATURE_OK:
   args: 2
   format: Hittade RRSIG(DNSKEY %s) skapad av publik nyckel (tag %s).
@@ -431,37 +431,37 @@ messages:
   descr: Hittade inga godkända signaturer för SOA
  DNSSEC:CHILD_CHECKED:
   args: 1
-  format: Klar med DNSSEC-tester av dotterzonen för %s.
+  format: Klar med DNSSEC-tester av barnzonen för %s.
  DNSSEC:CHECKING_PARENT:
   args: 1
-  format: Kollar DNSSEC för moderzonen till %s.
+  format: Kollar DNSSEC för föräldrazonen till %s.
  DNSSEC:PARENT_DS:
   args: 2
-  format: Hittade DS(%s) i moderzonen: %s
+  format: Hittade DS(%s) i föräldrazonen: %s
  DNSSEC:DS_KEYREF_OK:
   args: 2
-  format: Moderzonens DS(%s) refererar till godkänd nyckel för dotterzonen: %s
+  format: Föräldrazonens DS(%s) refererar till en godkänd nyckel för barnzonen: %s
  DNSSEC:DS_KEYREF_INVALID:
   args: 2
-  format: Moderzonens DS(%s) refererar till icke godkänd nyckel hos dotterzonen: %s
-  descr: DS RRset måste referera till en godkänd nyckel hos dotterzonen, annars bryts förtroendekedjan mellan moderzonen och dotterzonen vilket innebär att validerande resolvers inte kommer kunna kontrollera svaren från dotterzonen.
+  format: Föräldrazonens DS(%s) refererar till icke godkänd nyckel hos barnzonen: %s
+  descr: DS RRset måste referera till en giltig nyckel hos barnzonen, annars bryts förtroendekedjan mellan föräldrazonen och barnzonen vilket innebär att validerande resolvers inte kommer kunna validera svaren från barnzonen.
  DNSSEC:DS_TO_SEP:
   args: 2
-  format: Moderzonens DS(%s) refererar till en säker startpunkt (SEP) hos dotterzonen: %s
+  format: Föräldrazonens DS(%s) refererar till en säker startpunkt (SEP) hos barnzonen: %s
  DNSSEC:DS_TO_NONSEP:
   args: 2
-  format: Moderzonens DS(%s) refererar inte till en säker startpunkt (SEP) hos dotterzonen: %s
-  descr: DS RRset refererar till en DNSKEY hos dotterzonen men nyckeln är inte markerad som en säker startpunkt.
+  format: Föräldrazonens DS(%s) refererar inte till en säker startpunkt (SEP) hos barnzonen: %s
+  descr: DS RRset refererar till en DNSKEY hos barnzonen men nyckeln är inte markerad som en säker startpunkt.
  DNSSEC:DS_MANDATORY_FOUND:
   args: 1
   format: Minst en obligatorisk DS-algoritm hittad för %s.
  DNSSEC:DS_MANDATORY_NOT_FOUND:
   args: 1
   format: Ingen obligatorisk DS-algoritm hittad för %s.
-  descr: Eftersom ingen av hash-algoritmerna publicerade i DS RRset är obligatoriska, kommer vissa validerande resolvers att inte kunna följa förtroendekedjan från moderzonen till dotterzonen.
+  descr: Eftersom ingen av hash-algoritmerna publicerade i DS RRset är obligatoriska, kommer vissa validerande resolvers att inte kunna följa förtroendekedjan från föräldrazonen till barnzonen.
  DNSSEC:PARENT_CHECKED:
   args: 1
-  format: Klar med DNSSEC-tester av moderzonen för %s.
+  format: Klar med DNSSEC-tester av föräldrazonen för %s.
  DNSSEC:RRSIG_NOT_YET_VALID:
   args: 1
   format: DNSSEC-signatur ej godkänd än: %s
@@ -795,11 +795,11 @@ messages:
  ZONE:FATAL_DELEGATION:
   args: 1
   format: Kritiskt fel i delegering av zonen %s.
-  descr: Inga DNS-servrar hittade hos dotterzonen eller moderzonen. Ytterligare tester kan ej utföras.
+  descr: Inga DNS-servrar hittade hos barn- eller föräldrazonen. Ytterligare tester kan ej utföras.
  ZONE:FATAL_NO_CHILD_NS:
   args: 1
-  format: Kritiskt fel - inga DNS-servrar för dotterzonen för %s.
-  descr: Inga DNS-servrar för dotterzonen hittades. Ytterligare tester kan ej utföras.
+  format: Kritiskt fel - inga DNS-servrar i barnzonen för %s.
+  descr: Inga DNS-servrar för barnzonen hittades. Ytterligare tester kan ej utföras.
  ZONE:END:
   args: 1
   format: Klar med test av zonen %s.
