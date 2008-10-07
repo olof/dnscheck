@@ -184,8 +184,6 @@ DNSCheck - DNS Check Tools
 
 new(I<config>);
 
-$dns->report();
-
 $dns->zone(I<zone>);
 
 $dns->host(I<hostname>);
@@ -215,6 +213,6 @@ $dns->smtp(I<mailhost>, I<emailaddress>);
 	my $check = new DNSCheck({ class => "IN" });
 
 	$check->zone("example.com");
-	$check->report();
+	$check->logger->print;
 
 =cut
