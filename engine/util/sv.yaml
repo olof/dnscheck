@@ -17,10 +17,10 @@ messages:
   format: %s är en ogiltig IP-adress.
  ASN:ANNOUNCE_BY:
   args: 2
-  format: %s utannonserad av AS %s.
+  format: %s annonserad av AS %s.
  ASN:NOT_ANNOUNCE:
   args: 1
-  format: %s är inte utannonserad.
+  format: %s är inte annonserad.
  ASN:LOOKUP_ERROR:
   args: 1
   format: Lyckades inte slå upp AS-numret för %s.
@@ -185,7 +185,7 @@ messages:
 
  ADDRESS:BEGIN:
   args: 1
-  format: Börja testa adressen %s.
+  format: Börjar testa adressen %s.
  ADDRESS:INVALID:
   args: 1
   format: Adressen %s är ogiltig eller inkorrekt.
@@ -216,29 +216,29 @@ messages:
 
  CONNECTIVITY:BEGIN:
   args: 1
-  format: Börja testa nåbarhet för %s.
+  format: Börjar testa nåbarhet för %s.
  CONNECTIVITY:ANNOUNCED_BY_ASN:
   args: 2
-  format: DNS-servern %s utannonserad av: %s
-  descr: IP-adressen är utannonserad av ett autonomt system (AS).
+  format: DNS-servern %s annonserad av: %s
+  descr: IP-adressen är annonserad av ett autonomt system (AS).
  CONNECTIVITY:MULTIPLE_ASN:
   args: 1
-  format: DNS-servern %s är utannonerad av flera AS.
-  descr: DNS-servern är utannonserad av fler än ett autonomt system (AS).
+  format: DNS-servern %s är annonserad av flera AS.
+  descr: DNS-servern är annonserad av fler än ett autonomt system (AS).
  CONNECTIVITY:NOT_ANNOUNCED:
   args: 1
-  format: DNS-servern %s är inte utannonserad av något AS.
-  descr: IP-adressen är inte utannonserad av något autonomt system och är troligtvis inte nåbar på Internet.
+  format: DNS-servern %s är inte annonserad av något AS.
+  descr: IP-adressen är inte annonserad av något autonomt system och är troligtvis inte nåbar på Internet.
  CONNECTIVITY:ASN_LIST:
   args: 1
-  format: Zon utannonserad av ASN: %s
+  format: Zon annonserad av ASN: %s
  CONNECTIVITY:TOO_FEW_ASN:
   args: 1
-  format: Zon utannonserad av endast ett ASN (%s).
+  format: Zon annonserad av endast ett ASN (%s).
   descr: Samtliga av zonens DNS-servrar finns inom samma autonoma system.
  CONNECTIVITY:ASN_COUNT_OK:
   args: 1
-  format: Zon utannonserad av fler än ett ASN (%s).
+  format: Zon annonserad av fler än ett ASN (%s).
   descr: Zonens DNS-servrar är spridda över mer än ett autonomt system.
  CONNECTIVITY:END:
   args: 1
@@ -246,7 +246,7 @@ messages:
 
  DELEGATION:BEGIN:
   args: 1
-  format: Börja testa delegering av %s.
+  format: Börjar testa delegering av %s.
  DELEGATION:NS_AT_PARENT:
   args: 1
   format: DNS-servrar listade i föräldrazonen: %s
@@ -324,7 +324,7 @@ messages:
 
  DNSSEC:BEGIN:
   args: 1
-  format: Börja testa DNSSEC för %s.
+  format: Börjar testa DNSSEC för %s.
  DNSSEC:CHECKING_DS_AT_PARENT:
   args: 1
   format: Kollar DS-poster för %s i föräldrazonen.
@@ -479,7 +479,7 @@ messages:
 
  HOST:BEGIN:
   args: 1
-  format: Börja testa värd %s.
+  format: Börjar testa värdnamn %s.
  HOST:ILLEGAL_NAME:
   args: 2
   format: Värdnamnet %s innehåller fel (syntax-fel på %s)
@@ -494,11 +494,11 @@ messages:
   descr: Värdnamnet är ett alias (CNAME), vilket inte är tillåtet. Värdnamn måste publiceras med en A- eller AAAA-pekare.
  HOST:END:
   args: 1
-  format: Klar med test av värden %s.
+  format: Klar med test av värdnamnet %s.
 
  MAIL:BEGIN:
   args: 1
-  format: Börja testa e-postadressen %s.
+  format: Börjar testa e-postadressen %s.
  MAIL:ADDRESS_SYNTAX:
   args: 1
   format: %s är inte en korrekt e-postadress.
@@ -516,14 +516,14 @@ messages:
  MAIL:IPV6_ONLY:
   args: 1
   format: E-postservern %s är endast nåbar via IPv6.
-  descr: Denna e-postserver är endast nåbar via IPv6, vilket gör det omöjligt för de flesta värdar på Internet att skicka epost till den. Om mer än en MX finns och minst en går att nå via IPv4 kan detta ignoreras. 
+  descr: Denna e-postserver är endast nåbar via IPv6, vilket gör det omöjligt för de flesta att skicka epost till den. Om mer än en MX finns och minst en går att nå via IPv4 kan detta ignoreras. 
  MAIL:END:
   args: 1
   format: Klar med test av e-postadressen %s.
 
  NAMESERVER:BEGIN:
   args: 1
-  format: Börja testa DNS-servern %s.
+  format: Börjar testa DNS-servern %s.
  NAMESERVER:HOST_ERROR:
   args: 1
   format: Fel på värdnamnet eller adressen för %s.
@@ -612,7 +612,7 @@ messages:
 
  CONSISTENCY:BEGIN:
   args: 1
-  format: Börja testa att zonen är konsekvent uppsatt för %s.
+  format: Börjar testa att zonen är konsekvent uppsatt för %s.
  CONSISTENCY:SOA_SERIAL_AT_ADDRESS:
   args: 2
   format: SOA på adressen %s har serienumret %s.
@@ -639,7 +639,7 @@ messages:
 
  SMTP:BEGIN:
   args: 3
-  format: Börja testa e-postservern %s (%s) med %s.
+  format: Börjar testa e-postservern %s (%s) med %s.
  SMTP:CONNECT_FAILED:
   args: 2
   format: Lyckades inte kontakta %s (%s).
@@ -659,14 +659,14 @@ messages:
   format: SMTP-svar: %s
  SMTP:MAIL_FROM_REJECTED:
   args: 1
-  format: Värden accepterade inte %s som SMTP-destination.
+  format: E-postservern accepterade inte %s som SMTP-destination.
   descr: E-postservern accepterade inte vår avsändaradress. DNSCheck använder en standard null avsändaradress som måste accepteras av e-postservrar.
  SMTP:RCPT_TO:
   args: 1
   format: Använder %s som SMTP-mottagare (RCPT_TO).
  SMTP:RECIPIENT_REJECTED:
   args: 1
-  format: Värden accepterade inte %s som SMTP-mottagare.
+  format: E-postservern accepterade inte %s som SMTP-mottagare.
   descr: E-postservern accepterade inte epost till mottagaradressen. Detta beror troligtvis på att det är en okänd adress.
  SMTP:RSET:
   args: 0
@@ -683,7 +683,7 @@ messages:
 
  SOA:BEGIN:
   args: 1
-  format: Börja testa SOA-parametrar för %s.
+  format: Börjar testa SOA-parametrar för %s.
  SOA:NOT_FOUND:
   args: 1
   format: Hittade ingen SOA-post för %s.
@@ -791,7 +791,7 @@ messages:
 
  ZONE:BEGIN:
   args: 1
-  format: Börja testa zonen %s.
+  format: Börjar testa zonen %s.
  ZONE:FATAL_DELEGATION:
   args: 1
   format: Kritiskt fel i delegering av zonen %s.
