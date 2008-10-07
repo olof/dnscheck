@@ -3,7 +3,7 @@
 	
 	function checkIfDomainExists($domain)
 	{
-		$command = "preflight '" . addslashes($domain) . "'";
+		$command = "dnscheck-preflight '" . addslashes($domain) . "'";
 		$commandOutput = array();
 		$commandReturnValue = null;
 		@exec($command, $commandOutput, $commandReturnValue);
