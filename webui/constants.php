@@ -1,5 +1,3 @@
-<!-- $Id$ -->
-
 <?php
 	require_once('IP2Country.php');
 
