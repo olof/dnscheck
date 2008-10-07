@@ -3,14 +3,14 @@
 	
 	function checkIfDomainExists($domain)
 	{
-		$command = "dig +nssearch '" . addslashes($domain) . "'";
+		$command = "preflight '" . addslashes($domain) . "'";
 		$commandOutput = array();
 		$commandReturnValue = null;
 		@exec($command, $commandOutput, $commandReturnValue);
 		
 		$rawOutput = implode("\r\n", $commandOutput) . "\r\n";
 		
-		if ((false === strpos($rawOutput, 'SOA')) && (false === strpos($rawOutput, 'CNAME')))
+		if (false === strpos($rawOutput, 'TRUE'))
 		{
 			return false;
 		}
