@@ -333,9 +333,9 @@
 			"Testet utfördes inte",
 			"Delegering",
 			"DNS-server",
-			"Konsekventa inställningar",
+			"Konsekvent uppsättning",
 			"SOA",
-			"Uppkoppling",
+			"Konnektivitet",
 			"DNSSEC",
 			"Länk till det här testresultatet"
 		)
