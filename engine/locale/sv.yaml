@@ -473,6 +473,9 @@ messages:
  DNSSEC:RRSIG_VALID:
   args: 1
   format: DNSSEC-signatur godkänd: %s
+ DNSSEC:RRSIG_EXPIRES_AT:
+     args: 1
+     format: DNSSEC-signaturen går ut: %s
  DNSSEC:END:
   args: 1
   format: Klar med test av DNSSEC för %s.
