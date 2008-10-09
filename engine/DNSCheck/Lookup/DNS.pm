@@ -1111,6 +1111,12 @@ sub preflight_check {
     } elsif (!defined($packet)) {
         return 1;
     }
+    
+    # Was it SERVFAIL? If it was, return true.
+    if ($resolver->errorstring eq 'SERVFAIL') {
+        return 1;
+    }
+    
 
     # No NS, no SOA, no successful return
     return undef;
