@@ -1,11 +1,10 @@
 #!/usr/bin/perl -l
 
-use DNSCheck::Logger;
-use DNSCheck::Lookup::DNS;
-use Data::Dumper;
+use DNSCheck;
+use Config;
 
-my $logger = DNSCheck::Logger->new();
-my $dns    = DNSCheck::Lookup::DNS->new($logger);
+my $dc = DNSCheck->new($DNSCheck::default->{config});
+my $dns = $dc->{context}->dns;
 
 if ($dns->preflight_check($ARGV[0])) {
     print "TRUE";

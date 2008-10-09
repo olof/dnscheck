@@ -1102,7 +1102,6 @@ sub preflight_check {
     } elsif (!defined($packet)) {
 
         # The manual doesn't say what errors are possible, just that they are.
-        warn "Unknown error on NS lookup";
         return 1;
     }
 
@@ -1110,7 +1109,6 @@ sub preflight_check {
     if (defined($packet) and grep { $_->type eq 'SOA' } $packet->answer) {
         return 1;
     } elsif (!defined($packet)) {
-        warn "Unknown error on SOA lookup";
         return 1;
     }
 
