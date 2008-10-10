@@ -81,10 +81,10 @@ sub new {
     $self->{blacklist} = ();
 
     # default parameters
-    $self->{default}{udp_timeout}  = $config->{udp_timeout};
-    $self->{default}{tcp_timeout}  = $config->{tcp_timeout};
-    $self->{default}{retry}        = $config->{retry};
-    $self->{default}{retrans}      = $config->{retrans};
+    $self->{default}{udp_timeout} = $config->{udp_timeout};
+    $self->{default}{tcp_timeout} = $config->{tcp_timeout};
+    $self->{default}{retry}       = $config->{retry};
+    $self->{default}{retrans}     = $config->{retrans};
 
     # set up global resolver
     $self->{resolver} = new Net::DNS::Resolver;
@@ -1090,12 +1090,11 @@ sub preflight_check {
     } elsif (!defined($packet)) {
         return 1;
     }
-    
+
     # Was it SERVFAIL? If it was, return true.
     if ($resolver->errorstring eq 'SERVFAIL') {
         return 1;
     }
-    
 
     # No NS, no SOA, no successful return
     return undef;

@@ -123,7 +123,7 @@ sub new {
           unless $config->{policy}->{params}->{$p};
     }
 
-	# create DNSCheck context
+    # create DNSCheck context
     $self->{context} = new DNSCheck::Context($config);
 
     bless $self, $class;

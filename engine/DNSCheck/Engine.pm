@@ -76,7 +76,6 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-
     my $config = shift;
 
     # apply default ENGINE configuration
@@ -92,7 +91,7 @@ sub new {
         $self->{syslog} = 0;
     }
 
-	# open syslog if applicable
+    # open syslog if applicable
     if ($self->{syslog}) {
         openlog("dnscheck", "pid", $config->{engine}->{syslog_facility});
     }

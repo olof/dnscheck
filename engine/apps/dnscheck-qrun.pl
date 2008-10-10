@@ -90,7 +90,7 @@ sub main {
         die "Failed to read policy from $policy_file";
     }
 
-	# turn of syslog if we try to debug
+    # turn of syslog if we try to debug
     if ($debug) {
         $facility = undef;
     }
@@ -113,7 +113,7 @@ sub main {
     $config->{engine}->{chunksize}       = $chunksize if ($chunksize);
     $config->{engine}->{processes}       = $processes if ($processes);
 
-	# daemonize only if we have syslog
+    # daemonize only if we have syslog
     daemonize() if ($facility);
 
     my $n = $processes;
