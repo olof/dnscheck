@@ -117,6 +117,11 @@ sub zone {
     DNSCheck::Test::Zone::test($self->{context}, @_);
 }
 
+sub undelegated_zone {
+    my $self = shift;
+    DNSCheck::Test::Zone::test_undelegated($self->{context}, @_);
+}
+
 sub host {
     my $self = shift;
     DNSCheck::Test::Host::test($self->{context}, @_);

@@ -83,6 +83,50 @@ sub test {
     return $errors;
 }
 
+sub test_undelegated {
+    my $context = shift;
+    my $zone    = shift;
+    my @ns_list = @_;
+    my $errors;
+
+    my $qclass = $context->qclass;
+    my $logger = $context->logger;
+
+    $logger->logname($zone);
+
+    $logger->module_stack_push();
+    $logger->auto("ZONE:BEGIN", $zone);
+
+    # FIXME: Write accessor in DNS::Lookup to get the resolver
+    my @saved_ns_list = $context->dns->{resolver}->nameservers;
+    $context->dns->{resolver}->nameservers(@ns_list);
+
+    my @ns_at_child = $context->dns->get_nameservers_at_child($zone, $qclass);
+
+    unless ($ns_at_child[0]) {
+        $logger->auto("ZONE:FATAL_NO_CHILD_NS", $zone);
+        goto DONE;
+    }
+
+    foreach my $ns (@ns_at_child) {
+        $errors += DNSCheck::Test::Nameserver::test($context, $zone, $ns);
+    }
+
+    $errors += DNSCheck::Test::Consistency::test($context, $zone);
+    $errors += DNSCheck::Test::SOA::test($context, $zone);
+    $errors += DNSCheck::Test::Connectivity::test($context, $zone);
+    $errors += DNSCheck::Test::DNSSEC::test($context, $zone);
+
+  DONE:
+    $logger->auto("ZONE:END", $zone);
+    $logger->module_stack_pop();
+    # Restore original nameservers in resolver
+    $context->dns->{resolver}->nameservers(@saved_ns_list);
+
+    return $errors;
+}
+
+
 1;
 
 __END__
