@@ -51,7 +51,7 @@ sub test {
     my @nameservers = ();
 
     # Fetch IPv4 nameservers
-    if ($context->{ipv4}) {
+    if ($context->{config}->{ipv4}) {
         my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
         push @nameservers, @{$ipv4} if ($ipv4);
     }

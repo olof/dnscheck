@@ -35,6 +35,7 @@ use warnings;
 use strict;
 
 use YAML qw(LoadFile Dump);
+use Data::Dumper;
 
 use DNSCheck::Logger;
 use DNSCheck::Lookup::DNS;
@@ -49,17 +50,10 @@ sub new {
 
     my $config = shift;
 
-    if ($config->{class}) {
-        $self->{qclass} = $config->{class};
-    } else {
-        $self->{qclass} = "IN";
-    }
+    $self->{config} = $config;
 
-    if ($config->{policy}) {
-        my ($hashref, $arrayref, $string) = LoadFile($config->{policy});
-        $self->{params}    = $hashref->{params};
-        $self->{loglevels} = $hashref->{loglevels};
-    }
+    $self->{logger} =
+      new DNSCheck::Logger($config->{logging}, $config->{policy}->{loglevels});
 
     # add default parameters
     foreach my $p (keys %{ $DNSCheck::default->{params} }) {
@@ -87,11 +81,6 @@ sub new {
     bless $self, $class;
 }
 
-sub hostname {
-    my $self = shift;
-    return $self->{hostname};
-}
-
 sub dns {
     my $self = shift;
     return $self->{dns};
@@ -109,17 +98,12 @@ sub logger {
 
 sub qclass {
     my $self = shift;
-    return $self->{qclass};
+    return $self->{config}->{dns}->{class};
 }
 
 sub params {
     my $self = shift;
-    return $self->{params};
-}
-
-sub loglevels {
-    my $self = shift;
-    return $self->{loglevels};
+    return $self->{config}->{policy}->{params};
 }
 
 1;

@@ -53,8 +53,8 @@ sub test {
 
     my $smtp = Net::SMTP->new(
         Host    => $address,
-        Hello   => $context->hostname,
-        Timeout => $context->{dns}{default}{smtp_timeout}
+        Hello   => $context->{config}->{smtp}->{hostname},
+        Timeout => $context->{config}->{smtp}->{timeout},
     );
 
     unless ($smtp) {

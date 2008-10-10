@@ -102,12 +102,12 @@ sub test {
     my @addresses = $context->{dns}->find_addresses($soa->mname, $soa->class);
     foreach my $address (@addresses) {
 
-        if (ip_get_version($address) == 4 && !$context->{ipv4}) {
+        if (ip_get_version($address) == 4 && !$context->{config}->{ipv4}) {
             $logger->auto("SOA:SKIPPED_IPV4", $address);
             next;
         }
 
-        if (ip_get_version($address) == 6 && !$context->{ipv6}) {
+        if (ip_get_version($address) == 6 && !$context->{config}->{ipv6}) {
             $logger->auto("SOA:SKIPPED_IPV6", $address);
             next;
         }
@@ -130,7 +130,7 @@ sub test {
         $mailaddr =~ s/(?<!\\)\./@/;
         $mailaddr =~ s/\\\././g;
 
-        if ($context->{smtp}) {
+        if ($context->{config}->{smtp}) {
             if (DNSCheck::Test::Mail::test($context, $mailaddr)) {
                 $logger->auto("SOA:RNAME_UNDELIVERABLE",
                     $zone, $soa->rname, $mailaddr);

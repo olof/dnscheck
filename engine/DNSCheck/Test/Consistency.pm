@@ -62,11 +62,11 @@ sub test {
         foreach my $address ($context->dns->find_addresses($ns, $qclass)) {
             my $ip = new Net::IP($address);
 
-            if ($ip->version == 4 and $context->{ipv4}) {
+            if ($ip->version == 4 and $context->{config}->{ipv4}) {
                 push @nameservers, $address;
             }
 
-            if ($ip->version == 6 and $context->{ipv6}) {
+            if ($ip->version == 6 and $context->{config}->{ipv6}) {
                 push @nameservers, $address;
             }
         }

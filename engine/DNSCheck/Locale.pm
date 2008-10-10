@@ -34,8 +34,6 @@ require 5.8.0;
 use warnings;
 use strict;
 
-use YAML qw(LoadFile Dump);
-
 ######################################################################
 
 sub new {
@@ -43,13 +41,11 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    my $file = shift;
+    my $config = shift;
 
-    my ($hashref, $arrayref, $string) = LoadFile($file);
-
-    $self->{name}     = $hashref->{locale_name};
-    $self->{lang}     = $hashref->{locale_id};
-    $self->{messages} = $hashref->{messages};
+    $self->{name}     = $config->{locale_name};
+    $self->{lang}     = $config->{locale_id};
+    $self->{messages} = $config->{messages};
 
     bless $self, $class;
 }
