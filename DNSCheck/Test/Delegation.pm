@@ -74,9 +74,12 @@ sub test {
     }
 
     # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
+    my @ns_at_both;
     foreach my $ns (@ns_at_parent) {
         unless (scalar grep(/^$ns$/i, @ns_at_child)) {
             $errors += $logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
+        } else {
+            push @ns_at_both, $ns;
         }
     }
 
@@ -88,8 +91,9 @@ sub test {
     }
 
     # REQUIRE: at least two (2) NS records at parent [IIS.KVSE.001.01/r1]
-    unless (scalar @ns_at_parent >= 2) {
-        $logger->auto("DELEGATION:TOO_FEW_NS", scalar @ns_at_parent);
+    # Modified to check for NS records that exist at both parent and child.
+    unless (scalar @ns_at_both >= 2) {
+        $logger->auto("DELEGATION:TOO_FEW_NS", scalar @ns_at_both);
     }
 
     # REQUIRE: at least two IPv4 nameservers must be found
@@ -265,6 +269,11 @@ sub _history {
 
     my @old = ();
 
+    # Build a hash with all IP addresses for all current nameservers
+    my %current_addresses =
+      map { $_ => 1 }
+      map { $context->dns->find_addresses($_, $qclass) } @$current;
+
     # do not check current nameservers
     foreach my $ns (@$previous) {
         unless (grep(/^$ns$/, @$current)) {
@@ -280,8 +289,12 @@ sub _history {
         # FIXME: also skip current IP addresses
 
         foreach my $address (@addresses) {
+
+            # Skip to next address if this one leads to a current server
+            next if $current_addresses{$address};
             my $packet =
-              $context->dns->query_explicit($zone, $qclass, "SOA", $address);
+              $context->dns->query_explicit($zone, $qclass, "SOA", $address,
+                { noservfail => 1 });
             if ($packet && $packet->header->aa) {
                 $logger->auto("DELEGATION:STILL_AUTH", $ns, $address, $zone);
             }

@@ -48,7 +48,7 @@ use DNSCheck::Test::Mail;
 use DNSCheck::Test::SMTP;
 use DNSCheck::Test::NSP;
 
-our $VERSION = "0.70";
+our $VERSION = "0.80";
 
 our $default = {
     config => {
@@ -185,8 +185,6 @@ DNSCheck - DNS Check Tools
 
 new(I<config>);
 
-$dns->report();
-
 $dns->zone(I<zone>);
 
 $dns->host(I<hostname>);
@@ -216,6 +214,6 @@ $dns->smtp(I<mailhost>, I<emailaddress>);
 	my $check = new DNSCheck({ class => "IN" });
 
 	$check->zone("example.com");
-	$check->report();
+	$check->logger->print;
 
 =cut
