@@ -40,6 +40,96 @@ use strict;
 # this module will implement the Name Service Provider tracking
 #
 
+sub new {
+    my $proto = shift;
+    my $class = ref($proto) || $proto;
+    my $self  = {};
+
+    my $config = shift;
+
+    unless ($config->{db_config}) {
+        $config->{db_config} = "./dnscheck.conf";
+    }
+
+    $self->{dbh} = DBI->connect(
+        "DBI:mysql:database=;"
+          . "mysql_read_default_group=dnscheck;"
+          . "mysql_read_default_file="
+          . $config->{db_config},
+        undef,
+        undef,
+        { RaiseError => 1, AutoCommit => 1 }
+    ) or die $DBI::errstr;
+
+    unless ($config->{class}) {
+        $config->{class} = "IN";
+    }
+
+    $self->{context} = DNSCheck::Context->new($config);
+
+    bless $self, $class;
+}
+
+# In: domain name. Out: registrar, contact email (if one exists).
+sub lookup {
+    my $self   = shift;
+    my $zone   = shift;
+    my $logger = $self->{context}->logger;
+
+    $logger->module_stack_push;
+    $logger->auto("NSP:GETTING_CHILD_NAMESERVERS_FOR", $zone);
+    my @servers =
+      $self->{context}
+      ->dns->get_nameservers_at_child($zone, $self->{context}->qclass);
+    $logger->module_stack_pop;
+
+    my %operators;
+    foreach my $server (@servers) {
+        my ($operator, $email) = $self->ns_operator($server);
+        next unless (defined($operator) and defined($email));
+        $operators{$operator} = $email;
+    }
+
+# The following is an if statement in case we want to separate these cases later on.
+    if (scalar keys %operators > 1) {
+        return %operators;
+    } else {
+        return %operators;
+    }
+
+}
+
+sub ns_operator {
+    my $self   = shift;
+    my $nsname = shift;
+
+    my $sth =
+      $self->dbh->prepare(
+"select nsp.name, nsp.email from nsp, nameservers as ns where nsp.id = ns.nsp_id and ns.nameserver = ?"
+      );
+    $sth->execute($nsname);
+    my @res = @{ $sth->fetchall_arrayref };
+    if (@res == 0) {
+        $self->dbh->do(
+            q{
+            insert ignore into nameservers (nameserver) values (?)
+        }, undef, $nsname
+        );
+        return ();
+    } elsif (@res > 1) {
+        die "More than one operator for nameserver: database broken?";
+    } else {
+        return @{ $res[0] };    # Two-item list with name and email, hopefully
+    }
+    die "ns_operator fell through to end: this should be impossible.";
+}
+
+sub dbh {
+    my $self = shift;
+
+    return $self->{dbh};
+}
+
 1;
 
 __END__

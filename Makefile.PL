@@ -29,10 +29,10 @@ WriteMakefile(
         Time::HiRes            => 0,
         YAML                   => 0,
     },
-    'EXE_FILES' => ['apps/dnscheck', 'apps/dnscheck-qrun'],
+    'EXE_FILES' => ['apps/dnscheck', 'apps/dnscheck-qrun', 'apps/dnscheck-preflight'],
     'NO_META'   => 1,
     'SIGN'      => 0,
-    clean       => { FILES           => "*~ apps/dnscheck apps/dnscheck-qrun" },
+    clean       => { FILES           => "*~ apps/dnscheck apps/dnscheck-qrun apps/dnscheck-preflight" },
 );
 
 sub MY::install {
@@ -68,6 +68,9 @@ apps/dnscheck: apps/dnscheck.pl
 	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
 
 apps/dnscheck-qrun: apps/dnscheck-qrun.pl
+	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
+
+apps/dnscheck-preflight: apps/dnscheck-preflight.pl
 	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
 
 install_locale:

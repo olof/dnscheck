@@ -335,7 +335,9 @@ sub query_explicit {
 
     # FIXME: Returns $packet since we don't want NAMESERVER:NO_TCP/NO_UDP
     if ($packet->header->rcode eq "SERVFAIL" && uc($qtype) eq "SOA") {
-        $self->{logger}->auto("DNS:SOA_SERVFAIL", $address);
+        unless (defined($flags) && $flags->{noservfail}) {
+            $self->{logger}->auto("DNS:SOA_SERVFAIL", $address);
+        }
         $self->add_blacklist($address, $qname, $qclass, $qtype);
         $self->{logger}
           ->auto("DNS:ADDRESS_BLACKLIST_ADD", $address, $qname, $qclass,
@@ -612,30 +614,30 @@ sub _init_nameservers_helper {
         # Lookup IPv4 addresses for name servers
         my $ipv4 = $self->query_resolver($ns, $qclass, "A");
 
-        goto DONE unless ($ipv4);
-
-        foreach my $rr ($ipv4->answer) {
-            if (($rr->type eq "A") && $rr->address) {
-                push @{ $self->{nameservers}{$qname}{$qclass}{ipv4} },
-                  $rr->address;
-                $self->{logger}
-                  ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
-                    $rr->address);
+        if (defined($ipv4)) {
+            foreach my $rr ($ipv4->answer) {
+                if (($rr->type eq "A") && $rr->address) {
+                    push @{ $self->{nameservers}{$qname}{$qclass}{ipv4} },
+                      $rr->address;
+                    $self->{logger}
+                      ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
+                        $rr->address);
+                }
             }
         }
 
         # Lookup IPv6 addresses for name servers
         my $ipv6 = $self->query_resolver($ns, $qclass, "AAAA");
 
-        goto DONE unless ($ipv6);
-
-        foreach my $rr ($ipv6->answer) {
-            if (($rr->type eq "AAAA") && $rr->address) {
-                push @{ $self->{nameservers}{$qname}{$qclass}{ipv6} },
-                  $rr->address;
-                $self->{logger}
-                  ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
-                    $rr->address);
+        if (defined($ipv6)) {
+            foreach my $rr ($ipv6->answer) {
+                if (($rr->type eq "AAAA") && $rr->address) {
+                    push @{ $self->{nameservers}{$qname}{$qclass}{ipv6} },
+                      $rr->address;
+                    $self->{logger}
+                      ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
+                        $rr->address);
+                }
             }
         }
     }
@@ -1063,6 +1065,41 @@ sub check_timeout {
 }
 
 ######################################################################
+
+sub preflight_check {
+    my $self     = shift;
+    my $resolver = $self->{resolver};
+    my $name     = shift;
+
+    my $packet = $resolver->send($name, 'NS');
+
+    # Can we find an NS record?
+    if (defined($packet) and grep { $_->type eq 'NS' } $packet->answer) {
+
+        # Yup, return true
+        return 1;
+    } elsif (!defined($packet)) {
+
+        # The manual doesn't say what errors are possible, just that they are.
+        return 1;
+    }
+
+    $packet = $resolver->send($name, 'SOA');
+    if (defined($packet) and grep { $_->type eq 'SOA' } $packet->answer) {
+        return 1;
+    } elsif (!defined($packet)) {
+        return 1;
+    }
+    
+    # Was it SERVFAIL? If it was, return true.
+    if ($resolver->errorstring eq 'SERVFAIL') {
+        return 1;
+    }
+    
+
+    # No NS, no SOA, no successful return
+    return undef;
+}
 
 1;
 

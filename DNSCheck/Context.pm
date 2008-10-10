@@ -55,7 +55,27 @@ sub new {
     $self->{logger} =
       new DNSCheck::Logger($config->{logging}, $config->{policy}->{loglevels});
 
-    $self->{dns} = new DNSCheck::Lookup::DNS($self->{logger}, $config->{dns});
+    # add default parameters
+    foreach my $p (keys %{ $DNSCheck::default->{params} }) {
+        unless ($self->{params}->{$p}) {
+            $self->{params}->{$p} = $DNSCheck::default->{params}->{$p};
+        }
+    }
+
+    $self->{ipv4} = 1;
+    $self->{ipv6} = 1;
+    $self->{smtp} = 1;
+
+    $self->{ipv4} = 0 if ($config->{disable_ipv4});
+    $self->{ipv6} = 0 if ($config->{disable_ipv6});
+    $self->{smtp} = 0 if ($config->{disable_smtp});
+
+    # FIXME: perhaps do this some other way
+    $self->{hostname} = `hostname`;
+    chomp $self->{hostname};
+
+    $self->{logger} = new DNSCheck::Logger($config, $self->{loglevels});
+    $self->{dns} = new DNSCheck::Lookup::DNS($self->{logger}, $config);
     $self->{asn} = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
 
     bless $self, $class;
