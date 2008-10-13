@@ -48,7 +48,7 @@ use DNSCheck::Test::DNSSEC;
 use DNSCheck::Test::Mail;
 use DNSCheck::Test::SMTP;
 
-our $VERSION = "0.81";
+our $VERSION = "0.90_01";
 
 our $default = {
     dns => {
