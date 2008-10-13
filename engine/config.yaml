@@ -1,0 +1,25 @@
+# $Id$
+
+dns:
+  class: IN
+  debug: 0
+  ipv4: 1
+  ipv6: 1
+  retrans: 2
+  retry: 3
+  tcp_timeout: 5
+  udp_timeout: 5
+
+logging:
+  interactive: 0
+  locale: ~
+
+smtp:
+  enable: 1
+  hostname: ~
+  timeout: 20
+
+net:
+    ipv4: 1
+    ipv6: 1
+    smtp: 1

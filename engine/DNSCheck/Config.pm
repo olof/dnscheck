@@ -35,7 +35,9 @@ use warnings;
 
 use Config;
 use File::Spec::Functions;
+use Sys::Hostname;
 use YAML 'LoadFile';
+use Carp;
 
 sub new {
     my $proto = shift;
@@ -44,7 +46,7 @@ sub new {
     bless $self, $proto;
 
     my %arg = @_;
-
+    
     my $configdir = catfile($Config{'installprefix'}, 'share/dnscheck');
     $configdir = $arg{'configdir'} if defined($arg{'configdir'});
 
@@ -70,7 +72,12 @@ sub new {
     $self->{'siteconfigfile'} = $siteconfigfile;
     $self->{'sitepolicyfile'} = $sitepolicyfile;
 
-    my $cfdata  = LoadFile($configfile)     if -r $configfile;
+    unless (-r $configfile) {
+        croak "Can't read default configuration file";
+    }
+    
+
+    my $cfdata  = LoadFile($configfile);
     my $pfdata  = LoadFile($policyfile)     if -r $policyfile;
     my $scfdata = LoadFile($siteconfigfile) if -r $siteconfigfile;
     my $spfdata = LoadFile($sitepolicyfile) if -r $sitepolicyfile;
@@ -80,7 +87,20 @@ sub new {
     _hashrefcopy($self, $pfdata)  if defined($pfdata);
     _hashrefcopy($self, $spfdata) if defined($pfdata);
 
+    # Special cases
+    $self->{'hostname'} = hostname;
+    $self->{'debug'} = 1;
+
     return $self;
+}
+
+sub get {
+    my $self = shift;
+    my ($key) = @_;
+
+    my $res = $self->{$key};
+    carp "Getting nonexistent configuration key $key" if ($self->{'debug'} && !defined($res));
+    return $res;
 }
 
 ###
@@ -93,9 +113,16 @@ sub _hashrefcopy {
     foreach my $pkey (keys %{$source}) {
         $target->{$pkey} = {} unless defined($target->{$pkey});
 
-        # Hash slice assignment to copy all keys under the $pkey top-level key
-        @{ $target->{$pkey} }{ keys %{ $source->{$pkey} } } =
-          values %{ $source->{$pkey} };
+        if (ref($source->{$pkey}) eq 'HASH') {
+
+            # Hash slice assignment to copy all keys under the $pkey top-level key.
+            # We don't just copy the entire hash since a site file may have changed only
+            # some of the keys in it.
+            @{ $target->{$pkey} }{ keys %{ $source->{$pkey} } } =
+              values %{ $source->{$pkey} };
+        } else {
+            $target->{$pkey} = $source->{$pkey};
+        }
     }
 }
 
@@ -137,7 +164,7 @@ welcome to do so.
 
 =over
 
-=item ->new()
+=item ->new(parameter => $value)
 
 The C<new> method creates a new C<DNSCheck::Config> object. It takes named
 parameters in the perl/Tk style (but without the initial dashes). 
@@ -172,6 +199,11 @@ The full path to the policy file.
 The full path to the site policy file.
 
 =back
+
+=item ->get($key)
+
+Simply returns whatever got read from the configuration or policy files under
+the given key.
 
 =back
 

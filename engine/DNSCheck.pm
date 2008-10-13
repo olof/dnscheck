@@ -36,6 +36,7 @@ use strict;
 use Data::Dumper;
 
 use DNSCheck::Context;
+use DNSCheck::Config;
 use DNSCheck::Test::Host;
 use DNSCheck::Test::Address;
 use DNSCheck::Test::SOA;
@@ -50,42 +51,6 @@ use DNSCheck::Test::SMTP;
 
 our $VERSION = "0.90_01";
 
-our $default = {
-    dns => {
-        debug       => 0,
-        ipv4        => 1,
-        ipv6        => 1,
-        class       => "IN",
-        udp_timeout => 5,
-        tcp_timeout => 5,
-        retry       => 3,
-        retrans     => 2,
-    },
-
-    smtp => {
-        enable   => 1,
-        hostname => `hostname`,
-        timeout  => 20,
-    },
-
-    logging => {
-        interactive => 0,
-        locale      => undef,
-    },
-
-    policy => {
-        params => {
-            'SOA:EXPIRE_VS_REFRESH' => 7,
-            'SOA:MAX_MINIMUM'       => 86400,
-            'SOA:MIN_EXPIRE'        => 604800,
-            'SOA:MIN_MINIMUM'       => 300,
-            'SOA:MIN_REFRESH'       => 1440,
-            'SOA:MIN_RETRY'         => 3600,
-            'SOA:MIN_TTL'           => 3600,
-        }
-    }
-};
-
 ######################################################################
 
 sub new {
@@ -93,35 +58,9 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    # config, policy, locale are HASH references
-    my $config = shift;
-
-    # apply default DNS configuration
-    foreach my $p (keys %{ $default->{dns} }) {
-        $config->{dns}->{$p} = $default->{dns}->{$p}
-          unless $config->{dns}->{$p};
-    }
-
-    # apply default SMTP configuration
-    foreach my $p (keys %{ $default->{smtp} }) {
-        $config->{smtp}->{$p} = $default->{smtp}->{$p}
-          unless $config->{smtp}->{$p};
-    }
-
-    # strip any newline from SMTP hostname
-    chomp $config->{smtp}->{hostname};
-
-    # apply default LOGGING configuration
-    foreach my $p (keys %{ $default->{logging} }) {
-        $config->{logging}->{$p} = $default->{logging}->{$p}
-          unless $config->{logging}->{$p};
-    }
-
-    # apply default POLICY
-    foreach my $p (keys %{ $default->{policy}->{params} }) {
-        $config->{policy}->{params}->{$p} = $default->{policy}->{params}->{$p}
-          unless $config->{policy}->{params}->{$p};
-    }
+    
+    my $config_args = shift;
+    my $config = DNSCheck::Config->new(%{$config_args});
 
     # create DNSCheck context
     $self->{context} = new DNSCheck::Context($config);

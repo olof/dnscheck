@@ -53,7 +53,7 @@ sub test {
 
     my $smtp = Net::SMTP->new(
         Host    => $address,
-        Hello   => $context->{config}->{smtp}->{hostname},
+        Hello   => $context->{config}->get("hostname"),
         Timeout => $context->{config}->{smtp}->{timeout},
     );
 
