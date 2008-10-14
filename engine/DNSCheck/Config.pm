@@ -211,6 +211,20 @@ The full path to the policy file.
 
 The full path to the site policy file.
 
+=item locale
+
+The locale to be used for messages. This is supposed to be only a string with
+the locale, for example "en" or "sv". The actual filename will be figured out
+from that.
+
+=item localefile
+
+The full path to the actual YAML file holding the locale information to be used.
+
+=item extras
+
+A hashref with random stuff that'll be copied to the Config object.
+
 =back
 
 =item ->get($key)
