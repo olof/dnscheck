@@ -87,14 +87,16 @@ sub new {
     my $pfdata  = LoadFile($policyfile) if -r $policyfile;
     my $scfdata = LoadFile($siteconfigfile) if -r $siteconfigfile;
     my $spfdata = LoadFile($sitepolicyfile) if -r $sitepolicyfile;
-    my $lfdata  = LoadFile($localefile) if -r $localefile;
+    
+    my $lfdata;
+    $lfdata  = LoadFile($localefile) if (defined($localefile) and -r $localefile);
 
     _hashrefcopy($self, $cfdata)  if defined($cfdata);
     _hashrefcopy($self, $scfdata) if defined($scfdata);
     _hashrefcopy($self, $pfdata)  if defined($pfdata);
     _hashrefcopy($self, $spfdata) if defined($pfdata);
 
-    $self->{locale} = $lfdata if defined($lfdata);
+    $self->{locale} = $lfdata;
 
     _hashrefcopy($self, $arg{extras})
       if (defined($arg{extras}) && (ref($arg{extras}) eq 'HASH'));
@@ -112,7 +114,7 @@ sub get {
 
     my $res = $self->{$key};
     carp "Getting nonexistent configuration key $key"
-      if ($self->{'debug'} && !defined($res));
+      if ($self->{'debug'} && !exists($self->{$key}));
     return $res;
 }
 

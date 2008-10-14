@@ -33,7 +33,6 @@ package DNSCheck;
 require 5.8.0;
 use warnings;
 use strict;
-use Data::Dumper;
 
 use DNSCheck::Context;
 use DNSCheck::Config;
@@ -48,6 +47,8 @@ use DNSCheck::Test::Nameserver;
 use DNSCheck::Test::DNSSEC;
 use DNSCheck::Test::Mail;
 use DNSCheck::Test::SMTP;
+use DNSCheck::Lookup::DNS;
+use DNSCheck::Lookup::ASN;
 
 our $VERSION = "0.90_01";
 
@@ -153,6 +154,20 @@ sub mail {
 sub smtp {
     my $self = shift;
     DNSCheck::Test::SMTP->test($self, @_);
+}
+
+######################################################################
+
+sub dns {
+    my $self = shift;
+    
+    return $self->context->dns;
+}
+
+sub asn {
+    my $self = shift;
+    
+    return $self->context->asn;
 }
 
 1;

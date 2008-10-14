@@ -8,13 +8,12 @@ use strict;
 
 use Test::More tests => 7;
 
-use DNSCheck::Logger;
-use DNSCheck::Lookup::DNS;
+use DNSCheck;
 
 ######################################################################
 
-my $logger = new DNSCheck::Logger();
-my $dns = new DNSCheck::Lookup::DNS($logger);
+my $check = new DNSCheck;
+my $dns = $check->dns;
 
 ######################################################################
 
