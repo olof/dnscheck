@@ -73,7 +73,7 @@ sub new {
     $self->{'sitepolicyfile'} = $sitepolicyfile;
 
     unless (-r $configfile) {
-        croak "Can't read default configuration file";
+        croak "Can't read default configuration file $configfile";
     }
     
 
