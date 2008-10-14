@@ -73,11 +73,13 @@ INIT {
 ######################################################################
 
 sub test {
-    my $context = shift;
+    my $proto = shift; # Not used
+    my $parent = shift;
+    my $context = $parent->context;
     my $address = shift;
 
     my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
     my $errors = 0;
 
     $logger->module_stack_push();
@@ -202,7 +204,7 @@ test(I<context>, I<address>);
     use DNSCheck::Test::Address;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::Address::test($context, "127.0.0.1");
+    DNSCheck::Test::Address->test($dnscheck, "127.0.0.1");
     $context->logger->dump();
 
 =head1 SEE ALSO

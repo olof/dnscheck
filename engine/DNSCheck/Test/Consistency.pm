@@ -40,11 +40,13 @@ use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
 ######################################################################
 
 sub test {
-    my $context = shift;
+    my $proto   = shift; # Not used
+    my $parent  = shift;
+    my $context = $parent->context;
     my $zone    = shift;
 
     my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
     my $errors = 0;
 
     $logger->module_stack_push();
@@ -151,7 +153,7 @@ test(I<context>, I<zone>);
     use DNSCheck::Test::Consistency;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::CONSISTENCY::test($context, "se");
+    DNSCheck::Test::CONSISTENCY->test($dnscheck, "se");
     $context->logger->dump();
 
 =head1 SEE ALSO

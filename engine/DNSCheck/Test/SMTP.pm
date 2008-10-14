@@ -39,12 +39,14 @@ use Net::SMTP 2.29;
 ######################################################################
 
 sub test {
-    my $context  = shift;
+    my $proto = shift; # Not used
+    my $parent = shift;
+    my $context  = $parent->context;
     my $hostname = shift;
     my $address  = shift;
     my $email    = shift;
 
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
     my $errors = 0;
     my $message;
 
@@ -145,7 +147,7 @@ test(I<context>, I<mailhost>, I<address>, I<emailaddress>);
     use DNSCheck::Test::SMTP;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::SMTP::test($context, "mail.example.com", "192.168.0.1", "user\@example.com");
+    DNSCheck::Test::SMTP->test($dnscheck, "mail.example.com", "192.168.0.1", "user\@example.com");
     $context->logger->dump();
 
 =head1 SEE ALSO

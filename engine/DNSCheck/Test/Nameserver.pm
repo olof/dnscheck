@@ -41,12 +41,14 @@ use DNSCheck::Test::Host;
 ######################################################################
 
 sub test {
-    my $context    = shift;
+    my $proto = shift; # Not used
+    my $parent = shift;
+    my $context    = $parent->context;
     my $zone       = shift;
     my $nameserver = shift;
 
     my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
     my $errors = 0;
 
     my $packet;
@@ -55,7 +57,7 @@ sub test {
     $logger->auto("NAMESERVER:BEGIN", $nameserver);
 
     # REQUIRE: Nameserver must be a valid hostname
-    if (DNSCheck::Test::Host::test($context, $nameserver)) {
+    if (DNSCheck::Test::Host->test($parent, $nameserver)) {
         $errors += $logger->auto("NAMESERVER:HOST_ERROR", $nameserver);
         goto DONE;
     }
@@ -231,7 +233,7 @@ test(I<context>, I<zone>, I<nameserver>);
     use DNSCheck::Test::Nameserver;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::Nameserver::test($context, "se", "a.ns.se");
+    DNSCheck::Test::Nameserver->test($dnscheck, "se", "a.ns.se");
     $context->logger->dump();
 
 =head1 SEE ALSO

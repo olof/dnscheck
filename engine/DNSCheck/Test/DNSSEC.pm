@@ -43,11 +43,13 @@ use POSIX qw(strftime);
 ######################################################################
 
 sub test {
-    my $context = shift;
+    my $proto   = shift; # Not used
+    my $parent  = shift;
+    my $context = $parent->context;
     my $zone    = shift;
 
     my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
     my $errors = 0;
     my $flags  = { transport => "tcp", dnssec => 1, aaonly => 1 };
     my $packet;
@@ -471,7 +473,7 @@ test(I<context>, I<zone>);
     use DNSCheck::Test::DNSSEC;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::DNSSEC::test($context, "example.com");
+    DNSCheck::Test::DNSSEC->test($dnscheck, "example.com");
     $context->logger->dump();
 
 =head1 SEE ALSO

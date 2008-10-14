@@ -345,7 +345,7 @@ test(I<context>, I<zone>);
     use DNSCheck::Test::Delegation;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::Delegation::test($context, "iis.se");
+    DNSCheck::Test::Delegation->test($dnscheck, "iis.se");
     $context->logger->dump();
 
 =head1 SEE ALSO

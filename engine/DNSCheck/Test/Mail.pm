@@ -40,10 +40,12 @@ use DNSCheck::Test::SMTP;
 ######################################################################
 
 sub test {
-    my $context = shift;
+    my $proto = shift; # Not used
+    my $parent = shift;
+    my $context = $parent->context;
     my $email   = shift;
 
-    my $logger           = $context->logger;
+    my $logger           = $parent->logger;
     my $errors           = 0;
     my $mail_delivery_ok = 0;
 
@@ -72,7 +74,7 @@ sub test {
 
     # REQUIRE: MX points to valid hostname
     foreach my $hostname (@mailhosts) {
-        if (DNSCheck::Test::Host::test($context, $hostname) > 0) {
+        if (DNSCheck::Test::Host->test($parent, $hostname) > 0) {
             $logger->auto("MAIL:HOST_ERROR", $hostname);
             next;
         }
@@ -95,8 +97,8 @@ sub test {
         foreach my $rr ($ipv4->answer) {
             next unless ($rr->type eq "A");
             unless (
-                DNSCheck::Test::SMTP::test(
-                    $context, $hostname, $rr->address, $email
+                DNSCheck::Test::SMTP->test(
+                    $parent, $hostname, $rr->address, $email
                 )
               )
             {
@@ -109,7 +111,7 @@ sub test {
             next unless ($rr->type eq "AAAA");
 
    # FIXME: Do not connect to IPv6 hosts for now
-   #if (DNSCheck::Test::SMTP::test($context, $hostname, $rr->address, $email)) {
+   #if (DNSCheck::Test::SMTP->test($parent, $hostname, $rr->address, $email)) {
    #    $errors++;
    #}
         }
@@ -164,7 +166,7 @@ test(I<context>, I<emailaddress>);
     use DNSCheck::Test::Mail;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::Mail::test($context, "hostmaster\@example.com");
+    DNSCheck::Test::Mail->test($dnscheck, "hostmaster\@example.com");
     $context->logger->dump();
 
 =head1 SEE ALSO

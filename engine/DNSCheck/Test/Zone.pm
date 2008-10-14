@@ -64,19 +64,19 @@ sub test {
     unless ($ns_at_child[0]) {
 
         # This shouldn't happen because get_nameservers_at_child was also
-        # called in DNSCheck::Test::Delegation::test
+        # called in DNSCheck::Test::Delegation->test
         $logger->auto("ZONE:FATAL_NO_CHILD_NS", $zone);
         goto DONE;
     }
 
     foreach my $ns (@ns_at_child) {
-        $errors += DNSCheck::Test::Nameserver::test($context, $zone, $ns);
+        $errors += DNSCheck::Test::Nameserver->test($parent, $zone, $ns);
     }
 
-    $errors += DNSCheck::Test::Consistency::test($context, $zone);
-    $errors += DNSCheck::Test::SOA::test($context, $zone);
-    $errors += DNSCheck::Test::Connectivity::test($context, $zone);
-    $errors += DNSCheck::Test::DNSSEC::test($context, $zone);
+    $errors += DNSCheck::Test::Consistency->test($parent, $zone);
+    $errors += DNSCheck::Test::SOA->test($parent, $zone);
+    $errors += DNSCheck::Test::Connectivity->test($parent, $zone);
+    $errors += DNSCheck::Test::DNSSEC->test($parent, $zone);
 
   DONE:
     $logger->auto("ZONE:END", $zone);
@@ -108,7 +108,7 @@ test(I<context>, I<zone>);
     use DNSCheck::Test::Zone;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::Zone::test($context, "example.com");
+    DNSCheck::Test::Zone->test($dnscheck, "example.com");
     $context->logger->dump();
 
 =head1 SEE ALSO

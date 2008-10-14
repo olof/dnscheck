@@ -39,11 +39,13 @@ use DNSCheck::Test::Address;
 ######################################################################
 
 sub test {
-    my $context  = shift;
+    my $proto = shift; # Not used
+    my $parent = shift;
+    my $context  = $parent->context;
     my $hostname = shift;
 
     my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
     my $errors = 0;
 
     $logger->module_stack_push();
@@ -104,7 +106,7 @@ sub test {
     # REQUIRE: All host addresses must be valid
     foreach my $rr (@answers) {
         if ($rr->type eq "A" or $rr->type eq "AAAA") {
-            if (DNSCheck::Test::Address::test($context, $rr->address)) {
+            if (DNSCheck::Test::Address->test($parent, $rr->address)) {
                 $errors++;
                 goto DONE;
             }
@@ -160,7 +162,7 @@ test(I<context>, I<hostname>);
     use DNSCheck::Test::Host;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::Host::test($context, "a.ns.se");
+    DNSCheck::Test::Host->test($dnscheck, "a.ns.se");
     $context->logger->dump();
 
 =head1 SEE ALSO

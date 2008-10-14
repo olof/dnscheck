@@ -107,52 +107,52 @@ sub zone {
 
 sub host {
     my $self = shift;
-    DNSCheck::Test::Host::test($self->{context}, @_);
+    DNSCheck::Test::Host->test($self, @_);
 }
 
 sub address {
     my $self = shift;
-    DNSCheck::Test::Address::test($self->{context}, @_);
+    DNSCheck::Test::Address->test($self, @_);
 }
 
 sub soa {
     my $self = shift;
-    DNSCheck::Test::SOA::test($self->{context}, @_);
+    DNSCheck::Test::SOA->test($self, @_);
 }
 
 sub connectivity {
     my $self = shift;
-    DNSCheck::Test::Connectivity::test($self->{context}, @_);
+    DNSCheck::Test::Connectivity->test($self, @_);
 }
 
 sub consistency {
     my $self = shift;
-    DNSCheck::Test::Consistency::test($self->{context}, @_);
+    DNSCheck::Test::Consistency->test($self, @_);
 }
 
 sub delegation {
     my $self = shift;
-    DNSCheck::Test::Delegation::test($self->{context}, @_);
+    DNSCheck::Test::Delegation->test($self, @_);
 }
 
 sub nameserver {
     my $self = shift;
-    DNSCheck::Test::Nameserver::test($self->{context}, @_);
+    DNSCheck::Test::Nameserver->test($self, @_);
 }
 
 sub dnssec {
     my $self = shift;
-    DNSCheck::Test::DNSSEC::test($self->{context}, @_);
+    DNSCheck::Test::DNSSEC->test($self, @_);
 }
 
 sub mail {
     my $self = shift;
-    DNSCheck::Test::Mail::test($self->{context}, @_);
+    DNSCheck::Test::Mail->test($self, @_);
 }
 
 sub smtp {
     my $self = shift;
-    DNSCheck::Test::SMTP::test($self->{context}, @_);
+    DNSCheck::Test::SMTP->test($self, @_);
 }
 
 1;

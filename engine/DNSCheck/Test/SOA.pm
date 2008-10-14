@@ -42,12 +42,14 @@ use DNSCheck::Test::Mail;
 ######################################################################
 
 sub test {
-    my $context = shift;
+    my $proto   = shift; # Not used
+    my $parent  = shift;
+    my $context = $parent->context;
     my $zone    = shift;
 
-    my $params = $context->params;
+    my $params = $parent->config->get("params");
     my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
     my $errors = 0;
 
     $logger->module_stack_push();
@@ -76,7 +78,7 @@ sub test {
     my $soa    = $answer[0];
 
     # REQUIRE: SOA MNAME must exist as a valid hostname
-    if (DNSCheck::Test::Host::test($context, $soa->mname) > 0) {
+    if (DNSCheck::Test::Host->test($parent, $soa->mname) > 0) {
         $errors += $logger->auto("SOA:MNAME_ERROR", $zone, $soa->mname);
     } else {
         $logger->auto("SOA:MNAME_VALID", $zone, $soa->mname);
@@ -131,7 +133,7 @@ sub test {
         $mailaddr =~ s/\\\././g;
 
         if ($context->{config}->{smtp}) {
-            if (DNSCheck::Test::Mail::test($context, $mailaddr)) {
+            if (DNSCheck::Test::Mail->test($parent, $mailaddr)) {
                 $logger->auto("SOA:RNAME_UNDELIVERABLE",
                     $zone, $soa->rname, $mailaddr);
             } else {
@@ -294,7 +296,7 @@ test(I<context>, I<zone>);
     use DNSCheck::Test::SOA;
 
     my $context = new DNSCheck::Context();
-    DNSCheck::Test::SOA::test($context, "example.com");
+    DNSCheck::Test::SOA->test($dnscheck, "example.com");
     $context->logger->dump();
 
 =head1 SEE ALSO
