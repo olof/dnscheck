@@ -37,12 +37,14 @@ use strict;
 ######################################################################
 
 sub test {
-    my $context = shift;
+    my $proto   = shift;              # Not used
+    my $parent  = shift;
+    my $context = $parent->context;
     my $zone    = shift;
     my $history = shift;
 
     my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
     my $errors = 0;
 
     my $testable = undef;

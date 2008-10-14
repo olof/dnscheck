@@ -54,6 +54,7 @@ sub MY::postamble {
 
     return qq#
 
+CONFIG_DIR = $instprefix/share/dnscheck
 POLICY_DIR = $instprefix/share/dnscheck
 LOCALE_DIR = $instprefix/share/dnscheck/locale
 
@@ -61,6 +62,7 @@ LOCALE_DIR = $instprefix/share/dnscheck/locale
 
 FIXVARS = \
 	-Mvars \
+	-DCONFIG_DIR="$(CONFIG_DIR)" \
 	-DPOLICY_DIR="$(POLICY_DIR)" \
 	-DLOCALE_DIR="$(LOCALE_DIR)"
 
@@ -76,7 +78,7 @@ apps/dnscheck-preflight: apps/dnscheck-preflight.pl
 install_locale:
 	install -d ${DESTDIR}/${POLICY_DIR}
 	install -m 444 policy.yaml ${DESTDIR}/${POLICY_DIR}
-	install -m 444 config.yaml ${DESTDIR}/${POLICY_DIR}
+	install -m 444 config.yaml ${DESTDIR}/${CONFIG_DIR}
 	install -d ${DESTDIR}/${LOCALE_DIR}
 	install -m 444 locale/*.yaml ${DESTDIR}/${LOCALE_DIR}
 #

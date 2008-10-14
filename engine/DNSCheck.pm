@@ -57,15 +57,16 @@ sub new {
     my $proto = shift;
     my $class = ref($proto) || $proto;
     my $self  = {};
+    bless $self, $class;
 
-    
     my $config_args = shift;
-    my $config = DNSCheck::Config->new(%{$config_args});
+    my $config      = DNSCheck::Config->new(%{$config_args});
+    $self->{config} = $config;
 
     # create DNSCheck context
-    $self->{context} = new DNSCheck::Context($config);
+    $self->{context} = new DNSCheck::Context($self);
 
-    bless $self, $class;
+    return $self;
 }
 
 ######################################################################
@@ -83,14 +84,25 @@ sub flush {
 
 sub logger {
     my $self = shift;
-    return $self->{context}->logger;
+    return $self->context->logger;
+}
+
+sub config {
+    my $self = shift;
+    return $self->{config};
+}
+
+# Hopefully we will be able to remove this one soon.
+sub context {
+    my $self = shift;
+    return $self->{context};
 }
 
 ######################################################################
 
 sub zone {
     my $self = shift;
-    DNSCheck::Test::Zone::test($self->{context}, @_);
+    DNSCheck::Test::Zone->test($self, @_);
 }
 
 sub host {

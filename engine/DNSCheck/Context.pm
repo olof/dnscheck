@@ -47,17 +47,20 @@ sub new {
     my $proto = shift;
     my $class = ref($proto) || $proto;
     my $self  = {};
+    bless $self, $class;
 
-    my $config = shift;
+    my $parent = shift;
+    my $config = $parent->config;
 
     $self->{config} = $config;
+    $self->{parent} = $parent;
 
     $self->{logger} =
       new DNSCheck::Logger($config->get('logging'), $config->get('loglevels'));
     $self->{dns} = new DNSCheck::Lookup::DNS($self->{logger}, $config);
     $self->{asn} = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
 
-    bless $self, $class;
+    return $self;
 }
 
 sub dns {
@@ -82,7 +85,7 @@ sub qclass {
 
 sub params {
     my $self = shift;
-    return $self->{config}->get("policy")->{params};
+    return $self->{config}->get("params");
 }
 
 1;

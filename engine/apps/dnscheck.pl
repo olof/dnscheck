@@ -38,9 +38,11 @@ use YAML qw(LoadFile Dump);
 use Data::Dumper;
 use DNSCheck;
 
-my $CONFIG_DIR = '@@CONFIG_DIR@@';
-my $POLICY_DIR = '@@POLICY_DIR@@';
-my $LOCALE_DIR = '@@LOCALE_DIR@@';
+use vars qw[$CONFIG_DIR $POLICY_DIR $LOCALE_DIR];
+
+$CONFIG_DIR = '@@CONFIG_DIR@@';
+$POLICY_DIR = '@@POLICY_DIR@@';
+$LOCALE_DIR = '@@LOCALE_DIR@@';
 
 ######################################################################
 
@@ -52,7 +54,7 @@ sub main {
 
     my $config_file = $CONFIG_DIR . "/config.yaml";
     my $policy_file = $POLICY_DIR . "/policy.yaml";
-    my $locale_file = $LOCALE_DIR . "/locale/en.yaml";
+    my $locale_file = $LOCALE_DIR . "/en.yaml";
 
     GetOptions(
         'help|?'   => \$help,
@@ -69,24 +71,7 @@ sub main {
         pod2usage(2);
     }
 
-    # read configuration
-    my $config;
-    if (-r $config_file) {
-        my ($hashref, $arrayref, $string) = LoadFile($config_file);
-        $config = $hashref;
-    } else {
-        die "Failed to read config from $config_file";
-    }
-
-    # read policy
-    my $policy;
-    if (-r $policy_file) {
-        my ($hashref, $arrayref, $string) = LoadFile($policy_file);
-        $config->{policy} = $hashref;
-    } else {
-        die "Failed to read policy from $policy_file";
-    }
-
+    my $config = {};
     $config->{logging}->{interactive} = 1;
     $config->{dns}->{debug}           = $debug;
 
@@ -100,7 +85,13 @@ sub main {
         }
     }
 
-    my $check = new DNSCheck($config);
+    my $check = new DNSCheck(
+        {
+            configfile => $config_file,
+            policyfile => $policy_file,
+            extras     => $config
+        }
+    );
 
     $check->zone($zone);
 }

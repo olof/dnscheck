@@ -46,7 +46,7 @@ sub new {
     bless $self, $proto;
 
     my %arg = @_;
-    
+
     my $configdir = catfile($Config{'installprefix'}, 'share/dnscheck');
     $configdir = $arg{'configdir'} if defined($arg{'configdir'});
 
@@ -75,10 +75,9 @@ sub new {
     unless (-r $configfile) {
         croak "Can't read default configuration file $configfile";
     }
-    
 
     my $cfdata  = LoadFile($configfile);
-    my $pfdata  = LoadFile($policyfile)     if -r $policyfile;
+    my $pfdata  = LoadFile($policyfile) if -r $policyfile;
     my $scfdata = LoadFile($siteconfigfile) if -r $siteconfigfile;
     my $spfdata = LoadFile($sitepolicyfile) if -r $sitepolicyfile;
 
@@ -87,9 +86,12 @@ sub new {
     _hashrefcopy($self, $pfdata)  if defined($pfdata);
     _hashrefcopy($self, $spfdata) if defined($pfdata);
 
+    _hashrefcopy($self, $arg{extras})
+      if (defined($arg{extras}) && (ref($arg{extras}) eq 'HASH'));
+
     # Special cases
     $self->{'hostname'} = hostname;
-    $self->{'debug'} = 1;
+    $self->{'debug'}    = 1;
 
     return $self;
 }
@@ -99,7 +101,8 @@ sub get {
     my ($key) = @_;
 
     my $res = $self->{$key};
-    carp "Getting nonexistent configuration key $key" if ($self->{'debug'} && !defined($res));
+    carp "Getting nonexistent configuration key $key"
+      if ($self->{'debug'} && !defined($res));
     return $res;
 }
 
@@ -115,9 +118,9 @@ sub _hashrefcopy {
 
         if (ref($source->{$pkey}) eq 'HASH') {
 
-            # Hash slice assignment to copy all keys under the $pkey top-level key.
-            # We don't just copy the entire hash since a site file may have changed only
-            # some of the keys in it.
+    # Hash slice assignment to copy all keys under the $pkey top-level key.
+    # We don't just copy the entire hash since a site file may have changed only
+    # some of the keys in it.
             @{ $target->{$pkey} }{ keys %{ $source->{$pkey} } } =
               values %{ $source->{$pkey} };
         } else {

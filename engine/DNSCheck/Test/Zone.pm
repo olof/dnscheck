@@ -37,12 +37,14 @@ use strict;
 ######################################################################
 
 sub test {
-    my $context = shift;
+    my $proto   = shift;              # Not used
+    my $parent  = shift;
+    my $context = $parent->context;
     my $zone    = shift;
     my $history = shift;
 
     my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
 
     $logger->logname($zone);
 
@@ -50,7 +52,7 @@ sub test {
     $logger->auto("ZONE:BEGIN", $zone);
 
     my ($errors, $testable) =
-      DNSCheck::Test::Delegation::test($context, $zone, $history);
+      DNSCheck::Test::Delegation->test($parent, $zone, $history);
 
     unless ($testable) {
         $logger->auto("ZONE:FATAL_DELEGATION", $zone);
