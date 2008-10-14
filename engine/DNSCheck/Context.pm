@@ -55,8 +55,8 @@ sub new {
     $self->{config} = $config;
     $self->{parent} = $parent;
 
-    $self->{logger} =  DNSCheck::Logger->new($parent);
-    $self->{dns} = new DNSCheck::Lookup::DNS($self->{logger}, $config);
+    $self->{logger} =  $parent->logger;
+    $self->{dns} = new DNSCheck::Lookup::DNS($parent);
     $self->{asn} = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
 
     return $self;

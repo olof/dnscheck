@@ -85,7 +85,12 @@ sub flush {
 
 sub logger {
     my $self = shift;
-    return $self->context->logger;
+    
+    unless (defined($self->{logger})) {
+        $self->{logger} = DNSCheck::Logger->new($self)
+    }
+
+    return $self->{logger};
 }
 
 sub config {

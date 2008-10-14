@@ -51,10 +51,12 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    $self->{logger} = shift;
-    my $config = shift;
+    my $parent = shift;
+    $self->{parent} = $parent;
+    my $config = $parent->config;
+    $self->{logger} = $parent->logger;
 
-    $self->{debug} = $config->{debug};
+    $self->{debug} = $config->get("debug");
 
     if ($config->{debug} && $config->{debug} >= 2) {
         $self->{debug_resolver} = 1;
@@ -81,10 +83,10 @@ sub new {
     $self->{blacklist} = ();
 
     # default parameters
-    $self->{default}{udp_timeout} = $config->{udp_timeout};
-    $self->{default}{tcp_timeout} = $config->{tcp_timeout};
-    $self->{default}{retry}       = $config->{retry};
-    $self->{default}{retrans}     = $config->{retrans};
+    $self->{default}{udp_timeout} = $config->get("dns")->{udp_timeout};
+    $self->{default}{tcp_timeout} = $config->get("dns")->{tcp_timeout};
+    $self->{default}{retry}       = $config->get("dns")->{retry};
+    $self->{default}{retrans}     = $config->get("dns")->{retrans};
 
     # set up global resolver
     $self->{resolver} = new Net::DNS::Resolver;
