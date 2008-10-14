@@ -65,12 +65,19 @@ sub new {
     my $sitepolicyfile = catfile($configdir, 'site_policy.yaml');
     $sitepolicyfile = $arg{'sitepolicyfile'} if defined($arg{'sitepolicyfile'});
 
+    my $localefile;
+    $localefile = $arg{'localefile'} if defined($arg{'localefile'});
+    if (defined($arg{'locale'}) && !defined($localefile)) {
+        $localefile = catfile($configdir, 'locale', $arg{'locale'} . '.yaml');
+    }
+
     $self->{'configdir'}      = $configdir;
     $self->{'sitedir'}        = $sitedir;
     $self->{'configfile'}     = $configfile;
     $self->{'policyfile'}     = $policyfile;
     $self->{'siteconfigfile'} = $siteconfigfile;
     $self->{'sitepolicyfile'} = $sitepolicyfile;
+    $self->{'localefile'}     = $localefile;
 
     unless (-r $configfile) {
         croak "Can't read default configuration file $configfile";
@@ -80,11 +87,14 @@ sub new {
     my $pfdata  = LoadFile($policyfile) if -r $policyfile;
     my $scfdata = LoadFile($siteconfigfile) if -r $siteconfigfile;
     my $spfdata = LoadFile($sitepolicyfile) if -r $sitepolicyfile;
+    my $lfdata  = LoadFile($localefile) if -r $localefile;
 
     _hashrefcopy($self, $cfdata)  if defined($cfdata);
     _hashrefcopy($self, $scfdata) if defined($scfdata);
     _hashrefcopy($self, $pfdata)  if defined($pfdata);
     _hashrefcopy($self, $spfdata) if defined($pfdata);
+
+    $self->{locale} = $lfdata if defined($lfdata);
 
     _hashrefcopy($self, $arg{extras})
       if (defined($arg{extras}) && (ref($arg{extras}) eq 'HASH'));

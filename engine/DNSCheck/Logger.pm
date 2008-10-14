@@ -44,13 +44,14 @@ sub new {
     my $class = ref($proto) || $proto;
     my $self  = {};
 
-    my $config    = shift;
-    my $loglevels = shift;
+    my $parent    = shift;
+    my $config    = $parent->config;
+    my $loglevels = $config->get('loglevels');
 
-    $self->{interactive} = $config->{interactive};
+    $self->{interactive} = $config->get('logging')->{interactive};
 
-    if ($config->{locale}) {
-        $self->{locale} = new DNSCheck::Locale($config->{locale});
+    if ($config->get('locale')) {
+        $self->{locale} = new DNSCheck::Locale($config->get('locale'));
     }
 
     if ($loglevels) {

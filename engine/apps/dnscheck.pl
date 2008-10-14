@@ -54,7 +54,7 @@ sub main {
 
     my $config_file = $CONFIG_DIR . "/config.yaml";
     my $policy_file = $POLICY_DIR . "/policy.yaml";
-    my $locale_file = $LOCALE_DIR . "/en.yaml";
+    my $locale      = 'en';
 
     GetOptions(
         'help|?'   => \$help,
@@ -62,6 +62,7 @@ sub main {
         'debug+'   => \$debug,
         'config=s' => \$config_file,
         'policy=s' => \$policy_file,
+        'locale=s' => \$locale,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -71,25 +72,16 @@ sub main {
         pod2usage(2);
     }
 
-    my $config = {};
-    $config->{logging}->{interactive} = 1;
-    $config->{dns}->{debug}           = $debug;
-
-    # read locale
-    unless ($raw) {
-        if (-r $locale_file) {
-            my ($hashref, $arrayref, $string) = LoadFile($locale_file);
-            $config->{logging}->{locale} = $hashref;
-        } else {
-            die "Failed to read locale from $locale_file";
-        }
-    }
+    my $extras = {};
+    $extras->{logging}->{interactive} = 1;
+    $extras->{dns}->{debug}           = $debug;
 
     my $check = new DNSCheck(
         {
             configfile => $config_file,
             policyfile => $policy_file,
-            extras     => $config
+            extras     => $extras,
+            ($raw ? undef : (locale => $locale)),
         }
     );
 
@@ -113,3 +105,6 @@ Options:
  --help                brief help message
  --debug               enable debugging. use twice for dns packet dump.
  --raw                 raw log output, suitable for automatic processing
+ --config              specify a configuration file
+ --policy              specify a policy file
+ --locale              specify a locale
