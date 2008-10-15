@@ -58,7 +58,7 @@ sub new {
 
     $self->{debug} = $config->get("debug");
 
-    if ($config->{debug} && $config->{debug} >= 2) {
+    if ($self->{debug} && $self->{debug} >= 2) {
         $self->{debug_resolver} = 1;
     } else {
         $self->{debug_resolver} = 0;
