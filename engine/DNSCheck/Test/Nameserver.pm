@@ -85,6 +85,11 @@ sub test_by_ip {
     $logger->module_stack_push();
     $logger->auto("NAMESERVER:BEGIN", $nameserver);
 
+    # This only works because we know $errors is zero here.
+    if ($errors += $parent->address($nameserver)) {
+        goto DONE;
+    }
+
     $errors += _test_ip($parent, $zone, $nameserver, $nameserver);
 
   DONE:
