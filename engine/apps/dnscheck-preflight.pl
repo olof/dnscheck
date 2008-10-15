@@ -10,3 +10,43 @@ if ($dns->preflight_check($ARGV[0])) {
 } else {
     print "FALSE";
 }
+
+=head1 NAME
+
+dnscheck-preflight - quickly check if a name seems to be a delegated domain or not
+
+=head1 DESCRIPTION
+
+The dnscheck-preflight script takes a name and tries to figure out if that
+name corresponds to a delegated domain or not, without taking too much time
+about it (at least in theory, it should never use more than just over six
+seconds).
+
+There are no options. The script will print the string TRUE to standard output
+if it thinks the name is a delegated domain, and the string FALSE otherwise.
+
+A domain will be considered to exist if any of the following is true:
+
+=over
+
+=item
+
+An NS record can be found.
+
+=item
+
+A SOA record can be found.
+
+=item
+
+A query for either of the above gets a SERVFAIL response.
+
+=item
+
+A query for either of the above times out.
+
+=back
+
+=head1 EXAMPLE
+
+    dnscheck-preflight iis.se
