@@ -37,7 +37,7 @@ use strict;
 ######################################################################
 
 sub test {
-    my $proto   = shift;              # Not used
+    my $proto   = shift;    # Not used
     my $parent  = shift;
     my $zone    = shift;
     my $history = shift;
@@ -126,8 +126,7 @@ sub test {
             next;
         }
 
-        my $c =
-          $parent->dns->query_child($zone, $g->name, $g->class, $g->type);
+        my $c = $parent->dns->query_child($zone, $g->name, $g->class, $g->type);
 
         if ($c and $c->header->rcode eq "NOERROR") {
             ## got NOERROR, might be good or bad - dunno yet
@@ -210,7 +209,7 @@ sub test {
 
 sub _get_glue {
     my $parent = shift;
-    my $zone    = shift;
+    my $zone   = shift;
 
     my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
@@ -221,8 +220,7 @@ sub _get_glue {
     @ns = () unless $ns[0];
 
     foreach my $nameserver (@ns) {
-        my $ipv4 =
-          $parent->dns->query_parent($zone, $nameserver, $qclass, "A");
+        my $ipv4 = $parent->dns->query_parent($zone, $nameserver, $qclass, "A");
 
         if ($ipv4) {
             my @sorted_ipv4 =
@@ -260,7 +258,7 @@ sub _get_glue {
 }
 
 sub _history {
-    my $parent  = shift;
+    my $parent   = shift;
     my $zone     = shift;
     my $current  = shift;
     my $previous = shift;

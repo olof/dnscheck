@@ -37,7 +37,7 @@ use strict;
 ######################################################################
 
 sub test {
-    my $proto   = shift;              # Not used
+    my $proto   = shift;    # Not used
     my $parent  = shift;
     my $zone    = shift;
     my $history = shift;
@@ -50,8 +50,7 @@ sub test {
     $logger->module_stack_push();
     $logger->auto("ZONE:BEGIN", $zone);
 
-    my ($errors, $testable) =
-      $parent->delegation($zone, $history);
+    my ($errors, $testable) = $parent->delegation($zone, $history);
 
     unless ($testable) {
         $logger->auto("ZONE:FATAL_DELEGATION", $zone);

@@ -49,7 +49,7 @@ sub new {
 
 sub parent {
     my $self = shift;
-    
+
     return $self->{parent};
 }
 

@@ -87,9 +87,10 @@ sub new {
     my $pfdata  = LoadFile($policyfile) if -r $policyfile;
     my $scfdata = LoadFile($siteconfigfile) if -r $siteconfigfile;
     my $spfdata = LoadFile($sitepolicyfile) if -r $sitepolicyfile;
-    
+
     my $lfdata;
-    $lfdata  = LoadFile($localefile) if (defined($localefile) and -r $localefile);
+    $lfdata = LoadFile($localefile)
+      if (defined($localefile) and -r $localefile);
 
     _hashrefcopy($self, $cfdata)  if defined($cfdata);
     _hashrefcopy($self, $scfdata) if defined($scfdata);

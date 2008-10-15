@@ -64,16 +64,16 @@ sub new {
     $self->{messages} = ();
 
     $self->{module_stack} = [0];
-    $self->{module_id} = 0;
+    $self->{module_id}    = 0;
 
     bless $self, $class;
 }
 
 sub clear {
     my $self = shift;
-    $self->{messages} = ();
+    $self->{messages}     = ();
     $self->{module_stack} = [0];
-    $self->{module_id} = 0;
+    $self->{module_id}    = 0;
 }
 
 sub logname {

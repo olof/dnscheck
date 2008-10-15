@@ -116,13 +116,13 @@ sub flush {
 
 sub parent {
     my $self = shift;
-    
+
     return $self->{_parent};
 }
 
 sub logger {
     my $self = shift;
-    
+
     return $self->parent->logger;
 }
 
@@ -141,8 +141,8 @@ sub query_resolver {
           $self->{resolver}->send($qname, $qtype, $qclass);
 
         if ($self->check_timeout($self->{resolver})) {
-            $self->logger
-              ->auto("DNS:RESOLVER_QUERY_TIMEOUT", $qname, $qclass, $qtype);
+            $self->logger->auto("DNS:RESOLVER_QUERY_TIMEOUT",
+                $qname, $qclass, $qtype);
             return undef;
         }
     }
@@ -196,8 +196,8 @@ sub query_parent_nocache {
     my $qtype  = shift;
     my $flags  = shift;
 
-    $self->logger
-      ->auto("DNS:QUERY_PARENT_NOCACHE", $zone, $qname, $qclass, $qtype);
+    $self->logger->auto("DNS:QUERY_PARENT_NOCACHE",
+        $zone, $qname, $qclass, $qtype);
 
     # find parent
     $self->logger->auto("DNS:FIND_PARENT", $zone, $qclass);
@@ -263,8 +263,8 @@ sub query_child_nocache {
     my $qtype  = shift;
     my $flags  = shift;
 
-    $self->logger
-      ->auto("DNS:QUERY_CHILD_NOCACHE", $zone, $qname, $qclass, $qtype);
+    $self->logger->auto("DNS:QUERY_CHILD_NOCACHE",
+        $zone, $qname, $qclass, $qtype);
 
     # initialize child nameservers
     $self->init_nameservers($zone, $qclass);
@@ -295,8 +295,8 @@ sub query_explicit {
     my $address = shift;
     my $flags   = shift;
 
-    $self->logger
-      ->auto("DNS:QUERY_EXPLICIT", $address, $qname, $qclass, $qtype);
+    $self->logger->auto("DNS:QUERY_EXPLICIT", $address, $qname, $qclass,
+        $qtype);
 
     unless (_querible($address)) {
         $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
@@ -307,20 +307,19 @@ sub query_explicit {
     $resolver->nameserver($address);
 
     if ($self->check_blacklist($address, $qname, $qclass, $qtype)) {
-        $self->logger
-          ->auto("DNS:ADDRESS_BLACKLISTED", $address, $qname, $qclass, $qtype);
+        $self->logger->auto("DNS:ADDRESS_BLACKLISTED",
+            $address, $qname, $qclass, $qtype);
         return undef;
     }
 
     my $packet = $resolver->send($qname, $qtype, $qclass);
 
     if ($self->check_timeout($resolver)) {
-        $self->logger
-          ->auto("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
+        $self->logger->auto("DNS:QUERY_TIMEOUT",
+            $address, $qname, $qclass, $qtype);
         $self->add_blacklist($address, $qname, $qclass, $qtype);
-        $self->logger
-          ->auto("DNS:ADDRESS_BLACKLIST_ADD", $address, $qname, $qclass,
-            $qtype);
+        $self->logger->auto("DNS:ADDRESS_BLACKLIST_ADD",
+            $address, $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -351,16 +350,14 @@ sub query_explicit {
             $self->logger->auto("DNS:SOA_SERVFAIL", $address);
         }
         $self->add_blacklist($address, $qname, $qclass, $qtype);
-        $self->logger
-          ->auto("DNS:ADDRESS_BLACKLIST_ADD", $address, $qname, $qclass,
-            $qtype);
+        $self->logger->auto("DNS:ADDRESS_BLACKLIST_ADD",
+            $address, $qname, $qclass, $qtype);
         return $packet;
     }
 
     # FIXME: notice, warning, error?
     if ($packet->header->rcode ne "NOERROR") {
-        $self->logger
-          ->auto("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
+        $self->logger->auto("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
         return undef;
     }
 
@@ -368,8 +365,8 @@ sub query_explicit {
     unless ($packet && $packet->header->aa) {
         if ($flags && $flags->{aaonly}) {
             unless ($flags->{aaonly} == 0) {
-                $self->logger
-                  ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
+                $self->logger->auto("DNS:NOT_AUTH", $address, $qname, $qclass,
+                    $qtype);
                 return undef;
             }
         }
@@ -415,8 +412,8 @@ sub _query_multiple {
         unless ($packet && $packet->header->aa) {
             if ($flags && $flags->{aaonly}) {
                 if ($flags->{aaonly} == 1) {
-                    $self->logger
-                      ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
+                    $self->logger->auto("DNS:NOT_AUTH", $address, $qname,
+                        $qclass, $qtype);
                     next;
                 }
             }
@@ -631,9 +628,8 @@ sub _init_nameservers_helper {
                 if (($rr->type eq "A") && $rr->address) {
                     push @{ $self->{nameservers}{$qname}{$qclass}{ipv4} },
                       $rr->address;
-                    $self->logger
-                      ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
-                        $rr->address);
+                    $self->logger->auto("DNS:NAMESERVER_FOUND", $qname, $qclass,
+                        $rr->name, $rr->address);
                 }
             }
         }
@@ -646,9 +642,8 @@ sub _init_nameservers_helper {
                 if (($rr->type eq "AAAA") && $rr->address) {
                     push @{ $self->{nameservers}{$qname}{$qclass}{ipv6} },
                       $rr->address;
-                    $self->logger
-                      ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
-                        $rr->address);
+                    $self->logger->auto("DNS:NAMESERVER_FOUND", $qname, $qclass,
+                        $rr->name, $rr->address);
                 }
             }
         }
@@ -717,8 +712,7 @@ sub _find_parent_helper {
 
   DONE:
     if ($parent) {
-        $self->logger
-          ->auto("DNS:FIND_PARENT_RESULT", $parent, $qname, $qclass);
+        $self->logger->auto("DNS:FIND_PARENT_RESULT", $parent, $qname, $qclass);
     } else {
         $self->logger->auto("DNS:NXDOMAIN", $qname, $qclass);
     }
@@ -894,8 +888,8 @@ sub address_is_recursive {
     my $qtype = "SOA";
     my $packet = $resolver->send($nonexisting, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-        $self->logger
-          ->auto("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
+        $self->logger->auto("DNS:QUERY_TIMEOUT", $address, $nonexisting,
+            $qclass, $qtype);
         goto DONE;
     }
 

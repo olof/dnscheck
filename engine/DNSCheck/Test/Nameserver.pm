@@ -39,8 +39,8 @@ use Net::IP 1.25 qw(ip_get_version);
 ######################################################################
 
 sub test {
-    my $proto = shift; # Not used
-    my $parent = shift;
+    my $proto      = shift;    # Not used
+    my $parent     = shift;
     my $zone       = shift;
     my $nameserver = shift;
 
@@ -67,12 +67,16 @@ sub test {
         my $skip_udp = 0;
         my $skip_tcp = 0;
 
-        if (ip_get_version($address) == 4 && !$parent->config->get("net")->{ipv4}) {
+        if (ip_get_version($address) == 4
+            && !$parent->config->get("net")->{ipv4})
+        {
             $logger->auto("NAMESERVER:SKIPPED_IPV4", $address);
             next ADDRESS;
         }
 
-        if (ip_get_version($address) == 6 && !$parent->config->get("net")->{ipv6}) {
+        if (ip_get_version($address) == 6
+            && !$parent->config->get("net")->{ipv6})
+        {
             $logger->auto("NAMESERVER:SKIPPED_IPV6", $address);
             next ADDRESS;
         }
@@ -161,7 +165,7 @@ sub test {
 }
 
 sub _check_id {
-    my $parent    = shift;
+    my $parent     = shift;
     my $nameserver = shift;
     my $address    = shift;
 

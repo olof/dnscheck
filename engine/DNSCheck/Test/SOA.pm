@@ -39,9 +39,9 @@ use Net::IP 1.25 qw(ip_get_version);
 ######################################################################
 
 sub test {
-    my $proto   = shift; # Not used
-    my $parent  = shift;
-    my $zone    = shift;
+    my $proto  = shift;    # Not used
+    my $parent = shift;
+    my $zone   = shift;
 
     my $params = $parent->config->get("params");
     my $qclass = $parent->config->get("dns")->{class};
@@ -100,12 +100,16 @@ sub test {
     my @addresses = $parent->dns->find_addresses($soa->mname, $soa->class);
     foreach my $address (@addresses) {
 
-        if (ip_get_version($address) == 4 && !$parent->config->get('net')->{ipv4}) {
+        if (ip_get_version($address) == 4
+            && !$parent->config->get('net')->{ipv4})
+        {
             $logger->auto("SOA:SKIPPED_IPV4", $address);
             next;
         }
 
-        if (ip_get_version($address) == 6 && !$parent->config->get('net')->{ipv6}) {
+        if (ip_get_version($address) == 6
+            && !$parent->config->get('net')->{ipv6})
+        {
             $logger->auto("SOA:SKIPPED_IPV6", $address);
             next;
         }

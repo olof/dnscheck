@@ -60,7 +60,7 @@ sub new {
 
 sub parent {
     my $self = shift;
-    
+
     return $self->{parent};
 }
 
@@ -89,7 +89,8 @@ sub lookup {
 
     if ($asn) {
         if (scalar @{$asn} > 0) {
-            $self->parent->logger->auto("ASN:ANNOUNCE_BY", $ip, join(",", @{$asn}));
+            $self->parent->logger->auto("ASN:ANNOUNCE_BY", $ip,
+                join(",", @{$asn}));
         } else {
             $self->parent->logger->auto("ASN:NOT_ANNOUNCE", $ip);
         }

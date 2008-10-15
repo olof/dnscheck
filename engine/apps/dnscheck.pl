@@ -74,7 +74,7 @@ sub main {
 
     my $extras = {};
     $extras->{logging}->{interactive} = 1;
-    $extras->{debug}           = $debug;
+    $extras->{debug} = $debug;
 
     my $check = new DNSCheck(
         {

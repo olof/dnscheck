@@ -39,8 +39,8 @@ use Net::SMTP 2.29;
 ######################################################################
 
 sub test {
-    my $proto = shift; # Not used
-    my $parent = shift;
+    my $proto    = shift;    # Not used
+    my $parent   = shift;
     my $hostname = shift;
     my $address  = shift;
     my $email    = shift;

@@ -86,9 +86,9 @@ sub flush {
 
 sub logger {
     my $self = shift;
-    
+
     unless (defined($self->{logger})) {
-        $self->{logger} = DNSCheck::Logger->new($self)
+        $self->{logger} = DNSCheck::Logger->new($self);
     }
 
     return $self->{logger};
@@ -96,21 +96,21 @@ sub logger {
 
 sub dns {
     my $self = shift;
-    
+
     unless (defined($self->{dns})) {
-            $self->{dns} = DNSCheck::Lookup::DNS->new($self);
+        $self->{dns} = DNSCheck::Lookup::DNS->new($self);
     }
-    
+
     return $self->{dns};
 }
 
 sub asn {
     my $self = shift;
-    
+
     unless (defined($self->{asn})) {
         $self->{asn} = DNSCheck::Lookup::ASN->new($self);
     }
-    
+
     return $self->{asn};
 }
 

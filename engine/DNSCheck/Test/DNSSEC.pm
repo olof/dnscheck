@@ -43,9 +43,9 @@ use POSIX qw(strftime);
 ######################################################################
 
 sub test {
-    my $proto   = shift; # Not used
-    my $parent  = shift;
-    my $zone    = shift;
+    my $proto  = shift;    # Not used
+    my $parent = shift;
+    my $zone   = shift;
 
     my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
@@ -124,8 +124,8 @@ sub test {
 
 sub _check_child {
     my $parent = shift;
-    my $zone    = shift;
-    my $dnskey  = shift;
+    my $zone   = shift;
+    my $dnskey = shift;
 
     my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
@@ -365,9 +365,9 @@ sub _dissect {
 }
 
 sub _check_signature ($$) {
-    my $parent  = shift;
-    my $zone    = shift;
-    my $rrsig   = shift;
+    my $parent = shift;
+    my $zone   = shift;
+    my $rrsig  = shift;
 
     my $logger = $parent->logger;
 

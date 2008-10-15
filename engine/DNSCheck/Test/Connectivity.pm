@@ -37,9 +37,9 @@ use strict;
 ######################################################################
 
 sub test {
-    my $proto   = shift; # Not used
-    my $parent  = shift;
-    my $zone    = shift;
+    my $proto  = shift;    # Not used
+    my $parent = shift;
+    my $zone   = shift;
 
     my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;

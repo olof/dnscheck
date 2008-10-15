@@ -37,9 +37,9 @@ use strict;
 ######################################################################
 
 sub test {
-    my $proto = shift; # Not used
+    my $proto  = shift;    # Not used
     my $parent = shift;
-    my $email   = shift;
+    my $email  = shift;
 
     my $logger           = $parent->logger;
     my $errors           = 0;
@@ -92,12 +92,7 @@ sub test {
 
         foreach my $rr ($ipv4->answer) {
             next unless ($rr->type eq "A");
-            unless (
-                $parent->smtp(
-                    $hostname, $rr->address, $email
-                )
-              )
-            {
+            unless ($parent->smtp($hostname, $rr->address, $email)) {
                 $mail_delivery_ok++;
             }
         }
@@ -106,10 +101,10 @@ sub test {
         foreach my $rr ($ipv6->answer) {
             next unless ($rr->type eq "AAAA");
 
-   # FIXME: Do not connect to IPv6 hosts for now
-   #if ($parent->smtp($hostname, $rr->address, $email)) {
-   #    $errors++;
-   #}
+            # FIXME: Do not connect to IPv6 hosts for now
+            #if ($parent->smtp($hostname, $rr->address, $email)) {
+            #    $errors++;
+            #}
         }
     }
 
