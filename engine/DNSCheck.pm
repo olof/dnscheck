@@ -167,6 +167,11 @@ sub nameserver {
     DNSCheck::Test::Nameserver->test($self, @_);
 }
 
+sub nameserver_by_ip {
+    my $self = shift;
+    DNSCheck::Test::Nameserver->test_by_ip($self, @_);
+}
+
 sub dnssec {
     my $self = shift;
     DNSCheck::Test::DNSSEC->test($self, @_);

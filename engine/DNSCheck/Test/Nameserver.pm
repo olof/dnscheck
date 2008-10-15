@@ -61,7 +61,51 @@ sub test {
 
     my @addresses = $parent->dns->find_addresses($nameserver, $qclass);
 
-    # TODO: Break content of loop out into separate method
+    $errors += _test_ip($parent, $zone, $nameserver, @addresses);
+
+  DONE:
+    $logger->auto("NAMESERVER:END", $nameserver);
+    $logger->module_stack_pop();
+
+    return $errors;
+}
+
+sub test_by_ip {
+    my $proto      = shift;    # Not used
+    my $parent     = shift;
+    my $zone       = shift;
+    my $nameserver = shift;
+
+    my $qclass = $parent->config->get("dns")->{class};
+    my $logger = $parent->logger;
+    my $errors = 0;
+
+    my $packet;
+
+    $logger->module_stack_push();
+    $logger->auto("NAMESERVER:BEGIN", $nameserver);
+
+    $errors += _test_ip($parent, $zone, $nameserver, $nameserver);
+
+  DONE:
+    $logger->auto("NAMESERVER:END", $nameserver);
+    $logger->module_stack_pop();
+
+    return $errors;
+}
+
+sub _test_ip {
+    my $parent     = shift;
+    my $zone       = shift;
+    my $nameserver = shift;
+    my @addresses  = @_;
+
+    my $qclass = $parent->config->get("dns")->{class};
+    my $logger = $parent->logger;
+    my $errors = 0;
+
+    my $packet;
+
   ADDRESS: foreach my $address (@addresses) {
 
         my $skip_udp = 0;
@@ -156,10 +200,6 @@ sub test {
         #    $logger->auto("NAMESERVER:NSID", $nameserver, $address, $nsid);
         #}
     }
-
-  DONE:
-    $logger->auto("NAMESERVER:END", $nameserver);
-    $logger->module_stack_pop();
 
     return $errors;
 }
