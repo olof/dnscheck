@@ -48,17 +48,20 @@ sub new {
     my $proto = shift;
     my $class = ref($proto) || $proto;
     my $self  = {};
+    bless $self, $class;
 
-    $self->{logger} = shift;
-    $self->{dns}    = shift;
-
-    die "missing logger" unless $self->{logger};
-    die "missing dns"    unless $self->{dns};
+    $self->{parent} = shift;
 
     # hash of ASN indexed by IP
     $self->{asn} = ();
 
-    bless $self, $class;
+    return $self;
+}
+
+sub parent {
+    my $self = shift;
+    
+    return $self->{parent};
 }
 
 sub flush {
@@ -71,10 +74,10 @@ sub lookup {
     my $self = shift;
     my $ip   = shift;
 
-    $self->{logger}->auto("ASN:LOOKUP", $ip);
+    $self->parent->logger->auto("ASN:LOOKUP", $ip);
 
     if ($ip !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
-        $self->{logger}->auto("ASN:INVALID_ADDRESS", $ip);
+        $self->parent->logger->auto("ASN:INVALID_ADDRESS", $ip);
         return undef;
     }
 
@@ -86,12 +89,12 @@ sub lookup {
 
     if ($asn) {
         if (scalar @{$asn} > 0) {
-            $self->{logger}->auto("ASN:ANNOUNCE_BY", $ip, join(",", @{$asn}));
+            $self->parent->logger->auto("ASN:ANNOUNCE_BY", $ip, join(",", @{$asn}));
         } else {
-            $self->{logger}->auto("ASN:NOT_ANNOUNCE", $ip);
+            $self->parent->logger->auto("ASN:NOT_ANNOUNCE", $ip);
         }
     } else {
-        $self->{logger}->auto("ASN:LOOKUP_ERROR", $ip);
+        $self->parent->logger->auto("ASN:LOOKUP_ERROR", $ip);
     }
 
     return $asn;
@@ -106,7 +109,7 @@ sub _asn_helper {
     my $qname =
       sprintf("%s.%s", join(".", reverse(split(/\./, $ip))), $asn_domain);
 
-    my $packet = $self->{dns}->query_resolver($qname, "IN", "TXT");
+    my $packet = $self->parent->dns->query_resolver($qname, "IN", "TXT");
 
     unless ($packet && $packet->header->ancount) {
         ## lookup failure

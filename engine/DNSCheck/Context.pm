@@ -34,13 +34,6 @@ require 5.8.0;
 use warnings;
 use strict;
 
-use YAML qw(LoadFile Dump);
-use Data::Dumper;
-
-use DNSCheck::Logger;
-use DNSCheck::Lookup::DNS;
-use DNSCheck::Lookup::ASN;
-
 ######################################################################
 
 sub new {
@@ -49,32 +42,31 @@ sub new {
     my $self  = {};
     bless $self, $class;
 
-    my $parent = shift;
-    my $config = $parent->config;
-
-    $self->{config} = $config;
-    $self->{parent} = $parent;
-
-    $self->{logger} =  $parent->logger;
-    $self->{dns} = new DNSCheck::Lookup::DNS($parent);
-    $self->{asn} = new DNSCheck::Lookup::ASN($self->{logger}, $self->{dns});
+    $self->{parent} = shift;
+    $self->{config} = $self->parent->config;
 
     return $self;
 }
 
+sub parent {
+    my $self = shift;
+    
+    return $self->{parent};
+}
+
 sub dns {
     my $self = shift;
-    return $self->{dns};
+    return $self->parent->dns;
 }
 
 sub asn {
     my $self = shift;
-    return $self->{asn};
+    return $self->parent->asn;
 }
 
 sub logger {
     my $self = shift;
-    return $self->{logger};
+    return $self->parent->logger;
 }
 
 sub qclass {

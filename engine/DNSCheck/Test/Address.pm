@@ -138,9 +138,9 @@ sub test {
             push @ptrlist, $p->ptrdname;
         }
         foreach my $hostname (sort @ptrlist) {
-            my $ipv4 = $context->{dns}->query_resolver($hostname, $qclass, "A");
+            my $ipv4 = $context->dns->query_resolver($hostname, $qclass, "A");
             my $ipv6 =
-              $context->{dns}->query_resolver($hostname, $qclass, "AAAA");
+              $context->dns->query_resolver($hostname, $qclass, "AAAA");
 
             unless (($ipv4 && $ipv4->header->ancount)
                 || ($ipv6 && $ipv6->header->ancount))

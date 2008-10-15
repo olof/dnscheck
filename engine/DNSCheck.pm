@@ -49,6 +49,7 @@ use DNSCheck::Test::Mail;
 use DNSCheck::Test::SMTP;
 use DNSCheck::Lookup::DNS;
 use DNSCheck::Lookup::ASN;
+use DNSCheck::Logger;
 
 our $VERSION = "0.90_01";
 
@@ -91,6 +92,26 @@ sub logger {
     }
 
     return $self->{logger};
+}
+
+sub dns {
+    my $self = shift;
+    
+    unless (defined($self->{dns})) {
+            $self->{dns} = DNSCheck::Lookup::DNS->new($self);
+    }
+    
+    return $self->{dns};
+}
+
+sub asn {
+    my $self = shift;
+    
+    unless (defined($self->{asn})) {
+        $self->{asn} = DNSCheck::Lookup::ASN->new($self);
+    }
+    
+    return $self->{asn};
 }
 
 sub config {
@@ -162,18 +183,6 @@ sub smtp {
 }
 
 ######################################################################
-
-sub dns {
-    my $self = shift;
-    
-    return $self->context->dns;
-}
-
-sub asn {
-    my $self = shift;
-    
-    return $self->context->asn;
-}
 
 1;
 

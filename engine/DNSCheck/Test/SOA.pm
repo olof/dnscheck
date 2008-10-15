@@ -101,7 +101,7 @@ sub test {
     # REQUIRE: SOA MNAME may be unreachable
     # REQUIRE: SOA MNAME must be authoritative
     # FIXME: discuss how to handle timeouts
-    my @addresses = $context->{dns}->find_addresses($soa->mname, $soa->class);
+    my @addresses = $context->dns->find_addresses($soa->mname, $soa->class);
     foreach my $address (@addresses) {
 
         if (ip_get_version($address) == 4 && !$context->{config}->{ipv4}) {
