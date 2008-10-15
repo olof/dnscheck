@@ -154,7 +154,7 @@ sub daemon {
 
     $self->message("info", "Starting DNSCheck Engine Daemon");
 
-    usleep(int(rand($sleep * 1000)));
+    usleep(int(rand($sleep * 1000000)));
 
     $SIG{'QUIT'} = \&sighandler;
 
