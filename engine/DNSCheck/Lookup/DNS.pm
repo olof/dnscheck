@@ -35,6 +35,7 @@ use warnings;
 use strict;
 
 use List::Util 'shuffle';
+use Carp;
 
 use Data::Dumper;
 use Net::DNS 0.59;
@@ -50,11 +51,12 @@ sub new {
     my $proto = shift;
     my $class = ref($proto) || $proto;
     my $self  = {};
+    bless $self, $class;
 
     my $parent = shift;
-    $self->{parent} = $parent;
+
+    $self->{_parent} = $parent;
     my $config = $parent->config;
-    $self->{logger} = $parent->logger;
 
     $self->{debug} = $config->get("debug");
 
@@ -82,11 +84,7 @@ sub new {
     # hash of SOMETHING indexed by ADDRESSES
     $self->{blacklist} = ();
 
-    # default parameters
-    $self->{default}{udp_timeout} = $config->get("dns")->{udp_timeout};
-    $self->{default}{tcp_timeout} = $config->get("dns")->{tcp_timeout};
-    $self->{default}{retry}       = $config->get("dns")->{retry};
-    $self->{default}{retrans}     = $config->get("dns")->{retrans};
+    $self->{default} = $parent->config->get("dns");
 
     # set up global resolver
     $self->{resolver} = new Net::DNS::Resolver;
@@ -98,7 +96,7 @@ sub new {
     $self->{resolver}->retry($self->{default}{retry});
     $self->{resolver}->retrans($self->{default}{retrans});
 
-    bless $self, $class;
+    return $self;
 }
 
 sub DESTROY {
@@ -116,6 +114,18 @@ sub flush {
     $self->{blacklist}       = ();
 }
 
+sub parent {
+    my $self = shift;
+    
+    return $self->{_parent};
+}
+
+sub logger {
+    my $self = shift;
+    
+    return $self->parent->logger;
+}
+
 ######################################################################
 
 sub query_resolver {
@@ -124,14 +134,14 @@ sub query_resolver {
     my $qclass = shift;
     my $qtype  = shift;
 
-    $self->{logger}->auto("DNS:QUERY_RESOLVER", $qname, $qclass, $qtype);
+    $self->logger->auto("DNS:QUERY_RESOLVER", $qname, $qclass, $qtype);
 
     unless ($self->{cache}{resolver}{$qname}{$qclass}{$qtype}) {
         $self->{cache}{resolver}{$qname}{$qclass}{$qtype} =
           $self->{resolver}->send($qname, $qtype, $qclass);
 
         if ($self->check_timeout($self->{resolver})) {
-            $self->{logger}
+            $self->logger
               ->auto("DNS:RESOLVER_QUERY_TIMEOUT", $qname, $qclass, $qtype);
             return undef;
         }
@@ -140,7 +150,7 @@ sub query_resolver {
     my $packet = $self->{cache}{resolver}{$qname}{$qclass}{$qtype};
 
     if ($packet) {
-        $self->{logger}->auto("DNS:RESOLVER_RESPONSE",
+        $self->logger->auto("DNS:RESOLVER_RESPONSE",
             sprintf("%d answer(s)", $packet->header->ancount));
     }
 
@@ -156,7 +166,7 @@ sub query_parent {
     my $qclass = shift;
     my $qtype  = shift;
 
-    $self->{logger}->auto("DNS:QUERY_PARENT", $zone, $qname, $qclass, $qtype);
+    $self->logger->auto("DNS:QUERY_PARENT", $zone, $qname, $qclass, $qtype);
 
     unless ($self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype}) {
         $self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype} =
@@ -166,7 +176,7 @@ sub query_parent {
     my $packet = $self->{cache}{parent}{$zone}{$qname}{$qclass}{$qtype};
 
     if ($packet) {
-        $self->{logger}->auto(
+        $self->logger->auto(
             "DNS:PARENT_RESPONSE",
             sprintf(
                 "%d answer(s), %d authority",
@@ -186,17 +196,17 @@ sub query_parent_nocache {
     my $qtype  = shift;
     my $flags  = shift;
 
-    $self->{logger}
+    $self->logger
       ->auto("DNS:QUERY_PARENT_NOCACHE", $zone, $qname, $qclass, $qtype);
 
     # find parent
-    $self->{logger}->auto("DNS:FIND_PARENT", $zone, $qclass);
+    $self->logger->auto("DNS:FIND_PARENT", $zone, $qclass);
     my $parent = $self->find_parent($zone, $qclass);
     unless ($parent) {
-        $self->{logger}->auto("DNS:NO_PARENT", $zone, $qclass);
+        $self->logger->auto("DNS:NO_PARENT", $zone, $qclass);
         return undef;
     } else {
-        $self->{logger}->auto("DNS:PARENT_OF", $parent, $zone, $qclass);
+        $self->logger->auto("DNS:PARENT_OF", $parent, $zone, $qclass);
     }
 
     # initialize parent nameservers
@@ -209,7 +219,7 @@ sub query_parent_nocache {
     @target = (@target, @{$ipv4}) if ($ipv4);
     @target = (@target, @{$ipv6}) if ($ipv6);
     unless (scalar @target) {
-        $self->{logger}->auto("DNS:NO_PARENT_NS", $parent, $zone, $qclass);
+        $self->logger->auto("DNS:NO_PARENT_NS", $parent, $zone, $qclass);
         return undef;
     }
 
@@ -228,7 +238,7 @@ sub query_child {
     my $qclass = shift;
     my $qtype  = shift;
 
-    $self->{logger}->auto("DNS:QUERY_CHILD", $zone, $qname, $qclass, $qtype);
+    $self->logger->auto("DNS:QUERY_CHILD", $zone, $qname, $qclass, $qtype);
 
     unless ($self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype}) {
         $self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype} =
@@ -238,7 +248,7 @@ sub query_child {
     my $packet = $self->{cache}{child}{$zone}{$qname}{$qclass}{$qtype};
 
     if ($packet) {
-        $self->{logger}->auto("DNS:CHILD_RESPONSE",
+        $self->logger->auto("DNS:CHILD_RESPONSE",
             sprintf("%d answer(s)", $packet->header->ancount));
     }
 
@@ -253,7 +263,7 @@ sub query_child_nocache {
     my $qtype  = shift;
     my $flags  = shift;
 
-    $self->{logger}
+    $self->logger
       ->auto("DNS:QUERY_CHILD_NOCACHE", $zone, $qname, $qclass, $qtype);
 
     # initialize child nameservers
@@ -266,7 +276,7 @@ sub query_child_nocache {
     @target = (@target, @{$ipv4}) if ($ipv4);
     @target = (@target, @{$ipv6}) if ($ipv6);
     unless (scalar @target) {
-        $self->{logger}->auto("DNS:NO_CHILD_NS", $zone, $qclass);
+        $self->logger->auto("DNS:NO_CHILD_NS", $zone, $qclass);
         return undef;
     }
 
@@ -285,11 +295,11 @@ sub query_explicit {
     my $address = shift;
     my $flags   = shift;
 
-    $self->{logger}
+    $self->logger
       ->auto("DNS:QUERY_EXPLICIT", $address, $qname, $qclass, $qtype);
 
     unless (_querible($address)) {
-        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
+        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return undef;
     }
 
@@ -297,7 +307,7 @@ sub query_explicit {
     $resolver->nameserver($address);
 
     if ($self->check_blacklist($address, $qname, $qclass, $qtype)) {
-        $self->{logger}
+        $self->logger
           ->auto("DNS:ADDRESS_BLACKLISTED", $address, $qname, $qclass, $qtype);
         return undef;
     }
@@ -305,17 +315,17 @@ sub query_explicit {
     my $packet = $resolver->send($qname, $qtype, $qclass);
 
     if ($self->check_timeout($resolver)) {
-        $self->{logger}
+        $self->logger
           ->auto("DNS:QUERY_TIMEOUT", $address, $qname, $qclass, $qtype);
         $self->add_blacklist($address, $qname, $qclass, $qtype);
-        $self->{logger}
+        $self->logger
           ->auto("DNS:ADDRESS_BLACKLIST_ADD", $address, $qname, $qclass,
             $qtype);
         return undef;
     }
 
     unless ($packet) {
-        $self->{logger}->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
+        $self->logger->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
         return undef;
     }
 
@@ -325,23 +335,23 @@ sub query_explicit {
     if ($packet->header->rcode eq "FORMERR"
         && ($flags->{bufsize} || $flags->{dnssec}))
     {
-        $self->{logger}->auto("DNS:NO_EDNS", $address);
+        $self->logger->auto("DNS:NO_EDNS", $address);
         return undef;
     }
 
     # FIXME: improve; see RFC 2671 section 5.3
     if ($packet->header->rcode eq "FORMERR") {
-        $self->{logger}->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
+        $self->logger->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
         return undef;
     }
 
     # FIXME: Returns $packet since we don't want NAMESERVER:NO_TCP/NO_UDP
     if ($packet->header->rcode eq "SERVFAIL" && uc($qtype) eq "SOA") {
         unless (defined($flags) && $flags->{noservfail}) {
-            $self->{logger}->auto("DNS:SOA_SERVFAIL", $address);
+            $self->logger->auto("DNS:SOA_SERVFAIL", $address);
         }
         $self->add_blacklist($address, $qname, $qclass, $qtype);
-        $self->{logger}
+        $self->logger
           ->auto("DNS:ADDRESS_BLACKLIST_ADD", $address, $qname, $qclass,
             $qtype);
         return $packet;
@@ -349,7 +359,7 @@ sub query_explicit {
 
     # FIXME: notice, warning, error?
     if ($packet->header->rcode ne "NOERROR") {
-        $self->{logger}
+        $self->logger
           ->auto("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
         return undef;
     }
@@ -358,18 +368,18 @@ sub query_explicit {
     unless ($packet && $packet->header->aa) {
         if ($flags && $flags->{aaonly}) {
             unless ($flags->{aaonly} == 0) {
-                $self->{logger}
+                $self->logger
                   ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
                 return undef;
             }
         }
     }
 
-    $self->{logger}->auto("DNS:EXPLICIT_RESPONSE",
+    $self->logger->auto("DNS:EXPLICIT_RESPONSE",
         sprintf("%d answer(s)", $packet->header->ancount));
 
     foreach my $rr ($packet->answer) {
-        $self->{logger}->auto("DNS:ANSWER_DUMP", _rr2string($rr));
+        $self->logger->auto("DNS:ANSWER_DUMP", _rr2string($rr));
     }
 
     return $packet;
@@ -393,7 +403,7 @@ sub _query_multiple {
 
     for my $address (@target) {
         unless (_querible($address)) {
-            $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
+            $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
             next;
         }
 
@@ -405,7 +415,7 @@ sub _query_multiple {
         unless ($packet && $packet->header->aa) {
             if ($flags && $flags->{aaonly}) {
                 if ($flags->{aaonly} == 1) {
-                    $self->{logger}
+                    $self->logger
                       ->auto("DNS:NOT_AUTH", $address, $qname, $qclass, $qtype);
                     next;
                 }
@@ -421,10 +431,10 @@ sub _query_multiple {
 
     unless ($packet && $packet->header->rcode ne "SERVFAIL") {
         if ($timeout) {
-            $self->{logger}->auto("DNS:QUERY_TIMEOUT", join(",", @target),
+            $self->logger->auto("DNS:QUERY_TIMEOUT", join(",", @target),
                 $qname, $qclass, $qtype);
         } else {
-            $self->{logger}->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
+            $self->logger->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
         }
     }
 
@@ -437,7 +447,7 @@ sub _setup_resolver {
     my $self  = shift;
     my $flags = shift;
 
-    $self->{logger}->auto("DNS:SETUP_RESOLVER");
+    $self->logger->auto("DNS:SETUP_RESOLVER");
 
     # set up resolver
     my $resolver = new Net::DNS::Resolver;
@@ -465,7 +475,7 @@ sub _setup_resolver {
             }
 
             if ($flags->{transport} eq "udp" && $flags->{bufsize}) {
-                $self->{logger}->auto("DNS:SET_BUFSIZE", $flags->{bufsize});
+                $self->logger->auto("DNS:SET_BUFSIZE", $flags->{bufsize});
                 $resolver->udppacketsize($flags->{bufsize});
             }
         }
@@ -480,21 +490,21 @@ sub _setup_resolver {
     }
 
     if ($resolver->usevc) {
-        $self->{logger}->auto("DNS:TRANSPORT_TCP");
+        $self->logger->auto("DNS:TRANSPORT_TCP");
     } else {
-        $self->{logger}->auto("DNS:TRANSPORT_UDP");
+        $self->logger->auto("DNS:TRANSPORT_UDP");
     }
 
     if ($resolver->recurse) {
-        $self->{logger}->auto("DNS:RECURSION_DESIRED");
+        $self->logger->auto("DNS:RECURSION_DESIRED");
     } else {
-        $self->{logger}->auto("DNS:RECURSION_DISABLED");
+        $self->logger->auto("DNS:RECURSION_DISABLED");
     }
 
     if ($resolver->dnssec) {
-        $self->{logger}->auto("DNS:DNSSEC_DESIRED");
+        $self->logger->auto("DNS:DNSSEC_DESIRED");
     } else {
-        $self->{logger}->auto("DNS:DNSSEC_DISABLED");
+        $self->logger->auto("DNS:DNSSEC_DISABLED");
     }
 
     return $resolver;
@@ -529,7 +539,7 @@ sub get_nameservers_at_parent {
 
     my @ns;
 
-    $self->{logger}->auto("DNS:GET_NS_AT_PARENT", $qname, $qclass);
+    $self->logger->auto("DNS:GET_NS_AT_PARENT", $qname, $qclass);
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
 
@@ -559,7 +569,7 @@ sub get_nameservers_at_child {
 
     my @ns;
 
-    $self->{logger}->auto("DNS:GET_NS_AT_CHILD", $qname, $qclass);
+    $self->logger->auto("DNS:GET_NS_AT_CHILD", $qname, $qclass);
 
     my $packet = $self->query_child($qname, $qname, $qclass, "NS");
 
@@ -591,7 +601,7 @@ sub _init_nameservers_helper {
     my $qname  = shift;
     my $qclass = shift;
 
-    $self->{logger}->auto("DNS:INITIALIZING_NAMESERVERS", $qname, $qclass);
+    $self->logger->auto("DNS:INITIALIZING_NAMESERVERS", $qname, $qclass);
 
     $self->{nameservers}{$qname}{$qclass}{ns}   = ();
     $self->{nameservers}{$qname}{$qclass}{ipv4} = ();
@@ -621,7 +631,7 @@ sub _init_nameservers_helper {
                 if (($rr->type eq "A") && $rr->address) {
                     push @{ $self->{nameservers}{$qname}{$qclass}{ipv4} },
                       $rr->address;
-                    $self->{logger}
+                    $self->logger
                       ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
                         $rr->address);
                 }
@@ -636,7 +646,7 @@ sub _init_nameservers_helper {
                 if (($rr->type eq "AAAA") && $rr->address) {
                     push @{ $self->{nameservers}{$qname}{$qclass}{ipv6} },
                       $rr->address;
-                    $self->{logger}
+                    $self->logger
                       ->auto("DNS:NAMESERVER_FOUND", $qname, $qclass, $rr->name,
                         $rr->address);
                 }
@@ -645,7 +655,7 @@ sub _init_nameservers_helper {
     }
 
   DONE:
-    $self->{logger}->auto("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
+    $self->logger->auto("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
 }
 
 ######################################################################
@@ -672,7 +682,7 @@ sub _find_parent_helper {
 
     my $parent = undef;
 
-    $self->{logger}->auto("DNS:FIND_PARENT_BEGIN", $qname, $qclass);
+    $self->logger->auto("DNS:FIND_PARENT_BEGIN", $qname, $qclass);
 
     # start by finding the SOA for the qname
     my $try = $self->_find_soa($qname, $qclass);
@@ -682,7 +692,7 @@ sub _find_parent_helper {
         goto DONE;
     }
 
-    $self->{logger}->auto("DNS:FIND_PARENT_DOMAIN", $try);
+    $self->logger->auto("DNS:FIND_PARENT_DOMAIN", $try);
 
     my @labels = split(/\./, $try);
 
@@ -691,14 +701,14 @@ sub _find_parent_helper {
         $try = join(".", @labels);
         $try = "." if ($try eq "");
 
-        $self->{logger}->auto("DNS:FIND_PARENT_TRY", $try);
+        $self->logger->auto("DNS:FIND_PARENT_TRY", $try);
 
         $parent = $self->_find_soa($try, $qclass);
 
         # if we get an NXDOMAIN back, we're done
         goto DONE unless ($parent);
 
-        $self->{logger}->auto("DNS:FIND_PARENT_UPPER", $parent);
+        $self->logger->auto("DNS:FIND_PARENT_UPPER", $parent);
 
         goto DONE if ($try eq $parent);
     } while ($#labels > 0);
@@ -707,10 +717,10 @@ sub _find_parent_helper {
 
   DONE:
     if ($parent) {
-        $self->{logger}
+        $self->logger
           ->auto("DNS:FIND_PARENT_RESULT", $parent, $qname, $qclass);
     } else {
-        $self->{logger}->auto("DNS:NXDOMAIN", $qname, $qclass);
+        $self->logger->auto("DNS:NXDOMAIN", $qname, $qclass);
     }
 
     return $parent;
@@ -747,7 +757,7 @@ sub find_mx {
     my $packet;
     my @dest = ();
 
-    $self->{logger}->auto("DNS:FIND_MX_BEGIN", $domain);
+    $self->logger->auto("DNS:FIND_MX_BEGIN", $domain);
 
     $packet = $self->query_resolver($domain, "MX", "IN");
     if ($packet && $packet->header->ancount > 0) {
@@ -780,7 +790,7 @@ sub find_mx {
     }
 
   DONE:
-    $self->{logger}->auto("DNS:FIND_MX_RESULT", $domain, join(",", @dest));
+    $self->logger->auto("DNS:FIND_MX_RESULT", $domain, join(",", @dest));
 
     return sort(@dest);
 }
@@ -792,7 +802,7 @@ sub find_addresses {
 
     my @addresses = ();
 
-    $self->{logger}->auto("DNS:FIND_ADDRESSES", $qname, $qclass);
+    $self->logger->auto("DNS:FIND_ADDRESSES", $qname, $qclass);
 
     my $ipv4 = $self->query_resolver($qname, $qclass, "A");
     my $ipv6 = $self->query_resolver($qname, $qclass, "AAAA");
@@ -820,7 +830,7 @@ sub find_addresses {
     }
 
   DONE:
-    $self->{logger}->auto("DNS:FIND_ADDRESSES_RESULT", $qname, $qclass,
+    $self->logger->auto("DNS:FIND_ADDRESSES_RESULT", $qname, $qclass,
         join(",", @addresses));
 
     return @addresses;
@@ -834,7 +844,7 @@ sub address_is_authoritative {
     my $qname   = shift;
     my $qclass  = shift;
 
-    my $logger = $self->{logger};
+    my $logger = $self->logger;
     my $errors = 0;
 
     my $packet =
@@ -854,13 +864,13 @@ sub address_is_recursive {
     my $address = shift;
     my $qclass  = shift;
 
-    my $logger = $self->{logger};
+    my $logger = $self->logger;
     my $errors = 0;
 
     # no blacklisting here, since some nameservers ignore recursive queries
 
     unless (_querible($address)) {
-        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
+        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         goto DONE;
     }
 
@@ -884,7 +894,7 @@ sub address_is_recursive {
     my $qtype = "SOA";
     my $packet = $resolver->send($nonexisting, $qtype, $qclass);
     if ($self->check_timeout($resolver)) {
-        $self->{logger}
+        $self->logger
           ->auto("DNS:QUERY_TIMEOUT", $address, $nonexisting, $qclass, $qtype);
         goto DONE;
     }
@@ -919,7 +929,7 @@ sub check_axfr {
     my $qclass  = shift;
 
     unless (_querible($address)) {
-        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
+        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return 0;
     }
 
@@ -951,7 +961,7 @@ sub query_nsid {
     my $qtype   = shift;
 
     unless (_querible($address)) {
-        $self->{logger}->auto("DNS:UNQUERIBLE_ADDRESS", $address);
+        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return undef;
     }
 
