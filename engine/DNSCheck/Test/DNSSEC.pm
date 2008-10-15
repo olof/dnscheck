@@ -45,10 +45,9 @@ use POSIX qw(strftime);
 sub test {
     my $proto   = shift; # Not used
     my $parent  = shift;
-    my $context = $parent->context;
     my $zone    = shift;
 
-    my $qclass = $context->qclass;
+    my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
     my $errors = 0;
     my $flags  = { transport => "tcp", dnssec => 1, aaonly => 1 };
@@ -67,7 +66,7 @@ sub test {
     # Query parent for DS
     $logger->auto("DNSSEC:CHECKING_DS_AT_PARENT", $zone);
     $packet =
-      $context->dns->query_parent_nocache($zone, $zone, $qclass, "DS", $flags);
+      $parent->dns->query_parent_nocache($zone, $zone, $qclass, "DS", $flags);
     $ds = _dissect($packet, "DS");
     if ($ds && $#{ @{ $ds->{DS} } } >= 0) {
         $logger->auto("DNSSEC:DS_FOUND", $zone);
@@ -78,7 +77,7 @@ sub test {
     # Query child for DNSKEY
     $logger->auto("DNSSEC:CHECKING_DNSKEY_AT_CHILD", $zone);
     $packet =
-      $context->dns->query_child_nocache($zone, $zone, $qclass, "DNSKEY",
+      $parent->dns->query_child_nocache($zone, $zone, $qclass, "DNSKEY",
         $flags);
     $dnskey = _dissect($packet, "DNSKEY");
     if ($dnskey && $#{ @{ $dnskey->{DNSKEY} } } >= 0) {
@@ -105,13 +104,13 @@ sub test {
         $errors += $logger->auto("DNSSEC:MISSING_DS", $zone);
     }
 
-    ($child_errors, $child_result) = _check_child($context, $zone, $dnskey);
+    ($child_errors, $child_result) = _check_child($parent, $zone, $dnskey);
     $errors += $child_errors;
 
     # Only check parent if we've found a DS
     if ($ds) {
         $parent_errors =
-          _check_parent($context, $zone, $ds, $dnskey, $child_result);
+          _check_parent($parent, $zone, $ds, $dnskey, $child_result);
         $errors += $parent_errors;
     }
 
@@ -124,12 +123,12 @@ sub test {
 ######################################################################
 
 sub _check_child {
-    my $context = shift;
+    my $parent = shift;
     my $zone    = shift;
     my $dnskey  = shift;
 
-    my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $qclass = $parent->config->get("dns")->{class};
+    my $logger = $parent->logger;
     my $errors = 0;
 
     my $flags = { transport => "tcp", dnssec => 1 };
@@ -197,7 +196,7 @@ sub _check_child {
     unless ($#{ @{ $dnskey->{RRSIG} } } >= 0) {
 
         $packet =
-          $context->dns->query_child_nocache($zone, $zone, $qclass, "RRSIG",
+          $parent->dns->query_child_nocache($zone, $zone, $qclass, "RRSIG",
             $flags);
 
         if (    $packet->header->rcode eq "NOERROR"
@@ -217,7 +216,7 @@ sub _check_child {
     # REQUIRE: RRSIG(DNSKEY) MUST be valid and created by a valid DNSKEY
     my $valid_dnskey_signatures = 0;
     foreach my $sig (@{ $dnskey->{RRSIG} }) {
-        my $valid = _check_signature($context, $zone, $sig);
+        my $valid = _check_signature($parent, $zone, $sig);
 
         push @{ $result{anchors} }, $sig->keytag;
 
@@ -240,12 +239,12 @@ sub _check_child {
 
     # REQUIRE: RRSIG(SOA) MUST be valid and created by a valid DNSKEY
     $packet =
-      $context->dns->query_child_nocache($zone, $zone, $qclass, "SOA", $flags);
+      $parent->dns->query_child_nocache($zone, $zone, $qclass, "SOA", $flags);
     goto DONE unless ($packet);
     my $soa = _dissect($packet, "SOA");
     my $valid_soa_signatures = 0;
     foreach my $sig (@{ $soa->{RRSIG} }) {
-        my $valid = _check_signature($context, $zone, $sig);
+        my $valid = _check_signature($parent, $zone, $sig);
 
         push @{ $result{anchors} }, $sig->keytag;
 
@@ -274,14 +273,14 @@ sub _check_child {
 ######################################################################
 
 sub _check_parent {
-    my $context      = shift;
+    my $parent       = shift;
     my $zone         = shift;
     my $ds           = shift;
     my $dnskey       = shift;
     my $child_result = shift;
 
-    my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $qclass = $parent->config->get("dns")->{class};
+    my $logger = $parent->logger;
     my $errors = 0;
 
     my $mandatory_algorithm = 0;
@@ -366,11 +365,11 @@ sub _dissect {
 }
 
 sub _check_signature ($$) {
-    my $context = shift;
+    my $parent  = shift;
     my $zone    = shift;
     my $rrsig   = shift;
 
-    my $logger = $context->logger;
+    my $logger = $parent->logger;
 
     die "bad call to check_signature()" unless ($rrsig->type eq "RRSIG");
 
@@ -465,19 +464,12 @@ At least one DS algorithm should be of type RSA/SHA1.
 
 =head1 METHODS
 
-test(I<context>, I<zone>);
+test(I<parent>, I<zone>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::DNSSEC;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::DNSSEC->test($dnscheck, "example.com");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+L<DNSCheck>, L<DNSCheck::Logger>
 
 =cut

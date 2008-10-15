@@ -42,10 +42,9 @@ use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
 sub test {
     my $proto   = shift; # Not used
     my $parent  = shift;
-    my $context = $parent->context;
     my $zone    = shift;
 
-    my $qclass = $context->qclass;
+    my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -57,18 +56,18 @@ sub test {
     my @nameservers = ();
 
     # fetch all nameservers, both from parent and child
-    my @ns_parent = $context->dns->get_nameservers_at_parent($zone, $qclass);
-    my @ns_child = $context->dns->get_nameservers_at_child($zone, $qclass);
+    my @ns_parent = $parent->dns->get_nameservers_at_parent($zone, $qclass);
+    my @ns_child = $parent->dns->get_nameservers_at_child($zone, $qclass);
 
     foreach my $ns (@ns_parent, @ns_child) {
-        foreach my $address ($context->dns->find_addresses($ns, $qclass)) {
+        foreach my $address ($parent->dns->find_addresses($ns, $qclass)) {
             my $ip = new Net::IP($address);
 
-            if ($ip->version == 4 and $context->{config}->{ipv4}) {
+            if ($ip->version == 4 and $parent->config->get("net")->{ipv4}) {
                 push @nameservers, $address;
             }
 
-            if ($ip->version == 6 and $context->{config}->{ipv6}) {
+            if ($ip->version == 6 and $parent->config->get("net")->{ipv6}) {
                 push @nameservers, $address;
             }
         }
@@ -76,7 +75,7 @@ sub test {
 
     foreach my $address (@nameservers) {
         my $packet =
-          $context->dns->query_explicit($zone, $qclass, "SOA", $address);
+          $parent->dns->query_explicit($zone, $qclass, "SOA", $address);
 
         next unless ($packet);
 
@@ -145,19 +144,12 @@ The serial number of the zone must be the same at all listed name servers.
 
 =head1 METHODS
 
-test(I<context>, I<zone>);
+test(I<parent>, I<zone>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::Consistency;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::CONSISTENCY->test($dnscheck, "se");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+L<DNSCheck>, L<DNSCheck::Logger>
 
 =cut

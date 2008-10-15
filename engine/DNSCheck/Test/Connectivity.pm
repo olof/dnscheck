@@ -39,10 +39,9 @@ use strict;
 sub test {
     my $proto   = shift; # Not used
     my $parent  = shift;
-    my $context = $parent->context;
     my $zone    = shift;
 
-    my $qclass = $context->qclass;
+    my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -53,15 +52,15 @@ sub test {
     my @nameservers = ();
 
     # Fetch IPv4 nameservers
-    if ($context->{config}->{ipv4}) {
-        my $ipv4 = $context->dns->get_nameservers_ipv4($zone, $qclass);
+    if ($parent->config->get("net")->{ipv4}) {
+        my $ipv4 = $parent->dns->get_nameservers_ipv4($zone, $qclass);
         push @nameservers, @{$ipv4} if ($ipv4);
     }
 
     # FIXME: AS lookup for IPv6 addresses
 
     foreach my $address (@nameservers) {
-        my $as_lookup = $context->asn->lookup($address);
+        my $as_lookup = $parent->asn->lookup($address);
         my @as_list   = ();
         @as_list = @{$as_lookup} if $as_lookup;
 
@@ -126,19 +125,12 @@ Domain name servers should live in more than one AS.
 
 =head1 METHODS
 
-test(I<context>, I<zone>);
+test(I<parent>, I<zone>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::Connectivity;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::Connectivity->test($dnscheck, "iis.se");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+L<DNSCheck>, L<DNSCheck::Logger>
 
 =cut

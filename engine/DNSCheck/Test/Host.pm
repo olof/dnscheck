@@ -34,17 +34,14 @@ require 5.8.0;
 use warnings;
 use strict;
 
-use DNSCheck::Test::Address;
-
 ######################################################################
 
 sub test {
     my $proto = shift; # Not used
     my $parent = shift;
-    my $context  = $parent->context;
     my $hostname = shift;
 
-    my $qclass = $context->qclass;
+    my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -80,8 +77,8 @@ sub test {
         }
     }
 
-    my $ipv4 = $context->dns->query_resolver($hostname, $qclass, "A");
-    my $ipv6 = $context->dns->query_resolver($hostname, $qclass, "AAAA");
+    my $ipv4 = $parent->dns->query_resolver($hostname, $qclass, "A");
+    my $ipv6 = $parent->dns->query_resolver($hostname, $qclass, "AAAA");
 
     # REQUIRE: Host address must exist
     unless (($ipv4 && $ipv4->header->ancount)
@@ -106,7 +103,7 @@ sub test {
     # REQUIRE: All host addresses must be valid
     foreach my $rr (@answers) {
         if ($rr->type eq "A" or $rr->type eq "AAAA") {
-            if (DNSCheck::Test::Address->test($parent, $rr->address)) {
+            if ($parent->address($rr->address)) {
                 $errors++;
                 goto DONE;
             }
@@ -154,20 +151,12 @@ All host addresses (IPv4 and IPv6) must be valid.
 
 =head1 METHODS
 
-test(I<context>, I<hostname>);
+test(I<parent>, I<hostname>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::Host;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::Host->test($dnscheck, "a.ns.se");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
-L<DNSCheck::Test::Address>
+L<DNSCheck>, L<DNSCheck::Logger>, L<DNSCheck::Test::Address>
 
 =cut

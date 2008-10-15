@@ -39,11 +39,10 @@ use strict;
 sub test {
     my $proto   = shift;              # Not used
     my $parent  = shift;
-    my $context = $parent->context;
     my $zone    = shift;
     my $history = shift;
 
-    my $qclass = $context->qclass;
+    my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
 
     $logger->logname($zone);
@@ -52,14 +51,14 @@ sub test {
     $logger->auto("ZONE:BEGIN", $zone);
 
     my ($errors, $testable) =
-      DNSCheck::Test::Delegation->test($parent, $zone, $history);
+      $parent->delegation($zone, $history);
 
     unless ($testable) {
         $logger->auto("ZONE:FATAL_DELEGATION", $zone);
         goto DONE;
     }
 
-    my @ns_at_child = $context->dns->get_nameservers_at_child($zone, $qclass);
+    my @ns_at_child = $parent->dns->get_nameservers_at_child($zone, $qclass);
 
     unless ($ns_at_child[0]) {
 
@@ -70,13 +69,13 @@ sub test {
     }
 
     foreach my $ns (@ns_at_child) {
-        $errors += DNSCheck::Test::Nameserver->test($parent, $zone, $ns);
+        $errors += $parent->nameserver($zone, $ns);
     }
 
-    $errors += DNSCheck::Test::Consistency->test($parent, $zone);
-    $errors += DNSCheck::Test::SOA->test($parent, $zone);
-    $errors += DNSCheck::Test::Connectivity->test($parent, $zone);
-    $errors += DNSCheck::Test::DNSSEC->test($parent, $zone);
+    $errors += $parent->consistency($zone);
+    $errors += $parent->soa($zone);
+    $errors += $parent->connectivity($zone);
+    $errors += $parent->dnssec($zone);
 
   DONE:
     $logger->auto("ZONE:END", $zone);
@@ -100,22 +99,15 @@ Test a zone using all DNSCheck modules.
 
 =head1 METHODS
 
-test(I<context>, I<zone>);
+test(I<parent>, I<zone>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::Zone;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::Zone->test($dnscheck, "example.com");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
-L<DNSCheck::Test::Delegation>, L<DNSCheck::Test::Nameserver>,
-L<DNSCheck::Test::Consistency>, L<DNSCheck::Test::SOA>,
-L<DNSCheck::Test::Connectivity>, L<DNSCheck::Test::DNSSEC>
+L<DNSCheck>, L<DNSCheck::Logger>, L<DNSCheck::Test::Delegation>,
+L<DNSCheck::Test::Nameserver>, L<DNSCheck::Test::Consistency>,
+L<DNSCheck::Test::SOA>, L<DNSCheck::Test::Connectivity>,
+L<DNSCheck::Test::DNSSEC>
 
 =cut

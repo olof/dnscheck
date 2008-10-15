@@ -75,10 +75,9 @@ INIT {
 sub test {
     my $proto = shift; # Not used
     my $parent = shift;
-    my $context = $parent->context;
     my $address = shift;
 
-    my $qclass = $context->qclass;
+    my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -124,7 +123,7 @@ sub test {
 
     # REQUIRE: PTR should exist for address
     my $reverse = $ip->reverse_ip();
-    my $ptr = $context->dns->query_resolver($reverse, $qclass, "PTR");
+    my $ptr = $parent->dns->query_resolver($reverse, $qclass, "PTR");
 
     unless ($ptr && $ptr->header->ancount) {
         $logger->auto("ADDRESS:PTR_NOT_FOUND", $address, $reverse);
@@ -138,9 +137,9 @@ sub test {
             push @ptrlist, $p->ptrdname;
         }
         foreach my $hostname (sort @ptrlist) {
-            my $ipv4 = $context->dns->query_resolver($hostname, $qclass, "A");
+            my $ipv4 = $parent->dns->query_resolver($hostname, $qclass, "A");
             my $ipv6 =
-              $context->dns->query_resolver($hostname, $qclass, "AAAA");
+              $parent->dns->query_resolver($hostname, $qclass, "AAAA");
 
             unless (($ipv4 && $ipv4->header->ancount)
                 || ($ipv6 && $ipv6->header->ancount))
@@ -196,19 +195,15 @@ The hostname(s) pointed to by the PTR record(s) should exist.
 
 =head1 METHODS
 
-test(I<context>, I<address>);
+test(I<parent>, I<address>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::Address;
+    use DNSCheck;
 
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::Address->test($dnscheck, "127.0.0.1");
-    $context->logger->dump();
 
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+L<DNSCheck>, L<DNSCheck::Logger>
 
 =cut

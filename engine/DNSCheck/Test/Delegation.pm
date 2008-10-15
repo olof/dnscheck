@@ -39,11 +39,10 @@ use strict;
 sub test {
     my $proto   = shift;              # Not used
     my $parent  = shift;
-    my $context = $parent->context;
     my $zone    = shift;
     my $history = shift;
 
-    my $qclass = $context->qclass;
+    my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -54,7 +53,7 @@ sub test {
 
     my $packet;
 
-    my @ns_at_parent = $context->dns->get_nameservers_at_parent($zone, $qclass);
+    my @ns_at_parent = $parent->dns->get_nameservers_at_parent($zone, $qclass);
     @ns_at_parent = () unless $ns_at_parent[0];
     if (scalar @ns_at_parent) {
         $logger->auto("DELEGATION:NS_AT_PARENT", join(",", @ns_at_parent));
@@ -66,7 +65,7 @@ sub test {
 
     goto DONE if ($errors);
 
-    my @ns_at_child = $context->dns->get_nameservers_at_child($zone, $qclass);
+    my @ns_at_child = $parent->dns->get_nameservers_at_child($zone, $qclass);
     @ns_at_child = () unless $ns_at_child[0];
     if (scalar @ns_at_child) {
         $logger->auto("DELEGATION:NS_AT_CHILD", join(",", @ns_at_child));
@@ -99,7 +98,7 @@ sub test {
     }
 
     # REQUIRE: at least two IPv4 nameservers must be found
-    my $ipv4_ns = $context->dns->get_nameservers_ipv4($zone, $qclass);
+    my $ipv4_ns = $parent->dns->get_nameservers_ipv4($zone, $qclass);
     if ($ipv4_ns && scalar(@{$ipv4_ns} < 2)) {
         $logger->auto("DELEGATION:TOO_FEW_NS_IPV4", scalar @{$ipv4_ns});
     }
@@ -108,7 +107,7 @@ sub test {
     }
 
     # REQUIRE: at least two IPv6 nameservers should be found
-    my $ipv6_ns = $context->dns->get_nameservers_ipv6($zone, $qclass);
+    my $ipv6_ns = $parent->dns->get_nameservers_ipv6($zone, $qclass);
     if ($ipv6_ns && scalar(@{$ipv6_ns} < 2)) {
         $logger->auto("DELEGATION:TOO_FEW_NS_IPV6", scalar @{$ipv6_ns});
     }
@@ -117,7 +116,7 @@ sub test {
     }
 
     # REQUIRE: check for inconsistent glue
-    my @glue = _get_glue($context, $zone);
+    my @glue = _get_glue($parent, $zone);
     foreach my $g (@glue) {
         $logger->auto("DELEGATION:MATCHING_GLUE", $g->name, $g->address);
 
@@ -128,7 +127,7 @@ sub test {
         }
 
         my $c =
-          $context->dns->query_child($zone, $g->name, $g->class, $g->type);
+          $parent->dns->query_child($zone, $g->name, $g->class, $g->type);
 
         if ($c and $c->header->rcode eq "NOERROR") {
             ## got NOERROR, might be good or bad - dunno yet
@@ -193,7 +192,7 @@ sub test {
 
     # Test old namservers if we have history
     if ($history) {
-        _history($context, $zone, \@ns_at_parent, $history);
+        _history($parent, $zone, \@ns_at_parent, $history);
     }
 
     # TODO: check for loop in glue record chain (i.e. unresolvable)
@@ -210,20 +209,20 @@ sub test {
 ######################################################################
 
 sub _get_glue {
-    my $context = shift;
+    my $parent = shift;
     my $zone    = shift;
 
-    my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $qclass = $parent->config->get("dns")->{class};
+    my $logger = $parent->logger;
 
     my @glue = ();
 
-    my @ns = $context->dns->get_nameservers_at_parent($zone, $qclass);
+    my @ns = $parent->dns->get_nameservers_at_parent($zone, $qclass);
     @ns = () unless $ns[0];
 
     foreach my $nameserver (@ns) {
         my $ipv4 =
-          $context->dns->query_parent($zone, $nameserver, $qclass, "A");
+          $parent->dns->query_parent($zone, $nameserver, $qclass, "A");
 
         if ($ipv4) {
             my @sorted_ipv4 =
@@ -240,7 +239,7 @@ sub _get_glue {
         }
 
         my $ipv6 =
-          $context->dns->query_parent($zone, $nameserver, $qclass, "AAAA");
+          $parent->dns->query_parent($zone, $nameserver, $qclass, "AAAA");
 
         if ($ipv6) {
             my @sorted_ipv6 =
@@ -261,20 +260,20 @@ sub _get_glue {
 }
 
 sub _history {
-    my $context  = shift;
+    my $parent  = shift;
     my $zone     = shift;
     my $current  = shift;
     my $previous = shift;
 
-    my $qclass = $context->qclass;
-    my $logger = $context->logger;
+    my $qclass = $parent->config->get("dns")->{class};
+    my $logger = $parent->logger;
 
     my @old = ();
 
     # Build a hash with all IP addresses for all current nameservers
     my %current_addresses =
       map { $_ => 1 }
-      map { $context->dns->find_addresses($_, $qclass) } @$current;
+      map { $parent->dns->find_addresses($_, $qclass) } @$current;
 
     # do not check current nameservers
     foreach my $ns (@$previous) {
@@ -286,7 +285,7 @@ sub _history {
     $logger->auto("DELEGATION:NS_HISTORY", $zone, join(",", @old));
 
     foreach my $ns (@old) {
-        my @addresses = $context->dns->find_addresses($ns, $qclass);
+        my @addresses = $parent->dns->find_addresses($ns, $qclass);
 
         # FIXME: also skip current IP addresses
 
@@ -295,7 +294,7 @@ sub _history {
             # Skip to next address if this one leads to a current server
             next if $current_addresses{$address};
             my $packet =
-              $context->dns->query_explicit($zone, $qclass, "SOA", $address,
+              $parent->dns->query_explicit($zone, $qclass, "SOA", $address,
                 { noservfail => 1 });
             if ($packet && $packet->header->aa) {
                 $logger->auto("DELEGATION:STILL_AUTH", $ns, $address, $zone);
@@ -337,19 +336,12 @@ Nameservers at child may exist at parent.
 
 =head1 METHODS
 
-test(I<context>, I<zone>);
+test(I<parent>, I<zone>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::Delegation;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::Delegation->test($dnscheck, "iis.se");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>
+L<DNSCheck>, L<DNSCheck::Logger>
 
 =cut

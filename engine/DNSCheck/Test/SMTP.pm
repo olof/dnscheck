@@ -41,7 +41,6 @@ use Net::SMTP 2.29;
 sub test {
     my $proto = shift; # Not used
     my $parent = shift;
-    my $context  = $parent->context;
     my $hostname = shift;
     my $address  = shift;
     my $email    = shift;
@@ -55,8 +54,8 @@ sub test {
 
     my $smtp = Net::SMTP->new(
         Host    => $address,
-        Hello   => $context->{config}->get("hostname"),
-        Timeout => $context->{config}->{smtp}->{timeout},
+        Hello   => $parent->config->get("hostname"),
+        Timeout => $parent->config->get("smtp")->{timeout},
     );
 
     unless ($smtp) {
@@ -139,19 +138,12 @@ Test if an email address is deliverable using SMTP.
 
 =head1 METHODS
 
-test(I<context>, I<mailhost>, I<address>, I<emailaddress>);
+test(I<parent>, I<mailhost>, I<address>, I<emailaddress>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::SMTP;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::SMTP->test($dnscheck, "mail.example.com", "192.168.0.1", "user\@example.com");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>, L<Net::SMTP>
+L<DNSCheck>, L<DNSCheck::Logger>, L<Net::SMTP>
 
 =cut

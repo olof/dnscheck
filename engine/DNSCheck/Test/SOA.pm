@@ -36,26 +36,22 @@ use strict;
 
 use Net::IP 1.25 qw(ip_get_version);
 
-use DNSCheck::Test::Host;
-use DNSCheck::Test::Mail;
-
 ######################################################################
 
 sub test {
     my $proto   = shift; # Not used
     my $parent  = shift;
-    my $context = $parent->context;
     my $zone    = shift;
 
     my $params = $parent->config->get("params");
-    my $qclass = $context->qclass;
+    my $qclass = $parent->config->get("dns")->{class};
     my $logger = $parent->logger;
     my $errors = 0;
 
     $logger->module_stack_push();
     $logger->auto("SOA:BEGIN", $zone);
 
-    my $packet = $context->dns->query_child($zone, $zone, $qclass, "SOA");
+    my $packet = $parent->dns->query_child($zone, $zone, $qclass, "SOA");
 
     # REQUIRE: SOA record must exist
     if (   $packet
@@ -78,13 +74,13 @@ sub test {
     my $soa    = $answer[0];
 
     # REQUIRE: SOA MNAME must exist as a valid hostname
-    if (DNSCheck::Test::Host->test($parent, $soa->mname) > 0) {
+    if ($parent->host($soa->mname) > 0) {
         $errors += $logger->auto("SOA:MNAME_ERROR", $zone, $soa->mname);
     } else {
         $logger->auto("SOA:MNAME_VALID", $zone, $soa->mname);
     }
 
-    $packet = $context->dns->query_resolver($zone, $qclass, "NS");
+    $packet = $parent->dns->query_resolver($zone, $qclass, "NS");
 
     unless ($packet && $packet->header->ancount) {
         $errors += $logger->auto("SOA:NS_NOT_FOUND", $zone);
@@ -101,21 +97,21 @@ sub test {
     # REQUIRE: SOA MNAME may be unreachable
     # REQUIRE: SOA MNAME must be authoritative
     # FIXME: discuss how to handle timeouts
-    my @addresses = $context->dns->find_addresses($soa->mname, $soa->class);
+    my @addresses = $parent->dns->find_addresses($soa->mname, $soa->class);
     foreach my $address (@addresses) {
 
-        if (ip_get_version($address) == 4 && !$context->{config}->{ipv4}) {
+        if (ip_get_version($address) == 4 && !$parent->config->get('net')->{ipv4}) {
             $logger->auto("SOA:SKIPPED_IPV4", $address);
             next;
         }
 
-        if (ip_get_version($address) == 6 && !$context->{config}->{ipv6}) {
+        if (ip_get_version($address) == 6 && !$parent->config->get('net')->{ipv6}) {
             $logger->auto("SOA:SKIPPED_IPV6", $address);
             next;
         }
 
         my $error =
-          $context->dns->address_is_authoritative($address, $soa->name,
+          $parent->dns->address_is_authoritative($address, $soa->name,
             $soa->class);
 
         if ($error == 0) {
@@ -132,8 +128,8 @@ sub test {
         $mailaddr =~ s/(?<!\\)\./@/;
         $mailaddr =~ s/\\\././g;
 
-        if ($context->{config}->{smtp}) {
-            if (DNSCheck::Test::Mail->test($parent, $mailaddr)) {
+        if ($parent->config->get('net')->{smtp}) {
+            if ($parent->mail($mailaddr)) {
                 $logger->auto("SOA:RNAME_UNDELIVERABLE",
                     $zone, $soa->rname, $mailaddr);
             } else {
@@ -288,20 +284,13 @@ SOA 'minimum' should be less than 1 day.
 
 =head1 METHODS
 
-test(I<context>, I<zone>);
+test(I<parent>, I<zone>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::SOA;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::SOA->test($dnscheck, "example.com");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
-L<DNSCheck::Test::Host>, L<DNSCheck::Test::Mail>
+L<DNSCheck>, L<DNSCheck::Logger>, L<DNSCheck::Test::Host>,
+L<DNSCheck::Test::Mail>
 
 =cut

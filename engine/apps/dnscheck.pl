@@ -81,7 +81,7 @@ sub main {
             configfile => $config_file,
             policyfile => $policy_file,
             extras     => $extras,
-            ($raw ? undef : (locale => $locale)),
+            locale     => ($raw ? undef : $locale),
         }
     );
 

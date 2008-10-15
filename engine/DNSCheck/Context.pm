@@ -43,7 +43,6 @@ sub new {
     bless $self, $class;
 
     $self->{parent} = shift;
-    $self->{config} = $self->parent->config;
 
     return $self;
 }
@@ -71,12 +70,12 @@ sub logger {
 
 sub qclass {
     my $self = shift;
-    return $self->{config}->get("dns")->{class};
+    return $self->parent->config->get("dns")->{class};
 }
 
 sub params {
     my $self = shift;
-    return $self->{config}->get("params");
+    return $self->parent->config->get("params");
 }
 
 1;

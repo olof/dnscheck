@@ -34,15 +34,11 @@ require 5.8.0;
 use warnings;
 use strict;
 
-use DNSCheck::Test::Host;
-use DNSCheck::Test::SMTP;
-
 ######################################################################
 
 sub test {
     my $proto = shift; # Not used
     my $parent = shift;
-    my $context = $parent->context;
     my $email   = shift;
 
     my $logger           = $parent->logger;
@@ -61,7 +57,7 @@ sub test {
     }
 
     # REQUIRE: MX or A must exist for domain
-    my @mailhosts = $context->dns->find_mx($domain);
+    my @mailhosts = $parent->dns->find_mx($domain);
 
     if (@mailhosts) {
         $logger->auto("MAIL:MAIL_EXCHANGER", $email, join(",", @mailhosts));
@@ -74,13 +70,13 @@ sub test {
 
     # REQUIRE: MX points to valid hostname
     foreach my $hostname (@mailhosts) {
-        if (DNSCheck::Test::Host->test($parent, $hostname) > 0) {
+        if ($parent->host($hostname) > 0) {
             $logger->auto("MAIL:HOST_ERROR", $hostname);
             next;
         }
 
-        my $ipv4 = $context->dns->query_resolver($hostname, "IN", "A");
-        my $ipv6 = $context->dns->query_resolver($hostname, "IN", "AAAA");
+        my $ipv4 = $parent->dns->query_resolver($hostname, "IN", "A");
+        my $ipv6 = $parent->dns->query_resolver($hostname, "IN", "AAAA");
 
         unless ($ipv4 && $ipv6) {
             ## FIXME: error
@@ -97,8 +93,8 @@ sub test {
         foreach my $rr ($ipv4->answer) {
             next unless ($rr->type eq "A");
             unless (
-                DNSCheck::Test::SMTP->test(
-                    $parent, $hostname, $rr->address, $email
+                $parent->smtp(
+                    $hostname, $rr->address, $email
                 )
               )
             {
@@ -111,7 +107,7 @@ sub test {
             next unless ($rr->type eq "AAAA");
 
    # FIXME: Do not connect to IPv6 hosts for now
-   #if (DNSCheck::Test::SMTP->test($parent, $hostname, $rr->address, $email)) {
+   #if ($parent->smtp($hostname, $rr->address, $email)) {
    #    $errors++;
    #}
         }
@@ -158,20 +154,13 @@ Mail for the email address must be deliverable via SMTP.
 
 =head1 METHODS
 
-test(I<context>, I<emailaddress>);
+test(I<parent>, I<emailaddress>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Context;
-    use DNSCheck::Test::Mail;
-
-    my $context = new DNSCheck::Context();
-    DNSCheck::Test::Mail->test($dnscheck, "hostmaster\@example.com");
-    $context->logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck>, L<DNSCheck::Context>, L<DNSCheck::Logger>,
-L<DNSCheck::Test::Host>, L<DNSCheck::Test::SMTP>
+L<DNSCheck>, L<DNSCheck::Logger>, L<DNSCheck::Test::Host>,
+L<DNSCheck::Test::SMTP>
 
 =cut
