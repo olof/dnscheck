@@ -622,7 +622,7 @@ messages:
  CONSISTENCY:SOA_SERIAL_DIFFERENT:
   args: 1
   format: %s olika serienummer hittade.
-  descr: SOA-serienumret är inte detsamma på alla DNS-serverar. Detta beror vanligtvis på en felkonfiguration, men kan ibland bero på långsam spridning av zonen till sekundära DNS-servrar.
+  descr: SOA-serienumret är inte detsamma på alla DNS-servrar. Detta beror vanligtvis på en felkonfiguration, men kan ibland bero på långsam spridning av zonen till sekundära DNS-servrar.
  CONSISTENCY:SOA_SERIAL_CONSISTENT:
   args: 0
   format: Alla SOA-poster har överenstämmande serienummer.
