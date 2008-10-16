@@ -274,7 +274,7 @@ messages:
  DELEGATION:TOO_FEW_NS:
   args: 1
   format: För få DNS-servrar (%s).
-  descr: Endast en DNS-server hittades för zonen. Det bör alltid finnas två DNS-servrar för en zon för att kunna hantera tillfälliga problem med förbindelserna.
+  descr: Endast en DNS-server hittades för zonen. Det bör alltid finnas minst två DNS-servrar för en zon för att kunna hantera tillfälliga problem med förbindelserna.
  DELEGATION:TOO_FEW_NS_IPV4:
   args: 1
   format: För få IPv4 DNS-servrar (%s).
