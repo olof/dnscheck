@@ -53,7 +53,7 @@ sub test {
 
     my %serial_counter;
     my %digest_counter;
-    my @nameservers = ();
+    my %nameservers = ();
 
     # fetch all nameservers, both from parent and child
     my @ns_parent = $parent->dns->get_nameservers_at_parent($zone, $qclass);
@@ -64,16 +64,16 @@ sub test {
             my $ip = new Net::IP($address);
 
             if ($ip->version == 4 and $parent->config->get("net")->{ipv4}) {
-                push @nameservers, $address;
+                $nameservers{$address} = $address;
             }
 
             if ($ip->version == 6 and $parent->config->get("net")->{ipv6}) {
-                push @nameservers, $address;
+                $nameservers{$address} = $address;
             }
         }
     }
 
-    foreach my $address (@nameservers) {
+    foreach my $address (keys %nameservers) {
         my $packet =
           $parent->dns->query_explicit($zone, $qclass, "SOA", $address);
 
