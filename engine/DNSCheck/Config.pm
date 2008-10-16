@@ -38,6 +38,9 @@ use File::Spec::Functions;
 use Sys::Hostname;
 use YAML 'LoadFile';
 use Carp;
+use Cwd;
+use FindBin;
+use List::Util qw(first);
 
 sub new {
     my $proto = shift;
@@ -47,41 +50,40 @@ sub new {
 
     my %arg = @_;
 
-    my $configdir = catfile($Config{'installprefix'}, 'share/dnscheck');
-    $configdir = $arg{'configdir'} if defined($arg{'configdir'});
+    $self->{configdir} = catfile($Config{'installprefix'}, 'share/dnscheck');
+    $self->{configdir} = $arg{'configdir'} if defined($arg{'configdir'});
 
-    my $sitedir = $configdir;
-    $sitedir = $arg{'sitedir'} if defined($arg{'sitedir'});
+    $self->{sitedir} = $self->{configdir};
+    $self->{sitedir} = $arg{'sitedir'} if defined($arg{'sitedir'});
 
-    my $configfile = catfile($configdir, 'config.yaml');
+    my $configfile = _findfile('config.yaml', $self->{configdir});
     $configfile = $arg{'configfile'} if defined($arg{'configfile'});
 
-    my $policyfile = catfile($configdir, 'policy.yaml');
+    unless (-r $configfile) {
+        croak "Configuration file $configfile not readable.";
+    }
+
+    my $policyfile = _findfile('policy.yaml', $self->{configdir});
     $policyfile = $arg{'policyfile'} if defined($arg{'policyfile'});
 
-    my $siteconfigfile = catfile($configdir, 'site_config.yaml');
+    my $siteconfigfile = _findfile('site_config.yaml', $self->{sitedir});
     $siteconfigfile = $arg{'siteconfigfile'} if defined($arg{'siteconfigfile'});
 
-    my $sitepolicyfile = catfile($configdir, 'site_policy.yaml');
+    my $sitepolicyfile = _findfile('site_policy.yaml', $self->{sitedir});
     $sitepolicyfile = $arg{'sitepolicyfile'} if defined($arg{'sitepolicyfile'});
 
     my $localefile;
     $localefile = $arg{'localefile'} if defined($arg{'localefile'});
     if (defined($arg{'locale'}) && !defined($localefile)) {
-        $localefile = catfile($configdir, 'locale', $arg{'locale'} . '.yaml');
+        $localefile = _findfile($arg{'locale'} . '.yaml',
+            catfile('locale', $self->{configdir}));
     }
 
-    $self->{'configdir'}      = $configdir;
-    $self->{'sitedir'}        = $sitedir;
     $self->{'configfile'}     = $configfile;
     $self->{'policyfile'}     = $policyfile;
     $self->{'siteconfigfile'} = $siteconfigfile;
     $self->{'sitepolicyfile'} = $sitepolicyfile;
     $self->{'localefile'}     = $localefile;
-
-    unless (-r $configfile) {
-        croak "Can't read default configuration file $configfile";
-    }
 
     my $cfdata  = LoadFile($configfile);
     my $pfdata  = LoadFile($policyfile) if -r $policyfile;
@@ -123,6 +125,20 @@ sub get {
 ### Non-public functions below here
 ###
 
+sub _findfile {
+    my ($file, $prio) = @_;
+
+    my $path = first { -e $_ }
+    map { catfile($_, $file) } ($prio, getcwd(), $FindBin::Bin);
+
+    if (defined($path)) {
+        return $path;
+    } else {
+        return $file;
+    }
+
+}
+
 sub _hashrefcopy {
     my ($target, $source) = @_;
 
@@ -161,15 +177,23 @@ and such. In addition to this there is I<policy>, which specifies things about
 the tests that get run. Most importantly, the policy information specifies the
 reported severity level of various test failures.
 
-By default, C<DNSCheck::Config> will look for configuration and policy files
-in the directory C<share/dnscheck> under the Perl installation root. This is
-where C<make install> will put the default files. Also by default, it will
-look for four different files: F<policy.yaml>, F<config.yaml>,
-F<site_policy.yaml> and F<site_config.yaml>. Only the first two exist by
-default. If the second two exist, they will override values in their
-respective non-site file. Local changes should go in the site files, since
-the default files will get overwritten when a new DNSCheck version is
-installed.
+By default, C<DNSCheck::Config> will look for four different files:
+F<policy.yaml>, F<config.yaml>, F<site_policy.yaml> and F<site_config.yaml>.
+Only the first two exist by default. If the second two exist, they will
+override values in their respective non-site file. Local changes should go in
+the site files, since the default files will get overwritten when a new
+DNSCheck version is installed.
+
+These four files will be looked for in a number of places: a config directory,
+the current working directory (as determined by the Cwd module) and the
+directory where the running script file is stored (as determined by the
+FindBin module). By default, the config directory is F<share/dnscheck> under
+the root directory for the Perl installation. This can be changed via the
+C<configdir> (for F<config.yaml> and F<policy.yaml>) and C<sitedir> (for
+F<site_config.yalm> and F<site_policy.yaml>) parameters.
+
+The default lookup of a file is disregarded if the parameter giving the full
+path to that file is used.
 
 There is no protection against having the same keys in the configuration and
 policy files. The configuration/policy distinction is entirely for human use,
