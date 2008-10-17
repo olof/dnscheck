@@ -34,13 +34,15 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use base 'DNSCheck::Test::Common';
+
 use Net::SMTP 2.29;
 
 ######################################################################
 
 sub test {
-    my $proto    = shift;    # Not used
-    my $parent   = shift;
+    my $self     = shift;
+    my $parent   = $self->parent;
     my $hostname = shift;
     my $address  = shift;
     my $email    = shift;

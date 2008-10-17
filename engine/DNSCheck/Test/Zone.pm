@@ -34,15 +34,17 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use base 'DNSCheck::Test::Common';
+
 ######################################################################
 
 sub test {
-    my $proto   = shift;    # Not used
-    my $parent  = shift;
+    my $self    = shift;
     my $zone    = shift;
     my $history = shift;
 
-    my $qclass = $parent->config->get("dns")->{class};
+    my $parent = $self->parent;
+    my $qclass = $self->qclass;
     my $logger = $parent->logger;
 
     $logger->logname($zone);
@@ -50,7 +52,7 @@ sub test {
     $logger->module_stack_push();
     $logger->auto("ZONE:BEGIN", $zone);
 
-    my ($errors, $testable) = $parent->delegation($zone, $history);
+    my ($errors, $testable) = $parent->delegation->test($zone, $history);
 
     unless ($testable) {
         $logger->auto("ZONE:FATAL_DELEGATION", $zone);
@@ -68,13 +70,13 @@ sub test {
     }
 
     foreach my $ns (@ns_at_child) {
-        $errors += $parent->nameserver($zone, $ns);
+        $errors += $parent->nameserver->test($zone, $ns);
     }
 
-    $errors += $parent->consistency($zone);
-    $errors += $parent->soa($zone);
-    $errors += $parent->connectivity($zone);
-    $errors += $parent->dnssec($zone);
+    $errors += $parent->consistency->test($zone);
+    $errors += $parent->soa->test($zone);
+    $errors += $parent->connectivity->test($zone);
+    $errors += $parent->dnssec->test($zone);
 
   DONE:
     $logger->auto("ZONE:END", $zone);

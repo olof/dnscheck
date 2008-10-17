@@ -18,9 +18,9 @@ my ($zone, $server) = @ARGV;
 die "horribly" unless (defined($zone) and defined($server));
 
 if (Net::IP->new($server)) {
-    $check->nameserver_by_ip($zone, $server);
+    $check->nameserver->test_by_ip($zone, $server);
 } else {
-    $check->nameserver($zone, $server);
+    $check->nameserver->test($zone, $server);
 }
 
 $check->logger->dump;

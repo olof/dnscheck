@@ -34,11 +34,13 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use base 'DNSCheck::Test::Common';
+
 ######################################################################
 
 sub test {
-    my $proto  = shift;    # Not used
-    my $parent = shift;
+    my $self   = shift;
+    my $parent = $self->parent;
     my $email  = shift;
 
     my $logger           = $parent->logger;
@@ -70,7 +72,7 @@ sub test {
 
     # REQUIRE: MX points to valid hostname
     foreach my $hostname (@mailhosts) {
-        if ($parent->host($hostname) > 0) {
+        if ($parent->host->test($hostname) > 0) {
             $logger->auto("MAIL:HOST_ERROR", $hostname);
             next;
         }
@@ -92,7 +94,7 @@ sub test {
 
         foreach my $rr ($ipv4->answer) {
             next unless ($rr->type eq "A");
-            unless ($parent->smtp($hostname, $rr->address, $email)) {
+            unless ($parent->smtp->test($hostname, $rr->address, $email)) {
                 $mail_delivery_ok++;
             }
         }
@@ -102,7 +104,7 @@ sub test {
             next unless ($rr->type eq "AAAA");
 
             # FIXME: Do not connect to IPv6 hosts for now
-            #if ($parent->smtp($hostname, $rr->address, $email)) {
+            #if ($parent->smtp->test($hostname, $rr->address, $email)) {
             #    $errors++;
             #}
         }

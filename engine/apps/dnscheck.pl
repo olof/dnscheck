@@ -85,7 +85,7 @@ sub main {
         }
     );
 
-    $check->zone($zone);
+    $check->zone->test($zone);
 }
 
 main();

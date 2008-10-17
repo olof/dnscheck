@@ -34,17 +34,19 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use base 'DNSCheck::Test::Common';
+
 use Net::IP 1.25 qw(ip_get_version);
 
 ######################################################################
 
 sub test {
-    my $proto  = shift;    # Not used
-    my $parent = shift;
+    my $self   = shift;
+    my $parent = $self->parent;
     my $zone   = shift;
 
     my $params = $parent->config->get("params");
-    my $qclass = $parent->config->get("dns")->{class};
+    my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -74,7 +76,7 @@ sub test {
     my $soa    = $answer[0];
 
     # REQUIRE: SOA MNAME must exist as a valid hostname
-    if ($parent->host($soa->mname) > 0) {
+    if ($parent->host->test($soa->mname) > 0) {
         $errors += $logger->auto("SOA:MNAME_ERROR", $zone, $soa->mname);
     } else {
         $logger->auto("SOA:MNAME_VALID", $zone, $soa->mname);
@@ -133,7 +135,7 @@ sub test {
         $mailaddr =~ s/\\\././g;
 
         if ($parent->config->get('net')->{smtp}) {
-            if ($parent->mail($mailaddr)) {
+            if ($parent->mail->test($mailaddr)) {
                 $logger->auto("SOA:RNAME_UNDELIVERABLE",
                     $zone, $soa->rname, $mailaddr);
             } else {

@@ -34,14 +34,16 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use base 'DNSCheck::Test::Common';
+
 ######################################################################
 
 sub test {
-    my $proto    = shift;    # Not used
-    my $parent   = shift;
+    my $self     = shift;
+    my $parent   = $self->parent;
     my $hostname = shift;
 
-    my $qclass = $parent->config->get("dns")->{class};
+    my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -103,7 +105,7 @@ sub test {
     # REQUIRE: All host addresses must be valid
     foreach my $rr (@answers) {
         if ($rr->type eq "A" or $rr->type eq "AAAA") {
-            if ($parent->address($rr->address)) {
+            if ($parent->address->test($rr->address)) {
                 $errors++;
                 goto DONE;
             }

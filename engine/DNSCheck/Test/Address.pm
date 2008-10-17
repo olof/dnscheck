@@ -34,6 +34,8 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use base 'DNSCheck::Test::Common';
+
 use Net::IP 1.25;
 
 ######################################################################
@@ -73,11 +75,11 @@ INIT {
 ######################################################################
 
 sub test {
-    my $proto   = shift;    # Not used
-    my $parent  = shift;
+    my $self    = shift;
+    my $parent  = $self->parent;
     my $address = shift;
 
-    my $qclass = $parent->config->get("dns")->{class};
+    my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;
 

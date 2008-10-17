@@ -34,17 +34,19 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use base 'DNSCheck::Test::Common';
+
 use Net::IP 1.25 qw(ip_get_version);
 
 ######################################################################
 
 sub test {
-    my $proto      = shift;    # Not used
-    my $parent     = shift;
+    my $self       = shift;
+    my $parent     = $self->parent;
     my $zone       = shift;
     my $nameserver = shift;
 
-    my $qclass = $parent->config->get("dns")->{class};
+    my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -54,7 +56,7 @@ sub test {
     $logger->auto("NAMESERVER:BEGIN", $nameserver);
 
     # REQUIRE: Nameserver must be a valid hostname
-    if ($parent->host($nameserver)) {
+    if ($parent->host->test($nameserver)) {
         $errors += $logger->auto("NAMESERVER:HOST_ERROR", $nameserver);
         goto DONE;
     }
@@ -71,12 +73,12 @@ sub test {
 }
 
 sub test_by_ip {
-    my $proto      = shift;    # Not used
-    my $parent     = shift;
+    my $self       = shift;
+    my $parent     = $self->parent;
     my $zone       = shift;
     my $nameserver = shift;
 
-    my $qclass = $parent->config->get("dns")->{class};
+    my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -86,7 +88,7 @@ sub test_by_ip {
     $logger->auto("NAMESERVER:BEGIN", $nameserver);
 
     # This only works because we know $errors is zero here.
-    if ($errors += $parent->address($nameserver)) {
+    if ($errors += $parent->address->test($nameserver)) {
         goto DONE;
     }
 

@@ -129,62 +129,111 @@ sub context {
 
 sub zone {
     my $self = shift;
-    DNSCheck::Test::Zone->test($self, @_);
+    unless (defined($self->{test_zone})) {
+        $self->{test_zone} = DNSCheck::Test::Zone->new($self);
+    }
+
+    return $self->{test_zone};
 }
 
 sub host {
     my $self = shift;
-    DNSCheck::Test::Host->test($self, @_);
+
+    unless (defined($self->{test_host})) {
+        $self->{test_host} = DNSCheck::Test::Host->new($self);
+    }
+
+    return $self->{test_host};
 }
 
 sub address {
     my $self = shift;
-    DNSCheck::Test::Address->test($self, @_);
+
+    unless (defined($self->{test_address})) {
+        $self->{test_address} = DNSCheck::Test::Address->new($self);
+    }
+
+    return $self->{test_address};
 }
 
 sub soa {
     my $self = shift;
-    DNSCheck::Test::SOA->test($self, @_);
+
+    unless (defined($self->{test_soa})) {
+        $self->{test_soa} = DNSCheck::Test::SOA->new($self);
+    }
+
+    return $self->{test_soa};
 }
 
 sub connectivity {
     my $self = shift;
-    DNSCheck::Test::Connectivity->test($self, @_);
+
+    unless (defined($self->{test_connectivity})) {
+        $self->{test_connectivity} = DNSCheck::Test::Connectivity->new($self);
+    }
+
+    return $self->{test_connectivity};
 }
 
 sub consistency {
     my $self = shift;
-    DNSCheck::Test::Consistency->test($self, @_);
+
+    unless (defined($self->{test_consistency})) {
+        $self->{test_consistency} = DNSCheck::Test::Consistency->new($self);
+    }
+
+    return $self->{test_consistency};
 }
 
 sub delegation {
     my $self = shift;
-    DNSCheck::Test::Delegation->test($self, @_);
+
+    unless (defined($self->{test_delegation})) {
+        $self->{test_delegation} = DNSCheck::Test::Delegation->new($self);
+    }
+
+    return $self->{test_delegation};
 }
 
 sub nameserver {
     my $self = shift;
-    DNSCheck::Test::Nameserver->test($self, @_);
-}
 
-sub nameserver_by_ip {
-    my $self = shift;
-    DNSCheck::Test::Nameserver->test_by_ip($self, @_);
+    unless (defined($self->{test_nameserver})) {
+        $self->{test_nameserver} = DNSCheck::Test::Nameserver->new($self);
+    }
+
+    return $self->{test_nameserver};
 }
 
 sub dnssec {
     my $self = shift;
-    DNSCheck::Test::DNSSEC->test($self, @_);
+
+    unless (defined($self->{test_dnssec})) {
+        $self->{test_dnssec} = DNSCheck::Test::DNSSEC->new($self);
+    }
+
+    return $self->{test_dnssec};
 }
 
 sub mail {
     my $self = shift;
-    DNSCheck::Test::Mail->test($self, @_);
+
+    unless (defined($self->{test_mail})) {
+        $self->{test_mail} = DNSCheck::Test::Mail->new($self);
+    }
+
+    return $self->{test_mail};
 }
 
 sub smtp {
     my $self = shift;
-    DNSCheck::Test::SMTP->test($self, @_);
+
+    unless (defined($self->{test_smtp})) {
+        $self->{test_smtp} = DNSCheck::Test::SMTP->new($self);
+    }
+
+    return $self->{test_smtp};
 }
 
 ######################################################################
