@@ -36,6 +36,7 @@ use strict;
 
 use DNSCheck::Context;
 use DNSCheck::Config;
+use DNSCheck::Test::Common;
 use DNSCheck::Test::Host;
 use DNSCheck::Test::Address;
 use DNSCheck::Test::SOA;
