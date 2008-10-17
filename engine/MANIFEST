@@ -2,11 +2,13 @@ apps/dnscheck-preflight.pl
 apps/dnscheck-qrun.pl
 apps/dnscheck.pl
 build/preprocessor.pl
+config.yaml
 db/drop.sql
 db/indexes.sql
 db/schema.sql
 dnscheck.conf
 DNSCheck.pm
+DNSCheck/Config.pm
 DNSCheck/Context.pm
 DNSCheck/Engine.pm
 DNSCheck/Locale.pm
@@ -15,6 +17,7 @@ DNSCheck/Lookup/ASN.pm
 DNSCheck/Lookup/DNS.pm
 DNSCheck/NSP.pm
 DNSCheck/Test/Address.pm
+DNSCheck/Test/Common.pm
 DNSCheck/Test/Connectivity.pm
 DNSCheck/Test/Consistency.pm
 DNSCheck/Test/Delegation.pm
@@ -56,10 +59,13 @@ locale/sv.yaml
 Makefile.PL
 MANIFEST
 policy.yaml
-t/address.pl
+t/address.t
 t/asn.t
+t/config.t
 t/email_addresses.t
 t/find_parent.t
+t/main_object.t
+t/zone.t
 util/dumpyaml.pl
 util/locale2sql.pl
 util/localecompare.pl
