@@ -359,4 +359,22 @@ entry method called C<test> that runs all available tests with the arguments giv
 
 =head1 EXAMPLES
 
+   use DNSCheck;
+   
+   my $dc = DNSCheck->new;
+   $dc->zone->test("iis.se");
+   $dc->logger->dump;
+
+=head1 SEE ALSO
+
+L<DNSCheck::Config.pm>, L<DNSCheck::Context.pm> L<DNSCheck::Locale.pm>,
+L<DNSCheck::Logger.pm>, L<DNSCheck::Lookup::ASN.pm>,
+L<DNSCheck::Lookup::DNS.pm>, L<DNSCheck::Test::Address.pm>,
+L<DNSCheck::Test::Common.pm>, L<DNSCheck::Test::Connectivity.pm>,
+L<DNSCheck::Test::Consistency.pm>, L<DNSCheck::Test::Delegation.pm>,
+L<DNSCheck::Test::DNSSEC.pm>, L<DNSCheck::Test::Host.pm>,
+L<DNSCheck::Test::Mail.pm>, L<DNSCheck::Test::Nameserver.pm>,
+L<DNSCheck::Test::SMTP.pm>, L<DNSCheck::Test::SOA.pm>,
+L<DNSCheck::Test::Zone.pm>
+
 =cut
