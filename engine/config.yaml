@@ -23,3 +23,11 @@ net:
     ipv4: 1
     ipv6: 1
     smtp: 1
+
+# This information is expected to be overridden in site_config.yaml
+dbi:
+    host: 127.0.0.1
+    port: 13317
+    database: dnscheckng
+    user: dnscheckng
+    password: not_given_here

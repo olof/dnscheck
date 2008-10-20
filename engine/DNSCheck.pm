@@ -34,6 +34,9 @@ require 5.8.0;
 use warnings;
 use strict;
 
+use DBI;
+use Carp;
+
 use DNSCheck::Context;
 use DNSCheck::Config;
 use DNSCheck::Test::Common;
@@ -63,8 +66,11 @@ sub new {
     bless $self, $class;
 
     my $config_args = shift;
-    my $config      = DNSCheck::Config->new(%{$config_args});
-    $self->{config} = $config;
+    if ($config_args->{with_config_object}) {
+        $self->{config} = $config_args->{with_config_object};
+    } else {
+        $self->{config} = DNSCheck::Config->new(%{$config_args});
+    }
 
     # create DNSCheck context
     $self->{context} = new DNSCheck::Context($self);
@@ -126,6 +132,27 @@ sub context {
     return $self->{context};
 }
 
+sub dbh {
+    my $self = shift;
+    
+    unless (defined($self->config->get("dbi"))) {
+        return undef;
+    }
+
+    unless (defined($self->{"dbh"}) && $self->{"dbh"}->ping) {
+        my $conf = $self->config->get("dbi");
+        my $dsn  = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
+            $conf->{"database"}, $conf->{"host"}, $conf->{"port"});
+        my $dbh = DBI->connect($dsn, $conf->{"user"}, $conf->{"password"});
+        carp "Failed to connect to database: $DBI::errstr" unless defined($dbh);
+        $self->{"dbh"} = $dbh;
+    }
+
+    return $self->{"dbh"};
+}
+
+######################################################################
+# Test objects
 ######################################################################
 
 sub zone {
@@ -250,41 +277,30 @@ DNSCheck - DNS Check Tools
 
 =head1 DESCRIPTION
 
-...
+This module provides the main external interface to the actual tests in the
+DNSCheck system.
 
 =head1 METHODS
 
-new(I<config>);
+=over
 
-$dns->zone(I<zone>);
+=item ->new(I<config>);
 
-$dns->host(I<hostname>);
+I<config> is a reference to a hash holding configuration keys. They will be
+blindly used to create a L<DNSCheck::Config> object, unless one key is
+C<with_config_object>. If there is such a key, its value will be used as the
+L<DNSCheck::Config> object. No check to see if it actually I<is> such an
+object will be done, so anything that responds to the right methods can be
+used.
 
-$dns->address(I<address>);
+Providing a pre-created config object can be useful when creating and
+discarding a large number of L<DNSCheck> objects, since config object creation
+normally stands for the majority of the time it takes to create such an
+object. Creating the config object once and then providing it to every
+L<DNSCheck> may save considerable time in the long run.
 
-$dns->soa(I<zone>);
-
-$dns->connectivity(I<zone>);
-
-$dns->consistency(I<zone>);
-
-$dns->delegation(I<zone>);
-
-$dns->nameserver(I<zone>, I<nameserver>));
-
-$dns->dnssec(I<zone>);
-
-$dns->mail(I<emailaddress>);
-
-$dns->smtp(I<mailhost>, I<emailaddress>);
+=back
 
 =head1 EXAMPLES
-
-    use DNSCheck;
-
-	my $check = new DNSCheck({ class => "IN" });
-
-	$check->zone("example.com");
-	$check->logger->print;
 
 =cut
