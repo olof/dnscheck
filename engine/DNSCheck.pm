@@ -134,7 +134,7 @@ sub context {
 
 sub dbh {
     my $self = shift;
-    
+
     unless (defined($self->config->get("dbi"))) {
         return undef;
     }

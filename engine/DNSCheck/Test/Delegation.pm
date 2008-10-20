@@ -39,10 +39,17 @@ use base 'DNSCheck::Test::Common';
 ######################################################################
 
 sub test {
-    my $self    = shift;
-    my $parent  = $self->parent;
-    my $zone    = shift;
-    my $history = shift;
+    my $self   = shift;
+    my $parent = $self->parent;
+    my $zone   = shift;
+
+    my $history;
+    if ($parent->dbh) {
+        $history = $parent->dbh->selectcol_arrayref(
+            'SELECT DISTINCT nameserver FROM delegation_history WHERE domain=?',
+            undef, $zone
+        );
+    }
 
     my $qclass = $self->qclass;
     my $logger = $parent->logger;
