@@ -299,6 +299,62 @@ normally stands for the majority of the time it takes to create such an
 object. Creating the config object once and then providing it to every
 L<DNSCheck> may save considerable time in the long run.
 
+=item ->flush()
+
+Flush the internal DNS cache.
+
+=item ->logger()
+
+Return the logger object. It is of type L<DNSCheck::Logger>.
+
+=item ->dns()
+
+Return the DNS lookup object. It is of type L<DNSCeck::Lookup::DNS>.
+
+=item ->asn()
+
+Return the ASN lookup object. It is of type L<DNSCheck::Lookup::ASN>.
+
+=item ->config()
+
+Return the config object. It will be of type L<DNSCheck::Config> unless
+something different was given to C<new> as described above.
+
+=item ->dbh()
+
+Return a live database connection (L<DBI>) object, if database access is
+configured. If not, returns C<undef>. If a database connection is configured,
+it should point at a database with the dnscheck schema loaded, or the first
+sub-module here to try and use the database will throw an exception and cause
+the script to die.
+
+=item ->zone()
+
+=item ->host()
+
+=item ->address()
+
+=item ->soa()
+
+=item ->connectivity()
+
+=item ->consistency()
+
+=item ->delegation()
+
+=item ->nameserver()
+
+=item ->dnssec()
+
+=item ->mail()
+
+=item ->smtp()
+
+These eleven methods all return properly configured objects of the respective
+test classes. For more details on how to use the objects, see the
+documentation on the modules in question. Generally, though, they have a main
+entry method called C<test> that runs all available tests with the arguments given. 
+
 =back
 
 =head1 EXAMPLES
