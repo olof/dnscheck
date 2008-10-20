@@ -51,7 +51,7 @@ sub new {
     $self->{interactive} = $config->get('logging')->{interactive};
 
     if ($config->get('locale')) {
-        $self->{locale} = new DNSCheck::Locale($config->get('locale'));
+        $self->{locale} = DNSCheck::Locale->new($config->get('locale'));
     }
 
     if ($loglevels) {
@@ -190,6 +190,20 @@ sub export {
 
     return \@buffer;
 }
+
+sub count_string {
+    my $self   = shift;
+    my $string = shift;
+
+    return scalar grep { $_->{level} eq $string } @{ $self->{messages} };
+}
+
+sub count_debug    { my $self = shift; return $self->count_string('DEBUG'); }
+sub count_info     { my $self = shift; return $self->count_string('INFO'); }
+sub count_warning  { my $self = shift; return $self->count_string('WARNING'); }
+sub count_notice   { my $self = shift; return $self->count_string('NOTICE'); }
+sub count_error    { my $self = shift; return $self->count_string('ERROR'); }
+sub count_critical { my $self = shift; return $self->count_string('CRITICAL'); }
 
 # module_stack_push() creates a unique (autoincrement) identifier for the
 # module that called the function, and saves it in module stack - an array
