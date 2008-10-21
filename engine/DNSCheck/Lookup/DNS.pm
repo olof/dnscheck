@@ -869,7 +869,7 @@ sub address_is_recursive {
     }
 
     my $resolver = new Net::DNS::Resolver;
-    $resolver->debug($self->{debug});
+    $resolver->debug($self->{debug_resolver});
 
     $resolver->udp_timeout($self->{default}{udp_timeout});
     $resolver->tcp_timeout($self->{default}{tcp_timeout});
@@ -929,7 +929,7 @@ sub check_axfr {
 
     # set up resolver
     my $resolver = new Net::DNS::Resolver;
-    $resolver->debug($self->{debug});
+    $resolver->debug($self->{debug_resolver});
     $resolver->recurse(0);
     $resolver->dnssec(0);
     $resolver->usevc(0);
