@@ -8,11 +8,11 @@ use strict;
 
 use Data::Dumper;
 
-use DNSCheck::Logger;
+use DNSCheck;
 
 ######################################################################
 
-my $logger = new DNSCheck::Logger;
+my $logger = DNSCheck->new->logger;
 
 $logger->add("level1", "tag1", 1, 2, 3);
 $logger->add("level2", "tag2", 4, 5, 6);

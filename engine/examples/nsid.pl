@@ -8,12 +8,10 @@ use strict;
 
 use Data::Dumper;
 
-use DNSCheck::Logger;
-use DNSCheck::Lookup::DNS;
+use DNSCheck;
 
 ######################################################################
 
-my $logger = new DNSCheck::Logger({ interactive => 1 });
-my $dns = new DNSCheck::Lookup::DNS($logger, { debug => 1 });
+my $check = DNSCheck->new({interactive => 1});
 
-my $nsid = $dns->query_nsid("62.119.93.254", "se", "IN", "SOA");
+my $nsid = $check->dns->query_nsid("62.119.93.254", "se", "IN", "SOA");

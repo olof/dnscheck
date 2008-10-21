@@ -19,4 +19,4 @@ die "syntax error" unless ($ARGV[0]);
 my @history =
   ("ns.kirei.se", "ns.schlyter.se", "ns1.pin.se", "ns2.pin.se", "ns3.pin.se");
 
-$check->delegation($ARGV[0], \@history);
+$check->delegation->test($ARGV[0], \@history);

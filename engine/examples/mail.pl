@@ -18,5 +18,5 @@ my @email = ("jakob\@kirei.se", "hostmaster\@n6.schlyter.se",
     "invalid-user\@schlyter.se");
 
 foreach my $x (@email) {
-    $check->mail($x);
+    $check->mail->test($x);
 }

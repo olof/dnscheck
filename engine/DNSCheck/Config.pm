@@ -76,7 +76,7 @@ sub new {
     $localefile = $arg{'localefile'} if defined($arg{'localefile'});
     if (defined($arg{'locale'}) && !defined($localefile)) {
         $localefile = _findfile($arg{'locale'} . '.yaml',
-            catfile('locale', $self->{configdir}));
+            catfile($self->{configdir}, 'locale'));
     }
 
     $self->{'configfile'}     = $configfile;
@@ -107,6 +107,7 @@ sub new {
     # Special cases
     $self->{'hostname'} = hostname;
     $self->{'debug'}    = 1;
+    $self->{'logging'}{'interactive'} = 1 if $arg{'interactive'};
 
     return $self;
 }
@@ -247,6 +248,11 @@ from that.
 =item localefile
 
 The full path to the actual YAML file holding the locale information to be used.
+
+=item interactive
+
+If this key is a true value, the logger object will be set to print entries to
+stdout as they are added, rather than store them for future use.
 
 =item extras
 

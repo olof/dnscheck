@@ -6,8 +6,6 @@ require 5.8.0;
 use warnings;
 use strict;
 
-use Data::Dumper;
-
 use DNSCheck;
 
 ######################################################################
@@ -24,5 +22,5 @@ my @addresses = (
 );
 
 foreach my $a (@addresses) {
-    $check->address($a);
+    $check->address->test($a);
 }

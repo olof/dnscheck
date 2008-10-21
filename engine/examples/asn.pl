@@ -6,18 +6,12 @@ require 5.8.0;
 use warnings;
 use strict;
 
-use Data::Dumper;
-
-use DNSCheck::Logger;
-use DNSCheck::Lookup::DNS;
-use DNSCheck::Lookup::ASN;
+use DNSCheck;
 
 ######################################################################
 
-my $logger = new DNSCheck::Logger({ interactive => 1 });
-my $dns    = new DNSCheck::Lookup::DNS($logger);
-my $asn    = new DNSCheck::Lookup::ASN($logger, $dns);
+my $check    = DNSCheck->new;
 
 die "syntax error" unless ($ARGV[0]);
 
-$asn->lookup($ARGV[0]);
+print "$_\n" for @{$check->asn->lookup($ARGV[0])};

@@ -11,7 +11,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = DNSCheck->new;
+my $check = DNSCheck->new({interactive => 1});
 
 my ($zone, $server) = @ARGV;
 
@@ -22,5 +22,3 @@ if (Net::IP->new($server)) {
 } else {
     $check->nameserver->test($zone, $server);
 }
-
-$check->logger->dump;

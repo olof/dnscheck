@@ -16,4 +16,4 @@ my $check = new DNSCheck({ interactive => 1 });
 
 die "syntax error" unless ($ARGV[0]);
 
-$check->dnssec($ARGV[0]);
+$check->dnssec->test($ARGV[0]);
