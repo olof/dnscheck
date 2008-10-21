@@ -205,6 +205,24 @@ sub count_notice   { my $self = shift; return $self->count_string('NOTICE'); }
 sub count_error    { my $self = shift; return $self->count_string('ERROR'); }
 sub count_critical { my $self = shift; return $self->count_string('CRITICAL'); }
 
+sub get_next_entry {
+    my $self = shift;
+    
+    if (!defined($self->{_iter_index})) {
+        $self->{_iter_index} = 0;
+    }
+    
+    if ($self->{_iter_index} > $#{$self->{messages}}) {
+        $self->{_iter_index} = 0;
+        return undef;
+    }
+        
+    my $e = $self->{messages}[$self->{_iter_index}];
+    $self->{_iter_index}++;
+    
+    return $e;
+}
+
 # module_stack_push() creates a unique (autoincrement) identifier for the
 # module that called the function, and saves it in module stack - an array
 # of module ids
