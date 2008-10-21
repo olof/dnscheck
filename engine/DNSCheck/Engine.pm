@@ -97,7 +97,7 @@ sub new {
     }
 
     # set debugging
-    $self->{engine_degug} = $config->{engine}->{debug};
+    $self->{engine_debug} = $config->{engine}->{debug};
     $self->{ignore_debug} = $config->{engine}->{ignore_debug};
 
     # set priorities
