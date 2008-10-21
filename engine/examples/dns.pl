@@ -13,7 +13,7 @@ use DNSCheck;
 ######################################################################
 
 my $check = new DNSCheck;
-my $dns = $check->dns;
+my $dns   = $check->dns;
 
 my $zone   = "schlyter.se";
 my $domain = "ns.schlyter.se";

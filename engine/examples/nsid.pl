@@ -12,6 +12,6 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = DNSCheck->new({interactive => 1});
+my $check = DNSCheck->new({ interactive => 1 });
 
 my $nsid = $check->dns->query_nsid("62.119.93.254", "se", "IN", "SOA");

@@ -4,7 +4,7 @@ use strict;
 use warnings;
 require 5.8.0;
 
-BEGIN {die "This code is not currently working.\n";}
+BEGIN { die "This code is not currently working.\n"; }
 
 use DNSCheck::NSP;
 use Data::Dumper;

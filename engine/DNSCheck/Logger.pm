@@ -207,19 +207,19 @@ sub count_critical { my $self = shift; return $self->count_string('CRITICAL'); }
 
 sub get_next_entry {
     my $self = shift;
-    
+
     if (!defined($self->{_iter_index})) {
         $self->{_iter_index} = 0;
     }
-    
-    if ($self->{_iter_index} > $#{$self->{messages}}) {
+
+    if ($self->{_iter_index} > $#{ $self->{messages} }) {
         $self->{_iter_index} = 0;
         return undef;
     }
-        
+
     my $e = $self->{messages}[$self->{_iter_index}];
     $self->{_iter_index}++;
-    
+
     return $e;
 }
 

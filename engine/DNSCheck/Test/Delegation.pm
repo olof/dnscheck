@@ -39,9 +39,9 @@ use base 'DNSCheck::Test::Common';
 ######################################################################
 
 sub test {
-    my $self   = shift;
-    my $parent = $self->parent;
-    my $zone   = shift;
+    my $self    = shift;
+    my $parent  = $self->parent;
+    my $zone    = shift;
     my $history = shift;
 
     if (!defined($history) && $parent->dbh) {
