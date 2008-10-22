@@ -24,6 +24,15 @@ net:
     ipv6: 1
     smtp: 1
 
+syslog:
+    ident: dnscheck
+    facility: local2
+
+daemon:
+    pidfile: /var/run/dnscheck_dispatcher.pid
+    errorlog: /var/log/dnscheck_errors.log
+    maxchild: 10
+
 # This information is expected to be overridden in site_config.yaml
 dbi:
     host: 127.0.0.1

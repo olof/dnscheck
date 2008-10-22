@@ -143,7 +143,9 @@ sub dbh {
         my $conf = $self->config->get("dbi");
         my $dsn  = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
             $conf->{"database"}, $conf->{"host"}, $conf->{"port"});
-        my $dbh = DBI->connect($dsn, $conf->{"user"}, $conf->{"password"});
+        my $dbh =
+          DBI->connect($dsn, $conf->{"user"}, $conf->{"password"},
+            { RaiseError => 1 });
         carp "Failed to connect to database: $DBI::errstr" unless defined($dbh);
         $self->{"dbh"} = $dbh;
     }
