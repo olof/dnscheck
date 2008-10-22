@@ -126,6 +126,12 @@ sub logger {
     return $self->parent->logger;
 }
 
+sub resolver {
+    my $self = shift;
+    
+    return $self->{resolver};
+}
+
 ######################################################################
 
 sub query_resolver {
