@@ -125,7 +125,12 @@ sub dispatch {
     }
 
     if (defined($domain)) {
-        process($domain);
+        unless ($problem{$domain} >= 5) {
+            process($domain);
+        } else {
+            slog 'error',"Testing $domain caused repeated abnormal termination of children. Assuming bug. Exiting.";
+            $running = 0;
+        }
         return 0.0;
     } else {
         return 0.25;
