@@ -18,6 +18,7 @@ CREATE TABLE `queue` (
   `domain` varchar(255) default NULL,
   `priority` tinyint(3) unsigned NOT NULL default '0',
   `inprogress` datetime default NULL,
+  `tester_pid` int(10) unsigned NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 

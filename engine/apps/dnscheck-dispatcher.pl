@@ -160,7 +160,8 @@ q[SELECT id, domain FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, 
         my $err = $@;
         slog 'warning', "Database error in get_entry: $err";
 
-        if ($err =~ /DBD driver has not implemented the AutoCommit attribute/
+        if ($err =~
+/(DBD driver has not implemented the AutoCommit attribute)|(Lost connection to MySQL server during query)/
             and defined($id))
         {
 
