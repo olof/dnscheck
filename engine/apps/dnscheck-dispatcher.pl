@@ -83,10 +83,12 @@ sub setup {
     GetOptions('debug' => \$debug, 'verbose' => \$verbose);
     openlog($check->config->get("syslog")->{ident},
         'pid', $check->config->get("syslog")->{facility});
-    slog 'info', "$0 starting.";
+    slog 'info', "$0 starting with %d maximum children.",
+      $check->config->get("daemon")->{maxchild};
     detach() unless $debug;
-    open STDERR,  '>>', $errfile or die "Failed to open error log: $!";
-    open PIDFILE, '>',  $pidfile or die "Failed to open PID file: $!";
+    open STDERR, '>>', $errfile or die "Failed to open error log: $!";
+    printf STDERR "%s starting at %s\n", $0, scalar(localtime);
+    open PIDFILE, '>', $pidfile or die "Failed to open PID file: $!";
     print PIDFILE $$;
     close PIDFILE;
     $SIG{CHLD} = \&REAPER;
@@ -115,9 +117,10 @@ sub detach
 
 sub dispatch {
     my $domain;
+    my $id;
 
     if (scalar keys %running < $limit) {
-        $domain = get_entry();
+        ($domain, $id) = get_entry();
         slog 'debug', "Fetched $domain from database." if defined($domain);
     } else {
 
@@ -125,10 +128,11 @@ sub dispatch {
     }
 
     if (defined($domain)) {
-        unless ($problem{$domain} >= 5) {
-            process($domain);
+        unless (defined($problem{$domain}) and $problem{$domain} >= 5) {
+            process($domain, $id);
         } else {
-            slog 'error',"Testing $domain caused repeated abnormal termination of children. Assuming bug. Exiting.";
+            slog 'error',
+"Testing $domain caused repeated abnormal termination of children. Assuming bug. Exiting.";
             $running = 0;
         }
         return 0.0;
@@ -141,25 +145,42 @@ sub get_entry {
     my $dbh = $check->dbh;
     my ($id, $domain);
 
-    do eval {
+    eval {
         $dbh->begin_work;
         ($id, $domain) = $dbh->selectrow_array(
 q[SELECT id, domain FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, id ASC LIMIT 1 FOR UPDATE]
         );
+        slog 'debug', "Got $id, $domain from database."
+          if (defined($domain) or defined($id));
         $dbh->do(q[UPDATE queue SET inprogress = NOW() WHERE id = ?],
             undef, $id);
         $dbh->commit;
     };
     if ($@) {
-        slog 'warn', "Database error in get_entry: $@";
+        my $err = $@;
+        slog 'warning', "Database error in get_entry: $err";
+
+        if ($err =~ /DBD driver has not implemented the AutoCommit attribute/
+            and defined($id))
+        {
+
+            # Database handle went away. Try to recover.
+            slog 'info',
+              "Known problem. Trying to clear inprogress for queue id $id.";
+            $dbh = $check->dbh;
+            $dbh->do(q[UPDATE queue SET inprogress = NULL WHERE id = ?],
+                undef, $id);
+        }
+
         return undef;
     }
 
-    return $domain;
+    return ($domain, $id);
 }
 
 sub process {
     my $domain = shift;
+    my $id     = shift;
 
     my $pid = fork;
 
@@ -167,7 +188,7 @@ sub process {
         $running{$pid} = $domain;
         slog 'debug', "Child process $pid has been started.";
     } elsif ($pid == 0) {    # Zero value, so child
-        running_in_child($domain);
+        running_in_child($domain, $id);
     } else {                 # Undefined value, so error
         die "Fork failed: $!";
     }
@@ -175,17 +196,20 @@ sub process {
 
 sub running_in_child {
     my $domain = shift;
+    my $id     = shift;
 
     # Reuse the old configuration, but get new everything else.
     my $dc  = DNSCheck->new({ with_config_object => $check->config });
     my $dbh = $dc->dbh;
     my $log = $dc->logger;
 
+    $dbh->do(q[UPDATE queue SET tester_pid = ? WHERE id = ?], undef, $$, $id);
     $dbh->do(q[INSERT INTO tests (domain,begin) VALUES (?,NOW())],
         undef, $domain);
 
     my $test_id = $dbh->{'mysql_insertid'};
-    my $line    = 0;
+    slog 'debug', "$$ running test number $test_id.";
+    my $line = 0;
 
     $dc->zone->test($domain);
 
@@ -218,6 +242,7 @@ q[UPDATE tests SET end = NOW(), count_critical = ?, count_error = ?, count_warni
     );
 
 # Everything went well, so exit nicely (if they didn't go well, we've already died not-so-nicely).
+    slog 'debug', "$$ about to exit nicely.";
     exit(0);
 }
 
@@ -251,7 +276,18 @@ sub cleanup {
     if ($status == 0) {
 
         # Child died nicely.
-        $dbh->do(q[DELETE FROM queue WHERE domain = ?], undef, $domain);
+      AGAIN: eval {
+            $dbh->do(q[DELETE FROM queue WHERE domain = ?], undef, $domain);
+        };
+        if ($@)
+        { # mysqld dumped us. Get a new handle and try again, after a little pause
+            slog 'warning',
+              "Failed to delete queue entry for $domain. Retrying.";
+            sleep(0.25);
+            $dbh = $check->dbh;
+            goto AGAIN;
+        }
+
     } else {
 
         # Child blew up. Clean up.
@@ -290,6 +326,7 @@ sub main {
     monitor_children until (keys %running == 0);
     unlink $check->config->get("daemon")->{pidfile};
     slog 'info', "$0 exiting normally.";
+    printf STDERR "%s exiting normally.\n", $0;
 }
 
 __END__
@@ -342,7 +379,10 @@ PID after it has detached, the file it will redirect its standard error to and
 the maximum number of concurrent child processes it may have. Make sure to set
 the pathnames to values where the user the daemon is running under has write
 permission, since it will terminated if they are specified but can't be
-written to.
+written to. Additionally, running with a maxchild value of n means that at
+least n+1 simultaneous connections to the database will be opened. Make sure
+that the database can actually handle that, or everything will die with more
+or less understandable error messages.
 
 If everything works as intended nothing should ever be written to the
 errorlog. All normal log outout goes to syslog (and, with the debug flag,

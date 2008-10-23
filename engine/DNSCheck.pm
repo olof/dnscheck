@@ -133,21 +133,36 @@ sub context {
 }
 
 sub dbh {
-    my $self = shift;
+    my $self  = shift;
+    my $tries = 0;
+    my $dbh;
 
     unless (defined($self->config->get("dbi"))) {
         return undef;
     }
 
     unless (defined($self->{"dbh"}) && $self->{"dbh"}->ping) {
-        my $conf = $self->config->get("dbi");
-        my $dsn  = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
-            $conf->{"database"}, $conf->{"host"}, $conf->{"port"});
-        my $dbh =
-          DBI->connect($dsn, $conf->{"user"}, $conf->{"password"},
-            { RaiseError => 1 });
-        carp "Failed to connect to database: $DBI::errstr" unless defined($dbh);
-        $self->{"dbh"} = $dbh;
+        until (defined($dbh) or ($tries > 5)) {
+            $tries += 1;
+            my $conf = $self->config->get("dbi");
+            my $dsn  = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
+                $conf->{"database"}, $conf->{"host"}, $conf->{"port"});
+
+            eval {
+                $dbh =
+                  DBI->connect($dsn, $conf->{"user"}, $conf->{"password"},
+                    { RaiseError => 1, AutoCommit => 1 });
+            };
+            if ($@) {
+                carp "Failed to connect to database: $@";
+            }
+        }
+
+        if (defined($dbh)) {
+            $self->{"dbh"} = $dbh;
+        } else {
+            croak "Cannot connect to database.";
+        }
     }
 
     return $self->{"dbh"};
