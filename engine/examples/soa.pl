@@ -2,7 +2,7 @@
 #
 # $Id$
 
-require 5.8.0;
+require 5.008;
 use warnings;
 use strict;
 

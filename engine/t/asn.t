@@ -2,7 +2,7 @@
 #
 # $Id: find_parent.t 249 2008-03-03 15:48:42Z jakob $
 
-require 5.8.0;
+require 5.008;
 use warnings;
 use strict;
 

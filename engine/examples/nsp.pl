@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-require 5.8.0;
+require 5.008;
 
 BEGIN { die "This code is not currently working.\n"; }
 
