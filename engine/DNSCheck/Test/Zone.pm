@@ -85,6 +85,47 @@ sub test {
     return $errors;
 }
 
+sub test_undelegated {
+    my $self        = shift;
+    my $zone        = shift;
+    my @nameservers = @_;
+
+    my $parent = $self->parent;
+    my $qclass = $self->qclass;
+    my $logger = $parent->logger;
+
+    my $errors = 0;
+
+    $logger->logname($zone);
+
+    $logger->module_stack_push();
+    $logger->auto("ZONE:BEGIN", $zone);
+
+    $parent->dns->nameservers_for_child(@nameservers);
+
+    unless ($nameservers[0]) {
+
+        # Slightly silly, since this is really a calling error
+        $logger->auto("ZONE:FATAL_NO_CHILD_NS", $zone);
+        goto DONE;
+    }
+
+    foreach my $ns (@nameservers) {
+        $errors += $parent->nameserver->test_by_ip($zone, $ns);
+    }
+
+    $errors += $parent->soa->test($zone);
+    $errors += $parent->connectivity->test($zone);
+
+  DONE:
+
+    $parent->dns->nameservers_for_child(undef);
+    $logger->auto("ZONE:END", $zone);
+    $logger->module_stack_pop();
+
+    return $errors;
+}
+
 1;
 
 __END__
@@ -96,11 +137,16 @@ DNSCheck::Test::Zone - Test a zone
 
 =head1 DESCRIPTION
 
-Test a zone using all DNSCheck modules.
+Test a zone using all DNSCheck modules, or test an undelegated zone at given
+servers with all tests that make sense.
 
 =head1 METHODS
 
-test(I<parent>, I<zone>);
+new(I<$parent>)
+
+test(I<zone>, [I<$history>])
+
+test_undelegated(I<$zone>, I<@nameservers>)
 
 =head1 EXAMPLES
 

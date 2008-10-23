@@ -105,6 +105,12 @@ sub DESTROY {
 
 ######################################################################
 
+sub nameservers_for_child {
+    my $self = shift;
+
+    $self->{fixed_child_nameservers} = [@_];
+}
+
 sub flush {
     my $self = shift;
 
@@ -128,7 +134,7 @@ sub logger {
 
 sub resolver {
     my $self = shift;
-    
+
     return $self->{resolver};
 }
 
@@ -279,8 +285,13 @@ sub query_child_nocache {
     my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
     my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
     my @target = ();
-    @target = (@target, @{$ipv4}) if ($ipv4);
-    @target = (@target, @{$ipv6}) if ($ipv6);
+
+    if (defined($self->{fixed_child_nameservers})) {
+        @target = @{ $self->{fixed_child_nameservers} };
+    } else {
+        @target = (@target, @{$ipv4}) if ($ipv4);
+        @target = (@target, @{$ipv6}) if ($ipv6);
+    }
     unless (scalar @target) {
         $self->logger->auto("DNS:NO_CHILD_NS", $zone, $qclass);
         return undef;
