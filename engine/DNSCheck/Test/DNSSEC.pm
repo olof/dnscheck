@@ -70,7 +70,7 @@ sub test {
     $packet =
       $parent->dns->query_parent_nocache($zone, $zone, $qclass, "DS", $flags);
     $ds = _dissect($packet, "DS");
-    if ($ds && $#{ @{ $ds->{DS} } } >= 0) {
+    if ($ds && $#{ $ds->{DS} } >= 0) {
         $logger->auto("DNSSEC:DS_FOUND", $zone);
     } else {
         $logger->auto("DNSSEC:NO_DS_FOUND", $zone);
@@ -82,7 +82,7 @@ sub test {
       $parent->dns->query_child_nocache($zone, $zone, $qclass, "DNSKEY",
         $flags);
     $dnskey = _dissect($packet, "DNSKEY");
-    if ($dnskey && $#{ @{ $dnskey->{DNSKEY} } } >= 0) {
+    if ($dnskey && $#{ $dnskey->{DNSKEY} } >= 0) {
         $logger->auto("DNSSEC:DNSKEY_FOUND", $zone);
     } else {
         $logger->auto("DNSSEC:DNSKEY_NOT_FOUND", $zone);
@@ -195,7 +195,7 @@ sub _check_child {
         $errors += $logger->auto("DNSSEC:DNSKEY_MANDATORY_NOT_FOUND", $zone);
     }
 
-    unless ($#{ @{ $dnskey->{RRSIG} } } >= 0) {
+    unless ($#{ $dnskey->{RRSIG} } >= 0) {
 
         $packet =
           $parent->dns->query_child_nocache($zone, $zone, $qclass, "RRSIG",
