@@ -27,7 +27,7 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 ######################################################################
-use 5.8.0;
+use 5.008;
 
 use warnings;
 use strict;
@@ -36,7 +36,7 @@ use DNSCheck;
 
 use Getopt::Long;
 use Sys::Syslog;
-use POSIX ":sys_wait_h";
+use POSIX ':sys_wait_h';
 use Time::HiRes 'sleep';
 
 use vars qw[
@@ -85,6 +85,14 @@ sub setup {
         'pid', $check->config->get("syslog")->{facility});
     slog 'info', "$0 starting with %d maximum children.",
       $check->config->get("daemon")->{maxchild};
+    slog 'info', 'IPv4 disabled.' unless $check->config->get("net")->{ipv4};
+    slog 'info', 'IPv6 disabled.' unless $check->config->get("net")->{ipv6};
+    slog 'info', 'SMTP disabled.' unless $check->config->get("net")->{smtp};
+    slog 'info', 'Logging as %s to facility %s.',
+      $check->config->get("syslog")->{ident},
+      $check->config->get("syslog")->{facility};
+    slog 'info', 'Reading config from %s and %s.',
+      $check->config->get("configfile"), $check->config->get("siteconfigfile");
     detach() unless $debug;
     open STDERR, '>>', $errfile or die "Failed to open error log: $!";
     printf STDERR "%s starting at %s\n", $0, scalar(localtime);
