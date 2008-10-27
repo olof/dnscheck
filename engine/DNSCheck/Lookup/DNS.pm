@@ -90,6 +90,7 @@ sub new {
     $self->{resolver} = new Net::DNS::Resolver;
     $self->{resolver}->persistent_tcp(0);
     $self->{resolver}->cdflag(1);
+    $self->{resolver}->recurse(1);
     $self->{resolver}->debug($self->{debug_resolver});
     $self->{resolver}->udp_timeout($self->{default}{udp_timeout});
     $self->{resolver}->tcp_timeout($self->{default}{tcp_timeout});
@@ -282,13 +283,13 @@ sub query_child_nocache {
     $self->init_nameservers($zone, $qclass);
 
     # find child to query
-    my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
-    my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
     my @target = ();
 
     if (defined($self->{fixed_child_nameservers})) {
         @target = @{ $self->{fixed_child_nameservers} };
     } else {
+        my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
+        my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
         @target = (@target, @{$ipv4}) if ($ipv4);
         @target = (@target, @{$ipv6}) if ($ipv6);
     }

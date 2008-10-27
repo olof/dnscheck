@@ -45,36 +45,88 @@ sub test {
     my $parent = $self->parent;
     my $zone   = shift;
 
-    my $params = $parent->config->get("params");
-    my $qclass = $self->qclass;
     my $logger = $parent->logger;
-    my $errors = 0;
 
     $logger->module_stack_push();
     $logger->auto("SOA:BEGIN", $zone);
 
-    my $packet = $parent->dns->query_child($zone, $zone, $qclass, "SOA");
+    my ($errors, $packet) = $self->test_soa_existence($zone);
 
+    my $soa;
+    if (defined($packet)) {
+        $soa = ($packet->answer)[0]
+    }
+    
+    if (defined($soa)) {
+        $errors += $self->test_soa_mname($soa, $zone);
+        $errors += $self->test_soa_rname($soa, $zone);
+        $errors += $self->test_soa_values($soa, $zone);
+    }
+
+    $logger->auto("SOA:END", $zone);
+    $logger->module_stack_pop();
+
+    return $errors;
+}
+
+################################################################
+# Utility function(s)
+################################################################
+
+sub mname_is_ns {
+    my $soa = shift;
+    my @ns  = @_;
+
+    foreach my $rr (@ns) {
+        if (lc($rr->nsdname) eq lc($soa->mname)) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+################################################################
+# Tests
+################################################################
+
+sub test_soa_existence {
+    my $self = shift;
+    my $zone = shift;
+    
+    my $packet = $self->parent->dns->query_child($zone, $zone, $self->qclass, "SOA");
+    
+    my $errors = 0;
+    
     # REQUIRE: SOA record must exist
     if (   $packet
         && ($packet->header->ancount == 1)
         && (($packet->answer)[0]->type eq "SOA"))
     {
-        $logger->auto("SOA:FOUND", $zone);
+        $self->logger->auto("SOA:FOUND", $zone);
     } else {
-        $errors += $logger->auto("SOA:NOT_FOUND", $zone);
-        goto DONE;
+        $errors += $self->logger->auto("SOA:NOT_FOUND", $zone);
+        return ($errors, undef);
     }
 
     # REQUIRE: only ONE SOA record may exist
     unless ($packet->header->ancount == 1) {
-        $errors += $logger->auto("SOA:MULTIPLE_SOA", $zone);
-        goto DONE;
+        $errors += $self->logger->auto("SOA:MULTIPLE_SOA", $zone);
     }
+    
+    return ($errors, $packet);
+}
 
-    my @answer = $packet->answer;
-    my $soa    = $answer[0];
-
+sub test_soa_mname {
+    my $self = shift;
+    my $soa = shift;
+    my $zone = shift;
+    
+    my $parent = $self->parent;
+    my $logger = $self->logger;
+    
+    my $errors = 0;
+    
     # REQUIRE: SOA MNAME must exist as a valid hostname
     if ($parent->host->test($soa->mname) > 0) {
         $errors += $logger->auto("SOA:MNAME_ERROR", $zone, $soa->mname);
@@ -82,11 +134,11 @@ sub test {
         $logger->auto("SOA:MNAME_VALID", $zone, $soa->mname);
     }
 
-    $packet = $parent->dns->query_resolver($zone, $qclass, "NS");
+    my $packet = $parent->dns->query_resolver($zone, $self->qclass, "NS");
 
     unless ($packet && $packet->header->ancount) {
         $errors += $logger->auto("SOA:NS_NOT_FOUND", $zone);
-        goto DONE;
+        return $errors;
     }
 
     # REQUIRE: SOA MNAME may not be in the list of nameservers
@@ -126,7 +178,19 @@ sub test {
             $logger->auto("SOA:MNAME_NOT_AUTH", $zone, $soa->mname);
         }
     }
+    return $errors;
+}
 
+sub test_soa_rname {
+    my $self = shift;
+    my $soa = shift;
+    my $zone = shift;
+    
+    my $errors = 0;
+    
+    my $parent = $self->parent;
+    my $logger = $self->logger;
+    
     # REQUIRE: SOA RNAME must have a valid syntax (@ vs .)
     # REQUIRE: SOA RNAME address should be deliverable
     if ($soa->rname =~ /^(.+?)(?<!\\)\.(.+)$/) {
@@ -147,7 +211,22 @@ sub test {
     } else {
         $errors += $logger->auto("SOA:RNAME_SYNTAX", $zone, $soa->rname);
     }
+    
+    return $errors;
+}
 
+sub test_soa_values {
+    my $self = shift;
+    my $soa = shift;
+    my $zone = shift;
+    
+    my $errors = 0;
+    
+    my $parent = $self->parent;
+    my $logger = $self->logger;
+    
+    my $params = $parent->config->get("params");
+    
     # REQUIRE: SOA TTL advistory, min 1 hour
     my $min_soa_ttl = $params->{"SOA:MIN_TTL"};
     if ($soa->ttl < $min_soa_ttl) {
@@ -205,25 +284,8 @@ sub test {
         $logger->auto("SOA:MINIMUM_OK", $zone, $soa->minimum, $min_soa_minimum,
             $max_soa_minimum);
     }
-
-  DONE:
-    $logger->auto("SOA:END", $zone);
-    $logger->module_stack_pop();
-
-    return $errors;
-}
-
-sub mname_is_ns {
-    my $soa = shift;
-    my @ns  = @_;
-
-    foreach my $rr (@ns) {
-        if (lc($rr->nsdname) eq lc($soa->mname)) {
-            return 1;
-        }
-    }
-
-    return 0;
+ 
+   return $errors;
 }
 
 1;
