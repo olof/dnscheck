@@ -1,4 +1,5 @@
 apps/dnscheck-preflight.pl
+apps/dnscheck-dispatcher.pl
 apps/dnscheck-qrun.pl
 apps/dnscheck.pl
 build/preprocessor.pl
@@ -39,6 +40,7 @@ examples/connectivity.pl
 examples/consistency.pl
 examples/delegation.pl
 examples/dns.pl
+examples/dnscheck_nagios_plugin.pl
 examples/dnssec.pl
 examples/engine.pl
 examples/host.pl
