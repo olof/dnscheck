@@ -41,8 +41,9 @@ use Net::IP 1.25 qw(ip_get_version);
 ######################################################################
 
 sub test {
-    my $self = shift;
-    my $zone = shift;
+    my $self        = shift;
+    my $zone        = shift;
+    my $undelegated = shift;
 
     my $logger = $self->parent->logger;
 
@@ -57,7 +58,7 @@ sub test {
     }
 
     if (defined($soa)) {
-        $errors += $self->test_soa_mname($soa, $zone);
+        $errors += $self->test_soa_mname($soa, $zone, $undelegated);
         $errors += $self->test_soa_rname($soa, $zone);
         $errors += $self->test_soa_values($soa, $zone);
     }
@@ -66,6 +67,13 @@ sub test {
     $logger->module_stack_pop();
 
     return $errors;
+}
+
+sub test_undelegated {
+    my $self = shift;
+    my $zone = shift;
+
+    $self->test($zone, 1);
 }
 
 ################################################################
@@ -118,9 +126,10 @@ sub test_soa_existence {
 }
 
 sub test_soa_mname {
-    my $self = shift;
-    my $soa  = shift;
-    my $zone = shift;
+    my $self        = shift;
+    my $soa         = shift;
+    my $zone        = shift;
+    my $undelegated = shift;
 
     my $parent = $self->parent;
     my $logger = $self->logger;
@@ -134,7 +143,12 @@ sub test_soa_mname {
         $logger->auto("SOA:MNAME_VALID", $zone, $soa->mname);
     }
 
-    my $packet = $parent->dns->query_resolver($zone, $self->qclass, "NS");
+    my $packet;
+    unless ($undelegated) {
+        $packet = $parent->dns->query_resolver($zone, $self->qclass, "NS");
+    } else {
+        $packet = $parent->dns->query_child($zone, $zone, $self->qclass, "NS");
+    }
 
     unless ($packet && $packet->header->ancount) {
         $errors += $logger->auto("SOA:NS_NOT_FOUND", $zone);

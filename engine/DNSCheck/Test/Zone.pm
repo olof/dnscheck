@@ -114,7 +114,7 @@ sub test_undelegated {
         $errors += $parent->nameserver->test_by_ip($zone, $ns);
     }
 
-    $errors += $parent->soa->test($zone);
+    $errors += $parent->soa->test_undelegated($zone);
     $errors += $parent->connectivity->test($zone);
 
   DONE:
