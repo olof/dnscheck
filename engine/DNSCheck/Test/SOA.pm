@@ -41,11 +41,10 @@ use Net::IP 1.25 qw(ip_get_version);
 ######################################################################
 
 sub test {
-    my $self   = shift;
-    my $parent = $self->parent;
-    my $zone   = shift;
+    my $self = shift;
+    my $zone = shift;
 
-    my $logger = $parent->logger;
+    my $logger = $self->parent->logger;
 
     $logger->module_stack_push();
     $logger->auto("SOA:BEGIN", $zone);
@@ -54,9 +53,9 @@ sub test {
 
     my $soa;
     if (defined($packet)) {
-        $soa = ($packet->answer)[0]
+        $soa = ($packet->answer)[0];
     }
-    
+
     if (defined($soa)) {
         $errors += $self->test_soa_mname($soa, $zone);
         $errors += $self->test_soa_rname($soa, $zone);
@@ -93,11 +92,12 @@ sub mname_is_ns {
 sub test_soa_existence {
     my $self = shift;
     my $zone = shift;
-    
-    my $packet = $self->parent->dns->query_child($zone, $zone, $self->qclass, "SOA");
-    
+
+    my $packet =
+      $self->parent->dns->query_child($zone, $zone, $self->qclass, "SOA");
+
     my $errors = 0;
-    
+
     # REQUIRE: SOA record must exist
     if (   $packet
         && ($packet->header->ancount == 1)
@@ -113,20 +113,20 @@ sub test_soa_existence {
     unless ($packet->header->ancount == 1) {
         $errors += $self->logger->auto("SOA:MULTIPLE_SOA", $zone);
     }
-    
+
     return ($errors, $packet);
 }
 
 sub test_soa_mname {
     my $self = shift;
-    my $soa = shift;
+    my $soa  = shift;
     my $zone = shift;
-    
+
     my $parent = $self->parent;
     my $logger = $self->logger;
-    
+
     my $errors = 0;
-    
+
     # REQUIRE: SOA MNAME must exist as a valid hostname
     if ($parent->host->test($soa->mname) > 0) {
         $errors += $logger->auto("SOA:MNAME_ERROR", $zone, $soa->mname);
@@ -183,14 +183,14 @@ sub test_soa_mname {
 
 sub test_soa_rname {
     my $self = shift;
-    my $soa = shift;
+    my $soa  = shift;
     my $zone = shift;
-    
+
     my $errors = 0;
-    
+
     my $parent = $self->parent;
     my $logger = $self->logger;
-    
+
     # REQUIRE: SOA RNAME must have a valid syntax (@ vs .)
     # REQUIRE: SOA RNAME address should be deliverable
     if ($soa->rname =~ /^(.+?)(?<!\\)\.(.+)$/) {
@@ -211,22 +211,22 @@ sub test_soa_rname {
     } else {
         $errors += $logger->auto("SOA:RNAME_SYNTAX", $zone, $soa->rname);
     }
-    
+
     return $errors;
 }
 
 sub test_soa_values {
     my $self = shift;
-    my $soa = shift;
+    my $soa  = shift;
     my $zone = shift;
-    
+
     my $errors = 0;
-    
+
     my $parent = $self->parent;
     my $logger = $self->logger;
-    
+
     my $params = $parent->config->get("params");
-    
+
     # REQUIRE: SOA TTL advistory, min 1 hour
     my $min_soa_ttl = $params->{"SOA:MIN_TTL"};
     if ($soa->ttl < $min_soa_ttl) {
@@ -284,8 +284,8 @@ sub test_soa_values {
         $logger->auto("SOA:MINIMUM_OK", $zone, $soa->minimum, $min_soa_minimum,
             $max_soa_minimum);
     }
- 
-   return $errors;
+
+    return $errors;
 }
 
 1;
