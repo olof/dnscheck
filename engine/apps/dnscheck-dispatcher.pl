@@ -48,6 +48,7 @@ use vars qw[
   $check
   $limit
   $running
+  $syslog
 ];
 
 %running = ();
@@ -58,6 +59,7 @@ $verbose = 0;
 $check   = DNSCheck->new;
 $limit   = $check->config->get("daemon")->{maxchild};
 $running = 1;
+$syslog  = 1;
 
 # Kick everything off
 main();
@@ -73,7 +75,19 @@ sub slog {
     my $msg = sprintf($_[0], @_[1 .. $#_]);
 
     printf("%s (%d): %s\n", uc($priority), $$, $msg) if $debug;
-    syslog($priority, @_);
+    eval {
+        if ($syslog)
+        {
+            syslog($priority, @_);
+        } else {
+            printf STDERR "%s (%d): %s\n", uc($priority), $$, $msg;
+        }
+    };
+    if ($@) {
+        print STDERR "SYSLOG CONNECTION LOST. Switching to stderr logging.\n";
+        $syslog = 0;
+        printf STDERR "%s (%d): %s\n", uc($priority), $$, $msg;
+    }
 }
 
 sub setup {
@@ -117,6 +131,32 @@ sub detach
     exit if $pid;
     die "Fork failed: $!" unless defined($pid);
     slog('info', 'Detached.');
+}
+
+sub inital_cleanup {
+    my $dbh = $check->dbh;
+
+    $dbh->do(
+q[UPDATE queue SET inprogress = NULL WHERE inprogress IS NOT NULL AND tester_pid IS NULL]
+    );
+    my $c = $dbh->selectall_hashref(
+q[SELECT id, domain, tester_pid FROM queue WHERE inprogress IS NOT NULL AND tester_pid IS NOT NULL],
+        'tester_pid'
+    );
+    foreach my $k (keys %$c) {
+        if (kill 0, $c->{$k}{tester_pid}) {
+
+# The process running this test is still alive, so just remove it from the queue.
+            $dbh->do(q[DELETE FROM queue WHERE id = ?], undef, $c->{$k}{id});
+            slog 'info', 'Removed %s from queue', $c->{$k}{domain};
+        } else {
+
+            # The process running this test has died, so reschedule it
+            $dbh->do(q[UPDATE queue SET inprogress = NULL WHERE id = ?],
+                undef, $c->{$k}{id});
+            slog 'info', 'Rescheduled test for %s', $c->{$k}{domain};
+        }
+    }
 }
 
 ################################################################
@@ -326,6 +366,7 @@ sub REAPER {
 
 sub main {
     setup();
+    inital_cleanup();
     while ($running) {
         my $skip = dispatch();
         monitor_children();
