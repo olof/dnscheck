@@ -72,9 +72,6 @@ sub new {
         $self->{config} = DNSCheck::Config->new(%{$config_args});
     }
 
-    # create DNSCheck context
-    $self->{context} = new DNSCheck::Context($self);
-
     return $self;
 }
 
@@ -83,7 +80,21 @@ sub new {
 sub flush {
     my $self = shift;
 
-    $self->{context}->{dns}->flush();
+    # Dump the DNS cache.
+    $self->{dns}->flush();
+    
+    # Dump all cached test objects.
+    $self->{test_zone} = undef;
+    $self->{test_host} = undef;
+    $self->{test_address} = undef;
+    $self->{test_soa} = undef;
+    $self->{test_connectivity} = undef;
+    $self->{test_consistency} = undef;
+    $self->{test_delegation} = undef;
+    $self->{test_nameserver} = undef;
+    $self->{test_dnssec} = undef;
+    $self->{test_mail} = undef;
+    $self->{test_smtp} = undef;
 
     # should the ASN cache be flushed as well?
     #$self->{context}->{asn}->flush();
@@ -129,6 +140,13 @@ sub config {
 # Hopefully we will be able to remove this one soon.
 sub context {
     my $self = shift;
+
+    carp "Using legacy Context object. Fix to use main object instead";
+
+    unless (defined($self->{context})) {
+        $self->{context} = DNSCheck::Context->new($self);
+    }
+    
     return $self->{context};
 }
 
@@ -294,27 +312,29 @@ DNSCheck - DNS Check Tools
 
 =head1 DESCRIPTION
 
-This module provides the main external interface to the actual tests in the
+This module provides the external interface to the actual tests in the
 DNSCheck system.
 
 =head1 METHODS
 
 =over
 
-=item ->new(I<config>);
+=item ->new($confighashref);
 
-I<config> is a reference to a hash holding configuration keys. They will be
-blindly used to create a L<DNSCheck::Config> object, unless one key is
-C<with_config_object>. If there is such a key, its value will be used as the
-L<DNSCheck::Config> object. No check to see if it actually I<is> such an
-object will be done, so anything that responds to the right methods can be
-used.
+C<confighashref> is a reference to a hash holding configuration keys.
+They will be blindly used to create a L<DNSCheck::Config> object,
+unless one key is C<with_config_object>. If there is such a key, its
+value will be used as the L<DNSCheck::Config> object. No check to see
+if it actually I<is> such an object will be done, so anything that
+responds to the right methods can be used.
 
 Providing a pre-created config object can be useful when creating and
-discarding a large number of L<DNSCheck> objects, since config object creation
-normally stands for the majority of the time it takes to create such an
-object. Creating the config object once and then providing it to every
-L<DNSCheck> may save considerable time in the long run.
+discarding a large number of L<DNSCheck> objects, since config object
+creation normally stands for the majority of the time it takes to
+create such an object. Creating the config object once and then
+providing it to every L<DNSCheck> may save considerable time in the
+long run. An example if this use can be found in the
+C<dnscheck-dispatcher> application.
 
 =item ->flush()
 
@@ -345,6 +365,13 @@ it should point at a database with the dnscheck schema loaded, or the first
 sub-module here to try and use the database will throw an exception and cause
 the script to die.
 
+This method uses L<DBI::ping()> to determine if a connection is alive
+or not, so make sure to use a DBI adapter where that isn't a null
+operation (as it used to be in older versions of L<DBD::mysql>). Also,
+since the included database schema assumes that the database is MySQL,
+this method will try to connect to the server five times before it
+gives up and dies.
+
 =item ->zone()
 
 =item ->host()
@@ -367,10 +394,15 @@ the script to die.
 
 =item ->smtp()
 
-These eleven methods all return properly configured objects of the respective
-test classes. For more details on how to use the objects, see the
-documentation on the modules in question. Generally, though, they have a main
-entry method called C<test> that runs all available tests with the arguments given. 
+These eleven methods all return properly configured objects of the
+respective test classes. For more details on how to use the objects,
+see the documentation on the modules in question. Generally, though,
+they have a main entry method called C<test> that runs all available
+tests with the arguments given.
+
+The objects returned are created on first request and cached for
+future use. Use the C<flush()> method to discard the existing objects,
+so that new ones will be created on next request.
 
 =back
 

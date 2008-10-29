@@ -6,7 +6,7 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 9;
+use Test::More tests => 8;
 
 use DNSCheck;
 use Sys::Hostname;
@@ -28,7 +28,6 @@ SKIP: {
     ok($dc->config->get("net")->{"smtp"} eq 1);
     ok($dc->config->get("hostname") eq hostname);
     ok(ref($dc->dns) eq 'DNSCheck::Lookup::DNS');
-    ok(ref($dc->context) eq 'DNSCheck::Context');
     ok(ref($dc->logger) eq 'DNSCheck::Logger');
     ok($dc->dns->parent eq $dc);
 }
