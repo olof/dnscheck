@@ -43,12 +43,14 @@ use Net::IP 1.25 qw(ip_get_version);
 sub test {
     my $self       = shift;
     my $parent     = $self->parent;
-    my $zone       = shift;
-    my $nameserver = shift;
+    my $zone       = shift || $self->zone;
+    my $nameserver = shift || $self->ns;
 
-    my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;
+
+    $self->zone($zone);
+    $self->ns($nameserver);
 
     my $packet;
 
@@ -61,9 +63,9 @@ sub test {
         goto DONE;
     }
 
-    my @addresses = $parent->dns->find_addresses($nameserver, $qclass);
+    my @addresses = $parent->dns->find_addresses($nameserver, $self->qclass);
 
-    $errors += _test_ip($parent, $zone, $nameserver, @addresses);
+    $errors += $self->_test_ip(@addresses);
 
   DONE:
     $logger->auto("NAMESERVER:END", $nameserver);
@@ -82,6 +84,9 @@ sub test_by_ip {
     my $logger = $parent->logger;
     my $errors = 0;
 
+    $self->zone($zone);
+    $self->ns($nameserver);
+
     my $packet;
 
     $logger->module_stack_push();
@@ -92,7 +97,7 @@ sub test_by_ip {
         goto DONE;
     }
 
-    $errors += _test_ip($parent, $zone, $nameserver, $nameserver);
+    $errors += $self->_test_ip($nameserver);
 
   DONE:
     $logger->auto("NAMESERVER:END", $nameserver);
@@ -102,14 +107,15 @@ sub test_by_ip {
 }
 
 sub _test_ip {
-    my $parent     = shift;
-    my $zone       = shift;
-    my $nameserver = shift;
-    my @addresses  = @_;
+    my $self      = shift;
+    my @addresses = @_;
 
-    my $qclass = $parent->config->get("dns")->{class};
-    my $logger = $parent->logger;
-    my $errors = 0;
+    my $parent     = $self->parent;
+    my $zone       = $self->zone;
+    my $nameserver = $self->ns;
+    my $qclass     = $parent->config->get("dns")->{class};
+    my $logger     = $parent->logger;
+    my $errors     = 0;
 
     my $packet;
 
@@ -132,70 +138,32 @@ sub _test_ip {
             next ADDRESS;
         }
 
-        # REQUIRE: Nameserver should not be recursive
-        $logger->auto("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
-        if ($parent->dns->address_is_recursive($address, $qclass)) {
-            $logger->auto("NAMESERVER:RECURSIVE", $nameserver, $address);
-        } else {
-            $logger->auto("NAMESERVER:NOT_RECURSIVE", $nameserver, $address);
-        }
+        $errors += $self->ns_recursive($address);
 
-        # REQUIRE: Nameserver must be authoritative for the zone
-        #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
-        $logger->auto("NAMESERVER:CHECKING_AUTH", $nameserver, $address);
-        if ($parent->dns->address_is_authoritative($address, $zone, $qclass)) {
-            $errors +=
-              $logger->auto("NAMESERVER:NOT_AUTH", $nameserver, $address,
-                $zone);
-            next ADDRESS;
-        } else {
-            $logger->auto("NAMESERVER:AUTH", $nameserver, $address, $zone);
-        }
+        my $tmp = $self->ns_authoritative($address);
+        $errors += $tmp;
+        next ADDRESS if $tmp > 0;
 
-        # REQUIRE: SOA must be fetchable over any protocol (UDP/TCP)
-        $logger->auto("NAMESERVER:TESTING_UDP", $nameserver, $address);
-        $packet =
-          $parent->dns->query_explicit($zone, $qclass, "SOA", $address,
-            { transport => "udp", aaonly => 0 });
-        if ($packet) {
-            $logger->auto("NAMESERVER:UDP_OK", $nameserver, $address, $zone);
-        } else {
-            $errors +=
-              $logger->auto("NAMESERVER:NO_UDP", $nameserver, $address, $zone);
-            $skip_udp = 1;
-        }
+        $tmp = $self->ns_udp($address);
+        $errors += $tmp;
+        $skip_udp = 1 if $tmp > 0;
 
-        $logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
-        $packet =
-          $parent->dns->query_explicit($zone, $qclass, "SOA", $address,
-            { transport => "tcp", aaonly => 0 });
-        if ($packet) {
-            $logger->auto("NAMESERVER:TCP_OK", $nameserver, $address, $zone);
-        } else {
-            $errors +=
-              $logger->auto("NAMESERVER:NO_TCP", $nameserver, $address, $zone);
-            $skip_tcp = 1;
-        }
+        $tmp = $self->ns_tcp($address);
+        $errors += $tmp;
+        $skip_tcp = 1 if $tmp > 0;
 
         # REQUIRE: Nameserver may provide AXFR
-        $logger->auto("NAMESERVER:TESTING_AXFR", $nameserver, $address);
         if ($skip_tcp) {
             $logger->auto("NAMESERVER:AXFR_SKIP", $nameserver, $address, $zone);
         } else {
-            if ($parent->dns->check_axfr($address, $zone, $qclass)) {
-                $logger->auto("NAMESERVER:AXFR_OPEN", $nameserver, $address,
-                    $zone);
-            } else {
-                $logger->auto("NAMESERVER:AXFR_CLOSED",
-                    $nameserver, $address, $zone);
-            }
+            $errors += $self->ns_axfr($address);
         }
 
         # Check for possible identification
         unless ($skip_tcp || $skip_udp) {
             $logger->auto("NAMESERVER:CHECKING_LEGACY_ID",
                 $nameserver, $address);
-            _check_id($parent, $nameserver, $address);
+            $self->ns_check_id($address);
         } else {
             $logger->auto("NAMESERVER:LEGACY_ID_SKIP", $nameserver, $address);
         }
@@ -211,13 +179,34 @@ sub _test_ip {
     return $errors;
 }
 
-sub _check_id {
-    my $parent     = shift;
-    my $nameserver = shift;
-    my $address    = shift;
+sub zone {
+    my $self = shift;
+    my $zone = shift;
 
-    my $qclass = $parent->config->get("dns")->{class};
-    my $logger = $parent->logger;
+    if (defined($zone)) {
+        $self->{zone} = $zone;
+    }
+
+    return $self->{zone};
+}
+
+sub ns {
+    my $self = shift;
+    my $ns   = shift;
+
+    if (defined($ns)) {
+        $self->{nameserver} = $ns;
+    }
+
+    return $self->{nameserver};
+}
+
+sub ns_check_id {
+    my $self       = shift;
+    my $address    = shift;
+    my $nameserver = shift || $self->ns;
+
+    my $logger = $self->logger;
 
     my @domains =
       ("hostname.bind", "version.bind", "id.server", "version.server");
@@ -225,11 +214,10 @@ sub _check_id {
     my $packet;
 
     for my $domain (@domains) {
-        $packet = $parent->dns->query_explicit($domain, "CH", "TXT", $address);
+        $packet =
+          $self->parent->dns->query_explicit($domain, "CH", "TXT", $address);
 
         if ($packet) {
-            next unless ($packet);
-
             foreach my $rr ($packet->answer) {
                 next unless (($rr->type eq "TXT") && $rr->txtdata);
 
@@ -240,6 +228,103 @@ sub _check_id {
     }
 }
 
+################################################################
+# Individual tests
+################################################################
+
+sub ns_recursive {
+    my $self       = shift;
+    my $address    = shift;
+    my $nameserver = shift || $self->ns;
+
+    # REQUIRE: Nameserver should not be recursive
+    $self->logger->auto("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
+    if ($self->parent->dns->address_is_recursive($address, $self->qclass)) {
+        return $self->logger->auto("NAMESERVER:RECURSIVE", $nameserver,
+            $address);
+    } else {
+        return $self->logger->auto("NAMESERVER:NOT_RECURSIVE", $nameserver,
+            $address);
+    }
+}
+
+sub ns_authoritative {
+    my $self       = shift;
+    my $address    = shift;
+    my $nameserver = shift || $self->ns;
+    my $zone       = shift || $self->zone;
+
+    # REQUIRE: Nameserver must be authoritative for the zone
+    #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
+    $self->logger->auto("NAMESERVER:CHECKING_AUTH", $nameserver, $address);
+    if (
+        $self->parent->dns->address_is_authoritative(
+            $address, $zone, $self->qclass
+        )
+      )
+    {
+        return $self->logger->auto("NAMESERVER:NOT_AUTH", $nameserver, $address,
+            $zone);
+    } else {
+        return $self->logger->auto("NAMESERVER:AUTH", $nameserver, $address,
+            $zone);
+    }
+}
+
+sub ns_udp {
+    my $self       = shift;
+    my $address    = shift;
+    my $nameserver = shift || $self->ns;
+    my $zone       = shift || $self->zone;
+
+    $self->logger->auto("NAMESERVER:TESTING_UDP", $nameserver, $address);
+    my $packet =
+      $self->parent->dns->query_explicit($zone, $self->qclass, "SOA", $address,
+        { transport => "udp", aaonly => 0 });
+    if ($packet) {
+        return $self->logger->auto("NAMESERVER:UDP_OK", $nameserver, $address,
+            $zone);
+    } else {
+        return $self->logger->auto("NAMESERVER:NO_UDP", $nameserver, $address,
+            $zone);
+    }
+}
+
+sub ns_tcp {
+    my $self       = shift;
+    my $address    = shift;
+    my $nameserver = shift || $self->ns;
+    my $zone       = shift || $self->zone;
+
+    $self->logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
+    my $packet =
+      $self->parent->dns->query_explicit($zone, $self->qclass, "SOA", $address,
+        { transport => "tcp", aaonly => 0 });
+    if ($packet) {
+        return $self->logger->auto("NAMESERVER:TCP_OK", $nameserver, $address,
+            $zone);
+    } else {
+        return $self->logger->auto("NAMESERVER:NO_TCP", $nameserver, $address,
+            $zone);
+    }
+}
+
+sub ns_axfr {
+    my $self       = shift;
+    my $address    = shift;
+    my $nameserver = shift || $self->ns;
+    my $zone       = shift || $self->zone;
+
+    $self->logger->auto("NAMESERVER:TESTING_AXFR", $nameserver, $address);
+    if ($self->parent->dns->check_axfr($address, $zone, $self->qclass)) {
+        return $self->logger->auto("NAMESERVER:AXFR_OPEN", $nameserver,
+            $address, $zone);
+    } else {
+        return $self->logger->auto("NAMESERVER:AXFR_CLOSED",
+            $nameserver, $address, $zone);
+    }
+}
+
 1;
 
 __END__
@@ -247,16 +332,16 @@ __END__
 
 =head1 NAME
 
-DNSCheck::Test::Nameserver - Test a single nameserver
+DNSCheck::Test::Nameserver - Test a nameserver
 
 =head1 DESCRIPTION
 
-Test a single name server for a specific zone. The following tests are made:
+Test a single name server for a specific zone. The following tests are done:
 
 =over 4
 
 =item *
-The nameserver must be a valid hostname.
+The nameserver must be a valid hostname (according to L<DNSCheck::Test::Host>).
 
 =item *
 The nameserver should not be recursive.
@@ -274,9 +359,68 @@ The nameserver may provide AXFR for the zone.
 
 =head1 METHODS
 
-test(I<parent>, I<zone>, I<nameserver>);
+=over
 
-=head1 EXAMPLES
+=item ->new($parent, $zone, $nameserver)
+
+Create a new test object, and optionally set the zone and nameserver name that
+will be tested. If those two are set, the values will be used as defaults for
+many other methods.
+
+=item ->test($zone, $nameserver);
+
+Perform the default set of tests for a nameserver in a delegated domain. Uses
+the defaults set in L<new()>, if any. Returns the number of problems found at
+level ERROR and CRITICAL (as well as detiled log info in the parent's logger
+object as usual).
+
+For this test, a lookup on the nameserver name will be made and all tests run
+on all addresses found (obeying global settings for use of IPv4 and IPv6, of
+course).
+
+=item ->test_by_ip($zone, $address)
+
+Perform as many of the default tests as make sense for the named zone on a
+nameserver specified by IP address, and the L<DNSCheck::Test::Host> test is
+replaced by only a L<DNSCheck::Test::Address> test. The same as L<test()> in
+other respects.
+
+=item ->zone($zone)
+
+Get or set the default zone for this object.
+
+=item ->ns($name)
+
+Get or set the default nameserver name for this object.
+
+=item ->ns_check_id($ip, [$name])
+
+Run the version-fetching test for the specified server.
+
+=item ->ns_recursive($ip, [$name])
+
+Test if the specified server is recursive. As all tests here, returns the
+number of problems on levels ERROR and CRITICAL found, and populates the
+logger object.
+
+=item ->ns_authoritative($ip, [$name, $zone])
+
+Test if the specified server is authoritative for the given zone (nameserver
+name is only used for logging).
+
+=item ->ns_udp($ip, [$name, $zone])
+
+Test if the given server can be queried via UDP.
+
+=item ->ns_tcp($ip, [$name, $zone])
+
+Test if the given server can be queried via TCP.
+
+=item ->ns_axfr($ip, [$name, $zone])
+
+Test if the given server allows transfer of the given zone.
+
+=back
 
 =head1 SEE ALSO
 
