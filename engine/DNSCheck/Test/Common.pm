@@ -72,3 +72,46 @@ sub qclass {
 
     return $self->parent->config->get("dns")->{class};
 }
+
+__END__
+
+=head1 NAME
+
+DNSCheck::Test::Common - parent module to all other DNSCheck::Test modules.
+
+=head1 SYNOPSIS
+
+Provides the methods C<new>, C<parent>, C<logger>, C<config> and C<qclass>.
+
+=head1 DESCRIPTION
+
+=over
+
+=item ->new($parent)
+
+Creates a new object and sets the parent object (which in just about all cases
+should be a L<DNSCheck> object). Will C<croak> if a parent object is not
+provided.
+
+=item ->parent()
+
+Returns the parent object.
+
+=item ->logger()
+
+Returns the parent's logger object (an instance of L<DNSCheck::Logger>, unless
+you've done something strange).
+
+=item ->config()
+
+Returns the parent's config object (an instance of L<DNSCheck::Config>, unless
+you've done something strange).
+
+=item ->qclass()
+
+Returns the DNS lookup class set in the config object. In practice this might
+as well be hardcoded to "IN", since the only test that will ever use anything
+else is L<DNSCheck::Test::Nameserver::ns_check_id>.
+
+=back
+
