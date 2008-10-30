@@ -50,7 +50,8 @@ sub test {
     $logger->module_stack_push();
     $logger->auto("MAIL:BEGIN", $email);
 
-    my ($localpart, $domain) = split(/@/, $email);
+    # Slightly less broken than just using split()
+    my ($localpart, $domain) = $email =~ m|^ (.*) @ ([-_.a-z0-9]+) $|ix;
 
     # FIXME: stricter checks needed here
     unless ($localpart && $domain) {
@@ -73,7 +74,7 @@ sub test {
     # REQUIRE: MX points to valid hostname
     foreach my $hostname (@mailhosts) {
         if ($parent->host->test($hostname) > 0) {
-            $logger->auto("MAIL:HOST_ERROR", $hostname);
+            $errors += $logger->auto("MAIL:HOST_ERROR", $hostname);
             next;
         }
 
@@ -81,37 +82,45 @@ sub test {
         my $ipv6 = $parent->dns->query_resolver($hostname, "IN", "AAAA");
 
         unless ($ipv4 && $ipv6) {
-            ## FIXME: error
-            goto DONE;
+            ## (FIXME: error)? Is it still? What was the problem?
+            ## Is there actually a reason to skip all subsequent
+            ## addresses if one gets a lookup error?
+
+            # One or both of the lookups got an error, skip to next address.
+            next;
         }
 
         # REQUIRE: Warn if a mail exchanger is reachable by IPv6 only
         if (   ($ipv4 && $ipv4->header->ancount == 0)
             && ($ipv6 && $ipv6->header->ancount > 0))
         {
-            $logger->auto("MAIL:IPV6_ONLY", $hostname);
+            $errors += $logger->auto("MAIL:IPV6_ONLY", $hostname);
         }
 
-        foreach my $rr ($ipv4->answer) {
-            next unless ($rr->type eq "A");
-            unless ($parent->smtp->test($hostname, $rr->address, $email)) {
-                $mail_delivery_ok++;
+        if (defined($ipv4) && $parent->config->get("net")->{ipv4}) {
+            foreach my $rr ($ipv4->answer) {
+                next unless ($rr->type eq "A");
+                my $tmp = $parent->smtp->test($hostname, $rr->address, $email);
+                unless ($tmp) {
+                    $mail_delivery_ok++;
+                } else {
+                    $errors += $tmp;
+                }
             }
         }
 
-        # FIXME: mail delivery over IPv6
-        foreach my $rr ($ipv6->answer) {
-            next unless ($rr->type eq "AAAA");
-
-            # FIXME: Do not connect to IPv6 hosts for now
-            #if ($parent->smtp->test($hostname, $rr->address, $email)) {
-            #    $errors++;
-            #}
+        if (defined($ipv6) && $parent->config->get("net")->{ipv6}) {
+            foreach my $rr ($ipv6->answer) {
+                next unless ($rr->type eq "AAAA");
+                my $tmp = $parent->smtp->test($hostname, $rr->address, $email);
+                unless ($tmp) {
+                    $mail_delivery_ok++;
+                } else {
+                    $errors += $tmp;
+                }
+            }
         }
     }
-
-    # Only flag as undeliverable if no mail deliveries were successful
-    $errors++ unless ($mail_delivery_ok);
 
   DONE:
     $logger->auto("MAIL:END", $email);

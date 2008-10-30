@@ -82,19 +82,19 @@ sub flush {
 
     # Dump the DNS cache.
     $self->{dns}->flush();
-    
+
     # Dump all cached test objects.
-    $self->{test_zone} = undef;
-    $self->{test_host} = undef;
-    $self->{test_address} = undef;
-    $self->{test_soa} = undef;
+    $self->{test_zone}         = undef;
+    $self->{test_host}         = undef;
+    $self->{test_address}      = undef;
+    $self->{test_soa}          = undef;
     $self->{test_connectivity} = undef;
-    $self->{test_consistency} = undef;
-    $self->{test_delegation} = undef;
-    $self->{test_nameserver} = undef;
-    $self->{test_dnssec} = undef;
-    $self->{test_mail} = undef;
-    $self->{test_smtp} = undef;
+    $self->{test_consistency}  = undef;
+    $self->{test_delegation}   = undef;
+    $self->{test_nameserver}   = undef;
+    $self->{test_dnssec}       = undef;
+    $self->{test_mail}         = undef;
+    $self->{test_smtp}         = undef;
 
     # should the ASN cache be flushed as well?
     #$self->{context}->{asn}->flush();
@@ -146,7 +146,7 @@ sub context {
     unless (defined($self->{context})) {
         $self->{context} = DNSCheck::Context->new($self);
     }
-    
+
     return $self->{context};
 }
 

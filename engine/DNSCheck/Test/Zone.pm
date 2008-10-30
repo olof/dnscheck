@@ -146,7 +146,7 @@ new(I<$parent>)
 
 test(I<zone>, [I<$history>])
 
-test_undelegated(I<$zone>, I<@nameservers>)
+test_undelegated(I<$zone>, I<@ip_addresses>)
 
 =head1 EXAMPLES
 

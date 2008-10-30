@@ -42,14 +42,19 @@ use Net::SMTP 2.29;
 
 sub test {
     my $self     = shift;
-    my $parent   = $self->parent;
     my $hostname = shift;
     my $address  = shift;
     my $email    = shift;
 
+    my $parent = $self->parent;
     my $logger = $parent->logger;
     my $errors = 0;
     my $message;
+
+    unless ($parent->config->get("net")->{smtp}) {
+        $logger->auto('SMTP:SKIPPED');
+        return 0;
+    }
 
     $logger->module_stack_push();
     $logger->auto("SMTP:BEGIN", $hostname, $address, $email);
@@ -140,7 +145,13 @@ Test if an email address is deliverable using SMTP.
 
 =head1 METHODS
 
-test(I<parent>, I<mailhost>, I<address>, I<emailaddress>);
+=over
+
+=item ->new($parent)
+
+Inherited from L<DNSCheck::Test::Common>
+
+=item ->test($mailhost, $address, $emailaddress);
 
 =head1 EXAMPLES
 
