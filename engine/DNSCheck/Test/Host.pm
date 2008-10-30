@@ -50,34 +50,8 @@ sub test {
     $logger->module_stack_push();
     $logger->auto("HOST:BEGIN", $hostname);
 
-    my @labels = split(/\./, $hostname);
-
-    # REQUIRE: RFC 952 says first component must begin with a-z
-    # REQUIRE: RFC 1123 allows initial digit
-    if (scalar @labels > 0
-        && $labels[0] !~ /^[A-Za-z0-9][A-Za-z0-9-]*$/)
-    {
-        $errors += $logger->auto("HOST:ILLEGAL_NAME", $hostname, $labels[0]);
-        goto DONE;
-    }
-
-    foreach my $label (@labels) {
-
-        # REQUIRE: RFC 952 says hostnames may contain a-z, 0-9 or -
-        if ($label !~ /^[A-Za-z0-9][A-Za-z0-9-]*$/) {
-            $label = "<NULL>" if ($label eq "");
-            $errors += $logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
-            goto DONE;
-        }
-
-        # REQUIRE: RFC 952 says the last character must not
-        # be a minus sign or a period.
-        if ($label =~ /[\-\.]$/) {
-            $label = "<NULL>" if ($label eq "");
-            $errors += $logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
-            goto DONE;
-        }
-    }
+    $errors += $self->host_syntax($hostname);
+    goto DONE if $errors > 0;
 
     my $ipv4 = $parent->dns->query_resolver($hostname, $qclass, "A");
     my $ipv6 = $parent->dns->query_resolver($hostname, $qclass, "AAAA");
@@ -105,8 +79,8 @@ sub test {
     # REQUIRE: All host addresses must be valid
     foreach my $rr (@answers) {
         if ($rr->type eq "A" or $rr->type eq "AAAA") {
-            if ($parent->address->test($rr->address)) {
-                $errors++;
+            if (my $tmp = $parent->address->test($rr->address)) {
+                $errors += $tmp;
                 goto DONE;
             }
         }
@@ -117,6 +91,45 @@ sub test {
     $logger->module_stack_pop();
 
     return $errors;
+}
+
+sub host_syntax {
+    my $self     = shift;
+    my $hostname = shift;
+
+    my @labels = split(/\./, $hostname);
+
+    # REQUIRE: RFC 952 says first component must begin with a-z, and that
+    #          labels may not end with a dash.
+
+    # REQUIRE: RFC 1123 allows an initial digit
+
+    # REQUIRE: RFC 2181 spells out that a label may be from 1 to 63 octets
+    #          (inclusive) and the whole name at most 255 octets including
+    #          separators.
+
+    # REQUIRE: RFC 3696 spells out that the top-level label may not be
+    #          all-numeric
+    if (length($hostname) > 255) {
+        return $self->logger->auto("HOST:ILLEGAL_NAME", $hostname, "Too long");
+    }
+
+    foreach my $label (@labels) {
+        unless ($label =~ m|^[a-z0-9]|i
+            && $label =~ m|^.[-a-z0-9]*.?$|i
+            && $label =~ m|[a-z0-9]$|i
+            && length($label) <= 63)
+        {
+            return $self->logger->auto("HOST:ILLEGAL_NAME", $hostname, $label);
+        }
+    }
+
+    unless ($labels[-1] =~ m|[a-z]|i) {
+        return $self->logger->auto("HOST:ILLEGAL_NAME", $hostname,
+            "Top all-numeric");
+    }
+
+    return 0;
 }
 
 1;
