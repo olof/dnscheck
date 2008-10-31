@@ -40,11 +40,11 @@ use base 'DNSCheck::Test::Common';
 
 sub test {
     my $self   = shift;
-    my $parent = $self->parent;
     my $zone   = shift;
 
+    my $parent = $self->parent;
     my $qclass = $self->qclass;
-    my $logger = $parent->logger;
+    my $logger = $self->logger;
     my $errors = 0;
 
     $logger->module_stack_push();
@@ -87,7 +87,7 @@ sub test {
     # REQUIRE: Domain name servers should live in more than one AS
     my $as_count = scalar keys %as_set;
     if ($as_count <= 1) {
-        $logger->auto("CONNECTIVITY:TOO_FEW_ASN", $as_count);
+        $errors += $logger->auto("CONNECTIVITY:TOO_FEW_ASN", $as_count);
     } else {
         $logger->auto("CONNECTIVITY:ASN_COUNT_OK", $as_count);
     }

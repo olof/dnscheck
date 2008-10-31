@@ -43,11 +43,11 @@ use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
 
 sub test {
     my $self   = shift;
-    my $parent = $self->parent;
     my $zone   = shift;
 
+    my $parent = $self->parent;
     my $qclass = $self->qclass;
-    my $logger = $parent->logger;
+    my $logger = $self->logger;
     my $errors = 0;
 
     $logger->module_stack_push();
