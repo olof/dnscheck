@@ -40,9 +40,10 @@ use base 'DNSCheck::Test::Common';
 
 sub test {
     my $self    = shift;
-    my $parent  = $self->parent;
     my $zone    = shift;
     my $history = shift;
+
+    my $parent = $self->parent;
 
     if (!defined($history) && $parent->dbh) {
         $history = $parent->dbh->selectcol_arrayref(
@@ -62,150 +63,15 @@ sub test {
 
     my $packet;
 
-    my @ns_at_parent = $parent->dns->get_nameservers_at_parent($zone, $qclass);
-    @ns_at_parent = () unless $ns_at_parent[0];
-    if (scalar @ns_at_parent) {
-        $logger->auto("DELEGATION:NS_AT_PARENT", join(",", @ns_at_parent));
-        $testable = 1;
-    } else {
-        $errors += $logger->auto("DELEGATION:NOT_FOUND_AT_PARENT");
-        $testable = 0;
-    }
+    ($errors, $testable) = $self->ns_parent_child_matching($zone);
 
-    goto DONE if ($errors);
-
-    my @ns_at_child = $parent->dns->get_nameservers_at_child($zone, $qclass);
-    @ns_at_child = () unless $ns_at_child[0];
-    if (scalar @ns_at_child) {
-        $logger->auto("DELEGATION:NS_AT_CHILD", join(",", @ns_at_child));
-    } else {
-        $errors += $logger->auto("DELEGATION:NOT_FOUND_AT_CHILD");
-        $testable = 0;
-    }
-
-    # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
-    my @ns_at_both;
-    foreach my $ns (@ns_at_parent) {
-        unless (scalar grep(/^$ns$/i, @ns_at_child)) {
-            $errors += $logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
-        } else {
-            push @ns_at_both, $ns;
-        }
-    }
-
-    # REQUIRE: all NS at child may exist at parent
-    foreach my $ns (@ns_at_child) {
-        unless (scalar grep(/^$ns$/i, @ns_at_parent)) {
-            $logger->auto("DELEGATION:EXTRA_NS_CHILD", $ns);
-        }
-    }
-
-    # REQUIRE: at least two (2) NS records at parent [IIS.KVSE.001.01/r1]
-    # Modified to check for NS records that exist at both parent and child.
-    unless (scalar @ns_at_both >= 2) {
-        $logger->auto("DELEGATION:TOO_FEW_NS", scalar @ns_at_both);
-    }
-
-    # REQUIRE: at least two IPv4 nameservers must be found
-    my $ipv4_ns = $parent->dns->get_nameservers_ipv4($zone, $qclass);
-    if ($ipv4_ns && scalar(@{$ipv4_ns} < 2)) {
-        $logger->auto("DELEGATION:TOO_FEW_NS_IPV4", scalar @{$ipv4_ns});
-    }
-    unless ($ipv4_ns) {
-        $logger->auto("DELEGATION:NO_NS_IPV4");
-    }
-
-    # REQUIRE: at least two IPv6 nameservers should be found
-    my $ipv6_ns = $parent->dns->get_nameservers_ipv6($zone, $qclass);
-    if ($ipv6_ns && scalar(@{$ipv6_ns} < 2)) {
-        $logger->auto("DELEGATION:TOO_FEW_NS_IPV6", scalar @{$ipv6_ns});
-    }
-    unless ($ipv6_ns) {
-        $logger->auto("DELEGATION:NO_NS_IPV6");
-    }
-
-    # REQUIRE: check for inconsistent glue
-    my @glue = _get_glue($parent, $zone);
-    foreach my $g (@glue) {
-        $logger->auto("DELEGATION:MATCHING_GLUE", $g->name, $g->address);
-
-        # make sure we only check in-zone-glue
-        unless ($g->name =~ /$zone$/i) {
-            $logger->auto("DELEGATION:GLUE_SKIPPED", $g->name, "out-of-zone");
-            next;
-        }
-
-        my $c = $parent->dns->query_child($zone, $g->name, $g->class, $g->type);
-
-        if ($c and $c->header->rcode eq "NOERROR") {
-            ## got NOERROR, might be good or bad - dunno yet
-
-            if ($c->header->ancount > 0) {
-                ## got positive answer back, let's see if this makes any sense
-
-                my $found = 0;
-                foreach my $rr ($c->answer) {
-                    if (    lc($rr->name) eq lc($g->name)
-                        and $rr->class   eq $g->class
-                        and $rr->type    eq $g->type
-                        and $rr->address eq $g->address)
-                    {
-                        $logger->auto("DELEGATION:GLUE_FOUND_AT_CHILD",
-                            $zone, $g->name, $g->address);
-                        $found++;
-                    }
-                }
-
-                unless ($found) {
-                    $logger->auto("DELEGATION:INCONSISTENT_GLUE", $g->name);
-                }
-            } elsif ($c->header->nscount > 0) {
-                ## got referer or nothing, authority section needs study
-
-                my $soa = undef;
-                my $ns  = undef;
-
-                foreach my $rr ($c->authority) {
-                    $soa = $rr if ($rr->type eq "SOA");
-                    $ns  = $rr if ($rr->type eq "NS");
-                }
-
-                ## got NOERROR and NS in authority section -> referer
-                if ($ns) {
-                    $logger->auto("DELEGATION:GLUE_SKIPPED", $g->name,
-                        "referer");
-                    next;
-                }
-
-                ## got NOERROR and SOA in authority section -> not found
-                if ($soa) {
-                    $logger->auto("DELEGATION:GLUE_MISSING_AT_CHILD", $g->name);
-                    next;
-                }
-            }
-        } elsif ($c and $c->header->rcode eq "REFUSED") {
-            ## got REFUSED, probably not authoritative
-            $logger->auto("DELEGATION:GLUE_SKIPPED", $g->name, "refused");
-            next;
-        } elsif ($c and $c->header->rcode eq "SERVFAIL") {
-            ## got SERVFAIL, most likely not authoritative
-            $logger->auto("DELEGATION:GLUE_SKIPPED", $g->name, "servfail");
-            next;
-        } else {
-            ## got something else, let's blame the user...
-            $logger->auto("DELEGATION:GLUE_MISSING_AT_CHILD", $g->name);
-            next;
-        }
-    }
+    $errors += $self->enough_nameservers($zone);
+    $errors += $self->consistent_glue($zone);
 
     # Test old namservers if we have history
     if ($history) {
-        _history($parent, $zone, \@ns_at_parent, $history);
+        $self->check_history($zone, $history);
     }
-
-    # TODO: check for loop in glue record chain (i.e. unresolvable)
-
-    # TODO: warning if glue chain is longer than 3 lookups
 
   DONE:
     $logger->auto("DELEGATION:END", $zone);
@@ -214,7 +80,9 @@ sub test {
     return ($errors, $testable);
 }
 
-######################################################################
+################################################################
+# Utility functions
+################################################################
 
 sub _get_glue {
     my $parent = shift;
@@ -266,16 +134,195 @@ sub _get_glue {
     return @glue;
 }
 
-sub _history {
-    my $parent   = shift;
+################################################################
+# Single tests
+################################################################
+
+sub consistent_glue {
+    my $self = shift;
+    my $zone = shift;
+
+    my $parent = $self->parent;
+    my $logger = $self->logger;
+    my $qclass = $self->qclass;
+
+    my $errors = 0;
+
+    # REQUIRE: check for inconsistent glue
+    my @glue = _get_glue($parent, $zone);
+    foreach my $g (@glue) {
+        $logger->auto("DELEGATION:MATCHING_GLUE", $g->name, $g->address);
+
+        # make sure we only check in-zone-glue
+        unless ($g->name =~ /$zone$/i) {
+            $logger->auto("DELEGATION:GLUE_SKIPPED", $g->name, "out-of-zone");
+            next;
+        }
+
+        my $c = $parent->dns->query_child($zone, $g->name, $g->class, $g->type);
+
+        if ($c and $c->header->rcode eq "NOERROR") {
+            ## got NOERROR, might be good or bad - dunno yet
+
+            if ($c->header->ancount > 0) {
+                ## got positive answer back, let's see if this makes any sense
+
+                my $found = 0;
+                foreach my $rr ($c->answer) {
+                    if (    lc($rr->name) eq lc($g->name)
+                        and $rr->class   eq $g->class
+                        and $rr->type    eq $g->type
+                        and $rr->address eq $g->address)
+                    {
+                        $logger->auto("DELEGATION:GLUE_FOUND_AT_CHILD",
+                            $zone, $g->name, $g->address);
+                        $found++;
+                    }
+                }
+
+                unless ($found) {
+                    $errors +=
+                      $logger->auto("DELEGATION:INCONSISTENT_GLUE", $g->name);
+                }
+            } elsif ($c->header->nscount > 0) {
+                ## got referer or nothing, authority section needs study
+
+                my $soa = undef;
+                my $ns  = undef;
+
+                foreach my $rr ($c->authority) {
+                    $soa = $rr if ($rr->type eq "SOA");
+                    $ns  = $rr if ($rr->type eq "NS");
+                }
+
+                ## got NOERROR and NS in authority section -> referer
+                if ($ns) {
+                    $logger->auto("DELEGATION:GLUE_SKIPPED", $g->name,
+                        "referer");
+                    next;
+                }
+
+                ## got NOERROR and SOA in authority section -> not found
+                if ($soa) {
+                    $logger->auto("DELEGATION:GLUE_MISSING_AT_CHILD", $g->name);
+                    next;
+                }
+            }
+        } elsif ($c and $c->header->rcode eq "REFUSED") {
+            ## got REFUSED, probably not authoritative
+            $logger->auto("DELEGATION:GLUE_SKIPPED", $g->name, "refused");
+            next;
+        } elsif ($c and $c->header->rcode eq "SERVFAIL") {
+            ## got SERVFAIL, most likely not authoritative
+            $logger->auto("DELEGATION:GLUE_SKIPPED", $g->name, "servfail");
+            next;
+        } else {
+            ## got something else, let's blame the user...
+            $errors +=
+              $logger->auto("DELEGATION:GLUE_MISSING_AT_CHILD", $g->name);
+            next;
+        }
+    }
+
+    # TODO: check for loop in glue record chain (i.e. unresolvable)
+
+    # TODO: warning if glue chain is longer than 3 lookups
+
+    return $errors;
+}
+
+sub ns_parent_child_matching {
+    my $self = shift;
+    my $zone = shift;
+
+    my $errors = 0;
+    my $testable;
+
+    my @ns_at_parent =
+      $self->parent->dns->get_nameservers_at_parent($zone, $self->qclass);
+    @ns_at_parent = () unless $ns_at_parent[0];
+    if (scalar @ns_at_parent) {
+        $self->logger->auto("DELEGATION:NS_AT_PARENT",
+            join(",", @ns_at_parent));
+        $testable = 1;
+    } else {
+        $errors += $self->logger->auto("DELEGATION:NOT_FOUND_AT_PARENT");
+        $testable = 0;
+    }
+
+    my @ns_at_child =
+      $self->parent->dns->get_nameservers_at_child($zone, $self->qclass);
+    @ns_at_child = () unless $ns_at_child[0];
+    if (scalar @ns_at_child) {
+        $self->logger->auto("DELEGATION:NS_AT_CHILD", join(",", @ns_at_child));
+    } else {
+        $errors += $self->logger->auto("DELEGATION:NOT_FOUND_AT_CHILD");
+        $testable = 0;
+    }
+
+    # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
+    my @ns_at_both;
+    foreach my $ns (@ns_at_parent) {
+        unless (scalar grep(/^$ns$/i, @ns_at_child)) {
+            $errors += $self->logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
+        } else {
+            push @ns_at_both, $ns;
+        }
+    }
+
+    # REQUIRE: all NS at child may exist at parent
+    foreach my $ns (@ns_at_child) {
+        unless (scalar grep(/^$ns$/i, @ns_at_parent)) {
+            $self->logger->auto("DELEGATION:EXTRA_NS_CHILD", $ns);
+        }
+    }
+
+    return ($errors, $testable);
+}
+
+sub enough_nameservers {
+    my $self   = shift;
+    my $zone   = shift;
+    my $errors = 0;
+
+    # REQUIRE: at least two IPv4 nameservers must be found
+    my $ipv4_ns =
+      $self->parent->dns->get_nameservers_ipv4($zone, $self->qclass);
+    if ($ipv4_ns && scalar(@{$ipv4_ns} < 2)) {
+        $errors +=
+          $self->logger->auto("DELEGATION:TOO_FEW_NS_IPV4", scalar @{$ipv4_ns});
+    }
+    unless ($ipv4_ns) {
+        $errors += $self->logger->auto("DELEGATION:NO_NS_IPV4");
+    }
+
+    # REQUIRE: at least two IPv6 nameservers should be found
+    my $ipv6_ns =
+      $self->parent->dns->get_nameservers_ipv6($zone, $self->qclass);
+    if ($ipv6_ns && scalar(@{$ipv6_ns} < 2)) {
+        $errors +=
+          $self->logger->auto("DELEGATION:TOO_FEW_NS_IPV6", scalar @{$ipv6_ns});
+    }
+    unless ($ipv6_ns) {
+        $errors += $self->logger->auto("DELEGATION:NO_NS_IPV6");
+    }
+
+    return $errors;
+}
+
+sub check_history {
+    my $self     = shift;
     my $zone     = shift;
-    my $current  = shift;
     my $previous = shift;
 
-    my $qclass = $parent->config->get("dns")->{class};
-    my $logger = $parent->logger;
+    my $parent = $self->parent;
+    my $qclass = $self->qclass;
+    my $logger = $self->logger;
 
     my @old = ();
+
+    my @ns_at_parent = $parent->dns->get_nameservers_at_parent($zone, $qclass);
+    my $current = \@ns_at_parent;
 
     # Build a hash with all IP addresses for all current nameservers
     my %current_addresses =

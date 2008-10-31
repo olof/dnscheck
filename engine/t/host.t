@@ -6,7 +6,7 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 
 use DNSCheck;
 
@@ -30,4 +30,5 @@ SKIP: {
     ok($ht->host_syntax('foo.b------r.com') == 0, 'Label may contain dashes');
     ok($ht->host_syntax('foo.bar.4711') > 0, 'Top-level may not be all-numeric');
     ok($ht->host_syntax('a.bar.com') == 0, 'One-octet labels are allowed');
+    ok($ht->host_syntax('foo..com') > 0, 'Label must not be empty');
 }

@@ -38,7 +38,6 @@ use base 'DNSCheck::Test::Common';
 
 use Net::DNS 0.59;
 use Net::DNS::SEC 0.14;
-use Data::Dumper;
 use Date::Parse;
 use POSIX qw(strftime);
 
