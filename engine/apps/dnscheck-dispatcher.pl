@@ -252,6 +252,8 @@ sub running_in_child {
     my $dbh = $dc->dbh;
     my $log = $dc->logger;
 
+    $0 = "Testing $domain";
+
     $dbh->do(q[UPDATE queue SET tester_pid = ? WHERE id = ?], undef, $$, $id);
     $dbh->do(q[INSERT INTO tests (domain,begin) VALUES (?,NOW())],
         undef, $domain);
