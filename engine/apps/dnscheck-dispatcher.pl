@@ -73,11 +73,14 @@ main();
 
 sub slog {
     my $priority = shift;
+    my $tries    = 0;
 
     # See perldoc on sprintf for why we have to write it like this
     my $msg = sprintf($_[0], @_[1 .. $#_]);
 
     printf("%s (%d): %s\n", uc($priority), $$, $msg) if $debug;
+
+  TRY:
     eval {
         if ($syslog)
         {
@@ -87,9 +90,19 @@ sub slog {
         }
     };
     if ($@) {
-        print STDERR "SYSLOG CONNECTION LOST. Switching to stderr logging.\n";
-        $syslog = 0;
-        printf STDERR "%s (%d): %s\n", uc($priority), $$, $msg;
+        if ($tries < 5) {
+            print STDERR "Trying to reconnect to syslogd...\n";
+            sleep(0.5);
+            $tries += 1;
+            openlog($check->config->get("syslog")->{ident},
+                'pid', $check->config->get("syslog")->{facility});
+            goto TRY;
+        } else {
+            print STDERR
+              "SYSLOG CONNECTION LOST. Switching to stderr logging.\n";
+            $syslog = 0;
+            printf STDERR "%s (%d): %s\n", uc($priority), $$, $msg;
+        }
     }
 }
 
@@ -119,10 +132,10 @@ sub setup {
     close PIDFILE;
     $SIG{CHLD} = \&REAPER;
     $SIG{TERM} = sub { $running = 0 };
-    $SIG{HUP}  = sub { 
+    $SIG{HUP}  = sub {
         $running = 0;
         $restart = 1;
-        };
+    };
 }
 
 sub detach

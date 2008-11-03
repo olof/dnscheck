@@ -65,7 +65,7 @@ sub test {
 
     ($errors, $testable) = $self->ns_parent_child_matching($zone);
     goto DONE unless $testable;
-    
+
     $errors += $self->enough_nameservers($zone);
     $errors += $self->consistent_glue($zone);
 

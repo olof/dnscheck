@@ -39,8 +39,8 @@ use base 'DNSCheck::Test::Common';
 ######################################################################
 
 sub test {
-    my $self   = shift;
-    my $zone   = shift;
+    my $self = shift;
+    my $zone = shift;
 
     my $parent = $self->parent;
     my $qclass = $self->qclass;
