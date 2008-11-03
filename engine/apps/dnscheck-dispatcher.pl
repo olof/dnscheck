@@ -48,6 +48,8 @@ use vars qw[
   $check
   $limit
   $running
+  $restart
+  @saved_argv
   $syslog
 ];
 
@@ -59,6 +61,7 @@ $verbose = 0;
 $check   = DNSCheck->new;
 $limit   = $check->config->get("daemon")->{maxchild};
 $running = 1;
+$restart = 0;
 $syslog  = 1;
 
 # Kick everything off
@@ -94,6 +97,7 @@ sub setup {
     my $errfile = $check->config->get("daemon")->{errorlog};
     my $pidfile = $check->config->get("daemon")->{pidfile};
 
+    @saved_argv = @ARGV;
     GetOptions('debug' => \$debug, 'verbose' => \$verbose);
     openlog($check->config->get("syslog")->{ident},
         'pid', $check->config->get("syslog")->{facility});
@@ -115,6 +119,10 @@ sub setup {
     close PIDFILE;
     $SIG{CHLD} = \&REAPER;
     $SIG{TERM} = sub { $running = 0 };
+    $SIG{HUP}  = sub { 
+        $running = 0;
+        $restart = 1;
+        };
 }
 
 sub detach
@@ -379,6 +387,11 @@ sub main {
     unlink $check->config->get("daemon")->{pidfile};
     slog 'info', "$0 exiting normally.";
     printf STDERR "%s exiting normally.\n", $0;
+    if ($restart) {
+        slog 'info', 'Attempting to restart myself.';
+        exec($0, @saved_argv);
+        warn "Exec failed: $!";
+    }
 }
 
 __END__
