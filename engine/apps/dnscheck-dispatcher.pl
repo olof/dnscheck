@@ -71,6 +71,9 @@ main();
 # Utility functions and program setup
 ################################################################
 
+# Log something. Far, far more complex than it should have to be, to keep from
+# dying if we suddenly lose contact with syslogd. Which we do if the system is
+# too heavily loaded.
 sub slog {
     my $priority = shift;
     my $tries    = 0;
@@ -110,7 +113,7 @@ sub setup {
     my $errfile = $check->config->get("daemon")->{errorlog};
     my $pidfile = $check->config->get("daemon")->{pidfile};
 
-    @saved_argv = @ARGV;
+    @saved_argv = @ARGV; # We'll use this if we're asked to restart ourselves
     GetOptions('debug' => \$debug, 'verbose' => \$verbose);
     openlog($check->config->get("syslog")->{ident},
         'pid', $check->config->get("syslog")->{facility});
@@ -154,6 +157,7 @@ sub detach
     slog('info', 'Detached.');
 }
 
+# Clean up residue from earlier run(s), if any.
 sub inital_cleanup {
     my $dbh = $check->dbh;
 
@@ -167,7 +171,8 @@ q[SELECT id, domain, tester_pid FROM queue WHERE inprogress IS NOT NULL AND test
     foreach my $k (keys %$c) {
         if (kill 0, $c->{$k}{tester_pid}) {
 
-# The process running this test is still alive, so just remove it from the queue.
+# The process running this test is still alive, so just remove it from the
+# queue.
             $dbh->do(q[DELETE FROM queue WHERE id = ?], undef, $c->{$k}{id});
             slog 'info', 'Removed %s from queue', $c->{$k}{domain};
         } else {
@@ -204,9 +209,9 @@ sub dispatch {
 "Testing $domain caused repeated abnormal termination of children. Assuming bug. Exiting.";
             $running = 0;
         }
-        return 0.0;
+        return 0.0; # There was something in the queue, so check for more without delay
     } else {
-        return 0.25;
+        return 0.25; # Queue empty or process slots full. Wait a little.
     }
 }
 
@@ -273,6 +278,7 @@ sub running_in_child {
     my $dbh = $dc->dbh;
     my $log = $dc->logger;
 
+    # On some OS:s (including Ubuntu Linux), this is visible in the process list.
     $0 = "dispatcher: testing $domain (queue id $id)";
 
     $dbh->do(q[UPDATE queue SET tester_pid = ? WHERE id = ?], undef, $$, $id);
@@ -283,6 +289,7 @@ sub running_in_child {
     slog 'debug', "$$ running test number $test_id.";
     my $line = 0;
 
+    # This line hides all the actual useful work.
     $dc->zone->test($domain);
 
     my $sth = $dbh->prepare(
@@ -374,6 +381,7 @@ q[DELETE FROM tests WHERE begin IS NOT NULL AND end IS NULL AND domain = ?],
     }
 }
 
+# This code is mostly stolen from the perlipc manpage.
 sub REAPER {
     my $child;
 

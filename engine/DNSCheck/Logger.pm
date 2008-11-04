@@ -253,7 +253,7 @@ __END__
 
 =head1 NAME
 
-DNSCheck::Looger - Logger Subsystem
+DNSCheck::Logger - Logger Subsystem
 
 =head1 DESCRIPTION
 
