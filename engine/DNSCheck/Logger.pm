@@ -257,37 +257,122 @@ DNSCheck::Looger - Logger Subsystem
 
 =head1 DESCRIPTION
 
-Helper functions for logging support.
+The logger object keeps track of the results from the DNSCheck system.
 
 =head1 METHODS
 
-new();
+=over 
 
-$logger->clear();
+=item ->new();
 
-$logger->logname(I<string>);
+Object creation. Do not use this, use the L<DNSCheck::logger()> method.
 
-$logger->add(I<level>, I<tag>, I<arg1>, I<arg2>, ..., I<argN>);
+=item ->clear();
 
-$logger->auto(I<tag>, I<arg1>, I<arg2>, ..., I<argN>);
+Delete all current content in the object.
 
-$logger->dump();
+=item ->logname($name);
 
-$logger->print();
+Set the log name.
 
-$logger->export();
+=item ->auto(I<tag>, I<arg1>, I<arg2>, ..., I<argN>);
 
-my @logmessages = $logger->export();
+Add an entry to the log. You should only need to use this if you're writing
+more tests for DNSCheck. The tag needs to be defined in the locale YAML file,
+and the number of arguments specified there must match the number given when
+calling the method.
+
+If the I<interactive> key is set in the system's config object, this method
+will print the log entry rather than store it internally.
+
+=item ->dump();
+
+Send a textual raw dump of the object's contents to standard error.
+
+=item ->print();
+
+Send a textual dump of the object's contents to standard output. If a locale
+is set, the output will be translated from raw tags to human-readable
+messages.
+
+=item ->export();
+
+Return a list with all messages currently in the object.
+
+=item ->get_next_entry()
+
+Returns a hashref with the next log entry. If this method has never been alled
+before on this object, the "next" entry is the first one. It will then iterate
+through the entries until all have been returned, and after that it will
+return C<undef>. It is possible to add more entries without upsetting the
+iterator. This is, however, not really the intened use. The purpose is to be
+able to process all log entries without needing to know anything about their
+storage or copying possibly large arrays. See below for an example of use.
+
+=item ->count_debug
+
+=item ->count_info
+
+=item ->count_notice
+
+=item ->count_warning
+
+=item ->count_error
+
+=item ->count_critical
+
+Returns the number of current entries of the various severity levels. The
+level a given tag is considered to be is specified in F<policy.yaml>.
+
+=back
+
+=head1 LOG ENTRIES
+
+Each entry in the log is a hash. The L<export()> and L<get_next_entry()>
+methods return them, as a list or one at a time. There are a bunch of keys in
+the hashes:
+
+=over
+
+=item tag
+
+The message tag, as given when the entry was added. If it can't be found in
+F<policy.yaml>, it'll be considered to have no arguments and be of level
+DEBUG.
+
+=item timestamp
+
+The time when the entry was added, as a string representing a float value in
+seconds since the Unix epoch.
+
+=item level
+
+The severity level, as taken from F<policy.yaml>.
+
+=item arg
+
+A reference to a list with message arguments.
+
+=item module_id
+
+=item parent_module_id
+
+Numbers that represent the call hieararchy of test modules. Used by the
+standard web gui.
+
+=back
 
 =head1 EXAMPLES
 
-    use DNSCheck::Logger;
+    use DNSCheck;
 
-	my $logger = new DNSCheck::Logger;
+	my $dc = DNSCheck->new;
 
-	$logger->add("foo", 1, 2, 3);
-	$logger->add("bar", 4, 5, 6);
-
-	$logger->dump;
+    $dc->zone->test("iis.se");
+    
+    while (defined(my $entry = $dc->logger->get_next_entry)) {
+        print $entry->{tag}
+    }
+    
 
 =cut
