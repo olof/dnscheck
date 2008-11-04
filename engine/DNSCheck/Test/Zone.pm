@@ -138,15 +138,31 @@ DNSCheck::Test::Zone - Test a zone
 =head1 DESCRIPTION
 
 Test a zone using all DNSCheck modules, or test an undelegated zone at given
-servers with all tests that make sense.
+servers with all tests that make sense. The results of all tests will end up
+in the logger object.
 
 =head1 METHODS
 
-new(I<$parent>)
+=over
 
-test(I<zone>, [I<$history>])
+=item ->new(I<$parent>)
 
-test_undelegated(I<$zone>, I<@ip_addresses>)
+This method is not meant to be used directly. Use L<DNSCheck::zone> instead.
+
+=item ->test(I<zone>, [I<$history>])
+
+Run the standard set of tests on the given domain, possibly also giving a
+reference to an array with the names of nameservers that used to be
+authoritative for the zone.
+
+=item ->test_undelegated(I<$zone>, I<@ip_addresses>)
+
+Run as many tests as make sense for the given zone on the specified
+nameserver(s). Be careful when interpreting the results os these tests, and
+some things reported as problems may not be after a zone is linked in with the
+rest of the DNS world.
+
+=back
 
 =head1 EXAMPLES
 

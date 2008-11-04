@@ -366,9 +366,38 @@ SOA 'minimum' should be less than 1 day.
 
 =head1 METHODS
 
-test(I<parent>, I<zone>);
+=over
 
-=head1 EXAMPLES
+=item ->test($zonename)
+
+Runs all the tests specified above.
+
+=item ->test_undelegated($zonename)
+
+Exactly the same as C<test()>, except that C<test_soa_mname()> will be run
+with the C<$undelegated> flag set.
+
+=item ->test_soa_existence($zonename)
+
+Tests that one and only one SOA record exists.
+
+=item ->test_soa_mname($soapacket, $zonename, [$undelegated])
+
+Runs the MNAME-related tests. If the C<$undelegated> flag is true, the NS list
+that the MNAME is compared against will be fethed directly from the child
+nameservers instead of from the global tree.
+
+C<$soapacket> must be a L<Net::DNS::RR::SOA> object suitably filled in.
+
+=item ->test_soa_rname($soapacket, $zonename)
+
+Runs the RNAME-related tests.
+
+=item ->test_soa_values($soapacket, $zonename)
+
+Runs the tests checking the values in the given SOA record.
+
+=back
 
 =head1 SEE ALSO
 

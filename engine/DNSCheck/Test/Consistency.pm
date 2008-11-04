@@ -146,7 +146,15 @@ The serial number of the zone must be the same at all listed name servers.
 
 =head1 METHODS
 
-test(I<parent>, I<zone>);
+=over
+
+=item ->test($zonename)
+
+Check that the SOA records retrieved from all nameservers for the zone contain
+the same information (that is, the same serial number and the same timeout
+values).
+
+=back
 
 =head1 EXAMPLES
 

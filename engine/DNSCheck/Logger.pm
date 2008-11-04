@@ -366,7 +366,7 @@ standard web gui.
 
     use DNSCheck;
 
-	my $dc = DNSCheck->new;
+    my $dc = DNSCheck->new;
 
     $dc->zone->test("iis.se");
     

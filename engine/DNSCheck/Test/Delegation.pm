@@ -391,7 +391,39 @@ Nameservers at child may exist at parent.
 
 =head1 METHODS
 
-test(I<parent>, I<zone>);
+=over
+
+=item ->test($zonename, $historyarrayref)
+
+Run the default set of delegation tests on the given domain with the specified
+history.
+
+=item ->ns_parent_child_matching($zonename)
+
+Only run the tests checking if the parent and child nameserver information
+matches. Returns a two-element list, with the first element being the number
+of problems at levels ERROR and CRITICAL, and the second element being a
+boolean flag indicating if the zone is at all testable. If that flag is false,
+there is not point in running any further tests, since they will almst
+invariably fail.
+
+=item ->consistent_glue($zonename)
+
+Check that the glue records for the zone make sense.
+
+=item ->enough_nameservers($zonename)
+
+Check that there are a sufficient number of nameservers for the given zone.
+
+=item ->check_history($zonename, $historyarrayref)
+
+Go through the nameservers that used to be authoritative for this zone and
+check that they no longer answer authoritatively for it.
+
+=back
+
+Where nothing else is said, all methods return the total number of errors
+found at levels ERROR and CRITICAL.
 
 =head1 EXAMPLES
 

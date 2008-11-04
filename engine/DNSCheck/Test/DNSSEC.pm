@@ -465,7 +465,11 @@ At least one DS algorithm should be of type RSA/SHA1.
 
 =head1 METHODS
 
-test(I<parent>, I<zone>);
+=over
+
+=item ->test($zonename)
+
+=back
 
 =head1 EXAMPLES
 

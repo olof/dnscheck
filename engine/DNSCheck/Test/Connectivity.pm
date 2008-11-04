@@ -127,7 +127,11 @@ Domain name servers should live in more than one AS.
 
 =head1 METHODS
 
-test(I<parent>, I<zone>);
+=over
+
+=item ->test($zonename);
+
+=back
 
 =head1 EXAMPLES
 
