@@ -245,6 +245,7 @@ q[SELECT id, domain FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, 
             $dbh = $check->dbh;
             $dbh->do(q[UPDATE queue SET inprogress = NULL WHERE id = ?],
                 undef, $id);
+            $dbh->commit;
         }
 
         return undef;
