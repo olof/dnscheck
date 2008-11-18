@@ -192,9 +192,10 @@ q[SELECT id, domain, tester_pid FROM queue WHERE inprogress IS NOT NULL AND test
 sub dispatch {
     my $domain;
     my $id;
+    my $source;
 
     if (scalar keys %running < $limit) {
-        ($domain, $id) = get_entry();
+        ($domain, $id, $source) = get_entry();
         slog 'debug', "Fetched $domain from database." if defined($domain);
     } else {
 
@@ -203,7 +204,7 @@ sub dispatch {
 
     if (defined($domain)) {
         unless (defined($problem{$domain}) and $problem{$domain} >= 5) {
-            process($domain, $id);
+            process($domain, $id, $source);
         } else {
             slog 'error',
 "Testing $domain caused repeated abnormal termination of children. Assuming bug. Exiting.";
@@ -219,14 +220,14 @@ sub dispatch {
 
 sub get_entry {
     my $dbh = $check->dbh;
-    my ($id, $domain);
+    my ($id, $domain, $source);
 
     eval {
         $dbh->begin_work;
-        ($id, $domain) = $dbh->selectrow_array(
-q[SELECT id, domain FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, id ASC LIMIT 1 FOR UPDATE]
+        ($id, $domain, $source) = $dbh->selectrow_array(
+q[SELECT id, domain, source_id FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, id ASC LIMIT 1 FOR UPDATE]
         );
-        slog 'debug', "Got $id, $domain from database."
+        slog 'debug', "Got $id, $domain, $source from database."
           if (defined($domain) or defined($id));
         $dbh->do(q[UPDATE queue SET inprogress = NOW() WHERE id = ?],
             undef, $id);
@@ -252,12 +253,13 @@ q[SELECT id, domain FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, 
         return undef;
     }
 
-    return ($domain, $id);
+    return ($domain, $id, $source);
 }
 
 sub process {
     my $domain = shift;
     my $id     = shift;
+    my $source = shift;
 
     my $pid = fork;
 
@@ -265,7 +267,7 @@ sub process {
         $running{$pid} = $domain;
         slog 'debug', "Child process $pid has been started.";
     } elsif ($pid == 0) {    # Zero value, so child
-        running_in_child($domain, $id);
+        running_in_child($domain, $id, $source);
     } else {                 # Undefined value, so error
         die "Fork failed: $!";
     }
@@ -274,6 +276,7 @@ sub process {
 sub running_in_child {
     my $domain = shift;
     my $id     = shift;
+    my $source = shift;
 
     # Reuse the old configuration, but get new everything else.
     my $dc  = DNSCheck->new({ with_config_object => $check->config });
@@ -284,8 +287,8 @@ sub running_in_child {
     $0 = "dispatcher: testing $domain (queue id $id)";
 
     $dbh->do(q[UPDATE queue SET tester_pid = ? WHERE id = ?], undef, $$, $id);
-    $dbh->do(q[INSERT INTO tests (domain,begin) VALUES (?,NOW())],
-        undef, $domain);
+    $dbh->do(q[INSERT INTO tests (domain,begin, source_id) VALUES (?,NOW(),?)],
+        undef, $domain, $source);
 
     my $test_id = $dbh->{'mysql_insertid'};
     slog 'debug', "$$ running test number $test_id.";

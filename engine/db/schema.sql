@@ -2,7 +2,7 @@
 
 -- DNSCheck Primary Data
 
-CREATE TABLE `messages` (
+CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `tag` varchar(255) NOT NULL default '',
   `arguments` tinyint(3) unsigned NOT NULL default 0,
@@ -13,16 +13,17 @@ CREATE TABLE `messages` (
   UNIQUE KEY `langtag` (`tag`,`language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `queue` (
+CREATE TABLE IF NOT EXISTS `queue` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) default NULL,
   `priority` tinyint(3) unsigned NOT NULL default '0',
   `inprogress` datetime default NULL,
   `tester_pid` int(10) unsigned NULL,
+  `source_id` int(10) unsigned NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
-CREATE TABLE `tests` (
+CREATE TABLE IF NOT EXISTS `tests` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) NOT NULL default '',
   `begin` datetime default NULL,
@@ -32,10 +33,11 @@ CREATE TABLE `tests` (
   `count_warning` int(10) unsigned default '0',
   `count_notice` int(10) unsigned default '0',
   `count_info` int(10) unsigned default '0',
+  `source_id` int(10) unsigned NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
-CREATE TABLE `results` (
+CREATE TABLE IF NOT EXISTS `results` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `test_id` int(10) unsigned NOT NULL,
   `line` int(10) unsigned NOT NULL,
@@ -61,14 +63,14 @@ CREATE TABLE `results` (
 
 -- Name Service Providers
 
-CREATE TABLE `nameservers` (
+CREATE TABLE IF NOT EXISTS `nameservers` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `nsp_id` int(10) unsigned NULL,
   `nameserver` varchar(255) UNIQUE NOT NULL default '',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
-CREATE TABLE `nsp` (
+CREATE TABLE IF NOT EXISTS `nsp` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(255) default '',
   `email` varchar(255) default '',
@@ -78,7 +80,7 @@ CREATE TABLE `nsp` (
 
 -- Domains and History
 
-CREATE TABLE `domains` (
+CREATE TABLE IF NOT EXISTS `domains` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) NOT NULL default '',
   `last_test` datetime default NULL,
@@ -86,7 +88,7 @@ CREATE TABLE `domains` (
   UNIQUE KEY (`domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
-CREATE TABLE `delegation_history` (
+CREATE TABLE IF NOT EXISTS `delegation_history` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) NOT NULL default '',
   `nameserver` varchar(255) NOT NULL default '',
@@ -94,3 +96,10 @@ CREATE TABLE `delegation_history` (
   UNIQUE KEY (`domain`,`nameserver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
+CREATE TABLE IF NOT EXISTS `source` (
+    `id` int(10) unsigned NOT NULL auto_increment,
+    `name` varchar(255) NOT NULL,
+    `contact` varchar(255),
+    PRIMARY KEY (`id`),
+    UNIQUE KEY (`name`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

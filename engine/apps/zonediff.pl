@@ -64,7 +64,8 @@ sub get_changed_domains {
     $new{$name} = md5_base64(sort(@acc));
 
     if (!defined($new{$flagdomain})) {
-        warn "Incomplete zone transfer (flag domain not present), retrying with alternate.";
+        warn
+"Incomplete zone transfer (flag domain not present), retrying with alternate.";
         $server = 'burgess.nic.se';
         goto AGAIN;
     }
@@ -95,8 +96,8 @@ sub get_changed_domains {
 sub reggie_dbh {
     my $conf = shift;
     my $dbh;
-    
-    my $dsn  = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
+
+    my $dsn = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
         $conf->{"database"}, $conf->{"host"}, $conf->{"port"});
 
     eval {
@@ -107,18 +108,18 @@ sub reggie_dbh {
     if ($@) {
         carp "Failed to connect to database: $@";
     }
-    
+
     return $dbh;
 }
 
 sub domain_owner {
-    my ($dbh,$domain) = @_;
+    my ($dbh, $domain) = @_;
     my ($name, $email);
-    
+
     # FIXME: Add code to do the DB lookup
-    
+
     return ($name, $email);
 }
 
-my $dc = DNSCheck->new;
+my $dc  = DNSCheck->new;
 my $dbh = reggie_dbh($dc->config->get("reggie"));
