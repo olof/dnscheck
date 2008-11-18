@@ -8,6 +8,8 @@ use Net::DNS;
 use Digest::MD5 qw[md5_base64];
 use DNSCheck;
 
+my $source_name = '12-hour check';
+
 # We want to test a domain if:
 #
 #  * a domain has been added
@@ -92,34 +94,23 @@ sub get_changed_domains {
     return @changed;
 }
 
-# Call with a reference to a config hash, such as from $dc->config->get("reggie")
-sub reggie_dbh {
-    my $conf = shift;
-    my $dbh;
+sub get_source_id {
+    my $dc  = shift;
+    my $dbh = $dc->dbh;
 
-    my $dsn = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
-        $conf->{"database"}, $conf->{"host"}, $conf->{"port"});
+    $dbh->do(q[INSERT IGNORE INTO source (name) VALUES (?)],
+        undef, $source_name);
+    my @res = $dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?],
+        undef, $source_name);
 
-    eval {
-        $dbh =
-          DBI->connect($dsn, $conf->{"user"}, $conf->{"password"},
-            { RaiseError => 1, AutoCommit => 1 });
-    };
-    if ($@) {
-        carp "Failed to connect to database: $@";
-    }
-
-    return $dbh;
+    return $res[0];
 }
 
-sub domain_owner {
-    my ($dbh, $domain) = @_;
-    my ($name, $email);
+my $dc        = DNSCheck->new;
+my $source_id = get_source_id($dc);
+my $sth       = $dc->dbh->prepare(
+    q[INSERT INTO queue (priority,domain,source_id) VALUES (?,?,?)]);
 
-    # FIXME: Add code to do the DB lookup
-
-    return ($name, $email);
+foreach my $domain (get_changed_domains) {
+    $sth->execute(3, $domain, $source_id);
 }
-
-my $dc  = DNSCheck->new;
-my $dbh = reggie_dbh($dc->config->get("reggie"));
