@@ -34,13 +34,69 @@ use warnings;
 use DNSCheck;
 use Net::SMTP;
 use DBI;
+use MIME::Lite;
+
+use Data::Dumper;
 
 my $reggie;
 my $dc;
 
 sub setup {
-    $dc     = DNSCheck->new;
+    $dc = DNSCheck->new({ locale => "en" });
     $reggie = get_reggie_dbh($dc->config->get("reggie"));
+}
+
+sub text_for_domain {
+    my $tref   = shift;
+    my $body   = "";
+    my $locale = $dc->locale();
+    my $len    = length($tref->{domain});
+    $len = 9 if $len < 9;
+
+    my $rref = $dc->dbh->selectall_arrayref(
+        q[
+        SELECT id,test_id,line,module_id,parent_module_id,
+            timestamp,level,message,arg0,arg1,arg2,arg3,
+            arg4,arg5,arg6,arg7,arg8,arg9
+        FROM results
+        WHERE test_id = ? AND (level = 'ERROR' OR level = 'CRITICAL')
+        ORDER BY id ASC
+    ], undef, $tref->{id}
+    );
+
+    $body = sprintf(
+        "%${len}s: %d critical problems and %d errors.\n",
+        $tref->{'domain'}, $tref->{count_critical},
+        $tref->{count_error}
+    );
+
+    foreach my $l (@{$rref}) {
+        my @tmp = grep { defined($_) } @{$l}[7 .. 999];
+        $body .= sprintf("%${len}s: %s\n", $l->[6], $locale->expand(@tmp));
+    }
+
+    return $body;
+}
+
+sub generate_mail_text_for_registrar {
+    my $name = shift;
+    my $ref  = shift;
+    my $body = "";
+
+    foreach my $d (keys %{ $ref->{domains} }) {
+        $body .= text_for_domain($ref->{domains}{$d});
+        $body .= "\n\n";
+    }
+
+    my $msg = MIME::Lite->new(
+        From    => $dc->config->get("12hour")->{from},
+        To      => $ref->{mail},
+        Subject => $dc->config->get("12hour")->{subject},
+        Data    => $body
+    );
+    $msg->attr('content-type.charset' => 'UTF-8');
+
+    return $msg;
 }
 
 sub get_reggie_dbh {
@@ -56,27 +112,6 @@ sub get_reggie_dbh {
 
     return $dbh;
 
-}
-
-sub generate_mail_text_for_registrar {
-    my $name = shift;
-    my $ref  = shift;
-
-    my $m = "";
-
-    $m .= "From: Efterkontrollen\n";
-    $m .= "To: " . $ref->{mail} . "\n";
-    $m .= "Subject: Testresultat för era domäner\n";
-    $m .= "\n";
-    foreach my $d (keys %{ $ref->{domains} }) {
-        my $t = $ref->{domains}{$d};
-        $m .= sprintf(
-            "%s: %d critical problems and %d errors. Test started at %s.\n",
-            $d, $t->{count_critical}, $t->{count_error}, $t->{begin});
-    }
-
-    $m .= "\n";
-    return $m;
 }
 
 sub get_registrar_info {
@@ -128,29 +163,14 @@ sub get_test_results {
     return $test;
 }
 
-sub send_mail {
-    my $address = shift;
-    my $body    = shift;
-    my $conf    = $dc->config->get("12hour");
-
-    my $smtphost = $conf->{smtphost};
-    my $smtp     = Net::SMTP->new($smtphost)
-      or die "Failed to connect to SMTP host $smtphost";
-
-    $smtp->mail($conf->{from});
-    $smtp->to($address);
-    $smtp->data($body);
-    $smtp->quit;
-}
-
 setup();
 my %data = aggregate_registrar_info(domains_tested_last_day());
 
 foreach my $reg (keys %data) {
     if ($dc->config->get("12hour")->{debug}) {
-        print "<$reg>\n\n";
-        print generate_mail_text_for_registrar($reg, $data{$reg});
+        print generate_mail_text_for_registrar($reg, $data{$reg})->as_string;
     } else {
-        send_mail($data{$reg}{mail}, generate_mail_text_for_registrar($reg, $data{$reg}));
+        generate_mail_text_for_registrar($reg, $data{$reg})
+          ->send('smtp', $dc->config->get("12hour")->{smtphost});
     }
 }

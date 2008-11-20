@@ -137,6 +137,15 @@ sub config {
     return $self->{config};
 }
 
+sub locale {
+    my $self = shift;
+
+    unless (defined($self->{locale})) {
+        $self->{locale} = DNSCheck::Locale->new($self->config->get("locale"));
+    }
+    return $self->{locale};
+}
+
 # Hopefully we will be able to remove this one soon.
 sub context {
     my $self = shift;
