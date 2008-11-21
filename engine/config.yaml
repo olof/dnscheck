@@ -34,9 +34,33 @@ daemon:
     maxchild: 10
 
 # This information is expected to be overridden in site_config.yaml
+# Not all keys will be useful for all setups. See the documentation
+# for the various programs about which keys they use, and what they
+# mean.
 dbi:
     host: 127.0.0.1
     port: 13317
     database: dnscheckng
     user: dnscheckng
     password: not_given_here
+
+reggie:
+    host: 127.0.0.1
+    port: 13317
+    database: reggie
+    user: reggieuser
+    password: not_given_here
+
+12hour:
+    smtphost: smtp.example.com
+    from: unknown@example.com
+    subject: Problem(s) in your domain(s)
+    timespan: 24:00:00
+    debug: 1
+
+zonediff:
+    datafile: /tmp/zone_hashes.txt
+    servers:
+      - ns.example.com
+    domain: example.com.
+    tsig: test.key TSIG WW91IGFjdHVhbGx5IGJvdGhlcmVkIHRvIGRlY29kZSB0aGlzPw==
