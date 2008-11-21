@@ -145,8 +145,8 @@ sub aggregate_registrar_info {
 sub domains_tested_last_day {
     my $aref = $dc->dbh->selectall_arrayref(
         q[
-        SELECT DISTINCT domain FROM tests WHERE begin > subtime(now(),'24:00:00') AND (count_critical + count_error) > 0
-        ]
+        SELECT DISTINCT domain FROM tests WHERE begin > subtime(now(),?) AND (count_critical + count_error) > 0
+        ], undef, $dc->config->get("12hour")->{timespan}
     );
     return map { $_->[0] } @$aref;
 }
@@ -174,3 +174,59 @@ foreach my $reg (keys %data) {
           ->send('smtp', $dc->config->get("12hour")->{smtphost});
     }
 }
+
+=head1 NAME
+
+dnscheck-12hourmailer - email registrars about problems in their domains
+
+=head1 DESCRIPTION
+
+This script will look through the C<tests> table in the L<DNSCheck> database,
+pick out the ones that resulted in problems classified at level C<CRITICAL> or
+C<ERROR>, group the domains thus found by registrar and send each registrar an
+email listing the problematic zones and some basic information on the problems.
+
+The registrar data is taken from the REGGIE database for the C<.se> domain,
+and thus the script will probably be of limited use to other organisations as
+is. Other users will almost certainly need to write their own version of the
+L<get_registrar_info> function. It expects a single domain name as its input,
+and returns C<undef> (if no registrar could be found) or a two-element list
+with the contact email address for and name of the relevant registrar (in that
+order).
+
+It might be useful to simply make the function return a fixed list with an
+email address and a name string, in which case single email with all problems
+will be sent to the address given.
+
+=head1 CONFIGURATION
+
+This script uses the same YAML files as the rest of the DNSCheck system. It
+looks for its information under the key C<12hour>. The subkeys it uses are the
+following.
+
+=over
+
+=item smtphost
+
+The full name of the SMTP server to use for sending emails.
+
+=item from
+
+The string to put in the C<From> line of the sent emails.
+
+=item subject
+
+The string to put in the C<subject> line of the sent emails.
+
+=item timespan
+
+How far into the past the script should look for tests. The value should be a
+string that will be understood as a time value by MySQL (for example,
+"12:00:00" is twelve hours, zero minutes and zero seconds).
+
+=item debug
+
+A Perl boolean value. If it is true, emails will be printed to standard output
+instead of sent.
+
+=back
