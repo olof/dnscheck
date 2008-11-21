@@ -55,7 +55,7 @@ sub get_changed_domains {
             $new{$current} = md5_base64(sort(@acc));
             @acc = ();
             if ($count++ % 1000 == 0) {
-                print STDERR "$name\n";
+                # print STDERR "$name\n";
             }
 
             $current = $name;
