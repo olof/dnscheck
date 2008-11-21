@@ -68,3 +68,6 @@ zonediff:
     domain: example.com.
     tsig: test.key TSIG WW91IGFjdHVhbGx5IGJvdGhlcmVkIHRvIGRlY29kZSB0aGlzPw==
     sourcestring: 12-hour-check
+    flagdomain:
+        - 000000000000.example.com
+        - zzzzzzzzzzzz.example.com

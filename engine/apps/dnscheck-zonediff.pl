@@ -32,7 +32,7 @@ sub get_changed_domains {
 
     my %new;
     my %old;
-    my $flagdomain = $conf->{flagdomain};
+    my @flagdomains = @{$conf->{flagdomain}} if defined($conf->{flagdomain});
     my $current    = "";
     my @acc        = ();
     my $name;
@@ -63,8 +63,9 @@ sub get_changed_domains {
     }
     $new{$name} = md5_base64(sort(@acc));
 
-    if (defined($flagdomain) and !defined($new{$flagdomain})) {
-        warn "Incomplete transfer (no flag domain), trying alternate.";
+    if (@flagdomains and !(scalar(grep {$new{$_}} @flagdomains) == scalar(@flagdomains))) {
+        warn "Incomplete transfer (no flag domain), trying next server.\n";
+        die "No more servers to try. Giving up.\n" if (@servers == 0);
         goto AGAIN;
     }
 
@@ -97,7 +98,7 @@ sub get_source_id {
     $dbh->do(q[INSERT IGNORE INTO source (name) VALUES (?)],
         undef, $dc->config->get("zonediff")->{sourcestring});
     my @res = $dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?],
-        undef, $source_name);
+        undef, $dc->config->get("zonediff")->{sourcestring});
 
     return $res[0];
 }
@@ -140,7 +141,7 @@ looks for five subkeys:
 The signature to be used to authorise the transfer, if one is needed. Should
 be in a format that can be fed dirctly to L<Net::DNS::RR::new> (which is for
 practical purposes the same as you'd put in a zone file: "keyname TSIG
-keydata").
+keydata"). If this key is set to an empty value, TSIG will not be used.
 
 =item datafile
 
@@ -154,8 +155,12 @@ the order listed.
 
 =item flagdomain
 
-A special domain name that will be present if the entire zone was correctly
-transferred. If this key is not present, the check will not be made.
+A list of special domain names thats will be present if the entire zone was
+correctly transferred. If one or more of the listed domains are missing after
+the transfer has concluded, it will be assumed that the transfer was
+incomplete and a new attempt will be made with the next server. If there are
+no more servers to try, the script will exit with an error message. If this
+key is not present, the check will not be made.
 
 =item domain
 
