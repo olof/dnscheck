@@ -8,8 +8,6 @@ use Net::DNS;
 use Digest::MD5 qw[md5_base64];
 use DNSCheck;
 
-my $source_name = '12-hour check';
-
 # We want to test a domain if:
 #
 #  * a domain has been added
@@ -97,7 +95,7 @@ sub get_source_id {
     my $dbh = $dc->dbh;
 
     $dbh->do(q[INSERT IGNORE INTO source (name) VALUES (?)],
-        undef, $source_name);
+        undef, $dc->config->get("zonediff")->{sourcestring});
     my @res = $dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?],
         undef, $source_name);
 
@@ -162,6 +160,10 @@ transferred. If this key is not present, the check will not be made.
 =item domain
 
 The domain to check.
+
+=item sourcestring
+
+The string used to mark tests queued from this script.
 
 =back
 

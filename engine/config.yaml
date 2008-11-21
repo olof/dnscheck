@@ -57,6 +57,7 @@ reggie:
     subject: Problem(s) in your domain(s)
     timespan: 24:00:00
     debug: 1
+    sourcestring: 12-hour-check
 
 zonediff:
     datafile: /tmp/zone_hashes.txt
@@ -64,3 +65,4 @@ zonediff:
       - ns.example.com
     domain: example.com.
     tsig: test.key TSIG WW91IGFjdHVhbGx5IGJvdGhlcmVkIHRvIGRlY29kZSB0aGlzPw==
+    sourcestring: 12-hour-check

@@ -36,14 +36,16 @@ use Net::SMTP;
 use DBI;
 use MIME::Lite;
 
-use Data::Dumper;
-
 my $reggie;
 my $dc;
+my $source_id;
 
 sub setup {
     $dc = DNSCheck->new({ locale => "en" });
     $reggie = get_reggie_dbh($dc->config->get("reggie"));
+    my $source_name = $dc->config->get("12hour")->{sourcestring};
+    ($source_id) = $dc->dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?], undef, $source_name);
+    die "No source information in database.\n" unless defined($source_id);
 }
 
 sub text_for_domain {
@@ -145,8 +147,12 @@ sub aggregate_registrar_info {
 sub domains_tested_last_day {
     my $aref = $dc->dbh->selectall_arrayref(
         q[
-        SELECT DISTINCT domain FROM tests WHERE begin > subtime(now(),?) AND (count_critical + count_error) > 0
-        ], undef, $dc->config->get("12hour")->{timespan}
+        SELECT DISTINCT domain
+        FROM tests
+        WHERE begin > subtime(now(),?) 
+            AND (count_critical + count_error) > 0
+            AND source_id = ?
+        ], undef, $dc->config->get("12hour")->{timespan}, $source_id
     );
     return map { $_->[0] } @$aref;
 }
@@ -228,5 +234,9 @@ string that will be understood as a time value by MySQL (for example,
 
 A Perl boolean value. If it is true, emails will be printed to standard output
 instead of sent.
+
+=item sourcestring
+
+The string identifying the source of the tests to consider mailing about.
 
 =back
