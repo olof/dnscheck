@@ -62,7 +62,9 @@ reggie:
 zonediff:
     datafile: /tmp/zone_hashes.txt
     servers:
-      - ns.example.com
+      - ns1.example.com
+      - ns2.example.com
+      - ns3.example.com
     domain: example.com.
     tsig: test.key TSIG WW91IGFjdHVhbGx5IGJvdGhlcmVkIHRvIGRlY29kZSB0aGlzPw==
     sourcestring: 12-hour-check
