@@ -30,10 +30,11 @@ WriteMakefile(
         YAML                   => 0,
         DBI                    => 0,
     },
-    'EXE_FILES' => ['apps/dnscheck', 'apps/dnscheck-qrun', 'apps/dnscheck-preflight', 'apps/dnscheck-dispatcher'],
+    'EXE_FILES' => ['apps/dnscheck', 'apps/dnscheck-qrun', 'apps/dnscheck-preflight', 'apps/dnscheck-dispatcher',
+                    'apps/dnscheck-zonediff', 'apps/dnscheck-12hourmailer'],
     'NO_META'   => 1,
     'SIGN'      => 0,
-    clean       => { FILES           => "*~ apps/dnscheck apps/dnscheck-qrun apps/dnscheck-preflight apps/dnscheck-dispatcher" },
+    clean       => { FILES => "*~ apps/dnscheck apps/dnscheck-qrun apps/dnscheck-preflight apps/dnscheck-dispatcher apps/dnscheck-zonediff apps/dnscheck-12hourmailer" },
 );
 
 sub MY::install {
@@ -67,16 +68,7 @@ FIXVARS = \
 	-DPOLICY_DIR="$(POLICY_DIR)" \
 	-DLOCALE_DIR="$(LOCALE_DIR)"
 
-apps/dnscheck: apps/dnscheck.pl
-	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
-
-apps/dnscheck-qrun: apps/dnscheck-qrun.pl
-	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
-
-apps/dnscheck-preflight: apps/dnscheck-preflight.pl
-	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
-
-apps/dnscheck-dispatcher: apps/dnscheck-dispatcher.pl
+apps/%: apps/%.pl
 	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
 
 install_locale:
