@@ -32,7 +32,8 @@ sub get_changed_domains {
 
     my %new;
     my %old;
-    my @flagdomains = @{$conf->{flagdomain}} if defined($conf->{flagdomain});
+    my @flagdomains;
+    @flagdomains = @{$conf->{flagdomain}} if defined($conf->{flagdomain});
     my $current    = "";
     my @acc        = ();
     my $name;
