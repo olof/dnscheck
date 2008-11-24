@@ -1,0 +1,207 @@
+=head1 NAME
+
+The DNSCheck System
+
+=head1 DESCRIPTION
+
+=head2 Introduction
+
+The central part of the DNSCheck system are the Perl modules that perform the
+actual tests. All of them should be used by creating a L<DNSCheck.pm> object
+and letting it create other objects as needed and/or requested. These modules
+will make lots of queries to DNS servers all around the world, and sooner or
+later return a result in the form of a list of messages.
+
+At this level, the libs can be used for any number of tasks. In the examples
+directory in the source distribution there is, for example, a script that lets
+one monitor the status of a domain via the Nagios monitoring system.
+
+The system as distributed, however, contains more than the lib. There are also
+a couple of programs and a web interface. We will not talk about the web
+interface here, except to mention that it like the rest of the programs
+communicate with the other parts via the database tables to be mentioned
+later.
+
+=head2 The programs
+
+=head3 The dispatcher
+
+The program that actually runs tests is L<dnscheck-dispatch>. It polls the
+table C<queue> table in the database every 0.25 seconds, and forks children to
+run tests on what it finds there. It monitors the state of the children, and
+cleans up after they exit. If a child exits uncleanly, the test it was running
+is re-scheduled. If the same domain causes unclean exits five times or more,
+that domain will be blacklisted and will not be tested again until the
+dispatcher is restarted.
+
+If the dispatcher receives a TERM signal, it will stop starting new tests,
+wait for the ones currently running to exit and then exit in good order. This
+may at worst take several minutes.
+
+If the dispatcher receives a HUP signal, it will do an orderly exit as above,
+and then re-execute itself. If it was not originally started with a full
+pathname, the re-execution may fail.
+
+The dispatcher is written to do a small number of tasks (get queue entry,
+start child, clean up after it) in as robust fashion as possible. As of this
+writing, the program appears to be very reliable as long as the database
+server is not too heavily loaded. Exactly what "too heavily loaded" means in
+practice will vary, of course, but as a rule of thumb, if a simple UPDATE
+takes more than a second to finish the system is almost certainly there.
+
+It is B<vital> that the queue table use the InnoDB storage engine. If it is
+MyISAM, there will be data corruption under heavy load. Other storage engines
+with sane transaction handling should also work, but have not been tested. 
+
+At the moment, only MySQL is supported. Patches to add support for more
+databases are welcome.
+
+The dispatcher's child processes run the default tests on the given domain,
+write the results to the C<tests> and C<results> tables in the database and
+then exits.
+
+=head3 The zone change detector
+
+One of the programs that insert entries into the C<queue> table is
+L<dnscheck-zonediff>. This program does a zone transfer of a specified domain
+and looks at all the C<NS> and C<DS> records. For ever subdomain, it'll
+concatenate the textual representations of the records and calculate an MD5
+sum of the resulting string. If that sum is not identical with what it was the
+previous time the program was run, the subdomain in question will be scheduled
+for testing (that is, it'll be written to the C<queue> table, where the
+dispatcher will pick it up).
+
+The change detector stores data between runs in a simple text file, with a
+zone name and its corresponding MD5 sum on each line.
+
+At the moment, the time it takes to do the AXFR is limited by the speed at
+which the Perl module Net::DNS can create new records. It also uses a fair bit
+of RAM (100-150MB for around 750 thousand domains), so if you're planning to
+run it against C<.com> you'll want a pretty hefty machine.
+
+=head3 The results mailer
+
+The L<dnscheck-12hourmailer> script reads results of tests from the database
+tables C<tests> and C<results>, aggregates them per registrar and sends an
+email to each registrar with a summary of serious problems found among their
+domains.
+
+This is pretty specific to C<.SE>, particularly the bit that maps domain names
+to registrars and fetches contact information for the registrars. If you want
+to do something similar to this, you'll probably need to modify the code of
+the script. At the moment, the emails are also generated entirely
+programmatically, so changing their formatting also involves changing code.
+
+=head2 The database
+
+It's entirely possible to use the lib part of DNSCheck without a database. All
+the surrounding functionality, however, needs one. All communication between
+various parts of the entire system is done entirely through database tables.
+While this may not be the most convenient interface ever, it does mean that
+anything that can talk to MySQL can be a part of the system, which is useful.
+
+There are a number of tables. Let's start looking at them from the top of, so
+to speak, the food chain.
+
+=head3 The source table
+
+Anythingt that can write to the C<queue> table can be a source of domains to
+be tested. In order to make it possible to keep track of which source
+requested which test, there is the C<source> table. It has only three fields,
+and is supposed to be mostly read-only. The fields are C<id>, C<name> and
+C<contact>. The id is an autoincrementing integer as usual. The name is a
+human-readable name for the source. The contact is some sort of human-useable
+contact information for the source in question (email address, phone number,
+ham radio call sign,...).
+
+One example of the use of source information is the mailer described above,
+which only mails results about tests that were scheduled for testing by the
+zone change detector, not once that came from (for example) the web GUI.
+    
+=head3 The queue table
+
+This table has six fields apart from the autoincrementing C<id>. There is
+C<domain>, which is the name of a domain to be tested. There is C<priority>,
+which is an integer. L<dnscheck-dispatch> will always pick the queue entry
+with the highest priority first (and if there are several with the same
+priority, the one with the lowest id). There is C<inprogress>, which is NULL
+to begin with and gets a timestamp written to it by the dispatcher when it's
+been scheduled for testing. There is a C<tester_pid> field, where the
+particular child process that's running the test for the domain writes it's
+system PID (if we ever need to have more than one machince running tests, thre
+maybe a host field added here). C<source_id> pints into the source table.
+C<source_data> is any data specific to this test that is relevant for the
+specific source. The two source fields are simply copied over to the C<tests>
+table when a test is started.
+
+=head3 The tests table
+
+This table has one row for every test run, an contains information on the
+domain tested, the start and finish times of the test, a summary of the
+results and the source information that was copied from the queue table. The
+fields are: C<id> as usual, C<domain> for the domain name, C<begin> for the
+start time (with whole-second resolution), C<end> for the finish time,
+C<count_critical>, C<count_error>, C<count_warning>, C<count_notice> and
+C<count_info> for the number of problems at the respecive severity levels,
+C<source_id> to point into the source table and finally C<source_data> to hold
+whatever data that source wants.
+
+=head3 The results table
+
+This table has a number of rows for every test. They reflect the list of
+results returned after a test is run, and several of the fields are rather
+specific to the web GUI application. The fields that can be useful to others
+are: C<test_id>, which points into the C<tests> table. C<timestamp> with is
+the time at which the log entry was entered (with microsecond resolution).
+C<level> which is one of the all-caps strings CRITICAL, ERROR, WARNING, NOTICE
+or INFO. C<message> which is the message tag that describes the reason the log
+entry was made. C<arg0> to C<arg9>, which are arguments to the message.
+
+The message tags are specified in YAML files.
+
+=head3 messages
+
+The messages table contains a copy of a localy YAML file. It is used by the
+web GUI.
+
+=head3 delegation_history
+
+This table contains information about which nameservers has historically been
+authoritative for domains. Some tests use it, if it's available.
+
+=head3 nameservers and nsp
+
+The function of these tables have been obsoleted by the registrar system.
+
+=head3 domains
+
+A list of domains. More of a convenience thing than an actual part of the
+DNSCheck system.
+
+=head2 Files
+
+The system uses a number of files.
+
+=head3 config.yaml and site_config.yaml
+
+These contain configuration information in YAML format. The C<config.yaml>
+file is installed with DNSCheck, and should not be modified (if you do modify
+it, your changes will be overwritten when you upgrade DNSCheck).
+C<site_config.yaml> overrides what is in C<config.yaml>, and is where local
+changes (such as database access information and TSIG keys) should be entered.
+It will not be touched by the installation process.
+
+=head3 policy.yaml and site_policy.yaml
+
+C<policy.yaml> specifies the severity of various problems. As distributed, it
+represents .SE's view on best practices for DNS. If you want to change
+anything, do so in C<site_policy.yaml>, or your changes will be overwritten on
+the next install.
+
+=head3 locle/en.yaml and locale/sv.yaml
+
+These files contain information on how to transform the raw test log entries
+into human-readable messages. If you want to do your own translation, you need
+to know that the "format" key is a L<sprintf()> format string, and "args" the
+number of arguments after the format. If the latter number does not match the
+Perl code, a warning will be printed at runtime.
