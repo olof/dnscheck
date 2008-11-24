@@ -39,7 +39,6 @@ sub get_changed_domains {
     my $name;
     my @changed;
     my $debug = 1;
-    my $count = 0;
 
     $res->axfr_start($conf->{domain}, 'IN') or die;
 
@@ -55,9 +54,6 @@ sub get_changed_domains {
         } else {
             $new{$current} = md5_base64(sort(@acc));
             @acc = ();
-            if ($count++ % 1000 == 0) {
-                # print STDERR "$name\n";
-            }
 
             $current = $name;
         }
@@ -70,8 +66,7 @@ sub get_changed_domains {
         goto AGAIN;
     }
 
-    open my $oldfile, '<', $filename;
-    if ($oldfile) {
+    if (open my $oldfile, '<', $filename) {
         while (defined(my $line = <$oldfile>)) {
             my ($domain, $hash) = split(/\s+/, $line);
             $old{$domain} = $hash;
