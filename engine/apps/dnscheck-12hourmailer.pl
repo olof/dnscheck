@@ -44,7 +44,9 @@ sub setup {
     $dc = DNSCheck->new({ locale => "en" });
     $reggie = get_reggie_dbh($dc->config->get("reggie"));
     my $source_name = $dc->config->get("12hour")->{sourcestring};
-    ($source_id) = $dc->dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?], undef, $source_name);
+    ($source_id) =
+      $dc->dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?],
+        undef, $source_name);
     die "No source information in database.\n" unless defined($source_id);
 }
 

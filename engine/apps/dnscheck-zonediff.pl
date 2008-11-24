@@ -33,9 +33,9 @@ sub get_changed_domains {
     my %new;
     my %old;
     my @flagdomains;
-    @flagdomains = @{$conf->{flagdomain}} if defined($conf->{flagdomain});
-    my $current    = "";
-    my @acc        = ();
+    @flagdomains = @{ $conf->{flagdomain} } if defined($conf->{flagdomain});
+    my $current = "";
+    my @acc     = ();
     my $name;
     my @changed;
     my $debug = 1;
@@ -60,7 +60,9 @@ sub get_changed_domains {
     }
     $new{$name} = md5_base64(sort(@acc));
 
-    if (@flagdomains and !(scalar(grep {$new{$_}} @flagdomains) == scalar(@flagdomains))) {
+    if (@flagdomains
+        and !(scalar(grep { $new{$_} } @flagdomains) == scalar(@flagdomains)))
+    {
         warn "Incomplete transfer (no flag domain), trying next server.\n";
         die "No more servers to try. Giving up.\n" if (@servers == 0);
         goto AGAIN;
