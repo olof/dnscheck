@@ -178,8 +178,13 @@ foreach my $reg (keys %data) {
     if ($dc->config->get("12hour")->{debug}) {
         print generate_mail_text_for_registrar($reg, $data{$reg})->as_string;
     } else {
-        generate_mail_text_for_registrar($reg, $data{$reg})
-          ->send('smtp', $dc->config->get("12hour")->{smtphost});
+        eval {
+            generate_mail_text_for_registrar($reg, $data{$reg})
+              ->send('smtp', $dc->config->get("12hour")->{smtphost});
+        };
+        if ($@) {
+            print STDERR $@;
+        }
     }
 }
 
