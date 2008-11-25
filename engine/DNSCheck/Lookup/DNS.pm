@@ -1139,42 +1139,47 @@ Helper functions for looking up information in the DNS (Domain Name System).
 
 =head1 METHODS
 
-new(I<logger>);
+=over
 
-flush();
+=item new(I<logger>);
 
-my $packet = $dns->query_resolver(I<qname>, I<qclass>, I<qtype>);
+=item flush();
 
-my $packet = $dns->query_parent(I<zone>, I<qname>, I<qclass>, I<qtype>);
+=item my $packet = $dns->query_resolver(I<qname>, I<qclass>, I<qtype>);
 
-my $packet = $dns->query_child(I<zone>, I<qname>, I<qclass>, I<qtype>);
+=item my $packet = $dns->query_parent(I<zone>, I<qname>, I<qclass>, I<qtype>);
 
-my $packet = $dns->query_explicit(I<qname>, I<qclass>, I<qtype>, I<address>, I<flags>);
+=item my $packet = $dns->query_child(I<zone>, I<qname>, I<qclass>, I<qtype>);
 
-my $addrs = $dns->get_nameservers_ipv4(I<qname>, I<qclass>);
+=item my $packet = $dns->query_explicit(I<qname>, I<qclass>, I<qtype>, I<address>, I<flags>);
 
-my $addrs = $dns->get_nameservers_ipv6(I<qname>, I<qclass>);
+=item my $addrs = $dns->get_nameservers_ipv4(I<qname>, I<qclass>);
 
-my $ns = $dns->get_nameservers_at_parent(I<qname>, I<qclass>);
+=item my $addrs = $dns->get_nameservers_ipv6(I<qname>, I<qclass>);
 
-my $ns = $dns->get_nameservers_at_child(I<qname>, I<qclass>);
+=item my $ns = $dns->get_nameservers_at_parent(I<qname>, I<qclass>);
 
-$dns->init_nameservers(I<qname>, I<qclass>);
+=item my $ns = $dns->get_nameservers_at_child(I<qname>, I<qclass>);
 
-my $parent = $dns->find_parent(I<qname>, I<qclass>);
+=item $dns->init_nameservers(I<qname>, I<qclass>);
 
-my @mx = $dns->find_mail_destination(I<domain>);
+=item my $parent = $dns->find_parent(I<qname>, I<qclass>);
 
-my @addresses = $dns->find_addresses(I<qname>, I<qclass>);
+=item my @mx = $dns->find_mail_destination(I<domain>);
 
-my $bool = $dns->address_is_authoritative(I<address>, I<qname>, I<qtype>);
+=item my @addresses = $dns->find_addresses(I<qname>, I<qclass>);
 
-my $bool = $dns->address_is_recursive(I<address>, I<qclass>);
+=item my $bool = $dns->address_is_authoritative(I<address>, I<qname>, I<qtype>);
 
-my $bool = $dns->check_axfr(I<address>, I<qname>, I<qclass>);
+=item my $bool = $dns->address_is_recursive(I<address>, I<qclass>);
 
-my $string = $dns->query_nsid(I<address>, I<qname>, I<qclass>, I<qtype>);
+=item my $bool = $dns->check_axfr(I<address>, I<qname>, I<qclass>);
 
+=item my $string = $dns->query_nsid(I<address>, I<qname>, I<qclass>, I<qtype>);
+
+These need to be documented better.
+
+=back
 
 =head1 EXAMPLES
 

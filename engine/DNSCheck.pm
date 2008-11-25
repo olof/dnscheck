@@ -71,6 +71,7 @@ sub new {
     } else {
         $self->{config} = DNSCheck::Config->new(%{$config_args});
     }
+    $self->{faked} = {};
 
     return $self;
 }
@@ -98,6 +99,24 @@ sub flush {
 
     # should the ASN cache be flushed as well?
     #$self->{context}->{asn}->flush();
+}
+
+######################################################################
+
+sub add_fake_parent_data {
+    my $self = shift;
+    my $domain = shift;
+    my $ns_name = shift;
+    my $ns_ip = shift;
+    
+    $self->{faked}{$domain}{$ns_name} = $ns_ip;
+}
+
+sub undelegated_test {
+    my $self = shift;
+    my $domain = shift;
+    
+    return exists $self->{faked}{$domain};
 }
 
 ######################################################################
