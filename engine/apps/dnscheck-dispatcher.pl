@@ -36,7 +36,7 @@ use DNSCheck;
 
 use Getopt::Long;
 use Sys::Syslog;
-use POSIX ':sys_wait_h';
+use POSIX qw(:sys_wait_h strftime);
 use Time::HiRes 'sleep';
 
 use vars qw[
@@ -313,9 +313,10 @@ q[INSERT INTO tests (domain,begin, source_id, source_data) VALUES (?,NOW(),?,?)]
     while (defined(my $e = $log->get_next_entry)) {
         next if ($e->{level} eq 'DEBUG');
         $line++;
+        my $time = strftime("%Y-%m-%d %H:%M:%S",localtime($e->{timestamp}));
         $sth->execute(
             $test_id,               $line,           $e->{module_id},
-            $e->{parent_module_id}, $e->{timestamp}, $e->{level},
+            $e->{parent_module_id}, $time,           $e->{level},
             $e->{tag},              $e->{arg}[0],    $e->{arg}[1],
             $e->{arg}[2],           $e->{arg}[3],    $e->{arg}[4],
             $e->{arg}[5],           $e->{arg}[6],    $e->{arg}[7],
