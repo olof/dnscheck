@@ -35,68 +35,76 @@ use DNSCheck;
 use Net::SMTP;
 use DBI;
 use MIME::Lite;
+use Text::Template;
+use File::Spec::Functions;
+
+use Data::Dumper;
 
 my $reggie;
 my $dc;
 my $source_id;
+my $templatedir;
+my $domaintemplate;
+my $registrartemplate;
 
 sub setup {
     $dc = DNSCheck->new({ locale => "en" });
     $reggie = get_reggie_dbh($dc->config->get("reggie"));
+    
     my $source_name = $dc->config->get("12hour")->{sourcestring};
     ($source_id) =
       $dc->dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?],
         undef, $source_name);
     die "No source information in database.\n" unless defined($source_id);
+    
+    $templatedir = $dc->config->get("12hour")->{templatedir};
+    $domaintemplate = Text::Template->new(SOURCE => catfile($templatedir,'domain.template'))   
+        or die "Failed to construct domain template: $Text::Template::ERROR";
+    $registrartemplate = Text::Template->new(SOURCE => catfile($templatedir, 'registrar.template'))
+        or die "Failed to construct registrar tempalte: $Text::Template::ERROR";
 }
 
-sub text_for_domain {
+sub tests_for_domain {
     my $tref   = shift;
-    my $body   = "";
     my $locale = $dc->locale();
-    my $len    = length($tref->{domain});
-    $len = 9 if $len < 9;
 
-    my $rref = $dc->dbh->selectall_arrayref(
+    my $rref = $dc->dbh->selectall_hashref(
         q[
-        SELECT id,test_id,line,module_id,parent_module_id,
-            timestamp,level,message,arg0,arg1,arg2,arg3,
+        SELECT id, timestamp,level,message,arg0,arg1,arg2,arg3,
             arg4,arg5,arg6,arg7,arg8,arg9
         FROM results
         WHERE test_id = ? AND (level = 'ERROR' OR level = 'CRITICAL')
-        ORDER BY id ASC
-    ], undef, $tref->{id}
+        ], 'id', undef, $tref->{id}
     );
-
-    $body = sprintf(
-        "%${len}s: %d critical problems and %d errors.\n",
-        $tref->{'domain'}, $tref->{count_critical},
-        $tref->{count_error}
-    );
-
-    foreach my $l (@{$rref}) {
-        my @tmp = grep { defined($_) } @{$l}[7 .. 999];
-        $body .= sprintf("%${len}s: %s\n", $l->[6], $locale->expand(@tmp));
+    
+    foreach my $t (keys %$rref) {
+        $rref->{$t}{formatted} = $locale->expand(
+            grep {$_} @{$rref->{$t}}{qw(message arg0 arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9)})
     }
-
-    return $body;
+    
+    return $rref;
 }
 
-sub generate_mail_text_for_registrar {
+sub generate_mail_for_registrar {
     my $name = shift;
     my $ref  = shift;
-    my $body = "";
+    my @domains;
 
     foreach my $d (keys %{ $ref->{domains} }) {
-        $body .= text_for_domain($ref->{domains}{$d});
-        $body .= "\n\n";
+        push @domains, [$d,tests_for_domain($ref->{domains}{$d})];
     }
 
     my $msg = MIME::Lite->new(
         From    => $dc->config->get("12hour")->{from},
         To      => $ref->{mail},
         Subject => $dc->config->get("12hour")->{subject},
-        Data    => $body
+        Data    => $registrartemplate->fill_in(
+                HASH => {
+                    name => $name,
+                    domains => \@domains,
+                    domaintemplate => \$domaintemplate,
+                }
+            ),
     );
     $msg->attr('content-type.charset' => 'UTF-8');
 
@@ -176,10 +184,10 @@ my %data = aggregate_registrar_info(domains_tested_last_day());
 
 foreach my $reg (keys %data) {
     if ($dc->config->get("12hour")->{debug}) {
-        print generate_mail_text_for_registrar($reg, $data{$reg})->as_string;
+        print generate_mail_for_registrar($reg, $data{$reg})->as_string;
     } else {
         eval {
-            generate_mail_text_for_registrar($reg, $data{$reg})
+            generate_mail_for_registrar($reg, $data{$reg})
               ->send('smtp', $dc->config->get("12hour")->{smtphost});
         };
         if ($@) {

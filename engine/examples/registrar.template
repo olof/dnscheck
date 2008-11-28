@@ -1,0 +1,10 @@
+Dear {$name},
+
+the following {scalar @domains} domains for which you are the registrar
+currently have problems.
+
+{
+    foreach(@domains){
+        $OUT .= $domaintemplate->fill_in(HASH => {name => $_->[0], result => $_->[1]})
+    }
+}
