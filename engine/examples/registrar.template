@@ -4,7 +4,12 @@ the following {scalar @domains} domains for which you are the registrar
 currently have problems.
 
 {
-    foreach(@domains){
-        $OUT .= $domaintemplate->fill_in(HASH => {name => $_->[0], result => $_->[1]})
+    if(@domains <= 12){
+        foreach(@domains){
+            $OUT .= $domaintemplate->fill_in(HASH => {name => $_->[0], result => $_->[1]})
+        }
+    } else {
+        $OUT .= join("\n", map {$_->[0]} @domains);
+        $OUT .= "\n\n";
     }
 }

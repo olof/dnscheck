@@ -94,6 +94,8 @@ sub generate_mail_for_registrar {
         push @domains, [$d,tests_for_domain($ref->{domains}{$d})];
     }
 
+    @domains = sort {$a->[0] cmp $b->[0]} @domains;
+    
     my $msg = MIME::Lite->new(
         From    => $dc->config->get("12hour")->{from},
         To      => $ref->{mail},

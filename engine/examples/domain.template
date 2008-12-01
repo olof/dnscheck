@@ -1,3 +1,7 @@
-Information about {$name}.
-There are {scalar keys %result} problems.
-
+Domain {$name}:
+    {
+        foreach(sort keys %result){
+            $OUT .= $result{$_}{formatted};
+            $OUT .= "\n    ";
+        }
+    }
