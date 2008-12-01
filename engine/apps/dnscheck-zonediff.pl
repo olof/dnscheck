@@ -105,6 +105,9 @@ my $dc        = DNSCheck->new;
 my $source_id = get_source_id($dc);
 my $sth       = $dc->dbh->prepare(
     q[INSERT INTO queue (priority,domain,source_id) VALUES (?,?,?)]);
+my $rndc = $dc->config->get("zonediff")->{rndcbin};
+
+system($rndc, 'flush') if (defined($rndc) && -x $rndc);
 
 foreach my $domain (get_changed_domains($dc->config->get("zonediff"))) {
     $sth->execute(3, $domain, $source_id);
@@ -167,6 +170,12 @@ The domain to check.
 =item sourcestring
 
 The string used to mark tests queued from this script.
+
+=item rndcbin
+
+The full path to the L<rndc> binary to be used to tell the local L<named> to
+flush its cache. If not set, or set to something that's not executable by the
+userid running the script, it'll just be silently skipped.
 
 =back
 
