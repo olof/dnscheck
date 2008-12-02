@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `queue` (
   `tester_pid` int(10) unsigned NULL,
   `source_id` int(10) unsigned NULL,
   `source_data` varchar(255) NULL,
+  `fake_parent_glue` text NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
