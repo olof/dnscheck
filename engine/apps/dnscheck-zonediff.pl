@@ -35,30 +35,46 @@ sub get_changed_domains {
     my @flagdomains;
     @flagdomains = @{ $conf->{flagdomain} } if defined($conf->{flagdomain});
     my $current = "";
-    my @acc     = ();
+    my %acc     = ();
     my $name;
-    my @changed;
+    my %changed;
     my $debug = 1;
 
     $res->axfr_start($conf->{domain}, 'IN') or die;
 
     while (my $rr = $res->axfr_next) {
-        next unless ($rr->type eq 'NS' or $rr->type eq 'DS');
+        if ($rr->type eq 'NS' or $rr->type eq 'DS') {
 
-        $name = $rr->name;
+            $name = $rr->name;
 
-        if ($name eq $current) {
-            push @acc, $rr->string;
-        } elsif ($current eq "") {
-            $current = $name;
+            if ($name eq $current) {
+                push @{ $acc{ $rr->type } }, $rr->string;
+            } elsif ($current eq "") {
+                $current   = $name;
+                $acc{'NS'} = [];
+                $acc{'DS'} = [];
+                $acc{'A'}  = [];
+                push @{ $acc{ $rr->type } }, $rr->string;
+            } else {
+                $new{$current}{'NS'} = md5_base64(sort(@{ $acc{'NS'} }));
+                $new{$current}{'DS'} = md5_base64(sort(@{ $acc{'DS'} }));
+                $new{$current}{'A'}  = md5_base64(sort(@{ $acc{'A'} }));
+
+                $current   = $name;
+                $acc{'NS'} = [];
+                $acc{'DS'} = [];
+                $acc{'A'}  = [];
+                push @{ $acc{ $rr->type } }, $rr->string;
+            }
+        } elsif ($rr->type eq 'A') {
+            push @{ $acc{'A'} }, $rr->string;
         } else {
-            $new{$current} = md5_base64(sort(@acc));
-            @acc = ();
-
-            $current = $name;
+            next;
         }
     }
-    $new{$name} = md5_base64(sort(@acc));
+    $new{$current}{'NS'} = md5_base64(sort(@{ $acc{'NS'} }));
+    $new{$current}{'DS'} = md5_base64(sort(@{ $acc{'DS'} }));
+    $new{$current}{'A'}  = md5_base64(sort(@{ $acc{'A'} }));
 
     if (@flagdomains
         and !(scalar(grep { $new{$_} } @flagdomains) == scalar(@flagdomains)))
@@ -70,8 +86,10 @@ sub get_changed_domains {
 
     if (open my $oldfile, '<', $filename) {
         while (defined(my $line = <$oldfile>)) {
-            my ($domain, $hash) = split(/\s+/, $line);
-            $old{$domain} = $hash;
+            my ($domain, $ns_hash, $ds_hash, $a_hash) = split(/\s+/, $line);
+            $old{$domain}{'NS'} = $ns_hash;
+            $old{$domain}{'DS'} = $ds_hash;
+            $old{$domain}{'A'}  = $a_hash;
         }
         close $oldfile;
     }
@@ -80,13 +98,26 @@ sub get_changed_domains {
       or die "Failed open save file: $!";
 
     while (my ($domain, $hash) = each %new) {
-        if (!defined($old{$domain}) or ($hash ne $old{$domain})) {
-            push @changed, $domain;
+        if (!defined($old{$domain})) {
+            $changed{$domain} = 'NEW';
+        } else {
+            my $o = $old{$domain};
+
+            next
+              if (  $o->{NS} eq $hash->{NS}
+                and $o->{DS} eq $hash->{DS}
+                and $o->{A}  eq $hash->{A});
+            $changed{$domain} = '';
+            $changed{$domain} .= 'NS ' if $o->{NS} ne $hash->{NS};
+            $changed{$domain} .= 'DS ' if $o->{DS} ne $hash->{DS};
+            $changed{$domain} .= 'A '  if $o->{A}  ne $hash->{A};
         }
-        print $newfile "$domain\t$hash\n";
+
+        printf $newfile "%s\t%s\t%s\t%s\n", $domain, $hash->{'NS'},
+          $hash->{'DS'}, $hash->{'A'};
     }
 
-    return @changed;
+    return %changed;
 }
 
 sub get_source_id {
@@ -104,13 +135,16 @@ sub get_source_id {
 my $dc        = DNSCheck->new;
 my $source_id = get_source_id($dc);
 my $sth       = $dc->dbh->prepare(
-    q[INSERT INTO queue (priority,domain,source_id) VALUES (?,?,?)]);
+q[INSERT INTO queue (priority,domain,source_id,source_data) VALUES (?,?,?,?)]
+);
 my $rndc = $dc->config->get("zonediff")->{rndcbin};
 
 system($rndc, 'flush') if (defined($rndc) && -x $rndc);
 
-foreach my $domain (get_changed_domains($dc->config->get("zonediff"))) {
-    $sth->execute(3, $domain, $source_id);
+my %changed = get_changed_domains($dc->config->get("zonediff"));
+
+foreach my $domain (keys %changed) {
+    $sth->execute(3, $domain, $source_id, $changed{$domain});
 }
 
 =head1 NAME
