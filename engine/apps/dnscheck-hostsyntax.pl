@@ -1,0 +1,28 @@
+#!/usr/bin/perl -l
+
+use DNSCheck;
+
+my $dc  = DNSCheck->new;
+
+if ($dc->host->host_syntax($ARGV[0]) == 0) {
+    print "TRUE";
+} else {
+    print "FALSE";
+}
+
+=head1 NAME
+
+dnscheck-hostsyntax - check if a name is syntactically correct for DNS
+
+=head1 DESCRIPTION
+
+The dnscheck-hostsyntax script takes a string as a command line argument and
+checks if it's a syntactically correct hostname according to
+L<DNSCheck::Test::Host::host_syntax>.
+
+There are no options. The script will print the string TRUE to standard output
+if it thinks the name is correct, and the string FALSE otherwise.
+
+=head1 EXAMPLE
+
+    dnscheck-hostsyntax iis.se
