@@ -98,6 +98,9 @@ sub get_changed_domains {
       or die "Failed open save file: $!";
 
     while (my ($domain, $hash) = each %new) {
+        printf $newfile "%s\t%s\t%s\t%s\n", $domain, $hash->{'NS'},
+          $hash->{'DS'}, $hash->{'A'};
+
         if (!defined($old{$domain})) {
             $changed{$domain} = 'NEW';
         } else {
@@ -112,9 +115,6 @@ sub get_changed_domains {
             $changed{$domain} .= 'DS ' if $o->{DS} ne $hash->{DS};
             $changed{$domain} .= 'A '  if $o->{A}  ne $hash->{A};
         }
-
-        printf $newfile "%s\t%s\t%s\t%s\n", $domain, $hash->{'NS'},
-          $hash->{'DS'}, $hash->{'A'};
     }
 
     return %changed;
