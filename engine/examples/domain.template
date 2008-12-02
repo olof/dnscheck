@@ -1,4 +1,4 @@
-Domain {$name}:
+Domain {$name} ({$change} records changed):
     {
         foreach(sort keys %result){
             $OUT .= $result{$_}{formatted};

@@ -50,18 +50,20 @@ my $registrartemplate;
 sub setup {
     $dc = DNSCheck->new({ locale => "en" });
     $reggie = get_reggie_dbh($dc->config->get("reggie"));
-    
+
     my $source_name = $dc->config->get("12hour")->{sourcestring};
     ($source_id) =
       $dc->dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?],
         undef, $source_name);
     die "No source information in database.\n" unless defined($source_id);
-    
+
     $templatedir = $dc->config->get("12hour")->{templatedir};
-    $domaintemplate = Text::Template->new(SOURCE => catfile($templatedir,'domain.template'))   
-        or die "Failed to construct domain template: $Text::Template::ERROR";
-    $registrartemplate = Text::Template->new(SOURCE => catfile($templatedir, 'registrar.template'))
-        or die "Failed to construct registrar tempalte: $Text::Template::ERROR";
+    $domaintemplate =
+      Text::Template->new(SOURCE => catfile($templatedir, 'domain.template'))
+      or die "Failed to construct domain template: $Text::Template::ERROR";
+    $registrartemplate =
+      Text::Template->new(SOURCE => catfile($templatedir, 'registrar.template'))
+      or die "Failed to construct registrar tempalte: $Text::Template::ERROR";
 }
 
 sub tests_for_domain {
@@ -76,12 +78,14 @@ sub tests_for_domain {
         WHERE test_id = ? AND (level = 'ERROR' OR level = 'CRITICAL')
         ], 'id', undef, $tref->{id}
     );
-    
+
     foreach my $t (keys %$rref) {
-        $rref->{$t}{formatted} = $locale->expand(
-            grep {$_} @{$rref->{$t}}{qw(message arg0 arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9)})
+        $rref->{$t}{formatted} =
+          $locale->expand(grep { $_ }
+              @{ $rref->{$t} }
+              {qw(message arg0 arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9)});
     }
-    
+
     return $rref;
 }
 
@@ -91,22 +95,27 @@ sub generate_mail_for_registrar {
     my @domains;
 
     foreach my $d (keys %{ $ref->{domains} }) {
-        push @domains, [$d,tests_for_domain($ref->{domains}{$d})];
+        push @domains,
+          [
+            $d,
+            tests_for_domain($ref->{domains}{$d}),
+            $ref->{domains}{$d}{source_data}
+          ];
     }
 
-    @domains = sort {$a->[0] cmp $b->[0]} @domains;
-    
+    @domains = sort { $a->[0] cmp $b->[0] } @domains;
+
     my $msg = MIME::Lite->new(
         From    => $dc->config->get("12hour")->{from},
         To      => $ref->{mail},
         Subject => $dc->config->get("12hour")->{subject},
         Data    => $registrartemplate->fill_in(
-                HASH => {
-                    name => $name,
-                    domains => \@domains,
-                    domaintemplate => \$domaintemplate,
-                }
-            ),
+            HASH => {
+                name           => $name,
+                domains        => \@domains,
+                domaintemplate => \$domaintemplate,
+            }
+        ),
     );
     $msg->attr('content-type.charset' => 'UTF-8');
 
