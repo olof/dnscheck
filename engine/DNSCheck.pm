@@ -71,7 +71,7 @@ sub new {
     } else {
         $self->{config} = DNSCheck::Config->new(%{$config_args});
     }
-    $self->{faked} = {};
+    $self->{faked} = [];
 
     return $self;
 }
@@ -96,6 +96,7 @@ sub flush {
     $self->{test_dnssec}       = undef;
     $self->{test_mail}         = undef;
     $self->{test_smtp}         = undef;
+    $self->{faked}             = [];
 
     # should the ASN cache be flushed as well?
     #$self->{context}->{asn}->flush();
@@ -103,20 +104,42 @@ sub flush {
 
 ######################################################################
 
-sub add_fake_parent_data {
-    my $self = shift;
-    my $domain = shift;
+sub add_fake_glue {
+    my $self    = shift;
     my $ns_name = shift;
-    my $ns_ip = shift;
+    my $ns_ip   = shift;
+
+    unless (defined($ns_ip)) {
+        my @ip = $self->dns->find_addresses($ns_name,'IN');
+        if (@ip == 0) {
+            $self->logger->auto("FAKEGLUE:NO_ADDRESS");
+            return;
+        } else {
+            push @{$self->{faked}}, [$ns_name, $_] for @ip
+        }
+    } else {
+        push @{$self->{faked}}, [$ns_name, $ns_ip];
+    }
     
-    $self->{faked}{$domain}{$ns_name} = $ns_ip;
+    return 1;
 }
 
 sub undelegated_test {
-    my $self = shift;
-    my $domain = shift;
-    
-    return exists $self->{faked}{$domain};
+    my $self   = shift;
+
+    return scalar(@{$self->{faked}});
+}
+
+sub fake_glue_ips {
+    my $self   = shift;
+
+    return map {$_->[1]} @{ $self->{faked} };
+}
+
+sub fake_glue_names {
+    my $self   = shift;
+
+    return map {$_->[0]} @{ $self->{faked} };
 }
 
 ######################################################################

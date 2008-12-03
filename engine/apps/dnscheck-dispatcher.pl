@@ -194,9 +194,10 @@ sub dispatch {
     my $id;
     my $source;
     my $source_data;
+    my $fake_glue;
 
     if (scalar keys %running < $limit) {
-        ($domain, $id, $source, $source_data) = get_entry();
+        ($domain, $id, $source, $source_data, $fake_glue) = get_entry();
         slog 'debug', "Fetched $domain from database." if defined($domain);
     } else {
 
@@ -205,7 +206,7 @@ sub dispatch {
 
     if (defined($domain)) {
         unless (defined($problem{$domain}) and $problem{$domain} >= 5) {
-            process($domain, $id, $source, $source_data);
+            process($domain, $id, $source, $source_data, $fake_glue);
         } else {
             slog 'error',
 "Testing $domain caused repeated abnormal termination of children. Assuming bug. Exiting.";
@@ -221,12 +222,12 @@ sub dispatch {
 
 sub get_entry {
     my $dbh = $check->dbh;
-    my ($id, $domain, $source, $source_data);
+    my ($id, $domain, $source, $source_data, $fake_glue);
 
     eval {
         $dbh->begin_work;
-        ($id, $domain, $source, $source_data) = $dbh->selectrow_array(
-q[SELECT id, domain, source_id, source_data FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, id ASC LIMIT 1 FOR UPDATE]
+        ($id, $domain, $source, $source_data, $fake_glue) = $dbh->selectrow_array(
+q[SELECT id, domain, source_id, source_data, fake_parent_glue FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, id ASC LIMIT 1 FOR UPDATE]
         );
         slog 'debug', "Got $id, $domain from database."
           if (defined($domain) or defined($id));
@@ -254,7 +255,7 @@ q[SELECT id, domain, source_id, source_data FROM queue WHERE inprogress IS NULL 
         return undef;
     }
 
-    return ($domain, $id, $source, $source_data);
+    return ($domain, $id, $source, $source_data, $fake_glue);
 }
 
 sub process {
@@ -262,6 +263,7 @@ sub process {
     my $id          = shift;
     my $source      = shift;
     my $source_data = shift;
+    my $fake_glue   = shift;
 
     my $pid = fork;
 
@@ -269,7 +271,7 @@ sub process {
         $running{$pid} = $domain;
         slog 'debug', "Child process $pid has been started.";
     } elsif ($pid == 0) {    # Zero value, so child
-        running_in_child($domain, $id, $source, $source_data);
+        running_in_child($domain, $id, $source, $source_data, $fake_glue);
     } else {                 # Undefined value, so error
         die "Fork failed: $!";
     }
@@ -280,11 +282,21 @@ sub running_in_child {
     my $id          = shift;
     my $source      = shift;
     my $source_data = shift;
+    my $fake_glue   = shift;
 
     # Reuse the old configuration, but get new everything else.
     my $dc  = DNSCheck->new({ with_config_object => $check->config });
     my $dbh = $dc->dbh;
     my $log = $dc->logger;
+    
+    if (defined($fake_glue)) {
+        my @ns = split(/\s+/, $fake_glue);
+        foreach my $n (@ns) {
+            my ($name,$ip) = split(m|/|,$n);
+            $dc->add_fake_glue($domain, $name, $ip);
+        }
+    }
+    
 
    # On some OS:s (including Ubuntu Linux), this is visible in the process list.
     $0 = "dispatcher: testing $domain (queue id $id)";
@@ -313,13 +325,13 @@ q[INSERT INTO tests (domain,begin, source_id, source_data) VALUES (?,NOW(),?,?)]
     while (defined(my $e = $log->get_next_entry)) {
         next if ($e->{level} eq 'DEBUG');
         $line++;
-        my $time = strftime("%Y-%m-%d %H:%M:%S",localtime($e->{timestamp}));
+        my $time = strftime("%Y-%m-%d %H:%M:%S", localtime($e->{timestamp}));
         $sth->execute(
-            $test_id,               $line,           $e->{module_id},
-            $e->{parent_module_id}, $time,           $e->{level},
-            $e->{tag},              $e->{arg}[0],    $e->{arg}[1],
-            $e->{arg}[2],           $e->{arg}[3],    $e->{arg}[4],
-            $e->{arg}[5],           $e->{arg}[6],    $e->{arg}[7],
+            $test_id,               $line,        $e->{module_id},
+            $e->{parent_module_id}, $time,        $e->{level},
+            $e->{tag},              $e->{arg}[0], $e->{arg}[1],
+            $e->{arg}[2],           $e->{arg}[3], $e->{arg}[4],
+            $e->{arg}[5],           $e->{arg}[6], $e->{arg}[7],
             $e->{arg}[8],           $e->{arg}[9],
         );
     }

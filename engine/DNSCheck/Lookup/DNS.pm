@@ -106,12 +106,6 @@ sub DESTROY {
 
 ######################################################################
 
-sub nameservers_for_child {
-    my $self = shift;
-
-    $self->{fixed_child_nameservers} = [@_];
-}
-
 sub flush {
     my $self = shift;
 
@@ -142,6 +136,21 @@ sub resolver {
 ######################################################################
 
 sub query_resolver {
+  my $self   = shift;
+  my $qname  = shift;
+  my $qclass = shift;
+  my $qtype  = shift;
+
+  my $p = $self->query_resolver_real($qname,$qclass,$qtype);
+  
+  if ($self->parent->undelegated_test and (!defined($p) or $p->header->ancount == 0)) {
+    $p = $self->query_resolver_fake($qname,$qclass,$qtype)
+  }
+  
+  return $p;
+}
+
+sub query_resolver_real {
     my $self   = shift;
     my $qname  = shift;
     my $qclass = shift;
@@ -161,6 +170,38 @@ sub query_resolver {
     }
 
     my $packet = $self->{cache}{resolver}{$qname}{$qclass}{$qtype};
+
+    if ($packet) {
+        $self->logger->auto("DNS:RESOLVER_RESPONSE",
+            sprintf("%d answer(s)", $packet->header->ancount));
+    }
+
+    return $packet;
+}
+
+sub query_resolver_fake {
+    my $self   = shift;
+    my $qname  = shift;
+    my $qclass = shift;
+    my $qtype  = shift;
+
+    $self->logger->auto("DNS:QUERY_RESOLVER_FAKE", $qname, $qclass, $qtype);
+
+    my $res = $self->_setup_resolver;
+    $res->nameservers($self->parent->fake_glue_ips);
+
+    unless ($self->{cache}{fake}{$qname}{$qclass}{$qtype}) {
+        $self->{cache}{fake}{$qname}{$qclass}{$qtype} =
+          $res->send($qname, $qtype, $qclass);
+
+        if ($self->check_timeout($self->{resolver})) {
+            $self->logger->auto("DNS:RESOLVER_QUERY_TIMEOUT",
+                $qname, $qclass, $qtype);
+            return undef;
+        }
+    }
+
+    my $packet = $self->{cache}{fake}{$qname}{$qclass}{$qtype};
 
     if ($packet) {
         $self->logger->auto("DNS:RESOLVER_RESPONSE",
@@ -275,6 +316,7 @@ sub query_child_nocache {
     my $qclass = shift;
     my $qtype  = shift;
     my $flags  = shift;
+    my $parent = $self->parent;
 
     $self->logger->auto("DNS:QUERY_CHILD_NOCACHE",
         $zone, $qname, $qclass, $qtype);
@@ -285,8 +327,8 @@ sub query_child_nocache {
     # find child to query
     my @target = ();
 
-    if (defined($self->{fixed_child_nameservers})) {
-        @target = @{ $self->{fixed_child_nameservers} };
+    if ($parent->undelegated_test) {
+        @target = $parent->fake_glue_ips;
     } else {
         my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
         my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
@@ -555,6 +597,11 @@ sub get_nameservers_at_parent {
     my @ns;
 
     $self->logger->auto("DNS:GET_NS_AT_PARENT", $qname, $qclass);
+    
+    if ($self->parent->undelegated_test) {
+      $self->logger->auto("DNS:USING_FAKE_GLUE");
+      return $self->parent->fake_glue_names;
+    }
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
 
@@ -742,8 +789,13 @@ sub _find_soa {
     my $self   = shift;
     my $qname  = shift;
     my $qclass = shift;
+    my $answer;
 
-    my $answer = $self->{resolver}->send($qname, "SOA", $qclass);
+    if ($self->parent->undelegated_test) {
+        $answer = $self->query_child($qname, $qname, $qclass, 'SOA');
+    } else {
+        $answer = $self->{resolver}->send($qname, "SOA", $qclass);
+    }
 
     return $qname unless ($answer);
     return undef if ($answer->header->rcode eq "NXDOMAIN");
