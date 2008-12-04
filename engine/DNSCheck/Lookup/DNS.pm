@@ -136,18 +136,20 @@ sub resolver {
 ######################################################################
 
 sub query_resolver {
-  my $self   = shift;
-  my $qname  = shift;
-  my $qclass = shift;
-  my $qtype  = shift;
+    my $self   = shift;
+    my $qname  = shift;
+    my $qclass = shift;
+    my $qtype  = shift;
 
-  my $p = $self->query_resolver_real($qname,$qclass,$qtype);
-  
-  if ($self->parent->undelegated_test and (!defined($p) or $p->header->ancount == 0)) {
-    $p = $self->query_resolver_fake($qname,$qclass,$qtype)
-  }
-  
-  return $p;
+    my $p = $self->query_resolver_real($qname, $qclass, $qtype);
+
+    if ($self->parent->undelegated_test
+        and (!defined($p) or $p->header->ancount == 0))
+    {
+        $p = $self->query_resolver_fake($qname, $qclass, $qtype);
+    }
+
+    return $p;
 }
 
 sub query_resolver_real {
@@ -597,10 +599,10 @@ sub get_nameservers_at_parent {
     my @ns;
 
     $self->logger->auto("DNS:GET_NS_AT_PARENT", $qname, $qclass);
-    
+
     if ($self->parent->undelegated_test) {
-      $self->logger->auto("DNS:USING_FAKE_GLUE");
-      return $self->parent->fake_glue_names;
+        $self->logger->auto("DNS:USING_FAKE_GLUE");
+        return $self->parent->fake_glue_names;
     }
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");

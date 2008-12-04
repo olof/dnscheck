@@ -2,7 +2,7 @@
 
 use DNSCheck;
 
-my $dc  = DNSCheck->new;
+my $dc = DNSCheck->new;
 
 if ($dc->host->host_syntax($ARGV[0]) == 0) {
     print "TRUE";

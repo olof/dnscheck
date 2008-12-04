@@ -358,7 +358,7 @@ sub _dissect {
         }
     }
 
-    if ($#{ $response{$qtype} } < 0) {
+    if ($#{ $response{$qtype} } < 0) {    # FIXME: This must be a bug
         return undef;
     }
 

@@ -226,9 +226,10 @@ sub get_entry {
 
     eval {
         $dbh->begin_work;
-        ($id, $domain, $source, $source_data, $fake_glue) = $dbh->selectrow_array(
+        ($id, $domain, $source, $source_data, $fake_glue) =
+          $dbh->selectrow_array(
 q[SELECT id, domain, source_id, source_data, fake_parent_glue FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, id ASC LIMIT 1 FOR UPDATE]
-        );
+          );
         slog 'debug', "Got $id, $domain from database."
           if (defined($domain) or defined($id));
         $dbh->do(q[UPDATE queue SET inprogress = NOW() WHERE id = ?],
@@ -288,15 +289,14 @@ sub running_in_child {
     my $dc  = DNSCheck->new({ with_config_object => $check->config });
     my $dbh = $dc->dbh;
     my $log = $dc->logger;
-    
+
     if (defined($fake_glue)) {
         my @ns = split(/\s+/, $fake_glue);
         foreach my $n (@ns) {
-            my ($name,$ip) = split(m|/|,$n);
+            my ($name, $ip) = split(m|/|, $n);
             $dc->add_fake_glue($domain, $name, $ip);
         }
     }
-    
 
    # On some OS:s (including Ubuntu Linux), this is visible in the process list.
     $0 = "dispatcher: testing $domain (queue id $id)";

@@ -110,36 +110,36 @@ sub add_fake_glue {
     my $ns_ip   = shift;
 
     unless (defined($ns_ip)) {
-        my @ip = $self->dns->find_addresses($ns_name,'IN');
+        my @ip = $self->dns->find_addresses($ns_name, 'IN');
         if (@ip == 0) {
             $self->logger->auto("FAKEGLUE:NO_ADDRESS");
             return;
         } else {
-            push @{$self->{faked}}, [$ns_name, $_] for @ip
+            push @{ $self->{faked} }, [$ns_name, $_] for @ip;
         }
     } else {
-        push @{$self->{faked}}, [$ns_name, $ns_ip];
+        push @{ $self->{faked} }, [$ns_name, $ns_ip];
     }
-    
+
     return 1;
 }
 
 sub undelegated_test {
-    my $self   = shift;
+    my $self = shift;
 
-    return scalar(@{$self->{faked}});
+    return scalar(@{ $self->{faked} });
 }
 
 sub fake_glue_ips {
-    my $self   = shift;
+    my $self = shift;
 
-    return map {$_->[1]} @{ $self->{faked} };
+    return map { $_->[1] } @{ $self->{faked} };
 }
 
 sub fake_glue_names {
-    my $self   = shift;
+    my $self = shift;
 
-    return map {$_->[0]} @{ $self->{faked} };
+    return map { $_->[0] } @{ $self->{faked} };
 }
 
 ######################################################################
