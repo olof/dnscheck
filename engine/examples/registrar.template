@@ -4,12 +4,16 @@ the following {scalar @domains} domains for which you are the registrar
 currently have problems.
 
 {
-    if(@domains <= 12){
-        foreach(@domains){
-            $OUT .= $domaintemplate->fill_in(HASH => {name => $_->[0], result => $_->[1], change => $_->[2]})
-        }
-    } else {
-        $OUT .= join("\n", map {$_->[0]} @domains);
+    my $limit = 12;
+    $limit = @domains if @domains < 12;
+    my @first = @domains[0 .. $limit-1];
+    my @rest  = @domains[$limit .. $#domains];
+    foreach(@first){
+        $OUT .= $domaintemplate->fill_in(HASH => {name => $_->[0], result => $_->[1], change => $_->[2]})
+    }
+    if(@rest){
+        $OUT .= "\nThe following domains also had problems. See attachment for details.\n\n";
+        $OUT .= join("\n", map {$_->[0]} @rest);
         $OUT .= "\n\n";
     }
 }

@@ -38,7 +38,7 @@ use MIME::Lite;
 use Text::Template;
 use File::Spec::Functions;
 
-use Data::Dumper;
+use YAML;
 
 my $reggie;
 my $dc;
@@ -109,7 +109,11 @@ sub generate_mail_for_registrar {
         From    => $dc->config->get("12hour")->{from},
         To      => $ref->{mail},
         Subject => $dc->config->get("12hour")->{subject},
-        Data    => $registrartemplate->fill_in(
+        Type    => 'multipart/mixed',
+    );
+    $msg->attach(
+        Type => 'text/plain;charset=utf-8',
+        Data => $registrartemplate->fill_in(
             HASH => {
                 name           => $name,
                 domains        => \@domains,
@@ -117,9 +121,46 @@ sub generate_mail_for_registrar {
             }
         ),
     );
-    $msg->attr('content-type.charset' => 'UTF-8');
+    $msg->attach(
+        Type        => 'application/x-yaml',
+        Data        => produce_yaml($ref->{domains}, @domains),
+        Disposition => 'attachment',
+        Filename    => 'dnscheck_results.yaml',
+    );
 
     return $msg;
+}
+
+sub produce_yaml {
+    my %ref     = %{ shift(@_) };
+    my @domains = @_;
+
+    foreach my $d (@domains) {
+        my $n = $d->[0];
+        foreach (sort keys %{ $d->[1] }) {
+            my $t = $d->[1]{$_};
+            push @{ $ref{$n}{tests} },
+              {
+                message   => $t->{message},
+                timestamp => $t->{timestamp},
+                formatted => $t->{formatted},
+                level     => $t->{level},
+                args      => [
+                    grep { $_ } (
+                        $t->{arg0}, $t->{arg1}, $t->{arg2}, $t->{arg3},
+                        $t->{arg4}, $t->{arg5}, $t->{arg6}, $t->{arg7},
+                        $t->{arg8}, $t->{arg9}
+                    )
+                ],
+              };
+        }
+        delete $ref{$n}{id};
+        delete $ref{$n}{source_id};
+        $ref{$n}{changed_types} = $ref{$n}{source_data};
+        delete $ref{$n}{source_data};
+    }
+
+    return Dump(\%ref);
 }
 
 sub get_reggie_dbh {
