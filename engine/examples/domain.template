@@ -1,4 +1,5 @@
-Domain {$name} ({$change} records changed):
+Domain {$name} ({(grep {$_ eq 'NEW'} @change)?"new domain":join(", ",@change)." changed"}):
+{$error} errors and {$critical} critical problems.
     {
         foreach(sort keys %result){
             $OUT .= $result{$_}{formatted};

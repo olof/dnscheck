@@ -9,11 +9,19 @@ currently have problems.
     my @first = @domains[0 .. $limit-1];
     my @rest  = @domains[$limit .. $#domains];
     foreach(@first){
-        $OUT .= $domaintemplate->fill_in(HASH => {name => $_->[0], result => $_->[1], change => $_->[2]})
+        $OUT .= $domaintemplate->fill_in(HASH => {
+            name => $_->[0],
+            result => $_->[1],
+            change => $_->[2],
+            critical => $_->[3],
+            error => $_->[4],
+        })
     }
     if(@rest){
         $OUT .= "\nThe following domains also had problems. See attachment for details.\n\n";
-        $OUT .= join("\n", map {$_->[0]} @rest);
+        foreach(@rest){
+            $OUT .= sprintf("%s (%d error, %d critical)\n", @{$_}[0,4,3])
+        }
         $OUT .= "\n\n";
     }
 }
