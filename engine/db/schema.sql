@@ -113,6 +113,11 @@ CREATE TABLE IF NOT EXISTS `delegation_history` (
 -- tests adds its name and possible some contact information to this table,
 -- checks what id number it got and then uses that number when inserting
 -- into the queue table and selecting from the tests table.
+--
+-- The easiest way for a source to use this, is to do an INSERT IGNORE of a
+-- string unique for that source and then SELECT the id for that string.
+-- For most sources, this need only be done once on startup and then the
+-- numeric id can be used to insert into the queue or select from tests.
 
 CREATE TABLE IF NOT EXISTS `source` (
     `id` int(10) unsigned NOT NULL auto_increment,
