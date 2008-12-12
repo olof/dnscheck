@@ -31,10 +31,10 @@ WriteMakefile(
         DBI                    => 0,
     },
     'EXE_FILES' => ['apps/dnscheck', 'apps/dnscheck-preflight', 'apps/dnscheck-dispatcher',
-                    'apps/dnscheck-zonediff', 'apps/dnscheck-12hourmailer'],
+                    'apps/dnscheck-zonediff', 'apps/dnscheck-12hourmailer', 'apps/dnscheck-hostsyntax'],
     'NO_META'   => 1,
     'SIGN'      => 0,
-    clean       => { FILES => "*~ apps/dnscheck apps/dnscheck-preflight apps/dnscheck-dispatcher apps/dnscheck-zonediff apps/dnscheck-12hourmailer" },
+    clean       => { FILES => "*~ apps/dnscheck apps/dnscheck-preflight apps/dnscheck-dispatcher apps/dnscheck-zonediff apps/dnscheck-12hourmailer apps/dnscheck-hostsyntax" },
 );
 
 sub MY::install {
