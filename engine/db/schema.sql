@@ -13,6 +13,15 @@ CREATE TABLE IF NOT EXISTS `messages` (
   UNIQUE KEY `langtag` (`tag`,`language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- source_id should reference an entry in the source table.
+-- source_data is some piece of data private to a particular source.
+-- It will be copied to the tests table by the dispatcher.
+-- fake_parent_glue gives necessary data to run tests on undelegated
+-- domains. The content of the field must be nameserver specifikations
+-- separated by spaces. Each nameserver is either simply a name, which
+-- will be looked up in DNS as usual, or a name, a slash and an IP
+-- address. Example: "ns.example.com ns2.example.com/127.0.0.2"
+
 CREATE TABLE IF NOT EXISTS `queue` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `domain` varchar(255) default NULL,
@@ -98,6 +107,12 @@ CREATE TABLE IF NOT EXISTS `delegation_history` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY (`domain`,`nameserver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
+
+-- Source is supposed to be a list of all sources requesting tests.
+-- The recommended procedure is that a program that wants to add
+-- tests adds its name and possible some contact information to this table,
+-- checks what id number it got and then uses that number when inserting
+-- into the queue table and selecting from the tests table.
 
 CREATE TABLE IF NOT EXISTS `source` (
     `id` int(10) unsigned NOT NULL auto_increment,
