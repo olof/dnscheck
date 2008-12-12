@@ -1,7 +1,6 @@
 apps/dnscheck-12hourmailer.pl
 apps/dnscheck-dispatcher.pl
 apps/dnscheck-preflight.pl
-apps/dnscheck-qrun.pl
 apps/dnscheck-zonediff.pl
 apps/dnscheck.pl
 build/preprocessor.pl
@@ -13,7 +12,6 @@ dnscheck.conf
 DNSCheck.pm
 DNSCheck/Config.pm
 DNSCheck/Context.pm
-DNSCheck/Engine.pm
 DNSCheck/Locale.pm
 DNSCheck/Logger.pm
 DNSCheck/Lookup/ASN.pm
