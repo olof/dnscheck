@@ -1195,11 +1195,20 @@ Helper functions for looking up information in the DNS (Domain Name System).
 
 =over
 
-=item new(I<logger>);
+=item new($parent);
+
+Create a new lookup object. Not recommended to use, create a L<DNSCheck>
+object and call the L<DNSCheck::dns> method instead.
 
 =item flush();
 
+Empty the cache and clear the blacklist.
+
 =item my $packet = $dns->query_resolver(I<qname>, I<qclass>, I<qtype>);
+
+Send a query to the default resolver(s). This will be whatever reslver the
+operating system usually uses (that is, what's in L<resolv.conf> on a Unix
+machine).
 
 =item my $packet = $dns->query_parent(I<zone>, I<qname>, I<qclass>, I<qtype>);
 
