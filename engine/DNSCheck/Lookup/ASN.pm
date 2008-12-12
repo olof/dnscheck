@@ -36,6 +36,7 @@ use strict;
 
 use Data::Dumper;
 use Net::DNS;
+use Net::IP;
 
 ######################################################################
 
@@ -133,6 +134,42 @@ sub _asn_helper {
     return \@asn_list;
 }
 
+sub lookup6 {
+    my $self   = shift;
+    my $raw_ip = shift;
+
+    unless ($self->{asn}{$raw_ip}) {
+        $self->{asn}{$raw_ip} = $self->_lookup6($raw_ip);
+    }
+
+    return $self->{asn}{$raw_ip};
+}
+
+sub _lookup6 {
+    my $self   = shift;
+    my $raw_ip = shift;
+
+    my $ip = Net::IP->new($raw_ip);
+    return unless defined($ip);
+
+    my $rev = $ip->reverse_ip;
+    $rev =~ s/ip6\.arpa/origin6.asn.cymru.com/;
+    my $packet = $self->parent->dns->query_resolver($rev, 'IN', 'TXT');
+    return unless (defined($packet) and $packet->header->ancount > 0);
+
+    my @asn;
+    foreach my $rr ($packet->answer) {
+        next unless $rr->type eq 'TXT';
+        foreach my $txt ($rr->char_str_list) {
+            if ($txt =~ /^(\d+)\s*\|/) {
+                push @asn, $1;
+            }
+        }
+    }
+
+    return \@asn;
+}
+
 1;
 
 __END__
@@ -157,20 +194,14 @@ my $n = $asn->lookup(I<address>);
 
 =head1 EXAMPLES
 
-    use DNSCheck::Logger;
-    use DNSCheck::Lookup::DNS;
-    use DNSCheck::Lookup::ASN;
+    use DNSCheck;
 
-    my $logger = new DNSCheck::Logger;
-    my $dns    = new DNSCheck::Lookup::DNS($logger);
-    my $asn    = new DNSCheck::Lookup::ASN($logger, $dns);
+    my $asn    = DNSCheck->new->asn;
 
     $asn->lookup("64.233.183.99");
 
-    $logger->dump();
-
 =head1 SEE ALSO
 
-L<DNSCheck::Logger>, L<DNSCheck::Lookup::DNS>
+L<DNSCheck>
 
 =cut
