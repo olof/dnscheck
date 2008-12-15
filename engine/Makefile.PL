@@ -2,6 +2,9 @@
 
 use ExtUtils::MakeMaker;
 
+my @exefiles = ('apps/dnscheck', 'apps/dnscheck-preflight', 'apps/dnscheck-dispatcher',
+                'apps/dnscheck-zonediff', 'apps/dnscheck-12hourmailer', 'apps/dnscheck-hostsyntax');
+
 WriteMakefile(
     'NAME'         => 'DNSCheck',
     'AUTHOR'       => '.SE (The Internet Infrastructure Foundation) <dnscheck@iis.se>',
@@ -30,8 +33,7 @@ WriteMakefile(
         YAML                   => 0,
         DBI                    => 0,
     },
-    'EXE_FILES' => ['apps/dnscheck', 'apps/dnscheck-preflight', 'apps/dnscheck-dispatcher',
-                    'apps/dnscheck-zonediff', 'apps/dnscheck-12hourmailer', 'apps/dnscheck-hostsyntax'],
+    'EXE_FILES' => \@exefiles,
     'NO_META'   => 1,
     'SIGN'      => 0,
     clean       => { FILES => "*~ apps/dnscheck apps/dnscheck-preflight apps/dnscheck-dispatcher apps/dnscheck-zonediff apps/dnscheck-12hourmailer apps/dnscheck-hostsyntax" },
@@ -54,7 +56,7 @@ sub MY::postamble {
 
     my $instprefix = $self->{PREFIX};
 
-    return qq#
+    my $tmp = qq#
 
 CONFIG_DIR = $instprefix/share/dnscheck
 POLICY_DIR = $instprefix/share/dnscheck
@@ -68,14 +70,21 @@ FIXVARS = \
 	-DPOLICY_DIR="$(POLICY_DIR)" \
 	-DLOCALE_DIR="$(LOCALE_DIR)"
 
-apps/%: apps/%.pl
-	$(PERL) build/preprocessor.pl $(FIXVARS) -Msharpbang <$? >$@
-
 install_locale:
 	install -d ${DESTDIR}/${POLICY_DIR}
 	install -m 444 policy.yaml ${DESTDIR}/${POLICY_DIR}
 	install -m 444 config.yaml ${DESTDIR}/${CONFIG_DIR}
 	install -d ${DESTDIR}/${LOCALE_DIR}
 	install -m 444 locale/*.yaml ${DESTDIR}/${LOCALE_DIR}
-#
+#;
+
+    foreach my $f (@exefiles) {
+        $tmp .= qq[
+$f: $f.pl
+	\$(PERL) build/preprocessor.pl \$(FIXVARS) -Msharpbang <\$? >\$@
+
+        ]
+    }
+    
+    return $tmp;
 }
