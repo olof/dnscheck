@@ -602,7 +602,7 @@ sub get_nameservers_at_parent {
 
     if ($self->parent->undelegated_test) {
         $self->logger->auto("DNS:USING_FAKE_GLUE");
-        return $self->parent->fake_glue_names;
+        push @ns, $self->parent->fake_glue_names;
     }
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
@@ -634,6 +634,11 @@ sub get_nameservers_at_child {
     my @ns;
 
     $self->logger->auto("DNS:GET_NS_AT_CHILD", $qname, $qclass);
+
+    if ($self->parent->undelegated_test) {
+        $self->logger->auto("DNS:USING_FAKE_GLUE");
+        push @ns, $self->parent->fake_glue_names;
+    }
 
     my $packet = $self->query_child($qname, $qname, $qclass, "NS");
 
