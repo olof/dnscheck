@@ -725,6 +725,28 @@ sub _init_nameservers_helper {
     $self->logger->auto("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
 }
 
+sub prep_fake_glue {
+    my $self = shift;
+    my $zone = shift;
+
+    unless ($self->{nameservers}{$zone} and $self->{nameservers}{$zone}{'IN'}) {
+        $self->{nameservers}{$zone}{'IN'} = {};
+    }
+
+    my $cache = $self->{nameservers}{$zone}{'IN'};
+    push @{ $cache->{'ns'} }, $self->parent->fake_glue_names;
+    foreach my $ip ($self->parent->fake_glue_ips) {
+        my $i = Net::IP->new($ip);
+        if (!defined($i)) {
+            $self->parent->logger->auto("DNS:MALFORMED_FAKE_IP ($ip)");
+        } elsif ($i->version == 4) {
+            push @{ $cache->{'ipv4'} }, $ip;
+        } else {
+            push @{ $cache->{'ipv6'} }, $ip;
+        }
+    }
+}
+
 ######################################################################
 
 sub find_parent {

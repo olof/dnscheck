@@ -15,8 +15,9 @@ my $check = new DNSCheck({ interactive => 1 });
 # die "usage: $0 zone ns1-name ns1-ip ns2-name ns2-ip ..." unless (@ARGV > 1);
 
 # Cheat to save typing
-@ARGV = qw[undelegated.nl ns1.undelegated.nl 62.163.82.28 ns2.undelegated.nl 207.210.112.222]
- unless @ARGV>0;
+@ARGV =
+  qw[undelegated.nl ns1.undelegated.nl 62.163.82.28 ns1.undelegated.nl 2001:470:1f06:1d1::2 ns2.undelegated.nl 207.210.112.222]
+  unless @ARGV > 0;
 
 my $domain = shift(@ARGV);
 while (@ARGV) {

@@ -99,7 +99,7 @@ sub generate_mail_for_registrar {
           [
             $d,
             tests_for_domain($ref->{domains}{$d}),
-            [split(/\s+/,$ref->{domains}{$d}{source_data})],
+            [split(/\s+/, $ref->{domains}{$d}{source_data})],
             $ref->{domains}{$d}{count_critical},
             $ref->{domains}{$d}{count_error},
           ];
