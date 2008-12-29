@@ -142,6 +142,12 @@ sub fake_glue_names {
     return map { $_->[0] } @{ $self->{faked} };
 }
 
+sub fake_glue_data {
+    my $self = shift;
+
+    return @{ $self->{faked} };
+}
+
 ######################################################################
 
 sub logger {
