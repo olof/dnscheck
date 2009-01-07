@@ -228,7 +228,7 @@ sub get_entry {
         $dbh->begin_work;
         ($id, $domain, $source, $source_data, $fake_glue) =
           $dbh->selectrow_array(
-q[SELECT id, domain, source_id, source_data, fake_parent_glue FROM queue WHERE inprogress IS NULL ORDER BY priority DESC, id ASC LIMIT 1 FOR UPDATE]
+q[SELECT id, domain, source_id, source_data, fake_parent_glue FROM queue WHERE inprogress IS NULL AND priority = (SELECT MAX(priority) FROM queue) ORDER BY id ASC LIMIT 1 FOR UPDATE]
           );
         slog 'debug', "Got $id, $domain from database."
           if (defined($domain) or defined($id));
