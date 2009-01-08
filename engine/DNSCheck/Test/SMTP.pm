@@ -38,6 +38,17 @@ use base 'DNSCheck::Test::Common';
 
 use Net::SMTP 2.29;
 
+use IO::Socket::INET;
+use IO::Socket::INET6;
+
+BEGIN {
+
+    # Vile hack to make Net::SMTP work with IPv6.
+    # Hopefully, at some point in the future Perl itself will be upgraded to
+    # handle IPv6 and we can take this abomination out.
+    $::{'IO::'}{'Socket::'}{'INET::'} = $::{'IO::'}{'Socket::'}{'INET6::'};
+}
+
 ######################################################################
 
 sub test {
