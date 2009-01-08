@@ -298,6 +298,10 @@ sub _check_parent {
         if ($rr->algorithm == Net::DNS::SEC->algorithm("RSASHA1")) {
             $mandatory_algorithm++;
         }
+        
+        if ($rr->algorithm == Net::DNS::SEC->algorithm("RSAMD5")) {
+            $logger->auto("DNSSEC:DS_ALGORITHM_MD5")
+        }
 
         # REQUIRE: the DS MUST point to a DNSKEY that is
         # signing the child's DNSKEY RRset
