@@ -253,6 +253,15 @@ q[SELECT id, domain, source_id, source_data, fake_parent_glue FROM queue WHERE i
                 undef, $id);
         }
 
+        if ($err =~ m|Already in a transaction|) {
+            slog 'critical',
+              'Serious problem. Sleeping, then trying to restart.';
+            $running = 0;
+            $restart = 1;
+            sleep(15);
+            return;
+        }
+
         return undef;
     }
 
