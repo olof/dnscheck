@@ -20,7 +20,7 @@ How to install the DNSCheck perl library and associated scripts
    you need to set up access information for a MySQL database. Copy the
    appropriate part from config.yaml to site_config.yaml and modify to
    match your database setup. The database you point out should be freshly
-   loaded with the contents of db/schema.sql.
+   loaded with the contents of db/schema.sql and db/index.sql.
    
    
    

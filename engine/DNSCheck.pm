@@ -139,7 +139,8 @@ sub fake_glue_ips {
 sub fake_glue_names {
     my $self = shift;
 
-    return map { $_->[0] } @{ $self->{faked} };
+    my %tmp = map { $_->[0], $_->[1] } @{ $self->{faked} };
+    return keys %tmp;
 }
 
 sub fake_glue_data {
