@@ -34,35 +34,34 @@ use strict;
 
 use Getopt::Long;
 use Pod::Usage;
-use YAML qw(LoadFile Dump);
-use Data::Dumper;
 use DNSCheck;
-
-use vars qw[$CONFIG_DIR $POLICY_DIR $LOCALE_DIR];
-
-$CONFIG_DIR = '@@CONFIG_DIR@@';
-$POLICY_DIR = '@@POLICY_DIR@@';
-$LOCALE_DIR = '@@LOCALE_DIR@@';
 
 ######################################################################
 
 sub main {
-    my $help    = 0;
-    my $debug   = 0;
-    my $timeout = 5;
-    my $raw     = 0;
+    my $help  = 0;
+    my $debug = 0;
+    my $raw   = 0;
 
-    my $config_file = $CONFIG_DIR . "/config.yaml";
-    my $policy_file = $POLICY_DIR . "/policy.yaml";
-    my $locale      = 'en';
+    my $locale = 'en';
+    my (
+        $configdir,  $sitedir,        $configfile, $siteconfigfile,
+        $policyfile, $sitepolicyfile, $localefile, @nameservers
+    );
 
     GetOptions(
-        'help|?'   => \$help,
-        'raw'      => \$raw,
-        'debug+'   => \$debug,
-        'config=s' => \$config_file,
-        'policy=s' => \$policy_file,
-        'locale=s' => \$locale,
+        'help|?'           => \$help,
+        'raw'              => \$raw,
+        'debug+'           => \$debug,
+        'configdir=s'      => \$configdir,
+        'sitedir=s'        => \$sitedir,
+        'configfile=s'     => \$configfile,
+        'siteconfigfile'   => \$siteconfigfile,
+        'policyfile=s'     => \$policyfile,
+        'sitepolicyfile=s' => \$sitepolicyfile,
+        'localefile=s'     => \$localefile,
+        'locale=s'         => \$locale,
+        'nameserver=s'     => \@nameservers,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -76,14 +75,27 @@ sub main {
     $extras->{logging}->{interactive} = 1;
     $extras->{debug} = $debug;
 
-    my $check = new DNSCheck(
-        {
-            configfile => $config_file,
-            policyfile => $policy_file,
-            extras     => $extras,
-            locale     => ($raw ? undef : $locale),
+    my $conf = {};
+    $conf->{configdir}      = $configdir      if $configdir;
+    $conf->{sitedir}        = $sitedir        if $sitedir;
+    $conf->{configfile}     = $configfile     if $configfile;
+    $conf->{siteconfigfile} = $siteconfigfile if $siteconfigfile;
+    $conf->{policyfile}     = $policyfile     if $policyfile;
+    $conf->{sitepolicyfile} = $sitepolicyfile if $sitepolicyfile;
+    $conf->{localefile}     = $localefile     if $localefile;
+    $conf->{locale} = ($raw ? undef : $locale);
+    $conf->{extras} = $extras;
+
+    my $check = new DNSCheck($conf);
+
+    foreach my $ns (@nameservers) {
+        my ($name, $ip) = split(m|/|, $ns);
+        if ($ip) {
+            $check->add_fake_glue($name, $ip);
+        } else {
+            $check->add_fake_glue($name);
         }
-    );
+    }
 
     $check->zone->test($zone);
 }
@@ -105,6 +117,23 @@ Options:
  --help                brief help message
  --debug               enable debugging. use twice for dns packet dump.
  --raw                 raw log output, suitable for automatic processing
- --config              specify a configuration file
- --policy              specify a policy file
- --locale              specify a locale
+ --configdir           directory to look for config files in
+ --sitedir             directory to look for site-specific config in
+ --configfile          specify a configuration file
+ --siteconfigfile      specify a file to read site config from
+ --policyfile          specify a policy file
+ --sitepolicyfile      specify a file to read site-specific policy from
+ --localefile          specify a file to read locale from
+ --locale              specify a locale to be used
+ --nameserver          specify glue data as the name of a nameserver, or as
+                       a name followed by a slash and its IP address. This
+                       option can be given several times to specify multiple
+                       servers or multiple IP addresses for the same name.
+
+ More specific options override less specific ones. If you, for example, give
+ both C<--configdir> and C<--sitepolicyfile> all config will be read from files
+ in the directory given in the first option, except for site-specific policy
+ changes which will be read from the given file.
+
+ The locales available for use with the C<--locale> switch at the time being
+ are sv and en. en is the default.
