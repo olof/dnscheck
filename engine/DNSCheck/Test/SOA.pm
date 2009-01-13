@@ -43,7 +43,6 @@ use Net::IP 1.25 qw(ip_get_version);
 sub test {
     my $self        = shift;
     my $zone        = shift;
-    my $undelegated = shift;
 
     my $logger = $self->parent->logger;
 
@@ -58,7 +57,7 @@ sub test {
     }
 
     if (defined($soa)) {
-        $errors += $self->test_soa_mname($soa, $zone, $undelegated);
+        $errors += $self->test_soa_mname($soa, $zone);
         $errors += $self->test_soa_rname($soa, $zone);
         $errors += $self->test_soa_values($soa, $zone);
     }
@@ -67,13 +66,6 @@ sub test {
     $logger->module_stack_pop();
 
     return $errors;
-}
-
-sub test_undelegated {
-    my $self = shift;
-    my $zone = shift;
-
-    $self->test($zone, 1);
 }
 
 ################################################################
@@ -129,7 +121,6 @@ sub test_soa_mname {
     my $self        = shift;
     my $soa         = shift;
     my $zone        = shift;
-    my $undelegated = shift;
 
     my $parent = $self->parent;
     my $logger = $self->logger;
@@ -144,11 +135,7 @@ sub test_soa_mname {
     }
 
     my $packet;
-    unless ($undelegated) {
-        $packet = $parent->dns->query_resolver($zone, $self->qclass, "NS");
-    } else {
-        $packet = $parent->dns->query_child($zone, $zone, $self->qclass, "NS");
-    }
+    $packet = $parent->dns->query_resolver($zone, $self->qclass, "NS");
 
     unless ($packet && $packet->header->ancount) {
         $errors += $logger->auto("SOA:NS_NOT_FOUND", $zone);
@@ -372,20 +359,13 @@ SOA 'minimum' should be less than 1 day.
 
 Runs all the tests specified above.
 
-=item ->test_undelegated($zonename)
-
-Exactly the same as C<test()>, except that C<test_soa_mname()> will be run
-with the C<$undelegated> flag set.
-
 =item ->test_soa_existence($zonename)
 
 Tests that one and only one SOA record exists.
 
-=item ->test_soa_mname($soapacket, $zonename, [$undelegated])
+=item ->test_soa_mname($soapacket, $zonename)
 
-Runs the MNAME-related tests. If the C<$undelegated> flag is true, the NS list
-that the MNAME is compared against will be fethed directly from the child
-nameservers instead of from the global tree.
+Runs the MNAME-related tests.
 
 C<$soapacket> must be a L<Net::DNS::RR::SOA> object suitably filled in.
 

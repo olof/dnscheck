@@ -87,47 +87,6 @@ sub test {
     return $errors;
 }
 
-sub test_undelegated {
-    my $self        = shift;
-    my $zone        = shift;
-    my @nameservers = @_;
-
-    my $parent = $self->parent;
-    my $qclass = $self->qclass;
-    my $logger = $parent->logger;
-
-    my $errors = 0;
-
-    $logger->logname($zone);
-
-    $logger->module_stack_push();
-    $logger->auto("ZONE:BEGIN", $zone);
-
-    $parent->dns->nameservers_for_child(@nameservers);
-
-    unless ($nameservers[0]) {
-
-        # Slightly silly, since this is really a calling error
-        $logger->auto("ZONE:FATAL_NO_CHILD_NS", $zone);
-        goto DONE;
-    }
-
-    foreach my $ns (@nameservers) {
-        $errors += $parent->nameserver->test_by_ip($zone, $ns);
-    }
-
-    $errors += $parent->soa->test_undelegated($zone);
-    $errors += $parent->connectivity->test($zone);
-
-  DONE:
-
-    $parent->dns->nameservers_for_child(undef);
-    $logger->auto("ZONE:END", $zone);
-    $logger->module_stack_pop();
-
-    return $errors;
-}
-
 1;
 
 __END__
@@ -156,13 +115,6 @@ This method is not meant to be used directly. Use L<DNSCheck::zone> instead.
 Run the standard set of tests on the given domain, possibly also giving a
 reference to an array with the names of nameservers that used to be
 authoritative for the zone.
-
-=item ->test_undelegated(I<$zone>, I<@ip_addresses>)
-
-Run as many tests as make sense for the given zone on the specified
-nameserver(s). Be careful when interpreting the results os these tests, and
-some things reported as problems may not be after a zone is linked in with the
-rest of the DNS world.
 
 =back
 
