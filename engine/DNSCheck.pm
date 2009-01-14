@@ -37,7 +37,6 @@ use strict;
 use DBI;
 use Carp;
 
-use DNSCheck::Context;
 use DNSCheck::Config;
 use DNSCheck::Test::Common;
 use DNSCheck::Test::Host;
@@ -193,19 +192,6 @@ sub locale {
         $self->{locale} = DNSCheck::Locale->new($self->config->get("locale"));
     }
     return $self->{locale};
-}
-
-# Hopefully we will be able to remove this one soon.
-sub context {
-    my $self = shift;
-
-    carp "Using legacy Context object. Fix to use main object instead";
-
-    unless (defined($self->{context})) {
-        $self->{context} = DNSCheck::Context->new($self);
-    }
-
-    return $self->{context};
 }
 
 sub dbh {
