@@ -724,6 +724,9 @@ messages:
  SOA:MNAME_IS_AUTH:
   args: 2
   format: SOA MNAME for %s (%s) is authoritative.
+ SOA:MNAME_IS_CNAME:
+     args: 2
+     format: SOA MNAME %s points to a CNAME (%s).
  SOA:RNAME_UNDELIVERABLE:
   args: 3
   format: Failed to deliver email for SOA RNAME of %s (%s) using %s. 

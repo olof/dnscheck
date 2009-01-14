@@ -74,10 +74,14 @@ sub test {
 
 sub mname_is_ns {
     my $soa = shift;
+    my $logger = shift;
     my @ns  = @_;
 
     foreach my $rr (@ns) {
-        if (lc($rr->nsdname) eq lc($soa->mname)) {
+        if ($rr->type eq 'CNAME') {
+            $logger->auto('SOA:MNAME_IS_CNAME',$rr->name, $rr->cname);
+        }
+        elsif (lc($rr->nsdname) eq lc($soa->mname)) {
             return 1;
         }
     }
@@ -143,7 +147,7 @@ sub test_soa_mname {
     }
 
     # REQUIRE: SOA MNAME may not be in the list of nameservers
-    unless (mname_is_ns($soa, $packet->answer)) {
+    unless (mname_is_ns($soa, $logger, $packet->answer)) {
         $logger->auto("SOA:MNAME_STEALTH", $zone, $soa->mname);
     } else {
         $logger->auto("SOA:MNAME_PUBLIC", $zone, $soa->mname);

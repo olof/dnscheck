@@ -151,6 +151,7 @@ loglevels:
   SOA:MINIMUM_SMALL: notice
   SOA:MNAME_ERROR: error
   SOA:MNAME_IS_AUTH: info
+  SOA:MNAME_IS_CNAME: info
   SOA:MNAME_NOT_AUTH: warning
   SOA:MNAME_PUBLIC: info
   SOA:MNAME_STEALTH: notice
