@@ -267,6 +267,10 @@ messages:
   args: 1
   format: Superfluous name server listed at parent: %s
   descr: A name server listed at the parent, but not at the child, was found. This is most likely an administrative error. You should update the parent to match the name servers at the child as soon as possible.
+ DELEGATION:POSSIBLE_EXTRA_NS_PARENT:
+  args: 1
+  format: Name server %s listed at parent may be superflous.
+  descr: A name server listed at the parent, but not at the child, was found. This is most likely an administrative error. You should update the parent to match the name servers at the child as soon as possible.
  DELEGATION:EXTRA_NS_CHILD:
   args: 1
   format: Additional name server listed at child: %s

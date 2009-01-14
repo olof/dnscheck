@@ -267,6 +267,10 @@ messages:
   args: 1
   format: Extra DNS-server listad hos förälder: %s
   descr: En DNS-server finns listad i föräldrazonen men inte i barnzonen. Det här är troligtvis ett administrationsfel. Du borde uppdatera föräldrazonen så att den listar samma DNS-servrar som hos barnzonen så snart som möjligt.
+ DELEGATION:POSSIBLE_EXTRA_NS_PARENT:
+  args: 1
+  format: Namnservern %s hos föräldern kan vara överflödig.
+  descr: En DNS-server finns listad i föräldrazonen men inte i barnzonen. Det här är troligtvis ett administrationsfel. Du borde uppdatera föräldrazonen så att den listar samma DNS-servrar som hos barnzonen så snart som möjligt.
  DELEGATION:EXTRA_NS_CHILD:
   args: 1
   format: Extra DNS-server listad hos barnet: %s
