@@ -121,6 +121,98 @@ sub test {
     return $errors;
 }
 
+sub rrsig_validities {
+    my $self = shift;
+    my $zone = shift;
+
+    my $dns = $self->parent->dns;
+
+    $self->logger->auto('DNSSEC:VALIDITIES_BEGIN');
+
+    my @ns;
+    my $tmp;
+
+    if ($self->config->get("net")->{ipv4}
+        and ($tmp = $dns->get_nameservers_ipv4($zone, 'IN')))
+    {
+        push @ns, @$tmp;
+    }
+    if ($self->config->get("net")->{ipv6}
+        and ($tmp = $dns->get_nameservers_ipv6($zone, 'IN')))
+    {
+        push @ns, @$tmp;
+    }
+
+    my $result = 0;
+
+    foreach my $ns (@ns) {
+        $self->logger->auto('DNSSEC:VALIDITIES_SERVER', $ns);
+        my $p =
+          $dns->query_explicit($zone, 'IN', 'RRSIG', $ns, { aaonly => 1 });
+
+        if (!defined($p)) {
+            $result += $self->logger->auto('DNSSEC:VALIDITIES_SERVER_ERROR');
+            next;
+        } elsif ($p->header->ancount == 0) {
+            $result += $self->logger->auto('DNSSEC:VALIDITIES_NO_SIGNATURES');
+            next;
+        } else {
+            foreach my $rrsig ($p->answer) {
+                my @rrset;
+                my @keys;
+
+                $self->logger->auto("DNSSEC:RRSIG_AT_SERVER", $rrsig->sig);
+
+                my $p =
+                  $dns->query_explicit($zone, 'IN', $rrsig->typecovered, $ns,
+                    { aaonly => 1 });
+                if (!defined($p)) {
+                    $result +=
+                      $self->logger->auto('DNSSEC:VALIDITIES_SERVER_ERROR');
+                    next;
+                } elsif ($p->header->ancount == 0) {
+                    $result += $self->logger->auto('DNSSEC:RRSET_EMPTY');
+                    next;
+                } else {
+                    @rrset = $p->answer;
+                }
+
+                $p =
+                  $dns->query_explicit($rrsig->signame, 'IN', 'DNSKEY', $ns,
+                    { aaonly => 1 });
+                if (!defined($p)) {
+                    $result +=
+                      $self->logger->auto('DNSSEC:VALIDITIES_SERVER_ERROR');
+                    next;
+                } elsif ($p->header->ancount == 0) {
+                    $result +=
+                      $self->logger->auto('DNSSEC:VALIDITIES_KEYS_MISSING');
+                    next;
+                } else {
+                    @keys = $p->answer;
+                }
+
+                if (
+                    $rrsig->verify(
+                        \@rrset, grep { $_->keytag eq $rrsig->keytag } @keys
+                    )
+                  )
+                {
+                    $result += $self->logger->auto('DNSSEC:RRSIG_VALIDATES');
+                } else {
+                    $result +=
+                      $self->logger->auto('DNSSEC:RRSIG_VALIDATION_FAILED',
+                        $rrsig->vrfyerrstr);
+                }
+            }
+        }
+    }
+
+    $self->logger->auto('DNSSEC:VAILIDITIES_END');
+
+    return $result;
+}
+
 ######################################################################
 
 sub _check_child {
