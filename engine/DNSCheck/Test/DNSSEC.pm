@@ -132,6 +132,7 @@ sub rrsig_validities {
     my @ns;
     my $tmp;
 
+    # Get the nameservers we'll work with
     if ($self->config->get("net")->{ipv4}
         and ($tmp = $dns->get_nameservers_ipv4($zone, 'IN')))
     {
@@ -145,6 +146,7 @@ sub rrsig_validities {
 
     my $result = 0;
 
+    # Loop over nameservers
     foreach my $ns (@ns) {
         $self->logger->auto('DNSSEC:VALIDITIES_SERVER', $ns);
         my $p =
@@ -158,11 +160,13 @@ sub rrsig_validities {
             next;
         } else {
             foreach my $rrsig ($p->answer) {
+                # Loop over RRSIG records from current nameserver
                 my @rrset;
                 my @keys;
 
                 $self->logger->auto("DNSSEC:RRSIG_AT_SERVER", $rrsig->sig);
 
+                # Fetch the RRset that the RRSIG signs.
                 my $p =
                   $dns->query_explicit($zone, 'IN', $rrsig->typecovered, $ns,
                     { aaonly => 1 });
@@ -177,6 +181,7 @@ sub rrsig_validities {
                     @rrset = $p->answer;
                 }
 
+                # Fetch all DNSKEY records for the name the RRSIG signs.
                 $p =
                   $dns->query_explicit($rrsig->signame, 'IN', 'DNSKEY', $ns,
                     { aaonly => 1 });
@@ -192,6 +197,7 @@ sub rrsig_validities {
                     @keys = $p->answer;
                 }
 
+                # Verify signature with keys having the same tag as the RRSIG
                 if (
                     $rrsig->verify(
                         \@rrset, grep { $_->keytag eq $rrsig->keytag } @keys
@@ -208,7 +214,7 @@ sub rrsig_validities {
         }
     }
 
-    $self->logger->auto('DNSSEC:VAILIDITIES_END');
+    $self->logger->auto('DNSSEC:VALIDITIES_END');
 
     return $result;
 }
