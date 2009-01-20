@@ -96,7 +96,7 @@ sub new {
     $self->{resolver}->tcp_timeout($self->{default}{tcp_timeout});
     $self->{resolver}->retry($self->{default}{retry});
     $self->{resolver}->retrans($self->{default}{retrans});
-
+    
     return $self;
 }
 
@@ -454,50 +454,15 @@ sub _query_multiple {
     my $flags  = shift;
     my @target = @_;
 
-    # set up resolver
-    my $resolver = $self->_setup_resolver($flags);
-
-    my $packet  = undef;
-    my $timeout = 0;
-
     for my $address (@target) {
-        unless (_querible($address)) {
-            $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
-            next;
-        }
-
-        $resolver->nameserver($address);
-
-        $packet = $resolver->send($qname, $qtype, $qclass);
-
-        # ignore non-authoritative answers if flag aaonly is set
-        unless ($packet && $packet->header->aa) {
-            if ($flags && $flags->{aaonly}) {
-                if ($flags->{aaonly} == 1) {
-                    $self->logger->auto("DNS:NOT_AUTH", $address, $qname,
-                        $qclass, $qtype);
-                    next;
-                }
-            }
-        }
-
-        last if ($packet && $packet->header->rcode ne "SERVFAIL");
-
-        if ($self->check_timeout($resolver)) {
-            $timeout++;
-        }
+        my $packet = $self->query_explicit($qname, $qclass, $qtype, $address, $flags);
+        
+        if (defined($packet)) {
+            return $packet
+        }        
     }
 
-    unless ($packet && $packet->header->rcode ne "SERVFAIL") {
-        if ($timeout) {
-            $self->logger->auto("DNS:QUERY_TIMEOUT", join(",", @target),
-                $qname, $qclass, $qtype);
-        } else {
-            $self->logger->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
-        }
-    }
-
-    return $packet;
+    return;
 }
 
 ######################################################################
