@@ -41,8 +41,8 @@ use Net::IP 1.25 qw(ip_get_version);
 ######################################################################
 
 sub test {
-    my $self        = shift;
-    my $zone        = shift;
+    my $self = shift;
+    my $zone = shift;
 
     my $logger = $self->parent->logger;
 
@@ -73,15 +73,14 @@ sub test {
 ################################################################
 
 sub mname_is_ns {
-    my $soa = shift;
+    my $soa    = shift;
     my $logger = shift;
-    my @ns  = @_;
+    my @ns     = @_;
 
     foreach my $rr (@ns) {
         if ($rr->type eq 'CNAME') {
-            $logger->auto('SOA:MNAME_IS_CNAME',$rr->name, $rr->cname);
-        }
-        elsif (lc($rr->nsdname) eq lc($soa->mname)) {
+            $logger->auto('SOA:MNAME_IS_CNAME', $rr->name, $rr->cname);
+        } elsif (lc($rr->nsdname) eq lc($soa->mname)) {
             return 1;
         }
     }
@@ -122,9 +121,9 @@ sub test_soa_existence {
 }
 
 sub test_soa_mname {
-    my $self        = shift;
-    my $soa         = shift;
-    my $zone        = shift;
+    my $self = shift;
+    my $soa  = shift;
+    my $zone = shift;
 
     my $parent = $self->parent;
     my $logger = $self->logger;

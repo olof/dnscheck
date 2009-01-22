@@ -160,6 +160,7 @@ sub rrsig_validities {
             next;
         } else {
             foreach my $rrsig ($p->answer) {
+
                 # Loop over RRSIG records from current nameserver
                 my @rrset;
                 my @keys;

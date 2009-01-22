@@ -96,7 +96,7 @@ sub new {
     $self->{resolver}->tcp_timeout($self->{default}{tcp_timeout});
     $self->{resolver}->retry($self->{default}{retry});
     $self->{resolver}->retrans($self->{default}{retrans});
-    
+
     return $self;
 }
 
@@ -455,11 +455,12 @@ sub _query_multiple {
     my @target = @_;
 
     for my $address (@target) {
-        my $packet = $self->query_explicit($qname, $qclass, $qtype, $address, $flags);
-        
+        my $packet =
+          $self->query_explicit($qname, $qclass, $qtype, $address, $flags);
+
         if (defined($packet)) {
-            return $packet
-        }        
+            return $packet;
+        }
     }
 
     return;
