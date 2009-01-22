@@ -11,7 +11,6 @@ db/schema.sql
 dnscheck.conf
 DNSCheck.pm
 DNSCheck/Config.pm
-DNSCheck/Context.pm
 DNSCheck/Locale.pm
 DNSCheck/Logger.pm
 DNSCheck/Lookup/ASN.pm
