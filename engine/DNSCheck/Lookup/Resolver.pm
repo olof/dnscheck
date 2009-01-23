@@ -119,13 +119,12 @@ sub remember {
     foreach my $rr ($p->answer, $p->additional, $p->authority) {
         my $n = $self->canonicalize_name($rr->name);
         if ($rr->type eq 'A' or $rr->type eq 'AAAA') {
-            push @{ $self->{cache}{ips}{$n} }, $rr->address;
+            $self->{cache}{ips}{$n}{$rr->address} = 1;
             $self->logger->auto(
                 sprintf("RESOLVER:CACHED_IP %s %s", $n, $rr->address));
         }
         if ($rr->type eq 'NS') {
-            push @{ $self->{cache}{ns}{$n} },
-              $self->canonicalize_name($rr->nsdname);
+            $self->{cache}{ns}{$n}{$self->canonicalize_name($rr->nsdname)} = 1;
             $self->logger->auto(
                 sprintf("RESOLVER:CACHED_NS %s %s", $n, $rr->nsdname));
         }
@@ -171,14 +170,15 @@ sub highest_known_ns {
     my $self = shift;
     my $name = shift;
 
-    while ($name ne '.') {
-        return @{ $self->{cache}{ns}{$name} } if $self->{cache}{ns}{$name};
+	$name = $self->canonicalize_name($name);
+    while (1) {
+        return keys %{ $self->{cache}{ns}{$name} } if $self->{cache}{ns}{$name};
+		if ($name eq '.') {
+			die "Root zone cache missing.";
+		}
+		
         $name = $self->strip_label($name);
     }
-
-    return grep { $_ }
-      map { $self->{cache}{ips}{$_} and @{ $self->{cache}{ips}{$_} } }
-      @{ $self->{cache}{ns}{'.'} };
 }
 
 # Send a query to a specified set of nameservers and return the result.
@@ -230,7 +230,7 @@ sub recurse {
                 if ($rr->type eq 'NS') {
                     my $n = $self->canonicalize_name($rr->nsdname);
                     if (my $ip = $self->{cache}{ips}{$n}) {
-                        push @ns, @$ip;
+                        push @ns, keys %$ip;
                     } else {
                         $self->recurse($n, 'A');
                         redo TOP;
@@ -252,41 +252,41 @@ __DATA__
 ---
 ips:
   a.root-servers.net.:
-    - 198.41.0.4
-    - 2001:503:ba3e:0:0:0:2:30
+    198.41.0.4: 1
+    2001:503:ba3e:0:0:0:2:30: 1
   b.root-servers.net.:
-    - 192.228.79.201
+    192.228.79.201: 1
   c.root-servers.net.:
-    - 192.33.4.12
+    192.33.4.12: 1
   d.root-servers.net.:
-    - 128.8.10.90
+    128.8.10.90: 1
   e.root-servers.net.:
-    - 192.203.230.10
+    192.203.230.10: 1
   f.root-servers.net.:
-    - 192.5.5.241
-    - 2001:500:2f:0:0:0:0:f
+    192.5.5.241: 1
+    2001:500:2f:0:0:0:0:f: 1
   g.root-servers.net.:
-    - 192.112.36.4
+    192.112.36.4: 1
   h.root-servers.net.:
-    - 128.63.2.53
-    - 2001:500:1:0:0:0:803f:235
+    128.63.2.53: 1
+    2001:500:1:0:0:0:803f:235: 1
   i.root-servers.net.:
-    - 192.36.148.17
+    192.36.148.17: 1
   j.root-servers.net.:
-    - 192.58.128.30
-    - 2001:503:c27:0:0:0:2:30
+    192.58.128.30: 1
+    2001:503:c27:0:0:0:2:30: 1
 ns:
   .:
-    - i.root-servers.net.
-    - j.root-servers.net.
-    - k.root-servers.net.
-    - l.root-servers.net.
-    - m.root-servers.net.
-    - a.root-servers.net.
-    - b.root-servers.net.
-    - c.root-servers.net.
-    - d.root-servers.net.
-    - e.root-servers.net.
-    - f.root-servers.net.
-    - g.root-servers.net.
-    - h.root-servers.net.
+    a.root-servers.net.: 1
+    b.root-servers.net.: 1
+    c.root-servers.net.: 1
+    d.root-servers.net.: 1
+    e.root-servers.net.: 1
+    f.root-servers.net.: 1
+    g.root-servers.net.: 1
+    h.root-servers.net.: 1
+    i.root-servers.net.: 1
+    j.root-servers.net.: 1
+    k.root-servers.net.: 1
+    l.root-servers.net.: 1
+    m.root-servers.net.: 1
