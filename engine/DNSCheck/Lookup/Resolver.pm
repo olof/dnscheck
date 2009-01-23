@@ -270,7 +270,7 @@ sub recurse {
                         }
                     }
                 } elsif ($rr->type eq 'SOA') {
-                    $done = 1;
+                    return $p;
                 }
             }
             $p = $self->get($name, $type, $class, @ns);
