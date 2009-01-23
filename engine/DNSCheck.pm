@@ -51,6 +51,7 @@ use DNSCheck::Test::DNSSEC;
 use DNSCheck::Test::Mail;
 use DNSCheck::Test::SMTP;
 use DNSCheck::Lookup::DNS;
+use DNSCheck::Lookup::Resolver;
 use DNSCheck::Lookup::ASN;
 use DNSCheck::Logger;
 
@@ -168,6 +169,16 @@ sub dns {
     }
 
     return $self->{dns};
+}
+
+sub resolver {
+    my $self = shift;
+
+    unless (defined($self->{resolver})) {
+        $self->{resolver} = DNSCheck::Lookup::Resolver->new($self);
+    }
+
+    return $self->{resolver};
 }
 
 sub asn {

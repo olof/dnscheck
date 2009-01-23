@@ -34,23 +34,83 @@ require 5.008;
 use warnings;
 use strict;
 
-use base 'Net::DNS::Resolver';
-
 use YAML;
 use Net::IP;
 
+# In order to be able to know for sure where certain information comes from,
+# and/or modify parts of resolver chains, we need to do our own recursive
+# lookups rather than rely on an external caching recursive resolver. This
+# module is supposed to do recursive lookups. It seems to work, but was
+# written by someone who is not a DNS expert, so comments on the module logic
+# is very welcome.
 sub new {
-    my $proto = shift;
-    my $class = ref($proto) || $proto;
-    my $self  = {};
+    my $proto  = shift;
+    my $parent = shift;
+    my $class  = ref($proto) || $proto;
+    my $self   = {};
+
     bless $self, $proto;
 
+    $self->{parent} = $parent;
+
+    $self->logger->auto("RESOLVER:CREATED");
+
+    my $config = $self->config->get("dns");
+
     $self->{cache} = Load(join('', <DATA>));
+
     $self->{resolver} = Net::DNS::Resolver->new;
+    $self->{resolver}->persistent_tcp(0);
+    $self->{resolver}->cdflag(1);
+    $self->{resolver}->recurse(0);
+    $self->{resolver}->dnssec(0);
+    $self->{resolver}->debug($config->{debug});
+    $self->{resolver}->udp_timeout($config->{udp_timeout});
+    $self->{resolver}->tcp_timeout($config->{tcp_timeout});
+    $self->{resolver}->retry($config->{retry});
+    $self->{resolver}->retrans($config->{retrans});
 
     return $self;
 }
 
+# Standard utility methods
+sub resolver {
+    return $_[0]->{resolver};
+}
+
+sub parent {
+    return $_[0]->{parent};
+}
+
+sub cache {
+    return $_[0]->{cache};
+}
+
+sub config {
+    return $_[0]->parent->config;
+}
+
+sub logger {
+    return $_[0]->parent->logger;
+}
+
+# Interface methods to underlying Net::DNS::Resolver object
+
+sub errorstring {
+    my $self = shift;
+
+    return $self->resolver->errorstring(@_);
+}
+
+sub dnssec {
+    my $self = shift;
+
+    return $self->resolver->dnssec(@_);
+}
+
+# Add stuff to our cache.
+#
+# We cache known nameserver lists for names, and IP addresses for names.
 sub remember {
     my ($self, $p, $name, $type, $class) = @_;
 
@@ -60,14 +120,19 @@ sub remember {
         my $n = $self->canonicalize_name($rr->name);
         if ($rr->type eq 'A' or $rr->type eq 'AAAA') {
             push @{ $self->{cache}{ips}{$n} }, $rr->address;
+            $self->logger->auto(
+                sprintf("RESOLVER:CACHED_IP %s %s", $n, $rr->address));
         }
         if ($rr->type eq 'NS') {
             push @{ $self->{cache}{ns}{$n} },
               $self->canonicalize_name($rr->nsdname);
+            $self->logger->auto(
+                sprintf("RESOLVER:CACHED_NS %s %s", $n, $rr->nsdname));
         }
     }
 }
 
+# Reformat a name into a standardized form, for ease of comparison
 sub canonicalize_name {
     my $self = shift;
     my $name = shift;
@@ -83,6 +148,8 @@ sub canonicalize_name {
     return $name;
 }
 
+# Strip the leftmost label off a DNS name. If there are no labels left after
+# removing one, returns a single period for the root level.
 sub strip_label {
     my $self = shift;
     my $name = shift;
@@ -97,6 +164,9 @@ sub strip_label {
     }
 }
 
+# Take a name, and return the nameserver names for the highest parent level we
+# have in cache. Which, at worst, will be the root zone, the data for which we
+# have hardcoded into the module.
 sub highest_known_ns {
     my $self = shift;
     my $name = shift;
@@ -111,6 +181,7 @@ sub highest_known_ns {
       @{ $self->{cache}{ns}{'.'} };
 }
 
+# Send a query to a specified set of nameservers and return the result.
 sub get {
     my $self  = shift;
     my $name  = shift;
@@ -118,6 +189,7 @@ sub get {
     my $class = shift || 'IN';
     my @ns    = @_;
 
+    $self->logger->auto("RESOLVER:GET $name $type $class @ns");
     my @ns_old = $self->{resolver}->nameservers;
     $self->{resolver}->nameservers(@ns) if @ns;
 
@@ -128,25 +200,22 @@ sub get {
     return $p;
 }
 
+# Recursively look up stuff.
 sub recurse {
-    my $self = shift;
-    my $name = shift;
-    my $type = shift || 'NS';
+    my $self  = shift;
+    my $name  = shift;
+    my $type  = shift || 'NS';
+    my $class = shift || 'IN';
 
     my $done = undef;
 
     $name = $self->canonicalize_name($name);
 
-    my $p = $self->get($name, $type, 'IN', $self->highest_known_ns($name));
+    $self->logger->auto("RESOLVER:RECURSE $name $type $class");
+    my $p = $self->get($name, $type, $class, $self->highest_known_ns($name));
     my $h = $p->header;
 
-    die(
-        sprintf(
-            "%s for %s record for %s",
-            $self->{res}->errorstring,
-            $type, $name
-        )
-    ) unless defined($p);
+    return unless defined($p);
   TOP:
 
     until ($done) {
@@ -170,14 +239,8 @@ sub recurse {
                     $done = 1;
                 }
             }
-            $p = $self->get($name, $type, 'IN', @ns);
-            die(
-                sprintf(
-                    "%s for %s record for %s\n",
-                    $self->{resolver}->errorstring,
-                    $type, $name
-                )
-            ) unless defined($p);
+            $p = $self->get($name, $type, $class, @ns);
+            return unless defined($p);
             $h = $p->header;
         }
     }
