@@ -111,17 +111,17 @@ sub dnssec {
 # Methods to support undelegated testing
 
 sub add_fake_glue {
-	my $self = shift;
-	my $zone = shift;
-	my $nsname = shift;
-	my $nsip = shift;
-	
-	$nsname = $self->canonicalize_name($nsname);
-	
-	$self->cache->{ns}{$zone}{$nsname} = 1;
-	$self->cache->{ips}{$nsname}{$nsip} = 1;
-	$self->{fake}{ns}{$zone} = 1;
-	$self->{fake}{ips}{$nsname} = 1;
+    my $self   = shift;
+    my $zone   = shift;
+    my $nsname = shift;
+    my $nsip   = shift;
+
+    $nsname = $self->canonicalize_name($nsname);
+
+    $self->cache->{ns}{$zone}{$nsname}  = 1;
+    $self->cache->{ips}{$nsname}{$nsip} = 1;
+    $self->{fake}{ns}{$zone}            = 1;
+    $self->{fake}{ips}{$nsname}         = 1;
 }
 
 # Add stuff to our cache.
@@ -135,12 +135,12 @@ sub remember {
     foreach my $rr ($p->answer, $p->additional, $p->authority) {
         my $n = $self->canonicalize_name($rr->name);
         if ($rr->type eq 'A' or $rr->type eq 'AAAA') {
-            $self->{cache}{ips}{$n}{$rr->address} = 1
-				unless $self->{fake}{ips}{$n};
+            $self->{cache}{ips}{$n}{ $rr->address } = 1
+              unless $self->{fake}{ips}{$n};
         }
         if ($rr->type eq 'NS') {
-            $self->{cache}{ns}{$n}{$self->canonicalize_name($rr->nsdname)} = 1
-				unless $self->{fake}{ns}{$n};
+            $self->{cache}{ns}{$n}{ $self->canonicalize_name($rr->nsdname) } = 1
+              unless $self->{fake}{ns}{$n};
         }
     }
 }
@@ -184,29 +184,29 @@ sub highest_known_ns {
     my $self = shift;
     my $name = shift;
 
-	$name = $self->canonicalize_name($name);
+    $name = $self->canonicalize_name($name);
     while (1) {
         return keys %{ $self->{cache}{ns}{$name} } if $self->{cache}{ns}{$name};
-		if ($name eq '.') {
-			die "Root zone cache missing.";
-		}
-		
+        if ($name eq '.') {
+            die "Root zone cache missing.";
+        }
+
         $name = $self->strip_label($name);
     }
 }
 
 sub simple_names_to_ips {
-	my $self = shift;
-	my @names = @_;
-	my @ips;
-	
-	foreach my $n (@names) {
-		if($self->cache->{ips}{$n}) {
-			push @ips, keys %{$self->cache->{ips}{$n}}
-		}
-	}
+    my $self  = shift;
+    my @names = @_;
+    my @ips;
 
-	return @ips;
+    foreach my $n (@names) {
+        if ($self->cache->{ips}{$n}) {
+            push @ips, keys %{ $self->cache->{ips}{$n} };
+        }
+    }
+
+    return @ips;
 }
 
 # Send a query to a specified set of nameservers and return the result.
@@ -240,7 +240,9 @@ sub recurse {
     $name = $self->canonicalize_name($name);
 
     $self->logger->auto("RESOLVER:RECURSE $name $type $class");
-    my $p = $self->get($name, $type, $class, $self->simple_names_to_ips($self->highest_known_ns($name)));
+    my $p =
+      $self->get($name, $type, $class,
+        $self->simple_names_to_ips($self->highest_known_ns($name)));
     my $h = $p->header;
 
     return unless defined($p);
@@ -261,10 +263,11 @@ sub recurse {
                     } else {
                         $self->recurse($n, 'A');
                         if (my $ip = $self->{cache}{ips}{$n}) {
-	                        push @ns, keys %$ip;
-	                    } else {
-	                        $self->logger->auto("RESOLVER:UNRESOLVABLE_NAME $n");
-	                    }
+                            push @ns, keys %$ip;
+                        } else {
+                            $self->logger->auto(
+                                "RESOLVER:UNRESOLVABLE_NAME $n");
+                        }
                     }
                 } elsif ($rr->type eq 'SOA') {
                     $done = 1;

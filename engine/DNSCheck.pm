@@ -106,6 +106,7 @@ sub flush {
 
 sub add_fake_glue {
     my $self    = shift;
+    my $zone    = shift;
     my $ns_name = shift;
     my $ns_ip   = shift;
 
@@ -115,10 +116,10 @@ sub add_fake_glue {
             $self->logger->auto("FAKEGLUE:NO_ADDRESS");
             return;
         } else {
-            push @{ $self->{faked} }, [$ns_name, $_] for @ip;
+            $self->resolver->add_fake_glue($zone, $ns_name, $_) for @ip;
         }
     } else {
-        push @{ $self->{faked} }, [$ns_name, $ns_ip];
+        $self->resolver->add_fake_flue($zone, $ns_name, $ns_ip);
     }
 
     return 1;

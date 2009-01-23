@@ -272,14 +272,11 @@ sub query_child_nocache {
     # find child to query
     my @target = ();
 
-    if ($parent->undelegated_test) {
-        @target = $parent->fake_glue_ips;
-    } else {
-        my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
-        my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
-        @target = (@target, @{$ipv4}) if ($ipv4);
-        @target = (@target, @{$ipv6}) if ($ipv6);
-    }
+    my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
+    my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
+    @target = (@target, @{$ipv4}) if ($ipv4);
+    @target = (@target, @{$ipv6}) if ($ipv6);
+
     unless (scalar @target) {
         $self->logger->auto("DNS:NO_CHILD_NS", $zone, $qclass);
         return undef;
@@ -502,11 +499,6 @@ sub get_nameservers_at_parent {
 
     $self->logger->auto("DNS:GET_NS_AT_PARENT", $qname, $qclass);
 
-    if ($self->parent->undelegated_test) {
-        $self->logger->auto("DNS:USING_FAKE_GLUE");
-        return sort $self->parent->fake_glue_names;
-    }
-
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
 
     return undef unless ($packet);
@@ -717,11 +709,7 @@ sub _find_soa {
     my $qclass = shift;
     my $answer;
 
-    if ($self->parent->undelegated_test) {
-        $answer = $self->query_child($qname, $qname, $qclass, 'SOA');
-    } else {
-        $answer = $self->{resolver}->recurse($qname, "SOA", $qclass);
-    }
+    $answer = $self->{resolver}->recurse($qname, "SOA", $qclass);
 
     return $qname unless ($answer);
     return undef if ($answer->header->rcode eq "NXDOMAIN");

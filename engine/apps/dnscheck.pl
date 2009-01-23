@@ -91,9 +91,9 @@ sub main {
     foreach my $ns (@nameservers) {
         my ($name, $ip) = split(m|/|, $ns);
         if ($ip) {
-            $check->add_fake_glue($name, $ip);
+            $check->add_fake_glue($zone, $name, $ip);
         } else {
-            $check->add_fake_glue($name);
+            $check->add_fake_glue($zone, $name);
         }
     }
 

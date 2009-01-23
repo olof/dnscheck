@@ -52,8 +52,6 @@ sub test {
     $logger->module_stack_push();
     $logger->auto("ZONE:BEGIN", $zone);
 
-    $parent->dns->prep_fake_glue($zone) if $parent->undelegated_test;
-
     my ($errors, $testable) = $parent->delegation->test($zone, $history);
 
     unless ($testable) {
