@@ -719,7 +719,7 @@ sub _init_nameservers_helper {
 
   DONE:
     $self->{nameservers}{$qname}{$qclass}{ipv4} = [keys %nsv4];
-    $self->{nameservers}{$qname}{$qclass}{ipv6} = [keys %nsv6];
+    $self->{nameservers}{$qname}{$qclass}{ipv6} = [keys %nsv6] if (keys %nsv6) > 0;
     $self->logger->auto("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
 }
 
