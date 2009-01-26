@@ -133,20 +133,6 @@ sub _get_glue {
         }
     }
 
-    if ($parent->undelegated_test) {
-        my @t;
-
-        foreach my $n ($parent->fake_glue_data) {
-            if (ip_is_ipv4($n->[1])) {
-                push @t, Net::DNS::RR->new($n->[0] . ' IN A ' . $n->[1]);
-            } else {
-                push @t, Net::DNS::RR->new($n->[0] . ' IN AAAA ' . $n->[1]);
-            }
-        }
-
-        @glue = sort { $a->name cmp $b->name } (@glue, @t);
-    }
-
     return @glue;
 }
 

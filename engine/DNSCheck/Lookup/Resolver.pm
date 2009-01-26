@@ -60,10 +60,11 @@ sub new {
     $self->{cache} = Load(join('', <DATA>));
 
     $self->{resolver} = Net::DNS::Resolver->new(
-        # RFC3330 reserved address. As close to guaranteed *not* to have a nameserver
-        # on it as we're likely to get (the module does not accept an empty list).
-        nameservers => ['192.0.2.1'], 
-                );
+
+   # RFC3330 reserved address. As close to guaranteed *not* to have a nameserver
+   # on it as we're likely to get (the module does not accept an empty list).
+        nameservers => ['192.0.2.1'],
+    );
     $self->{resolver}->persistent_tcp(0);
     $self->{resolver}->cdflag(1);
     $self->{resolver}->recurse(0);
@@ -121,11 +122,31 @@ sub add_fake_glue {
     my $nsip   = shift;
 
     $nsname = $self->canonicalize_name($nsname);
+    $zone   = $self->canonicalize_name($zone);
 
     $self->cache->{ns}{$zone}{$nsname}  = 1;
     $self->cache->{ips}{$nsname}{$nsip} = 1;
     $self->{fake}{ns}{$zone}            = 1;
     $self->{fake}{ips}{$nsname}         = 1;
+}
+
+sub faked_zones {
+    my $self = shift;
+
+    return keys %{ $self->{fake}{ns} };
+}
+
+sub faked_zone {
+    my $self = shift;
+    my $name = shift;
+
+    $name = $self->canonicalize_name($name);
+
+    if ($self->{fake}{ns}{$name}) {
+        return keys %{ $self->cache->{ns}{$name} };
+    } else {
+        return;
+    }
 }
 
 # Add stuff to our cache.
@@ -189,6 +210,17 @@ sub highest_known_ns {
     my $name = shift;
 
     $name = $self->canonicalize_name($name);
+
+    my $faked = (
+        sort { $a =~ y/././ <=> $b =~ y/././ }
+          grep { $name =~ /$_$/ } $self->faked_zones
+    )[0];
+
+    if ($faked) {
+        $self->logger->auto("RESOLVER:USING_FAKE_GLUE $faked FOR $name");
+        return keys %{ $self->cache->{ns}{$faked} };
+    }
+
     while (1) {
         return keys %{ $self->{cache}{ns}{$name} } if $self->{cache}{ns}{$name};
         if ($name eq '.') {
@@ -239,23 +271,20 @@ sub recurse {
     my $type  = shift || 'NS';
     my $class = shift || 'IN';
 
-    my $done = undef;
-
     $name = $self->canonicalize_name($name);
 
     $self->logger->auto("RESOLVER:RECURSE $name $type $class");
     my $p =
       $self->get($name, $type, $class,
         $self->simple_names_to_ips($self->highest_known_ns($name)));
-    my $h = $p->header;
 
     return unless defined($p);
 
-    until ($done) {
+    my $h = $p->header;
 
-        if ($h->rcode ne 'NOERROR') {
-            return $p;
-        } elsif ($h->aa) {    # An authoritative answer
+    while (1) {
+
+        if ($h->aa) {    # An authoritative answer
             return $p;
         } elsif ($h->nscount > 0) {    # Authority records
             my @ns;
@@ -280,10 +309,13 @@ sub recurse {
             $p = $self->get($name, $type, $class, @ns);
             return unless defined($p);
             $h = $p->header;
+        } elsif ($h->rcode ne 'NOERROR') {
+            return $p;
+        } else {
+            $self->logger->auto("RESOLVER:WTF_ERROR");
+            return $p;
         }
     }
-
-    return $p;
 }
 
 __DATA__

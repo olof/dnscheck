@@ -119,8 +119,10 @@ sub add_fake_glue {
             $self->resolver->add_fake_glue($zone, $ns_name, $_) for @ip;
         }
     } else {
-        $self->resolver->add_fake_flue($zone, $ns_name, $ns_ip);
+        $self->resolver->add_fake_glue($zone, $ns_name, $ns_ip);
     }
+
+    $self->{faked} = 1;
 
     return 1;
 }
@@ -128,26 +130,7 @@ sub add_fake_glue {
 sub undelegated_test {
     my $self = shift;
 
-    return scalar(@{ $self->{faked} });
-}
-
-sub fake_glue_ips {
-    my $self = shift;
-
-    return map { $_->[1] } @{ $self->{faked} };
-}
-
-sub fake_glue_names {
-    my $self = shift;
-
-    my %tmp = map { $_->[0], $_->[1] } @{ $self->{faked} };
-    return keys %tmp;
-}
-
-sub fake_glue_data {
-    my $self = shift;
-
-    return @{ $self->{faked} };
+    return $self->{faked};
 }
 
 ######################################################################
