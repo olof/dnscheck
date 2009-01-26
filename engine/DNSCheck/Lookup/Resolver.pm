@@ -211,8 +211,10 @@ sub highest_known_ns {
 
     $name = $self->canonicalize_name($name);
 
+    # If there are more than one zone with fake glue, and one is a parent of
+    # another, choose the one with the most labels in it.
     my $faked = (
-        sort { $a =~ y/././ <=> $b =~ y/././ }
+        sort { $b =~ y/././ <=> $a =~ y/././ }
           grep { $name =~ /$_$/ } $self->faked_zones
     )[0];
 
