@@ -59,7 +59,11 @@ sub new {
 
     $self->{cache} = Load(join('', <DATA>));
 
-    $self->{resolver} = Net::DNS::Resolver->new;
+    $self->{resolver} = Net::DNS::Resolver->new(
+        # RFC3330 reserved address. As close to guaranteed *not* to have a nameserver
+        # on it as we're likely to get (the module does not accept an empty list).
+        nameservers => ['192.0.2.1'], 
+                );
     $self->{resolver}->persistent_tcp(0);
     $self->{resolver}->cdflag(1);
     $self->{resolver}->recurse(0);
@@ -251,8 +255,8 @@ sub recurse {
 
         if ($h->rcode ne 'NOERROR') {
             return $p;
-        } elsif ($h->ancount > 0) {    # An actual answer
-            $done = 1;
+        } elsif ($h->aa) {    # An authoritative answer
+            return $p;
         } elsif ($h->nscount > 0) {    # Authority records
             my @ns;
             foreach my $rr ($p->authority) {
