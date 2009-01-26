@@ -87,15 +87,7 @@ sub new {
     $self->{default} = $parent->config->get("dns");
 
     # set up global resolver
-    $self->{resolver} = new Net::DNS::Resolver;
-    $self->{resolver}->persistent_tcp(0);
-    $self->{resolver}->cdflag(1);
-    $self->{resolver}->recurse(1);
-    $self->{resolver}->debug($self->{debug_resolver});
-    $self->{resolver}->udp_timeout($self->{default}{udp_timeout});
-    $self->{resolver}->tcp_timeout($self->{default}{tcp_timeout});
-    $self->{resolver}->retry($self->{default}{retry});
-    $self->{resolver}->retrans($self->{default}{retrans});
+    $self->{resolver} = $parent->resolver;
 
     return $self;
 }
@@ -141,28 +133,11 @@ sub query_resolver {
     my $qclass = shift;
     my $qtype  = shift;
 
-    my $p = $self->query_resolver_real($qname, $qclass, $qtype);
-
-    if ($self->parent->undelegated_test
-        and (!defined($p) or $p->header->ancount == 0))
-    {
-        $p = $self->query_resolver_fake($qname, $qclass, $qtype);
-    }
-
-    return $p;
-}
-
-sub query_resolver_real {
-    my $self   = shift;
-    my $qname  = shift;
-    my $qclass = shift;
-    my $qtype  = shift;
-
     $self->logger->auto("DNS:QUERY_RESOLVER", $qname, $qclass, $qtype);
 
     unless ($self->{cache}{resolver}{$qname}{$qclass}{$qtype}) {
         $self->{cache}{resolver}{$qname}{$qclass}{$qtype} =
-          $self->{resolver}->send($qname, $qtype, $qclass);
+          $self->{resolver}->recurse($qname, $qtype, $qclass);
 
         if ($self->check_timeout($self->{resolver})) {
             $self->logger->auto("DNS:RESOLVER_QUERY_TIMEOUT",
@@ -172,38 +147,6 @@ sub query_resolver_real {
     }
 
     my $packet = $self->{cache}{resolver}{$qname}{$qclass}{$qtype};
-
-    if ($packet) {
-        $self->logger->auto("DNS:RESOLVER_RESPONSE",
-            sprintf("%d answer(s)", $packet->header->ancount));
-    }
-
-    return $packet;
-}
-
-sub query_resolver_fake {
-    my $self   = shift;
-    my $qname  = shift;
-    my $qclass = shift;
-    my $qtype  = shift;
-
-    $self->logger->auto("DNS:QUERY_RESOLVER_FAKE", $qname, $qclass, $qtype);
-
-    my $res = $self->_setup_resolver;
-    $res->nameservers($self->parent->fake_glue_ips);
-
-    unless ($self->{cache}{fake}{$qname}{$qclass}{$qtype}) {
-        $self->{cache}{fake}{$qname}{$qclass}{$qtype} =
-          $res->send($qname, $qtype, $qclass);
-
-        if ($self->check_timeout($self->{resolver})) {
-            $self->logger->auto("DNS:RESOLVER_QUERY_TIMEOUT",
-                $qname, $qclass, $qtype);
-            return undef;
-        }
-    }
-
-    my $packet = $self->{cache}{fake}{$qname}{$qclass}{$qtype};
 
     if ($packet) {
         $self->logger->auto("DNS:RESOLVER_RESPONSE",
@@ -329,14 +272,11 @@ sub query_child_nocache {
     # find child to query
     my @target = ();
 
-    if ($parent->undelegated_test) {
-        @target = $parent->fake_glue_ips;
-    } else {
-        my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
-        my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
-        @target = (@target, @{$ipv4}) if ($ipv4);
-        @target = (@target, @{$ipv6}) if ($ipv6);
-    }
+    my $ipv4 = $self->get_nameservers_ipv4($zone, $qclass);
+    my $ipv6 = $self->get_nameservers_ipv6($zone, $qclass);
+    @target = (@target, @{$ipv4}) if ($ipv4);
+    @target = (@target, @{$ipv6}) if ($ipv6);
+
     unless (scalar @target) {
         $self->logger->auto("DNS:NO_CHILD_NS", $zone, $qclass);
         return undef;
@@ -366,7 +306,8 @@ sub query_explicit {
     }
 
     my $resolver = $self->_setup_resolver($flags);
-    $resolver->nameserver($address);
+
+    # $resolver->nameserver($address);
 
     if ($self->check_blacklist($address, $qname, $qclass, $qtype)) {
         $self->logger->auto("DNS:ADDRESS_BLACKLISTED",
@@ -374,7 +315,7 @@ sub query_explicit {
         return undef;
     }
 
-    my $packet = $resolver->send($qname, $qtype, $qclass);
+    my $packet = $resolver->get($qname, $qtype, $qclass, $address);
 
     if ($self->check_timeout($resolver)) {
         $self->logger->auto("DNS:QUERY_TIMEOUT",
@@ -454,50 +395,16 @@ sub _query_multiple {
     my $flags  = shift;
     my @target = @_;
 
-    # set up resolver
-    my $resolver = $self->_setup_resolver($flags);
-
-    my $packet  = undef;
-    my $timeout = 0;
-
     for my $address (@target) {
-        unless (_querible($address)) {
-            $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
-            next;
-        }
+        my $packet =
+          $self->query_explicit($qname, $qclass, $qtype, $address, $flags);
 
-        $resolver->nameserver($address);
-
-        $packet = $resolver->send($qname, $qtype, $qclass);
-
-        # ignore non-authoritative answers if flag aaonly is set
-        unless ($packet && $packet->header->aa) {
-            if ($flags && $flags->{aaonly}) {
-                if ($flags->{aaonly} == 1) {
-                    $self->logger->auto("DNS:NOT_AUTH", $address, $qname,
-                        $qclass, $qtype);
-                    next;
-                }
-            }
-        }
-
-        last if ($packet && $packet->header->rcode ne "SERVFAIL");
-
-        if ($self->check_timeout($resolver)) {
-            $timeout++;
+        if (defined($packet)) {
+            return $packet;
         }
     }
 
-    unless ($packet && $packet->header->rcode ne "SERVFAIL") {
-        if ($timeout) {
-            $self->logger->auto("DNS:QUERY_TIMEOUT", join(",", @target),
-                $qname, $qclass, $qtype);
-        } else {
-            $self->logger->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
-        }
-    }
-
-    return $packet;
+    return;
 }
 
 ######################################################################
@@ -509,58 +416,50 @@ sub _setup_resolver {
     $self->logger->auto("DNS:SETUP_RESOLVER");
 
     # set up resolver
-    my $resolver = new Net::DNS::Resolver;
+    my $resolver = DNSCheck::Lookup::Resolver->new($self->parent);
 
-    $resolver->debug($self->{debug_resolver});
-    $resolver->udp_timeout($self->{default}{udp_timeout});
-    $resolver->tcp_timeout($self->{default}{tcp_timeout});
-    $resolver->retry($self->{default}{retry});
-    $resolver->retrans($self->{default}{retrans});
-
-    $resolver->recurse(0);
-    $resolver->dnssec(0);
-    $resolver->cdflag(1);
-    $resolver->usevc(0);
-    $resolver->defnames(0);
+    $resolver->resolver->cdflag(1);
+    $resolver->resolver->usevc(0);
+    $resolver->resolver->defnames(0);
 
     if ($flags) {
         if ($flags->{transport}) {
             if ($flags->{transport} eq "udp") {
-                $resolver->usevc(0);
+                $resolver->resolver->usevc(0);
             } elsif ($flags->{transport} eq "tcp") {
-                $resolver->usevc(1);
+                $resolver->resolver->usevc(1);
             } else {
                 die "unknown transport";
             }
 
             if ($flags->{transport} eq "udp" && $flags->{bufsize}) {
                 $self->logger->auto("DNS:SET_BUFSIZE", $flags->{bufsize});
-                $resolver->udppacketsize($flags->{bufsize});
+                $resolver->resolver->udppacketsize($flags->{bufsize});
             }
         }
 
-        if ($flags->{recurse}) {
-            $resolver->recurse(1);
-        }
+        # if ($flags->{recurse}) {
+        #    $resolver->recurse(1);
+        # }
 
         if ($flags->{dnssec}) {
             $resolver->dnssec(1);
         }
     }
 
-    if ($resolver->usevc) {
+    if ($resolver->resolver->usevc) {
         $self->logger->auto("DNS:TRANSPORT_TCP");
     } else {
         $self->logger->auto("DNS:TRANSPORT_UDP");
     }
 
-    if ($resolver->recurse) {
-        $self->logger->auto("DNS:RECURSION_DESIRED");
-    } else {
-        $self->logger->auto("DNS:RECURSION_DISABLED");
-    }
+    # if ($resolver->recurse) {
+    #     $self->logger->auto("DNS:RECURSION_DESIRED");
+    # } else {
+    #     $self->logger->auto("DNS:RECURSION_DISABLED");
+    # }
 
-    if ($resolver->dnssec) {
+    if ($resolver->resolver->dnssec) {
         $self->logger->auto("DNS:DNSSEC_DESIRED");
     } else {
         $self->logger->auto("DNS:DNSSEC_DISABLED");
@@ -600,9 +499,8 @@ sub get_nameservers_at_parent {
 
     $self->logger->auto("DNS:GET_NS_AT_PARENT", $qname, $qclass);
 
-    if ($self->parent->undelegated_test) {
-        $self->logger->auto("DNS:USING_FAKE_GLUE");
-        return sort $self->parent->fake_glue_names;
+    if ($self->resolver->faked_zone($qname)) {
+        return sort $self->resolver->faked_zone($qname);
     }
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
@@ -818,11 +716,7 @@ sub _find_soa {
     my $qclass = shift;
     my $answer;
 
-    if ($self->parent->undelegated_test) {
-        $answer = $self->query_child($qname, $qname, $qclass, 'SOA');
-    } else {
-        $answer = $self->{resolver}->send($qname, "SOA", $qclass);
-    }
+    $answer = $self->{resolver}->recurse($qname, "SOA", $qclass);
 
     return $qname unless ($answer);
     return undef if ($answer->header->rcode eq "NXDOMAIN");
@@ -965,17 +859,7 @@ sub address_is_recursive {
         goto DONE;
     }
 
-    my $resolver = new Net::DNS::Resolver;
-    $resolver->debug($self->{debug_resolver});
-
-    $resolver->udp_timeout($self->{default}{udp_timeout});
-    $resolver->tcp_timeout($self->{default}{tcp_timeout});
-    $resolver->retry($self->{default}{retry});
-    $resolver->retrans($self->{default}{retrans});
-
-    $resolver->recurse(1);
-    $resolver->cdflag(1);
-    $resolver->nameserver($address);
+    my $resolver = DNSCheck::Lookup::Resolver->new($self->parent);
 
     # create nonexisting domain name
     my $nxdomain = "nxdomain.example.com";
@@ -983,7 +867,7 @@ sub address_is_recursive {
     my $nonexisting = sprintf("%s.%s", join("", @tmp[1 .. 6]), $nxdomain);
 
     my $qtype = "SOA";
-    my $packet = $resolver->send($nonexisting, $qtype, $qclass);
+    my $packet = $resolver->get($nonexisting, $qtype, $qclass, $address);
     if ($self->check_timeout($resolver)) {
         $self->logger->auto("DNS:QUERY_TIMEOUT", $address, $nonexisting,
             $qclass, $qtype);
@@ -1089,7 +973,7 @@ sub query_nsid {
 
 ######################################################################
 
-sub _rr2string {
+sub _rr2string {    # Why do this instead of using the native ->string method?
     my $rr = shift;
     my $rdatastr;
 
@@ -1174,7 +1058,7 @@ sub preflight_check {
     my $resolver = $self->{resolver};
     my $name     = shift;
 
-    my $packet = $resolver->send($name, 'NS');
+    my $packet = $resolver->recurse($name, 'NS');
 
     # Can we find an NS record?
     if (defined($packet) and grep { $_->type eq 'NS' } $packet->answer) {
@@ -1187,7 +1071,7 @@ sub preflight_check {
         return 1;
     }
 
-    $packet = $resolver->send($name, 'SOA');
+    $packet = $resolver->recurse($name, 'SOA');
     if (defined($packet) and grep { $_->type eq 'SOA' } $packet->answer) {
         return 1;
     } elsif (!defined($packet)) {
@@ -1231,9 +1115,7 @@ Empty the cache and clear the blacklist.
 
 =item my $packet = $dns->query_resolver(I<qname>, I<qclass>, I<qtype>);
 
-Send a query to the default resolver(s). This will be whatever reslver the
-operating system usually uses (that is, what's in L<resolv.conf> on a Unix
-machine).
+Send a query to the default resolver(s). This will be a L<DNSCheck::Lookup::Resolver> object.
 
 =item my $packet = $dns->query_parent(I<zone>, I<qname>, I<qclass>, I<qtype>);
 

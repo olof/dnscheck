@@ -133,20 +133,6 @@ sub _get_glue {
         }
     }
 
-    if ($parent->undelegated_test) {
-        my @t;
-
-        foreach my $n ($parent->fake_glue_data) {
-            if (ip_is_ipv4($n->[1])) {
-                push @t, Net::DNS::RR->new($n->[0] . ' IN A ' . $n->[1]);
-            } else {
-                push @t, Net::DNS::RR->new($n->[0] . ' IN AAAA ' . $n->[1]);
-            }
-        }
-
-        @glue = sort { $a->name cmp $b->name } (@glue, @t);
-    }
-
     return @glue;
 }
 
@@ -281,10 +267,12 @@ sub ns_parent_child_matching {
     foreach my $ns (@ns_at_parent) {
         unless (scalar grep(/^$ns$/i, @ns_at_child)) {
             if ($self->parent->undelegated_test) {
-                $errors += $self->logger->auto("DELEGATION:POSSIBLE_EXTRA_NS_PARENT", $ns);
-            }
-            else {
-                $errors += $self->logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
+                $errors +=
+                  $self->logger->auto("DELEGATION:POSSIBLE_EXTRA_NS_PARENT",
+                    $ns);
+            } else {
+                $errors +=
+                  $self->logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
             }
         } else {
             push @ns_at_both, $ns;

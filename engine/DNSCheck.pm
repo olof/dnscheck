@@ -51,6 +51,7 @@ use DNSCheck::Test::DNSSEC;
 use DNSCheck::Test::Mail;
 use DNSCheck::Test::SMTP;
 use DNSCheck::Lookup::DNS;
+use DNSCheck::Lookup::Resolver;
 use DNSCheck::Lookup::ASN;
 use DNSCheck::Logger;
 
@@ -105,6 +106,7 @@ sub flush {
 
 sub add_fake_glue {
     my $self    = shift;
+    my $zone    = shift;
     my $ns_name = shift;
     my $ns_ip   = shift;
 
@@ -114,11 +116,13 @@ sub add_fake_glue {
             $self->logger->auto("FAKEGLUE:NO_ADDRESS");
             return;
         } else {
-            push @{ $self->{faked} }, [$ns_name, $_] for @ip;
+            $self->resolver->add_fake_glue($zone, $ns_name, $_) for @ip;
         }
     } else {
-        push @{ $self->{faked} }, [$ns_name, $ns_ip];
+        $self->resolver->add_fake_glue($zone, $ns_name, $ns_ip);
     }
+
+    $self->{faked} = 1;
 
     return 1;
 }
@@ -126,26 +130,7 @@ sub add_fake_glue {
 sub undelegated_test {
     my $self = shift;
 
-    return scalar(@{ $self->{faked} });
-}
-
-sub fake_glue_ips {
-    my $self = shift;
-
-    return map { $_->[1] } @{ $self->{faked} };
-}
-
-sub fake_glue_names {
-    my $self = shift;
-
-    my %tmp = map { $_->[0], $_->[1] } @{ $self->{faked} };
-    return keys %tmp;
-}
-
-sub fake_glue_data {
-    my $self = shift;
-
-    return @{ $self->{faked} };
+    return $self->{faked};
 }
 
 ######################################################################
@@ -168,6 +153,16 @@ sub dns {
     }
 
     return $self->{dns};
+}
+
+sub resolver {
+    my $self = shift;
+
+    unless (defined($self->{resolver})) {
+        $self->{resolver} = DNSCheck::Lookup::Resolver->new($self);
+    }
+
+    return $self->{resolver};
 }
 
 sub asn {

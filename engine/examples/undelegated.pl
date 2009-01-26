@@ -24,7 +24,7 @@ while (@ARGV) {
     my $name = shift @ARGV;
     my $ip   = shift @ARGV;
 
-    $check->add_fake_glue($name, $ip);
+    $check->add_fake_glue($domain, $name, $ip);
 }
 
 $check->zone->test($domain);
