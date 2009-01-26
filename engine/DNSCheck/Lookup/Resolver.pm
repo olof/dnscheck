@@ -53,8 +53,6 @@ sub new {
 
     $self->{parent} = $parent;
 
-    $self->logger->auto("RESOLVER:CREATED");
-
     my $config = $self->config->get("dns");
 
     $self->{cache} = Load(join('', <DATA>));
@@ -219,7 +217,6 @@ sub highest_known_ns {
     )[0];
 
     if ($faked) {
-        $self->logger->auto("RESOLVER:USING_FAKE_GLUE $faked FOR $name");
         return keys %{ $self->cache->{ns}{$faked} };
     }
 
@@ -255,7 +252,6 @@ sub get {
     my $class = shift || 'IN';
     my @ns    = @_;
 
-    $self->logger->auto("RESOLVER:GET $name $type $class @ns");
     my @ns_old = $self->{resolver}->nameservers;
     $self->{resolver}->nameservers(@ns) if @ns;
 
@@ -275,7 +271,6 @@ sub recurse {
 
     $name = $self->canonicalize_name($name);
 
-    $self->logger->auto("RESOLVER:RECURSE $name $type $class");
     my $p =
       $self->get($name, $type, $class,
         $self->simple_names_to_ips($self->highest_known_ns($name)));
@@ -300,8 +295,7 @@ sub recurse {
                         if (my $ip = $self->{cache}{ips}{$n}) {
                             push @ns, keys %$ip;
                         } else {
-                            $self->logger->auto(
-                                "RESOLVER:UNRESOLVABLE_NAME $n");
+                            # What to do here?
                         }
                     }
                 } elsif ($rr->type eq 'SOA') {
@@ -314,7 +308,7 @@ sub recurse {
         } elsif ($h->rcode ne 'NOERROR') {
             return $p;
         } else {
-            $self->logger->auto("RESOLVER:WTF_ERROR");
+            # Do something different here?
             return $p;
         }
     }

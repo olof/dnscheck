@@ -114,6 +114,9 @@ sub test {
           _check_parent($parent, $zone, $ds, $dnskey, $child_result);
         $errors += $parent_errors;
     }
+    
+    # Check if RRSIGs verifies for their respective RRSETs
+    $self->rrsig_validities($zone);
 
   DONE:
     $logger->auto("DNSSEC:END", $zone);
@@ -126,8 +129,6 @@ sub rrsig_validities {
     my $zone = shift;
 
     my $dns = $self->parent->dns;
-
-    $self->logger->auto('DNSSEC:VALIDITIES_BEGIN');
 
     my @ns;
     my $tmp;
@@ -148,7 +149,6 @@ sub rrsig_validities {
 
     # Loop over nameservers
     foreach my $ns (@ns) {
-        $self->logger->auto('DNSSEC:VALIDITIES_SERVER', $ns);
         my $p =
           $dns->query_explicit($zone, 'IN', 'RRSIG', $ns, { aaonly => 1 });
 
@@ -164,8 +164,6 @@ sub rrsig_validities {
                 # Loop over RRSIG records from current nameserver
                 my @rrset;
                 my @keys;
-
-                $self->logger->auto("DNSSEC:RRSIG_AT_SERVER", $rrsig->sig);
 
                 # Fetch the RRset that the RRSIG signs.
                 my $p =
@@ -205,17 +203,15 @@ sub rrsig_validities {
                     )
                   )
                 {
-                    $result += $self->logger->auto('DNSSEC:RRSIG_VALIDATES');
+                    $result += $self->logger->auto('DNSSEC:RRSIG_VALIDATES', $rrsig->keytag);
                 } else {
                     $result +=
                       $self->logger->auto('DNSSEC:RRSIG_VALIDATION_FAILED',
-                        $rrsig->vrfyerrstr);
+                        $rrsig->keytag, $rrsig->vrfyerrstr);
                 }
             }
         }
     }
-
-    $self->logger->auto('DNSSEC:VALIDITIES_END');
 
     return $result;
 }
