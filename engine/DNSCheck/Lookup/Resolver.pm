@@ -314,6 +314,36 @@ sub recurse {
     }
 }
 
+=head1 NAME
+
+DNSCheck::Lookup::Resolver - a recursive DNS resolver for DNSCheck
+
+=head1 DESCRIPTION
+
+This module does recursive lookups, and is heavily used by L<DNSCheck::Lookup::DNS>. 
+
+=head1 METHODS
+
+=over
+
+=item ->new($parent)
+
+Creates and configures a new resolver object. The parent object should be a
+L<DNSCheck> object, and it will be used to find DNS resolver configuration
+information.
+
+=item ->get($name, $type, $class, @nameservers)
+
+Send a DNS query to specified servers.
+
+=item ->recurse($name, $type, [$class])
+
+Do a recursive query. If the class is not specified, it defaults to IN.
+
+=back
+
+=cut
+
 __DATA__
 ---
 ips:

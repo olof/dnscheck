@@ -411,6 +411,17 @@ since the included database schema assumes that the database is MySQL,
 this method will try to connect to the server five times before it
 gives up and dies.
 
+=item ->add_fake_glue($zone, $nsname, [$nsip])
+
+Add an item of "fake" glue data. For the given zone, the provided information
+will be used instead of what can be found live in DNS (if any). If an IP
+address is provided, it will be used. If not, an attempt to look up addresses
+for the name will be made. If that attempt fails, the name will be ignored.
+
+=item ->undelegated_test()
+
+This method returns true of any "fake" glue information has been provided.
+
 =item ->zone()
 
 =item ->host()
