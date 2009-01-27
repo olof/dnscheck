@@ -37,6 +37,50 @@ use strict;
 use YAML;
 use Net::IP;
 
+my $root_zone =<<'EOD';
+---
+ips:
+  a.root-servers.net.:
+    198.41.0.4: 1
+    2001:503:ba3e:0:0:0:2:30: 1
+  b.root-servers.net.:
+    192.228.79.201: 1
+  c.root-servers.net.:
+    192.33.4.12: 1
+  d.root-servers.net.:
+    128.8.10.90: 1
+  e.root-servers.net.:
+    192.203.230.10: 1
+  f.root-servers.net.:
+    192.5.5.241: 1
+    2001:500:2f:0:0:0:0:f: 1
+  g.root-servers.net.:
+    192.112.36.4: 1
+  h.root-servers.net.:
+    128.63.2.53: 1
+    2001:500:1:0:0:0:803f:235: 1
+  i.root-servers.net.:
+    192.36.148.17: 1
+  j.root-servers.net.:
+    192.58.128.30: 1
+    2001:503:c27:0:0:0:2:30: 1
+ns:
+  .:
+    a.root-servers.net.: 1
+    b.root-servers.net.: 1
+    c.root-servers.net.: 1
+    d.root-servers.net.: 1
+    e.root-servers.net.: 1
+    f.root-servers.net.: 1
+    g.root-servers.net.: 1
+    h.root-servers.net.: 1
+    i.root-servers.net.: 1
+    j.root-servers.net.: 1
+    k.root-servers.net.: 1
+    l.root-servers.net.: 1
+    m.root-servers.net.: 1
+EOD
+
 # In order to be able to know for sure where certain information comes from,
 # and/or modify parts of resolver chains, we need to do our own recursive
 # lookups rather than rely on an external caching recursive resolver. This
@@ -55,7 +99,7 @@ sub new {
 
     my $config = $self->config->get("dns");
 
-    $self->{cache} = Load(join('', <DATA>));
+    $self->{cache} = Load($root_zone);
 
     $self->{resolver} = Net::DNS::Resolver->new(
 
@@ -128,12 +172,14 @@ sub add_fake_glue {
     $self->{fake}{ips}{$nsname}         = 1;
 }
 
+# Return a list of zones with fake glue
 sub faked_zones {
     my $self = shift;
 
     return keys %{ $self->{fake}{ns} };
 }
 
+# Return a list of NS names for a zone with fake glue
 sub faked_zone {
     my $self = shift;
     my $name = shift;
@@ -343,46 +389,3 @@ Do a recursive query. If the class is not specified, it defaults to IN.
 =back
 
 =cut
-
-__DATA__
----
-ips:
-  a.root-servers.net.:
-    198.41.0.4: 1
-    2001:503:ba3e:0:0:0:2:30: 1
-  b.root-servers.net.:
-    192.228.79.201: 1
-  c.root-servers.net.:
-    192.33.4.12: 1
-  d.root-servers.net.:
-    128.8.10.90: 1
-  e.root-servers.net.:
-    192.203.230.10: 1
-  f.root-servers.net.:
-    192.5.5.241: 1
-    2001:500:2f:0:0:0:0:f: 1
-  g.root-servers.net.:
-    192.112.36.4: 1
-  h.root-servers.net.:
-    128.63.2.53: 1
-    2001:500:1:0:0:0:803f:235: 1
-  i.root-servers.net.:
-    192.36.148.17: 1
-  j.root-servers.net.:
-    192.58.128.30: 1
-    2001:503:c27:0:0:0:2:30: 1
-ns:
-  .:
-    a.root-servers.net.: 1
-    b.root-servers.net.: 1
-    c.root-servers.net.: 1
-    d.root-servers.net.: 1
-    e.root-servers.net.: 1
-    f.root-servers.net.: 1
-    g.root-servers.net.: 1
-    h.root-servers.net.: 1
-    i.root-servers.net.: 1
-    j.root-servers.net.: 1
-    k.root-servers.net.: 1
-    l.root-servers.net.: 1
-    m.root-servers.net.: 1
