@@ -121,6 +121,15 @@ sub get {
     return $res;
 }
 
+sub put {
+    my $self = shift;
+    
+    my ($key, $value) = @_;
+    $self->{$key} = $value;
+    
+    return $value;
+}
+
 ###
 ### Non-public functions below here
 ###
