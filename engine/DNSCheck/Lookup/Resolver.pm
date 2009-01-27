@@ -220,7 +220,7 @@ sub canonicalize_name {
     my $self = shift;
     my $name = shift;
 
-    $name = lc($name);
+    $name = lc($name) || '';
 
     if (my $i = Net::IP->new($name)) {
         $name = $i->reverse_ip;
