@@ -98,7 +98,8 @@ sub new {
     $self->{parent} = $parent;
 
     my $config = $self->config->get("dns");
-
+    $self->{debug} = $parent->config->get("debug");
+    
     $self->{cache} = Load($root_zone);
 
     $self->{resolver} = Net::DNS::Resolver->new(
@@ -111,7 +112,7 @@ sub new {
     $self->{resolver}->cdflag(1);
     $self->{resolver}->recurse(0);
     $self->{resolver}->dnssec(0);
-    $self->{resolver}->debug($config->{debug});
+    $self->{resolver}->debug(1) if $self->{debug} > 1;
     $self->{resolver}->udp_timeout($config->{udp_timeout});
     $self->{resolver}->tcp_timeout($config->{tcp_timeout});
     $self->{resolver}->retry($config->{retry});
@@ -298,10 +299,13 @@ sub get {
     my $class = shift || 'IN';
     my @ns    = @_;
 
+    print STDERR "get: $name $type $class @ns\n" if $self->{debug};
+
     my @ns_old = $self->{resolver}->nameservers;
     $self->{resolver}->nameservers(@ns) if @ns;
 
     my $p = $self->{resolver}->send($name, $class, $type);
+    print STDERR "get: " . $p->string . "\n" if $self->{debug};
     $self->remember($p, $name, $type, $class) if defined($p);
 
     $self->{resolver}->nameservers(@ns_old);
@@ -314,8 +318,12 @@ sub recurse {
     my $name  = shift;
     my $type  = shift || 'NS';
     my $class = shift || 'IN';
+    
+    my %tried;
 
     $name = $self->canonicalize_name($name);
+    
+    print STDERR "recurse: $name $type $class\n" if $self->{debug};
 
     my $p =
       $self->get($name, $type, $class,
@@ -326,9 +334,13 @@ sub recurse {
     my $h = $p->header;
 
     while (1) {
-
+        
         if ($h->aa) {    # An authoritative answer
+            print STDERR "recurse: authoritative\n" if $self->{debug};
             return $p;
+        } elsif ($h->rcode ne 'NOERROR') {
+            print STDERR "recurse: ".$h->rcode."\n" if $self->{debug};
+                return $p;
         } elsif ($h->nscount > 0) {    # Authority records
             my @ns;
             foreach my $rr ($p->authority) {
@@ -348,13 +360,23 @@ sub recurse {
                     return $p;
                 }
             }
+            my $fingerprint = join '|', sort @ns;
+            if ($tried{$fingerprint}) {
+                # Looping
+                return;
+            } else {
+                $tried{$fingerprint} = 1;
+            }
+            
             $p = $self->get($name, $type, $class, @ns);
-            return unless defined($p);
+            unless(defined($p)){
+                print STDERR "recurse: failed to follow\n" if $self->{debug};
+                return;
+            }
             $h = $p->header;
-        } elsif ($h->rcode ne 'NOERROR') {
-            return $p;
         } else {
             # Do something different here?
+            print STDERR "recurse: wtf\n" if $self->{debug};
             return $p;
         }
     }

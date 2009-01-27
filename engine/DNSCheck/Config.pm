@@ -106,7 +106,6 @@ sub new {
 
     # Special cases
     $self->{'hostname'} = hostname;
-    $self->{'debug'}    = 1;
     $self->{'logging'}{'interactive'} = 1 if $arg{'interactive'};
 
     return $self;
