@@ -37,7 +37,7 @@ use strict;
 use YAML;
 use Net::IP;
 
-my $root_zone =<<'EOD';
+my $root_zone = <<'EOD';
 ---
 ips:
   a.root-servers.net.:
@@ -99,7 +99,7 @@ sub new {
 
     my $config = $self->config->get("dns");
     $self->{debug} = $parent->config->get("debug");
-    
+
     $self->{cache} = Load($root_zone);
 
     $self->{resolver} = Net::DNS::Resolver->new(
@@ -112,7 +112,7 @@ sub new {
     $self->{resolver}->cdflag(1);
     $self->{resolver}->recurse(0);
     $self->{resolver}->dnssec(0);
-    $self->{resolver}->debug(1) if $self->{debug} > 1;
+    $self->{resolver}->debug(1) if ($self->{debug} and $self->{debug} > 1);
     $self->{resolver}->udp_timeout($config->{udp_timeout});
     $self->{resolver}->tcp_timeout($config->{tcp_timeout});
     $self->{resolver}->retry($config->{retry});
@@ -318,11 +318,11 @@ sub recurse {
     my $name  = shift;
     my $type  = shift || 'NS';
     my $class = shift || 'IN';
-    
+
     my %tried;
 
     $name = $self->canonicalize_name($name);
-    
+
     print STDERR "recurse: $name $type $class\n" if $self->{debug};
 
     my $p =
@@ -334,13 +334,13 @@ sub recurse {
     my $h = $p->header;
 
     while (1) {
-        
+
         if ($h->aa) {    # An authoritative answer
             print STDERR "recurse: authoritative\n" if $self->{debug};
             return $p;
         } elsif ($h->rcode ne 'NOERROR') {
-            print STDERR "recurse: ".$h->rcode."\n" if $self->{debug};
-                return $p;
+            print STDERR "recurse: " . $h->rcode . "\n" if $self->{debug};
+            return $p;
         } elsif ($h->nscount > 0) {    # Authority records
             my @ns;
             foreach my $rr ($p->authority) {
@@ -353,6 +353,7 @@ sub recurse {
                         if (my $ip = $self->{cache}{ips}{$n}) {
                             push @ns, keys %$ip;
                         } else {
+
                             # What to do here?
                         }
                     }
@@ -362,19 +363,21 @@ sub recurse {
             }
             my $fingerprint = join '|', sort @ns;
             if ($tried{$fingerprint}) {
+
                 # Looping
                 return;
             } else {
                 $tried{$fingerprint} = 1;
             }
-            
+
             $p = $self->get($name, $type, $class, @ns);
-            unless(defined($p)){
+            unless (defined($p)) {
                 print STDERR "recurse: failed to follow\n" if $self->{debug};
                 return;
             }
             $h = $p->header;
         } else {
+
             # Do something different here?
             print STDERR "recurse: wtf\n" if $self->{debug};
             return $p;

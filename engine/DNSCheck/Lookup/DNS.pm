@@ -594,7 +594,7 @@ sub _init_nameservers_helper {
         if (defined($ipv4)) {
             foreach my $rr ($ipv4->answer) {
                 if (($rr->type eq "A") && $rr->address) {
-                    $nsv4{$rr->address} = 1;
+                    $nsv4{ $rr->address } = 1;
                     $self->logger->auto("DNS:NAMESERVER_FOUND", $qname, $qclass,
                         $rr->name, $rr->address);
                 }
@@ -607,7 +607,7 @@ sub _init_nameservers_helper {
         if (defined($ipv6)) {
             foreach my $rr ($ipv6->answer) {
                 if (($rr->type eq "AAAA") && $rr->address) {
-                    $nsv6{$rr->address} = 1;
+                    $nsv6{ $rr->address } = 1;
                     $self->logger->auto("DNS:NAMESERVER_FOUND", $qname, $qclass,
                         $rr->name, $rr->address);
                 }
@@ -617,7 +617,8 @@ sub _init_nameservers_helper {
 
   DONE:
     $self->{nameservers}{$qname}{$qclass}{ipv4} = [keys %nsv4];
-    $self->{nameservers}{$qname}{$qclass}{ipv6} = [keys %nsv6] if (keys %nsv6) > 0;
+    $self->{nameservers}{$qname}{$qclass}{ipv6} = [keys %nsv6]
+      if (keys %nsv6) > 0;
     $self->logger->auto("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
 }
 

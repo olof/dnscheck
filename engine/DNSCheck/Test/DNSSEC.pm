@@ -114,7 +114,7 @@ sub test {
           _check_parent($parent, $zone, $ds, $dnskey, $child_result);
         $errors += $parent_errors;
     }
-    
+
     # Check if RRSIGs verifies for their respective RRSETs
     $self->rrsig_validities($zone);
 
@@ -203,7 +203,9 @@ sub rrsig_validities {
                     )
                   )
                 {
-                    $result += $self->logger->auto('DNSSEC:RRSIG_VALIDATES', $rrsig->keytag);
+                    $result +=
+                      $self->logger->auto('DNSSEC:RRSIG_VALIDATES',
+                        $rrsig->keytag);
                 } else {
                     $result +=
                       $self->logger->auto('DNSSEC:RRSIG_VALIDATION_FAILED',
