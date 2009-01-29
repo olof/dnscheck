@@ -42,6 +42,7 @@ sub test {
     my $self   = shift;
     my $parent = $self->parent;
     my $email  = shift;
+    my $zone   = shift;
 
     return unless $parent->config->should_run;
 
@@ -67,6 +68,10 @@ sub test {
 
     if (@mailhosts) {
         $logger->auto("MAIL:MAIL_EXCHANGER", $email, join(",", @mailhosts));
+    }
+    
+    if (defined($zone) and scalar(@mailhosts) == grep {m/$zone$/} @mailhosts) {
+        $logger->auto("MAIL:ALL_MX_IN_ZONE", $email, $zone);
     }
 
     unless (scalar @mailhosts) {
@@ -177,7 +182,7 @@ Mail for the email address must be deliverable via SMTP.
 
 =head1 METHODS
 
-test(I<parent>, I<emailaddress>);
+test(I<emailaddress>, [I<zone>]);
 
 =head1 EXAMPLES
 

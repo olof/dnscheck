@@ -542,6 +542,9 @@ messages:
  MAIL:DELIVERY_IPV6_NOT_OK:
   args: 1
   format: Leverans över IPv6 till %s fungerade inte.
+ MAIL:ALL_MX_IN_ZONE:
+     args: 2
+     format: Alla mailservrar för %s finns i zonen %s.
  MAIL:END:
   args: 1
   format: Klar med test av e-postadressen %s.

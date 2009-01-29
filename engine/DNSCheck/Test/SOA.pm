@@ -211,7 +211,7 @@ sub test_soa_rname {
         $mailaddr =~ s/\\\././g;
 
         if ($parent->config->get('net')->{smtp}) {
-            if ($parent->mail->test($mailaddr)) {
+            if ($parent->mail->test($mailaddr, $zone)) {
                 $logger->auto("SOA:RNAME_UNDELIVERABLE",
                     $zone, $soa->rname, $mailaddr);
             } else {
