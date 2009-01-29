@@ -530,6 +530,18 @@ messages:
   args: 1
   format: Mail exchanger %s is reachable by IPv6 only.
   descr: This mail exchanger is only reachable via IPv6, making it impossible for most hosts on the Internet to deliver emails to it. If more than one MX exists and at least one is reachable by IPv4 this can be ignored.
+ MAIL:DELIVERY_IPV4_OK:
+     args: 1
+     format: Delivery over IPv4 to %s ok.
+ MAIL:DELIVERY_IPV6_OK:
+     args: 1
+     format: Delivery over IPv6 to %s ok.
+ MAIL:DELIVERY_IPV4_NOT_OK:
+     args: 1
+     format: Delivery over IPv4 to %s could not be done.
+ MAIL:DELIVERY_IPV6_NOT_OK:
+     args: 1
+     format: Delivery over IPv6 to %s could not be done.
  MAIL:END:
   args: 1
   format: Done testing email address %s.

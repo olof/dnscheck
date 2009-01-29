@@ -47,7 +47,8 @@ sub test {
 
     my $logger           = $parent->logger;
     my $errors           = 0;
-    my $mail_delivery_ok = 0;
+    my $mail_delivery_v4_ok = 0;
+    my $mail_delivery_v6_ok = 0;
 
     $logger->module_stack_push();
     $logger->auto("MAIL:BEGIN", $email);
@@ -101,10 +102,11 @@ sub test {
 
         if (defined($ipv4) && $parent->config->get("net")->{ipv4}) {
             foreach my $rr ($ipv4->answer) {
+                next if $mail_delivery_v4_ok;
                 next unless ($rr->type eq "A");
                 my $tmp = $parent->smtp->test($hostname, $rr->address, $email);
                 unless ($tmp) {
-                    $mail_delivery_ok++;
+                    $mail_delivery_v4_ok++;
                 } else {
                     $errors += $tmp;
                 }
@@ -113,10 +115,11 @@ sub test {
 
         if (defined($ipv6) && $parent->config->get("net")->{ipv6}) {
             foreach my $rr ($ipv6->answer) {
+                next if $mail_delivery_v6_ok;
                 next unless ($rr->type eq "AAAA");
                 my $tmp = $parent->smtp->test($hostname, $rr->address, $email);
                 unless ($tmp) {
-                    $mail_delivery_ok++;
+                    $mail_delivery_v6_ok++;
                 } else {
                     $errors += $tmp;
                 }
@@ -125,6 +128,18 @@ sub test {
     }
 
   DONE:
+    if ($mail_delivery_v4_ok) {
+        $errors += $logger->auto("MAIL:DELIVERY_IPV4_OK", $email)
+    } else {
+        $errors += $logger->auto("MAIL:DELIVERY_IPV4_NOT_OK", $email);
+    }
+
+    if ($mail_delivery_v6_ok) {
+        $errors += $logger->auto("MAIL:DELIVERY_IPV6_OK", $email)
+    } else {
+        $errors += $logger->auto("MAIL:DELIVERY_IPV6_NOT_OK", $email);
+    }
+    
     $logger->auto("MAIL:END", $email);
     $logger->module_stack_pop();
 

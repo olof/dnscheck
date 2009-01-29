@@ -530,6 +530,18 @@ messages:
   args: 1
   format: E-postservern %s är endast nåbar via IPv6.
   descr: Denna e-postserver är endast nåbar via IPv6, vilket gör det omöjligt för de flesta att skicka epost till den. Om mer än en MX finns och minst en går att nå via IPv4 kan detta ignoreras. 
+ MAIL:DELIVERY_IPV4_OK:
+  args: 1
+  format: Leverans över IPv4 till %s fungerade.
+ MAIL:DELIVERY_IPV6_OK:
+  args: 1
+  format: Leverans över IPv6 till %s fungerade.
+ MAIL:DELIVERY_IPV4_NOT_OK:
+  args: 1
+  format: Leverans över IPv4 till %s fungerade inte.
+ MAIL:DELIVERY_IPV6_NOT_OK:
+  args: 1
+  format: Leverans över IPv6 till %s fungerade inte.
  MAIL:END:
   args: 1
   format: Klar med test av e-postadressen %s.
