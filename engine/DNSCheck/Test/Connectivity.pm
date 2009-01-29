@@ -47,6 +47,8 @@ sub test {
     my $logger = $self->logger;
     my $errors = 0;
 
+    return unless $parent->config->should_run;
+
     $logger->module_stack_push();
     $logger->auto("CONNECTIVITY:BEGIN", $zone);
 

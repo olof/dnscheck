@@ -62,6 +62,8 @@ sub test {
     my $errors = 0;
     my $message;
 
+    return unless $parent->config->should_run;
+
     unless ($parent->config->get("net")->{smtp}) {
         $logger->auto('SMTP:SKIPPED');
         return 0;

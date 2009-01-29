@@ -43,6 +43,8 @@ sub test {
     my $parent = $self->parent;
     my $email  = shift;
 
+    return unless $parent->config->should_run;
+
     my $logger           = $parent->logger;
     my $errors           = 0;
     my $mail_delivery_ok = 0;

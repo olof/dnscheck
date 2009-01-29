@@ -79,6 +79,8 @@ sub test {
     my $parent  = $self->parent;
     my $address = shift;
 
+    return unless $parent->config->should_run;
+
     my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;

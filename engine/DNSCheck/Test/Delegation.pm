@@ -46,6 +46,8 @@ sub test {
 
     my $parent = $self->parent;
 
+    return unless $parent->config->should_run;
+
     if (!defined($history) && $parent->dbh) {
         $history = $parent->dbh->selectcol_arrayref(
             'SELECT DISTINCT nameserver FROM delegation_history WHERE domain=?',
@@ -148,6 +150,8 @@ sub consistent_glue {
     my $logger = $self->logger;
     my $qclass = $self->qclass;
 
+    return unless $parent->config->should_run;
+
     my $errors = 0;
 
     # REQUIRE: check for inconsistent glue
@@ -240,6 +244,8 @@ sub ns_parent_child_matching {
     my $errors = 0;
     my $testable;
 
+    return unless $self->parent->config->should_run;
+
     my @ns_at_parent =
       $self->parent->dns->get_nameservers_at_parent($zone, $self->qclass);
     @ns_at_parent = () unless $ns_at_parent[0];
@@ -294,6 +300,8 @@ sub enough_nameservers {
     my $zone   = shift;
     my $errors = 0;
 
+    return unless $self->parent->config->should_run;
+
     # REQUIRE: at least two IPv4 nameservers must be found
     my $ipv4_ns =
       $self->parent->dns->get_nameservers_ipv4($zone, $self->qclass);
@@ -327,6 +335,8 @@ sub check_history {
     my $parent = $self->parent;
     my $qclass = $self->qclass;
     my $logger = $self->logger;
+
+    return unless $parent->config->should_run;
 
     my @old = ();
 

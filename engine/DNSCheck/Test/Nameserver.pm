@@ -46,6 +46,8 @@ sub test {
     my $zone       = shift || $self->zone;
     my $nameserver = shift || $self->ns;
 
+    return unless $parent->config->should_run;
+
     my $logger = $parent->logger;
     my $errors = 0;
 
@@ -206,6 +208,8 @@ sub ns_check_id {
     my $address    = shift;
     my $nameserver = shift || $self->ns;
 
+    return unless $self->parent->config->should_run;
+
     my $logger = $self->logger;
 
     my @domains =
@@ -237,6 +241,8 @@ sub ns_recursive {
     my $address    = shift;
     my $nameserver = shift || $self->ns;
 
+    return unless $self->parent->config->should_run;
+
     # REQUIRE: Nameserver should not be recursive
     $self->logger->auto("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
     if ($self->parent->dns->address_is_recursive($address, $self->qclass)) {
@@ -253,6 +259,8 @@ sub ns_authoritative {
     my $address    = shift;
     my $nameserver = shift || $self->ns;
     my $zone       = shift || $self->zone;
+
+    return unless $self->parent->config->should_run;
 
     # REQUIRE: Nameserver must be authoritative for the zone
     #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
@@ -277,6 +285,8 @@ sub ns_udp {
     my $nameserver = shift || $self->ns;
     my $zone       = shift || $self->zone;
 
+    return unless $self->parent->config->should_run;
+
     $self->logger->auto("NAMESERVER:TESTING_UDP", $nameserver, $address);
     my $packet =
       $self->parent->dns->query_explicit($zone, $self->qclass, "SOA", $address,
@@ -296,6 +306,8 @@ sub ns_tcp {
     my $nameserver = shift || $self->ns;
     my $zone       = shift || $self->zone;
 
+    return unless $self->parent->config->should_run;
+
     $self->logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
     my $packet =
       $self->parent->dns->query_explicit($zone, $self->qclass, "SOA", $address,
@@ -314,6 +326,8 @@ sub ns_axfr {
     my $address    = shift;
     my $nameserver = shift || $self->ns;
     my $zone       = shift || $self->zone;
+
+    return unless $self->parent->config->should_run;
 
     $self->logger->auto("NAMESERVER:TESTING_AXFR", $nameserver, $address);
     if ($self->parent->dns->check_axfr($address, $zone, $self->qclass)) {
@@ -377,13 +391,6 @@ object as usual).
 For this test, a lookup on the nameserver name will be made and all tests run
 on all addresses found (obeying global settings for use of IPv4 and IPv6, of
 course).
-
-=item ->test_by_ip($zone, $address)
-
-Perform as many of the default tests as make sense for the named zone on a
-nameserver specified by IP address, and the L<DNSCheck::Test::Host> test is
-replaced by only a L<DNSCheck::Test::Address> test. The same as L<test()> in
-other respects.
 
 =item ->zone($zone)
 

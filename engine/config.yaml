@@ -36,7 +36,8 @@ daemon:
 # This information is expected to be overridden in site_config.yaml
 # Not all keys will be useful for all setups. See the documentation
 # for the various programs about which keys they use, and what they
-# mean.
+# mean. Some info is in DNSCheck::Overview.
+
 dbi:
     host: 127.0.0.1
     port: 13317

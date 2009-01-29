@@ -43,6 +43,8 @@ sub test {
     my $parent   = $self->parent;
     my $hostname = shift;
 
+    return unless $parent->config->should_run;
+
     my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;
@@ -96,6 +98,8 @@ sub test {
 sub host_syntax {
     my $self     = shift;
     my $hostname = shift;
+
+    return unless $self->parent->config->should_run;
 
     my @labels = split(/\./, $hostname);
 
@@ -167,6 +171,8 @@ All host addresses (IPv4 and IPv6) must be valid.
 =head1 METHODS
 
 test(I<parent>, I<hostname>);
+
+host_syntax(I<hostname>);
 
 =head1 EXAMPLES
 

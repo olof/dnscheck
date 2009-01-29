@@ -175,37 +175,37 @@ sub remember {
 sub get_preload_data {
     my $self = shift;
     my %cache;
-    
+
     my $res = Net::DNS::Resolver->new;
-    my $z   = $res->send('.', 'IN', 'NS');
-    
+    my $z = $res->send('.', 'IN', 'NS');
+
     if (!defined($z) or $z->header->ancount == 0) {
-        die "Failed to get root zone data"
+        die "Failed to get root zone data";
     }
-    
+
     foreach my $rr ($z->answer) {
         next unless $rr->type eq 'NS';
-        
-        $cache{ns}{'.'}{$self->canonicalize_name($rr->nsdname)} = 1
+
+        $cache{ns}{'.'}{ $self->canonicalize_name($rr->nsdname) } = 1;
     }
-    
-    foreach my $nsname (keys %{$cache{ns}{'.'}}) {
+
+    foreach my $nsname (keys %{ $cache{ns}{'.'} }) {
         $nsname = $self->canonicalize_name($nsname);
-        
+
         my $a = $res->send($nsname, 'IN', 'A');
         next if (!defined($a) or $a->header->ancount == 0);
         foreach my $rr ($a->answer) {
             next unless $rr->type eq 'A';
-            
-            $cache{ips}{$nsname}{$rr->address} = 1;
+
+            $cache{ips}{$nsname}{ $rr->address } = 1;
         }
 
         my $aaaa = $res->send($nsname, 'IN', 'AAAA');
         next if (!defined($aaaa) or $aaaa->header->ancount == 0);
         foreach my $rr ($aaaa->answer) {
             next unless $rr->type eq 'AAAA';
-            
-            $cache{ips}{$nsname}{$rr->address} = 1;
+
+            $cache{ips}{$nsname}{ $rr->address } = 1;
         }
     }
 

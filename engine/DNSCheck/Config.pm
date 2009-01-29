@@ -123,11 +123,25 @@ sub get {
 
 sub put {
     my $self = shift;
-    
+
     my ($key, $value) = @_;
     $self->{$key} = $value;
-    
+
     return $value;
+}
+
+sub should_run {
+    my $self = shift;
+
+    my (undef, undef, undef, $subroutine) = caller(1);
+
+    if ($self->get("disable") and $subroutine =~ /^DNSCheck::Test::(.*)$/) {
+        my ($module, $test) = map { lc($_) } split('::', $1, 2);
+
+        return !$self->get("disable")->{$module}{$test};
+    } else {
+        return 1;
+    }
 }
 
 ###

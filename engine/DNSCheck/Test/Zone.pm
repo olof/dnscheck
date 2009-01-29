@@ -47,6 +47,8 @@ sub test {
     my $qclass = $self->qclass;
     my $logger = $parent->logger;
 
+    return unless $parent->config->should_run;
+
     $logger->logname($zone);
 
     $logger->module_stack_push();

@@ -44,6 +44,8 @@ sub test {
     my $self = shift;
     my $zone = shift;
 
+    return unless $self->parent->config->should_run;
+
     my $logger = $self->parent->logger;
 
     $logger->module_stack_push();
@@ -96,6 +98,8 @@ sub test_soa_existence {
     my $self = shift;
     my $zone = shift;
 
+    return unless $self->parent->config->should_run;
+
     my $packet =
       $self->parent->dns->query_child($zone, $zone, $self->qclass, "SOA");
 
@@ -127,6 +131,8 @@ sub test_soa_mname {
 
     my $parent = $self->parent;
     my $logger = $self->logger;
+
+    return unless $parent->config->should_run;
 
     my $errors = 0;
 
@@ -195,6 +201,8 @@ sub test_soa_rname {
     my $parent = $self->parent;
     my $logger = $self->logger;
 
+    return unless $parent->config->should_run;
+
     # REQUIRE: SOA RNAME must have a valid syntax (@ vs .)
     # REQUIRE: SOA RNAME address should be deliverable
     if ($soa->rname =~ /^(.+?)(?<!\\)\.(.+)$/) {
@@ -228,6 +236,8 @@ sub test_soa_values {
 
     my $parent = $self->parent;
     my $logger = $self->logger;
+
+    return unless $parent->config->should_run;
 
     my $params = $parent->config->get("params");
 

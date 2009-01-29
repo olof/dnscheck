@@ -48,6 +48,8 @@ sub test {
     my $parent = $self->parent;
     my $zone   = shift;
 
+    return unless $parent->config->should_run;
+
     my $qclass = $self->qclass;
     my $logger = $parent->logger;
     my $errors = 0;
@@ -127,6 +129,8 @@ sub test {
 sub rrsig_validities {
     my $self = shift;
     my $zone = shift;
+
+    return unless $self->parent->config->should_run;
 
     my $dns = $self->parent->dns;
 
@@ -569,6 +573,8 @@ At least one DS algorithm should be of type RSA/SHA1.
 =over
 
 =item ->test($zonename)
+
+=item ->rrsig_validities($zonename)
 
 =back
 
