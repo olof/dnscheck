@@ -54,7 +54,7 @@ sub MY::postamble {
     package MY;
     my $self = shift;
 
-    my $instprefix = $self->{PREFIX};
+    my $instprefix = $self->{SITEPREFIX};
 
     my $tmp = qq#
 

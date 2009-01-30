@@ -50,7 +50,7 @@ sub new {
 
     my %arg = @_;
 
-    $self->{configdir} = catfile($Config{'installprefix'}, 'share/dnscheck');
+    $self->{configdir} = catfile($Config{'siteprefix'}, 'share/dnscheck');
     $self->{configdir} = $arg{'configdir'} if defined($arg{'configdir'});
 
     $self->{sitedir} = $self->{configdir};
