@@ -300,7 +300,7 @@ sub query_explicit {
     $self->logger->auto("DNS:QUERY_EXPLICIT", $address, $qname, $qclass,
         $qtype);
 
-    unless (_querible($address)) {
+    unless ($self->_querible($address)) {
         $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return undef;
     }
@@ -855,7 +855,7 @@ sub address_is_recursive {
 
     # no blacklisting here, since some nameservers ignore recursive queries
 
-    unless (_querible($address)) {
+    unless ($self->_querible($address)) {
         $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         goto DONE;
     }
@@ -904,7 +904,7 @@ sub check_axfr {
     my $qname   = shift;
     my $qclass  = shift;
 
-    unless (_querible($address)) {
+    unless ($self->_querible($address)) {
         $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return 0;
     }
@@ -936,7 +936,7 @@ sub query_nsid {
     my $qclass  = shift;
     my $qtype   = shift;
 
-    unless (_querible($address)) {
+    unless ($self->_querible($address)) {
         $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return undef;
     }
@@ -1006,10 +1006,14 @@ sub _rr2string {    # Why do this instead of using the native ->string method?
 }
 
 sub _querible {
+    my $self = shift;
     my $address = shift;
-
+    my $conf = $self->parent->config->get("net");
+    
     my $ip = new Net::IP($address);
 
+    return 0 if $ip->version==4 and !$conf->{ipv4};
+    return 0 if $ip->version==6 and !$conf->{ipv6};
     return 1 if ($ip->iptype eq "PUBLIC");            # IPv4
     return 1 if ($ip->iptype eq "GLOBAL-UNICAST");    # IPv6
     return 0;
