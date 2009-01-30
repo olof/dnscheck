@@ -12,7 +12,6 @@ body {
 }
 
 #top {
-	height: 220px;
 	background: #fff url(../_img/bg_top.png) no-repeat;
 }
 
@@ -45,11 +44,13 @@ body {
 }
 
 #searchbox {
+	display: inline;
 	float: left;
-	clear: left;
+	clear: both;
 	width: 385px;
-	padding: 20px;
+	padding: 20px 20px 0 20px;
 	margin-left: 170px;
+	background: url(../_img/bg_bottom_searchbox.png) no-repeat left bottom;
 }
 
 #menu {
@@ -77,44 +78,180 @@ body {
 	padding-left: 10px;
 }
 
+.testtabs {
+	clear: both;
+	border-bottom: 1px solid #009fc5;
+	height: 28px;
+}
+
+.testtabs ul {
+	margin: 0;
+	padding: 0 0 0 10px;
+	list-style-type: none;
+}
+
+.testtabs ul li {
+	float: left;
+	height: 27px;
+	background: url(../_img/bg_testtab_right_off.png) no-repeat top right;
+	margin-right: 2px;
+	padding-right: 10px;
+}
+
+.testtabs ul li a {
+	float: left;
+	height: 27px;
+	display: block;
+	background: url(../_img/bg_testtab_left_off.png) no-repeat top left;
+	color: #666;
+	font-size: 0.9em;
+	line-height: 27px;
+	padding-left: 10px;
+}
+
+.testtabs ul li.testtabson {
+	height: 29px;
+	background: url(../_img/bg_testtab_right_on.png) no-repeat top right;
+}
+
+.testtabs ul li.testtabson a {
+	height: 29px;
+	background: url(../_img/bg_testtab_left_on.png) no-repeat top left;
+	color: #fff;
+	font-weight: bold;
+	line-height: 29px;
+}
 
 #searchhead {
-	margin: 0;
+	margin: 15px 0;
 	color: #ff6b00;
+	clear: both;
 }
 
 p#testtext {
+	clear: both;
 	margin: 0 0 15px 0;
 	color: #666;
 	font-size: 0.8em;
 }
 
-p#testinput {
-	margin: 0;
+#testinput {
+	margin: 15px 0;
+}
+
+#testinput label {
+	height: 36px;
+	width: 123px;
+	background: #fff url(../_img/bg_label_testinput.png) no-repeat top;
+	font-size: 0.9em;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+	line-height: 36px;
+	float: left;	
 }
 
 #domaininput {
-	height: 32px;
-	width: 260px;
-	background: #fff url(../_img/bg_testinput.png) repeat-x top;
-	border: 1px solid #ccc;
-	font-size: 1.2em;
+	height: 26px;
+	width: 242px;
+	border: none;
+	padding: 5px 10px;
+	background: #fff url(../_img/bg_testinput.png) no-repeat top;
+	font-size: 1.1em;
 	color: #666;
-	line-height: 32px;
-	float: left;
+	line-height: 36px;
+	float: right;
 }
 
 a.button:link, a.button:visited {
 	display: block;
 	background: #333 url(../_img/bg_testbutton.png) no-repeat;
-	height: 34px;
-	width: 97px;
-	color: #f90;
+	height: 38px;
+	width: 123px;
+	color: #fff;
 	text-decoration: none;
 	font-size: 1em;
-	line-height: 34px;
+	line-height: 38px;
+	font-weight: bold;
 	text-align: center;
+	margin: 0 auto 20px auto;
+}
+
+#testbutton {
+	text-align: center;
+	clear: both;
+}
+
+h4.tabhead {
+	width: 150px;
+	height: 26px;
+	background: url(../_img/bg_testtab_right_off.png) no-repeat top right;
+	margin: 0 2px 0 0;
+	padding-right: 10px;
+}
+
+h4.tabhead span {
+	display: block;
+	float: left;
+	height: 26px;
+	width: 140px;
+	display: block;
+	background: url(../_img/bg_testtab_left_off.png) no-repeat top left;
+	color: #66c4db;
+	font-size: 0.8em;
+	line-height: 26px;
+	padding-left: 10px;
+	text-align: center;
+}
+
+.nameserver {
+	clear: both;
+	background: #cceaf2;
+	border-bottom: 1px solid #99d9e8;
+	border-top: 1px solid #fff;
+	padding: 2px;
+	height: 20px;
+}
+
+.nameserver label {
+	float: left;
+	font-size: 0.7em;
+	color: #009fc5;
+	font-weight: bold;
+	margin: 0 5px;
+}
+
+.nameserver input {
+	float: left;
+	font-size: 0.7em;
+	color: #666;
+	background: #fff;
+	border: 1px solid #fff;
+	height: 16px;
+	width: 130px;
+}
+
+.addnameserver {
 	float: right;
+}
+
+#undelegateddomain_info {
+	clear: both;
+	margin: 0 0 25px 0;
+	width: 425px;
+	margin-left: 170px;
+}
+
+#undelegateddomain_info p {
+	margin: 0;
+	font-size: 0.8em;
+	color: #ff6b00;
+	text-align: center;
+}
+
+form {
+	margin: 0;	
+	padding: 0;
 }
 
 #result_status {

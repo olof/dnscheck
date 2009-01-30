@@ -1,5 +1,5 @@
-﻿<?php
-	
+<?php
+
 	$translationIndex = array(
 		"Home",
 		"FAQ",
@@ -38,16 +38,31 @@
 		"SOA",
 		"Connectivity",
 		"DNSSEC",
-		"Link to this test"
+		"Link to this test",
+
+		"Domain test",
+		"Undelegated domain test",
+		"Domain name",
+		"Name servers",
+		"Add one more nameserver",
+		"Host",
+		"IP",
+		"Nameservers error",
+		"At least one nameserver should be entered",
+		"Domain syntax",
+		"Invalid domain syntax",
+		"Note",
+		"This test was performed on a undelegated domain",
+		"Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers."
 	);
-	
+
 	$translationMap = array(
 		"en" => array(
 			"Home",
 			"FAQ",
 			"A service from .SE",
 			"Test your DNS-server and find errors",
-			"Enter your domain name in the field below to test the DNS-servers that are used. Example: iis.se",
+			"Enter your domain name in the field above to test the DNS-servers that are used. Example: iis.se",
 			"Test now",
 			"Basic results",
 			"Advanced results",
@@ -68,7 +83,7 @@
 			"About the domain name system, DNS",
 			"<p>The domain name system (DNS in short) is what could be called the ”phone book” of the Internet. It keeps track of the mapping of, for example, a human-readable website name (like www.iis.se) to the slightly more arcane form of an IP-address that the computer needs to initiate communication (in this case 212.247.7.229). </p><p>Besides browsing the Internet with your web browser using website names instead of IP-addresses the DNS also makes sure your emails find their way. In short, a stable DNS is vital for most companies to maintain a working and efficient operation.</p>",
 			"DNSCheck FAQ",
-			'<h5 id="findex">Index</h5> 
+			'<h5 id="findex">Index</h5>
 			<ol>
 
 				<li><a href="#f1">What is DNSCheck?</a></li>
@@ -165,16 +180,16 @@
                         <p><a href="#findex">Back to the top </a></p>
 
 			<h5 id="f14">How come I can’t test my domain?</h5>
-                        
+
                         <p>If we skip the situation where the domain doesn’t exist, as in you input a non-existing domain to DNSCheck, there are 2 other possibilites:  <br />
                         <br />
 
 			1. To protect the engine from multiple identical inputs, that is the same IP checking the same zone several times, there is a delay of 5 minutes between identical subsequent tests. Which practically means that you can only test the same domain once every 5 minutes, if you try and test it again within 5 minutes the last results will be displayed instead.</p>
-			
+
 			 <p>2. Because DNSCheck was made to check domains (like iis.se) and not hostnames in a domain (like www.iis.se) the DNSCheck webpage will do a pre-control of your domain before it sends it on to the engine for testing. This shouldn’t effect the great majority of domains out there but it CAN do so, because if the webpage decides a domain doesn’t exist the check wont run. Sofar the only time we’ve seen this is when a domains’ nameservers all lie within the domain that’s being tested and these are very broken. We need to fix this, and please do report if you cannot check your domain so that we can see if anything else is wrong. This control will be improved, that’s a promise.</p>
 
                         <p><a href="#findex">Back to the top </a></p>
-			
+
 			<h5 id="f15">What kind of queries does DNSCheck generate?</h5>
 
 			<p>This  question is very hard to answer since DNSCheck will generate different queries  depending on how your name servers answer. The easiest way to get a full view  of what queries and results are generated is to run the “dnscheck” CLI command  and add the flag “--raw”. This will result in quite thorough information on  what is happening. However the output from this CLI-tool is quite heavily  technical so unless you’re into bits and bytes you might want to skip this  step. :)</p>
@@ -190,14 +205,29 @@
 			"SOA",
 			"Connectivity",
 			"DNSSEC",
-			"Link to this test"
+			"Link to this test",
+
+			"Domain test",
+			"Undelegated domain test",
+			"Domain name",
+			"Name servers",
+			"Add one more nameserver",
+			"Host",
+			"IP",
+			"Nameserver error",
+			"At least one nameserver needs to be entered",
+			"Domain syntax",
+			"Invalid domain syntax",
+			"Note",
+			"This test was performed on a undelegated domain",
+			"Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers."
 		),
 		"se" => array(
 			"Hem",
 			"Vanliga frågor",
 			"En tjänst från .SE",
 			"Testa din DNS-server och upptäck fel",
-			"Ange ditt domännamn nedan för att testa dess DNS-servrar.",
+			"Ange ditt domännamn ovan för att testa dess DNS-servrar.",
 			"Testa nu",
 			"Förenklat resultat",
 			"Avancerat resultat",
@@ -218,7 +248,7 @@
 			"Om domain name system, DNS",
 			"<p>Domain name system (förkortat DNS) skulle kunna kallas  Internets ”telefonbok”. Det ser till att läsbara namn på webbsidor (som www.iis.se) kan översättas till de mer  svårbegripliga IP-adresser som datorerna behöver för att kommunicera med  varandra (i detta fall 212.247.7.229).</p><p>Förutom att låta dig surfa på Internet med din webbläsare  med hjälp av namn på webbsidor istället för IP-adresser ser DNS även till att  din e-post hittar rätt. Med andra ord, ett stabilt DNS är nödvändigt för att de  flesta företag ska kunna fungera och arbeta effektivt.</p>",
 			"Vanliga frågor om DNSCheck",
-			'<h5 id="findex">Index</h5> 
+			'<h5 id="findex">Index</h5>
 			<ol>
 
 				<li><a href="#f1">Vad är DNSCheck?</a></li>
@@ -315,13 +345,13 @@
                         <p><a href="#findex">Tillbaka till början</a></p>
 
 			<h5 id="f14">Varför kan jag inte  testa min domän?</h5>
-                        
+
 			<p>Om vi utgår från att domänen du försöker testa faktiskt  existerar så finns det två saker som kan orsaka detta:</p>
 			<p>1. För att förhindra att flera test görs samtidigt  på samma zon från samma IP-adress finns det en påtvingad fördröjning på 5  minuter mellan identiska test. Detta innebär att du inte kan testa en domän  oftare än var 5:e minut. Om du testar din domän igen innan 5 minuter förflutit  så visas det senast sparade resultatet.</p>
 			<p>2. Eftersom DNSCheck är designad för att testa  domäner (som iis.se) och inte värdnamn i en domän (som www.iis.se) kontrollerar DNSChecks webbsida  domänen du skrivit in innan den skickas vidare till DNSChecks testmotor för att  se att det verkligen är en domän. Denna kontroll kan i vissa sällsynta fall  misslyckas (och zonen således inte godkänns som korrekt). De enda gånger vi  sett detta hända är ifall de DNS-servrar som tillhör den zon du försöker testa  är väldigt trasiga. Hör gärna av dig ifall detta hänt dig så vi får mer  information om hur vi kan korrigera hur detta test av domänen utförs. Det här testet  kommer att förbättras, det lovar vi.</p>
 
                         <p><a href="#findex">Tillbaka till början</a></p>
-			
+
 			<h5 id="f15">Vilka slags anrop genereras av DNSCheck?</h5>
 
 			<p>Det här är en svår fråga att svara på eftersom DNSCheck  kommer att generera olika typer av anrop beroende på hur dina DNS-servrar  svarar. Det enklaste sättet att se exakt vad DNSCheck testar är att köra  ”dnscheck” CLI-kommandot och lägga till flaggan ”--raw”. Resultatet ger  grundlig information om vad som händer under testet. Det bör dock nämnas att  utmatningen från CLI-verktyget är väldigt tekniskt utmanande så ifall du inte  gillar bits och bytes kanske du vill undvika det.</p>
@@ -337,33 +367,48 @@
 			"SOA",
 			"Konnektivitet",
 			"DNSSEC",
-			"Länk till det här testresultatet"
+			"Länk till det här testresultatet",
+
+			"Domäntest",
+			"Odelegerat domäntest",
+			"Domännamn",
+			"Namnservrar",
+			"Lägg till ny namnserver",
+			"Värd",
+			"IP",
+			"Namnserverfel",
+			"Du måste ange minst en namnserver",
+			"Domänfel",
+			"Kontrollera att du angivit ett korrekt domännamn",
+			"Notera",
+			"Detta test utfördes på en odelegerad domän",
+			"Ange ditt odelegerade domännamn ovan samt hostnamn och IP-adress till dina namnservrar du vill testa nedan. Du kan ange upp till 30 stycken namnservrar."
 		)
 	);
-	
-	
+
+
 	function translate($translateString)
 	{
 		global $languageId;
 		global $translationMap;
 		global $translationIndex;
-		
+
 		if (!isset($translationMap[$languageId]))
 		{
 			return $translateString;
 		}
-		
+
 		$index = array_search($translateString, $translationIndex);
 		if (false === $index)
 		{
 			return $translateString;
 		}
-		
+
 		if ((!isset($translationMap[$languageId][$index])) || (is_null($translationMap[$languageId][$index])))
 		{
 			return $translateString;
 		}
-		
+
 		return $translationMap[$languageId][$index];
 	}
 ?>

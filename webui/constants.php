@@ -11,11 +11,18 @@
 	define('STATUS_WARN', 'WARNING');
 	define('STATUS_ERROR', 'ERROR');
 	define('STATUS_DOMAIN_DOES_NOT_EXIST', 'ERROR_DOMAIN_DOES_NOT_EXIST');
+	define('STATUS_DOMAIN_SYNTAX', 'ERROR_DOMAIN_SYNTAX');
+	define('STATUS_NO_NAMESERVERS', 'ERROR_NO_NAMESERVERS');
 	define('STATUS_IN_PROGRESS', 'IN_PROGRESS');
 	define('STATUS_INTERNAL_ERROR', 'INTERNAL_ERROR');
 
 	define('PAGER_SIZE', 10);
-	
+
+	$sourceIdentifiers = array(
+		'standard' => 'webgui',
+		'undelegated' => 'webgui-undelegated'
+	);
+
 	$supportedLanguages = array(
 		array(
 			'id' => 'en',
@@ -28,6 +35,6 @@
 			'active' => false
 		)
 	);
-	
+
 	define('DEFAULT_LANGUAGE_ID', getDefaultLanguage());
 ?>
