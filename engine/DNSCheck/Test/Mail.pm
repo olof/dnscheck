@@ -46,8 +46,8 @@ sub test {
 
     return unless $parent->config->should_run;
 
-    my $logger           = $parent->logger;
-    my $errors           = 0;
+    my $logger              = $parent->logger;
+    my $errors              = 0;
     my $mail_delivery_v4_ok = 0;
     my $mail_delivery_v6_ok = 0;
 
@@ -69,8 +69,9 @@ sub test {
     if (@mailhosts) {
         $logger->auto("MAIL:MAIL_EXCHANGER", $email, join(",", @mailhosts));
     }
-    
-    if (defined($zone) and scalar(@mailhosts) == grep {m/$zone$/} @mailhosts) {
+
+    if (defined($zone) and scalar(@mailhosts) == grep { m/$zone$/ } @mailhosts)
+    {
         $logger->auto("MAIL:ALL_MX_IN_ZONE", $email, $zone);
     }
 
@@ -134,17 +135,17 @@ sub test {
 
   DONE:
     if ($mail_delivery_v4_ok) {
-        $errors += $logger->auto("MAIL:DELIVERY_IPV4_OK", $email)
+        $errors += $logger->auto("MAIL:DELIVERY_IPV4_OK", $email);
     } else {
         $errors += $logger->auto("MAIL:DELIVERY_IPV4_NOT_OK", $email);
     }
 
     if ($mail_delivery_v6_ok) {
-        $errors += $logger->auto("MAIL:DELIVERY_IPV6_OK", $email)
+        $errors += $logger->auto("MAIL:DELIVERY_IPV6_OK", $email);
     } else {
         $errors += $logger->auto("MAIL:DELIVERY_IPV6_NOT_OK", $email);
     }
-    
+
     $logger->auto("MAIL:END", $email);
     $logger->module_stack_pop();
 

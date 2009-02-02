@@ -301,7 +301,6 @@ sub query_explicit {
         $qtype);
 
     unless ($self->_querible($address)) {
-        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return undef;
     }
 
@@ -856,7 +855,6 @@ sub address_is_recursive {
     # no blacklisting here, since some nameservers ignore recursive queries
 
     unless ($self->_querible($address)) {
-        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         goto DONE;
     }
 
@@ -905,7 +903,6 @@ sub check_axfr {
     my $qclass  = shift;
 
     unless ($self->_querible($address)) {
-        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return 0;
     }
 
@@ -937,7 +934,6 @@ sub query_nsid {
     my $qtype   = shift;
 
     unless ($self->_querible($address)) {
-        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
         return undef;
     }
 
@@ -1006,17 +1002,22 @@ sub _rr2string {    # Why do this instead of using the native ->string method?
 }
 
 sub _querible {
-    my $self = shift;
+    my $self    = shift;
     my $address = shift;
-    my $conf = $self->parent->config->get("net");
-    
+    my $conf    = $self->parent->config->get("net");
+
     my $ip = new Net::IP($address);
 
-    return 0 if $ip->version==4 and !$conf->{ipv4};
-    return 0 if $ip->version==6 and !$conf->{ipv6};
-    return 1 if ($ip->iptype eq "PUBLIC");            # IPv4
-    return 1 if ($ip->iptype eq "GLOBAL-UNICAST");    # IPv6
-    return 0;
+    if (   ($ip->version == 4 and !$conf->{ipv4})
+        or ($ip->version == 6 and !$conf->{ipv6}))
+    {
+        return 0;
+    } elsif (($ip->iptype ne "PUBLIC") and ($ip->iptype ne "GLOBAL-UNICAST")) {
+        $self->logger->auto("DNS:UNQUERIBLE_ADDRESS", $address);
+        return 0;
+    } else {
+        return 1;
+    }
 }
 
 ######################################################################
@@ -1075,6 +1076,7 @@ sub preflight_check {
         # The manual doesn't say what errors are possible, just that they are.
         return 1;
     } elsif ($packet->header->aa) {
+
         # We got an _authoritative_ "Wee, no idea", so something exists
         return 1;
     }

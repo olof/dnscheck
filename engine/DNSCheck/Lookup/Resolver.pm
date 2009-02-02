@@ -133,7 +133,7 @@ sub add_fake_glue {
 sub faked_zones {
     my $self = shift;
 
-    return map {s/\.$//;$_} keys %{ $self->{fake}{ns} };
+    return map { s/\.$//; $_ } keys %{ $self->{fake}{ns} };
 }
 
 # Return a list of NS names for a zone with fake glue
@@ -144,7 +144,7 @@ sub faked_zone {
     $name = $self->canonicalize_name($name);
 
     if ($self->{fake}{ns}{$name}) {
-        return map {s/\.$//;$_} keys %{ $self->cache->{ns}{$name} };
+        return map { s/\.$//; $_ } keys %{ $self->cache->{ns}{$name} };
     } else {
         return;
     }
@@ -302,7 +302,8 @@ sub get {
     $self->{resolver}->nameservers(@ns) if @ns;
 
     my $p = $self->{resolver}->send($name, $class, $type);
-    print STDERR "get: " . $p->string . "\n" if ($self->{debug} and $self->{debug}> 1);
+    print STDERR "get: " . $p->string . "\n"
+      if ($self->{debug} and $self->{debug} > 1);
     $self->remember($p, $name, $type, $class) if defined($p);
 
     $self->{resolver}->nameservers(@ns_old);
@@ -317,7 +318,7 @@ sub recurse {
     my $class = shift || 'IN';
 
     my %tried;
-    
+
     $name = $self->canonicalize_name($name);
 
     print STDERR "recurse: $name $type $class\n" if $self->{debug};
