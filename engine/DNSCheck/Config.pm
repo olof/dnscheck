@@ -116,8 +116,6 @@ sub get {
     my ($key) = @_;
 
     my $res = $self->{$key};
-    carp "Getting nonexistent configuration key $key"
-      if ($self->{'debug'} && !exists($self->{$key}));
     return $res;
 }
 

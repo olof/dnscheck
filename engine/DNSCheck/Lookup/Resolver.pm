@@ -302,7 +302,7 @@ sub get {
     $self->{resolver}->nameservers(@ns) if @ns;
 
     my $p = $self->{resolver}->send($name, $class, $type);
-    print STDERR "get: " . $p->string . "\n" if $self->{debug};
+    print STDERR "get: " . $p->string . "\n" if ($self->{debug} and $self->{debug}> 1);
     $self->remember($p, $name, $type, $class) if defined($p);
 
     $self->{resolver}->nameservers(@ns_old);
@@ -317,7 +317,7 @@ sub recurse {
     my $class = shift || 'IN';
 
     my %tried;
-
+    
     $name = $self->canonicalize_name($name);
 
     print STDERR "recurse: $name $type $class\n" if $self->{debug};
