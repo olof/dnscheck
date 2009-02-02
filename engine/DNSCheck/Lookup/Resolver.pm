@@ -133,7 +133,7 @@ sub add_fake_glue {
 sub faked_zones {
     my $self = shift;
 
-    return keys %{ $self->{fake}{ns} };
+    return map {s/\.$//;$_} keys %{ $self->{fake}{ns} };
 }
 
 # Return a list of NS names for a zone with fake glue
@@ -144,7 +144,7 @@ sub faked_zone {
     $name = $self->canonicalize_name($name);
 
     if ($self->{fake}{ns}{$name}) {
-        return keys %{ $self->cache->{ns}{$name} };
+        return map {s/\.$//;$_} keys %{ $self->cache->{ns}{$name} };
     } else {
         return;
     }
