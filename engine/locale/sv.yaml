@@ -205,7 +205,7 @@ messages:
  ADDRESS:PTR_NOT_FOUND:
   args: 2
   format: Kunde inte hitta baklängesadress för %s (%s).
-  descr: Kunde inte hitta en PTR-post för adressen i in-addr.arpa.
+  descr: Kunde inte hitta PTR-post(er) för adressen i .arpa-zonen. (ip6.arpa. för IPv6 och in-addr.arpa. för IPv4).
  ADDRESS:PTR_HOSTNAME_NOT_FOUND:
   args: 2
   format: Baklängespekare för %s pekar till ett okänt värdnamn (%s).

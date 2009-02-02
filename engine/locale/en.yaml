@@ -205,7 +205,7 @@ messages:
  ADDRESS:PTR_NOT_FOUND:
   args: 2
   format: Could not find reverse address for %s (%s).
-  descr: A PTR records for the address could not be found in in-addr.arpa.
+  descr: PTR record(s) for the address could not be found in the .arpa-zone. (ip6.arpa. for IPv6 addresses and in-addr.arpa. for IPv4).
  ADDRESS:PTR_HOSTNAME_NOT_FOUND:
   args: 2
   format: Reverse for %s points to an unknown host name (%s).
