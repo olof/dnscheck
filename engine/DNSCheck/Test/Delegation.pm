@@ -272,14 +272,8 @@ sub ns_parent_child_matching {
     my @ns_at_both;
     foreach my $ns (@ns_at_parent) {
         unless (scalar grep(/^$ns$/i, @ns_at_child)) {
-            if ($self->parent->undelegated_test) {
-                $errors +=
-                  $self->logger->auto("DELEGATION:POSSIBLE_EXTRA_NS_PARENT",
-                    $ns);
-            } else {
-                $errors +=
-                  $self->logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
-            }
+            $errors +=
+              $self->logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
         } else {
             push @ns_at_both, $ns;
         }
