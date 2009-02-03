@@ -99,7 +99,7 @@
 			<div id="searchbox">
             	<div class="testtabs">
                 <ul>
-               	  <li <?php if($test == 'standard'): ?>class="testtabson"<?php endif; ?>><a href="/<?php echo("?lang=" . $languageId);?>"><?php echo(translate("Domain test"));?></a></li>
+               	  <li <?php if($test == 'standard'): ?>class="testtabson"<?php endif; ?>><a href="<?php echo("?lang=" . $languageId);?>"><?php echo(translate("Domain test"));?></a></li>
                   <li <?php if($test == 'undelegated'): ?>class="testtabson"<?php endif; ?>><a href="<?php echo("?lang=" . $languageId . "&test=undelegated");?>"><?php echo(translate("Undelegated domain test"));?></a></li>
                 </ul>
                 </div>
