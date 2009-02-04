@@ -296,14 +296,14 @@ sub get {
     my $class = shift || 'IN';
     my @ns    = @_;
 
-    print STDERR "get: $name $type $class @ns\n" if $self->{debug};
+    print STDERR "get: $name $type $class @ns ".(caller(1))[3]."\n" if $self->{debug};
 
     my @ns_old = $self->{resolver}->nameservers;
     $self->{resolver}->nameservers(@ns) if @ns;
 
     my $p = $self->{resolver}->send($name, $class, $type);
     print STDERR "get: " . $p->string . "\n"
-      if ($self->{debug} and $self->{debug} > 1);
+      if (defined($p) and $self->{debug} and $self->{debug} > 1);
     $self->remember($p, $name, $type, $class) if defined($p);
 
     $self->{resolver}->nameservers(@ns_old);
@@ -321,7 +321,8 @@ sub recurse {
 
     $name = $self->canonicalize_name($name);
 
-    print STDERR "recurse: $name $type $class\n" if $self->{debug};
+    printf(STDERR "recurse: %s %s %s (%s)\n", $name, $type, $class, (caller(1))[3] )
+        if $self->{debug};
 
     my $p =
       $self->get($name, $type, $class,
@@ -344,6 +345,7 @@ sub recurse {
             foreach my $rr ($p->authority) {
                 if ($rr->type eq 'NS') {
                     my $n = $self->canonicalize_name($rr->nsdname);
+                    next if $self->{poison}{$n};
                     if (my $ip = $self->{cache}{ips}{$n}) {
                         push @ns, keys %$ip;
                     } else {
@@ -351,8 +353,7 @@ sub recurse {
                         if (my $ip = $self->{cache}{ips}{$n}) {
                             push @ns, keys %$ip;
                         } else {
-
-                            # What to do here?
+                            $self->{poison}{$n} = 1;
                         }
                     }
                 } elsif ($rr->type eq 'SOA') {
@@ -362,7 +363,7 @@ sub recurse {
             my $fingerprint = join '|', sort @ns;
             if ($tried{$fingerprint}) {
 
-                # Looping
+                print STDERR "recurse: looping\n" if $self->{debug};
                 return;
             } else {
                 $tried{$fingerprint} = 1;
