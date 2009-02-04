@@ -56,7 +56,7 @@ sub new {
     my $config = $self->config->get("dns");
     $self->{debug} = $parent->config->get("debug");
 
-    $self->{cache} = $parent->config->get('root_zone_data');
+    $self->{cache}   = $parent->config->get('root_zone_data');
     $self->{current} = '';
 
     $self->{resolver} = Net::DNS::Resolver->new(
@@ -157,38 +157,42 @@ sub fake_packet {
     my $zone = shift;
     my $name = shift;
     my $type = shift;
-    
+
     $name = $self->canonicalize_name($name);
-    
+
     my @ns = $self->faked_zone($zone)
-        or return; # That zone isn't faked
-    my @ips = keys %{$self->cache->{ips}{$name}};
+      or return;    # That zone isn't faked
+    my @ips = keys %{ $self->cache->{ips}{$name} };
     my $version;
-    
+
     if ($type eq 'A') {
-        $version = 4
+        $version = 4;
     } elsif ($type eq 'AAAA') {
-        $version = 6
+        $version = 6;
     } else {
-        return; # Can't fake that, whatever it is
+        return;     # Can't fake that, whatever it is
     }
 
-    @ips = grep {Net::IP->new($_)->version == $version} @ips;
+    @ips = grep { Net::IP->new($_)->version == $version } @ips;
 
     my $p = Net::DNS::Packet->new;
-    
-    $p->unique_push('answer', Net::DNS::RR->new("$name 4711 IN $type $_")) for @ips;
-    
+
+    $p->unique_push('answer', Net::DNS::RR->new("$name 4711 IN $type $_"))
+      for @ips;
+
     for my $ns (@ns) {
         $p->unique_push('authority', Net::DNS::RR->new("$zone 4711 IN NS $ns"));
-        for my $ip (keys %{$self->cache->{ips}{$self->canonicalize_name($ns)}}) {
+        for my $ip (
+            keys %{ $self->cache->{ips}{ $self->canonicalize_name($ns) } })
+        {
             my $t = (Net::IP->new($ip)->version == 4) ? 'A' : 'AAAA';
-            $p->unique_push('additional', Net::DNS::RR->new("$ns 4711 IN $t $ip"));
+            $p->unique_push('additional',
+                Net::DNS::RR->new("$ns 4711 IN $t $ip"));
         }
     }
-    
+
     $p->header->aa(1);
-    
+
     return $p;
 }
 
@@ -338,7 +342,8 @@ sub get {
     my $class = shift || 'IN';
     my @ns    = @_;
 
-    print STDERR "get: $name $type $class @ns ".(caller(1))[3]."\n" if $self->{debug};
+    print STDERR "get: $name $type $class @ns " . (caller(1))[3] . "\n"
+      if $self->{debug};
 
     my @ns_old = $self->{resolver}->nameservers;
     $self->{resolver}->nameservers(@ns) if @ns;
@@ -360,10 +365,11 @@ sub recurse {
     my $class = shift || 'IN';
 
     my %tried;
-    my $signature = join('|',$name,$type,$class);
-    
+    my $signature = join('|', $name, $type, $class);
+
     if ($self->{current} eq $signature) {
-        print STDERR "recurse: called with current question.\n" if $self->{debug};
+        print STDERR "recurse: called with current question.\n"
+          if $self->{debug};
         return;
     } else {
         $self->{current} = $signature;
@@ -371,8 +377,9 @@ sub recurse {
 
     $name = $self->canonicalize_name($name);
 
-    printf(STDERR "recurse: %s %s %s (%s)\n", $name, $type, $class, (caller(1))[3] )
-        if $self->{debug};
+    printf(STDERR "recurse: %s %s %s (%s)\n",
+        $name, $type, $class, (caller(1))[3])
+      if $self->{debug};
 
     my $p =
       $self->get($name, $type, $class,
@@ -399,9 +406,11 @@ sub recurse {
                     if (my $ip = $self->{cache}{ips}{$n}) {
                         push @ns, keys %$ip;
                     } else {
-                        print STDERR "recurse: calling myself.\n" if $self->{debug};
+                        print STDERR "recurse: calling myself.\n"
+                          if $self->{debug};
                         $self->recurse($n, 'A');
-                        print STDERR "recurse: returned from myself.\n" if $self->{debug};
+                        print STDERR "recurse: returned from myself.\n"
+                          if $self->{debug};
                         if (my $ip = $self->{cache}{ips}{$n}) {
                             push @ns, keys %$ip;
                         } else {
