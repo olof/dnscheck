@@ -151,6 +151,47 @@ sub faked_zone {
     }
 }
 
+# Return a made-up packet with information for a name
+sub fake_packet {
+    my $self = shift;
+    my $zone = shift;
+    my $name = shift;
+    my $type = shift;
+    
+    $name = $self->canonicalize_name($name);
+    
+    my @ns = $self->faked_zone($zone)
+        or return; # That zone isn't faked
+    my @ips = keys %{$self->cache->{ips}{$name}};
+    my $version;
+    
+    if ($type eq 'A') {
+        $version = 4
+    } elsif ($type eq 'AAAA') {
+        $version = 6
+    } else {
+        return; # Can't fake that, whatever it is
+    }
+
+    @ips = grep {Net::IP->new($_)->version == $version} @ips;
+
+    my $p = Net::DNS::Packet->new;
+    
+    $p->unique_push('answer', Net::DNS::RR->new("$name 4711 IN $type $_")) for @ips;
+    
+    for my $ns (@ns) {
+        $p->unique_push('authority', Net::DNS::RR->new("$zone 4711 IN NS $ns"));
+        for my $ip (keys %{$self->cache->{ips}{$self->canonicalize_name($ns)}}) {
+            my $t = (Net::IP->new($ip)->version == 4) ? 'A' : 'AAAA';
+            $p->unique_push('additional', Net::DNS::RR->new("$ns 4711 IN $t $ip"));
+        }
+    }
+    
+    $p->header->aa(1);
+    
+    return $p;
+}
+
 # Add stuff to our cache.
 #
 # We cache known nameserver lists for names, and IP addresses for names.

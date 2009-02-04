@@ -198,6 +198,15 @@ sub query_parent_nocache {
     $self->logger->auto("DNS:QUERY_PARENT_NOCACHE",
         $zone, $qname, $qclass, $qtype);
 
+    if (my @ns = $self->parent->resolver->faked_zone($zone)) {
+        if ($qtype eq 'NS') {
+            die "Looking for NS from parent for faked domain.\n"
+        } elsif (($qtype eq 'A' or $qtype eq 'AAAA') and (grep {/$qname/} @ns)) {
+            my $p = $self->parent->resolver->fake_packet($zone,$qname,$qtype);
+            return $p if defined($p);
+        }
+    }
+
     # find parent
     $self->logger->auto("DNS:FIND_PARENT", $zone, $qclass);
     my $parent = $self->find_parent($zone, $qclass);
