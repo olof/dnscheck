@@ -156,6 +156,8 @@ sub print {
     my $self   = shift;
     my $locale = shift;
 
+    STDOUT->autoflush(1);
+
     my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
 
     foreach my $e (@{ $self->{messages} }) {
