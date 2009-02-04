@@ -744,7 +744,7 @@ sub find_mx {
 
     $self->logger->auto("DNS:FIND_MX_BEGIN", $domain);
 
-    $packet = $self->query_resolver($domain, "MX", "IN");
+    $packet = $self->query_resolver($domain, "IN", 'MX');
     if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
             if (($rr->type eq "MX") && $rr->exchange) {
@@ -754,7 +754,7 @@ sub find_mx {
         goto DONE if (scalar @dest);
     }
 
-    $packet = $self->query_resolver($domain, "A", "IN");
+    $packet = $self->query_resolver($domain, "IN", 'A');
     if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
             if ($rr->type eq "A") {
@@ -764,7 +764,7 @@ sub find_mx {
         }
     }
 
-    $packet = $self->query_resolver($domain, "AAAA", "IN");
+    $packet = $self->query_resolver($domain, "IN", 'AAAA');
     if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
             if ($rr->type eq "AAAA") {
