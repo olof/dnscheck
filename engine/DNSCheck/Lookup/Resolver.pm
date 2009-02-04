@@ -57,6 +57,7 @@ sub new {
     $self->{debug} = $parent->config->get("debug");
 
     $self->{cache} = $parent->config->get('root_zone_data');
+    $self->{current} = '';
 
     $self->{resolver} = Net::DNS::Resolver->new(
 
@@ -318,6 +319,14 @@ sub recurse {
     my $class = shift || 'IN';
 
     my %tried;
+    my $signature = join('|',$name,$type,$class);
+    
+    if ($self->{current} eq $signature) {
+        print STDERR "recurse: called with current question.\n" if $self->{debug};
+        return;
+    } else {
+        $self->{current} = $signature;
+    }
 
     $name = $self->canonicalize_name($name);
 
@@ -349,7 +358,9 @@ sub recurse {
                     if (my $ip = $self->{cache}{ips}{$n}) {
                         push @ns, keys %$ip;
                     } else {
+                        print STDERR "recurse: calling myself.\n" if $self->{debug};
                         $self->recurse($n, 'A');
+                        print STDERR "recurse: returned from myself.\n" if $self->{debug};
                         if (my $ip = $self->{cache}{ips}{$n}) {
                             push @ns, keys %$ip;
                         } else {
