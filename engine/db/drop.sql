@@ -8,3 +8,4 @@ drop table if exists `nsp`;
 drop table if exists `queue`;
 drop table if exists `results`;
 drop table if exists `tests`;
+drop table if exists `source`;
