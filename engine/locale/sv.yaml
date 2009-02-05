@@ -42,6 +42,9 @@ messages:
  DNS:QUERY_PARENT_NOCACHE:
   args: 4
   format: Anropar förälder (utan cache) till %s för %s/%s/%s.
+ DNS:FAKE_PACKET:
+     args: 3
+     format: Konstruerar paket i zon %s för %s/%s.
  DNS:FIND_PARENT:
   args: 2
   format: Söker förälder till %s/%s.

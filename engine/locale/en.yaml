@@ -39,6 +39,9 @@ messages:
  DNS:QUERY_PARENT:
   args: 4
   format: Query parent of %s for %s/%s/%s.
+ DNS:FAKE_PACKET:
+    args: 3
+    format: Faking response packet in zone %s for %s/%s.
  DNS:QUERY_PARENT_NOCACHE:
   args: 4
   format: Query parent (without cache) of %s for %s/%s/%s.
