@@ -9,7 +9,7 @@ WriteMakefile(
     'NAME'         => 'DNSCheck',
     'AUTHOR'       => '.SE (The Internet Infrastructure Foundation) <dnscheck@iis.se>',
     'ABSTRACT'     => 'DNS Quality and Integrity Checker',
-    'VERSION_FROM' => 'DNSCheck.pm',
+    'VERSION_FROM' => 'lib/DNSCheck.pm',
     'PREREQ_PM'    => {
         Crypt::OpenSSL::Random => 0,
         Data::Dumper           => 0,
