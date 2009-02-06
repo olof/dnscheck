@@ -44,12 +44,11 @@ use Net::IP;
 # written by someone who is not a DNS expert, so comments on the module logic
 # is very welcome.
 sub new {
-    my $proto  = shift;
+    my $class  = shift;
     my $parent = shift;
-    my $class  = ref($proto) || $proto;
     my $self   = {};
 
-    bless $self, $proto;
+    bless $self, $class;
 
     $self->{parent} = $parent;
 
@@ -128,6 +127,8 @@ sub add_fake_glue {
     $self->cache->{ips}{$nsname}{$nsip} = 1;
     $self->{fake}{ns}{$zone}            = 1;
     $self->{fake}{ips}{$nsname}         = 1;
+
+    return $self;
 }
 
 # Return a list of zones with fake glue
@@ -160,8 +161,7 @@ sub fake_packet {
 
     $name = $self->canonicalize_name($name);
 
-    my @ns = $self->faked_zone($zone)
-      or return;    # That zone isn't faked
+    my @ns  = $self->faked_zone($zone);
     my @ips = keys %{ $self->cache->{ips}{$name} };
     my $version;
 
@@ -170,7 +170,7 @@ sub fake_packet {
     } elsif ($type eq 'AAAA') {
         $version = 6;
     } else {
-        return;     # Can't fake that, whatever it is
+        return;    # Can't fake that, whatever it is
     }
 
     @ips = grep { Net::IP->new($_)->version == $version } @ips;
@@ -200,7 +200,7 @@ sub fake_packet {
 #
 # We cache known nameserver lists for names, and IP addresses for names.
 sub remember {
-    my ($self, $p, $name, $type, $class) = @_;
+    my ($self, $p) = @_;
 
     return unless defined($p);
 
@@ -215,6 +215,8 @@ sub remember {
               unless $self->{fake}{ns}{$n};
         }
     }
+
+    return $self;
 }
 
 # Class method to generate data with which to preload the cache.
@@ -292,7 +294,7 @@ sub strip_label {
 
 # Take a name, and return the nameserver names for the highest parent level we
 # have in cache. Which, at worst, will be the root zone, the data for which we
-# have hardcoded into the module.
+# initialize on object creation.
 sub highest_known_ns {
     my $self = shift;
     my $name = shift;
@@ -321,13 +323,35 @@ sub highest_known_ns {
 }
 
 sub simple_names_to_ips {
-    my $self  = shift;
-    my @names = @_;
+    my $self = shift;
+    my @names = map { $self->canonicalize_name($_) } @_;
     my @ips;
 
     foreach my $n (@names) {
         if ($self->cache->{ips}{$n}) {
             push @ips, keys %{ $self->cache->{ips}{$n} };
+        }
+    }
+
+    return @ips;
+}
+
+sub names_to_ips {
+    my $self = shift;
+    my @names = map { $self->canonicalize_name($_) } @_;
+    my @ips;
+
+    foreach my $n (@names) {
+        if ($self->cache->{ips}{$n}) {
+            push @ips, keys %{ $self->cache->{ips}{$n} };
+        } else {
+            next if $self->{poison}{$n};
+            remember($self->recurse($n, 'A'));
+            if ($self->cache->{ips}{$n}) {
+                push @ips, keys %{ $self->cache->{ips}{$n} };
+            } else {
+                $self->{poison}{$n} = 1;
+            }
         }
     }
 
@@ -351,97 +375,93 @@ sub get {
     my $p = $self->{resolver}->send($name, $class, $type);
     print STDERR "get: " . $p->string . "\n"
       if (defined($p) and $self->{debug} and $self->{debug} > 1);
-    $self->remember($p, $name, $type, $class) if defined($p);
+    $self->remember($p) if defined($p);
 
     $self->{resolver}->nameservers(@ns_old);
     return $p;
 }
 
 # Recursively look up stuff.
+#
+# Resolution procedure of a name
+# ==============================
+#
+# 1. Get ns names for the highest level we know of (root, probably).
+#
+# 2. Do name-to-ip for names. Discard names we can't translate.
+#
+# 3. Push IPs on stack of servers to ask, unless they've already been there.
+#
+# 4. Pop IP from stack. Send question to it. Remember we asked it.
+#    If the stack is empty, return undef.
+#
+# 5. If the reply is authoritative, return it.
+#    If it is not, but contains records in Authority section, get names from
+#    those records and go to 2.
+
 sub recurse {
-    my $self  = shift;
-    my $name  = shift;
-    my $type  = shift || 'NS';
-    my $class = shift || 'IN';
+    my ($self, $name, $type, $class) = @_;
+    $type  ||= 'NS';
+    $class ||= 'IN';
 
-    my %tried;
-    my $signature = join('|', $name, $type, $class);
-
-    if ($self->{current} eq $signature) {
-        print STDERR "recurse: called with current question.\n"
-          if $self->{debug};
-        return;
-    } else {
-        $self->{current} = $signature;
+    # See if it should be faked
+    if (($type eq 'A' or $type eq 'AAAA')
+        and $self->{fake}{ips}{ $self->canonicalize_name($name) })
+    {
+        return $self->fake_packet(undef, $name, $type);
     }
 
-    $name = $self->canonicalize_name($name);
+    my @stack = $self->simple_names_to_ips($self->highest_known_ns($name));
+    my %seen;
 
-    printf(STDERR "recurse: %s %s %s (%s)\n",
-        $name, $type, $class, (caller(1))[3])
-      if $self->{debug};
+    my $possible;
 
-    my $p =
-      $self->get($name, $type, $class,
-        $self->simple_names_to_ips($self->highest_known_ns($name)));
-
-    return unless defined($p);
-
-    my $h = $p->header;
-
-    while (1) {
-
-        if ($h->aa) {    # An authoritative answer
-            print STDERR "recurse: authoritative\n" if $self->{debug};
+    while (@stack) {
+        my $ns = pop(@stack);
+        print STDERR "Popped $ns (stack is "
+          . scalar(@stack)
+          . " entries deep).\n"
+          if $self->{debug};
+        $seen{$ns} = 1;
+        my $p = $self->get($name, $type, $class, $ns);
+        if (!defined($p)) {
+            print STDERR "No response packet.\n" if $self->{debug};
+            next;
+        } elsif ($p->header->aa) {
+            print STDERR "Authoritative response.\n" if $self->{debug};
             return $p;
-        } elsif ($h->rcode ne 'NOERROR') {
-            print STDERR "recurse: " . $h->rcode . "\n" if $self->{debug};
-            return $p;
-        } elsif ($h->nscount > 0) {    # Authority records
-            my @ns;
-            foreach my $rr ($p->authority) {
-                if ($rr->type eq 'NS') {
-                    my $n = $self->canonicalize_name($rr->nsdname);
-                    next if $self->{poison}{$n};
-                    if (my $ip = $self->{cache}{ips}{$n}) {
-                        push @ns, keys %$ip;
-                    } else {
-                        print STDERR "recurse: calling myself.\n"
-                          if $self->{debug};
-                        $self->recurse($n, 'A');
-                        print STDERR "recurse: returned from myself.\n"
-                          if $self->{debug};
-                        if (my $ip = $self->{cache}{ips}{$n}) {
-                            push @ns, keys %$ip;
-                        } else {
-                            $self->{poison}{$n} = 1;
-                        }
-                    }
-                } elsif ($rr->type eq 'SOA') {
-                    return $p;
-                }
-            }
-            my $fingerprint = join '|', sort @ns;
-            if ($tried{$fingerprint}) {
-
-                print STDERR "recurse: looping\n" if $self->{debug};
-                return;
+        } elsif ($p->header->rcode ne 'NOERROR') {
+            print STDERR "Response code " . $p->header->rcode . "\n"
+              if $self->{debug};
+            $possible = $p;
+            next;
+        } elsif ($p->header->nscount > 0) {
+            print STDERR scalar($p->authority) . " authority records.\n"
+              if $self->{debug};
+            my $zname = ($p->authority)[0]->name;
+            if (my @fns = $self->faked_zone($zname)) {
+                push @stack, simple_names_to_ips(@fns);
             } else {
-                $tried{$fingerprint} = 1;
+                $self->remember($p);
+                push @stack, sort { $a cmp $b }
+                  grep { !$seen{$_} } $self->names_to_ips(
+                    map { $_->nsdname }
+                      grep { $_->type eq 'NS' } $p->authority
+                  );
             }
-
-            $p = $self->get($name, $type, $class, @ns);
-            unless (defined($p)) {
-                print STDERR "recurse: failed to follow\n" if $self->{debug};
-                return;
-            }
-            $h = $p->header;
+            next;
         } else {
-
-            # Do something different here?
-            print STDERR "recurse: wtf\n" if $self->{debug};
-            return $p;
+            print STDERR "Fell through: " . $p->print if $self->{debug};
         }
+    }
+
+    print STDERR "Ran out of servers.\n" if $self->{debug};
+
+    # Ran out of servers before we got a good reply, return the best we have
+    if ($possible) {
+        return $possible;
+    } else {
+        return;
     }
 }
 
