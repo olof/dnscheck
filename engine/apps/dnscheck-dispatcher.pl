@@ -159,7 +159,13 @@ sub detach
 
 # Clean up residue from earlier run(s), if any.
 sub inital_cleanup {
-    my $dbh = $check->dbh;
+    my $dbh;
+
+    eval { $dbh = $check->dbh; };
+    if ($@) {
+        slog 'critical', 'Database not available. Exiting.';
+        exit(1);
+    }
 
     $dbh->do(
 q[UPDATE queue SET inprogress = NULL WHERE inprogress IS NOT NULL AND tester_pid IS NULL]
@@ -221,7 +227,14 @@ sub dispatch {
 }
 
 sub get_entry {
-    my $dbh = $check->dbh;
+    my $dbh;
+
+    eval { $dbh = $check->dbh; };
+    if ($@) {
+        slog 'critical', 'Database not available. Exiting.';
+        exit(1);
+    }
+
     my ($id, $domain, $source, $source_data, $fake_glue);
 
     eval {
@@ -379,7 +392,13 @@ sub monitor_children {
 sub cleanup {
     my $domain   = shift;
     my $exitcode = shift;
-    my $dbh      = $check->dbh;
+    my $dbh;
+
+    eval { $dbh = $check->dbh; };
+    if ($@) {
+        slog 'critical', "Cannot connect to database. Exiting.";
+        exit(1);
+    }
 
     my $status = $exitcode >> 8;
     my $signal = $exitcode & 127;
