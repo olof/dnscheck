@@ -2,7 +2,7 @@
 
 use ExtUtils::MakeMaker;
 
-my @exefiles = ('apps/dnscheck', 'apps/dnscheck-preflight', 'apps/dnscheck-dispatcher',
+my @exefiles = ('apps/dnscheck', 'apps/dnscheck-preflight', 'apps/dnscheck-dispatcher', 'apps/dnscheck-nsdiff',
                 'apps/dnscheck-zonediff', 'apps/dnscheck-12hourmailer', 'apps/dnscheck-hostsyntax');
 
 WriteMakefile(

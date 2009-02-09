@@ -1091,10 +1091,6 @@ sub preflight_check {
 
         # The manual doesn't say what errors are possible, just that they are.
         return 1;
-    } elsif ($packet->header->aa) {
-
-        # We got an _authoritative_ "Wee, no idea", so something exists
-        return 1;
     }
 
     $packet = $resolver->recurse($name, 'SOA');
