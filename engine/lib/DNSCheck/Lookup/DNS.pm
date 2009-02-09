@@ -474,11 +474,11 @@ sub _setup_resolver {
     #     $self->logger->auto("DNS:RECURSION_DISABLED");
     # }
 
-    if ($resolver->resolver->dnssec) {
-        $self->logger->auto("DNS:DNSSEC_DESIRED");
-    } else {
-        $self->logger->auto("DNS:DNSSEC_DISABLED");
-    }
+    # if ($resolver->resolver->dnssec) {
+    #     $self->logger->auto("DNS:DNSSEC_DESIRED");
+    # } else {
+    #     $self->logger->auto("DNS:DNSSEC_DISABLED");
+    # }
 
     return $resolver;
 }

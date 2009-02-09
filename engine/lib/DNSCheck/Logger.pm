@@ -49,6 +49,7 @@ sub new {
     my $loglevels = $config->get('loglevels');
 
     $self->{interactive} = $config->get('logging')->{interactive};
+    $self->{debug}       = $config->get('debug');
 
     if ($config->get('locale')) {
         $self->{locale} = DNSCheck::Locale->new($config->get('locale'));
@@ -161,6 +162,9 @@ sub print {
     my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
 
     foreach my $e (@{ $self->{messages} }) {
+        if ($e->{level} eq 'DEBUG' and !$self->{debug}) {
+            next;
+        }
         if ($self->{locale}) {
             printf("%s:%s%s %s\n",
                 $e->{timestamp}, $context, $e->{level},

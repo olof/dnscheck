@@ -54,6 +54,7 @@ sub new {
 
     my $config = $self->config->get("dns");
     $self->{debug} = $parent->config->get("debug");
+    $self->{debug} -= 1 if $self->{debug};
 
     $self->{cache}   = $parent->config->get('root_zone_data');
     $self->{current} = '';
