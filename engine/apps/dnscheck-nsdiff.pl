@@ -70,7 +70,7 @@ my $dc      = DNSCheck->new;
 my %dropped = get_changed_domains($dc->config->get("nsdiff"));
 
 my $sth = $dc->dbh->prepare(
-    q[INSERT INTO delegation_history (domain, nameserver) VALUES (?,?)]);
+    q[INSERT IGNORE INTO delegation_history (domain, nameserver) VALUES (?,?)]);
 
 while (my ($d, $v) = each %dropped) {
     foreach my $n (keys %{$v}) {
