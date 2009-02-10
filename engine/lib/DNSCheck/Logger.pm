@@ -66,6 +66,8 @@ sub new {
 
     $self->{module_stack} = [0];
     $self->{module_id}    = 0;
+    
+    $self->{start} = join '.', gettimeofday;
 
     bless $self, $class;
 }
@@ -166,13 +168,13 @@ sub print {
             next;
         }
         if ($self->{locale}) {
-            printf("%s:%s%s %s\n",
-                $e->{timestamp}, $context, $e->{level},
+            printf("%7.3f: %s%s %s\n",
+                ($e->{timestamp} - $self->{start}), $context, $e->{level},
                 $self->{locale}->expand($e->{tag}, @{ $e->{arg} }));
 
         } else {
-            printf("%s:%s%s [%s] %s\n",
-                $e->{timestamp}, $context, $e->{level}, $e->{tag},
+            printf("%7.3f: %s%s [%s] %s\n",
+                ($e->{timestamp} - $self->{start}), $context, $e->{level}, $e->{tag},
                 join(";", @{ $e->{arg} }));
         }
     }
