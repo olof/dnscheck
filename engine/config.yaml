@@ -37,20 +37,20 @@ daemon:
 # Not all keys will be useful for all setups. See the documentation
 # for the various programs about which keys they use, and what they
 # mean. Some info is in DNSCheck::Overview.
-
-dbi:
-    host: 127.0.0.1
-    port: 13317
-    database: dnscheckng
-    user: dnscheckng
-    password: not_given_here
-
-reggie:
-    host: 127.0.0.1
-    port: 13317
-    database: reggie
-    user: reggieuser
-    password: not_given_here
+#
+#dbi:
+#    host: 127.0.0.1
+#    port: 13317
+#    database: dnscheckng
+#    user: dnscheckng
+#    password: not_given_here
+#
+#reggie:
+#    host: 127.0.0.1
+#    port: 13317
+#    database: reggie
+#    user: reggieuser
+#    password: not_given_here
 
 12hour:
     smtphost: smtp.example.com
