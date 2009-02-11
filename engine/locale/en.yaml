@@ -820,8 +820,8 @@ messages:
   format: Done testing SOA parameters for %s.
 
  ZONE:BEGIN:
-  args: 1
-  format: Begin testing zone %s.
+  args: 2
+  format: Begin testing zone %s with version %s.
  ZONE:FATAL_DELEGATION:
   args: 1
   format: Fatal error in delegation for zone %s. 

@@ -52,7 +52,7 @@ sub test {
     $logger->logname($zone);
 
     $logger->module_stack_push();
-    $logger->auto("ZONE:BEGIN", $zone);
+    $logger->auto("ZONE:BEGIN", $zone, $DNSCheck::VERSION);
 
     my ($errors, $testable) = $parent->delegation->test($zone, $history);
 

@@ -820,8 +820,8 @@ messages:
   format: Klar med test av SOA-parametrar för %s.
 
  ZONE:BEGIN:
-  args: 1
-  format: Börjar testa zonen %s.
+  args: 2
+  format: Börjar testa zonen %s med version %s.
  ZONE:FATAL_DELEGATION:
   args: 1
   format: Kritiskt fel i delegering av zonen %s.
