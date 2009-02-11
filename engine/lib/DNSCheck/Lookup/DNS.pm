@@ -410,16 +410,47 @@ sub _query_multiple {
     my $flags  = shift;
     my @target = @_;
 
-    for my $address (@target) {
-        my $packet =
-          $self->query_explicit($qname, $qclass, $qtype, $address, $flags);
+    # set up resolver
+    my $resolver = $self->_setup_resolver($flags);
 
-        if (defined($packet)) {
-            return $packet;
+    my $packet  = undef;
+    my $timeout = 0;
+
+    for my $address (@target) {
+        unless ($self->_querible($address)) {
+            next;
+        }
+
+        $packet = $resolver->get($qname, $qtype, $qclass, $address);
+
+        # ignore non-authoritative answers if flag aaonly is set
+        unless ($packet && $packet->header->aa) {
+            if ($flags && $flags->{aaonly}) {
+                if ($flags->{aaonly} == 1) {
+                    $self->logger->auto("DNS:NOT_AUTH", $address, $qname,
+                        $qclass, $qtype);
+                    next;
+                }
+            }
+        }
+
+        last if ($packet && $packet->header->rcode ne "SERVFAIL");
+
+        if ($self->check_timeout($resolver)) {
+            $timeout++;
         }
     }
 
-    return;
+    unless ($packet && $packet->header->rcode ne "SERVFAIL") {
+        if ($timeout) {
+            $self->logger->auto("DNS:QUERY_TIMEOUT", join(",", @target),
+                $qname, $qclass, $qtype);
+        } else {
+            $self->logger->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
+        }
+    }
+
+    return $packet;
 }
 
 ######################################################################
