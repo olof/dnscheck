@@ -252,7 +252,7 @@ sub revision_string {
     
     foreach my $k (sort keys %revs) {
         my $rev;
-        if ($revs{$k} =~ m|\$Revision: (\d+)\$|) {
+        if ($revs{$k} =~ m|\$Revision: (\d+) \$|) {
             $rev = $1;
         } else {
             $rev = '(none)';
