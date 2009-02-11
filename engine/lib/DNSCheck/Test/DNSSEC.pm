@@ -66,15 +66,19 @@ sub test {
     $logger->module_stack_push();
     $logger->auto("DNSSEC:BEGIN", $zone);
 
+    my $faked_zone = $self->parent->resolver->faked_zone($zone);
+
     # Query parent for DS
     $logger->auto("DNSSEC:CHECKING_DS_AT_PARENT", $zone);
     $packet =
       $parent->dns->query_parent_nocache($zone, $zone, $qclass, "DS", $flags);
-    $ds = _dissect($packet, "DS");
-    if ($ds && $#{ $ds->{DS} } >= 0) {
-        $logger->auto("DNSSEC:DS_FOUND", $zone);
-    } else {
-        $logger->auto("DNSSEC:NO_DS_FOUND", $zone);
+    unless ($packet and $packet->header->rcode eq 'NXDOMAIN' and $faked_zone) {
+        $ds = _dissect($packet, "DS");
+        if ($ds && $#{ $ds->{DS} } >= 0) {
+            $logger->auto("DNSSEC:DS_FOUND", $zone);
+        } else {
+            $logger->auto("DNSSEC:NO_DS_FOUND", $zone);
+        }
     }
 
     # Query child for DNSKEY
@@ -103,7 +107,7 @@ sub test {
         goto DONE;
     }
 
-    if (!$ds and $dnskey) {
+    if (!$ds and $dnskey and !$faked_zone) {
         $errors += $logger->auto("DNSSEC:MISSING_DS", $zone);
     }
 
@@ -168,6 +172,11 @@ sub rrsig_validities {
                 # Loop over RRSIG records from current nameserver
                 my @rrset;
                 my @keys;
+                my $message = sprintf(
+                    "RRSIG(%s/%s/%s/%d)",
+                    $rrsig->name,        $rrsig->class,
+                    $rrsig->typecovered, $rrsig->keytag
+                );
 
                 # Fetch the RRset that the RRSIG signs.
                 my $p =
@@ -208,12 +217,11 @@ sub rrsig_validities {
                   )
                 {
                     $result +=
-                      $self->logger->auto('DNSSEC:RRSIG_VALIDATES',
-                        $rrsig->keytag);
+                      $self->logger->auto('DNSSEC:RRSIG_VALIDATES', $message);
                 } else {
                     $result +=
                       $self->logger->auto('DNSSEC:RRSIG_VALIDATION_FAILED',
-                        $rrsig->keytag, $rrsig->vrfyerrstr);
+                        $message, $rrsig->vrfyerrstr);
                 }
             }
         }
@@ -364,8 +372,6 @@ sub _check_child {
         ## No valid signatures over the SOA RRset
         $logger->auto("DNSSEC:SOA_NO_VALID_SIGNATURES", $zone);
     }
-
-    # FIXME: check signature validation?
 
   DONE:
     $logger->auto("DNSSEC:CHILD_CHECKED", $zone);
