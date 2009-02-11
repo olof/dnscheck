@@ -36,7 +36,7 @@ use strict;
 
 our $SVN_VERSION = '$Revision$';
 
-use Time::HiRes qw(gettimeofday);
+use Time::HiRes qw(time);
 use DNSCheck::Locale;
 use Data::Dumper;
 
@@ -70,7 +70,7 @@ sub new {
     $self->{module_stack} = [0];
     $self->{module_id}    = 0;
     
-    $self->{start} = join '.', gettimeofday;
+    $self->{start} = time;
 
     bless $self, $class;
 }
@@ -106,7 +106,7 @@ sub add {
     }
 
     my $entry;
-    $entry->{timestamp} = join(".", gettimeofday);
+    $entry->{timestamp} = time;
     $entry->{level}     = shift;
     $entry->{tag}       = shift;
     $entry->{module_id} = $module_id;    # Id of module that logged entry
