@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: Zone.pm 493 2008-10-15 11:46:25Z calle $
+# $Id$
 #
 # Copyright (c) 2007 .SE (The Internet Infrastructure Foundation).
 #                    All rights reserved.
@@ -33,6 +33,8 @@ package DNSCheck::Test::Common;
 require 5.008;
 use warnings;
 use strict;
+
+our $SVN_VERSION = '$Revision$';
 
 use Carp;
 

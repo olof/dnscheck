@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 #
+# $Id$
+#
 # Copyright (c) 2007 .SE (The Internet Infrastructure Foundation).
 #                    All rights reserved.
 #
@@ -31,7 +33,7 @@ require 5.008;
 use strict;
 use warnings;
 
-our $SVN_VERSION = '$Id$';
+our $SVN_VERSION = '$Revision$';
 
 use Config;
 use File::Spec::Functions;

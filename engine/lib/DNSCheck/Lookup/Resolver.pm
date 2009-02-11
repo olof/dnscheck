@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: ASN.pm 590 2008-12-12 15:27:07Z calle $
+# $Id$
 #
 # Copyright (c) 2007 .SE (The Internet Infrastructure Foundation).
 #                    All rights reserved.
@@ -33,6 +33,8 @@ package DNSCheck::Lookup::Resolver;
 require 5.008;
 use warnings;
 use strict;
+
+our $SVN_VERSION = '$Revision$';
 
 use YAML;
 use Net::IP;

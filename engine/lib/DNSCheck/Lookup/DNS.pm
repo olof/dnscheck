@@ -34,6 +34,8 @@ require 5.008;
 use warnings;
 use strict;
 
+our $SVN_VERSION = '$Revision$';
+
 use List::Util 'shuffle';
 use Carp;
 

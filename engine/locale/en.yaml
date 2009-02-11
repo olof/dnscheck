@@ -822,6 +822,9 @@ messages:
  ZONE:BEGIN:
   args: 2
   format: Begin testing zone %s with version %s.
+ ZONE:VERSIONS:
+     args: 1
+     format: Module versions: %s.
  ZONE:FATAL_DELEGATION:
   args: 1
   format: Fatal error in delegation for zone %s. 

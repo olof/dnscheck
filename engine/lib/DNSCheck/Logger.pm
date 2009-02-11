@@ -33,6 +33,9 @@ package DNSCheck::Logger;
 require 5.008;
 use warnings;
 use strict;
+
+our $SVN_VERSION = '$Revision$';
+
 use Time::HiRes qw(gettimeofday);
 use DNSCheck::Locale;
 use Data::Dumper;
