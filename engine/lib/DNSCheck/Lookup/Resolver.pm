@@ -210,7 +210,7 @@ sub remember {
     foreach my $rr ($p->answer, $p->additional, $p->authority) {
         my $n = $self->canonicalize_name($rr->name);
         if ($rr->type eq 'A' or $rr->type eq 'AAAA') {
-            $self->{cache}{ips}{$n}{ $rr->address } = 1
+            $self->{cache}{ips}{$n}{ Net::IP->new($rr->address)->ip } = 1
               unless $self->{fake}{ips}{$n};
         }
         if ($rr->type eq 'NS') {
@@ -443,7 +443,7 @@ sub recurse {
               if $self->{debug};
             my $zname = ($p->authority)[0]->name;
             if (my @fns = $self->faked_zone($zname)) {
-                push @stack, simple_names_to_ips(@fns);
+                push @stack, $self->simple_names_to_ips(@fns);
             } else {
                 $self->remember($p);
                 push @stack, sort { $a cmp $b }
