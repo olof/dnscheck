@@ -417,7 +417,7 @@ sub recurse {
     my @stack = $self->simple_names_to_ips($self->highest_known_ns($name));
     my %seen;
 
-    my $possible;
+    my $level = -1;
 
     while (@stack) {
         my $ns = pop(@stack);
@@ -436,12 +436,22 @@ sub recurse {
         } elsif ($p->header->rcode ne 'NOERROR') {
             print STDERR "Response code " . $p->header->rcode . "\n"
               if $self->{debug};
-            $possible = $p;
             next;
         } elsif ($p->header->nscount > 0) {
-            print STDERR scalar($p->authority) . " authority records.\n"
+            print STDERR "Got "
+              . scalar($p->authority)
+              . " authority records. Reloading stack.\n"
               if $self->{debug};
+            @stack = ();
             my $zname = ($p->authority)[0]->name;
+            my $m = $self->matching_labels($name, $zname);
+
+            if ($m < $level) {
+                return;    # Resolving chain redirecting up
+            }
+
+            $level = $m;
+
             if (my @fns = $self->faked_zone($zname)) {
                 push @stack, $self->simple_names_to_ips(@fns);
             } else {
@@ -460,12 +470,30 @@ sub recurse {
 
     print STDERR "Ran out of servers.\n" if $self->{debug};
 
-    # Ran out of servers before we got a good reply, return the best we have
-    if ($possible) {
-        return $possible;
-    } else {
-        return;
+    # Ran out of servers before we got a good reply, return nothing
+    return;
+}
+
+sub matching_labels {
+    my $self = shift;
+    my ($n1, $n2) = @_;
+
+    my @n1 = reverse split /\./, $n1;
+    my @n2 = reverse split /\./, $n2;
+    my $count = 0;
+
+    while (@n1 and @n2) {
+        my $i = shift @n1;
+        my $j = shift @n2;
+
+        if ($i eq $j) {
+            $count += 1;
+        } else {
+            last;
+        }
     }
+
+    return $count;
 }
 
 =head1 NAME
