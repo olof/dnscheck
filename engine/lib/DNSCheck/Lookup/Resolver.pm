@@ -456,11 +456,10 @@ sub recurse {
                 push @stack, $self->simple_names_to_ips(@fns);
             } else {
                 $self->remember($p);
-                push @stack, sort { $a cmp $b }
-                  grep { !$seen{$_} } $self->names_to_ips(
+                push @stack, grep { !$seen{$_} } $self->names_to_ips(
                     map { $_->nsdname }
                       grep { $_->type eq 'NS' } $p->authority
-                  );
+                );
             }
             next;
         } else {
