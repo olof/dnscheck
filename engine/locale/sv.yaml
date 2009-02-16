@@ -479,10 +479,10 @@ messages:
  DNSSEC:RRSIG_EXPIRES_AT:
      args: 1
      format: DNSSEC-signaturen går ut: %s
- DNSSEC:RRSIG_VALIDATES:
+ DNSSEC:RRSIG_VERIFIES:
      args: 1
      format: DNSSEC-signaturen %s stämmer med innehållet.
- DNSSEC:RRSIG_VALIDATION_FAILED:
+ DNSSEC:RRSIG_FAILS_VERIFY:
     args: 2
     format: DNSSEC-signaturen %s stämmer inte med innehållet: %s
  DNSSEC:END:

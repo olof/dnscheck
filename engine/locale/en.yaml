@@ -479,10 +479,10 @@ messages:
  DNSSEC:RRSIG_EXPIRES_AT:
      args: 1
      format: DNSSEC signature expires at: %s
- DNSSEC:RRSIG_VALIDATES:
+ DNSSEC:RRSIG_VERIFIES:
      args: 1
      format: DNSSEC signature %s matches records.
- DNSSEC:RRSIG_VALIDATION_FAILED:
+ DNSSEC:RRSIG_FAILS_VERIFY:
     args: 2
     format: DNSSEC signature %s does not match the records it signs: %s
  DNSSEC:END:

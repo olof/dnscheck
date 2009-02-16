@@ -225,7 +225,9 @@ sub _check_child {
     # REQUIRE: RRSIG(DNSKEY) MUST be valid and created by a valid DNSKEY
     my $valid_dnskey_signatures = 0;
     foreach my $sig (@{ $dnskey->{RRSIG} }) {
-        my $valid = _check_signature($parent, $zone, $sig);
+        my $valid =
+          _check_signature($parent, $zone, $sig, $dnskey->{DNSKEY},
+            $dnskey->{DNSKEY});
 
         push @{ $result{anchors} }, $sig->keytag;
 
@@ -253,7 +255,9 @@ sub _check_child {
     my $soa = _dissect($packet, "SOA");
     my $valid_soa_signatures = 0;
     foreach my $sig (@{ $soa->{RRSIG} }) {
-        my $valid = _check_signature($parent, $zone, $sig);
+        my $valid =
+          _check_signature($parent, $zone, $sig, $dnskey->{DNSKEY},
+            $soa->{SOA});
 
         push @{ $result{anchors} }, $sig->keytag;
 
@@ -375,10 +379,14 @@ sub _dissect {
     return \%response;
 }
 
-sub _check_signature ($$) {
+sub _check_signature ($$$$) {
     my $parent = shift;
     my $zone   = shift;
     my $rrsig  = shift;
+    my $keys   = shift;
+    my $rrset  = shift;
+
+    my $result;
 
     my $logger = $parent->logger;
 
@@ -399,10 +407,19 @@ sub _check_signature ($$) {
         $logger->auto("DNSSEC:RRSIG_EXPIRED", $message);
         return 0;
     } else {
-        $logger->auto("DNSSEC:RRSIG_VALID",      $message);
         $logger->auto("DNSSEC:RRSIG_EXPIRES_AT", scalar(gmtime($expiration)));
-        return 1;
     }
+
+    if ($rrsig->verify($rrset, $keys)) {
+        $logger->auto("DNSSEC:RRSIG_VERIFIES", $message);
+    } else {
+        $logger->auto("DNSSEC:RRSIG_FAILS_VERIFY", $message,
+            $rrsig->vrfyerrstr);
+        return 0;
+    }
+
+    $logger->auto("DNSSEC:RRSIG_VALID", $message);
+    return 1;
 }
 
 sub _parse_timestamp ($) {
