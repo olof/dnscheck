@@ -202,7 +202,8 @@
 				type: "POST",
 				url: "getPager.php",
 				data: "domain=" + searchDomain + "&page=" + pageNumber + "&test_type=" + $("#test_type").val() + "&parameters=" + additionalCheckParameters.raw,
-				success: function(msg) { getPagerResponse(msg, callback); }
+				success: function(msg) { getPagerResponse(msg, callback); },
+				error: function(XMLHttpRequest, textStatus, errorThrown){statusServerError();}
 			});
 	}
 
@@ -217,11 +218,10 @@
 
 		var response = eval("(" + msg + ")");
 
-		if ('ERROR' == response['status'])
+		if ('ERROR' == response.status)
 		{
-			$('#pager_error').show();
-			$('#pagerbuttonsdiv').hide();
-			$('#pagerlist').hide();
+			statusServerError();
+			return;
 		}
 		else
 		{
@@ -377,6 +377,7 @@
 			type: "POST",
 			url: "getResult.php",
 			data: "domain=" + searchDomain + "&test=" + $("#test_type").val() + "&lang=" + languageId + ((null != historyId) ? "&historyId=" + historyId : "" + "&parameters=" + additionalCheckParameters.raw),
+			error: function(XMLHttpRequest, textStatus, errorThrown){statusServerError();},
 			success: function(msg)
 			{
 				var response = eval("(" + msg + ")");
@@ -468,6 +469,16 @@
 		$("#status_header")[0].innerHTML = domainDoesNotExistHeader;
 		$("#status_text")[0].innerHTML = domainDoesNotExistLabel;
 	}
+	
+	function statusServerError()
+	{
+		$("#resultwrapper").slideUp("slow");
+
+		$("#status_light")[0].className = "loaderror";
+		$("#result_status").slideDown("slow");
+		$("#status_header")[0].innerHTML = loadErrorHeader;
+		$("#status_text")[0].innerHTML = loadErrorLabel;
+	}
 
 	function statusDomainSyntax()
 	{
@@ -549,12 +560,12 @@
 		newElement.children("input:last").val(ip);
 		newElement.appendTo("#nameservers");
 
-		// Remove button from all except the last one
-		$("#nameservers div:not(:last) a:last").hide();
+		// Show button from all except the last one
+		$("#nameservers > div > a").show();
 
 		if($("div.nameserver").size() == 30){
-			// Remove button from all except the last one
-			$("#nameservers a:last").hide();
+			// Remove add button link
+			$("#addnameserver").hide();
 		}
 	}
 
@@ -567,9 +578,20 @@
 	}
 
 	function resolveHostname(){
+		var nameservers = Array();
+		$("div.nameserver").each(function(){
+			var newOne = {};
+			newOne.host = $(this).children("[name=nameserver_host]").val();
+			newOne.ip = $(this).children("[name=nameserver_ip]").val();
+
+			if(newOne.host.trim().length > 0){
+				nameservers.push(newOne);
+			}
+		});
+		
 		var toPutInto = $(this).parent().children("input:last");
 		var hostname = $(this).val();
-		$.post('resolveHostname.php', {hostname:hostname}, function(data){
+		$.post('resolveHostname.php', {nameservers:$.toJSON(nameservers), hostname:hostname}, function(data){
 			if(toPutInto.val().length == 0){
 				if(hostname != data){
 					toPutInto.val(data);
@@ -579,9 +601,19 @@
 	}
 
 	$(document).ready(function(){
-		$("a.addnameserver").click(function(){
+		$("#addnameserver").click(function(){
 			addNameserver('', '');
 		});
+		
+		$("a.removenameserver").click(function(){
+			$(this).parent().remove();
+			
+			// If there is only one nameserver left, remove the remove button
+			if($("div.nameserver").size() == 1){
+				$("#nameservers > div > a").hide();
+			}
+		});
+		
 		$("[name=nameserver_host]").blur(resolveHostname);
 		$("#testnow").click(startTest);
 		$("#mainform").submit(function() { startTest(); return false; });

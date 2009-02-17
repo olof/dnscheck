@@ -53,7 +53,11 @@
 		"Invalid domain syntax",
 		"Note",
 		"This test was performed on a undelegated domain",
-		"Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers."
+		"Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers.",
+		"Remove name server",
+		"Connection error",
+		"Could not connect to main database, try again later",
+		"Add name server"
 	);
 
 	$translationMap = array(
@@ -220,7 +224,11 @@
 			"Invalid domain syntax",
 			"Note",
 			"This test was performed on a undelegated domain",
-			"Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers."
+			"Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers.",
+			"Remove name server",
+			"Connection error",
+			"Could not connect to main database, try again later",
+			"Add name server"
 		),
 		"se" => array(
 			"Hem",
@@ -382,7 +390,11 @@
 			"Kontrollera att du angivit ett korrekt domännamn",
 			"Notera",
 			"Detta test utfördes på en odelegerad domän",
-			"Ange ditt odelegerade domännamn ovan samt hostnamn och IP-adress till dina namnservrar du vill testa nedan. Du kan ange upp till 30 stycken namnservrar."
+			"Ange ditt odelegerade domännamn ovan samt hostnamn och IP-adress till dina namnservrar du vill testa nedan. Du kan ange upp till 30 stycken namnservrar.",
+			"Ta bort namnserver",
+			"Anslutningsproblem",
+			"Det gick inte att ansluta till huvuddatabasen",
+			"Lägg till namnserver"
 		)
 	);
 

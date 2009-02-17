@@ -233,6 +233,18 @@ h4.tabhead span {
 
 .addnameserver {
 	float: right;
+	margin: 0;
+	font-size: 0.8em;
+}
+
+#addnameserver {
+	background: url(../_img/icon_addsmall.png) no-repeat center left;
+	padding-left: 8px;
+}
+
+.removenameserver {
+	float: right;
+	display: none;
 }
 
 #undelegateddomain_info {
@@ -289,6 +301,12 @@ form {
 	height: 58px;
 	width: 74px;
 	background: url(../_img/status_error.png) no-repeat 10px 0;
+}
+
+.loaderror {
+	height: 58px;
+	width: 74px;
+	background: url(../_img/status_loaderror.png) no-repeat 10px 0;
 }
 
 .mainload {

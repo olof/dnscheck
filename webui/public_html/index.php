@@ -64,8 +64,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<script type="text/javascript" src="_js/jquery-1.2.2.min.js"></script>
-<script type="text/javascript" src="_js/DNSCheck.js?20080218_1622"></script>
+<script type="text/javascript" src="_js/jquery-1.2.2.min.js?20090217_1622"></script>
+<script type="text/javascript" src="_js/jquery.json-1.3.min.js?20090217_1622"></script>
+<script type="text/javascript" src="_js/DNSCheck.js?20090217_1622"></script>
 <script type="text/javascript">
 	var domainDoesNotExistHeader = "<?php echo(translate("Domain doesn't exist"));?>";
 	var domainDoesNotExistLabel = "<?php echo(translate("The domain you entered doesn't seem to be registered"));?>";
@@ -75,6 +76,8 @@
 	var noNameserversLabel = "<?php echo(translate("At least one nameserver should be entered"));?>";
 	var loadingHeader = "<?php echo(translate("Loading"));?>";
 	var loadingLabel = "<?php echo(translate("Waiting for the test results to be loaded"));?>";
+	var loadErrorHeader = "<?php echo(translate("Connection error"));?>";
+	var loadErrorLabel = "<?php echo(translate("Could not connect to main database, try again later"));?>";
 	var okHeader = "<?php echo(translate("All tests are ok"));?>";
 	var warningHeader = "<?php echo(translate("Warnings found in test"));?>";
 	var errorHeader = "<?php echo(translate("Errors found in test"));?>";
@@ -85,7 +88,7 @@
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DNSCheck</title>
-<link href="_css/dnscheck.css" rel="stylesheet" type="text/css" />
+<link href="_css/dnscheck.css?20090217_1622" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -124,9 +127,12 @@
 	                    <input name="nameserver_host" type="text"/>
 	                	<label for="nameserver_ip"><?php echo(translate("IP"));?>:</label>
 	                    <input name="nameserver_ip" type="text" />
-	                    <a href="#" title="<?php echo(translate("Add one more nameserver"));?>" class="addnameserver"><img src="_img/icon_add.png" width="18" height="18" border="0" alt="Add one more nameserver" /></a>
+	                    <a href="#" title="<?php echo(translate("Remove name server"));?>" class="removenameserver"><img src="_img/icon_remove.png" width="18" height="18" style="border:none" alt="<?php echo(translate("Remove name server"));?>" /></a>
 	              	</div>
               	</div>
+              	<p class="addnameserver">
+					<a id="addnameserver" href="#"><?php echo(translate("Add name server"));?></a>
+				</p>
               <?php endif;?>
 
               <p id="testbutton"><a href="javascript:void(0);" id="testnow" class="button"><?php echo(translate("Test now"));?></a></p>
