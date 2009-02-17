@@ -77,6 +77,9 @@ sub new {
     $self->{resolver}->retry($config->{retry});
     $self->{resolver}->retrans($config->{retrans});
 
+    $self->{ipv6} = $parent->config->get("net")->{ipv6};
+    $self->{ipv4} = $parent->config->get("net")->{ipv4};
+
     return $self;
 }
 
@@ -168,12 +171,12 @@ sub fake_packet {
     my @ips = keys %{ $self->cache->{ips}{$name} };
     my $version;
 
-    if ($type eq 'A') {
+    if ($type eq 'A' and $self->{ipv4}) {
         $version = 4;
-    } elsif ($type eq 'AAAA') {
+    } elsif ($type eq 'AAAA' and $self->{ipv6}) {
         $version = 6;
     } else {
-        return;    # Can't fake that, whatever it is
+        return;    # Can't or won't fake that
     }
 
     @ips = grep { Net::IP->new($_)->version == $version } @ips;
@@ -372,6 +375,15 @@ sub get {
     print STDERR "get: $name $type $class @ns " . (caller(1))[3] . "\n"
       if $self->{debug};
 
+    @ns = map { $_->ip } grep {
+             ($_->version == 4 and $self->{ipv4})
+          or ($_->version == 6 and $self->{ipv6})
+      } map {
+        Net::IP->new($_)
+      } @ns;
+
+    return unless @ns;
+
     my @ns_old = $self->{resolver}->nameservers;
     $self->{resolver}->nameservers(@ns) if @ns;
 
@@ -398,9 +410,12 @@ sub get {
 # 4. Pop IP from stack. Send question to it. Remember we asked it.
 #    If the stack is empty, return undef.
 #
-# 5. If the reply is authoritative, return it.
+# 5. If we get a response, clear the stack.
+#
+# 6. If the reply is authoritative, return it.
 #    If it is not, but contains records in Authority section, get names from
-#    those records and go to 2.
+#    those records and go to 2, unless the records point to a name higher in
+#    the chain, in which case we terminate and return undef.
 
 sub recurse {
     my ($self, $name, $type, $class) = @_;
