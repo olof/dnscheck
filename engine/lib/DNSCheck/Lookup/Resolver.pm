@@ -474,7 +474,7 @@ sub recurse {
             my $m = $self->matching_labels($name, $zname);
 
             if ($m < $level) {
-                return;    # Resolving chain redirecting up
+                next;    # Resolving chain redirecting up
             }
 
             $level = $m;
