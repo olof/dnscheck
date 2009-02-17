@@ -279,6 +279,12 @@ sub ns_parent_child_matching {
             push @ns_at_both, $ns;
         }
     }
+    
+    # REQUIRE: at least two (2) NS records at parent [IIS.KVSE.001.01/r1]
+    # Modified to check for NS records that exist at both parent and child.
+    unless (scalar @ns_at_both >= 2) {
+        $self->logger->auto("DELEGATION:TOO_FEW_NS", scalar @ns_at_both);
+    }
 
     # REQUIRE: all NS at child may exist at parent
     foreach my $ns (@ns_at_child) {
