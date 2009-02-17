@@ -71,7 +71,7 @@ sub test {
     my $faked_zone = $self->parent->resolver->faked_zone($zone);
 
     # Query parent for DS
- 	# if DS is found at parent, the child must be signed
+    # if DS is found at parent, the child must be signed
     $logger->auto("DNSSEC:CHECKING_DS_AT_PARENT", $zone);
     $packet =
       $parent->dns->query_parent_nocache($zone, $zone, $qclass, "DS", $flags);
@@ -85,13 +85,14 @@ sub test {
     }
 
     # Query child for DNSKEY
- 	# if DNSKEY is found at child, the child is probably running DNSSEC
+    # if DNSKEY is found at child, the child is probably running DNSSEC
     $logger->auto("DNSSEC:CHECKING_DNSKEY_AT_CHILD", $zone);
     $packet =
       $parent->dns->query_child_nocache($zone, $zone, $qclass, "DNSKEY",
         $flags);
     $dnskey = _dissect($packet, "DNSKEY");
-	# TODO: check that the DNSKEY protocol field is equal to 3
+
+    # TODO: check that the DNSKEY protocol field is equal to 3
     if ($dnskey && $#{ $dnskey->{DNSKEY} } >= 0) {
         $logger->auto("DNSSEC:DNSKEY_FOUND", $zone);
     } else {
@@ -100,27 +101,28 @@ sub test {
 
     # Determine security status
     $logger->auto("DNSSEC:DETERMINE_SECURITY_STATUS", $zone);
-	if ($ds) {
-    	if ($dnskey) {
-			# DS at parent, DNSKEY at child
-			$logger->auto("DNSSEC:CONSISTENT_SECURITY", $zone);
-		} else 
-			# DS at parent, but no DNSKEY at child
-    		$errors += $logger->auto("DNSSEC:INCONSISTENT_SECURITY", $zone);
-    		goto DONE;
-		}
+    if ($ds) {
+        if ($dnskey) {
+            ## DS at parent, DNSKEY at child
+            $logger->auto("DNSSEC:CONSISTENT_SECURITY", $zone);
+        } else {
+            ## DS at parent, but no DNSKEY at child
+            $errors += $logger->auto("DNSSEC:INCONSISTENT_SECURITY", $zone);
+            goto DONE;
+        }
     } else {
-    	if ($dnskey) {
-			# DNSKEY at child, no DS at parent
-			# TODO: is this noteworthy?
-		} else 
-			# No DNSKEY at child and no DS at parent
-			# TODO: is this noteworthy?
-		}
+        if ($dnskey) {
+            ## DNSKEY at child, no DS at parent
+            # TODO: is this noteworthy?
+        } else {
+            ## No DNSKEY at child and no DS at parent
+            # TODO: is this noteworthy?
+        }
     }
 
     if (!$dnskey) {
-		# Child has no DNSKEY, we're done
+
+        # Child has no DNSKEY, we're done
         $logger->auto("DNSSEC:SKIPPED_NO_KEYS", $zone);
         goto DONE;
     }
