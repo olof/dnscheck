@@ -100,13 +100,23 @@ sub test {
 
     # Determine security status
     $logger->auto("DNSSEC:DETERMINE_SECURITY_STATUS", $zone);
-    if ($ds and !$dnskey) {
-		# Parent has DS, but child has no DNSKEY
-        $errors += $logger->auto("DNSSEC:INCONSISTENT_SECURITY", $zone);
-        goto DONE;
+	if ($ds) {
+    	if ($dnskey) {
+			# DS at parent, DNSKEY at child
+			$logger->auto("DNSSEC:CONSISTENT_SECURITY", $zone);
+		} else 
+			# DS at parent, but no DNSKEY at child
+    		$errors += $logger->auto("DNSSEC:INCONSISTENT_SECURITY", $zone);
+    		goto DONE;
+		}
     } else {
-		# Parent may have DS, child has DNSKEY
-        $logger->auto("DNSSEC:CONSISTENT_SECURITY", $zone);
+    	if ($dnskey) {
+			# DNSKEY at child, no DS at parent
+			# TODO: is this noteworthy?
+		} else 
+			# No DNSKEY at child and no DS at parent
+			# TODO: is this noteworthy?
+		}
     }
 
     if (!$dnskey) {
@@ -122,7 +132,7 @@ sub test {
     ($child_errors, $child_result) = _check_child($parent, $zone, $dnskey);
     $errors += $child_errors;
 
-    # Only check parent if we've found a DS
+    # Only check parent if we've found a DS at the parent
     if ($ds) {
         $parent_errors =
           _check_parent($parent, $zone, $ds, $dnskey, $child_result);
