@@ -118,6 +118,18 @@ sub dnssec {
     return $self->resolver->dnssec(@_);
 }
 
+sub recursion {
+    my $self = shift;
+
+    return $self->resolver->recurse(@_);
+}
+
+sub cdflag {
+    my $self = shift;
+
+    return $self->resolver->cdflag(@_);
+}
+
 # Methods to support undelegated testing
 
 sub add_fake_glue {

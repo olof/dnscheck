@@ -908,6 +908,8 @@ sub address_is_recursive {
     }
 
     my $resolver = DNSCheck::Lookup::Resolver->new($self->parent);
+    $resolver->recursion(1);
+    $resolver->cdflag(1);
 
     # create nonexisting domain name
     my $nxdomain = "nxdomain.example.com";
