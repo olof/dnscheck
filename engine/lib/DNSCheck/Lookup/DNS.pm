@@ -797,9 +797,10 @@ sub find_mx {
     if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
             if (($rr->type eq "MX") && $rr->exchange) {
-                push @dest, $rr->exchange;
+                push @dest, [$rr->preference, $rr->exchange];
             }
         }
+        @dest = map { $_->[1] } sort { $a->[0] <=> $b->[0] } @dest;
         goto DONE if (scalar @dest);
     }
 
@@ -826,7 +827,7 @@ sub find_mx {
   DONE:
     $self->logger->auto("DNS:FIND_MX_RESULT", $domain, join(",", @dest));
 
-    return sort(@dest);
+    return @dest;
 }
 
 sub find_addresses {
