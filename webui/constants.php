@@ -5,7 +5,7 @@
 	define('DB_PORT', 3306);
 	define('DB_NAME', 'dnscheckng');
 	define('DB_USER', 'dnscheckng');
-	define('DB_PASS', 'engine');
+	define('DB_PASS', 'dnscheckng');
 
 	define('STATUS_OK', 'OK');
 	define('STATUS_WARN', 'WARNING');
@@ -17,6 +17,8 @@
 	define('STATUS_INTERNAL_ERROR', 'INTERNAL_ERROR');
 
 	define('PAGER_SIZE', 10);
+	
+	define('GUI_TIMEOUT', 300);
 
 	$sourceIdentifiers = array(
 		'standard' => 'webgui',

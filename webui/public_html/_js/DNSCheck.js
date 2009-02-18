@@ -45,6 +45,7 @@
 	 * End string trim
 	 */
 
+	var totalMillis = 0;
 	var currentPage = 1;
 	var totalPages = 5;
 	var searchDomain = "";
@@ -218,7 +219,8 @@
 
 		var response = eval("(" + msg + ")");
 
-		if ('ERROR' == response.status)
+		if ('ERROR' == response.status ||
+			'INTERNAL_ERROR' == response.status)
 		{
 			statusServerError();
 			return;
@@ -384,7 +386,19 @@
 
 				if ('IN_PROGRESS' == response['result'])
 				{
-					getResultTimeoutVar = setTimeout('getResult(' + historyId + ')', 1000);
+					totalMillis = totalMillis + 1000;
+					
+					if(totalMillis < (guiTimeout * 1000)){
+						getResultTimeoutVar = setTimeout('getResult(' + historyId + ')', 1000);
+					}
+					else {
+						statusServerError();
+					}
+					return;
+				}
+				
+				if(response['result'] == 'INTERNAL_ERROR'){
+					statusServerError();
 					return;
 				}
 
@@ -578,20 +592,18 @@
 	}
 
 	function resolveHostname(){
-		var nameservers = Array();
+		var nameservers = '';
 		$("div.nameserver").each(function(){
-			var newOne = {};
-			newOne.host = $(this).children("[name=nameserver_host]").val();
-			newOne.ip = $(this).children("[name=nameserver_ip]").val();
+			var host = $(this).children("[name=nameserver_host]").val();
 
-			if(newOne.host.trim().length > 0){
-				nameservers.push(newOne);
+			if(host.trim().length > 0){
+				nameservers = nameservers + host + '|';
 			}
 		});
 		
 		var toPutInto = $(this).parent().children("input:last");
 		var hostname = $(this).val();
-		$.post('resolveHostname.php', {nameservers:$.toJSON(nameservers), hostname:hostname}, function(data){
+		$.post('resolveHostname.php', {nameservers:nameservers, hostname:hostname}, function(data){
 			if(toPutInto.val().length == 0){
 				if(hostname != data){
 					toPutInto.val(data);

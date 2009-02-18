@@ -1,11 +1,11 @@
 <?php
-$nameservers = json_decode($_POST['nameservers']);
+$nameservers = explode('|', $_POST['nameservers']);
 $hostname = $_POST['hostname'];
 
 // Pass through the existing nameservers and try to find this one
 $count = 0;
 foreach ($nameservers as $nameserver){
-	if(trim($nameserver->host) == trim($hostname)){
+	if(trim($nameserver) == trim($hostname)){
 		$count++;
 	}
 }
