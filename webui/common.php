@@ -81,13 +81,13 @@
 				return true;
 			}
 
-			$link = mysql_connect(DB_SERVER . ':' . DB_PORT, DB_USER, DB_PASS);
+			$link = @mysql_connect(DB_SERVER . ':' . DB_PORT, DB_USER, DB_PASS);
 			if (false === $link)
 			{
 				return false;
 			}
 
-			$status = mysql_select_db(DB_NAME, $link);
+			$status = @mysql_select_db(DB_NAME, $link);
 			if (false === $status)
 			{
 				return false;
@@ -106,7 +106,7 @@
 				return false;
 			}
 
-			$rawResult = mysql_query($query, self::$dbConnection);
+			$rawResult = @mysql_query($query, self::$dbConnection);
 			if (false === $rawResult)
 			{
 				return false;
