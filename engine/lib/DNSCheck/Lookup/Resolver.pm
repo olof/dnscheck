@@ -183,9 +183,9 @@ sub fake_packet {
     my @ips = keys %{ $self->cache->{ips}{$name} };
     my $version;
 
-    if ($type eq 'A' and $self->{ipv4}) {
+    if ($type eq 'A') {
         $version = 4;
-    } elsif ($type eq 'AAAA' and $self->{ipv6}) {
+    } elsif ($type eq 'AAAA') {
         $version = 6;
     } else {
         return;    # Can't or won't fake that
