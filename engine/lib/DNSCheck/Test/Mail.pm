@@ -38,6 +38,8 @@ our $SVN_VERSION = '$Revision$';
 
 use base 'DNSCheck::Test::Common';
 
+use Mail::RFC822::Address qw[valid];
+
 ######################################################################
 
 sub test {
@@ -57,10 +59,9 @@ sub test {
     $logger->auto("MAIL:BEGIN", $email);
 
     # Slightly less broken than just using split()
-    my ($localpart, $domain) = $email =~ m|^ (.*) @ ([-_.a-z0-9]+) $|ix;
+    my ($localpart, $domain) = $email =~ m|^ (.+) @ ([-_.a-z0-9]+) $|ix;
 
-    # FIXME: stricter checks needed here
-    unless ($localpart && $domain) {
+    unless (valid($email)) {
         $errors += $logger->auto("MAIL:ADDRESS_SYNTAX", $email);
         goto DONE;
     }

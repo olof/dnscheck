@@ -32,6 +32,7 @@ WriteMakefile(
         Time::HiRes            => 0,
         YAML                   => 0,
         DBI                    => 0,
+        Mail::RFC822::Address  => 0,
     },
     'EXE_FILES' => \@exefiles,
     'NO_META'   => 1,
