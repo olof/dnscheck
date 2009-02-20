@@ -152,7 +152,7 @@ sub test {
     $logger->auto("MAIL:END", $email);
     $logger->module_stack_pop();
 
-    return $errors;
+    return !($mail_delivery_v4_ok or $mail_delivery_v6_ok);
 }
 
 1;
