@@ -198,10 +198,12 @@ sub aggregate_registrar_info {
     my @domains = @_;
     my %res;
 
+    my $no_registrar_address = $dc->config->get("12hour")->{fallback} || 'failure@example.com';
+
     foreach my $d (@domains) {
         my ($mail, $name) = get_registrar_info($d);
-        $mail = 'no.email.given@iis.se'    unless defined($mail);
-        $name = "Unknown registrar for $d" unless defined($name);
+        $mail = $no_registrar_address unless defined($mail);
+        $name = "Unknown registrar" unless defined($name);
         $res{$name}{mail} = $mail;
         $res{$name}{domains}{$d} = get_test_results($d);
     }

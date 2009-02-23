@@ -59,6 +59,7 @@ daemon:
     timespan: 24:00:00
     debug: 1
     sourcestring: 12-hour-check
+    fallback: unknown@example.com
 
 zonediff:
     datafile: /tmp/zone_hashes.txt
