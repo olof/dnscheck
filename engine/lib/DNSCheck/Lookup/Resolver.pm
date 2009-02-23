@@ -443,6 +443,7 @@ sub recurse {
 
     my @stack = $self->simple_names_to_ips($self->highest_known_ns($name));
     my %seen;
+    my $candidate;
 
     my $level = -1;
 
@@ -459,6 +460,16 @@ sub recurse {
             next;
         } elsif ($p->header->aa) {
             print STDERR "Authoritative response.\n" if $self->{debug};
+
+            unless ($p->header->rcode eq 'NOERROR'
+                or $p->header->rcode eq 'NXDOMAIN')
+            {
+                print STDERR "...but it's not good. Saving as candidate.\n"
+                  if $self->{debug};
+                $candidate = $p;
+                next;
+            }
+
             return $p;
         } elsif ($p->header->rcode ne 'NOERROR') {
             print STDERR "Response code " . $p->header->rcode . "\n"
@@ -496,8 +507,12 @@ sub recurse {
 
     print STDERR "Ran out of servers.\n" if $self->{debug};
 
-    # Ran out of servers before we got a good reply, return nothing
-    return;
+    # Ran out of servers before we got a good reply, return what we've got
+    if ($candidate) {
+        return $candidate;
+    } else {
+        return;
+    }
 }
 
 sub matching_labels {

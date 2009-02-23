@@ -207,10 +207,11 @@ sub test_soa_rname {
 
     # REQUIRE: SOA RNAME must have a valid syntax (@ vs .)
     # REQUIRE: SOA RNAME address should be deliverable
-    if ($soa->rname =~ /^(.+?)(?<!\\)\.(.+)$/) { # Check for existence if unescaped dot
+    if ($soa->rname =~ /^(.+?)(?<!\\)\.(.+)$/)
+    {    # Check for existence if unescaped dot
         my $mailaddr = $soa->rname;
-        $mailaddr =~ s/(?<!\\)\./@/; # Replace unescaped dot with at-sign
-        $mailaddr =~ s/\\\././g; # De-escape escaped dots.
+        $mailaddr =~ s/(?<!\\)\./@/;    # Replace unescaped dot with at-sign
+        $mailaddr =~ s/\\\././g;        # De-escape escaped dots.
 
         if ($parent->config->get('net')->{smtp}) {
             if ($parent->mail->test($mailaddr, $zone)) {

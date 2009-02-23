@@ -59,7 +59,7 @@ sub expand {
 
     my $format = $self->{messages}{$tag}{format};
 
-    if ($format and $#args + 1 != $self->{messages}{$tag}{args}) {
+    if ($format and @args != $self->{messages}{$tag}{args}) {
         warn "invalid number of arguments supplied for $tag";
     }
 
