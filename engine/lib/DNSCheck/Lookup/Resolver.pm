@@ -331,7 +331,11 @@ sub highest_known_ns {
     }
 
     while (1) {
-        return keys %{ $self->{cache}{ns}{$name} } if $self->{cache}{ns}{$name};
+        my @candidates =
+          $self->simple_names_to_ips(keys %{ $self->{cache}{ns}{$name} })
+          if $self->{cache}{ns}{$name};
+        return @candidates if @candidates;
+
         if ($name eq '.') {
             die "Root zone cache missing.";
         }
@@ -434,6 +438,8 @@ sub recurse {
     $type  ||= 'NS';
     $class ||= 'IN';
 
+    print STDERR "recurse: $name $type $class\n" if $self->{debug};
+
     # See if it should be faked
     if (($type eq 'A' or $type eq 'AAAA')
         and $self->{fake}{ips}{ $self->canonicalize_name($name) })
@@ -441,7 +447,7 @@ sub recurse {
         return $self->fake_packet(undef, $name, $type);
     }
 
-    my @stack = $self->simple_names_to_ips($self->highest_known_ns($name));
+    my @stack = $self->highest_known_ns($name);
     my %seen;
     my $candidate;
 
@@ -461,13 +467,28 @@ sub recurse {
         } elsif ($p->header->aa) {
             print STDERR "Authoritative response.\n" if $self->{debug};
 
-            unless ($p->header->rcode eq 'NOERROR'
-                or $p->header->rcode eq 'NXDOMAIN')
+            if (    $p->header->rcode ne 'NOERROR'
+                and $p->header->rcode ne 'NXDOMAIN')
             {
                 print STDERR "...but it's not good. Saving as candidate.\n"
                   if $self->{debug};
                 $candidate = $p;
                 next;
+            }
+
+            if (    $type ne 'CNAME'
+                and $p->header->ancount > 0
+                and grep { $_->type eq 'CNAME' } $p->answer)
+            {
+                print STDERR "Resolving CNAME.\n" if $self->{debug};
+                my $cnamerr = ($p->answer)[0];
+                my $tmp = $self->recurse($cnamerr->cname, $type);
+                if ($tmp) {
+                    $tmp->push(answer => $cnamerr);
+                    return $tmp;
+                } else {
+                    return $p;
+                }
             }
 
             return $p;
