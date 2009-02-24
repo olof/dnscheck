@@ -434,9 +434,10 @@ sub get {
 #    the chain, in which case we terminate and return undef.
 
 sub recurse {
-    my ($self, $name, $type, $class) = @_;
-    $type  ||= 'NS';
-    $class ||= 'IN';
+    my ($self, $name, $type, $class, $cnames) = @_;
+    $type   ||= 'NS';
+    $class  ||= 'IN';
+    $cnames ||= {};
 
     print STDERR "recurse: $name $type $class\n" if $self->{debug};
 
@@ -482,9 +483,12 @@ sub recurse {
             {
                 print STDERR "Resolving CNAME.\n" if $self->{debug};
                 my $cnamerr = ($p->answer)[0];
-                my $tmp = $self->recurse($cnamerr->cname, $type);
+                return $p if $cnames->{ $cnamerr->cname };    # Break loops
+                $cnames->{ $cnamerr->cname } = 1;
+                my $tmp =
+                  $self->recurse($cnamerr->cname, $type, $class, $cnames);
                 if ($tmp) {
-                    $tmp->push(answer => $cnamerr);
+                    $tmp->unique_push(answer => $cnamerr) unless keys %$cnames;
                     return $tmp;
                 } else {
                     return $p;
