@@ -488,7 +488,8 @@ sub recurse {
                 my $tmp =
                   $self->recurse($cnamerr->cname, $type, $class, $cnames);
                 if ($tmp) {
-                    $tmp->unique_push(answer => $cnamerr) unless keys %$cnames;
+                    print STDERR "recurse: Adding CNAME to response packet.\n" if $self->{debug};
+                    $tmp->unique_push(answer => $cnamerr) unless (keys %$cnames) > 1;
                     return $tmp;
                 } else {
                     return $p;
