@@ -482,14 +482,16 @@ sub recurse {
                 and grep { $_->type eq 'CNAME' } $p->answer)
             {
                 print STDERR "Resolving CNAME.\n" if $self->{debug};
-                my $cnamerr = ($p->answer)[0];
+                my $cnamerr = (grep { $_->type eq 'CNAME' } $p->answer)[0];
                 return $p if $cnames->{ $cnamerr->cname };    # Break loops
                 $cnames->{ $cnamerr->cname } = 1;
                 my $tmp =
                   $self->recurse($cnamerr->cname, $type, $class, $cnames);
                 if ($tmp) {
-                    print STDERR "recurse: Adding CNAME to response packet.\n" if $self->{debug};
-                    $tmp->unique_push(answer => $cnamerr) unless (keys %$cnames) > 1;
+                    print STDERR "recurse: Adding CNAME to response packet.\n"
+                      if $self->{debug};
+                    $tmp->unique_push(answer => $cnamerr)
+                      unless (keys %$cnames) > 1;
                     return $tmp;
                 } else {
                     return $p;
@@ -500,7 +502,28 @@ sub recurse {
         } elsif ($p->header->rcode ne 'NOERROR') {
             print STDERR "Response code " . $p->header->rcode . "\n"
               if $self->{debug};
+            $candidate = $p unless $candidate;
             next;
+        } elsif (
+            $p->header->ancount > 0 and grep {
+                $_->type eq 'CNAME'
+            } $p->answer
+          )
+        {
+            print STDERR "Resolving non-auth CNAME.\n" if $self->{debug};
+            my $cnamerr = (grep { $_->type eq 'CNAME' } $p->answer)[0];
+            return $p if $cnames->{ $cnamerr->cname };    # Break loops
+            $cnames->{ $cnamerr->cname } = 1;
+            my $tmp = $self->recurse($cnamerr->cname, $type, $class, $cnames);
+            if ($tmp) {
+                print STDERR "recurse: Adding CNAME to response packet.\n"
+                  if $self->{debug};
+                $tmp->unique_push(answer => $cnamerr)
+                  unless (keys %$cnames) > 1;
+                return $tmp;
+            } else {
+                return $p;
+            }
         } elsif ($p->header->nscount > 0) {
             print STDERR "Got "
               . scalar($p->authority)
