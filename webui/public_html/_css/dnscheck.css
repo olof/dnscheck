@@ -233,13 +233,23 @@ h4.tabhead span {
 
 .addnameserver {
 	float: right;
-	margin: 0;
-	font-size: 0.8em;
+	margin: 10px 0 5px 0;
+	font-size: 0.7em;
 }
 
 #addnameserver {
-	background: url(../_img/icon_addsmall.png) no-repeat center left;
-	padding-left: 8px;
+	display: block;
+	background: url(../_img/butt_addnameserver_right.png) no-repeat center right;
+	height: 19px;
+	padding-right: 7px;
+}
+
+#addnameserver span {
+	display: block;
+	background: url(../_img/butt_addnameserver_left.png) no-repeat center left;
+	height: 19px;
+	padding-left: 15px;
+	line-height: 19px;
 }
 
 .removenameserver {
