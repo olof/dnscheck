@@ -368,7 +368,7 @@ sub names_to_ips {
             push @ips, keys %{ $self->cache->{ips}{$n} };
         } else {
             next if $self->{poison}{$n};
-            remember($self->recurse($n, 'A'));
+            $self->remember($self->recurse($n, 'A'));
             if ($self->cache->{ips}{$n}) {
                 push @ips, keys %{ $self->cache->{ips}{$n} };
             } else {
