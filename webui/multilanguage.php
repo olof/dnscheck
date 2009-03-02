@@ -105,6 +105,7 @@
 				<li><a href="#f13">DNSCheck and privacy</a></li>
 				<li><a href="#f14">How come I can’t test my domain?</a></li>
 				<li><a href="#f15">What kind of queries does DNSCheck generate?</a></li>
+				<li><a href="#f16">What is an undelegated domain test?</a></li>
 
 			</ol>
 			<div class="divider"></div>
@@ -197,7 +198,12 @@
 			<h5 id="f15">What kind of queries does DNSCheck generate?</h5>
 
 			<p>This  question is very hard to answer since DNSCheck will generate different queries  depending on how your name servers answer. The easiest way to get a full view  of what queries and results are generated is to run the “dnscheck” CLI command  and add the flag “--raw”. This will result in quite thorough information on  what is happening. However the output from this CLI-tool is quite heavily  technical so unless you’re into bits and bytes you might want to skip this  step. :)</p>
-			<p><a href="#findex">Back to the top </a></p>',
+			<p><a href="#findex">Back to the top </a></p>
+
+                        <h5 id="f16">What is an undelegated domain test</h5>
+
+                        <p>An undelegated domain test is a test performed on a domain that may, or may not, be fully published in the DNS. This can be quite useful if you are going to move your domain from one registrar to another. For example let us say that you want to move your zone example.se from the nameserver ’ns.nic.se’ to the nameserver ’ns.iis.se’, in this scenario you could perform an undelegated domain test providing the zone (example.se) and the nameserver you are moving to (ns.iis.se) BEFORE you move your domain. When this test shows all green you can be fairly certain that the new location for your domain at least knows that it is supposed to be your domain’s new home. </p>
+                        <p><a href="#findex">Back to the top </a></p>',
 			"Explanation",
 			"Test was ok",
 			"Test contains warnings",
@@ -224,7 +230,7 @@
 			"Invalid domain syntax",
 			"Note",
 			"This test was performed on a undelegated domain",
-			"Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers.",
+			"Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers. <a href=\"/?faq=1&lang=en&test=undelegated#f16\">What is an undelegated domain test?</a>",
 			"Remove name server",
 			"Connection error",
 			"Could not connect to main database, try again later",
@@ -274,6 +280,7 @@
 				<li><a href="#f13">DNSCheck och personlig integritet</a></li>
 				<li><a href="#f14">Varför kan jag inte testa min domän?</a></li>
 				<li><a href="#f15">Vilka slags anrop genereras av DNSCheck?</a></li>
+				<li><a href="#f16">Vad är ett ”odelegerat domäntest”?</a></li>
 
 			</ol>
 			<div class="divider"></div>
@@ -363,7 +370,13 @@
 			<h5 id="f15">Vilka slags anrop genereras av DNSCheck?</h5>
 
 			<p>Det här är en svår fråga att svara på eftersom DNSCheck  kommer att generera olika typer av anrop beroende på hur dina DNS-servrar  svarar. Det enklaste sättet att se exakt vad DNSCheck testar är att köra  ”dnscheck” CLI-kommandot och lägga till flaggan ”--raw”. Resultatet ger  grundlig information om vad som händer under testet. Det bör dock nämnas att  utmatningen från CLI-verktyget är väldigt tekniskt utmanande så ifall du inte  gillar bits och bytes kanske du vill undvika det.</p>
-			<p><a href="#findex">Tillbaka till början</a></p>',
+			<p><a href="#findex">Tillbaka till början</a></p>
+
+                        <h5 id="f16">Vad är ett ”odelegerat domäntest”</h5>
+
+                        <p>Ett odelegerat domäntest är att test som genomförs på en domain som kan, men inte behöver, vara fullständigt publicerad i DNS. Detta kan vara mycket användbart om du hade tänkt flytta din domän från en registrar till en annan. T.ex. låt oss säg att din domän, example.se, ska flyttas från namnservern ’ns.nic.se’ till namnservern ’ns.iis.se’, i detta fall skulle du kunna köra ett odelegerat domäntest på domänen (example.se) med den namnservern du ska flytta till (ns.iis.se) INNAN du genomför flytten. När detta test visar allt grönt så kan du vara ganska säker på att den nya hemvisten för din domän åtminstone vet att den ska svara på frågor om din domän. </p>
+
+                        <p><a href="#findex">Tillbaka till början</a></p>',
 			"Förklaring",
 			"Testet var ok",
 			"Testet innehöll varningar",
@@ -390,7 +403,7 @@
 			"Kontrollera att du angivit ett korrekt domännamn",
 			"Notera",
 			"Detta test utfördes på en odelegerad domän",
-			"Ange ditt odelegerade domännamn ovan samt hostnamn och IP-adress till dina namnservrar du vill testa nedan. Du kan ange upp till 30 stycken namnservrar.",
+			"Ange ditt odelegerade domännamn ovan samt hostnamn och IP-adress till dina namnservrar du vill testa nedan. Du kan ange upp till 30 stycken namnservrar. <a href=\"/?faq=1&lang=se&test=undelegated#f16\">Vad är ett odelegerat domäntest?</a>",
 			"Ta bort namnserver",
 			"Anslutningsproblem",
 			"Det gick inte att ansluta till huvuddatabasen",
