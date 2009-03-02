@@ -7,6 +7,9 @@ use Carp;
 use Net::DNS;
 use Digest::MD5 qw[md5_base64];
 use DNSCheck;
+use Getopt::Long;
+
+my $bootstrap;
 
 # We want to test a domain if:
 #
@@ -40,7 +43,7 @@ sub get_changed_domains {
     my %changed;
     my $debug = 1;
 
-    $res->axfr_start($conf->{domain}, 'IN') or die;
+    $res->axfr_start($conf->{domain}, 'IN') or die "Zone transfer failed.\n";
 
     while (my $rr = $res->axfr_next) {
         if ($rr->type eq 'NS' or $rr->type eq 'DS') {
@@ -94,8 +97,15 @@ sub get_changed_domains {
         close $oldfile;
     }
 
+    if (    @flagdomains
+        and !(grep { $old{$_} } @flagdomains == @flagdomains)
+        and !$bootstrap)
+    {
+        die "$filename incomplete. Giving up.\n";
+    }
+
     open my $newfile, '>', $filename
-      or die "Failed open save file: $!";
+      or die "Failed to open save file: $!";
 
     while (my ($domain, $hash) = each %new) {
         printf $newfile "%s\t%s\t%s\t%s\n", $domain, $hash->{'NS'},
@@ -117,7 +127,11 @@ sub get_changed_domains {
         }
     }
 
-    return %changed;
+    if ($bootstrap) {
+        return;
+    } else {
+        return %changed;
+    }
 }
 
 sub get_source_id {
@@ -132,14 +146,13 @@ sub get_source_id {
     return $res[0];
 }
 
+GetOptions("bootstrap" => \$bootstrap);
+
 my $dc        = DNSCheck->new;
 my $source_id = get_source_id($dc);
 my $sth       = $dc->dbh->prepare(
 q[INSERT INTO queue (priority,domain,source_id,source_data) VALUES (?,?,?,?)]
 );
-my $rndc = $dc->config->get("zonediff")->{rndcbin};
-
-system($rndc, 'flush') if (defined($rndc) && -x $rndc);
 
 my %changed = get_changed_domains($dc->config->get("zonediff"));
 
@@ -197,6 +210,11 @@ incomplete and a new attempt will be made with the next server. If there are
 no more servers to try, the script will exit with an error message. If this
 key is not present, the check will not be made.
 
+The file with saved data from a previous run will also be checked for the
+existence of the flag domains, and the run terminated if they're not there. In
+order to initally populate a save file, or after the list of flag domains has
+been changed, run the program with the C<--bootstrap> flag.
+
 =item domain
 
 The domain to check.
@@ -204,12 +222,6 @@ The domain to check.
 =item sourcestring
 
 The string used to mark tests queued from this script.
-
-=item rndcbin
-
-The full path to the L<rndc> binary to be used to tell the local L<named> to
-flush its cache. If not set, or set to something that's not executable by the
-userid running the script, it'll just be silently skipped.
 
 =back
 
