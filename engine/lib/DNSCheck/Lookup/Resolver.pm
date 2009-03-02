@@ -368,13 +368,13 @@ sub names_to_ips {
             push @ips, keys %{ $self->cache->{ips}{$n} };
         } else {
             next if $self->{poison}{$n};
-            $self->{poison}{$n} = 1; # Block lookups of this name
+            $self->{poison}{$n} = 1;    # Block lookups of this name
             my $p = $self->recurse($n, 'A');
             $self->remember($p);
-            
+
             if ($self->cache->{ips}{$n}) {
                 push @ips, keys %{ $self->cache->{ips}{$n} };
-                $self->{poison}{$n} = 0; # Allow lookups of name
+                $self->{poison}{$n} = 0;    # Allow lookups of name
             }
         }
     }
