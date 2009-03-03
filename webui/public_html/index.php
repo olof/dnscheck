@@ -103,7 +103,7 @@
             	<div class="testtabs">
                 <ul>
                	  <li <?php if($test == 'standard'): ?>class="testtabson"<?php endif; ?>><a href="<?php echo("?lang=" . $languageId);?>"><?php echo(translate("Domain test"));?></a></li>
-                  <li <?php if($test == 'undelegated'): ?>class="testtabson"<?php endif; ?>><a href="<?php echo("?lang=" . $languageId . "&test=undelegated");?>"><?php echo(translate("Undelegated domain test"));?></a></li>
+                  <li <?php if($test == 'undelegated'): ?>class="testtabson"<?php endif; ?>><a href="<?php echo("?lang=" . $languageId . "&amp;test=undelegated");?>"><?php echo(translate("Undelegated domain test"));?></a></li>
                 </ul>
                 </div>
 				<h3 id="searchhead"><?php echo(translate("Test your DNS-server and find errors"));?></h3>
@@ -142,8 +142,8 @@
 
 			<div id="menu">
 				<ul>
-					<li><a href="./<?php echo("?lang=" . $languageId . "&test=" . $test); ?>"><?php echo(translate("Home")); ?></a></li>
-					<li><a href="./?faq=1<?php echo("&lang=" . $languageId . "&test=" . $test); ?>"><?php echo(translate("FAQ")); ?></a></li>
+					<li><a href="./<?php echo("?lang=" . $languageId . "&amp;test=" . $test); ?>"><?php echo(translate("Home")); ?></a></li>
+					<li><a href="./?faq=1<?php echo("&amp;lang=" . $languageId . "&amp;test=" . $test); ?>"><?php echo(translate("FAQ")); ?></a></li>
 				</ul>
 			</div>
             <div class="clear"> </div>
@@ -222,8 +222,8 @@
 
 	<div id="footer">
 		<p id="f_info"><?php echo(translate(".SE (The Internet Infrastructure Foundation)"));?></p>
-		<?php if('en' != $languageId){?><p id="f_links"><a href="?lang=en&test=<?php echo $test;?>" class="lang_en">English version</a><br /></p><?php }?>
-		<?php if('se' != $languageId){?><p id="f_links"><a href="?lang=se&test=<?php echo $test;?>" class="lang_se">Swedish version</a><br /></p><?php }?>
+		<?php if('en' != $languageId){?><p id="f_links"><a href="?lang=en&amp;test=<?php echo $test;?>" class="lang_en">English version</a><br /></p><?php }?>
+		<?php if('se' != $languageId){?><p id="f_links"><a href="?lang=se&amp;test=<?php echo $test;?>" class="lang_se">Swedish version</a><br /></p><?php }?>
 		<br class="clear" />
 	</div>
 
