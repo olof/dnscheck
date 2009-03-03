@@ -98,7 +98,7 @@ sub get_changed_domains {
     }
 
     if (    @flagdomains
-        and !(grep { $old{$_} } @flagdomains == @flagdomains)
+        and !(scalar(grep { $old{$_} } @flagdomains) == scalar(@flagdomains))
         and !$bootstrap)
     {
         die "$filename incomplete. Giving up.\n";
