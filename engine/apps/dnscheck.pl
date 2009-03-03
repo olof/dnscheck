@@ -46,7 +46,8 @@ sub main {
     my $locale = 'en';
     my (
         $configdir,  $sitedir,        $configfile, $siteconfigfile,
-        $policyfile, $sitepolicyfile, $localefile, @nameservers
+        $policyfile, $sitepolicyfile, $localefile, @nameservers,
+        $what_test
     );
 
     GetOptions(
@@ -62,6 +63,7 @@ sub main {
         'localefile=s'     => \$localefile,
         'locale=s'         => \$locale,
         'nameserver=s'     => \@nameservers,
+        'test=s'           => \$what_test,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -97,7 +99,22 @@ sub main {
         }
     }
 
-    $check->zone->test($zone);
+    if ($what_test eq 'zone' or !$what_test) {
+        $check->zone->test($zone)
+    } elsif ($what_test eq 'connectivity') {
+        $check->connectivity->test($zone)
+    } elsif ($what_test eq 'consistency') {
+        $check->consistency->test($zone)
+    } elsif ($what_test eq 'dnssec') {
+        $check->dnssec->test($zone)
+    } elsif ($what_test eq 'delegation') {
+        $check->delegation->test($zone)
+    } elsif ($what_test eq 'soa') {
+        $check->soa->test($zone)
+    } else {
+        print "Don't know how to perform a test of type $what_test on a zone.\n";
+        exit(1);
+    }
 }
 
 main();
@@ -129,6 +146,9 @@ Options:
                        a name followed by a slash and its IP address. This
                        option can be given several times to specify multiple
                        servers or multiple IP addresses for the same name.
+ --test=<test>         Specify which of the whole-zone tests to run. Currently
+                       available are: zone, connectivity, consistency,
+                       dnssec, delegation and soa.
 
  More specific options override less specific ones. If you, for example, give
  both C<--configdir> and C<--sitepolicyfile> all config will be read from files
