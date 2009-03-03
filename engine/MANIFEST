@@ -41,15 +41,12 @@ examples/delegation.pl
 examples/dns.pl
 examples/dnscheck_nagios_plugin.pl
 examples/dnssec.pl
-examples/engine.pl
 examples/host.pl
 examples/locale.pl
 examples/logger.pl
 examples/mail.pl
 examples/nameserver.pl
 examples/nsid-test.pl
-examples/nsid.pl
-examples/nsp.pl
 examples/parent.pl
 examples/smtp.pl
 examples/soa.pl
