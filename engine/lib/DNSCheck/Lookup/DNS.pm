@@ -768,6 +768,11 @@ sub _find_soa {
     $answer = $self->{resolver}->recurse($qname, "SOA", $qclass);
 
     return $qname unless ($answer);
+    
+    # The following check may run afoul of a bug in BIND 9.x where x is 3 or less,
+    # and if so lead to a false CRITICAL error.
+    # See http://www.ripe.net/ripe/meetings/ripe-51/presentations/pdf/ripe51-enum-e164.pdf
+    
     # return undef if ($answer->header->rcode eq "NXDOMAIN");
 
     # "Handle" CNAMEs at zone apex
