@@ -127,6 +127,10 @@ sub setup {
       $check->config->get("syslog")->{facility};
     slog 'info', 'Reading config from %s and %s.',
       $check->config->get("configfile"), $check->config->get("siteconfigfile");
+
+    unless ($check->dbh) {
+        die "Failed to connect to database. Exiting.\n";
+    }
     detach() unless $debug;
     open STDERR, '>>', $errfile or die "Failed to open error log: $!";
     printf STDERR "%s starting at %s\n", $0, scalar(localtime);

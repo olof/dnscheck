@@ -45,9 +45,9 @@ sub main {
 
     my $locale = 'en';
     my (
-        $configdir,  $sitedir,        $configfile, $siteconfigfile,
-        $policyfile, $sitepolicyfile, $localefile, @nameservers,
-        $what_test
+        $configdir,      $sitedir,     $configfile,
+        $siteconfigfile, $policyfile,  $sitepolicyfile,
+        $localefile,     @nameservers, $what_test
     );
 
     GetOptions(
@@ -100,19 +100,20 @@ sub main {
     }
 
     if (!$what_test or $what_test eq 'zone') {
-        $check->zone->test($zone)
+        $check->zone->test($zone);
     } elsif ($what_test eq 'connectivity') {
-        $check->connectivity->test($zone)
+        $check->connectivity->test($zone);
     } elsif ($what_test eq 'consistency') {
-        $check->consistency->test($zone)
+        $check->consistency->test($zone);
     } elsif ($what_test eq 'dnssec') {
-        $check->dnssec->test($zone)
+        $check->dnssec->test($zone);
     } elsif ($what_test eq 'delegation') {
-        $check->delegation->test($zone)
+        $check->delegation->test($zone);
     } elsif ($what_test eq 'soa') {
-        $check->soa->test($zone)
+        $check->soa->test($zone);
     } else {
-        print "Don't know how to perform a test of type $what_test on a zone.\n";
+        print
+          "Don't know how to perform a test of type $what_test on a zone.\n";
         exit(1);
     }
 }
