@@ -21,7 +21,7 @@ smtp:
 
 net:
     ipv4: 1
-    ipv6: 1
+    ipv6: 0
     smtp: 1
 
 syslog:

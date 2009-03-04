@@ -99,7 +99,7 @@ sub main {
         }
     }
 
-    if ($what_test eq 'zone' or !$what_test) {
+    if (!$what_test or $what_test eq 'zone') {
         $check->zone->test($zone)
     } elsif ($what_test eq 'connectivity') {
         $check->connectivity->test($zone)

@@ -10,7 +10,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $r = DNSCheck->new->resolver;
+my $r = DNSCheck->new({ interactive => 1, extras => { debug => 2 } })->resolver;
 
 my ($name, $type, $class) = @ARGV;
 
@@ -19,10 +19,10 @@ $type  ||= 'A';
 
 die "usage: $0 name [type [class]]\n" unless $name;
 
-my $p = $r->recurse($name,$type,$class);
+my $p = $r->recurse($name, $type, $class);
 
 if ($p) {
-    $p->print
+    $p->print;
 } else {
-    print "No answer.\n"
+    print "No answer.\n";
 }
