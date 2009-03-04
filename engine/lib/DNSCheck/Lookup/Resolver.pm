@@ -527,19 +527,23 @@ sub recurse {
                 return $p;
             }
         } elsif ($p->header->nscount > 0) {
+
+            my $zname = ($p->authority)[0]->name;
+            my $m = $self->matching_labels($name, $zname);
+
+            if ($m < $level) {
+                print STDERR "Bad referral. Skipping to next server.\n"
+                  if $self->{debug};
+                next;    # Resolving chain redirecting up
+            }
+
+            $level = $m;
+
             print STDERR "Got "
               . scalar($p->authority)
               . " authority records. Reloading stack.\n"
               if $self->{debug};
             @stack = ();
-            my $zname = ($p->authority)[0]->name;
-            my $m = $self->matching_labels($name, $zname);
-
-            if ($m < $level) {
-                next;    # Resolving chain redirecting up
-            }
-
-            $level = $m;
 
             if (my @fns = $self->faked_zone($zname)) {
                 push @stack, $self->simple_names_to_ips(@fns);
