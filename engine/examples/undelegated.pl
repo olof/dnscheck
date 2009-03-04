@@ -10,7 +10,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck({ interactive => 1 });
+my $check = new DNSCheck({ interactive => 1, extras => {debug => 1} });
 
 # die "usage: $0 zone ns1-name ns1-ip ns2-name ns2-ip ..." unless (@ARGV > 1);
 

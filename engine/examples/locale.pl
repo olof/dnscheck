@@ -12,7 +12,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = DNSCheck->new({ interactive => 1, locale => "en" });
+my $check = DNSCheck->new({ interactive => 1, extras => {debug => 1}, locale => "en" });
 
 die "syntax error" unless ($ARGV[0]);
 

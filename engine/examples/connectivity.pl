@@ -10,7 +10,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck({ interactive => 1 });
+my $check = new DNSCheck({ interactive => 1, extras => {debug => 1} });
 
 die "syntax error" unless ($ARGV[0]);
 
