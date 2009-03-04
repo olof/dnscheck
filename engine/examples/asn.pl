@@ -12,6 +12,6 @@ use DNSCheck;
 
 my $check = DNSCheck->new;
 
-die "syntax error" unless ($ARGV[0]);
+die "usage: $0 ip_address\n" unless ($ARGV[0]);
 
 print "$_\n" for @{ $check->asn->lookup($ARGV[0]) };
