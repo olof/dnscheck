@@ -302,6 +302,11 @@ sub test_soa_values {
             $max_soa_minimum);
     }
 
+    # RFC 2136 says serial should not be zero
+    if ($soa->serial == 0) {
+        $logger->auto('SOA:SERIAL_IS_ZERO', $zone);
+    }
+
     return $errors;
 }
 

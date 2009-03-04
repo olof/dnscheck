@@ -815,6 +815,9 @@ messages:
  SOA:SKIPPED_IPV6:
   args: 1
   format: IPv6 avaktiverad - kommer inte slå upp SOA MNAME hos %s.
+ SOA:SERIAL_IS_ZERO:
+     args: 1
+     format: Serienumret för SOA-posten för zonen %s bör inte vara noll.
  SOA:END:
   args: 1
   format: Klar med test av SOA-parametrar för %s.

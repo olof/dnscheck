@@ -179,6 +179,7 @@ loglevels:
   SOA:SKIPPED_IPV6: info
   SOA:TTL_OK: info
   SOA:TTL_SMALL: notice
+  SOA:SERIAL_IS_ZERO: warning
   ZONE:BEGIN: info
   ZONE:END: info
   ZONE:FATAL_DELEGATION: critical
