@@ -1,0 +1,10 @@
+This directory contains various code that was contributed from people outside
+the DNSCheck project as such. It's provided with their permission, and unless
+otherwise specified in the respective files under the same license terms as
+DNSCheck itself.
+
+
+* dnscheck-demon.pl was contributed by Mark Overmeer. At present it only works
+  with the 0.81 version of DNSCheck.
+  
+
