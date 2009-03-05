@@ -8,3 +8,8 @@ DNSCheck itself.
   with the 0.81 version of DNSCheck.
   
 
+* dnscheck-dispatcher.sh is an rc script for the dispatcher daemon for
+  FreeBSD. Drop the '.sh' suffix (which is here to avoid having two files in
+  the distribution called dnscheck-dispatcher), stick it in
+  /usr/local/etc/rc.d and add the enable line in /etc/rc.conf as usual.
+  Contributed by gregory.bernard@todoo.biz of the Angolan ccTLD registry.
