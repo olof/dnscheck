@@ -92,6 +92,28 @@ to do something similar to this, you'll probably need to modify the code of
 the script. At the moment, the emails are also generated entirely
 programmatically, so changing their formatting also involves changing code.
 
+=head3 The delegation change detector
+
+L<dnscheck-nsdiff> is similar to L<dnscheck-zonediff> in that it downloads a
+given zone and trawls through the data. Rather than schedule tests, though, it
+just adds rows to the C<delegation_history> table in the database.
+
+=head3 The preflight script
+
+L<dnscheck-preflight> is used by the web GUI. It takes a name as a command
+line argument and prints the string TRUE if it's a domain and FALSE otherwise.
+
+=head3 The hostsyntax script
+
+L<dnscheck-hostsyntax> is also used by the web GUI. It takes a name as a
+command line argument, and prints the string TRUE if it is a syntactically
+valid hostname and FALSE otherwise.
+
+=head3 The CLI interface
+
+L<dnscheck> is a command line tool to check domains. Run it with the switch
+C<--help> to get a short description of how to use it.
+
 =head2 The database
 
 It's entirely possible to use the lib part of DNSCheck without a database. All
@@ -159,24 +181,62 @@ entry was made. C<arg0> to C<arg9>, which are arguments to the message.
 
 The message tags are specified in YAML files.
 
-=head3 messages
+=head3 The messages table 
 
 The messages table contains a copy of a localy YAML file. It is used by the
 web GUI.
 
-=head3 delegation_history
+=head3 The delegation_history table
 
 This table contains information about which nameservers has historically been
 authoritative for domains. Some tests use it, if it's available.
 
-=head3 nameservers and nsp
+=head3 The nameservers and nsp tables
 
 The function of these tables have been obsoleted by the registrar system.
 
-=head3 domains
+=head3 The domains table
 
 A list of domains. More of a convenience thing than an actual part of the
 DNSCheck system.
+
+=head3 Needed permissions
+
+The various programs need different sets of permissions in the database in
+order to work correctly. It breaks down as follows:
+
+=over 4
+
+=item *
+
+Everything that schedules tests needs INSERT, UPDATE and SELECT on C<sources>
+and INSERT on C<queue>.
+
+=item *
+
+Everything that reads test results needs SELECT on C<sources>, C<tests> and
+C<results>.
+
+=item *
+
+Anything that runs tests needs SELECT on C<delegation_history> (or no database
+access at all).
+
+=item *
+
+L<dnscheck-dispatcher> needs a lot: INSERT, SELECT, UPDATE and DELETE on
+C<queue>, INSERT, SELECT and UPDATE on C<tests>, INSERT on C<results> plus
+everything listed above.
+
+=back
+
+In practice, the easiest reasonably secure setup is to give the web GUI one
+user with very limited permissions (INSERT, UPDATE, SELECT on C<sources> and
+INSERT on C<queue>), and one user with full rights on all tables for the rest
+of the system. Indeed, since all of the programs use the database connection
+info given in the L<site_config.yaml> file, you will need to point out a
+different such file to any programs you want to use different connection
+information.
 
 =head2 Files
 

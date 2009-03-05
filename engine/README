@@ -13,7 +13,7 @@ How to install the DNSCheck perl library and associated scripts
 
 5) Configuration files are installed in $PREFIX/share/dnscheck. $PREFIX
    is the top of your Perl installation tree. If you're not sure where
-   that is, you can run "perl -MConfig -le 'print $Config{prefix}'" to
+   that is, you can run "perl -MConfig -le 'print $Config{siteprefix}'" to
    find out.
    
 6) If you plan to use almost any of the included programs or the web gui,
@@ -21,6 +21,9 @@ How to install the DNSCheck perl library and associated scripts
    appropriate part from config.yaml to site_config.yaml and modify to
    match your database setup. The database you point out should be freshly
    loaded with the contents of db/schema.sql and db/index.sql.
+   
+7) Do "perldoc DNSCheck::Overview" to get more information about how things
+   fit together and which part does what.
    
    
    
