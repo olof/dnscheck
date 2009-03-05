@@ -79,10 +79,16 @@ sub lookup {
 
     $self->parent->logger->auto("ASN:LOOKUP", $ip);
 
-    if ($ip !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
+    my $nip = Net::IP->new($ip);
+
+    if (!$nip) {
         $self->parent->logger->auto("ASN:INVALID_ADDRESS", $ip);
         return undef;
-    }
+    } 
+    # Uncomment this when we want to include v6 servers in the check
+    # elsif ($nip->version == 6) {
+    #     return $self->lookup6($ip);
+    # }
 
     unless ($self->{asn}{$ip}) {
         $self->{asn}{$ip} = $self->_asn_helper($ip);
@@ -117,7 +123,7 @@ sub _asn_helper {
 
     unless ($packet && $packet->header->ancount) {
         ## lookup failure
-        return undef;
+        return ["Lookup Failure"];
     }
 
     foreach my $rr ($packet->answer) {

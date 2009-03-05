@@ -63,7 +63,11 @@ sub test {
         push @nameservers, @{$ipv4} if ($ipv4);
     }
 
-    # FIXME: AS lookup for IPv6 addresses
+    # Uncomment when we want v6 servers included in AS test
+    # if ($parent->config->get("net")->{ipv6}) {
+    #     my $ipv6 = $parent->dns->get_nameservers_ipv6($zone, $qclass);
+    #     push @nameservers, @{$ipv6} if ($ipv6);
+    # }
 
     foreach my $address (@nameservers) {
         my $as_lookup = $parent->asn->lookup($address);
