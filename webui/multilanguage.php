@@ -202,7 +202,7 @@
 
                         <h5 id="f16">What is an undelegated domain test</h5>
 
-                        <p>An undelegated domain test is a test performed on a domain that may, or may not, be fully published in the DNS. This can be quite useful if you are going to move your domain from one registrar to another. For example let us say that you want to move your zone example.se from the nameserver ’ns.nic.se’ to the nameserver ’ns.iis.se’, in this scenario you could perform an undelegated domain test providing the zone (example.se) and the nameserver you are moving to (ns.iis.se) BEFORE you move your domain. When this test shows all green you can be fairly certain that the new location for your domain at least knows that it is supposed to be your domain’s new home. </p>
+                        <p>An undelegated domain test is a test performed on a domain that may, or may not, be fully published in the DNS. This can be quite useful if you are going to move your domain from one registrar to another. For example, let us say that you want to move your zone example.se from the nameserver ’ns.nic.se’ to the nameserver ’ns.iis.se’. In this scenario you could perform an undelegated domain test providing the zone (example.se) and the nameserver you are moving to (ns.iis.se) BEFORE you move your domain. When this test shows a green light you can be fairly certain that the new location for your domain at least knows that it is supposed to be replying to queries about your domain. However there might still be other problems in the zone data itself that this test is unaware of.</p>
                         <p><a href="#findex">Back to the top </a></p>',
 			"Explanation",
 			"Test was ok",
@@ -374,7 +374,7 @@
 
                         <h5 id="f16">Vad är ett ”odelegerat domäntest”</h5>
 
-                        <p>Ett odelegerat domäntest är att test som genomförs på en domain som kan, men inte behöver, vara fullständigt publicerad i DNS. Detta kan vara mycket användbart om du hade tänkt flytta din domän från en registrar till en annan. T.ex. låt oss säg att din domän, example.se, ska flyttas från namnservern ’ns.nic.se’ till namnservern ’ns.iis.se’, i detta fall skulle du kunna köra ett odelegerat domäntest på domänen (example.se) med den namnservern du ska flytta till (ns.iis.se) INNAN du genomför flytten. När detta test visar allt grönt så kan du vara ganska säker på att den nya hemvisten för din domän åtminstone vet att den ska svara på frågor om din domän. </p>
+                        <p>Ett odelegerat domäntest är ett test som genomförs på en domän som kan (men inte måste) vara fullständigt publicerad i DNS. Detta kan vara mycket användbart om du tänker flytta din domän från en registrar till en annan. Låt oss ta som exempel att din domän example.se ska flyttas från namnservern ’ns.nic.se’ till namnservern ’ns.iis.se’. I detta fall skulle du kunna köra ett odelegerat domäntest på domänen (example.se) med den namnservern du ska flytta till (ns.iis.se) INNAN du genomför själva flytten. När testet visar grönt så kan du vara tämligen säker på att den nya hemvisten för din domän åtminstone vet att den ska svara på frågor om din domän. Det kan emellertid fortfarande finnas fel i zoninformationen som detta test inte känner till.</p>
 
                         <p><a href="#findex">Tillbaka till början</a></p>',
 			"Förklaring",
