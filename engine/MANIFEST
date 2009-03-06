@@ -8,7 +8,6 @@ config.yaml
 db/drop.sql
 db/indexes.sql
 db/schema.sql
-dnscheck.conf
 lib/DNSCheck.pm
 lib/DNSCheck/Config.pm
 lib/DNSCheck/Locale.pm
@@ -70,6 +69,5 @@ util/dumpyaml.pl
 util/locale2sql.pl
 util/localecompare.pl
 util/perltidyrc
-util/sv.yaml
 util/svntidy.sh
 util/tidy.sh
