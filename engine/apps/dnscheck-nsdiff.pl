@@ -6,6 +6,9 @@ use warnings;
 use Carp;
 use Net::DNS;
 use DNSCheck;
+use Getopt::Long;
+
+my $bootstrap;
 
 # Detect dropped nameservers for a domain and inject them into database
 
@@ -29,7 +32,7 @@ sub get_changed_domains {
     my @flagdomains;
     @flagdomains = @{ $conf->{flagdomain} } if defined($conf->{flagdomain});
 
-    $res->axfr_start($conf->{domain}, 'IN') or die;
+    $res->axfr_start($conf->{domain}, 'IN') or die "Zone transfer failed.\n";
 
     while (my $rr = $res->axfr_next) {
         next unless $rr->type eq 'NS';
@@ -54,6 +57,13 @@ sub get_changed_domains {
             }
         }
     }
+    
+    if (    @flagdomains
+        and !(scalar(grep { $old{$_} } @flagdomains) == scalar(@flagdomains))
+        and !$bootstrap)
+    {
+        die "$filename incomplete. Giving up.\n";
+    }
 
     open my $new, '>', $filename or die "Failed to open file for save: $!\n";
     while (my ($k, $v) = each %new) {
@@ -63,8 +73,14 @@ sub get_changed_domains {
     }
     close $new;
 
-    return %dropped;
+    if ($bootstrap) {
+        return;
+    } else {
+        return %dropped;
+    }
 }
+
+GetOptions("bootstrap" => \$bootstrap);
 
 my $dc      = DNSCheck->new;
 my %dropped = get_changed_domains($dc->config->get("nsdiff"));
