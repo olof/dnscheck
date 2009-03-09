@@ -243,6 +243,29 @@ messages:
   args: 1
   format: Zon annonserad av fler än ett ASN (%s).
   descr: Zonens DNS-servrar är spridda över mer än ett autonomt system.
+ CONNECTIVITY:V6_ANNOUNCED_BY_ASN:
+   args: 2
+   format: DNS-servern %s annonserad över IPv6 av: %s
+   descr: IP-adressen är annonserad av ett autonomt system (AS).
+ CONNECTIVITY:V6_MULTIPLE_ASN:
+   args: 1
+   format: DNS-servern %s är annonserad av flera IPv6 AS.
+   descr: DNS-servern är annonserad av fler än ett autonomt system (AS).
+ CONNECTIVITY:V6_NOT_ANNOUNCED:
+   args: 1
+   format: DNS-servern %s är inte annonserad av något IPv6 AS.
+   descr: IP-adressen är inte annonserad av något autonomt system och är troligtvis inte nåbar på Internet.
+ CONNECTIVITY:V6_ASN_LIST:
+   args: 1
+   format: Zon annonserad av IPv6 ASN: %s
+ CONNECTIVITY:V6_TOO_FEW_ASN:
+   args: 1
+   format: Zon annonserad av endast ett IPv6 ASN (%s).
+   descr: Samtliga DNS-servrar för zonen finns inom samma autonoma system.
+ CONNECTIVITY:V6_ASN_COUNT_OK:
+   args: 1
+   format: Zon annonserad av fler än ett IPv6 ASN (%s).
+   descr: Zonens DNS-servrar är spridda över mer än ett autonomt system.
  CONNECTIVITY:END:
   args: 1
   format: Klar med test av nåbarhet för %s.

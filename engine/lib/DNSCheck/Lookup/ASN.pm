@@ -84,11 +84,9 @@ sub lookup {
     if (!$nip) {
         $self->parent->logger->auto("ASN:INVALID_ADDRESS", $ip);
         return undef;
-    } 
-    # Uncomment this when we want to include v6 servers in the check
-    # elsif ($nip->version == 6) {
-    #     return $self->lookup6($ip);
-    # }
+    } elsif ($nip->version == 6) {
+        return $self->lookup6($ip);
+    }
 
     unless ($self->{asn}{$ip}) {
         $self->{asn}{$ip} = $self->_asn_helper($ip);

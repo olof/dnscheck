@@ -243,6 +243,29 @@ messages:
   args: 1
   format: Zone announced by more than one ASN (%s).
   descr: The zone's name serves are located within more than one autonomous system.
+ CONNECTIVITY:V6_ANNOUNCED_BY_ASN:
+   args: 2
+   format: Name server %s announced over IPv6 by: %s
+   descr: The IP address is announced by an autonomous system (AS).
+ CONNECTIVITY:V6_MULTIPLE_ASN:
+   args: 1
+   format: Name server %s announced by multiple IPv6 AS.
+   descr: The name server is announced my more than one autonomous system (AS).
+ CONNECTIVITY:V6_NOT_ANNOUNCED:
+   args: 1
+   format: Name server %s not announced by any IPv6 AS.
+   descr: The IP address is not announced by any autonomous system and is most probably not reachable on the Internet.
+ CONNECTIVITY:V6_ASN_LIST:
+   args: 1
+   format: Zone announced by IPv6 ASN: %s
+ CONNECTIVITY:V6_TOO_FEW_ASN:
+   args: 1
+   format: Zone announced by only one IPv6 ASN (%s).
+   descr: The zone's name servers are all located within the same autonomous system.
+ CONNECTIVITY:V6_ASN_COUNT_OK:
+   args: 1
+   format: Zone announced by more than one IPv6 ASN (%s).
+   descr: The zone's name serves are located within more than one autonomous system.
  CONNECTIVITY:END:
   args: 1
   format: Done testing connectivity for %s.
