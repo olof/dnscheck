@@ -87,9 +87,49 @@ sub test {
     # Query child for DNSKEY
     # if DNSKEY is found at child, the child is probably running DNSSEC
     $logger->auto("DNSSEC:CHECKING_DNSKEY_AT_CHILD", $zone);
-    $packet =
-      $parent->dns->query_child_nocache($zone, $zone, $qclass, "DNSKEY",
-        $flags);
+
+    # Loop over all children. Ask for DNSKEY with DNSSEC enabled.
+    # Check for DNSKEY+RRSIG. Let through the best one we find.
+    # Warn for inconsistent replies.
+    my @nsc;
+    my $v4nsc = $parent->dns->get_nameservers_ipv4($zone, $qclass)
+      if $self->config->get("net")->{ipv4};
+    push @nsc, @$v4nsc if $v4nsc;
+    my $v6nsc = $parent->dns->get_nameservers_ipv6($zone, $qclass)
+      if $self->config->get("net")->{ipv6};
+    push @nsc, @$v6nsc if $v6nsc;
+
+    my %extra;
+    my $good_packet;
+    foreach my $childns (@nsc) {
+        $packet =
+          $parent->dns->query_explicit($zone, $qclass, 'DNSKEY', $childns,
+            $flags);
+        next unless ($packet and $packet->header->ancount > 0);
+        my $tmp = _dissect($packet, 'DNSKEY');
+        if (    $tmp
+            and ($tmp->{DNSKEY} and @{ $tmp->{DNSKEY} } > 0)
+            and ($tmp->{RRSIG}  and @{ $tmp->{RRSIG} } > 0))
+        {
+            $logger->auto('DNSSEC:EXTRA_PROCESSING', $childns);
+            $extra{yes} += 1;
+            $good_packet = $packet;
+        } else {
+            $logger->auto('DNSSEC:NO_EXTRA_PROCESSING', $childns);
+            $extra{no} += 1;
+        }
+    }
+
+    if ($extra{yes} and $extra{no}) {
+        $logger->auto('DNSSEC:INCONSISTENT_EXTRA_PROCESSING', $zone);
+    } else {
+        $logger->auto('DNSSEC:CONSISTENT_EXTRA_PROCESSING', $zone);
+    }
+
+    $packet = $good_packet || $packet;
+
+    # End of all-child processing.
+
     $dnskey = _dissect($packet, "DNSKEY");
 
     # TODO: check that the DNSKEY protocol field is equal to 3

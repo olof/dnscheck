@@ -508,6 +508,18 @@ messages:
  DNSSEC:RRSIG_FAILS_VERIFY:
     args: 2
     format: DNSSEC-signaturen %s stämmer inte med innehållet: %s
+ DNSSEC:EXTRA_PROCESSING:
+     args: 1
+     format: Namnservern %s gör extrahantering för DNSSEC.
+ DNSSEC:NO_EXTRA_PROCESSING:
+    args: 1
+    format: Namnservern %s gör inte extra hantering för DNSSEC.
+ DNSSEC:CONSISTENT_EXTRA_PROCESSING:
+     args: 1
+     format: Servrarna för %s är överens om extra hantering för DNSSEC.
+ DNSSEC:INCONSISTENT_EXTRA_PROCESSING:
+     args: 1
+     format: Servrarna för %s är inte överens om extra hantering för DNSSEC.
  DNSSEC:END:
   args: 1
   format: Klar med test av DNSSEC för %s.

@@ -508,6 +508,18 @@ messages:
  DNSSEC:RRSIG_FAILS_VERIFY:
     args: 2
     format: DNSSEC signature %s does not match the records it signs: %s
+ DNSSEC:EXTRA_PROCESSING:
+     args: 1
+     format: Nameserver %s does DNSSEC extra processing.
+ DNSSEC:NO_EXTRA_PROCESSING:
+    args: 1
+    format: Nameserver %s does not do DNSSEC extra processing.
+ DNSSEC:CONSISTENT_EXTRA_PROCESSING:
+     args: 1
+     format: Servers for %s have consistent extra processing status.
+ DNSSEC:INCONSISTENT_EXTRA_PROCESSING:
+     args: 1
+     format: Not all servers for %s has DNSSEC extra processing turned on.
  DNSSEC:END:
   args: 1
   format: Done testing DNSSEC for %s.
