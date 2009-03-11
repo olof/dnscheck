@@ -66,6 +66,14 @@ sub test {
     $logger->module_stack_push();
     $logger->auto("DELEGATION:BEGIN", $zone);
 
+    if ($parent->undelegated_test
+        and scalar($parent->resolver->faked_zones) == 0)
+    {
+        $errors = $logger->auto('DELEGATION:BROKEN_UNDELEGATED', $zone);
+        $testable = 0;
+        goto DONE;
+    }
+
     my $packet;
 
     ($errors, $testable) = $self->ns_parent_child_matching($zone);

@@ -121,8 +121,9 @@ sub add_fake_glue {
             $self->resolver->add_fake_glue($zone, $ns_name, $_) for @ip;
         }
     } else {
-        return unless Net::IP->new($ns_ip);
-        $self->resolver->add_fake_glue($zone, $ns_name, $ns_ip);
+        unless ($self->resolver->add_fake_glue($zone, $ns_name, $ns_ip)) {
+            $self->logger->auto('FAKEGLUE:BROKEN_INFO', $ns_name, $ns_ip);
+        }
     }
 
     $self->{faked} = 1;

@@ -344,6 +344,9 @@ messages:
   args: 3
   format: Den tidigare använda DNS-servern %s (%s) är fortfarande auktoritativ för %s.
   descr: En tidigare använd DNS-server svarar fortfarande auktoritativt för zonen. Detta beror troligtvis på att den har kvar gammal zon-data. För att korrigera problemet, kontakta administratören av den DNS-servern och be dem ta bort zonen ur deras konfiguration.
+ DELEGATION:BROKEN_UNDELEGATED:
+     args: 1
+     format: Test av domän %s markerades som odelegerat, men ingen fungerande delegeringsinformation gavs.
  DELEGATION:END:
   args: 1
   format: Klar med test av delegering av %s.

@@ -193,7 +193,10 @@ sub fake_packet {
         return;    # Can't or won't fake that
     }
 
-    @ips = map {$_->ip} grep { defined($_) and $_->version == $version } map {Net::IP->new($_)} @ips;
+    @ips =
+      map { $_->ip }
+      grep { defined($_) and $_->version == $version }
+      map { Net::IP->new($_) } @ips;
 
     my $p = Net::DNS::Packet->new;
 
