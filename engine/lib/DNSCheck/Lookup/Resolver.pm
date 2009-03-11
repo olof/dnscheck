@@ -138,6 +138,8 @@ sub add_fake_glue {
     my $nsname = shift;
     my $nsip   = shift;
 
+    return unless Net::IP->new($nsip);
+
     $nsname = $self->canonicalize_name($nsname);
     $zone   = $self->canonicalize_name($zone);
 
@@ -191,7 +193,7 @@ sub fake_packet {
         return;    # Can't or won't fake that
     }
 
-    @ips = grep { Net::IP->new($_)->version == $version } @ips;
+    @ips = map {$_->ip} grep { defined($_) and $_->version == $version } map {Net::IP->new($_)} @ips;
 
     my $p = Net::DNS::Packet->new;
 
