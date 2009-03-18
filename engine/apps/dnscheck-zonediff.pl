@@ -14,7 +14,7 @@ my $debug;
 sub download_zone {
     my $conf = shift;
 
-    my $dig  = 'dig';           # $conf->{dig};
+    my $dig  = $conf->{dig};
     my $tsig = $conf->{tsig};
     $tsig =~ s/ TSIG /:/;
     my @servers = @{ $conf->{servers} };
@@ -84,7 +84,7 @@ sub download_zone {
 
 sub get_changed_domains {
     my $conf     = shift;
-    my $filename = '/var/tmp/newzonediff.store';    # $conf->{datafile};
+    my $filename = $conf->{datafile};
     my @flagdomains;
     my %changed;
     my %dropped;
