@@ -4,12 +4,75 @@ use strict;
 use warnings;
 
 use Carp;
-use Net::DNS;
-use Digest::MD5 qw[md5_base64];
+use Storable;
 use DNSCheck;
 use Getopt::Long;
 
 my $bootstrap;
+my $debug;
+
+sub download_zone {
+    my $conf = shift;
+
+    my $dig  = 'dig';           # $conf->{dig};
+    my $tsig = $conf->{tsig};
+    $tsig =~ s/ TSIG /:/;
+    my @servers = @{ $conf->{servers} };
+    my $domain  = $conf->{domain};
+    my @flagdomains;
+
+    @flagdomains = @{ $conf->{flagdomain} } if defined($conf->{flagdomain});
+
+    my %new;
+    my %newns;
+
+    while (my $server = shift @servers) {
+        open my $pipe, '-|', $dig, $domain, '@' . $server, 'axfr', '-y', $tsig
+          or die "Failed to run dig: $!\n";
+        while (defined(my $line = <$pipe>)) {
+            next if $line =~ /^;/;
+            printf("%10d\r", $.) if $debug;
+            chomp($line);
+            if (
+                my ($name, $type, $rest) =
+                $line =~ m/
+            ^
+            ([-.a-z0-9]+)\. # Name
+            \s+
+            \d+           # TTL
+            \s+
+            IN
+            \s+
+            ((?:NS)|(?:DS)|(?:A))     # Type
+            \s+
+            (.+)          # Rest
+            $
+            /x
+              )
+            {
+                push @{ $new{$name}{$type} }, $rest;
+                if ($type eq 'NS') {
+                    $newns{$name}{$rest} = 1;
+                }
+                
+            }
+        }
+        print "\n" if $debug;
+
+        if (@flagdomains
+            and
+            !(scalar(grep { $new{$_} } @flagdomains) == scalar(@flagdomains)))
+        {
+            warn "Incomplete transfer (no flag domain), trying next server.\n";
+            die "No more servers to try. Giving up.\n" if (@servers == 0);
+            next;
+        } else {
+            last;
+        }
+    }
+
+    return \%new, \%newns;
+}
 
 # We want to test a domain if:
 #
@@ -20,117 +83,74 @@ my $bootstrap;
 #  * a domain has had changes in DS
 
 sub get_changed_domains {
-    my $conf    = shift;
-    my @servers = @{ $conf->{servers} };
-
-    my $filename = $conf->{datafile};
-    my $tsig     = $conf->{tsig};
-
-  AGAIN:
-    my $server = shift(@servers);
-    my $res = Net::DNS::Resolver->new(nameservers => [$server], recurse => 0);
-
-    # TSIG for distribution server
-    $res->tsig(Net::DNS::RR->new("$tsig")) if defined($tsig);
-
-    my %new;
-    my %old;
+    my $conf     = shift;
+    my $filename = '/var/tmp/newzonediff.store';    # $conf->{datafile};
     my @flagdomains;
-    @flagdomains = @{ $conf->{flagdomain} } if defined($conf->{flagdomain});
-    my $current = "";
-    my %acc     = ();
-    my $name;
     my %changed;
-    my $debug = 1;
+    my %dropped;
 
-    $res->axfr_start($conf->{domain}, 'IN') or die "Zone transfer failed.\n";
+    @flagdomains = @{ $conf->{flagdomain} } if defined($conf->{flagdomain});
 
-    while (my $rr = $res->axfr_next) {
-        if ($rr->type eq 'NS' or $rr->type eq 'DS') {
+    my ($new, $newns) = download_zone($conf);
 
-            $name = $rr->name;
-
-            if ($name eq $current) {
-                push @{ $acc{ $rr->type } }, $rr->string;
-            } elsif ($current eq "") {
-                $current   = $name;
-                $acc{'NS'} = [];
-                $acc{'DS'} = [];
-                $acc{'A'}  = [];
-                push @{ $acc{ $rr->type } }, $rr->string;
-            } else {
-                $new{$current}{'NS'} = md5_base64(sort(@{ $acc{'NS'} }));
-                $new{$current}{'DS'} = md5_base64(sort(@{ $acc{'DS'} }));
-                $new{$current}{'A'}  = md5_base64(sort(@{ $acc{'A'} }));
-
-                $current   = $name;
-                $acc{'NS'} = [];
-                $acc{'DS'} = [];
-                $acc{'A'}  = [];
-                push @{ $acc{ $rr->type } }, $rr->string;
-            }
-        } elsif ($rr->type eq 'A') {
-            push @{ $acc{'A'} }, $rr->string;
-        } else {
-            next;
-        }
-    }
-    $new{$current}{'NS'} = md5_base64(sort(@{ $acc{'NS'} }));
-    $new{$current}{'DS'} = md5_base64(sort(@{ $acc{'DS'} }));
-    $new{$current}{'A'}  = md5_base64(sort(@{ $acc{'A'} }));
-
-    if (@flagdomains
-        and !(scalar(grep { $new{$_} } @flagdomains) == scalar(@flagdomains)))
-    {
-        warn "Incomplete transfer (no flag domain), trying next server.\n";
-        die "No more servers to try. Giving up.\n" if (@servers == 0);
-        goto AGAIN;
-    }
-
-    if (open my $oldfile, '<', $filename) {
-        while (defined(my $line = <$oldfile>)) {
-            my ($domain, $ns_hash, $ds_hash, $a_hash) = split(/\s+/, $line);
-            $old{$domain}{'NS'} = $ns_hash;
-            $old{$domain}{'DS'} = $ds_hash;
-            $old{$domain}{'A'}  = $a_hash;
-        }
-        close $oldfile;
-    }
+    my $old;
+    eval { $old = retrieve($filename); };
+    print "Old data loaded.\n" if $debug;
 
     if (    @flagdomains
-        and !(scalar(grep { $old{$_} } @flagdomains) == scalar(@flagdomains))
+        and !(scalar(grep { $old->{$_} } @flagdomains) == scalar(@flagdomains))
         and !$bootstrap)
     {
-        die "$filename incomplete. Giving up.\n";
+        die "$filename corrupt. Giving up.\n";
     }
 
-    open my $newfile, '>', $filename
-      or die "Failed to open save file: $!";
+    rename $filename, $filename . '.bak';
+    store $new, $filename;
 
-    while (my ($domain, $hash) = each %new) {
-        printf $newfile "%s\t%s\t%s\t%s\n", $domain, $hash->{'NS'},
-          $hash->{'DS'}, $hash->{'A'};
-
-        if (!defined($old{$domain})) {
+    foreach my $domain (keys %$new) {
+        printf("%70s\r", $domain) if $debug;
+        if (!defined($old->{$domain})) {
             $changed{$domain} = 'NEW';
         } else {
-            my $o = $old{$domain};
+            my $o = $old->{$domain};
+            my $n = $new->{$domain};
 
             next
-              if (  $o->{NS} eq $hash->{NS}
-                and $o->{DS} eq $hash->{DS}
-                and $o->{A}  eq $hash->{A});
+              if (  norm($o->{NS}) eq norm($n->{NS})
+                and norm($o->{DS}) eq norm($n->{DS})
+                and norm($o->{A})  eq norm($n->{A}));
             $changed{$domain} = '';
-            $changed{$domain} .= 'NS ' if $o->{NS} ne $hash->{NS};
-            $changed{$domain} .= 'DS ' if $o->{DS} ne $hash->{DS};
-            $changed{$domain} .= 'A '  if $o->{A}  ne $hash->{A};
+            $changed{$domain} .= 'NS ' if norm($o->{NS}) ne norm($n->{NS});
+            $changed{$domain} .= 'DS ' if norm($o->{DS}) ne norm($n->{DS});
+            $changed{$domain} .= 'A '  if norm($o->{A})  ne norm($n->{A});
+        }
+    }
+    print "\n" if $debug;
+    
+    foreach my $domain (keys %$old) {
+        next unless $old->{$domain}{NS};
+        foreach my $ns (@{$old->{$domain}{NS}}) {
+            unless ($newns->{$domain}{$ns}) {
+                printf("Adding %s for %s to list of dropped nameservers.\n", $ns, $domain) if $debug;
+                $dropped{$domain}{$ns} = 1;
+            }
         }
     }
 
     if ($bootstrap) {
         return;
     } else {
-        return %changed;
+        return \%changed,\%dropped;
+    }
+}
+
+sub norm {
+    my $r = shift;
+
+    if ($r) {
+        return join '', sort @$r;
+    } else {
+        return '';
     }
 }
 
@@ -143,35 +163,54 @@ sub get_source_id {
     my @res = $dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?],
         undef, $dc->config->get("zonediff")->{sourcestring});
 
+    print "Got source id " . $res[0] . "\n" if $debug;
     return $res[0];
 }
 
-GetOptions("bootstrap" => \$bootstrap);
+GetOptions("bootstrap" => \$bootstrap, "debug" => \$debug);
 
 my $dc        = DNSCheck->new;
 my $source_id = get_source_id($dc);
 my $sth       = $dc->dbh->prepare(
 q[INSERT INTO queue (priority,domain,source_id,source_data) VALUES (?,?,?,?)]
 );
+my $drop_sth = $dc->dbh->prepare(
+    q[INSERT IGNORE INTO delegation_history (domain, nameserver) VALUES (?,?)]);
+    
+my ($changed, $dropped) = get_changed_domains($dc->config->get("zonediff"));
 
-my %changed = get_changed_domains($dc->config->get("zonediff"));
-
-foreach my $domain (keys %changed) {
-    $sth->execute(3, $domain, $source_id, $changed{$domain});
+foreach my $domain (keys %$changed) {
+    printf("Queueing zone %s for test because of %s.\n",
+        $domain, $changed->{$domain})
+      if $debug;
+    $sth->execute(3, $domain, $source_id, $changed->{$domain});
 }
+
+while (my ($d, $v) = each %$dropped) {
+    foreach my $n (keys %{$v}) {
+        $n =~ s/\.$//;
+        printf("Inserting %s for %s into delegation history.\n", $n, $d);
+        $drop_sth->execute($d, $n);
+    }
+}
+
 
 =head1 NAME
 
-dnscheck-zonediff - Fetch a zone via AXFR and schedule tests for those changed
+dnscheck-zonediff - Fetch a zone with dig and schedule tests for those changed
 
 =head1 DESCRIPTION
 
 This program does a zone transfer of an entire domain, accumulates the NS and
-DS records for each name in it, calculates an MD5 hash on the sorted and
-concatenated string representations of the records and sees if the sum is the
-same as it was the last time the script was run. Any domain for which the sum
-is not the same is entered into the C<queue> table in the L<DNSCheck>
+DS records for each name in it, looks at the sorted and
+concatenated string representations of the records and sees if they are the
+same as it was the last time the script was run. Any domain for which they
+are not the same is entered into the C<queue> table in the L<DNSCheck>
 database.
+
+It also looks at NS records, and adds those that exist in the saved file from
+the last run but not in the current run to the database table
+C<delegation_history>.
 
 This program is intended to be executed regularly from L<cron> or a similar
 scheduler.
@@ -180,7 +219,7 @@ scheduler.
 
 This program gets all its configuration from the same YAML files as the rest
 of the L<DNSCheck> system. It looks for its data under the key C<zonediff>. It
-looks for five subkeys:
+looks for six subkeys:
 
 =over
 
@@ -193,7 +232,7 @@ keydata"). If this key is set to an empty value, TSIG will not be used.
 
 =item datafile
 
-The full path to the file where zone names and MD5 hashes will be stored
+The full path to the file where zone names and record contents will be stored
 between runs.
 
 =item servers
@@ -222,6 +261,10 @@ The domain to check.
 =item sourcestring
 
 The string used to mark tests queued from this script.
+
+=item dig
+
+The full path to the L<dig> binary to use for zone transfers.
 
 =back
 

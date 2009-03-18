@@ -62,7 +62,7 @@ daemon:
     fallback: unknown@example.com
 
 zonediff:
-    datafile: /tmp/zone_hashes.txt
+    datafile: /var/tmp/zone_data.store
     servers:
       - ns1.example.com
       - ns2.example.com
@@ -73,6 +73,7 @@ zonediff:
     flagdomain:
         - 000000000000.example.com
         - zzzzzzzzzzzz.example.com
+    dig: /usr/bin/dig
 
 nsdiff:
     datafile: /tmp/zone_ns.txt
