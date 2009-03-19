@@ -54,7 +54,7 @@ sub download_zone {
                 if ($type eq 'NS') {
                     $newns{$name}{$rest} = 1;
                 }
-                
+
             }
         }
         print "\n" if $debug;
@@ -126,12 +126,14 @@ sub get_changed_domains {
         }
     }
     print "\n" if $debug;
-    
+
     foreach my $domain (keys %$old) {
         next unless $old->{$domain}{NS};
-        foreach my $ns (@{$old->{$domain}{NS}}) {
+        foreach my $ns (@{ $old->{$domain}{NS} }) {
             unless ($newns->{$domain}{$ns}) {
-                printf("Adding %s for %s to list of dropped nameservers.\n", $ns, $domain) if $debug;
+                printf("Adding %s for %s to list of dropped nameservers.\n",
+                    $ns, $domain)
+                  if $debug;
                 $dropped{$domain}{$ns} = 1;
             }
         }
@@ -140,7 +142,7 @@ sub get_changed_domains {
     if ($bootstrap) {
         return;
     } else {
-        return \%changed,\%dropped;
+        return \%changed, \%dropped;
     }
 }
 
@@ -171,12 +173,13 @@ GetOptions("bootstrap" => \$bootstrap, "debug" => \$debug);
 
 my $dc        = DNSCheck->new;
 my $source_id = get_source_id($dc);
-my $sth       = $dc->dbh->prepare(
+my $sth =
+  $dc->dbh->prepare(
 q[INSERT INTO queue (priority,domain,source_id,source_data) VALUES (?,?,?,?)]
-);
+  );
 my $drop_sth = $dc->dbh->prepare(
     q[INSERT IGNORE INTO delegation_history (domain, nameserver) VALUES (?,?)]);
-    
+
 my ($changed, $dropped) = get_changed_domains($dc->config->get("zonediff"));
 
 foreach my $domain (keys %$changed) {
@@ -193,7 +196,6 @@ while (my ($d, $v) = each %$dropped) {
         $drop_sth->execute($d, $n);
     }
 }
-
 
 =head1 NAME
 

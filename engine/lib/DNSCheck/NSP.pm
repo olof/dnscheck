@@ -107,9 +107,10 @@ sub ns_operator {
     my $self   = shift;
     my $nsname = shift;
 
-    my $sth = $self->dbh->prepare(
+    my $sth =
+      $self->dbh->prepare(
 "select nsp.name, nsp.email from nsp, nameservers as ns where nsp.id = ns.nsp_id and ns.nameserver = ?"
-    );
+      );
     $sth->execute($nsname);
     my @res = @{ $sth->fetchall_arrayref };
     if (@res == 0) {
