@@ -90,6 +90,11 @@ sub test {
     chomp $message;
     $logger->auto("SMTP:BANNER", $message);
 
+    if ($smtp->status == 0) {
+        $logger->auto("SMTP:TIMEOUT");
+        goto RESET;
+    }
+
     unless ($smtp->status == 2) {
         $logger->auto("SMTP:HELLO_FAILED");
         $errors++;
@@ -102,18 +107,27 @@ sub test {
     chomp $message;
     $logger->auto("SMTP:RAW", $message);
 
+    if ($smtp->status == 0) {
+        $logger->auto("SMTP:TIMEOUT");
+        goto RESET;
+    }
+
     unless ($smtp->status == 2) {
         $logger->auto("SMTP:MAIL_FROM_REJECTED", "<>");
         $errors++;
         goto RESET;
     }
 
-    # FIXME: handle timeouts?
     $logger->auto("SMTP:RCPT_TO", $email);
     $smtp->recipient($email);
     $message = $smtp->message;
     chomp $message;
     $logger->auto("SMTP:RAW", $message);
+
+    if ($smtp->status == 0) {
+        $logger->auto("SMTP:TIMEOUT");
+        goto RESET;
+    }
 
     # accept 2xx (ok) and 4xx (temporary failure, possible greylisting)
     unless ($smtp->status == 2 || $smtp->status == 4) {

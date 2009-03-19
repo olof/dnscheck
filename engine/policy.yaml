@@ -159,6 +159,7 @@ loglevels:
   SMTP:MAIL_FROM_REJECTED: warning
   SMTP:OK: info
   SMTP:RECIPIENT_REJECTED: warning
+  SMTP:TIMEOUT: notice
   SOA:BEGIN: info
   SOA:END: info
   SOA:EXPIRE_OK: info

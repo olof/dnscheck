@@ -736,6 +736,9 @@ messages:
  SMTP:RSET:
   args: 0
   format: Sänder SMTP reset (RSET).
+ SMTP:TIMEOUT:
+  args: 0
+  format: E-postservern använde för lång tid för att svara på kommando.
  SMTP:QUIT:
   args: 0
   format: Sänder SMTP quit (QUIT).

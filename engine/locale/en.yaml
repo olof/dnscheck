@@ -736,6 +736,9 @@ messages:
  SMTP:RSET:
   args: 0
   format: Sending SMTP reset (RSET).
+ SMTP:TIMEOUT:
+  args: 0
+  format: The mail server timed out in SMTP dialog. 
  SMTP:QUIT:
   args: 0
   format: Sending SMTP quit (QUIT).
