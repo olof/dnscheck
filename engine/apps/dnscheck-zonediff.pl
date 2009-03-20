@@ -84,6 +84,7 @@ sub fetch_new_zone {
 
     foreach my $server (@servers) {
         print "Trying server $server...\n" if $debug;
+        print "$dig axfr $domain \@$server -y $tsig > $filename$newsuffix" if $debug;
         my $res =
           system("$dig axfr $domain \@$server -y $tsig > $filename$newsuffix");
         $res >>= 8;
@@ -101,6 +102,18 @@ sub fetch_new_zone {
             rename $filename . $newsuffix, $filename;
             exit(1);
         }
+    }
+    
+    my $newsize = -s $filename.$newsuffix;
+    my $oldsize = -s $filename;
+    my $ratio = $newsize/$oldsize;
+    
+    if ($ratio > 1.2) {
+        die "New file is more than 20% bigger than old file. Exiting.\n";
+    } elsif ($ratio < 0.83) {
+        die "New file is more than 20% smaller than old file. Exiting.\n";
+    } else {
+        printf("Ratio of new file size to old file size: %0.3f\n", $ratio) if $debug;
     }
 }
 
