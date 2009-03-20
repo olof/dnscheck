@@ -108,6 +108,10 @@ sub test_soa_existence {
     my $errors = 0;
 
     # REQUIRE: SOA record must exist
+
+    # Shouldn't this check that the returned SOA record actually is for the
+    # requested zone? As it's written now, any SOA record at all will make the
+    # test pass. /Calle
     if (   $packet
         && ($packet->header->ancount > 0)
         && (($packet->answer)[0]->type eq "SOA"))

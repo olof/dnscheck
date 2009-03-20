@@ -63,7 +63,7 @@ sub test {
 
     # fetch all nameservers, both from parent and child
     my @ns_parent = $parent->dns->get_nameservers_at_parent($zone, $qclass);
-    my @ns_child  = $parent->dns->get_nameservers_at_child($zone,  $qclass);
+    my @ns_child = $parent->dns->get_nameservers_at_child($zone, $qclass);
 
     foreach my $ns (@ns_parent, @ns_child) {
         foreach my $address ($parent->dns->find_addresses($ns, $qclass)) {

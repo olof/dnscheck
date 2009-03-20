@@ -233,7 +233,10 @@ sub process {
             $flagdomain{old}{$o} = 1;
         }
 
-        if ($n eq $o) {
+        if (!$n or !$o) {
+            @old = $old->();
+            @new = $new->();
+        } elsif ($n eq $o) {
             compare(\@new, \@old);
             @new = $new->();
             @old = $old->();
