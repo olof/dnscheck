@@ -83,7 +83,7 @@ sub lookup {
 
     if (!$nip) {
         $self->parent->logger->auto("ASN:INVALID_ADDRESS", $ip);
-        return undef;
+        return;
     } elsif ($nip->version == 6) {
         return $self->lookup6($ip);
     }

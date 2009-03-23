@@ -155,7 +155,8 @@ sub add_fake_glue {
 sub faked_zones {
     my $self = shift;
 
-    return map { s/\.$//; $_ } keys %{ $self->{fake}{ns} };
+    return
+      map { my $tmp = $_; $tmp =~ s/\.$//; $tmp } keys %{ $self->{fake}{ns} };
 }
 
 # Return a list of NS names for a zone with fake glue
@@ -166,7 +167,9 @@ sub faked_zone {
     $name = $self->canonicalize_name($name);
 
     if ($self->{fake}{ns}{$name}) {
-        return map { s/\.$//; $_ } keys %{ $self->cache->{ns}{$name} };
+        return
+          map { my $tmp = $_; $tmp =~ s/\.$//; $tmp }
+          keys %{ $self->cache->{ns}{$name} };
     } else {
         return;
     }
@@ -336,7 +339,8 @@ sub highest_known_ns {
     }
 
     while (1) {
-        my @candidates =
+        my @candidates;
+        @candidates =
           $self->simple_names_to_ips(keys %{ $self->{cache}{ns}{$name} })
           if $self->{cache}{ns}{$name};
         return @candidates if @candidates;

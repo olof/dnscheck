@@ -30,9 +30,9 @@
 
 package DNSCheck::Lookup::DNS;
 
-require 5.008;
-use warnings;
 use strict;
+use warnings;
+require 5.008;
 
 our $SVN_VERSION = '$Revision$';
 
@@ -144,7 +144,7 @@ sub query_resolver {
         if ($self->check_timeout($self->{resolver})) {
             $self->logger->auto("DNS:RESOLVER_QUERY_TIMEOUT",
                 $qname, $qclass, $qtype);
-            return undef;
+            return;
         }
     }
 
@@ -221,7 +221,7 @@ sub query_parent_nocache {
     my $parent = $self->find_parent($zone, $qclass);
     unless ($parent) {
         $self->logger->auto("DNS:NO_PARENT", $zone, $qclass);
-        return undef;
+        return;
     } else {
         $self->logger->auto("DNS:PARENT_OF", $parent, $zone, $qclass);
     }
@@ -237,7 +237,7 @@ sub query_parent_nocache {
     @target = (@target, @{$ipv6}) if ($ipv6);
     unless (scalar @target) {
         $self->logger->auto("DNS:NO_PARENT_NS", $parent, $zone, $qclass);
-        return undef;
+        return;
     }
 
     # randomize name server addresses
@@ -297,7 +297,7 @@ sub query_child_nocache {
 
     unless (scalar @target) {
         $self->logger->auto("DNS:NO_CHILD_NS", $zone, $qclass);
-        return undef;
+        return;
     }
 
     $flags->{aaonly} = 1;
@@ -319,7 +319,7 @@ sub query_explicit {
         $qtype);
 
     unless ($self->_querible($address)) {
-        return undef;
+        return;
     }
 
     my $resolver = $self->_setup_resolver($flags);
@@ -329,7 +329,7 @@ sub query_explicit {
     if ($self->check_blacklist($address, $qname, $qclass, $qtype)) {
         $self->logger->auto("DNS:ADDRESS_BLACKLISTED",
             $address, $qname, $qclass, $qtype);
-        return undef;
+        return;
     }
 
     my $packet = $resolver->get($qname, $qtype, $qclass, $address);
@@ -340,12 +340,12 @@ sub query_explicit {
         $self->add_blacklist($address, $qname, $qclass, $qtype);
         $self->logger->auto("DNS:ADDRESS_BLACKLIST_ADD",
             $address, $qname, $qclass, $qtype);
-        return undef;
+        return;
     }
 
     unless ($packet) {
         $self->logger->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
-        return undef;
+        return;
     }
 
     # FIXME: improve; see RFC 2671 section 5.3
@@ -355,13 +355,13 @@ sub query_explicit {
         && ($flags->{bufsize} || $flags->{dnssec}))
     {
         $self->logger->auto("DNS:NO_EDNS", $address);
-        return undef;
+        return;
     }
 
     # FIXME: improve; see RFC 2671 section 5.3
     if ($packet->header->rcode eq "FORMERR") {
         $self->logger->auto("DNS:LOOKUP_ERROR", $resolver->errorstring);
-        return undef;
+        return;
     }
 
     # FIXME: Returns $packet since we don't want NAMESERVER:NO_TCP/NO_UDP
@@ -378,7 +378,7 @@ sub query_explicit {
     # FIXME: notice, warning, error?
     if ($packet->header->rcode ne "NOERROR") {
         $self->logger->auto("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
-        return undef;
+        return;
     }
 
     # ignore non-authoritative answers unless flag aaonly is unset
@@ -387,7 +387,7 @@ sub query_explicit {
             unless ($flags->{aaonly} == 0) {
                 $self->logger->auto("DNS:NOT_AUTH", $address, $qname, $qclass,
                     $qtype);
-                return undef;
+                return;
             }
         }
     }
@@ -553,7 +553,7 @@ sub get_nameservers_at_parent {
 
     my $packet = $self->query_parent($qname, $qname, $qclass, "NS");
 
-    return undef unless ($packet);
+    return unless ($packet);
 
     if ($packet->authority > 0) {
         foreach my $rr ($packet->authority) {
@@ -583,7 +583,7 @@ sub get_nameservers_at_child {
 
     my $packet = $self->query_child($qname, $qname, $qclass, "NS");
 
-    return undef unless ($packet);
+    return unless ($packet);
 
     foreach my $rr ($packet->answer) {
         if (($rr->type eq "NS") && $rr->nsdname) {
@@ -652,7 +652,7 @@ sub _init_nameservers_helper {
         # Lookup IPv6 addresses for name servers
         my $ipv6;
         $ipv6 = $self->query_resolver($ns, $qclass, "AAAA")
-            if $self->parent->config->get("net")->{ipv6};
+          if $self->parent->config->get("net")->{ipv6};
 
         if (defined($ipv6)) {
             foreach my $rr ($ipv6->answer) {
@@ -822,7 +822,7 @@ sub find_mx {
     }
 
     $packet = $self->query_resolver($domain, "IN", 'AAAA')
-        if $self->parent->config->get("net")->{ipv6};
+      if $self->parent->config->get("net")->{ipv6};
     if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
             if ($rr->type eq "AAAA") {
@@ -994,7 +994,7 @@ sub query_nsid {
     my $qtype   = shift;
 
     unless ($self->_querible($address)) {
-        return undef;
+        return;
     }
 
     my $resolver = $self->_setup_resolver();
@@ -1025,7 +1025,7 @@ sub query_nsid {
 
     # FIXME: incomplete implementation
 
-    return undef;
+    return;
 }
 
 ######################################################################
@@ -1150,7 +1150,7 @@ sub preflight_check {
     }
 
     # No NS, no SOA, no successful return
-    return undef;
+    return;
 }
 
 1;

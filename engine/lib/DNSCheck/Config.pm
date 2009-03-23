@@ -87,10 +87,13 @@ sub new {
     $self->{'sitepolicyfile'} = $sitepolicyfile;
     $self->{'localefile'}     = $localefile;
 
-    my $cfdata  = LoadFile($configfile);
-    my $pfdata  = LoadFile($policyfile) if -r $policyfile;
-    my $scfdata = LoadFile($siteconfigfile) if -r $siteconfigfile;
-    my $spfdata = LoadFile($sitepolicyfile) if -r $sitepolicyfile;
+    my $cfdata = LoadFile($configfile);
+    my $pfdata;
+    $pfdata = LoadFile($policyfile) if -r $policyfile;
+    my $scfdata;
+    $scfdata = LoadFile($siteconfigfile) if -r $siteconfigfile;
+    my $spfdata;
+    $spfdata = LoadFile($sitepolicyfile) if -r $sitepolicyfile;
 
     my $lfdata;
     $lfdata = LoadFile($localefile)

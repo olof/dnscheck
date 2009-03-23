@@ -204,7 +204,7 @@ sub aggregate_registrar_info {
     foreach my $d (@domains) {
         my $r = get_test_results($d);
         if ($r->{count_critical} + $r->{count_error} == 0) {
-            next; # A later test was clean
+            next;    # A later test was clean
         }
         my ($mail, $name) = get_registrar_info($d);
         $mail = $no_registrar_address unless defined($mail);

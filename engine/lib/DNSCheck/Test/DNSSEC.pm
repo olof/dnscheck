@@ -92,10 +92,12 @@ sub test {
     # Check for DNSKEY+RRSIG. Let through the best one we find.
     # Warn for inconsistent replies.
     my @nsc;
-    my $v4nsc = $parent->dns->get_nameservers_ipv4($zone, $qclass)
+    my $v4nsc;
+    $v4nsc = $parent->dns->get_nameservers_ipv4($zone, $qclass)
       if $self->config->get("net")->{ipv4};
     push @nsc, @$v4nsc if $v4nsc;
-    my $v6nsc = $parent->dns->get_nameservers_ipv6($zone, $qclass)
+    my $v6nsc;
+    $v6nsc = $parent->dns->get_nameservers_ipv6($zone, $qclass)
       if $self->config->get("net")->{ipv6};
     push @nsc, @$v6nsc if $v6nsc;
 
@@ -413,7 +415,7 @@ sub _dissect {
 
     my %response = ();
 
-    return undef unless ($packet);
+    return unless ($packet);
 
     foreach my $rr ($packet->answer) {
         if (    $rr->type eq "RRSIG"
@@ -431,7 +433,7 @@ sub _dissect {
     }
 
     if ($#{ $response{$qtype} } < 0) {    # FIXME: This must be a bug
-        return undef;
+        return;
     }
 
     return \%response;
@@ -486,7 +488,7 @@ sub _parse_timestamp ($) {
     if ($str =~ /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/) {
         return str2time("$1-$2-$3 $4:$5:$6", "GMT");
     } else {
-        return undef;
+        return;
     }
 }
 

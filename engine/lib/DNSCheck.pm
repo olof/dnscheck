@@ -199,7 +199,7 @@ sub dbh {
     my $dbh;
 
     unless (defined($self->config->get("dbi"))) {
-        return undef;
+        return;
     }
 
     unless (defined($self->{"dbh"}) && $self->{"dbh"}->ping) {

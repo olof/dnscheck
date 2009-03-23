@@ -230,7 +230,7 @@ sub get_next_entry {
 
     if ($self->{_iter_index} > $#{ $self->{messages} }) {
         $self->{_iter_index} = 0;
-        return undef;
+        return;
     }
 
     my $e = $self->{messages}[$self->{_iter_index}];
