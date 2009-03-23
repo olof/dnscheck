@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/opt/local/bin/perl
 #
 # $Id: dnscheck.pl 721 2009-03-04 15:27:27Z calle $
 #
@@ -84,7 +84,8 @@ sub fetch_new_zone {
 
     foreach my $server (@servers) {
         print "Trying server $server...\n" if $debug;
-        print "$dig axfr $domain \@$server -y $tsig > $filename$newsuffix\n" if $debug;
+        print "$dig axfr $domain \@$server -y $tsig > $filename$newsuffix\n"
+          if $debug;
         my $res =
           system("$dig axfr $domain \@$server -y $tsig > $filename$newsuffix");
         $res >>= 8;
@@ -103,15 +104,16 @@ sub fetch_new_zone {
             exit(1);
         }
     }
-    
-    my $newsize = -s $filename.$newsuffix;
+
+    my $newsize = -s $filename . $newsuffix;
     my $oldsize = -s $filename;
-    my $ratio = $newsize/$oldsize;
-    
+    my $ratio   = $newsize / $oldsize;
+
     if ($ratio < 0.83) {
         die "New file is more than 20% smaller than old file. Exiting.\n";
     } else {
-        printf("Ratio of new file size to old file size: %0.3f\n", $ratio) if $debug;
+        printf("Ratio of new file size to old file size: %0.3f\n", $ratio)
+          if $debug;
     }
 }
 
@@ -158,45 +160,10 @@ sub line_parse {
     }
 }
 
-sub get_iterator {
-    my $filename = shift;
-
-    my @buffer;
-    open my $fh, '<', $filename or die "$filename: $!\n";
-
-    return sub {
-        my @res;
-
-        while (defined(my $line = <$fh>)) {
-            next unless $line;
-            chomp($line);
-            my @tmp = line_parse($line);
-            next unless @tmp;
-
-            unless (@buffer) {
-                @buffer = @tmp;
-                $line   = <$fh>;
-                redo;
-            }
-
-            if ($tmp[0] eq $buffer[0]) {
-                push @res, [@buffer];
-                @buffer = @tmp;
-            } else {
-                push @res, [@buffer];
-                @buffer = @tmp;
-                return @res;
-            }
-        }
-        return @res;
-      }
-}
-
 sub extract {
     my ($ary, $type) = @_;
 
-    return join '',
-      map { $_->[2] }
+    return join '', map { $_->[2] }
       grep { $_->[1] eq $type } sort { $a->[2] cmp $b->[2] } @$ary;
 }
 
@@ -225,42 +192,68 @@ sub compare {
 }
 
 sub process {
-    my $new = get_iterator($filename . $newsuffix);
-    my $old = get_iterator($filename);
-    my @new = $new->();
-    my @old = $old->();
+    my %res;
 
-    while (@new or @old) {
-        my $n;
-        my $o;
+    open my $new, '<', $filename . $newsuffix
+      or die "Failed to open $filename$newsuffix: $!\n";
+    open my $old, '<', $filename
+      or die "Failed ot open $filename: $!\n";
+    my $nline = '';
+    my $oline = '';
+    
+    print "Datafiles opened.\n" if $debug;
 
-        $n = $new[0][0] if @new;
-        $o = $old[0][0] if @old;
+    while (defined($nline) or defined($oline)) {
+        my @n;
+        my @o;
 
-        if ($n and $flagdomain{exist}{$n}) {
-            $flagdomain{new}{$n} = 1;
+        $nline = <$new>;
+        chomp($nline) if $nline;
+        $oline = <$old>;
+        chomp($oline) if $oline;
+
+        if (defined($nline) and (@n = line_parse($nline))) {
+            $flagdomain{new}{ $n[0] } = 1 if $flagdomain{exist}{ $n[0] };
+            $res{$nline} += 1;
+            if (defined($res{$nline}) and $res{$nline} == 0) {
+                delete $res{$nline};
+            }
         }
-        if ($o and $flagdomain{exist}{$o}) {
-            $flagdomain{old}{$o} = 1;
-        }
 
-        if (!$n or !$o) {
-            @old = $old->();
-            @new = $new->();
-        } elsif ($n eq $o) {
-            compare(\@new, \@old);
-            @new = $new->();
-            @old = $old->();
-        } elsif ($n gt $o) {
-            @old = $old->();
-        } elsif ($n lt $o) {
-            $added{$n} = 1;
-            @new = $new->();
-        } else {
-            print "WTF: $n $o\n";
-            last;
+        if (defined($oline) and (@o = line_parse($oline))) {
+            $flagdomain{old}{ $o[0] } = 1 if $flagdomain{exist}{ $o[0] };
+            $res{$oline} -= 1;
+            if (defined($res{$oline}) and $res{$oline} == 0) {
+                delete $res{$oline};
+            }
         }
     }
+    
+    print "Data files read (". scalar(keys %res). " entries retained).\n" if $debug;
+
+    my %old;
+    my %new;
+    while (my ($k, $v) = each %res) {
+        my ($name, $type, $data) = line_parse($k);
+
+        if ($v == 1) {
+            push @{ $new{$name} }, [$name, $type, $data];
+        } elsif ($v == -1) {
+            push @{ $old{$name} }, [$name, $type, $data];
+        } else {
+            print "Error: $v => $k\n";
+        }
+    }
+    %res = ();
+
+    foreach my $zone (keys %new) {
+        if (!$old{$zone}) {
+            $added{$zone} = 1;
+        } else {
+            compare($new{$zone}, $old{$zone});
+        }
+    }
+    print "Retained data compared.\n" if $debug;
 }
 
 sub get_source_id {
