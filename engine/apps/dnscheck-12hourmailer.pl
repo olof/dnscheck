@@ -202,11 +202,15 @@ sub aggregate_registrar_info {
       || 'failure@example.com';
 
     foreach my $d (@domains) {
+        my $r = get_test_results($d);
+        if ($r->{count_critical} + $r->{count_error} == 0) {
+            next; # A later test was clean
+        }
         my ($mail, $name) = get_registrar_info($d);
         $mail = $no_registrar_address unless defined($mail);
         $name = "Unknown registrar"   unless defined($name);
         $res{$name}{mail} = $mail;
-        $res{$name}{domains}{$d} = get_test_results($d);
+        $res{$name}{domains}{$d} = $r;
     }
     return %res;
 }

@@ -200,7 +200,7 @@ sub process {
       or die "Failed ot open $filename: $!\n";
     my $nline = '';
     my $oline = '';
-    
+
     print "Datafiles opened.\n" if $debug;
 
     while (defined($nline) or defined($oline)) {
@@ -228,8 +228,9 @@ sub process {
             }
         }
     }
-    
-    print "Data files read (". scalar(keys %res). " entries retained).\n" if $debug;
+
+    print "Data files read (" . scalar(keys %res) . " entries retained).\n"
+      if $debug;
 
     my %old;
     my %new;
