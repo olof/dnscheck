@@ -144,7 +144,8 @@ sub test {
         }
         foreach my $hostname (sort @ptrlist) {
             my $ipv4 = $parent->dns->query_resolver($hostname, $qclass, "A");
-            my $ipv6 = $parent->dns->query_resolver($hostname, $qclass, "AAAA");
+            my $ipv6 = $parent->dns->query_resolver($hostname, $qclass, "AAAA")
+                if $self->parent->config->get("net")->{ipv6};
 
             unless (($ipv4 && $ipv4->header->ancount)
                 || ($ipv6 && $ipv6->header->ancount))
