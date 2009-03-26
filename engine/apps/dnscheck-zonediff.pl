@@ -90,7 +90,7 @@ sub fetch_new_zone {
           if $debug;
         my $res =
           system("$dig axfr $domain \@$server -y $tsig > $filename$newsuffix");
-        printf("Transfer ended after %0.2f seconds.\n", time()-$start);
+        printf("Transfer ended after %0.2f seconds.\n", time() - $start);
         $res >>= 8;
         if ($res == 0) {
             print "Got file.\n" if $debug;
@@ -174,16 +174,19 @@ sub compare {
     my ($n, $o) = @_;
     my $name = $n->[0][0];
 
-    my $nns = extract($n, 'NS');
-    my $ons = extract($o, 'NS');
-    my $nds = extract($n, 'DS');
-    my $ods = extract($o, 'DS');
-    my $na  = extract($n, 'A');
-    my $oa  = extract($o, 'A');
+    my $nns   = extract($n, 'NS');
+    my $ons   = extract($o, 'NS');
+    my $nds   = extract($n, 'DS');
+    my $ods   = extract($o, 'DS');
+    my $na    = extract($n, 'A');
+    my $oa    = extract($o, 'A');
+    my $naaaa = extract($n, 'AAAA');
+    my $oaaaa = extract($o, 'AAAA');
 
-    $changed{$name} .= 'NS ' if $nns ne $ons;
-    $changed{$name} .= 'DS ' if $nds ne $ods;
-    $changed{$name} .= 'A '  if $na  ne $oa;
+    $changed{$name} .= 'NS '   if $nns   ne $ons;
+    $changed{$name} .= 'DS '   if $nds   ne $ods;
+    $changed{$name} .= 'A '    if $na    ne $oa;
+    $changed{$name} .= 'AAAA ' if $naaaa ne $oaaaa;
 
     my %oldns = map { $_->[2], 1 } grep { $_->[1] eq 'NS' } @$o;
     foreach my $new (map { $_->[2], 1 } grep { $_->[1] eq 'NS' } @$n) {
