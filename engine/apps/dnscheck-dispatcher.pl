@@ -208,7 +208,8 @@ sub dispatch {
     my $priority;
 
     if (scalar keys %running < $limit) {
-        ($domain, $id, $source, $source_data, $fake_glue, $priority) = get_entry();
+        ($domain, $id, $source, $source_data, $fake_glue, $priority) =
+          get_entry();
         slog 'debug', "Fetched $domain from database." if defined($domain);
     } else {
 
@@ -300,7 +301,8 @@ sub process {
         $running{$pid} = $domain;
         slog 'debug', "Child process $pid has been started.";
     } elsif ($pid == 0) {    # Zero value, so child
-        running_in_child($domain, $id, $source, $source_data, $fake_glue, $priority);
+        running_in_child($domain, $id, $source, $source_data, $fake_glue,
+            $priority);
     } else {                 # Undefined value, so error
         die "Fork failed: $!";
     }
@@ -319,7 +321,7 @@ sub running_in_child {
     my $dbh = $dc->dbh;
     my $log = $dc->logger;
 
-    setpriority(0, $$, 20-2*$priority);
+    setpriority(0, $$, 20 - 2 * $priority);
 
     if (defined($fake_glue)) {
         my @ns = split(/\s+/, $fake_glue);

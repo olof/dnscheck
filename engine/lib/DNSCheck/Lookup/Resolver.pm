@@ -167,8 +167,7 @@ sub faked_zone {
     $name = $self->canonicalize_name($name);
 
     if ($self->{fake}{ns}{$name}) {
-        return
-          map { my $tmp = $_; $tmp =~ s/\.$//; $tmp }
+        return map { my $tmp = $_; $tmp =~ s/\.$//; $tmp }
           keys %{ $self->cache->{ns}{$name} };
     } else {
         return;

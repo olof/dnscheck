@@ -233,8 +233,8 @@ sub get_test_results {
 
     my $test = $dc->dbh->selectrow_hashref(
         q[
-        SELECT * FROM tests WHERE domain = ? ORDER BY id DESC LIMIT 1
-        ], undef, $domain
+        SELECT * FROM tests WHERE domain = ? AND source_id = ? ORDER BY id DESC LIMIT 1
+        ], undef, $domain, $source_id
     );
     die "Domain $domain not tested!\n" unless $test;
     return $test;
