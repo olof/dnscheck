@@ -650,9 +650,7 @@ sub _init_nameservers_helper {
         }
 
         # Lookup IPv6 addresses for name servers
-        my $ipv6;
-        $ipv6 = $self->query_resolver($ns, $qclass, "AAAA")
-          if $self->parent->config->get("net")->{ipv6};
+        my $ipv6 = $self->query_resolver($ns, $qclass, "AAAA");
 
         if (defined($ipv6)) {
             foreach my $rr ($ipv6->answer) {
@@ -821,8 +819,7 @@ sub find_mx {
         }
     }
 
-    $packet = $self->query_resolver($domain, "IN", 'AAAA')
-      if $self->parent->config->get("net")->{ipv6};
+    $packet = $self->query_resolver($domain, "IN", 'AAAA');
     if ($packet && $packet->header->ancount > 0) {
         foreach my $rr ($packet->answer) {
             if ($rr->type eq "AAAA") {

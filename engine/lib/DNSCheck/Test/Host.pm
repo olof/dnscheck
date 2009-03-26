@@ -57,12 +57,8 @@ sub test {
     $errors += $self->host_syntax($hostname);
     goto DONE if $errors > 0;
 
-    my $ipv4;
-    $ipv4 = $parent->dns->query_resolver($hostname, $qclass, "A")
-      if $parent->config->get("net")->{ipv4};
-    my $ipv6;
-    $ipv6 = $parent->dns->query_resolver($hostname, $qclass, "AAAA")
-      if $parent->config->get("net")->{ipv6};
+    my $ipv4 = $parent->dns->query_resolver($hostname, $qclass, "A");
+    my $ipv6 = $parent->dns->query_resolver($hostname, $qclass, "AAAA");
 
     # REQUIRE: Host address must exist
     unless (($ipv4 && $ipv4->header->ancount)
