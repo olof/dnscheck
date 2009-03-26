@@ -151,7 +151,7 @@ sub line_parse {
                 \s+
                 IN
                 \s+
-                ((?:NS)|(?:DS)|(?:A))     # Type
+                ((?:NS)|(?:DS)|(?:A)|(?:AAAA))     # Type
                 \s+
                 (.+)          # Rest
                 $
