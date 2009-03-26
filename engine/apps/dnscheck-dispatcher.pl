@@ -205,9 +205,10 @@ sub dispatch {
     my $source;
     my $source_data;
     my $fake_glue;
+    my $priority;
 
     if (scalar keys %running < $limit) {
-        ($domain, $id, $source, $source_data, $fake_glue) = get_entry();
+        ($domain, $id, $source, $source_data, $fake_glue, $priority) = get_entry();
         slog 'debug', "Fetched $domain from database." if defined($domain);
     } else {
 
@@ -216,7 +217,7 @@ sub dispatch {
 
     if (defined($domain)) {
         unless (defined($problem{$domain}) and $problem{$domain} >= 5) {
-            process($domain, $id, $source, $source_data, $fake_glue);
+            process($domain, $id, $source, $source_data, $fake_glue, $priority);
         } else {
             slog 'error',
 "Testing $domain caused repeated abnormal termination of children. Assuming bug. Exiting.";
@@ -239,13 +240,13 @@ sub get_entry {
         exit(1);
     }
 
-    my ($id, $domain, $source, $source_data, $fake_glue);
+    my ($id, $domain, $source, $source_data, $fake_glue, $priority);
 
     eval {
         $dbh->begin_work;
-        ($id, $domain, $source, $source_data, $fake_glue) =
+        ($id, $domain, $source, $source_data, $fake_glue, $priority) =
           $dbh->selectrow_array(
-q[SELECT id, domain, source_id, source_data, fake_parent_glue FROM queue WHERE inprogress IS NULL AND priority = (SELECT MAX(priority) FROM queue WHERE inprogress IS NULL) ORDER BY id ASC LIMIT 1 FOR UPDATE]
+q[SELECT id, domain, source_id, source_data, fake_parent_glue, priority FROM queue WHERE inprogress IS NULL AND priority = (SELECT MAX(priority) FROM queue WHERE inprogress IS NULL) ORDER BY id ASC LIMIT 1 FOR UPDATE]
           );
         slog 'debug', "Got $id, $domain from database."
           if (defined($domain) or defined($id));
@@ -282,7 +283,7 @@ q[SELECT id, domain, source_id, source_data, fake_parent_glue FROM queue WHERE i
         return undef;
     }
 
-    return ($domain, $id, $source, $source_data, $fake_glue);
+    return ($domain, $id, $source, $source_data, $fake_glue, $priority);
 }
 
 sub process {
@@ -291,6 +292,7 @@ sub process {
     my $source      = shift;
     my $source_data = shift;
     my $fake_glue   = shift;
+    my $priority    = shift;
 
     my $pid = fork;
 
@@ -298,7 +300,7 @@ sub process {
         $running{$pid} = $domain;
         slog 'debug', "Child process $pid has been started.";
     } elsif ($pid == 0) {    # Zero value, so child
-        running_in_child($domain, $id, $source, $source_data, $fake_glue);
+        running_in_child($domain, $id, $source, $source_data, $fake_glue, $priority);
     } else {                 # Undefined value, so error
         die "Fork failed: $!";
     }
@@ -310,11 +312,14 @@ sub running_in_child {
     my $source      = shift;
     my $source_data = shift;
     my $fake_glue   = shift;
+    my $priority    = shift;
 
     # Reuse the old configuration, but get new everything else.
     my $dc  = DNSCheck->new({ with_config_object => $check->config });
     my $dbh = $dc->dbh;
     my $log = $dc->logger;
+
+    setpriority(0, $$, 20-2*$priority);
 
     if (defined($fake_glue)) {
         my @ns = split(/\s+/, $fake_glue);
