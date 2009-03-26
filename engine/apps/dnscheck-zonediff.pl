@@ -33,6 +33,7 @@ use strict;
 
 use Getopt::Long;
 use DNSCheck;
+use Time::HiRes qw[time];
 
 my %changed;
 my %dropped;
@@ -83,11 +84,13 @@ sub fetch_new_zone {
     my $success;
 
     foreach my $server (@servers) {
+        my $start = time;
         print "Trying server $server...\n" if $debug;
         print "$dig axfr $domain \@$server -y $tsig > $filename$newsuffix\n"
           if $debug;
         my $res =
           system("$dig axfr $domain \@$server -y $tsig > $filename$newsuffix");
+        printf("Transfer ended after %0.2f seconds.\n", time()-$start);
         $res >>= 8;
         if ($res == 0) {
             print "Got file.\n" if $debug;
