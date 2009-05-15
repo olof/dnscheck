@@ -71,8 +71,12 @@ sub new {
         $self->{config} = $config_args->{with_config_object};
     } else {
         $self->{config} = DNSCheck::Config->new(%{$config_args});
-        $self->config->put('root_zone_data',
-            DNSCheck::Lookup::Resolver->get_preload_data);
+        $self->config->put(
+            'root_zone_data',
+            DNSCheck::Lookup::Resolver->get_preload_data(
+                $config_args->{rootsource}
+            )
+        );
     }
 
     return $self;

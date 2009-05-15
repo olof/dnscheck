@@ -45,9 +45,9 @@ sub main {
 
     my $locale = 'en';
     my (
-        $configdir,      $sitedir,     $configfile,
-        $siteconfigfile, $policyfile,  $sitepolicyfile,
-        $localefile,     @nameservers, $what_test
+        $configdir,  $sitedir,        $configfile, $siteconfigfile,
+        $policyfile, $sitepolicyfile, $localefile, @nameservers,
+        $what_test,  $rootsource,
     );
 
     GetOptions(
@@ -64,6 +64,7 @@ sub main {
         'locale=s'         => \$locale,
         'nameserver=s'     => \@nameservers,
         'test=s'           => \$what_test,
+        'rootsource=s'     => \$rootsource,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -85,8 +86,9 @@ sub main {
     $conf->{policyfile}     = $policyfile     if $policyfile;
     $conf->{sitepolicyfile} = $sitepolicyfile if $sitepolicyfile;
     $conf->{localefile}     = $localefile     if $localefile;
-    $conf->{locale} = ($raw ? undef : $locale);
-    $conf->{extras} = $extras;
+    $conf->{locale}     = ($raw ? undef : $locale);
+    $conf->{extras}     = $extras;
+    $conf->{rootsource} = $rootsource;
 
     my $check = new DNSCheck($conf);
 

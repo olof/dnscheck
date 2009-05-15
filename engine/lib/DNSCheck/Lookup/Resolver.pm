@@ -246,10 +246,12 @@ sub remember {
 
 # Class method to generate data with which to preload the cache.
 sub get_preload_data {
-    my $self = shift;
+    my $self   = shift;
+    my $source = shift;
     my %cache;
 
     my $res = Net::DNS::Resolver->new;
+    $res->nameservers($source) if defined($source);
     my $z = $res->send('.', 'IN', 'NS');
 
     if (!defined($z) or $z->header->ancount == 0) {
