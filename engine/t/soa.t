@@ -23,7 +23,7 @@ eval {
 ok(!$@, $@);
 
 SKIP: {
-    skip "Failed to get an object to test", 4 unless defined($dc);
+    skip "Failed to get an object to test", 19 unless defined($dc);
     ok(defined($dc->soa->test("power.fine")));
     my @msg = @{ $dc->logger->{messages} };
     ok(scalar(@msg) == 98, "Total of " . scalar(@msg) . " messages.");

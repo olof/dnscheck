@@ -1,0 +1,7 @@
+These are tests for DNSCheck.
+
+As of this checkin, there is as special DNS tree available for running tests
+against. This will hopefully vastly increase the possible coverage and
+stability of these tests. So far, only a very few of them work with the
+special DNS tree. Have a look at zone.t and soa.t for examples of how to have
+DNSCheck use the special tree, and one way to write some tests.
