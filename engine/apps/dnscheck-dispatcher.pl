@@ -51,6 +51,7 @@ use vars qw[
   $restart
   @saved_argv
   $syslog
+  $exit_timeout
 ];
 
 %running = ();
@@ -398,6 +399,10 @@ sub monitor_children {
         delete $reaped{$pid};
         cleanup($domain, $exitcode);
     }
+    
+    if (defined($exit_timeout) and time()-$exit_timeout > 300) {
+        %running = ();
+    }
 }
 
 sub cleanup {
@@ -466,6 +471,7 @@ sub main {
         sleep($skip);
     }
     slog 'info', "Waiting for %d children to exit.", scalar keys %running;
+    $exit_timeout = time();
     monitor_children until (keys %running == 0);
     unlink $check->config->get("daemon")->{pidfile};
     slog 'info', "$0 exiting normally.";
