@@ -325,7 +325,7 @@ sub highest_known_ns {
     # another, choose the one with the most labels in it.
     my $faked = (
         sort { $b =~ y/././ <=> $a =~ y/././ }
-          grep { $name =~ /$_$/ } $self->faked_zones
+          grep { $name =~ /\Q$_\E$/ } $self->faked_zones
     )[0];
 
     if ($faked) {
