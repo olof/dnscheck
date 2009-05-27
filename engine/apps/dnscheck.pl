@@ -57,7 +57,7 @@ sub main {
         'configdir=s'      => \$configdir,
         'sitedir=s'        => \$sitedir,
         'configfile=s'     => \$configfile,
-        'siteconfigfile'   => \$siteconfigfile,
+        'siteconfigfile=s' => \$siteconfigfile,
         'policyfile=s'     => \$policyfile,
         'sitepolicyfile=s' => \$sitepolicyfile,
         'localefile=s'     => \$localefile,
