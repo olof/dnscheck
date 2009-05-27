@@ -32,6 +32,7 @@ daemon:
     pidfile: /var/run/dnscheck_dispatcher.pid
     errorlog: /var/log/dnscheck_errors.log
     maxchild: 10
+    savelevel: INFO
 
 # This information is expected to be overridden in site_config.yaml
 # Not all keys will be useful for all setups. See the documentation

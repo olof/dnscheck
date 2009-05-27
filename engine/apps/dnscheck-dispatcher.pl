@@ -52,18 +52,29 @@ use vars qw[
   @saved_argv
   $syslog
   $exit_timeout
+  $savelevel
+  %levels
 ];
 
-%running = ();
-%reaped  = ();
-%problem = ();
-$debug   = 0;
-$verbose = 0;
-$check   = DNSCheck->new;
-$limit   = $check->config->get("daemon")->{maxchild};
-$running = 1;
-$restart = 0;
-$syslog  = 1;
+%running   = ();
+%reaped    = ();
+%problem   = ();
+$debug     = 0;
+$verbose   = 0;
+$check     = DNSCheck->new;
+$limit     = $check->config->get("daemon")->{maxchild};
+$savelevel = $check->config->get("daemon")->{savelevel} || 'INFO';
+$running   = 1;
+$restart   = 0;
+$syslog    = 1;
+%levels    = (
+    DEBUG    => 0,
+    INFO     => 1,
+    NOTICE   => 2,
+    WARNING  => 3,
+    ERROR    => 4,
+    CRITICAL => 5,
+);
 
 # Kick everything off
 main();
@@ -357,7 +368,7 @@ q[INSERT INTO tests (domain,begin, source_id, source_data) VALUES (?,NOW(),?,?)]
         ]
     );
     while (defined(my $e = $log->get_next_entry)) {
-        next if ($e->{level} eq 'DEBUG');
+        next if ($levels{ $e->{level} } < $levels{$savelevel});
         $line++;
         my $time = strftime("%Y-%m-%d %H:%M:%S", localtime($e->{timestamp}));
         $sth->execute(
