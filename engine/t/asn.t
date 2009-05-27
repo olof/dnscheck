@@ -1,6 +1,6 @@
 #!/usr/bin/perl -sw
 #
-# $Id: find_parent.t 249 2008-03-03 15:48:42Z jakob $
+# $Id$
 
 require 5.008;
 use warnings;
