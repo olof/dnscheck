@@ -399,8 +399,8 @@ sub monitor_children {
         delete $reaped{$pid};
         cleanup($domain, $exitcode);
     }
-    
-    if (defined($exit_timeout) and time()-$exit_timeout > 300) {
+
+    if (defined($exit_timeout) and time() - $exit_timeout > 300) {
         %running = ();
     }
 }
