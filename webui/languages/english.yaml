@@ -1,0 +1,107 @@
+languageId: en
+
+home: Home
+
+faq: FAQ
+
+a_service_from_se: A service from .SE
+
+test_and_find_errors: Test your DNS-server and find errors
+
+enter_your_domain_name: Enter your domain name in the field above to test the DNS-servers that are used. E.g. "iis.se"
+
+test_now: Test now
+
+basic_results: Basic results
+
+advanced_results: Advanced results
+
+test_history: Test history
+
+error_loading_history: Error loading history
+
+no_test_history: No test history found
+
+page: Page
+
+se_tagline: .SE (The Internet Infrastructure Foundation)
+
+domain_doesnt_exist_header: Domain doesn't exist
+
+domain_doesnt_exist_label: The domain you provided doesn't seem to be delegated or was entered incorrectly. You need to enter only the domain name, like \"iis.se\", not the name of a subdomain, like \"dev.iis.se\" or a webserver like \"www.iis.se\".
+
+loading_header: Loading
+
+loading_label: Waiting for the test results to be loaded
+
+all_tests_ok: All tests are ok
+
+warning_header: Warnings found in test
+
+error_header: Errors found in test
+
+about_dnscheck: About DNSCheck
+
+explanation: Explanation
+
+test_was_ok: Test was ok
+
+test_contains_warnings: Test contains warnings
+
+test_contains_errors: Test contains errors
+
+test_was_not_performed: Test was not performed
+
+delegation: Delegation
+
+nameserver: Nameserver
+
+consistency: Consistency
+
+soa: SOA
+
+connectivity: Connectivity
+
+dnssec: DNSSEC
+
+link_to_this_test: Link to this test
+
+domain_test: Domain test
+
+undelegated_domain_test: Undelegated domain test
+
+domain_name: Domain name
+
+name_servers: Name servers
+
+add_one_more_nameserver: Add one more nameserver
+
+host: Host
+
+ip: IP
+
+nons_header: Nameserver error
+
+nons_label: At least one nameserver needs to be entered
+
+domain_syntax_header: Domain syntax
+
+domain_syntax_label: Invalid domain syntax
+
+note: Note
+
+this_test_on_undelegated: This test was performed on a undelegated domain
+
+enter_your_undelegated_domain_name: Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers.
+
+what_is_an_undelegated: What is an undelegated domain test?
+
+remove_name_server: Remove name server
+
+load_error_header: Connection error
+
+load_error_label: Could not connect to main database, try again later
+
+add_name_server: Add name server
+
+language: Language

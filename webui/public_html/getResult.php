@@ -3,8 +3,8 @@
 	require_once(dirname(__FILE__) . '/../common.php');
 	require_once(dirname(__FILE__) . '/../idna_convert.class.php');
 	require_once(dirname(__FILE__) . '/../stripslashes.php');
-	require_once(dirname(__FILE__) . '/../multilanguage.php');
-
+	require_once(dirname(__FILE__) . '/../i18n.php');
+	
 	function flattenTree($rootNode, $type, $allMessages, &$flattenedTree)
 	{
 		$status = 'ok';
@@ -98,7 +98,7 @@
 		";
 
 		$result;
-		$status = DatabasePackage::query($query, &$result);
+		$status = DatabasePackage::query($query, $result);
 		if (true !== $status)
 		{
 			return false;
@@ -123,14 +123,14 @@
 		$initialRootStatus = $showRootStatuses ? 'off' : '';
 
 		$finalTree = array(
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('Delegation'), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('Nameserver'), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('Consistency'), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('SOA'), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('Connectivity'), 'subtree' => array()),
-			array('type' => 0, 'class' => $initialRootStatus, 'caption' => translate('DNSSEC'), 'subtree' => array())
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => __("delegation"), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => __("nameserver"), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => __("consistency"), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => __("soa"), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => __("connectivity"), 'subtree' => array()),
+			array('type' => 0, 'class' => $initialRootStatus, 'caption' => __("dnssec"), 'subtree' => array())
 		);
-
+		
 		$finalResult = STATUS_OK;
 
 		foreach ($rawResultTree[0] as $rootNode)
@@ -147,7 +147,7 @@
 						break;
 					case 'NAMESERVER:BEGIN':
 						$result = flattenTree($rootNode, 3, $allMessages, $flattenedArray);
-						$nameserverNode = array('type' => 1, 'class' => $showRootStatuses ? $result : '', 'caption' => translate('Nameserver') . ' ' . $rootNode[0]['arg0'], 'subtree' => $flattenedArray);
+						$nameserverNode = array('type' => 1, 'class' => $showRootStatuses ? $result : '', 'caption' => __("nameserver") . ' ' . $rootNode[0]['arg0'], 'subtree' => $flattenedArray);
 						$finalTree[1]['subtree'][] = $nameserverNode;
 
 						if ($showRootStatuses)
@@ -304,7 +304,8 @@
 			$sourceData = $result[0]['source_data'];
 		}
 
-		$languageId = $_REQUEST['lang'];
+		$languageId = __("languageId");
+		
 		$rawResultTree = null;
 		getRawResultTree($testId, $languageId, $rawResultTree);
 

@@ -25,18 +25,6 @@
 		'undelegated' => 'webgui-undelegated'
 	);
 
-	$supportedLanguages = array(
-		array(
-			'id' => 'en',
-			'caption' => 'English language',
-			'active' => true
-		),
-		array(
-			'id' => 'se',
-			'caption' => 'Swedish version',
-			'active' => false
-		)
-	);
 
 	define('DEFAULT_LANGUAGE_ID', getDefaultLanguage());
 ?>
