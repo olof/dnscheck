@@ -47,7 +47,7 @@ sub main {
     my (
         $configdir,  $sitedir,        $configfile, $siteconfigfile,
         $policyfile, $sitepolicyfile, $localefile, @nameservers,
-        $what_test,  $rootsource,
+        $what_test,  $rootsource,     $history,
     );
 
     GetOptions(
@@ -65,6 +65,7 @@ sub main {
         'nameserver=s'     => \@nameservers,
         'test=s'           => \$what_test,
         'rootsource=s'     => \$rootsource,
+        'history=s'        => \$history,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -102,7 +103,9 @@ sub main {
     }
 
     if (!$what_test or $what_test eq 'zone') {
-        $check->zone->test($zone);
+        my $href;
+        $href = [split /,/, $history] if defined($history);
+        $check->zone->test($zone, $href);
     } elsif ($what_test eq 'connectivity') {
         $check->connectivity->test($zone);
     } elsif ($what_test eq 'consistency') {
@@ -149,6 +152,8 @@ Options:
                        a name followed by a slash and its IP address. This
                        option can be given several times to specify multiple
                        servers or multiple IP addresses for the same name.
+ --history             specify delegation history. Give the nameserver names
+                       as a comma-separated list.
  --test=<test>         Specify which of the whole-zone tests to run. Currently
                        available are: zone, connectivity, consistency,
                        dnssec, delegation and soa.
