@@ -96,9 +96,9 @@ sub test_v4 {
         # REQUIRE: A name server should not be announced by more than one AS
         # REQUIRE: A name server must be announced
         if (scalar @as_list > 1) {
-            $logger->auto("CONNECTIVITY:MULTIPLE_ASN", $address);
+            $errors += $logger->auto("CONNECTIVITY:MULTIPLE_ASN", $address);
         } elsif (scalar @as_list < 1) {
-            $logger->auto("CONNECTIVITY:NOT_ANNOUNCED", $address);
+            $errors += $logger->auto("CONNECTIVITY:NOT_ANNOUNCED", $address);
         }
     }
 
@@ -152,9 +152,9 @@ sub test_v6 {
         # REQUIRE: A name server should not be announced by more than one AS
         # REQUIRE: A name server must be announced
         if (scalar @as_list > 1) {
-            $logger->auto("CONNECTIVITY:V6_MULTIPLE_ASN", $address);
+            $errors += $logger->auto("CONNECTIVITY:V6_MULTIPLE_ASN", $address);
         } elsif (scalar @as_list < 1) {
-            $logger->auto("CONNECTIVITY:V6_NOT_ANNOUNCED", $address);
+            $errors += $logger->auto("CONNECTIVITY:V6_NOT_ANNOUNCED", $address);
         }
     }
 
