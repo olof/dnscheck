@@ -43,6 +43,7 @@ use Carp;
 use Cwd;
 use FindBin;
 use List::Util qw(first);
+use Storable qw(dclone);
 
 sub new {
     my $proto = shift;
@@ -121,6 +122,10 @@ sub get {
     my ($key) = @_;
 
     my $res = $self->{$key};
+    if (ref($res)) {
+        $res = dclone($res);
+    }
+    
     return $res;
 }
 
