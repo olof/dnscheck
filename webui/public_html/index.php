@@ -1,74 +1,65 @@
 <?php
-require_once(dirname(__FILE__) . '/../constants.php');
-require_once(dirname(__FILE__) . '/../common.php');
-require_once(dirname(__FILE__) . '/../i18n.php');
-require_once(dirname(__FILE__) . '/../idna_convert.class.php');
-require_once(dirname(__FILE__) . '/../stripslashes.php');
+	require_once(dirname(__FILE__) . '/../constants.php');
+	require_once(dirname(__FILE__) . '/../common.php');
+	require_once(dirname(__FILE__) . '/../multilanguage.php');
+	require_once(dirname(__FILE__) . '/../idna_convert.class.php');
+	require_once(dirname(__FILE__) . '/../stripslashes.php');
 
-// Set language
-if (isset($_GET["setLanguage"])) {
-	i18n_load_language($_GET["setLanguage"]);
-	setcookie("i18n_language", $_GET["setLanguage"]);
-}
-else {
-	// Language should be based on cookie or default
-	if (isset($_COOKIE["i18n_language"])) {
-		i18n_load_language($_COOKIE["i18n_language"]);	
-	}
-	else {
-		// Default language 
-		i18n_load_language();
-	}
-}
-
-// Get test type
-$test = 'standard';
-if(isset($_GET['test']))
-{
-	switch($_GET['test'])
+	// Get language
+	$languageId = DEFAULT_LANGUAGE_ID;
+	if ((isset($_GET['lang'])) && (isset($translationMap[$_GET['lang']])))
 	{
-		case 'undelegated':
-			$test = 'undelegated';
-			break;
-		default:
-			$test = 'standard';
+		$languageId = $_GET['lang'];
 	}
-}
 
-$permalinkId = 0;
-$permalinkView = 0;
-$permalinkDomain = '';
-if ((isset($_GET['id'])) && (isset($_GET['time'])) && (isset($_GET['view'])) && (in_array($_GET['view'], array('basic', 'advanced'))))
-{
-	$testId = intval($_GET['id']);
-	$testTime = intval($_GET['time']);
-
-	$query = "SELECT id, domain FROM tests WHERE id = $testId AND UNIX_TIMESTAMP(begin) = $testTime";
-	$result = null;
-	$status = DatabasePackage::query($query, $result);
-	if ((true === $status) && (1 == count($result)))
+	// Get test type
+	$test = 'standard';
+	if(isset($_GET['test']))
 	{
-		$permalinkId = intval($result[0]['id']);
-
-		$IDN = new idna_convert();
-		$permalinkDomain = $IDN->decode($result[0]['domain']);
-
-		$permalinkView = (('basic' == $_GET['view']) ? 1 : 2);
+		switch($_GET['test'])
+		{
+			case 'undelegated':
+				$test = 'undelegated';
+				break;
+			default:
+				$test = 'standard';
+		}
 	}
-}
 
-$test = 'standard';
-if(isset($_GET['test']))
-{
-	switch($_GET['test'])
+	$permalinkId = 0;
+	$permalinkView = 0;
+	$permalinkDomain = '';
+	if ((isset($_GET['id'])) && (isset($_GET['time'])) && (isset($_GET['view'])) && (in_array($_GET['view'], array('basic', 'advanced'))))
 	{
-		case 'undelegated':
-			$test = 'undelegated';
-			break;
-		default:
-			$test = 'standard';
+		$testId = intval($_GET['id']);
+		$testTime = intval($_GET['time']);
+
+		$query = "SELECT id, domain FROM tests WHERE id = $testId AND UNIX_TIMESTAMP(begin) = $testTime";
+		$result = null;
+		$status = DatabasePackage::query($query, $result);
+		if ((true === $status) && (1 == count($result)))
+		{
+			$permalinkId = intval($result[0]['id']);
+
+			$IDN = new idna_convert();
+			$permalinkDomain = $IDN->decode($result[0]['domain']);
+
+			$permalinkView = (('basic' == $_GET['view']) ? 1 : 2);
+		}
 	}
-}
+
+	$test = 'standard';
+	if(isset($_GET['test']))
+	{
+		switch($_GET['test'])
+		{
+			case 'undelegated':
+				$test = 'undelegated';
+				break;
+			default:
+				$test = 'standard';
+		}
+	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -76,24 +67,24 @@ if(isset($_GET['test']))
 <script type="text/javascript" src="_js/jquery-1.2.2.min.js?20090217_1622"></script>
 <script type="text/javascript" src="_js/DNSCheck.js?20090217_1622"></script>
 <script type="text/javascript">
-var domainDoesNotExistHeader = "<?php _e("domain_doesnt_exist_header");?>";
-var domainDoesNotExistLabel = "<?php _e("domain_doesnt_exist_label");?>";
-var domainSyntaxHeader = "<?php _e("domain_syntax_header");?>";
-var domainSyntaxLabel = "<?php _e("domain_syntax_label");?>";
-var noNameserversHeader = "<?php _e("nons_header");?>";
-var noNameserversLabel = "<?php _e("nons_label");?>";
-var loadingHeader = "<?php _e("loading_header");?>";
-var loadingLabel = "<?php _e("loading_label");?>";
-var loadErrorHeader = "<?php _e("load_error_header");?>";
-var loadErrorLabel = "<?php _e("load_error_label");?>";
-var okHeader = "<?php _e("all_tests_ok");?>";
-var warningHeader = "<?php _e("warning_header");?>";
-var errorHeader = "<?php _e("error_header");?>";
-var languageId = "<?php echo($languageId)?>";
-var permalinkId = <?php echo((0 < $permalinkId) ? $permalinkId : 'null');?>;
-var permalinkView = <?php echo($permalinkView)?>;
-var test = '<?php echo($test);?>';
-var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
+	var domainDoesNotExistHeader = "<?php echo(translate("Domain doesn't exist"));?>";
+	var domainDoesNotExistLabel = "<?php echo(translate("The domain you entered doesn't seem to be registered"));?>";
+	var domainSyntaxHeader = "<?php echo(translate("Domain syntax"));?>";
+	var domainSyntaxLabel = "<?php echo(translate("Invalid domain syntax"));?>";
+	var noNameserversHeader = "<?php echo(translate("Nameservers error"));?>";
+	var noNameserversLabel = "<?php echo(translate("At least one nameserver should be entered"));?>";
+	var loadingHeader = "<?php echo(translate("Loading"));?>";
+	var loadingLabel = "<?php echo(translate("Waiting for the test results to be loaded"));?>";
+	var loadErrorHeader = "<?php echo(translate("Connection error"));?>";
+	var loadErrorLabel = "<?php echo(translate("Could not connect to main database, try again later"));?>";
+	var okHeader = "<?php echo(translate("All tests are ok"));?>";
+	var warningHeader = "<?php echo(translate("Warnings found in test"));?>";
+	var errorHeader = "<?php echo(translate("Errors found in test"));?>";
+	var languageId = "<?php echo($languageId)?>";
+	var permalinkId = <?php echo((0 < $permalinkId) ? $permalinkId : 'null');?>;
+	var permalinkView = <?php echo($permalinkView)?>;
+	var test = '<?php echo($test);?>';
+	var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DNSCheck</title>
@@ -101,60 +92,58 @@ var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
 </head>
 
 <body>
+
 <div id="wrapper">
 	<input type="hidden" value="<?php echo ($test);?>" id="test_type"/>
 	<div id="top">
 		<h1 id="logo_dnscheck"><a href="#dnscheck">DNSCheck</a></h1>
-		<h2 id="logo_se"><a href="#se"><?php _e("a_service_from_se");?></a></h2>
+		<h2 id="logo_se"><a href="#se"><?php echo(translate("A service from .SE"));?></a></h2>
         <div class="clear"> </div>
 			<div id="searchbox">
             	<div class="testtabs">
                 <ul>
-               	  <li <?php if($test == 'standard'): ?>class="testtabson"<?php endif; ?>><a href="./"><?php _e("domain_test");?></a></li>
-                  <li <?php if($test == 'undelegated'): ?>class="testtabson"<?php endif; ?>><a href="?test=undelegated"><?php _e("undelegated_domain_test");?></a></li>
+               	  <li <?php if($test == 'standard'): ?>class="testtabson"<?php endif; ?>><a href="<?php echo("?lang=" . $languageId);?>"><?php echo(translate("Domain test"));?></a></li>
+                  <li <?php if($test == 'undelegated'): ?>class="testtabson"<?php endif; ?>><a href="<?php echo("?lang=" . $languageId . "&amp;test=undelegated");?>"><?php echo(translate("Undelegated domain test"));?></a></li>
                 </ul>
                 </div>
-				<h3 id="searchhead"><?php _e("test_and_find_errors");?></h3>
+				<h3 id="searchhead"><?php echo(translate("Test your DNS-server and find errors"));?></h3>
 
 				<form id="mainform" action="">
                 <div id="testinput">
-                        <label for="domaininput"><?php _e("domain_name");?>:</label>
+                        <label for="domaininput"><?php echo(translate("Domain name"));?>:</label>
                         <input name="" type="text" id="domaininput" value="<?php echo($permalinkDomain);?>" />
     			</div>
     		<?php if($test != 'undelegated'):?>
-                <p id="testtext"><?php _e("enter_your_domain_name");?></p>
+                <p id="testtext"><?php echo(translate("Enter your domain name in the field below to test the DNS-servers that are used."));?></p>
             <?php else:?>
-            	<p id="testtext"><?php _e("enter_your_undelegated_domain_name");?>
-            	<a href="./?faq=1&test=undelegated#f16"><?php _e("what_is_an_undelegated");?></a>
-            	</p>
-            	
+            	<p id="testtext"><?php echo(translate("Enter your undelegated domain name in the field above and the hostname(s) and IP(s) to the name servers you want to test below. You can add up to 30 name servers."));?></p>
            	<?php endif;?>
 
 			<?php if($test == 'undelegated'):?>
 				<div id="nameservers">
-	              	<h4 class="tabhead"><span><?php _e("name_servers");?></span></h4>
+	              	<h4 class="tabhead"><span><?php echo(translate("Name servers"));?></span></h4>
 	              	<div class="nameserver" id="nameserver">
-	                	<label for="nameserver_host"><?php _e("host");?>:</label>
+	                	<label for="nameserver_host"><?php echo(translate("Host"));?>:</label>
 	                    <input name="nameserver_host" type="text"/>
-	                	<label for="nameserver_ip"><?php _e("ip");?>:</label>
+	                	<label for="nameserver_ip"><?php echo(translate("IP"));?>:</label>
 	                    <input name="nameserver_ip" type="text" />
-	                    <a href="#" title="<?php _e("remove_name_server");?>" class="removenameserver"><img src="_img/icon_remove.png" width="18" height="18" style="border:none" alt="<?php _e("remove_name_server");?>" /></a>
+	                    <a href="#" title="<?php echo(translate("Remove name server"));?>" class="removenameserver"><img src="_img/icon_remove.png" width="18" height="18" style="border:none" alt="<?php echo(translate("Remove name server"));?>" /></a>
 	              	</div>
               	</div>
               	<p class="addnameserver">
-					<a id="addnameserver" href="#"><span><?php _e("add_name_server");?></span></a>
+					<a id="addnameserver" href="#"><span><?php echo(translate("Add name server"));?></span></a>
 				</p><br class="clear" />
               <?php endif;?>
 
-              <p id="testbutton"><a href="javascript:void(0);" id="testnow" class="button"><?php _e("test_now");?></a></p>
+              <p id="testbutton"><a href="javascript:void(0);" id="testnow" class="button"><?php echo(translate("Test now"));?></a></p>
 
 				</form>
 			</div>
 
 			<div id="menu">
 				<ul>
-					<li><a href="./?test=<?php echo $test; ?>"><?php _e("home"); ?></a></li>
-					<li><a href="./?faq=1&amp;test=<?php echo $test; ?>"><?php _e("faq"); ?></a></li>
+					<li><a href="./<?php echo("?lang=" . $languageId . "&amp;test=" . $test); ?>"><?php echo(translate("Home")); ?></a></li>
+					<li><a href="./?faq=1<?php echo("&amp;lang=" . $languageId . "&amp;test=" . $test); ?>"><?php echo(translate("FAQ")); ?></a></li>
 				</ul>
 			</div>
             <div class="clear"> </div>
@@ -162,14 +151,16 @@ var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
 
 	<div id="startwrapper">
 		<?php if (isset($_GET['faq']) && ("1" == $_GET['faq'])) { ?>
-			<h3><?php _e("faq"); ?></h3>
+			<h3><?php echo(translate("DNSCheck FAQ")); ?></h3>
 			<div class="startbox">
-			<?php _e("faq", true);?>
+			<?php echo(translate("DNSCheck FAQ contents"));?>
 			</div>
 		<?php } else { ?>
-			<h3><?php _e("about_dnscheck");?></h3>
+			<h3><?php echo(translate("About DNSCheck"));?></h3>
 			<div class="startbox">
-			<?php _e("about", true);?>
+			<?php echo(translate("DNSCheck info"));?>
+			<h5><?php echo(translate("About DNS"));?></h5>
+			<?php echo(translate("DNS info"));?>
 			</div>
 		<?php } ?>
 	</div>
@@ -183,7 +174,7 @@ var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
 
 	<?php if($test == 'undelegated'):?>
 	    <div id="undelegateddomain_info" style="display:none">
-	    <p><strong><?php _e("note");?>:</strong> <?php _e("this_test_on_undelegated");?></p>
+	    <p><strong><?php echo(translate("Note"));?>:</strong> <?php echo(translate("This test was performed on a undelegated domain"));?></p>
 	    </div>
     <?php endif;?>
 
@@ -192,65 +183,47 @@ var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
 			<div class="widetop">
 				<img src="_img/mini-loader.gif" style="display: none" id="result_loader" alt="Loading" width="16" height="16" />
 				<ul class="tabs">
-					<li class="tab_on" id="simpletab"><a href="javascript:activateSimpleTab();"><?php _e("basic_results");?></a></li>
-					<li id="advancedtab"><a href="javascript:activateAdvancedTab();"><?php _e("advanced_results");?></a></li>
+					<li class="tab_on" id="simpletab"><a href="javascript:activateSimpleTab();"><?php echo(translate("Basic results"));?></a></li>
+					<li id="advancedtab"><a href="javascript:activateAdvancedTab();"><?php echo(translate("Advanced results"));?></a></li>
 				</ul>
 			</div>
 			<div id="treediv"></div>
 			<div id="listdiv" style="display: none"></div>
-			<span style="display: none" id="link_to_test_label"><?php _e("link_to_this_test"); ?>:</span>
+			<span style="display: none" id="link_to_test_label"><?php echo(translate("Link to this test")); ?>:</span>
 		</div>
 		<div id="history">
-			<h3 class="smalltop"><img src="_img/mini-loader.gif" style="display: none" id="history_loader" alt="Loading" width="16" height="16" /><?php _e("test_history");?></h3>
+			<h3 class="smalltop"><img src="_img/mini-loader.gif" style="display: none" id="history_loader" alt="Loading" width="16" height="16" /><?php echo(translate("Test history"));?></h3>
 			<div class="smallbox">
-			<p id="pager_error" style="display: none"><img src="_img/icon_warning.gif" alt="Error" width="16" height="14" /> <?php _e("error_loading_history");?></p>
-			<p id="pager_no_history" style="display: none"><?php _e("no_test_history");?></p>
+			<p id="pager_error" style="display: none"><img src="_img/icon_warning.gif" alt="Error" width="16" height="14" /> <?php echo(translate("Error loading history"));?></p>
+			<p id="pager_no_history" style="display: none"><?php echo(translate("No test history found"));?></p>
 			<ul id="pagerlist">
-				<li style="display:none"><?php _e("test_history");?></li>
+				<li style="display:none"><?php echo(translate("Test history"));?></li>
 			</ul>
 			</div>
 			<div class="pager" id="pagerbuttonsdiv">
 			<a href="javascript:void(0);"><img src="_img/pager_start_off.png" alt="Start" id="pagerstart" /></a>
 			<a href="javascript:void(0);"><img src="_img/pager_back_off.png" alt="Back" id="pagerback" /></a>
-			<p><?php _e("page"); ?> <span id="pagerlabel"></span></p>
+			<p><?php echo(translate("Page"));?> <span id="pagerlabel"></span></p>
 			<a href="javascript:void(0);"><img src="_img/pager_forward_on.png" alt="Forward" id="pagerforward" /></a>
 			<a href="javascript:void(0);"><img src="_img/pager_end_on.png" alt="End" id="pagerend" /></a>
 			<div class="clear"> </div>
 			</div>
 
-			<h3 class="smalltop topmargin"><?php _e("explanation"); ?></h3>
+			<h3 class="smalltop topmargin"><?php echo(translate("Explanation"));?></h3>
 			<div class="smallbox">
-				<p class="testok"><?php _e("test_was_ok");?></p>
-				<p class="testwarn"><?php _e("test_contains_warnings");?></p>
-				<p class="testerror"><?php _e("test_contains_errors");?></p>
-				<p class="testoff"><?php _e("test_was_not_performed");?></p>
+				<p class="testok"><?php echo(translate("Test was ok"));?></p>
+				<p class="testwarn"><?php echo(translate("Test contains warnings"));?></p>
+				<p class="testerror"><?php echo(translate("Test contains errors"));?></p>
+				<p class="testoff"><?php echo(translate("Test was not performed"));?></p>
 			</div>
 
 		</div>
 	</div>
 
 	<div id="footer">
-		<p id="f_info"><?php _e("se_tagline");?></p>
-		<p id="f_links"><?php _e("language");?>: 
-			<select name="language" onchange="document.location.href='?setLanguage=' + this[this.selectedIndex].value;">
-<?php
-			// List languages based on files in languages/ ending in ".yaml"
-			if ($handle = opendir('../languages')) {
-				while (false !== ($file = readdir($handle))) {
-					if ($file != "." && $file != ".." && substr($file, (strlen($file)-4)) == "yaml") {
-						$thislang = ucfirst(str_replace(".yaml", "", $file));
-						echo "				<option ";
-						if (strtolower($i18n_current_language) == strtolower($thislang)) {
-							echo "SELECTED ";	
-						}
-						echo "value=\"" . strtolower($thislang) . "\">$thislang</option>\n";
-					}
-				}
-				closedir($handle);
-			}
-			?>
-			</select>
-		</p>
+		<p id="f_info"><?php echo(translate(".SE (The Internet Infrastructure Foundation)"));?></p>
+		<?php if('en' != $languageId){?><p id="f_links"><a href="?lang=en&amp;test=<?php echo $test;?>" class="lang_en">English version</a><br /></p><?php }?>
+		<?php if('se' != $languageId){?><p id="f_links"><a href="?lang=se&amp;test=<?php echo $test;?>" class="lang_se">Swedish version</a><br /></p><?php }?>
 		<br class="clear" />
 	</div>
 

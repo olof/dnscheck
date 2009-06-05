@@ -37,7 +37,7 @@
 
 		// 	Get the value
 		$query = "SELECT id FROM source WHERE name = '" . DatabasePackage::escape($source). "'";
-		$status = DatabasePackage::query($query, $result);
+		$status = DatabasePackage::query($query, &$result);
 		if (true !== $status)
 		{
 			return -1;
@@ -47,7 +47,7 @@
 		{
 			// Make a new insert, if we do not have the result
 			$query = "INSERT IGNORE INTO source (name) VALUES ('" . DatabasePackage::escape($source) . "')";
-			$status = DatabasePackage::query($query, $result);
+			$status = DatabasePackage::query($query, &$result);
 			if (true !== $status)
 			{
 				return -1;
@@ -55,7 +55,7 @@
 
 			// Get the value
 			$query = "SELECT id FROM source WHERE name = '" . DatabasePackage::escape($source). "'";
-			$status = DatabasePackage::query($query, $result);
+			$status = DatabasePackage::query($query, &$result);
 			if (true !== $status)
 			{
 				return -1;
