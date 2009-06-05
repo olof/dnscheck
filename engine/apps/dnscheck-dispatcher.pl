@@ -538,11 +538,12 @@ the dispatcher. The first one is C<syslog>. It has the subkeys C<ident>, which
 specifies the name the daemon will use when talking to syslogd, and
 C<facility>, which specifies the syslog facility to use.
 
-The second one is C<daemon>. It has the subkeys C<pidfile>, C<errorlog> and
-C<maxchild>. They specify, in order, the file where the daemon will write its
-PID after it has detached, the file it will redirect its standard error to and
-the maximum number of concurrent child processes it may have. Make sure to set
-the pathnames to values where the user the daemon is running under has write
+The second one is C<daemon>. It has the subkeys C<pidfile>, C<errorlog>,
+C<maxchild> and C<savelevel>. They specify, in order, the file where the
+daemon will write its PID after it has detached, the file it will redirect its
+standard error to, the maximum number of concurrent child processes it may
+have and the minumum log level to save to the database. Make sure to set the
+pathnames to values where the user the daemon is running under has write
 permission, since it will terminated if they are specified but can't be
 written to. Additionally, running with a maxchild value of n means that at
 least n+1 simultaneous connections to the database will be opened. Make sure
