@@ -11,10 +11,10 @@
 		switch ($country)
 		{
 			case 'SE':
-				return 'se';
+				return 'swedish';
 				break;
 			default:
-				return 'en';
+				return 'english';
 				break;	
 		}	
 	}

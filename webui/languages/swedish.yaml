@@ -1,0 +1,107 @@
+languageId: se
+
+home: Hem
+
+faq: Vanliga frågor
+
+a_service_from_se: En tjänst från .SE
+
+test_and_find_errors: Testa din DNS-server och upptäck fel
+
+enter_your_domain_name: Ange ditt domännamn ovan för att testa dess DNS-servrar.
+
+test_now: Testa nu
+
+basic_results: Förenklat resultat
+
+advanced_results: Avancerat resultat
+
+test_history: Tidigare test
+
+error_loading_history: Historiken kunde ej laddas
+
+no_test_history: Ingen historik finns
+
+page: Sida
+
+se_tagline: .SE (Stiftelsen för Internetinfrastruktur)
+
+domain_doesnt_exist_header: Domänen finns inte
+
+domain_doesnt_exist_label: Domänen du angav verkar inte vara registrerad
+
+loading_header: Laddar
+
+loading_label: Väntar på testresultat
+
+all_tests_ok: Alla test är ok
+
+warning_header: Testet innehöll varningar
+
+error_header: Testet innehöll fel
+
+about_dnscheck: Om DNSCheck
+
+explanation: Förklaring
+
+test_was_ok: Testet var ok
+
+test_contains_warnings: Testet innehöll varningar
+
+test_contains_errors: Testet innehöll fel
+
+test_was_not_performed: Testet utfördes inte
+
+delegation: Delegering
+
+nameserver: DNS-server
+
+consistency: Konsekvent uppsättning
+
+soa: SOA
+
+connectivity: Konnektivitet
+
+dnssec: DNSSEC
+
+link_to_this_test: Länk till det här testresultatet
+
+domain_test: Domäntest
+
+undelegated_domain_test: Odelegerat domäntest
+
+domain_name: Domännamn
+
+name_servers: Namnservrar
+
+add_one_more_nameserver: Lägg till ny namnserver
+
+host: Värd
+
+ip: IP
+
+nons_header: Namnserverfel
+
+nons_label: Du måste ange minst en namnserver
+
+domain_syntax_header: Domänfel
+
+domain_syntax_label: Kontrollera att du angivit ett korrekt domännamn
+
+note: Notera
+
+this_test_on_undelegated: Detta test utfördes på en odelegerad domän
+
+enter_your_undelegated_domain_name: Ange ditt odelegerade domännamn ovan samt hostnamn och IP-adress till dina namnservrar du vill testa nedan. Du kan ange upp till 30 stycken namnservrar.
+
+what_is_an_undelegated: Vad är ett odelegerat domäntest?
+
+remove_name_server: Ta bort namnserver
+
+load_error_header: Anslutningsproblem
+
+load_error_label: Det gick inte att ansluta till huvuddatabasen
+
+add_name_server: Lägg till namnserver
+
+language: Språk
