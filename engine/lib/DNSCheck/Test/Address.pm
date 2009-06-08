@@ -46,33 +46,30 @@ our @private_ipv4  = ();
 our @reserved_ipv4 = ();
 our @reserved_ipv6 = ();
 
-INIT {
+# REQUIRE: Private IPv4 Addresses (RFC 1918)
+push @private_ipv4, new Net::IP("10.0.0.0/8");
+push @private_ipv4, new Net::IP("172.16.0.0/12");
+push @private_ipv4, new Net::IP("192.168.0.0/16");
 
-    # REQUIRE: Private IPv4 Addresses (RFC 1918)
-    push @private_ipv4, new Net::IP("10.0.0.0/8");
-    push @private_ipv4, new Net::IP("172.16.0.0/12");
-    push @private_ipv4, new Net::IP("192.168.0.0/16");
+# REQUIRE: Special-Use IPv4 Addresses (RFC 3330)
+push @reserved_ipv4, new Net::IP("127.0.0.0/8");
+push @reserved_ipv4, new Net::IP("224.0.0.0/4");
+push @reserved_ipv4, new Net::IP("0.0.0.0/8");
+push @reserved_ipv4, new Net::IP("169.254.0.0/16");
+push @reserved_ipv4, new Net::IP("192.0.2.0/24");
+push @reserved_ipv4, new Net::IP("192.88.99.0/24");
+push @reserved_ipv4, new Net::IP("198.18.0.0/15");
+push @reserved_ipv4, new Net::IP("240.0.0.0/4");
 
-    # REQUIRE: Special-Use IPv4 Addresses (RFC 3330)
-    push @reserved_ipv4, new Net::IP("127.0.0.0/8");
-    push @reserved_ipv4, new Net::IP("224.0.0.0/4");
-    push @reserved_ipv4, new Net::IP("0.0.0.0/8");
-    push @reserved_ipv4, new Net::IP("169.254.0.0/16");
-    push @reserved_ipv4, new Net::IP("192.0.2.0/24");
-    push @reserved_ipv4, new Net::IP("192.88.99.0/24");
-    push @reserved_ipv4, new Net::IP("198.18.0.0/15");
-    push @reserved_ipv4, new Net::IP("240.0.0.0/4");
-
-    # REQUIRE: Special-Use IPv6 Addresses
-    # (draft-ietf-v6ops-rfc3330-for-ipv6-04.txt)
-    push @reserved_ipv6, new Net::IP("::1/128");
-    push @reserved_ipv6, new Net::IP("ff00::/8");
-    push @reserved_ipv6, new Net::IP("::/128");
-    push @reserved_ipv6, new Net::IP("::ffff:0:0/96");
-    push @reserved_ipv6, new Net::IP("fe80::/10");
-    push @reserved_ipv6, new Net::IP("fc00::/7");
-    push @reserved_ipv6, new Net::IP("2001:0db8::/32");
-}
+# REQUIRE: Special-Use IPv6 Addresses
+# (draft-ietf-v6ops-rfc3330-for-ipv6-04.txt)
+push @reserved_ipv6, new Net::IP("::1/128");
+push @reserved_ipv6, new Net::IP("ff00::/8");
+push @reserved_ipv6, new Net::IP("::/128");
+push @reserved_ipv6, new Net::IP("::ffff:0:0/96");
+push @reserved_ipv6, new Net::IP("fe80::/10");
+push @reserved_ipv6, new Net::IP("fc00::/7");
+push @reserved_ipv6, new Net::IP("2001:0db8::/32");
 
 ######################################################################
 
