@@ -102,9 +102,10 @@ sub main {
         }
     }
 
+    my $href;
+    $href = [split /,/, $history] if defined($history);
+
     if (!$what_test or $what_test eq 'zone') {
-        my $href;
-        $href = [split /,/, $history] if defined($history);
         $check->zone->test($zone, $href);
     } elsif ($what_test eq 'connectivity') {
         $check->connectivity->test($zone);
@@ -113,7 +114,7 @@ sub main {
     } elsif ($what_test eq 'dnssec') {
         $check->dnssec->test($zone);
     } elsif ($what_test eq 'delegation') {
-        $check->delegation->test($zone);
+        $check->delegation->test($zone, $href);
     } elsif ($what_test eq 'soa') {
         $check->soa->test($zone);
     } else {
