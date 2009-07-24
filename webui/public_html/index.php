@@ -5,6 +5,8 @@ require_once(dirname(__FILE__) . '/../i18n.php');
 require_once(dirname(__FILE__) . '/../idna_convert.class.php');
 require_once(dirname(__FILE__) . '/../stripslashes.php');
 
+i18n_get_language_names();
+
 // Set language
 if (isset($_GET["setLanguage"])) {
 	i18n_load_language($_GET["setLanguage"]);
@@ -232,22 +234,20 @@ var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
 	<div id="footer">
 		<p id="f_info"><?php _e("se_tagline");?></p>
 		<p id="f_links"><?php _e("language");?>: 
+		
 			<select name="language" onchange="document.location.href='?setLanguage=' + this[this.selectedIndex].value;">
 <?php
-			// List languages based on files in languages/ ending in ".yaml"
-			if ($handle = opendir('../languages')) {
-				while (false !== ($file = readdir($handle))) {
-					if ($file != "." && $file != ".." && substr($file, (strlen($file)-4)) == "yaml") {
-						$thislang = ucfirst(str_replace(".yaml", "", $file));
-						echo "				<option ";
-						if (strtolower($i18n_current_language) == strtolower($thislang)) {
+
+			$langAr = i18n_get_language_names();
+			
+			foreach($langAr AS $key => $name) {
+				echo "				<option ";
+						if (strtolower($i18n_current_language) == strtolower($key)) {
 							echo "SELECTED ";	
 						}
-						echo "value=\"" . strtolower($thislang) . "\">$thislang</option>\n";
-					}
-				}
-				closedir($handle);
+				echo "value=\"$key\">$name</option>\n";
 			}
+			
 			?>
 			</select>
 		</p>

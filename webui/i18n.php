@@ -8,6 +8,49 @@ function autoloader($class) {
 }
 spl_autoload_register('autoloader');
 
+function i18n_get_language_names() {
+	// Check for existing cookie with names
+	
+	if ($_COOKIE["i18n_language_names"]) {
+		return unserialize($_COOKIE["i18n_language_names"]);
+	}
+	
+	// No cookie, get language names from files
+	// Create an array to hold directory list
+    $langAr = array();
+
+    // Create a handler for the directory
+    $dir = opendir("../languages/");
+
+    // Loop through files in directory
+    while ($file = readdir($dir)) {
+
+        // if $file isn't this directory or its parent, 
+        // check if it ends in .yaml and if it does, read in "languageName"
+        // then add it to the results array
+        if ($file != '.' && $file != '..') {
+        	if (substr($file, (strlen($file) - 4)) == "yaml") {
+        		$thisLanguage = Horde_Yaml::loadFile("../languages/$file");
+        		$langAr[$thisLanguage["languageId"]] = $thisLanguage["languageName"];
+        	}
+        }
+    }
+
+    // tidy up: close the handler
+    closedir($dir);
+
+	// Set cookie
+	setcookie("i18n_language_names", serialize($langAr));
+	return ($langAr);
+}
+
+
+/**
+ * Load language file
+ *
+ * @param string $language - if left empty loads saved language selection (from cookie) or default language
+ * @return bool success
+ */
 function i18n_load_language($language = NULL) {
 	global $i18n_lang, $i18n_current_language;
 	
@@ -19,7 +62,7 @@ function i18n_load_language($language = NULL) {
 	}
 	
 	$i18n_current_language = $language;
-	
+		
 	if ($i18n_lang = Horde_Yaml::loadFile("../languages/$language.yaml")) {
 		return true;
 	}
