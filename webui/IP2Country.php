@@ -11,7 +11,7 @@
 		switch ($country)
 		{
 			case 'SE':
-				return 'se';
+				return 'sv';
 				break;
 			default:
 				return 'en';
