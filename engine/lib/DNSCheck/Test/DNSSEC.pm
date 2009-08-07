@@ -273,8 +273,9 @@ sub _check_child {
         if (    $packet->header->rcode eq "NOERROR"
             and $packet->header->ancount > 0)
         {
-            $errors +=
-              $logger->auto("DNSSEC:ADDITIONAL_PROCESSING_BROKEN", $zone);
+            my $tmp = $packet->answerfrom;
+            $errors += $logger->auto("DNSSEC:ADDITIONAL_PROCESSING_BROKEN",
+                $zone, ($tmp ? $tmp : 'Unknown'));
         } else {
             $errors += $logger->auto("DNSSEC:NO_SIGNATURES", $zone);
         }

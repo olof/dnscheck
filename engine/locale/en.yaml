@@ -420,8 +420,8 @@ messages:
   format: No mandatory algorithm found for DNSKEY %s.
   descr: At least one DNSKEY should be of type RSA/SHA1.
  DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
-  args: 1
-  format: DNSSEC additional processing broken for %s.
+  args: 2
+  format: DNSSEC additional processing broken for %s (server: %s).
   descr: No DNSSEC signatures were included in replies from the name server.  This is probably due to a misconfiguration at the name server.
  DNSSEC:NO_SIGNATURES:
   args: 1

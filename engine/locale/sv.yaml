@@ -420,8 +420,8 @@ messages:
   format: Ingen obligatorisk algoritm hittad för DNSKEY %s.
   descr: Minst en DNSKEY bör vara av typen RSA/SHA1.
  DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
-  args: 1
-  format: Ytterligare DNSSEC-bearbetning ej möjlig för %s.
+  args: 2
+  format: Ytterligare DNSSEC-bearbetning ej möjlig för %s (server: %s).
   descr: Inga DNSSEC-signaturer fanns inkluderade i svaren från DNS-servern. Detta beror troligtvis på en felkonfiguration hos DNS-servern.
  DNSSEC:NO_SIGNATURES:
   args: 1
