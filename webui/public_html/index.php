@@ -96,6 +96,14 @@ var permalinkId = <?php echo((0 < $permalinkId) ? $permalinkId : 'null');?>;
 var permalinkView = <?php echo($permalinkView)?>;
 var test = '<?php echo($test);?>';
 var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
+var thisId = 0;
+var thisTime = 0;
+
+function switchLang(lang) {
+	//alert(document.thisId + ":" + document.thisTime);
+	document.location.href='?time=' + document.thisTime + '&id=' + document.thisId + '&test=<?=$test?>&view=<?=$_GET["view"]?>&setLanguage=' + lang;	
+}
+
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DNSCheck</title>
@@ -235,7 +243,7 @@ var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
 		<p id="f_info"><?php _e("se_tagline");?></p>
 		<p id="f_links"><?php _e("language");?>: 
 		
-			<select name="language" onchange="document.location.href='?setLanguage=' + this[this.selectedIndex].value;">
+			<select name="language" onchange="switchLang(this[this.selectedIndex].value);">
 <?php
 
 			$langAr = i18n_get_language_names();

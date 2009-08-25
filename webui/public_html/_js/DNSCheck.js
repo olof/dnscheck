@@ -408,6 +408,10 @@
 				appendPermalink($("#treediv")[0], baseUrl + "?time=" + response['time'] + "&id=" + response['id'] + "&view=basic" + "&test=" + test);
 				populateTree(response['list'], $("#listdiv")[0], false);
 				appendPermalink($("#listdiv")[0], baseUrl + "?time=" + response['time'] + "&id=" + response['id'] + "&view=advanced" + "&test=" + test);
+				
+				document.thisId = response['id'];
+				document.thisTime = response['time'];
+				
 				$("#result_loader").hide();
 				$("#undelegateddomain_info").show();
 
