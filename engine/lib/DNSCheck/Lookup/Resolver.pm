@@ -547,12 +547,6 @@ sub recurse {
                 next;    # Resolving chain redirecting up
             }
 
-            if ($name eq $zname) {
-                print STDERR "Redirecting to same server. Skipping to next.\n"
-                  if $self->{debug};
-                next;    # Really messed-up redirecting
-            }
-
             $level = $m;
 
             print STDERR "Got "
@@ -561,10 +555,10 @@ sub recurse {
               if $self->{debug};
             @stack = ();
 
+            $self->remember($p);
             if (my @fns = $self->faked_zone($zname)) {
-                push @stack, $self->simple_names_to_ips(@fns);
+                push @stack, grep { !$seen{$_} } $self->simple_names_to_ips(@fns);
             } else {
-                $self->remember($p);
                 push @stack, grep { !$seen{$_} } $self->names_to_ips(
                     map { $_->nsdname }
                       grep { $_->type eq 'NS' } $p->authority
