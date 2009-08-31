@@ -11,7 +11,7 @@ spl_autoload_register('autoloader');
 function i18n_get_language_names() {
 	// Check for existing cookie with names
 	
-	if ($_COOKIE["i18n_language_names"]) {
+	if (isset($_COOKIE["i18n_language_names"]) && strlen($_COOKIE["i18n_language_names"]) > 0) {
 		return unserialize($_COOKIE["i18n_language_names"]);
 	}
 	
