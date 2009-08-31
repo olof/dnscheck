@@ -11,9 +11,9 @@ spl_autoload_register('autoloader');
 function i18n_get_language_names() {
 	// Check for existing cookie with names
 	
-	if (isset($_COOKIE["i18n_language_names"]) && strlen($_COOKIE["i18n_language_names"]) > 0) {
-		return unserialize($_COOKIE["i18n_language_names"]);
-	}
+	#if (isset($_COOKIE["i18n_language_names"]) && strlen($_COOKIE["i18n_language_names"]) > 0) {
+	#	return unserialize($_COOKIE["i18n_language_names"]);
+	#}
 	
 	// No cookie, get language names from files
 	// Create an array to hold directory list
@@ -40,7 +40,7 @@ function i18n_get_language_names() {
     closedir($dir);
 
 	// Set cookie
-	setcookie("i18n_language_names", serialize($langAr));
+	#setcookie("i18n_language_names", serialize($langAr));
 	return ($langAr);
 }
 
