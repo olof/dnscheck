@@ -547,6 +547,12 @@ sub recurse {
                 next;    # Resolving chain redirecting up
             }
 
+            if ($name eq $zname) {
+                print STDERR "Redirecting to same server. Skipping to next.\n"
+                  if $self->{debug};
+                next;    # Really messed-up redirecting
+            }
+
             $level = $m;
 
             print STDERR "Got "
