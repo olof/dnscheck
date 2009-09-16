@@ -557,7 +557,8 @@ sub recurse {
 
             $self->remember($p);
             if (my @fns = $self->faked_zone($zname)) {
-                push @stack, grep { !$seen{$_} } $self->simple_names_to_ips(@fns);
+                push @stack,
+                  grep { !$seen{$_} } $self->simple_names_to_ips(@fns);
             } else {
                 push @stack, grep { !$seen{$_} } $self->names_to_ips(
                     map { $_->nsdname }

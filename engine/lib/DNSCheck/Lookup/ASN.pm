@@ -39,13 +39,7 @@ our $SVN_VERSION = '$Revision$';
 use Data::Dumper;
 use Net::DNS;
 use Net::IP;
-
-######################################################################
-
-our $asn_domain = "asn.routeviews.org.";
-our $asn_magic  = 4294967295;
-
-######################################################################
+use Carp;
 
 sub new {
     my $proto = shift;
@@ -56,7 +50,9 @@ sub new {
     $self->{parent} = shift;
 
     # hash of ASN indexed by IP
-    $self->{asn} = ();
+    $self->{asn}    = ();
+    $self->{v4root} = $self->{parent}->config->get("net")->{v4root};
+    $self->{v6root} = $self->{parent}->config->get("net")->{v6root};
 
     return $self;
 }
@@ -84,12 +80,12 @@ sub lookup {
     if (!$nip) {
         $self->parent->logger->auto("ASN:INVALID_ADDRESS", $ip);
         return;
-    } elsif ($nip->version == 6) {
-        return $self->lookup6($ip);
+    } else {
+        $ip = $nip->ip;    # Normalize
     }
 
     unless ($self->{asn}{$ip}) {
-        $self->{asn}{$ip} = $self->_asn_helper($ip);
+        $self->{asn}{$ip} = $self->_asn_helper($nip);
     }
 
     my $asn = $self->{asn}{$ip};
@@ -112,54 +108,15 @@ sub _asn_helper {
     my $self = shift;
     my $ip   = shift;
 
-    my @asn_list = ();
-
-    my $qname =
-      sprintf("%s.%s", join(".", reverse(split(/\./, $ip))), $asn_domain);
-
-    my $packet = $self->parent->dns->query_resolver($qname, "IN", "TXT");
-
-    unless ($packet && $packet->header->ancount) {
-        ## lookup failure
-        return ["Lookup Failure"];
-    }
-
-    foreach my $rr ($packet->answer) {
-        if ($rr->rdatastr =~ /^\"(\d+)\"/) {
-            if ($1 eq $asn_magic) {
-                ## IP address not announced
-                goto DONE;
-            } else {
-                ## IP address announced
-                push @asn_list, $1;
-            }
-        }
-    }
-
-  DONE:
-    return \@asn_list;
-}
-
-sub lookup6 {
-    my $self   = shift;
-    my $raw_ip = shift;
-
-    unless ($self->{asn}{$raw_ip}) {
-        $self->{asn}{$raw_ip} = $self->_lookup6($raw_ip);
-    }
-
-    return $self->{asn}{$raw_ip};
-}
-
-sub _lookup6 {
-    my $self   = shift;
-    my $raw_ip = shift;
-
-    my $ip = Net::IP->new($raw_ip);
-    return unless defined($ip);
-
     my $rev = $ip->reverse_ip;
-    $rev =~ s/ip6\.arpa/origin6.asn.cymru.com/;
+    if ($ip->version == 6) {
+        $rev =~ s/ip6\.arpa/$self->{v6root}/e;
+    } elsif ($ip->version == 4) {
+        $rev =~ s/in-addr\.arpa/$self->{v4root}/e;
+    } else {
+        croak "Strange IP version: " . $ip->version;
+    }
+
     my $packet = $self->parent->dns->query_resolver($rev, 'IN', 'TXT');
     return unless (defined($packet) and $packet->header->ancount > 0);
 
