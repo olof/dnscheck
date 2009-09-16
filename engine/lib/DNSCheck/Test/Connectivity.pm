@@ -33,6 +33,7 @@ package DNSCheck::Test::Connectivity;
 require 5.008;
 use warnings;
 use strict;
+use Net::IP;
 
 our $SVN_VERSION = '$Revision$';
 
@@ -76,10 +77,8 @@ sub test_v4 {
     my @nameservers = ();
 
     # Fetch IPv4 nameservers
-    if ($parent->config->get("net")->{ipv4}) {
-        my $ipv4 = $parent->dns->get_nameservers_ipv4($zone, $qclass);
-        push @nameservers, @{$ipv4} if ($ipv4);
-    }
+    my $ipv4 = $parent->dns->get_nameservers_ipv4($zone, $qclass);
+    push @nameservers, @{$ipv4} if ($ipv4);
 
     foreach my $address (@nameservers) {
         my $as_lookup = $parent->asn->lookup($address);
@@ -132,12 +131,10 @@ sub test_v6 {
     my @nameservers = ();
 
     # Fetch IPv6 nameservers.
-    if ($parent->config->get("net")->{ipv6}) {
-        my $ipv6 = $parent->dns->get_nameservers_ipv6($zone, $qclass);
-        push @nameservers, @{$ipv6} if ($ipv6);
-    }
+    my $ipv6 = $parent->dns->get_nameservers_ipv6($zone, $qclass);
+    push @nameservers, @{$ipv6} if ($ipv6);
 
-    foreach my $address (@nameservers) {
+    foreach my $address (map {Net::IP->new($_)->ip} @nameservers) {
         my $as_lookup = $parent->asn->lookup($address);
         my @as_list   = ();
         @as_list = @{$as_lookup} if $as_lookup;
