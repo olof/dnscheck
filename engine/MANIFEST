@@ -1,7 +1,6 @@
 apps/dnscheck-12hourmailer.pl
 apps/dnscheck-dispatcher.pl
 apps/dnscheck-hostsyntax.pl
-apps/dnscheck-preflight
 apps/dnscheck-preflight.pl
 apps/dnscheck-zonediff.pl
 apps/dnscheck.pl
@@ -18,7 +17,6 @@ doc/call-flow.png
 doc/data-flow-batch.png
 doc/data-flow-web.png
 doc/database-schema.pdf
-'doc/DNSCheck Lib Descriptions.pdf'
 doc/DNSCheck.graffle
 examples/address.pl
 examples/asn.pl
