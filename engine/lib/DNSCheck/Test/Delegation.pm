@@ -290,8 +290,19 @@ sub ns_parent_child_matching {
 
     # REQUIRE: at least two (2) NS records at parent [IIS.KVSE.001.01/r1]
     # Modified to check for NS records that exist at both parent and child.
-    unless (scalar @ns_at_both >= 2) {
+    if (@ns_at_both == 1) {
         $self->logger->auto("DELEGATION:TOO_FEW_NS", scalar @ns_at_both);
+    } elsif (@ns_at_both == 0 and $testable) {
+        $self->logger->auto(
+            "DELEGATION:NO_COMMON_NS_NAMES",
+            join(",", @ns_at_parent),
+            join(",", @ns_at_child)
+        );
+    } elsif (@ns_at_both > 1) {
+
+        # Everything is fine.
+    } else {
+        die "Array lenght is not 0, 1 or greater than 1. This is impossible.";
     }
 
     # REQUIRE: all NS at child may exist at parent

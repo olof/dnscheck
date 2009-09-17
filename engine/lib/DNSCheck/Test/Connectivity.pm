@@ -134,7 +134,7 @@ sub test_v6 {
     my $ipv6 = $parent->dns->get_nameservers_ipv6($zone, $qclass);
     push @nameservers, @{$ipv6} if ($ipv6);
 
-    foreach my $address (map {Net::IP->new($_)->ip} @nameservers) {
+    foreach my $address (map { Net::IP->new($_)->ip } @nameservers) {
         my $as_lookup = $parent->asn->lookup($address);
         my @as_list   = ();
         @as_list = @{$as_lookup} if $as_lookup;
