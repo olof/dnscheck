@@ -130,6 +130,11 @@ sub generate_mail_for_registrar {
         Filename    => 'dnscheck_results.yaml',
     );
 
+    my $bcc = $dc->config->get("12hour")->{archive};
+    if ($bcc) {
+        $msg->add(Bcc => $bcc);
+    }
+
     return $msg;
 }
 
