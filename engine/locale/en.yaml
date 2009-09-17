@@ -315,6 +315,10 @@ messages:
  DELEGATION:NO_NS_IPV6:
   args: 0
   format: No IPv6 name servers found.
+ DELEGATION:NO_COMMON_NS_NAMES:
+  args: 2
+  format: Total parent/child glue mismatch.
+  descr: The parent lists name servers that the child doesnt know about, see details in advanced. This configuration could actually work but breaks very easily if one of these zones change slightly.
  DELEGATION:MATCHING_GLUE:
   args: 2
   format: Checking glue for %s (%s).

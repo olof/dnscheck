@@ -315,6 +315,10 @@ messages:
  DELEGATION:NO_NS_IPV6:
   args: 0
   format: Inga IPv6 DNS-servrar hittades.
+ DELEGATION:NO_COMMON_NS_NAMES:
+  args: 2
+  format: Ingen likhet mellan förälderns och barnets glue.
+  descr: Föräldern listar namnservrar som barnet inte vet om, se detaljer i den avancerade vyn. Denna konfiguration kan fungera men går sönder väldigt enkelt om någon av dessa zoner ändras.
  DELEGATION:MATCHING_GLUE:
   args: 2
   format: Kontrollerar glue för %s (%s).
