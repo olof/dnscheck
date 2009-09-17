@@ -299,10 +299,7 @@ sub ns_parent_child_matching {
             join(",", @ns_at_child)
         );
     } elsif (@ns_at_both > 1) {
-
-        # Everything is fine.
-    } else {
-        die "Array lenght is not 0, 1 or greater than 1. This is impossible.";
+        ## Everything is fine.
     }
 
     # REQUIRE: all NS at child may exist at parent
