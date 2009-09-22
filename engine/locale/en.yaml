@@ -714,7 +714,7 @@ messages:
   format: Failed to connect to %s (%s).
   descr: DNSCheck failed to connect to the mail server.  The server could be down or unreachable due to misconfigured routing and/or filtering.
  SMTP:BANNER:
-  args: 1
+  args: 2
   format: SMTP banner: %s
  SMTP:HELLO_FAILED:
   args: 1

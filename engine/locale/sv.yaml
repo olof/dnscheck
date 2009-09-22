@@ -714,7 +714,7 @@ messages:
   format: Lyckades inte kontakta %s (%s).
   descr: DNSCheck lyckades inte kontakta e-postservern. Servern kan vara nere eller vara onåbar på grund av felkonfigurerad routing och/eller filtrering.
  SMTP:BANNER:
-  args: 1
+  args: 2
   format: SMTP banner: %s
  SMTP:HELLO_FAILED:
   args: 1
