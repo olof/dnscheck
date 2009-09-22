@@ -408,7 +408,7 @@ sub monitor_children {
         my $exitcode = $reaped{$pid};
         delete $running{$pid};
         delete $reaped{$pid};
-        cleanup($domain, $exitcode);
+        cleanup($domain, $exitcode, $pid);
     }
 
     if (defined($exit_timeout) and time() - $exit_timeout > 300) {
@@ -419,6 +419,7 @@ sub monitor_children {
 sub cleanup {
     my $domain   = shift;
     my $exitcode = shift;
+    my $pid      = shift;
     my $dbh;
 
     eval { $dbh = $check->dbh; };
@@ -434,7 +435,8 @@ sub cleanup {
 
         # Child died nicely.
       AGAIN: eval {
-            $dbh->do(q[DELETE FROM queue WHERE domain = ?], undef, $domain);
+            $dbh->do(q[DELETE FROM queue WHERE domain = ? AND tester_pid = ?],
+                undef, $domain, $pid);
         };
         if ($@)
         { # mysqld dumped us. Get a new handle and try again, after a little pause
