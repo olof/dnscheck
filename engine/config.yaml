@@ -65,6 +65,8 @@ daemon:
     debug: 1
     sourcestring: 12-hour-check
     fallback: unknown@example.com
+    activekey: dnscheck.mail
+    addresskey: dnscheck.alternate
     # If the following key exists, it will be used as a BCC recipient of all mails.
     # archive: arkiv@example.org
 

@@ -47,9 +47,22 @@ my $templatedir;
 my $domaintemplate;
 my $registrartemplate;
 
+my $active_rp_id;
+my $address_rp_id;
+
 sub setup {
     $dc = DNSCheck->new({ locale => "en" });
     $reggie = get_reggie_dbh($dc->config->get("reggie"));
+
+    my $activekey  = $dc->config->get("12hour")->{activekey};
+    my $addresskey = $dc->config->get("12hour")->{addresskey};
+
+    ($active_rp_id) = $reggie->selectrow_array(
+        q[select RP_ID from REGISTRAR_PROPERTIES where PROP_KEY = ?],
+        undef, $activekey);
+    ($address_rp_id) = $reggie->selectrow_array(
+        q[select RP_ID from REGISTRAR_PROPERTIES where PROP_KEY = ?],
+        undef, $addresskey);
 
     my $source_name = $dc->config->get("12hour")->{sourcestring};
     ($source_id) =
@@ -188,15 +201,30 @@ sub get_reggie_dbh {
 sub get_registrar_info {
     my $domain = shift;
 
-    my ($email3, $display_name) = $reggie->selectrow_array(
+    my ($email3, $display_name, $registrar_id) = $reggie->selectrow_array(
         q[
-        select EMAIL3, DISPLAY_NAME
+        select EMAIL3, DISPLAY_NAME, REGISTRAR_ID
         from REGISTRARS, USERS, DOMAINS
         where DOMAINS.NAME = ? and DOMAINS.CLID = USERS.USER_ID and DOMAINS.CLID = REGISTRARS.EPP_USER_ID
         ], undef, $domain
     );
 
-    return ($email3, $display_name);
+    my $propquery = $reggie->prepare(
+        q[
+        select VALUE
+        from REGISTRARS_TO_PROPERTIES
+        where RP_ID = ? and REGISTRAR_ID = ?]
+    );
+
+    $propquery->execute($active_rp_id, $registrar_id);
+    my ($mail_active) = $propquery->fetchrow_array;
+
+    $propquery->execute($address_rp_id, $registrar_id);
+    my ($mail_address) = $propquery->fetchrow_array;
+
+    $email3 = $mail_address if ($mail_address and $mail_active);
+
+    return ($email3, $display_name, $mail_active);
 }
 
 sub aggregate_registrar_info {
@@ -207,11 +235,13 @@ sub aggregate_registrar_info {
       || 'failure@example.com';
 
     foreach my $d (@domains) {
+        my ($mail, $name, $sendp) = get_registrar_info($d);
+        next unless $sendp;
+
         my $r = get_test_results($d);
         if ($r->{count_critical} + $r->{count_error} == 0) {
             next;    # A later test was clean
         }
-        my ($mail, $name) = get_registrar_info($d);
         $mail = $no_registrar_address unless defined($mail);
         $name = "Unknown registrar"   unless defined($name);
         $res{$name}{mail} = $mail;
