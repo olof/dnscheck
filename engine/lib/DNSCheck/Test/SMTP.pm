@@ -86,9 +86,9 @@ sub test {
         goto DONE;
     }
 
-    my @extensions = split(/\n/,$smtp->message);
-    shift @extensions; # Toss server name
-    
+    my @extensions = split(/\n/, $smtp->message);
+    shift @extensions;    # Toss server name
+
     $message = $smtp->banner;
     chomp $message;
     $logger->auto("SMTP:BANNER", $message, join(',', @extensions));
