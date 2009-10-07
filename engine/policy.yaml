@@ -154,6 +154,7 @@ loglevels:
   NAMESERVER:TCP_OK: info
   NAMESERVER:UDP_OK: info
   SMTP:BEGIN: info
+  SMTP:BANNER: info
   SMTP:CONNECT_FAILED: warning
   SMTP:END: info
   SMTP:HELLO_FAILED: warning
