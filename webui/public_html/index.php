@@ -71,6 +71,12 @@ if(isset($_GET['test']))
 			$test = 'standard';
 	}
 }
+
+// Get current version of DNSCheck by checking last made test
+$sql = "SELECT arg1 FROM results WHERE message = 'ZONE:BEGIN' and test_id = (select max(test_id) from results) ORDER BY test_id DESC LIMIT 0, 1";
+$status = DatabasePackage::query($sql, $version);
+$thisVersion = $version[0]["arg1"];
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -91,6 +97,7 @@ var loadErrorLabel = "<?php _e("load_error_label");?>";
 var okHeader = "<?php _e("all_tests_ok");?>";
 var warningHeader = "<?php _e("warning_header");?>";
 var errorHeader = "<?php _e("error_header");?>";
+<?php print ($languageId ? "var languageId = \"$languageId\";\n" : ""); ?>
 var languageId = "<?php echo($languageId)?>";
 var permalinkId = <?php echo((0 < $permalinkId) ? $permalinkId : 'null');?>;
 var permalinkView = <?php echo($permalinkView)?>;
@@ -98,10 +105,12 @@ var test = '<?php echo($test);?>';
 var guiTimeout = <?php echo(GUI_TIMEOUT);?>;
 var thisId = 0;
 var thisTime = 0;
+var thisVersion = "<?php echo $thisVersion; ?>";
+var labelVersion = "<?php _e("test_was_performed_with_version"); ?>";
 
 function switchLang(lang) {
 	//alert(document.thisId + ":" + document.thisTime);
-	document.location.href='?time=' + document.thisTime + '&id=' + document.thisId + '&test=<?=$test?>&view=<?=$_GET["view"]?>&setLanguage=' + lang;	
+	document.location.href='?time=' + document.thisTime + '&id=' + document.thisId + '&test=<?php echo $test?>&view=<?php print($_GET["view"] ? $_GET["view"] : "basic");?>&setLanguage=' + lang;	
 }
 
 </script>
@@ -240,7 +249,15 @@ function switchLang(lang) {
 	</div>
 
 	<div id="footer">
-		<p id="f_info"><?php _e("se_tagline");?></p>
+		<p id="f_info"><?php 
+		$footer = __("se_tagline");
+		$sql = "SELECT arg1 FROM results WHERE message = 'ZONE:BEGIN' and test_id = (select max(test_id) from results) ORDER BY test_id DESC LIMIT 0, 1";
+		$status = DatabasePackage::query($sql, $version);
+		printf($footer, $version[0]["arg1"], $_SERVER["REMOTE_ADDR"]);
+		
+		?>
+		</p>
+		
 		<p id="f_links"><?php _e("language");?>: 
 		
 			<select name="language" onchange="switchLang(this[this.selectedIndex].value);">

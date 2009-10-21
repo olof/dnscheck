@@ -40,7 +40,6 @@ function i18n_get_language_names() {
     closedir($dir);
 
 	// Set cookie
-	#setcookie("i18n_language_names", serialize($langAr));
 	return ($langAr);
 }
 

@@ -20,13 +20,15 @@ advanced_results: Avancerat resultat
 
 test_history: Tidigare test
 
+test_was_performed_with_version: Testet utfördes med DNSCheck v
+
 error_loading_history: Historiken kunde ej laddas
 
 no_test_history: Ingen historik finns
 
 page: Sida
 
-se_tagline: .SE (Stiftelsen för Internetinfrastruktur)
+se_tagline: .SE presenterar DNSCheck v%s till IP %s
 
 domain_doesnt_exist_header: Domänen finns inte
 

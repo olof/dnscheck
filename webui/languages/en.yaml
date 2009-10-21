@@ -20,13 +20,15 @@ advanced_results: Advanced results
 
 test_history: Test history
 
+test_was_performed_with_version: Test was performed with DNSCheck v
+
 error_loading_history: Error loading history
 
 no_test_history: No test history found
 
 page: Page
 
-se_tagline: .SE (The Internet Infrastructure Foundation)
+se_tagline: .SE presents DNSCheck v%s to IP %s
 
 domain_doesnt_exist_header: Domain doesn't exist
 

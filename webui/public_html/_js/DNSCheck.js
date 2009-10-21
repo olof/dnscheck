@@ -375,6 +375,7 @@
 		}
 
 		var additionalCheckParameters = getAdditionalCheckParameters();
+		
 		getResultXMLHTTPRequest = $.ajax({
 			type: "POST",
 			url: "getResult.php",
@@ -383,7 +384,7 @@
 			success: function(msg)
 			{
 				var response = eval("(" + msg + ")");
-
+				
 				if ('IN_PROGRESS' == response['result'])
 				{
 					totalMillis = totalMillis + 1000;
@@ -418,13 +419,13 @@
 				switch(response['result'])
 				{
 					case 'OK':
-						statusOk(response['domain'], response['time']);
+						statusOk(response['domain'], response['time'], response['dnscheckversion']);
 						break;
 					case 'WARNING':
-						statusWarn(response['domain'], response['time']);
+						statusWarn(response['domain'], response['time'], response['dnscheckversion']);
 						break;
 					case 'ERROR':
-						statusError(response['domain'], response['time']);
+						statusError(response['domain'], response['time'], response['dnscheckversion']);
 						break;
 				}
 
@@ -526,28 +527,28 @@
 		$("#status_text")[0].innerHTML = loadingLabel;
 	}
 
-	function statusOk(domain, timestamp)
+	function statusOk(domain, timestamp, version)
 	{
 		$("#status_light")[0].className = "mainok";
 		$("#result_status").slideDown("slow");
 		$("#status_header")[0].innerHTML = okHeader;
-		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp);
+		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
 	}
 
-	function statusWarn(domain, timestamp)
+	function statusWarn(domain, timestamp, version)
 	{
 		$("#status_light")[0].className = "mainwarn";
 		$("#result_status").slideDown("slow");
 		$("#status_header")[0].innerHTML = warningHeader;
-		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp);
+		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
 	}
 
-	function statusError(domain, timestamp)
+	function statusError(domain, timestamp, version)
 	{
 		$("#status_light")[0].className = "mainerror";
 		$("#result_status").slideDown("slow");
 		$("#status_header")[0].innerHTML = errorHeader;
-		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp);
+		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp + '<br />' + labelVersion + version);
 	}
 
 	function startTest()
