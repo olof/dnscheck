@@ -548,7 +548,7 @@
 		$("#status_light")[0].className = "mainerror";
 		$("#result_status").slideDown("slow");
 		$("#status_header")[0].innerHTML = errorHeader;
-		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp + '<br />' + labelVersion + version);
+		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
 	}
 
 	function startTest()
