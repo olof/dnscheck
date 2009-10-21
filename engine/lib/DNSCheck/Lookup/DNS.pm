@@ -1130,7 +1130,7 @@ sub preflight_check {
         return 1;
     } elsif (!defined($packet)) {
 
-        # The manual doesn't say what errors are possible, just that they are.
+        # Transmission error or something similar, fail on the safe side.
         return 1;
     }
 

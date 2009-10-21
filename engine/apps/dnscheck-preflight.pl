@@ -2,10 +2,11 @@
 
 use DNSCheck;
 
-my $dc  = DNSCheck->new;
-my $dns = $dc->dns;
+my $dc   = DNSCheck->new;
+my $dns  = $dc->dns;
+my $name = $ARGV[0];
 
-if ($dns->preflight_check($ARGV[0])) {
+if ($dc->host->host_syntax($name) == 0 and $dns->preflight_check($name)) {
     print "TRUE";
 } else {
     print "FALSE";
