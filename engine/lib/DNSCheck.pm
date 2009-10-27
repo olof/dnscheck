@@ -55,7 +55,7 @@ use DNSCheck::Lookup::Resolver;
 use DNSCheck::Lookup::ASN;
 use DNSCheck::Logger;
 
-our $VERSION     = "1.0";
+our $VERSION     = "1.1_01";
 our $SVN_VERSION = '$Revision$';
 
 ######################################################################
