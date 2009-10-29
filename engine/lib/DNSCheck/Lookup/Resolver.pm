@@ -236,6 +236,7 @@ sub remember {
               unless $self->{fake}{ips}{$n};
         }
         if ($rr->type eq 'NS') {
+            print STDERR "remember: NS $n (".$rr->name.") ".$rr->nsdname.".\n" if $self->{debug};
             $self->{cache}{ns}{$n}{ $self->canonicalize_name($rr->nsdname) } = 1
               unless $self->{fake}{ns}{$n};
         }
@@ -292,7 +293,8 @@ sub canonicalize_name {
     my $self = shift;
     my $name = shift;
 
-    if (my $i = Net::IP->new($name)) {
+    my $i = Net::IP->new($name);
+    if ($name =~ m|^[0-9.:]+$| and defined($i)) {
         $name = $i->reverse_ip;
     }
 
