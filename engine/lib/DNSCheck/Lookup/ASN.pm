@@ -120,17 +120,17 @@ sub _asn_helper {
     my $packet = $self->parent->dns->query_resolver($rev, 'IN', 'TXT');
     return unless (defined($packet) and $packet->header->ancount > 0);
 
-    my @asn;
+    my %asn;
     foreach my $rr ($packet->answer) {
         next unless $rr->type eq 'TXT';
         foreach my $txt ($rr->char_str_list) {
             if ($txt =~ /^(\d+)\s*\|/) {
-                push @asn, $1;
+                $asn{$1} = 1;
             }
         }
     }
 
-    return \@asn;
+    return [keys %asn];
 }
 
 1;
