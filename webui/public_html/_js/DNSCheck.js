@@ -532,7 +532,12 @@
 		$("#status_light")[0].className = "mainok";
 		$("#result_status").slideDown("slow");
 		$("#status_header")[0].innerHTML = okHeader;
-		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
+		if (version != null) {
+			$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
+		}
+		else {
+			$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp);
+		}
 	}
 
 	function statusWarn(domain, timestamp, version)
@@ -540,7 +545,12 @@
 		$("#status_light")[0].className = "mainwarn";
 		$("#result_status").slideDown("slow");
 		$("#status_header")[0].innerHTML = warningHeader;
-		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
+		if (version != null) {
+			$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
+		}
+		else {
+			$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp);
+		}
 	}
 
 	function statusError(domain, timestamp, version)
@@ -548,7 +558,12 @@
 		$("#status_light")[0].className = "mainerror";
 		$("#result_status").slideDown("slow");
 		$("#status_header")[0].innerHTML = errorHeader;
-		$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
+		if (version != null) {
+			$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp) + '<br />' + labelVersion + version;
+		}
+		else {
+			$("#status_text")[0].innerHTML = domain + ', ' + formatDate(timestamp);
+		}
 	}
 
 	function startTest()
