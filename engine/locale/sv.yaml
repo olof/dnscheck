@@ -234,11 +234,11 @@ messages:
   descr: IP-adressen är inte annonserad av något autonomt system och är troligtvis inte nåbar på Internet.
  CONNECTIVITY:ASN_LIST:
   args: 1
-  format: Zon annonserad av ASN: %s
+  format: Zon annonserad av IPv4 ASN: %s
  CONNECTIVITY:TOO_FEW_ASN:
   args: 1
-  format: Zon annonserad av endast ett ASN (%s).
-  descr: Samtliga DNS-servrar för zonen finns inom samma autonoma system.
+  format: Zon annonserad av mindre än 2 IPv4 ASN (%s).
+  descr: Samtliga DNS-servrar för zonen finns inom samma, (eller inget), autonoma system.
  CONNECTIVITY:ASN_COUNT_OK:
   args: 1
   format: Zon annonserad av fler än ett ASN (%s).
@@ -250,7 +250,7 @@ messages:
  CONNECTIVITY:V6_MULTIPLE_ASN:
    args: 1
    format: DNS-servern %s är annonserad av flera IPv6 AS.
-   descr: DNS-servern är annonserad av fler än ett autonomt system (AS).
+   descr: DNS-servern är annonserad av fler än ett IPv6 autonomt system (AS).
  CONNECTIVITY:V6_NOT_ANNOUNCED:
    args: 1
    format: DNS-servern %s är inte annonserad av något IPv6 AS.
@@ -260,8 +260,8 @@ messages:
    format: Zon annonserad av IPv6 ASN: %s
  CONNECTIVITY:V6_TOO_FEW_ASN:
    args: 1
-   format: Zon annonserad av endast ett IPv6 ASN (%s).
-   descr: Samtliga DNS-servrar för zonen finns inom samma autonoma system.
+   format: Zon annonserad av mindre än 2 IPv6 ASN (%s).
+   descr: Samtliga DNS-servrar för zonen finns inom samma, (eller inget), autonoma system.
  CONNECTIVITY:V6_ASN_COUNT_OK:
    args: 1
    format: Zon annonserad av fler än ett IPv6 ASN (%s).
