@@ -105,6 +105,10 @@ sub main {
     my $href;
     $href = [split /,/, $history] if defined($history);
 
+    if ($what_test) {
+        $what_test = lc($what_test);
+    }
+
     if (!$what_test or $what_test eq 'zone') {
         $check->zone->test($zone, $href);
     } elsif ($what_test eq 'connectivity') {
