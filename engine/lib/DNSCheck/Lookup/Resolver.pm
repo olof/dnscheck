@@ -236,7 +236,10 @@ sub remember {
               unless $self->{fake}{ips}{$n};
         }
         if ($rr->type eq 'NS') {
-            print STDERR "remember: NS $n (".$rr->name.") ".$rr->nsdname.".\n" if $self->{debug};
+            print STDERR "remember: NS $n ("
+              . $rr->name . ") "
+              . $rr->nsdname . ".\n"
+              if $self->{debug};
             $self->{cache}{ns}{$n}{ $self->canonicalize_name($rr->nsdname) } = 1
               unless $self->{fake}{ns}{$n};
         }
@@ -334,7 +337,7 @@ sub highest_known_ns {
     # another, choose the one with the most labels in it.
     my $faked = (
         sort { $b =~ y/././ <=> $a =~ y/././ }
-          grep { $name =~ /\Q$_\E$/ } $self->faked_zones
+        grep { $name =~ /\Q$_\E$/ } $self->faked_zones
     )[0];
 
     if ($faked) {
@@ -564,7 +567,7 @@ sub recurse {
             } else {
                 push @stack, grep { !$seen{$_} } $self->names_to_ips(
                     map { $_->nsdname }
-                      grep { $_->type eq 'NS' } $p->authority
+                    grep { $_->type eq 'NS' } $p->authority
                 );
             }
             next;

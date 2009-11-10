@@ -129,8 +129,6 @@ sub _asn_helper {
             }
         }
     }
-    
-    
 
     return [keys %asn];
 }
