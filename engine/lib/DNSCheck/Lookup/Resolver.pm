@@ -297,7 +297,7 @@ sub canonicalize_name {
     my $name = shift;
 
     my $i = Net::IP->new($name);
-    if ($name =~ m|^[0-9.:]+$| and defined($i)) {
+    if ($name and $name =~ m|^[0-9.:]+$| and defined($i)) {
         $name = $i->reverse_ip;
     }
 
