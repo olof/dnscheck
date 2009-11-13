@@ -84,14 +84,3 @@ zonediff:
         - zzzzzzzzzzzz.example.com
     dig: /usr/bin/dig
 
-nsdiff:
-    datafile: /tmp/zone_ns.txt
-    servers:
-      - ns1.example.com
-      - ns2.example.com
-      - ns3.example.com
-    domain: example.com.
-    tsig: test.key TSIG WW91IGFjdHVhbGx5IGJvdGhlcmVkIHRvIGRlY29kZSB0aGlzPw==
-    flagdomain:
-        - 000000000000.example.com
-        - zzzzzzzzzzzz.example.com
