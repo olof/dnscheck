@@ -92,12 +92,6 @@ to do something similar to this, you'll probably need to modify the code of
 the script. At the moment, the emails are also generated entirely
 programmatically, so changing their formatting also involves changing code.
 
-=head3 The delegation change detector
-
-L<dnscheck-nsdiff> is similar to L<dnscheck-zonediff> in that it downloads a
-given zone and trawls through the data. Rather than schedule tests, though, it
-just adds rows to the C<delegation_history> table in the database.
-
 =head3 The preflight script
 
 L<dnscheck-preflight> is used by the web GUI. It takes a name as a command
