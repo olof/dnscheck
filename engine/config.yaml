@@ -25,8 +25,10 @@ net:
     smtp: 1
     # The following two lines should be DNS suffixes pointing to cymru-style
     # servers for looking up AS numbers for IP addresses. 
-    v4root: origin.asn.cymru.com
-    v6root: origin6.asn.cymru.com
+    v4root: 
+        - origin.asn.cymru.com
+    v6root: 
+        - origin6.asn.cymru.com
 
 syslog:
     ident: dnscheck

@@ -50,9 +50,9 @@ sub new {
     $self->{parent} = shift;
 
     # hash of ASN indexed by IP
-    $self->{asn}    = ();
-    $self->{v4root} = $self->{parent}->config->get("net")->{v4root};
-    $self->{v6root} = $self->{parent}->config->get("net")->{v6root};
+    $self->{asn}     = ();
+    $self->{v4roots} = $self->{parent}->config->get("net")->{v4root};
+    $self->{v6roots} = $self->{parent}->config->get("net")->{v6root};
 
     return $self;
 }
@@ -107,18 +107,29 @@ sub lookup {
 sub _asn_helper {
     my $self = shift;
     my $ip   = shift;
+    my @r4   = @{ $self->{v4roots} };
+    my @r6   = @{ $self->{v6roots} };
+
+  AGAIN:
+    if (@r4 == 0 or @r6 == 0) {
+
+        # No more roots to try
+        return;
+    }
 
     my $rev = $ip->reverse_ip;
     if ($ip->version == 6) {
-        $rev =~ s/ip6\.arpa/$self->{v6root}/e;
+        my $r = shift @r6;
+        $rev =~ s/ip6\.arpa/$r/e;
     } elsif ($ip->version == 4) {
-        $rev =~ s/in-addr\.arpa/$self->{v4root}/e;
+        my $r = shift @r4;
+        $rev =~ s/in-addr\.arpa/$r/e;
     } else {
         croak "Strange IP version: " . $ip->version;
     }
 
     my $packet = $self->parent->dns->query_resolver($rev, 'IN', 'TXT');
-    return unless (defined($packet) and $packet->header->ancount > 0);
+    goto AGAIN unless (defined($packet) and $packet->header->ancount > 0);
 
     my %asn;
     foreach my $rr ($packet->answer) {
