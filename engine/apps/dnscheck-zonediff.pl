@@ -313,7 +313,7 @@ switch_files_around();
 
 =head1 NAME
 
-dnscheck-zonediff - Tool to preiodically detect changes in a zone
+dnscheck-zonediff - Tool to periodically detect changes in a zone
 
 =head1 SYNOPSIS
 
