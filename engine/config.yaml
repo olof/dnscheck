@@ -23,8 +23,8 @@ net:
     ipv4: 1
     ipv6: 0
     smtp: 1
-    # The following two lines should be DNS suffixes pointing to cymru-style
-    # servers for looking up AS numbers for IP addresses. 
+    # The following two records should be lists of DNS suffixes pointing to
+    # cymru-style servers for looking up AS numbers for IP addresses. 
     v4root: 
         - origin.asn.cymru.com
     v6root: 
