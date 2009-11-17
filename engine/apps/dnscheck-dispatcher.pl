@@ -490,7 +490,7 @@ sub main {
     slog 'info', "$0 exiting normally.";
     printf STDERR "%s exiting normally.\n", $0;
     if ($restart) {
-        slog 'info', 'Attempting to restart myself.';
+        slog 'info', "Attempting to restart myself (as $0 @saved_argv).";
         exec($0, @saved_argv);
         warn "Exec failed: $!";
     }
