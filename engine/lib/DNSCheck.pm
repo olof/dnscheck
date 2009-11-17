@@ -216,7 +216,7 @@ sub dbh {
             eval {
                 $dbh =
                   DBI->connect($dsn, $conf->{"user"}, $conf->{"password"},
-                    { RaiseError => 1, AutoCommit => 1 });
+                    { RaiseError => 1, AutoCommit => 1, PrintError => 0 });
             };
             if ($@) {
                 carp "Failed to connect to database: $@";
