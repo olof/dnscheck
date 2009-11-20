@@ -26,15 +26,15 @@ SKIP: {
     skip "Failed to get an object to test", 19 unless defined($dc);
     ok(defined($dc->soa->test("power.fine")));
     my @msg = @{ $dc->logger->{messages} };
-    ok(scalar(@msg) == 98, "Total of " . scalar(@msg) . " messages.");
+    ok(scalar(@msg) == 67, "Total of " . scalar(@msg) . " messages.");
     %tag = map { $_->{tag}, $_ } @msg;
     foreach my $tag (
         qw[
         SOA:MNAME_VALID
         SOA:MNAME_PUBLIC
         SOA:MNAME_IS_AUTH
-        MAIL:DELIVERY_IPV4_OK
-        SOA:RNAME_DELIVERABLE
+        MAIL:DELIVERY_IPV4_NOT_OK
+        SOA:RNAME_UNDELIVERABLE
         SOA:TTL_OK
         SOA:REFRESH_OK
         SOA:RETRY_OK
