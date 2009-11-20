@@ -1,0 +1,5 @@
+libdnscheck-perl (1.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Calle Dybedahl <calle@nit.se>  Wed, 18 Nov 2009 15:36:22 +0100
