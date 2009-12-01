@@ -115,6 +115,8 @@ sub generate_mail_for_registrar {
             [split(/\s+/, $ref->{domains}{$d}{source_data})],
             $ref->{domains}{$d}{count_critical},
             $ref->{domains}{$d}{count_error},
+            $ref->{domains}{$d}{id},
+            $ref->{domains}{$d}{time_t},
           ];
     }
 
@@ -268,7 +270,7 @@ sub get_test_results {
 
     my $test = $dc->dbh->selectrow_hashref(
         q[
-        SELECT * FROM tests WHERE domain = ? AND source_id = ? ORDER BY id DESC LIMIT 1
+        SELECT *, unix_timestamp(begin) as time_t FROM tests WHERE domain = ? AND source_id = ? ORDER BY id DESC LIMIT 1
         ], undef, $domain, $source_id
     );
     die "Domain $domain not tested!\n" unless $test;

@@ -6,3 +6,4 @@ Domain {$name} ({(grep {$_ eq 'NEW'} @change)?"new domain":join(", ",@change)." 
             $OUT .= "\n    ";
         }
     }
+Test URL: http://dnscheck.iis.se/?time={time_t}&id={test_id}&view=basic&lang=
