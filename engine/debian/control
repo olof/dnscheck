@@ -8,7 +8,7 @@ Build-Depends-Indep: perl (>= 5.8.8-12ubuntu0.4),libyaml-perl,
 		     libcrypt-openssl-random-perl,libnet-dns-sec-perl (>= 0.15),
 		     libdigest-sha1-perl,libsocket6-perl (>= 0.19),
 		     libnet-dns-perl (>= 0.65),libdigest-bubblebabble-perl,
-		     libio-socket-inet6-perl (>= 2.51),libdbd-mysql-perl
+		     libio-socket-inet6-perl (>= 2.51),libdbd-mysql-perl,libtext-template-perl,libmime-lite-perl
 Maintainer: Einar Lönn <einar.lonn@iis.se>
 Standards-Version: 3.7.2
 Homepage: http://opensource.iis.se/dnscheck/
@@ -21,7 +21,7 @@ Depends: ${perl:Depends}, ${misc:Depends},libyaml-perl,
 		     libcrypt-openssl-random-perl,libnet-dns-sec-perl (>= 0.15),
 		     libdigest-sha1-perl,libsocket6-perl (>= 0.19),
 		     libnet-dns-perl (>= 0.65),libdigest-bubblebabble-perl,
-		     libio-socket-inet6-perl (>= 2.51),libdbd-mysql-perl
+		     libio-socket-inet6-perl (>= 2.51),libdbd-mysql-perl,libtext-template-perl,libmime-lite-perl
 Description:  DNS Check Tools
  This module includes the Perl parts of the DNSCheck system.
  .

@@ -34,6 +34,8 @@ WriteMakefile(
         DBI                    => 0,
         DBD::mysql             => 0,
         Mail::RFC822::Address  => 0,
+        Text::Template         => 0,
+        MIME::Lite             => 0,
     },
     'EXE_FILES' => \@exefiles,
     'NO_META'   => 1,
