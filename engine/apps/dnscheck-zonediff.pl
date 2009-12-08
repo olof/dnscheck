@@ -157,7 +157,11 @@ sub line_parse {
                 $
                 /x;
     if ($name) {
-        return ($name, $type, $rest);
+        if ($type eq 'A' or $type eq 'AAAA') {
+            return ($rest, $type, $name);
+        } else {
+            return ($name, $type, $rest);
+        }
     } else {
         return;
     }
