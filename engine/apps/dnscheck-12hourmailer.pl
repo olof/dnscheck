@@ -238,7 +238,7 @@ sub aggregate_registrar_info {
 
     foreach my $d (@domains) {
         my ($mail, $name, $sendp) = get_registrar_info($d);
-        next unless $sendp;
+        next if ($mail and !$sendp);
 
         my $r = get_test_results($d);
         if ($r->{count_critical} + $r->{count_error} == 0) {
