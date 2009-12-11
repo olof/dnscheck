@@ -7,8 +7,8 @@ PIDFILE=dnscheck_dispatcher.pid
 
 start () {
     echo Starting $DISPATCHER
-    if [ \! -d $DIR];then
-        (mkdir $DIR && chown $USER $LOGDIR) || exit(1)
+    if [ \! -d $DIR ];then
+        ( mkdir $DIR && chown $USER $DIR ) || exit 1
     fi
     su $USER $DISPATCHER
 }
