@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ "$1" != "configure" ]; then
+        exit 0
+fi
+
+APACHECONF="/etc/apache2/apache2.conf"
+
+# link perl.load if perl isn't enabled
+if [ ! -f "${APACHECONF%/*}/mods-enabled/php5.conf" ]; then
+  ln -s ${APACHECONF%/*}/mods-available/php5.conf ${APACHECONF%/*}/mods-enabled/
+fi
+
+if [ ! -f "${APACHECONF%/*}/mods-enabled/php5.load" ]; then
+  ln -s ${APACHECONF%/*}/mods-available/php5.load ${APACHECONF%/*}/mods-enabled/
+fi
+
+if [ ! -f "${APACHECONF%/*}/sites-enabled/dnscheck" ]; then
+  ln -s ${APACHECONF%/*}/sites-available/dnscheck.vhost ${APACHECONF%/*}/sites-enabled/dnscheck
+fi
+
+
+chown -R www-data:www-data /var/www

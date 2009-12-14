@@ -1,0 +1,5 @@
+This is the debian package for the DNSCheck module.
+It was created by Calle Dybedahl <calle@init.se> using dh-make-perl.
+
+The Debian packaging is (C) 2009, .SE <einar.lonn@iis.se> and
+is licensed under the same terms as the software itself (see above).

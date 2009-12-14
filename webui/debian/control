@@ -1,0 +1,13 @@
+Source: dnscheck-webui
+Priority: optional
+Build-Depends: debhelper (>= 5.0.0)
+Maintainer: Einar Lönn <einar.lonn@iis.se>
+Standards-Version:
+Homepage: http://opensource.iis.se/dnscheck/
+
+Package: dnscheck-webui
+Architecture: all
+Depends: libdnscheck-engine-perl, apache2, apache2.2-common, libapache2-mod-php5, mysql-server-5.0, php5-mysql, php5-common
+Description: This module includes the Perl parts of the DNSCheck system.
+ .
+

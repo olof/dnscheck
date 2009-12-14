@@ -1,0 +1,5 @@
+dnscheck-webui (1.0-1-iis1) hardy; urgency=low
+
+  * Initial Release for .SE
+
+ -- Joel Lindgren <joel@iis.se>  Mon, 14 Dec 2009 09:52:07 +0100
