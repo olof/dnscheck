@@ -2,19 +2,40 @@
 
 DIR=/var/run/dnscheck
 USER=dnscheck
-DISPATCHER=/usr/local/bin/dnscheck-dispatcher
+DISPATCHER=/usr/bin/dnscheck-dispatcher
 PIDFILE=dnscheck_dispatcher.pid
 
+check_running () {
+	PID=`ps ax|grep dnscheck-disp|grep -v grep|awk '{print $1}'`
+	if [ "X${PID}" == "X" ];then
+		return 0	
+	fi
+
+	return 1
+}
+
 start () {
+    check_running
+    if [ $? -eq 1 ];then
+	echo "Already running"
+	exit
+    fi
+	
     echo Starting $DISPATCHER
     if [ \! -d $DIR ];then
         ( mkdir $DIR && chown $USER $DIR ) || exit 1
     fi
+
     su $USER $DISPATCHER
 }
 
 stop () {
     echo Stopping $DISPATCHER
+    check_running
+    if [ $? -eq 0 ]; then
+	echo "Not running"
+	exit
+    fi
     pid=`cat $DIR/$PIDFILE`
     kill $pid
     sleep 1
