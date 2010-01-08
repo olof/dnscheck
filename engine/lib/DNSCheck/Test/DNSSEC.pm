@@ -368,7 +368,9 @@ sub _check_parent {
 
         $logger->auto("DNSSEC:PARENT_DS", $zone, $ds_message);
 
-        if ($rr->algorithm == Net::DNS::SEC->algorithm("RSASHA1")) {
+        if (   $rr->algorithm == Net::DNS::SEC->algorithm("RSASHA1")
+            || $rr->algorithm == Net::DNS::SEC->algorithm("RSA-NSEC3-SHA1"))
+        {
             $mandatory_algorithm++;
         }
 
