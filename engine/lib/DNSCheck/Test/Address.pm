@@ -61,8 +61,13 @@ push @reserved_ipv4, new Net::IP("192.88.99.0/24");
 push @reserved_ipv4, new Net::IP("198.18.0.0/15");
 push @reserved_ipv4, new Net::IP("240.0.0.0/4");
 
-# REQUIRE: Special-Use IPv6 Addresses
-# (draft-ietf-v6ops-rfc3330-for-ipv6-04.txt)
+# REQUIRE: Special-Use IPv4 Addresses (RFC 5735)
+push @reserved_ipv4, new Net::IP("198.51.100.0/24");
+push @reserved_ipv4, new Net::IP("203.0.113.0/24");
+push @reserved_ipv4, new Net::IP("192.0.0.0/24");
+push @reserved_ipv4, new Net::IP("255.255.255.255/32");
+
+# REQUIRE: Special-Use IPv6 Addresses (RFC 5156)
 push @reserved_ipv6, new Net::IP("::1/128");
 push @reserved_ipv6, new Net::IP("ff00::/8");
 push @reserved_ipv6, new Net::IP("::/128");
@@ -70,6 +75,7 @@ push @reserved_ipv6, new Net::IP("::ffff:0:0/96");
 push @reserved_ipv6, new Net::IP("fe80::/10");
 push @reserved_ipv6, new Net::IP("fc00::/7");
 push @reserved_ipv6, new Net::IP("2001:0db8::/32");
+push @reserved_ipv6, new Net::IP("2001:10::/28");
 
 ######################################################################
 
