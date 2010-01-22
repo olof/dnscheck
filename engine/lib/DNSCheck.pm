@@ -510,7 +510,7 @@ so that new ones will be created on next request.
 
 =head1 SEE ALSO
 
-L<DNSCheck::Config.pm>, L<DNSCheck::Context.pm> L<DNSCheck::Locale.pm>,
+L<DNSCheck::Config.pm>, L<DNSCheck::Locale.pm>,
 L<DNSCheck::Logger.pm>, L<DNSCheck::Lookup::ASN.pm>,
 L<DNSCheck::Lookup::DNS.pm>, L<DNSCheck::Test::Address.pm>,
 L<DNSCheck::Test::Common.pm>, L<DNSCheck::Test::Connectivity.pm>,
