@@ -48,7 +48,6 @@ lib/DNSCheck/Logger.pm
 lib/DNSCheck/Lookup/ASN.pm
 lib/DNSCheck/Lookup/DNS.pm
 lib/DNSCheck/Lookup/Resolver.pm
-lib/DNSCheck/NSP.pm
 lib/DNSCheck/Overview.pod
 lib/DNSCheck/Test/Address.pm
 lib/DNSCheck/Test/Common.pm
