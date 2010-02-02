@@ -81,6 +81,7 @@ sub test {
 
     $errors += $self->enough_nameservers($zone);
     $errors += $self->consistent_glue($zone);
+    $errors += $self->in_zone_ns_glue($zone);
 
     # Test old namservers if we have history
     if ($history) {
@@ -391,6 +392,23 @@ sub check_history {
     }
 
     return;
+}
+
+sub in_zone_ns_glue {
+    my ($self, $zone) = @_;
+
+    return unless $self->parent->config->should_run;
+
+    my %glue = map { $_->name, $_->address } _get_glue($self->parent, $zone);
+    my @ns_at_parent =
+      $self->parent->dns->get_nameservers_at_parent($zone, $self->qclass);
+
+    foreach my $ns (@ns_at_parent) {
+        if ($ns =~ /\Q$zone\E$/ and !$glue{$ns}) {
+            $self->logger->auto("DELEGATION:INZONE_NS_WITHOUT_GLUE", $ns,
+                $zone);
+        }
+    }
 }
 
 1;

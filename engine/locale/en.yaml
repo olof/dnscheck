@@ -351,6 +351,9 @@ messages:
  DELEGATION:BROKEN_UNDELEGATED:
      args: 1
      format: Test for zone %s was marked as undelegated, but no working fake glue was provided.
+ DELEGATION:INZONE_NS_WITHOUT_GLUE:
+     args: 2
+     format: Nameserver %s is listed for zone %s without address information.
  DELEGATION:END:
   args: 1
   format: Done testing delegation for %s.

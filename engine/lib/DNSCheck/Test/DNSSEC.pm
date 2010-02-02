@@ -368,6 +368,7 @@ sub _check_parent {
 
         $logger->auto("DNSSEC:PARENT_DS", $zone, $ds_message);
 
+        # FIXME: Add RSA/SHA256 when we get a Net::DNS::SEC. that supports it.
         if (   $rr->algorithm == Net::DNS::SEC->algorithm("RSASHA1")
             || $rr->algorithm == Net::DNS::SEC->algorithm("RSA-NSEC3-SHA1"))
         {
