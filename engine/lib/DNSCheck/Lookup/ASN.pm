@@ -135,8 +135,10 @@ sub _asn_helper {
     foreach my $rr ($packet->answer) {
         next unless $rr->type eq 'TXT';
         foreach my $txt ($rr->char_str_list) {
-            if ($txt =~ /^(\d+)\s*\|/) {
-                $asn{$1} = 1;
+            my ($numbers, $res) = split(/ \| /, $txt, 2);
+            foreach my $n (split(/\s+/, $numbers)) {
+                warn "Strange reply: $txt" unless $n =~ m|^\d+$|;
+                $asn{$n} = 1;
             }
         }
     }
