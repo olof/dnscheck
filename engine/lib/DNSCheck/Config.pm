@@ -111,7 +111,7 @@ sub new {
       if (defined($arg{extras}) && (ref($arg{extras}) eq 'HASH'));
 
     # Special cases
-    $self->{'hostname'} = hostname;
+    $self->{'hostname'} ||= hostname;
     $self->{'logging'}{'interactive'} = 1 if $arg{'interactive'};
 
     return $self;
