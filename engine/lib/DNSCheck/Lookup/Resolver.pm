@@ -344,18 +344,24 @@ sub highest_known_ns {
         return keys %{ $self->cache->{ns}{$faked} };
     }
 
+    my @candidates;
     while (1) {
-        my @candidates;
-        @candidates =
+        my @tmp =
           $self->simple_names_to_ips(keys %{ $self->{cache}{ns}{$name} })
           if $self->{cache}{ns}{$name};
-        return @candidates if @candidates;
+        push @candidates, @tmp if @tmp;
 
         if ($name eq '.') {
-            die "Root zone cache missing.";
+            last;
         }
 
         $name = $self->strip_label($name);
+    }
+
+    if (!@candidates) {
+        die "Root zone cache missing.";
+    } else {
+        return @candidates;
     }
 }
 
@@ -473,22 +479,23 @@ sub recurse {
 
     while (@stack) {
         my $ns = pop(@stack);
-        print STDERR "Popped $ns (stack is "
+        print STDERR "recurse: Popped $ns (stack is "
           . scalar(@stack)
           . " entries deep).\n"
           if $self->{debug};
         $seen{$ns} = 1;
         my $p = $self->get($name, $type, $class, $ns);
         if (!defined($p)) {
-            print STDERR "No response packet.\n" if $self->{debug};
+            print STDERR "recurse: No response packet.\n" if $self->{debug};
             next;
         } elsif ($p->header->aa) {
-            print STDERR "Authoritative response.\n" if $self->{debug};
+            print STDERR "recurse: Authoritative response.\n" if $self->{debug};
 
             if (    $p->header->rcode ne 'NOERROR'
                 and $p->header->rcode ne 'NXDOMAIN')
             {
-                print STDERR "...but it's not good. Saving as candidate.\n"
+                print STDERR
+                  "recurse: ...but it's not good. Saving as candidate.\n"
                   if $self->{debug};
                 $candidate = $p;
                 next;
@@ -498,7 +505,7 @@ sub recurse {
                 and $p->header->ancount > 0
                 and grep { $_->type eq 'CNAME' } $p->answer)
             {
-                print STDERR "Resolving CNAME.\n" if $self->{debug};
+                print STDERR "recurse: Resolving CNAME.\n" if $self->{debug};
                 my $cnamerr = (grep { $_->type eq 'CNAME' } $p->answer)[0];
                 return $p if $cnames->{ $cnamerr->cname };    # Break loops
                 $cnames->{ $cnamerr->cname } = 1;
@@ -517,7 +524,7 @@ sub recurse {
 
             return $p;
         } elsif ($p->header->rcode ne 'NOERROR') {
-            print STDERR "Response code " . $p->header->rcode . "\n"
+            print STDERR "recurse: Response code " . $p->header->rcode . "\n"
               if $self->{debug};
             $candidate = $p unless $candidate;
             next;
@@ -527,7 +534,8 @@ sub recurse {
             } $p->answer
           )
         {
-            print STDERR "Resolving non-auth CNAME.\n" if $self->{debug};
+            print STDERR "recurse: Resolving non-auth CNAME.\n"
+              if $self->{debug};
             my $cnamerr = (grep { $_->type eq 'CNAME' } $p->answer)[0];
             return $p if $cnames->{ $cnamerr->cname };    # Break loops
             $cnames->{ $cnamerr->cname } = 1;
@@ -547,14 +555,14 @@ sub recurse {
             my $m = $self->matching_labels($name, $zname);
 
             if ($m < $level) {
-                print STDERR "Bad referral. Skipping to next server.\n"
+                print STDERR "recurse: Bad referral. Skipping to next server.\n"
                   if $self->{debug};
                 next;    # Resolving chain redirecting up
             }
 
             $level = $m;
 
-            print STDERR "Got "
+            print STDERR "recurse: Got "
               . scalar($p->authority)
               . " authority records. Reloading stack.\n"
               if $self->{debug};
@@ -572,11 +580,12 @@ sub recurse {
             }
             next;
         } else {
-            print STDERR "Fell through: " . $p->print if $self->{debug};
+            print STDERR "recurse: Fell through: " . $p->print
+              if $self->{debug};
         }
     }
 
-    print STDERR "Ran out of servers.\n" if $self->{debug};
+    print STDERR "recurse: Ran out of servers.\n" if $self->{debug};
 
     # Ran out of servers before we got a good reply, return what we've got
     if ($candidate) {
