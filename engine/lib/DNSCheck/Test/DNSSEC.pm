@@ -381,7 +381,9 @@ sub _check_parent {
 
         # REQUIRE: the DS MUST point to a DNSKEY that is
         # signing the child's DNSKEY RRset
-        if (_count_in_list($rr->keytag, $child_result->{anchors}) >= 1) {
+        if (_count_in_list($rr->keytag, $child_result->{anchors}) >= 1
+            and $rr->verify($child_result->{rr}{ $rr->keytag }))
+        {
             ## DS refers to key signing the DNSKEY RRset
             $logger->auto("DNSSEC:DS_KEYREF_OK", $zone, $ds_message);
         } else {
