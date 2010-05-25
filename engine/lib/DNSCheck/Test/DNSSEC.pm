@@ -225,8 +225,8 @@ sub _check_child {
                 $zone, $key->keytag, "RSA/MD5");
         }
 
-        if (   $key->algorithm == Net::DNS::SEC->algorithm("RSASHA1")
-            || $key->algorithm == Net::DNS::SEC->algorithm("RSA-NSEC3-SHA1"))
+        if (defined($key->algorithm == Net::DNS::SEC->algorithm("RSASHA1"))
+            || (defined($key->algorithm == Net::DNS::SEC->algorithm("RSA-NSEC3-SHA1"))))
         {
             $mandatory_algorithm++;
         }
