@@ -36,6 +36,7 @@ use strict;
 
 use DBI;
 use Carp;
+use List::Util qw[reduce];
 
 use DNSCheck::Config;
 use DNSCheck::Test::Common;
@@ -267,6 +268,16 @@ sub revision_string {
     }
 
     return join '; ', @tmp;
+}
+
+sub log_nameserver_times {
+    my $self = shift;
+
+    while (my ($k, $v) = each %{ $self->resolver->times }) {
+        my $sum = reduce { $a + $b } @$v;
+        $self->logger->auto('NSTIME:AVERAGE', $k,
+            sprintf('%0.6f', ($sum / @$v)));
+    }
 }
 
 ######################################################################

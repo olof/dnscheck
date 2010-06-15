@@ -38,6 +38,7 @@ our $SVN_VERSION = '$Revision$';
 
 use YAML;
 use Net::IP;
+use Time::HiRes qw[gettimeofday tv_interval];
 
 # In order to be able to know for sure where certain information comes from,
 # and/or modify parts of resolver chains, we need to do our own recursive
@@ -102,6 +103,15 @@ sub config {
 
 sub logger {
     return $_[0]->parent->logger;
+}
+
+# Timing information
+
+sub times {
+    my $self = shift;
+
+    $self->{times} ||= {};
+    return $self->{times};
 }
 
 # Interface methods to underlying Net::DNS::Resolver object
@@ -426,7 +436,14 @@ sub get {
     my @ns_old = $self->{resolver}->nameservers;
     $self->{resolver}->nameservers(@ns) if @ns;
 
-    my $p = $self->{resolver}->send($name, $class, $type);
+    my $before   = [gettimeofday()];
+    my $p        = $self->{resolver}->send($name, $class, $type);
+    my $duration = tv_interval($before);
+
+    if ($p and $p->answerfrom) {
+        push @{ $self->times->{ $p->answerfrom } }, $duration;
+    }
+
     print STDERR "get: " . $p->string . "\n"
       if (defined($p) and $self->{debug} and $self->{debug} > 1);
     $self->remember($p) if defined($p);

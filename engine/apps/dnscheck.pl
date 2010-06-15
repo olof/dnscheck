@@ -126,6 +126,8 @@ sub main {
           "Don't know how to perform a test of type $what_test on a zone.\n";
         exit(1);
     }
+
+    $check->log_nameserver_times;
 }
 
 main();
