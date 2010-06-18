@@ -888,6 +888,6 @@ messages:
   args: 1
   format: Test completed for zone %s.
  NSTIME:AVERAGE:
-    args: 2
-    format: Average response time for server %s is %s seconds.
+    args: 6
+    format: Server %s: %s calls, %sms avg, %sms min, %sms max, %sms stddev.
 

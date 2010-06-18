@@ -36,7 +36,7 @@ use strict;
 
 use DBI;
 use Carp;
-use List::Util qw[reduce];
+use List::Util qw[reduce max min];
 
 use DNSCheck::Config;
 use DNSCheck::Test::Common;
@@ -270,13 +270,29 @@ sub revision_string {
     return join '; ', @tmp;
 }
 
+sub _stddev {
+    my @values = @_;
+
+    my $avg = (reduce { $a + $b } @values) / scalar(@values);
+    my $dev = reduce { $a + $b } map { $_ * $_ } map { $_ - $avg } @values;
+
+    return sqrt($dev / scalar(@values));
+}
+
 sub log_nameserver_times {
     my $self = shift;
 
     while (my ($k, $v) = each %{ $self->resolver->times }) {
         my $sum = reduce { $a + $b } @$v;
-        $self->logger->auto('NSTIME:AVERAGE', $k,
-            sprintf('%0.6f', ($sum / @$v)));
+        $self->logger->auto(
+            'NSTIME:AVERAGE',
+            $k,
+            scalar(@$v),
+            sprintf('%0.3f', 1000 * ($sum / @$v)),
+            sprintf('%0.3f', 1000 * min(@$v)),
+            sprintf('%0.3f', 1000 * max(@$v)),
+            sprintf('%0.3f', 1000 * _stddev(@$v)),
+        );
     }
 }
 

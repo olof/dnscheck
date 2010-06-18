@@ -888,6 +888,6 @@ messages:
   args: 1
   format: Klar med test av zonen %s.
  NSTIME:AVERAGE:
-     args: 2
-     format: Server %s har genomsnittlig svarstid %s sekunder.
+     args: 6
+     format: Server %s: %s anrop, %sms medel, %sms min, %sms max, %sms standardavvikelse.
 
