@@ -36,7 +36,7 @@ use DNSCheck;
 
 use Getopt::Long;
 use Sys::Syslog;
-use POSIX qw(:sys_wait_h strftime);
+use POSIX qw(:sys_wait_h strftime setuid setgid);
 use Time::HiRes 'sleep';
 
 use vars qw[
@@ -54,6 +54,8 @@ use vars qw[
   $exit_timeout
   $savelevel
   %levels
+  $user
+  $group
 ];
 
 %running   = ();
@@ -64,6 +66,8 @@ $verbose   = 0;
 $check     = DNSCheck->new;
 $limit     = $check->config->get("daemon")->{maxchild};
 $savelevel = $check->config->get("daemon")->{savelevel} || 'INFO';
+$user      = $check->config->get("daemon")->{user};
+$group     = $check->config->get("daemon")->{group};
 $running   = 1;
 $restart   = 0;
 $syslog    = 1;
@@ -124,6 +128,19 @@ sub slog {
 sub setup {
     my $errfile = $check->config->get("daemon")->{errorlog};
     my $pidfile = $check->config->get("daemon")->{pidfile};
+    my $uid;
+    my $gid;
+
+    if ($< == 0 and !defined($user)) {
+        die "Started as root, but no user to run as specified. Exiting.\n";
+    } elsif ($< == 0) {
+        $uid = (getpwnam($user))[2];
+        $gid = (getgrnam($group))[2] if $group;
+
+        unless (defined($uid)) {
+            die "Failed to look up uid for user $user. Exiting.\n";
+        }
+    }
 
     @saved_argv = @ARGV;    # We'll use this if we're asked to restart ourselves
     GetOptions('debug' => \$debug, 'verbose' => \$verbose);
@@ -149,6 +166,12 @@ sub setup {
     open PIDFILE, '>', $pidfile or die "Failed to open PID file: $!";
     print PIDFILE $$;
     close PIDFILE;
+
+    if ($< == 0) {
+        setuid($uid);
+        setgid($gid) if $gid;
+    }
+
     $SIG{CHLD} = \&REAPER;
     $SIG{TERM} = sub { $running = 0 };
     $SIG{HUP}  = sub {
@@ -486,7 +509,9 @@ sub main {
     slog 'info', "Waiting for %d children to exit.", scalar keys %running;
     $exit_timeout = time();
     monitor_children until (keys %running == 0);
-    unlink $check->config->get("daemon")->{pidfile};
+    unless (unlink $check->config->get("daemon")->{pidfile}) {
+        warn "Failed to remove PID file: $!\n";
+    }
     slog 'info', "$0 exiting normally.";
     printf STDERR "%s exiting normally.\n", $0;
     if ($restart) {

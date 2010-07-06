@@ -39,6 +39,9 @@ daemon:
     errorlog: /var/log/dnscheck_errors.log
     maxchild: 10
     savelevel: INFO
+    # The following two setting are used and required when the dispatcher is started as root
+    user: nobody
+    group: nogroup
 
 # This information is expected to be overridden in site_config.yaml
 # Not all keys will be useful for all setups. See the documentation
