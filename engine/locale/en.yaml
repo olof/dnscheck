@@ -454,7 +454,7 @@ messages:
  DNSSEC:SOA_SIGNATURE_OK:
   args: 2
   format: RRSIG(SOA %s) created by DNSKEY (tag %s) OK.
- DNSSEC:SOA_SIGNATURE_UNPUBLISHED:
+ DNSSEC:SOA_SIGNER_UNPUBLISHED:
   args: 2
   format: Found RRSIG(SOA %s) created by published key (tag %s).
   descr: DNSSEC signatures created by unpublished keys can't be validated by validating resolvers.  All keys used to sign data must be published.
