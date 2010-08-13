@@ -142,19 +142,24 @@ sub _test_ip {
             next ADDRESS;
         }
 
+        my $tmp_udp = $self->ns_udp($address);
+        $errors += $tmp_udp;
+        $skip_udp = 1 if $tmp_udp > 0;
+
+        my $tmp_tcp = $self->ns_tcp($address);
+        $errors += $tmp_tcp;
+        $skip_tcp = 1 if $tmp_tcp > 0;
+
+        # No point in trying to test the server if it's not responding at all
+        if ($tmp_udp and $tmp_tcp) {
+            next ADDRESS;
+        }
+
         $errors += $self->ns_recursive($address);
 
         my $tmp = $self->ns_authoritative($address);
         $errors += $tmp;
         next ADDRESS if $tmp > 0;
-
-        $tmp = $self->ns_udp($address);
-        $errors += $tmp;
-        $skip_udp = 1 if $tmp > 0;
-
-        $tmp = $self->ns_tcp($address);
-        $errors += $tmp;
-        $skip_tcp = 1 if $tmp > 0;
 
         # REQUIRE: Nameserver may provide AXFR
         if ($skip_tcp) {
