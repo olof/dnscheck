@@ -281,11 +281,20 @@ sub _stddev {
 
 sub log_nameserver_times {
     my $self = shift;
+    my $zone = shift;
+    my %t = %{$self->resolver->times};
+    
+    my %ns = map {$_ => 1} (
+            @{$self->dns->{nameservers}{$zone}{'IN'}{'ipv4'}},
+            @{$self->dns->{nameservers}{$zone}{'IN'}{'ipv6'}},
+        );
 
-    while (my ($k, $v) = each %{ $self->resolver->times }) {
+    while (my ($k, $v) = each %t) {
+        next unless $ns{$k};
         my $sum = reduce { $a + $b } @$v;
         $self->logger->auto(
             'NSTIME:AVERAGE',
+            $zone,
             $k,
             scalar(@$v),
             sprintf('%0.3f', 1000 * ($sum / @$v)),

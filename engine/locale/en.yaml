@@ -889,5 +889,5 @@ messages:
   format: Test completed for zone %s.
  NSTIME:AVERAGE:
     args: 6
-    format: Server %s: %s calls, %sms avg, %sms min, %sms max, %sms stddev.
+    format: Zone %s, server %s: %s calls, %sms avg, %sms min, %sms max, %sms stddev.
 
