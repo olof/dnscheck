@@ -378,7 +378,6 @@ sub query_explicit {
     # FIXME: notice, warning, error?
     if ($packet->header->rcode ne "NOERROR") {
         $self->logger->auto("DNS:NO_ANSWER", $address, $qname, $qclass, $qtype);
-        return;
     }
 
     # ignore non-authoritative answers unless flag aaonly is unset
