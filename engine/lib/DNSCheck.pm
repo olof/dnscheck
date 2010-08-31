@@ -280,6 +280,8 @@ sub _stddev {
 }
 
 sub log_nameserver_times {
+    no warnings 'uninitialized';
+    
     my $self = shift;
     my $zone = shift;
     my %t = %{$self->resolver->times};
