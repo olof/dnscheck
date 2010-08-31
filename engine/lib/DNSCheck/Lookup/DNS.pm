@@ -889,9 +889,10 @@ sub address_is_authoritative {
     my $packet =
       $self->query_explicit($qname, $qclass, "SOA", $address, { aaonly => 0 });
 
-    ## timeout is not considered an error
     goto DONE unless ($packet);
 
+    # This means that REFUSED or SERVFAIL with the authoritative flag set will
+    # register as the server being authoritative for the domain in question.     
     $errors++ if ($packet->header->aa != 1);
 
   DONE:
