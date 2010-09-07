@@ -1,0 +1,10 @@
+DNSCheck is a DNS delegation quality checker written in Perl. There is a backend
+for performing the checks, and a web frontend written in PHP.
+
+An online web based version can be found at http://dnscheck.iis.se.
+
+A DNSCheck-development mailing list where discussions about development
+and features take place can be subscribed to here:
+http://lists.iis.se/mailman/listinfo/dnscheck-dev.
+Browsing the archive you can do here:
+http://lists.iis.se/pipermail/dnscheck-dev/
