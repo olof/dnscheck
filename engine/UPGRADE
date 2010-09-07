@@ -1,0 +1,20 @@
+There has only been one change in the database schema, this is
+a description on how to upgrade the schema for version 0.90.
+
+Upgrading from DNSCheck version 0.81 to 0.90
+============================================
+
+1) Install the library as per points 1 to 4 above.
+
+2) Run db/upgrade_81_90.sql against your database, if you have one. If you 
+   have a lot of data in your 'tests' table, this may take some time, during
+   which new tests cannot be started and running ones cannot finish. Consider
+   doing this during a service window.
+
+3) Check the newly installed config.yaml for keys that you may want to
+   override in your site_config.yaml
+   
+4) Move database access configuration from dnscheck.conf to site_config.yaml
+   
+5) Change any startup scripts on your server so they run dnscheck-dispatcher
+   instead of dnscheck-qrun (which no longer exists).
