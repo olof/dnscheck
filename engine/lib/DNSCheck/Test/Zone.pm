@@ -34,8 +34,6 @@ require 5.008;
 use warnings;
 use strict;
 
-our $SVN_VERSION = '$Revision$';
-
 use base 'DNSCheck::Test::Common';
 
 ######################################################################
@@ -55,7 +53,6 @@ sub test {
 
     $logger->module_stack_push();
     $logger->auto("ZONE:BEGIN", $zone, $DNSCheck::VERSION);
-    $logger->auto("ZONE:VERSIONS", $parent->revision_string);
 
     my ($errors, $testable) = $parent->delegation->test($zone, $history);
 

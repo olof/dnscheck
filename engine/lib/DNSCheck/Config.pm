@@ -33,8 +33,6 @@ require 5.008;
 use strict;
 use warnings;
 
-our $SVN_VERSION = '$Revision$';
-
 use Config;
 use File::Spec::Functions;
 use Sys::Hostname;

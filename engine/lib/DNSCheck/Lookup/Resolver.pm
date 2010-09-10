@@ -34,8 +34,6 @@ require 5.008;
 use warnings;
 use strict;
 
-our $SVN_VERSION = '$Revision$';
-
 use YAML;
 use Net::IP;
 use Time::HiRes qw[gettimeofday tv_interval];

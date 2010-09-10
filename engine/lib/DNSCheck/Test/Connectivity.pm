@@ -35,8 +35,6 @@ use warnings;
 use strict;
 use Net::IP;
 
-our $SVN_VERSION = '$Revision$';
-
 use base 'DNSCheck::Test::Common';
 
 ######################################################################

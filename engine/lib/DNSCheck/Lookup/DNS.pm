@@ -34,8 +34,6 @@ use strict;
 use warnings;
 require 5.008;
 
-our $SVN_VERSION = '$Revision$';
-
 use List::Util 'shuffle';
 use Carp;
 
@@ -892,7 +890,7 @@ sub address_is_authoritative {
     goto DONE unless ($packet);
 
     # This means that REFUSED or SERVFAIL with the authoritative flag set will
-    # register as the server being authoritative for the domain in question.     
+    # register as the server being authoritative for the domain in question.
     $errors++ if ($packet->header->aa != 1);
 
   DONE:

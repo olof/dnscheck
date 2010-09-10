@@ -34,8 +34,6 @@ require 5.008;
 use warnings;
 use strict;
 
-our $SVN_VERSION = '$Revision$';
-
 use base 'DNSCheck::Test::Common';
 
 use Net::IP 1.25;

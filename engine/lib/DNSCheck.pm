@@ -56,8 +56,7 @@ use DNSCheck::Lookup::Resolver;
 use DNSCheck::Lookup::ASN;
 use DNSCheck::Logger;
 
-our $VERSION     = "1.1";
-our $SVN_VERSION = '$Revision$';
+our $VERSION = "1.1";
 
 ######################################################################
 
@@ -234,42 +233,6 @@ sub dbh {
     return $self->{"dbh"};
 }
 
-sub revision_string {
-    my @tmp;
-    my %revs = (
-        DNSCheck     => '$Revision$',
-        Config       => $DNSCheck::Config::SVN_VERSION,
-        Locale       => $DNSCheck::Locale::SVN_VERSION,
-        Logger       => $DNSCheck::Logger::SVN_VERSION,
-        DNS          => $DNSCheck::Lookup::DNS::SVN_VERSION,
-        ASN          => $DNSCheck::Lookup::ASN::SVN_VERSION,
-        Resolver     => $DNSCheck::Lookup::Resolver::SVN_VERSION,
-        Address      => $DNSCheck::Test::Address::SVN_VERSION,
-        Common       => $DNSCheck::Test::Common::SVN_VERSION,
-        Connectivity => $DNSCheck::Test::Connectivity::SVN_VERSION,
-        Consistency  => $DNSCheck::Test::Consistency::SVN_VERSION,
-        Delegation   => $DNSCheck::Test::Delegation::SVN_VERSION,
-        DNSSEC       => $DNSCheck::Test::DNSSEC::SVN_VERSION,
-        Host         => $DNSCheck::Test::Host::SVN_VERSION,
-        Mail         => $DNSCheck::Test::Mail::SVN_VERSION,
-        SMTP         => $DNSCheck::Test::SMTP::SVN_VERSION,
-        SOA          => $DNSCheck::Test::SOA::SVN_VERSION,
-        Zone         => $DNSCheck::Test::Zone::SVN_VERSION,
-    );
-
-    foreach my $k (sort keys %revs) {
-        my $rev;
-        if ($revs{$k} =~ m|\$Revision: (\d+) \$|) {
-            $rev = $1;
-        } else {
-            $rev = '(none)';
-        }
-        push @tmp, "$k:$rev";
-    }
-
-    return join '; ', @tmp;
-}
-
 sub _stddev {
     my @values = @_;
 
@@ -281,15 +244,15 @@ sub _stddev {
 
 sub log_nameserver_times {
     no warnings 'uninitialized';
-    
+
     my $self = shift;
     my $zone = shift;
-    my %t = %{$self->resolver->times};
-    
-    my %ns = map {$_ => 1} (
-            @{$self->dns->{nameservers}{$zone}{'IN'}{'ipv4'}},
-            @{$self->dns->{nameservers}{$zone}{'IN'}{'ipv6'}},
-        );
+    my %t    = %{ $self->resolver->times };
+
+    my %ns = map { $_ => 1 } (
+        @{ $self->dns->{nameservers}{$zone}{'IN'}{'ipv4'} },
+        @{ $self->dns->{nameservers}{$zone}{'IN'}{'ipv6'} },
+    );
 
     while (my ($k, $v) = each %t) {
         next unless $ns{$k};
