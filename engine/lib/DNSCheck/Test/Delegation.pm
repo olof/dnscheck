@@ -265,6 +265,8 @@ sub ns_parent_child_matching {
         $testable = 0;
     }
 
+    return ($errors, $testable) unless $testable;
+
     my @ns_at_child =
       $self->parent->dns->get_nameservers_at_child($zone, $self->qclass);
     @ns_at_child = () unless $ns_at_child[0];
@@ -274,6 +276,8 @@ sub ns_parent_child_matching {
         $errors += $self->logger->auto("DELEGATION:NOT_FOUND_AT_CHILD");
         $testable = 0;
     }
+
+    return ($errors, $testable) unless $testable;
 
     # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
     my @ns_at_both;
