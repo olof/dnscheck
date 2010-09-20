@@ -508,6 +508,18 @@ so that new ones will be created on next request.
    my $dc = DNSCheck->new;
    $dc->zone->test("iis.se");
    $dc->logger->dump;
+   
+=head KNOWN PROBLEMS
+
+=over
+
+=item Limited DNSSEC signature validity span.
+
+If DNSCheck is run with a perl interpreter that uses 32-bit integers, it will
+erroneously report DNSSEC signatures with expire dates after 19 Jan 2038 as
+being invalid.
+
+=back
 
 =head1 SEE ALSO
 
