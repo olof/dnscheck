@@ -41,6 +41,13 @@ use Net::DNS::SEC 0.14;
 use Date::Parse;
 use POSIX qw(strftime);
 
+our %acceptable_algorithm = (
+    5 => 'RSA/SHA1',
+    7 => 'RSA/SHA1 (NSEC3)',
+    8 => 'RSA/SHA-256',
+    10 => 'RSA/SHA-512',
+);
+
 ######################################################################
 
 sub test {
@@ -223,8 +230,7 @@ sub _check_child {
                 $zone, $key->keytag, "RSA/MD5");
         }
 
-        if (   $key->algorithm == Net::DNS::SEC->algorithm("RSASHA1")
-            || $key->algorithm == Net::DNS::SEC->algorithm("RSA-NSEC3-SHA1"))
+        if ($acceptable_algorithm{$key->algorithm})
         {
             $mandatory_algorithm++;
         }
@@ -366,9 +372,7 @@ sub _check_parent {
 
         $logger->auto("DNSSEC:PARENT_DS", $zone, $ds_message);
 
-        # FIXME: Add RSA/SHA256 when we get a Net::DNS::SEC. that supports it.
-        if (   $rr->algorithm == Net::DNS::SEC->algorithm("RSASHA1")
-            || $rr->algorithm == Net::DNS::SEC->algorithm("RSA-NSEC3-SHA1"))
+        if ($acceptable_algorithm{$rr->algorithm})
         {
             $mandatory_algorithm++;
         }
