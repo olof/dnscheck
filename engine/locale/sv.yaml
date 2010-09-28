@@ -530,6 +530,12 @@ messages:
  DNSSEC:INCONSISTENT_EXTRA_PROCESSING:
      args: 1
      format: Servrarna för %s är inte överens om extra hantering för DNSSEC.
+ DNSSEC:DNSKEY_ALGORITHM:
+    args: 4
+    format: %s nyckel med tag %s använder algorithm nummer %s (%s).
+ DNSSEC:DS_ALGORITHM:
+    args: 4
+    format: %s nyckel med tag %s använder algorithm nummer %s (%s).
  DNSSEC:END:
   args: 1
   format: Klar med test av DNSSEC för %s.

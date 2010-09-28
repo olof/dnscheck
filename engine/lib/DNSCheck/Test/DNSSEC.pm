@@ -41,12 +41,39 @@ use Net::DNS::SEC 0.14;
 use Date::Parse;
 use POSIX qw(strftime);
 
-our %acceptable_algorithm = (
-    5 => 'RSA/SHA1',
-    7 => 'RSA/SHA1 (NSEC3)',
-    8 => 'RSA/SHA-256',
-    10 => 'RSA/SHA-512',
-);
+# http://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml
+sub algorithm_name {
+    my $aid   = shift;
+    my %names = (
+        0   => 'Reserved (0)',
+        1   => 'RSA/MD5',
+        2   => 'Diffie-Hellman',
+        3   => 'DSA/SHA1',
+        4   => 'Reserved (ECC)',
+        5   => 'RSA/SHA-1',
+        6   => 'DSA-NSEC3-SHA1',
+        7   => 'RSA-NSEC3-SHA1 ',
+        8   => 'RSA/SHA-256',
+        9   => 'Unassigned (9)',
+        10  => 'RSA/SHA-512',
+        11  => 'Unassigned (11)',
+        12  => 'GOST R 34.10-2001',
+        252 => 'Reserved (Indirect keys)',
+        253 => 'Private algorithm (domain name)',
+        254 => 'Privade algorithm (OID)',
+        255 => 'Reserved'
+    );
+
+    if ($names{$aid}) {
+        return $names{$aid};
+    } elsif ($aid >= 13 and $aid <= 122) {
+        return "Unassigned ($aid)";
+    } elsif ($aid >= 123 and $aid <= 251) {
+        return "Reserved ($aid)";
+    } else {
+        return "Strange algorithm id ($aid)";
+    }
+}
 
 ######################################################################
 
@@ -230,10 +257,8 @@ sub _check_child {
                 $zone, $key->keytag, "RSA/MD5");
         }
 
-        if ($acceptable_algorithm{$key->algorithm})
-        {
-            $mandatory_algorithm++;
-        }
+        $logger->auto('DNSSEC:DNSKEY_ALGORITHM', $zone, $key->keytag,
+            $key->algorithm, algorithm_name($key->algorithm));
 
         # REQUIRE: a DNSKEY used for RRSIGs MUST have protocol DNSSEC (3)
         if ($key->protocol != 3) {
@@ -260,13 +285,6 @@ sub _check_child {
     # fill result set
     $result{rr} = \%keyhash;
     @{ $result{allkeys} } = keys %keyhash;
-
-    # REQUIRE: at least one DNSKEY SHOULD be RSA/SHA1
-    if ($mandatory_algorithm > 0) {
-        $logger->auto("DNSSEC:DNSKEY_MANDATORY_FOUND", $zone);
-    } else {
-        $errors += $logger->auto("DNSSEC:DNSKEY_MANDATORY_NOT_FOUND", $zone);
-    }
 
     unless ($#{ $dnskey->{RRSIG} } >= 0) {
 
@@ -372,10 +390,8 @@ sub _check_parent {
 
         $logger->auto("DNSSEC:PARENT_DS", $zone, $ds_message);
 
-        if ($acceptable_algorithm{$rr->algorithm})
-        {
-            $mandatory_algorithm++;
-        }
+        $logger->auto('DNSSEC:DS_ALGORITHM', $zone, $rr->keytag,
+            $rr->algorithm, algorithm_name($rr->algorithm));
 
         if ($rr->algorithm == Net::DNS::SEC->algorithm("RSAMD5")) {
             $logger->auto("DNSSEC:DS_ALGORITHM_MD5");
@@ -403,13 +419,6 @@ sub _check_parent {
                 $logger->auto("DNSSEC:DS_TO_NONSEP", $zone, $ds_message);
             }
         }
-    }
-
-    # REQUIRE: at least one DS algorithm SHOULD be of type RSA/SHA1
-    if ($mandatory_algorithm > 0) {
-        $logger->auto("DNSSEC:DS_MANDATORY_FOUND", $zone);
-    } else {
-        $errors += $logger->auto("DNSSEC:DS_MANDATORY_NOT_FOUND", $zone);
     }
 
   DONE:
