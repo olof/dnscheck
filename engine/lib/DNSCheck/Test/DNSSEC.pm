@@ -60,7 +60,7 @@ sub algorithm_name {
         12  => 'GOST R 34.10-2001',
         252 => 'Reserved (Indirect keys)',
         253 => 'Private algorithm (domain name)',
-        254 => 'Privade algorithm (OID)',
+        254 => 'Private algorithm (OID)',
         255 => 'Reserved'
     );
 
@@ -259,6 +259,7 @@ sub _check_child {
 
         $logger->auto('DNSSEC:DNSKEY_ALGORITHM', $zone, $key->keytag,
             $key->algorithm, algorithm_name($key->algorithm));
+        $errors += check_algorithm($logger, $key->algorithm);
 
         # REQUIRE: a DNSKEY used for RRSIGs MUST have protocol DNSSEC (3)
         if ($key->protocol != 3) {
@@ -392,6 +393,7 @@ sub _check_parent {
 
         $logger->auto('DNSSEC:DS_ALGORITHM', $zone, $rr->keytag,
             $rr->algorithm, algorithm_name($rr->algorithm));
+        $errors += check_algorithm($logger, $rr->algorithm);
 
         if ($rr->algorithm == Net::DNS::SEC->algorithm("RSAMD5")) {
             $logger->auto("DNSSEC:DS_ALGORITHM_MD5");
@@ -522,6 +524,44 @@ sub _count_in_list ($$) {
     }
 
     return $n;
+}
+
+sub check_algorithm {
+    my $logger = shift;
+    my $aid = shift;
+
+    #    0   => Reserved
+    #    1   => RSA/MD5
+    #    2   => Diffie-Hellman
+    #    3   => DSA/SHA1
+    #    4   => Reserved (ECC)
+    #    5   => RSA/SHA-1
+    #    6   => DSA-NSEC3-SHA1
+    #    7   => RSA-NSEC3-SHA1
+    #    8   => RSA/SHA-256
+    #    9   => Unassigned
+    #    10  => RSA/SHA-512
+    #    11  => Unassigned
+    #    12  => GOST R 34.10-2001
+    #    13-122 => Unassigned
+    #    123-251 => Reserved
+    #    252 => Reserved (Indirect keys)
+    #    253 => Private algorithm (domain name)
+    #    254 => Private algorithm (OID)
+    #    255 => Reserved
+
+    if ($aid == 0 or $aid == 4 or ($aid >= 123 and $aid <= 252) or $aid == 255) {
+        return $logger->auto('DNSSEC:ALGORITHM_RESERVED', $aid);
+    }
+    elsif ($aid == 9 or $aid == 11 or ($aid >= 13 and $aid <= 122)) {
+        return $logger->auto('DNSSEC:ALGORITHM_UNASSIGNED', $aid);        
+    }
+    elsif ($aid == 253 or $aid == 254) {
+        return $logger->auto('DNSSEC:ALGORITHM_PRIVATE', $aid);
+    }
+    else {
+        return $logger->auto('DNSSEC:ALGORITHM_OK', $aid);        
+    }
 }
 
 1;

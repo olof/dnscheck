@@ -536,6 +536,18 @@ messages:
  DNSSEC:DS_ALGORITHM:
     args: 4
     format: %s's key with tag %s uses algorithm number %s (%s).
+ DNSSEC:ALGORITHM_RESERVED:
+   args: 1
+   format: Algorithm number %s is reserved.
+ DNSSEC:ALGORITHM_UNASSIGNED:
+   args: 1
+   format: Algorithm number %s is unassigned.
+ DNSSEC:ALGORITHM_PRIVATE:
+   args: 1
+   format: Algorithm number %s is private.
+ DNSSEC:ALGORITHM_OK:
+   args: 1
+   format: Algorithm number %s is OK.
  DNSSEC:END:
   args: 1
   format: Done testing DNSSEC for %s.

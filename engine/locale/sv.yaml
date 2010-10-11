@@ -536,6 +536,18 @@ messages:
  DNSSEC:DS_ALGORITHM:
     args: 4
     format: %s nyckel med tag %s använder algorithm nummer %s (%s).
+ DNSSEC:ALGORITHM_RESERVED:
+   args: 1
+   format: Algoritm nummer %s är reserverad.
+ DNSSEC:ALGORITHM_UNASSIGNED:
+   args: 1
+   format: Algoritm nummer %s är inte tilldelad.
+ DNSSEC:ALGORITHM_PRIVATE:
+   args: 1
+   format: Algoritm nummer %s är privat.
+ DNSSEC:ALGORITHM_OK:
+   args: 1
+   format: Algoritm nummer %s är OK.
  DNSSEC:END:
   args: 1
   format: Klar med test av DNSSEC för %s.
