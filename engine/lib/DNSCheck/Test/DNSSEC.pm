@@ -391,8 +391,8 @@ sub _check_parent {
 
         $logger->auto("DNSSEC:PARENT_DS", $zone, $ds_message);
 
-        $logger->auto('DNSSEC:DS_ALGORITHM', $zone, $rr->keytag,
-            $rr->algorithm, algorithm_name($rr->algorithm));
+        $logger->auto('DNSSEC:DS_ALGORITHM', $zone, $rr->keytag, $rr->algorithm,
+            algorithm_name($rr->algorithm));
         $errors += check_algorithm($logger, $rr->algorithm);
 
         if ($rr->algorithm == Net::DNS::SEC->algorithm("RSAMD5")) {
@@ -528,7 +528,7 @@ sub _count_in_list ($$) {
 
 sub check_algorithm {
     my $logger = shift;
-    my $aid = shift;
+    my $aid    = shift;
 
     #    0   => Reserved
     #    1   => RSA/MD5
@@ -550,17 +550,15 @@ sub check_algorithm {
     #    254 => Private algorithm (OID)
     #    255 => Reserved
 
-    if ($aid == 0 or $aid == 4 or ($aid >= 123 and $aid <= 252) or $aid == 255) {
+    if ($aid == 0 or $aid == 4 or ($aid >= 123 and $aid <= 252) or $aid == 255)
+    {
         return $logger->auto('DNSSEC:ALGORITHM_RESERVED', $aid);
-    }
-    elsif ($aid == 9 or $aid == 11 or ($aid >= 13 and $aid <= 122)) {
-        return $logger->auto('DNSSEC:ALGORITHM_UNASSIGNED', $aid);        
-    }
-    elsif ($aid == 253 or $aid == 254) {
+    } elsif ($aid == 9 or $aid == 11 or ($aid >= 13 and $aid <= 122)) {
+        return $logger->auto('DNSSEC:ALGORITHM_UNASSIGNED', $aid);
+    } elsif ($aid == 253 or $aid == 254) {
         return $logger->auto('DNSSEC:ALGORITHM_PRIVATE', $aid);
-    }
-    else {
-        return $logger->auto('DNSSEC:ALGORITHM_OK', $aid);        
+    } else {
+        return $logger->auto('DNSSEC:ALGORITHM_OK', $aid);
     }
 }
 
