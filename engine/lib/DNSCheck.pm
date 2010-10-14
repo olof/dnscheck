@@ -509,7 +509,7 @@ so that new ones will be created on next request.
    $dc->zone->test("iis.se");
    $dc->logger->dump;
    
-=head KNOWN PROBLEMS
+=head1 KNOWN PROBLEMS
 
 =over
 
