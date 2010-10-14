@@ -199,6 +199,8 @@ sub fake_packet {
         $version = 4;
     } elsif ($type eq 'AAAA') {
         $version = 6;
+    } elsif ($type eq 'NS') {
+        return $self->fake_ns_packet($name);
     } else {
         return;    # Can't or won't fake that
     }
@@ -225,6 +227,24 @@ sub fake_packet {
     }
 
     $p->header->aa(1);
+
+    return $p;
+}
+
+sub fake_ns_packet {
+    my $self = shift;
+    my $zone = shift;
+    my @ns   = keys %{ $self->{cache}{ns}{$zone} };
+
+    my $p = Net::DNS::Packet->new;
+    foreach my $n (@ns) {
+        $p->unique_push('answer', Net::DNS::RR->new("$zone 4711 IN NS $n"));
+        foreach my $ip (keys %{ $self->{cache}{ips}{$n} }) {
+            my $t = (Net::IP->new($ip)->version == 4) ? 'A' : 'AAAA';
+            $p->unique_push('additional',
+                Net::DNS::RR->new("$n 4711 IN $t $ip"));
+        }
+    }
 
     return $p;
 }
@@ -482,6 +502,10 @@ sub recurse {
     # See if it should be faked
     if (($type eq 'A' or $type eq 'AAAA')
         and $self->{fake}{ips}{ $self->canonicalize_name($name) })
+    {
+        return $self->fake_packet(undef, $name, $type);
+    } elsif ($type eq 'NS'
+        and $self->{fake}{ns}{ $self->canonicalize_name($name) })
     {
         return $self->fake_packet(undef, $name, $type);
     }
