@@ -1,0 +1,48 @@
+Release Notes for DNSCheck Lib v1.2
+===================================
+
+New features since version 1.1:
+-------------------------------
+
+* The dispatcher can now be started as root, and change to a specified user
+  and group after it's done with opening files.
+  
+* The project has moved to Github. It can now be found at http://github.com/dotse/dnscheck
+
+
+Bugfixes and changes to tests since version 1.1
+-----------------------------------------------
+
+* The NO_TCP and NO_UDP tests have been made more reliable.
+
+* Some tests stop earlier if they can't run, avoiding some reports that don't
+  make sense (like nameservers that don't respond at all being stated not to
+  be recursive).
+  
+* The concept of "mandatory algorithms" for DNSSEC has been retired. Instead,
+  there will be warnings if DNSKEY or DS records are found to be using
+  cryptographic algorithms listed as unallocated, reserved or private by IANA.
+  
+* The DNSSEC tests now deal correctly with SHA-2 keys.
+  
+* Undelegated tests should work again.
+
+* There are new and changed messages. If you're using the Web GUI, don't
+  forget to reload the message table in the database.
+
+
+Currently known issues
+----------------------
+
+* Several DNSSEC tests need improving and/or re-thinking.
+
+* In some instances, the DNSCheck recursive resolver does not get the same
+  result as, for example, BIND, due to ours being less forgiving. If we should
+  change the current behavior has not been decided.
+  
+* Zones with nameservers that do not answer queries for DNSSEC-related records
+  when the query packet does not have the DNSSEC flag set will get broken
+  results from our DNSSEC tests.
+  
+* There is an outstanding issue where DNSCheck for at least one domain sends
+  some queries to the wrong parent zone's servers.
