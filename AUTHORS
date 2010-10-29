@@ -1,0 +1,22 @@
+AUTHORS
+
+DNSCheck is based on an idea from Patrik Falstrom who also write the first
+version for NIC-SE.
+
+DNSCheck was rewritten by Jakob Schlyter <jakob@kirei.se> for .SE - The
+Internet Infrastructure Foundation.
+
+Other contributors are:
+Mats Jernsell <matsj@init.se>
+Calle Dybedahl <calle@init.se>
+Einar Lonn <einar.lonn@iis.se>
+Mans Jonasson <mans.jonasson@iis.se>
+Milan Pavlovic <milan.pavlovic@troxo.com>
+Pingdom <info@pingdom.com>
+Patrik Wallstrom <pawal@iis.se>
+
+Current development is done by:
+Calle Dybedahl <calle@init.se>
+
+DNSCheck development is still funded by .SE. If you are interested in
+contributing, please contact Patrik Wallstrom <pawal@iis.se>.
