@@ -7,15 +7,25 @@ require_once(dirname(__FILE__) . '/../stripslashes.php');
 
 i18n_get_language_names();
 
+function filter_lang($lang)
+{
+	if ( 0 == preg_match('/^[a-z][a-z]$/',$lang))
+	{
+		$lang = "en";
+	}
+
+	return $lang;
+}
+
 // Set language
 if (isset($_GET["setLanguage"])) {
-	i18n_load_language($_GET["setLanguage"]);
-	setcookie("i18n_language", $_GET["setLanguage"]);
+	i18n_load_language(filter_lang($_GET["setLanguage"]));
+	setcookie("i18n_language", filter_lang($_GET["setLanguage"]));
 }
 else {
 	// Language should be based on cookie or default
 	if (isset($_COOKIE["i18n_language"])) {
-		i18n_load_language($_COOKIE["i18n_language"]);	
+		i18n_load_language(filter_lang($_COOKIE["i18n_language"]));	
 	}
 	else {
 		// Default language 
@@ -110,7 +120,7 @@ var labelVersion = "<?php _e("test_was_performed_with_version"); ?>";
 
 function switchLang(lang) {
 	//alert(document.thisId + ":" + document.thisTime);
-	document.location.href='?time=' + document.thisTime + '&id=' + document.thisId + '&test=<?php echo $test?>&view=<?php print($_GET["view"] ? $_GET["view"] : "basic");?>&setLanguage=' + lang;	
+	document.location.href='?time=' + document.thisTime + '&id=' + document.thisId + '&test=<?php echo $test?>&view=<?php print($_GET["view"]!="advanced" ? "basic" : "advanced" );?>&setLanguage=' + lang;	
 }
 
 </script>
