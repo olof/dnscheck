@@ -1,5 +1,12 @@
 Release Notes for DNSCheck Lib v1.2
 ===================================
+Changes since version 1.2:
+--------------------------
+
+* Fix an XSS issue in the web GUI.
+
+* Fix a bug in the delegation-testing code.
+
 
 New features since version 1.1:
 -------------------------------
