@@ -905,6 +905,9 @@ messages:
  ZONE:END:
   args: 1
   format: Test completed for zone %s.
+ ZONE:INVALID_NAME:
+   args: 1
+   format: %s is not a valid name for a zone.
  NSTIME:AVERAGE:
     args: 6
     format: Zone %s, server %s: %s calls, %sms avg, %sms min, %sms max, %sms stddev.

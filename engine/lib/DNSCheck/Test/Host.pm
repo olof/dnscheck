@@ -101,7 +101,11 @@ sub host_syntax {
 
     return unless $self->parent->config->should_run;
 
-    my @labels = split(/\./, $hostname);
+    my @labels = split(/\./, $hostname, -1);
+
+    if ($labels[-1] eq '') {
+        pop @labels;    # Empty label for root zone.
+    }
 
     # REQUIRE: RFC 952 says first component must begin with a-z, and that
     #          labels may not end with a dash.

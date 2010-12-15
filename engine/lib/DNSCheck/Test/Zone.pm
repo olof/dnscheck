@@ -54,6 +54,11 @@ sub test {
     $logger->module_stack_push();
     $logger->auto("ZONE:BEGIN", $zone, $DNSCheck::VERSION);
 
+    if ($parent->host->host_syntax($zone)) {
+        $logger->auto('ZONE:INVALID_NAME', $zone);
+        goto DONE;
+    }
+
     my ($errors, $testable) = $parent->delegation->test($zone, $history);
 
     unless ($testable) {

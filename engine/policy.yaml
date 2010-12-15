@@ -205,3 +205,4 @@ loglevels:
   ZONE:END: info
   ZONE:FATAL_DELEGATION: critical
   ZONE:FATAL_NO_CHILD_NS: critical
+  ZONE:INVALID_NAME: critical
