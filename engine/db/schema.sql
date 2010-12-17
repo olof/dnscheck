@@ -2,6 +2,8 @@
 
 -- DNSCheck Primary Data
 
+/*! SET FOREIGN_KEY_CHECKS=0 */
+
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `tag` varchar(255) NOT NULL default '',
