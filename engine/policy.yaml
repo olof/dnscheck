@@ -63,7 +63,7 @@ loglevels:
   DELEGATION:TOO_FEW_NS_IPV4: error
   DELEGATION:TOO_FEW_NS_IPV6: notice
   DELEGATION:BROKEN_UNDELEGATED: critical
-  DNS:DNS:NO_CHILD_NS: error
+  DNS:NO_CHILD_NS: error
   DNS:LOOKUP_ERROR: notice
   DNS:NO_ANSWER: notice
   DNS:NO_EDNS: error
