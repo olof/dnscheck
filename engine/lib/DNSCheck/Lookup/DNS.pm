@@ -211,6 +211,8 @@ sub query_parent_nocache {
         {
             my $p = $self->parent->resolver->fake_packet($zone, $qname, $qtype);
             return $p if defined($p);
+        } elsif ($qtype eq 'DS') {
+            return Net::DNS::Packet->new;
         }
     }
 
