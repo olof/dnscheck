@@ -159,6 +159,15 @@ sub add_fake_glue {
     return $self;
 }
 
+sub add_fake_ds {
+    my $self = shift;
+    my $ds   = shift;
+
+    push @{ $self->{fake}{ds}{ $ds->name } }, $ds;
+
+    return $self;
+}
+
 # Return a list of zones with fake glue
 sub faked_zones {
     my $self = shift;
@@ -244,6 +253,18 @@ sub fake_ns_packet {
             $p->unique_push('additional',
                 Net::DNS::RR->new("$n 4711 IN $t $ip"));
         }
+    }
+
+    return $p;
+}
+
+sub fake_ds_packet {
+    my $self = shift;
+    my $zone = shift;
+
+    my $p = Net::DNS::Packet->new;
+    foreach my $rr (@{ $self->{fake}{ds}{$zone} }) {
+        $p->unique_push('answer', $rr);
     }
 
     return $p;
