@@ -1,0 +1,111 @@
+languageId: nl
+
+languageName: Nederlands
+
+home: Home
+
+faq: FAQ
+
+a_service_from_se: Een service van SIDN (i.s.m. .SE)
+
+test_and_find_errors: SIDN Name server check
+
+enter_your_domain_name: Geef in bovenstaand veld de domeinnaam op om de bijbehorende name servers te testen. Bijvoorbeeld "sidn.nl"
+
+test_now: Test nu
+
+basic_results: Resultaten
+
+advanced_results: Gedetailleerd
+
+test_history: Test historie
+
+test_was_performed_with_version: Test uitgevoerd met DNSCheck v
+
+error_loading_history: Fout bij laden historie
+
+no_test_history: geen test historie gevonden
+
+page: Pagina
+
+se_tagline: SIDN presenteert DNSCheck v%s aan IP %s
+
+domain_doesnt_exist_header: Domein bestaat niet
+
+domain_doesnt_exist_label: Het opgegeven domein is verkeerd ingegeven of nog niet gedelegeerd. Geef uitsluitend de domeinnaam op, zoals \"sidn.nl\", niet de naam van bijvoorbeeld een webserver, zoals \"www.sidn.nl\".
+
+loading_header: Laden
+
+loading_label: Wachten op het laden van de testresultaten
+
+all_tests_ok: Alle tests zijn in orde
+
+warning_header: Waarschuwingen gevonden in de test
+
+error_header: Er zijn fouten gevonden in de test
+
+about_dnscheck: Over DNSCheck
+
+explanation: Toelichting
+
+test_was_ok: Test geslaagd
+
+test_contains_warnings: Test bevat waarschuwingen
+
+test_contains_errors: Test bevat fouten
+
+test_was_not_performed: Test niet uitgevoerd
+
+delegation: Delegatie
+
+nameserver: Name server
+
+consistency: Consistentheid
+
+soa: SOA
+
+connectivity: Connectiviteit
+
+dnssec: DNSSEC
+
+link_to_this_test: Link naar deze test
+
+domain_test: Domein test
+
+undelegated_domain_test: `Undelegated` domein test
+
+domain_name: Domein naam
+
+name_servers: Name servers
+
+add_one_more_nameserver: Voeg een name server toe
+
+host: Host
+
+ip: IP
+
+nons_header: Name server fout
+
+nons_label: Er moet minimaal een name server worden ingegeven
+
+domain_syntax_header: Domein syntax
+
+domain_syntax_label: Ongeldige domein syntax
+
+note: Note
+
+this_test_on_undelegated: Deze test is uitgevoerd op een niet-gedelegeerd domein
+
+enter_your_undelegated_domain_name: Geef uw niet-gedelegeerde domein name hierboven in alsmede hieronder de hostnamen en IP-adressen van de name servers die u wilt testen. Maximaal 30 name servers.
+
+what_is_an_undelegated: Wat is de niet-gedelegeerde (undelegated) domein test?
+
+remove_name_server: Verwijder name server
+
+load_error_header: Connectie fout
+
+load_error_label: Geen verbinding met database mogelijk, probeer het later nog eens
+
+add_name_server: Name server toevoegen
+
+language: Taal

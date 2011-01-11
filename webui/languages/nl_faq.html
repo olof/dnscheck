@@ -1,0 +1,209 @@
+<h5 id="findex">Index</h5>
+			<ol>
+
+			<li><a href="#f1">Wat is DNSCheck?</a></li>
+			<li><a href="#f2">Wat is DNS?</a></li>
+			<li><a href="#f3">Over www.dnscheck.se</a></li>		
+			<li><a href="#f4">Waarom een nieuwe DNSCheck?</a></li>
+			<li><a href="#f5">Hoe werkt DNScheck?</a></li>
+			<li><a href="#f6">Hoe kan DNSCheck mij helpen?</a></li>
+			<li><a href="#f7">DNSCheck geeft &quot;fouten&quot; en &quot;waarschuwingen&quot; op mijn domein, wat betekent dat?</a></li>
+			<li><a href="#f8">Hoe kan DNSCheck bepalen wat goed of fout is?</a></li>
+			<li><a href="#f9">Ondersteund DNSCheck IPv6?</a></li>
+			<li><a href="#f10">Ondersteund DNSCheck DNSSEC?</a></li>
+			<li><a href="#f11">Wat maakt DNSCheck anders dan andere zone controle software?</a></li>
+			<li><a href="#f12">Werkt DNSCheck voor een niet-.nl-domein?</a></li>
+			<li><a href="#f13">DNSCheck en privacy</a></li>
+			<li><a href="#f14">Waarom kan ik mijn domein niet testen?</a></li>
+			<li><a href="#f15">Wat voor soort vragen stelt de DNSCheck?</a></li>
+			<li><a href="#f16">Wat is een 'undelegated' domein test?</a></li>
+
+			</ol>
+			<div class="divider"></div>
+
+			<h5 id="f1">Wat is DNSCheck?</h5>
+
+			<p>
+			DNSCheck is bedoeld om de juiste configuratie en
+			werking van nameservers voor een bepaald(e)
+			domein(naam) te controleren.
+			Een correcte configuratie van het Domain Name System
+			(DNS) draagt bij aan de stabiliteit van het Internet. Wanneer u een domeinnaam
+			ingeeft, zal DNScheck deze op tal van punten controleren
+			en hiervan de resultaten na enige tijd tonen.
+			Daarmee vergrijgt de gebruiker hopenlijk meer
+			inzicht in de werking en het belang van het DNS.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f2">Wat is DNS?</h5>
+
+			<p>
+			Het domain name system (afgekort DNS) is een
+			hi&euml;rarchisch naam-systeem op het Internet of
+			lokaal netwerk, dat met name wordt gebruikt om voor mensen
+			betekenisvolle labels te vertalen naar
+			een binaire aanduiding geschikt voor computers. Denk
+			bijvoorbeeld aan een domeinnaam (www.sidn.nl) die
+			wordt omgezet naar een IP-adres (193.176.144.117).
+			Het kan beschouwd worden als het &quot;telefoonboek&quot; van het Internet.
+			Kort samengevat kan gesteld worden dat een stabiel,
+			berouwbaar DNS van essentieel belang is.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+			
+			<h5 id="f3">Over www.dnscheck.se</h5>
+
+			<p>De pagina <a href="http://www.dnscheck.se">www.dnscheck.se</a> wijst naar een eerdere versie van DNSCheck die .SE ontwikkeld heeft met behulp van Patrik Fältsröm van Frobbit AB. De nieuwe versie van DNSCheck staat op <a href="http://dnscheck.iis.se">dnscheck.iis.se</a> en is ontwikkeld door Jakob Schlyter van Kirei AB.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f4">Waarom een nieuwe DNSCheck?</h5>
+
+			<p>
+			.SE wilde een betere controle over de code en ook meer mogelijkheden om delen van deze code in andere projecten op te nemen. Vandaar dat we tot de conclusie kwamen dat het een beter idee was om het produkt van de grond af opnieuw op te bouwen met een modulaire codebase.
+			Zodoende konden we nieuwe features zoals bijvoorbeeld ipv6- en dnssec controle toevoegen.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f5">Hoe werkt de DNSCheck?</h5>
+
+			<p>Voor technische informatie over de DNSCheck kunt
+			u kijken op de Wiki van het <a
+			href="http://opensource.iis.se/trac/dnscheck/wiki/Architecture">DNScheck
+			open source project</a> Zie voor een minder
+			technisch antwoord de vraag <a href="#f1">Wat is DNSCheck?</a>.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f6">Hoe kan DNSCheck mij helpen?</h5>
+
+			<p>De huidige versie van DNSCheck is gemaakt voor technici of in ieder geval mensen die meer willen weten over hoe het DNS werkt. Als u puur wilt zien wie de baas is over uw domein (de tech-c or technische staf bij uw name server provider) dat er in feite een probleem is met uw domein kunt u de link gebruiken die onderaan de pagina verschijnt na iedere test. Dus als u een test heeft gedraaid en u wilt het specifieke resultaat aan iemand laten zien, kunt u gewoon de link onderaan de pagina die uw testresultaten toont kopieren.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f7">DNSCheck geeft &quot;fouten&quot; en &quot;waarschuwingen&quot; op mijn domein, wat betekent dat?</h5>
+
+			<p>
+			Dat is, vanzelfsprekend, afhankelijk van welke test
+			de melding heeft opgeleverd. In veel gevallen kunt u
+			de melding aanklikken voor een nadere toelichting.
+		
+			<p>Stel dat een test van de domeinnaam
+			"domeinnaam.nl" de volgende fout geeft: &quot;<strong>Nameserver ns2.sidn.nl (2001:610:0:800d::5)
+			geeft geen antwoord op queries via UDP</strong>&quot;.
+			Wat wil dat dan zeggen? Nadat we op de foutmelding geklikt hebben, kijgen we meer informatie te zien:
+			&quot;<strong>De nameserver reageerde niet op queries via UDP. Waarschijnlijk als gevolg van een configuratie fout</strong>&quot;.
+			Dat vergt nader onderzoek. Wellicht een fout in uw
+			firewall? Gelukkig gaat het hier slechts om een
+			voorbeeld want de betreffende fout geeft feitelijk
+			aan dat de nameserver niet bereikbaar is (via IPv6
+			althans). Dat is beslist niet de meest onschuldige fout die denkbaar
+			is.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f8">Hoe kan DNSCheck bepalen wat goed of fout is?</h5>
+
+			<p>Er is geen ondubbelzinnig oordeel over de kwaliteit van een domein waarin een ieder zich volledig kan vinden. Dit is erg belangrijk. .SE en de mensen achter DNSCheck beweren niet dat het resultaat van de DNSCheck altijd de volledige waarheid is.
+			Meningen verschillen soms, zeker tussen landen, maar ook soms lokaal. We hebben het geluk gehad hulp te krijgen van een zeer competente DNS-groep hier in Zweden.
+			Hopelijk heeft hun mening in combinatie met die van ons gezorgd voor een goede afweging tussen wat werkelijk een potentieel gevaarlijke fout is en wat enkel als een
+			opmerking of waarschuwing gezien kan worden.</p><p>
+			Maar zoals met alle zaken rond DNS verandert de situatie voortdurend en kan wat nu gezien wordt als een opmerking morgen een foutmelding zijn.
+			Als u werkelijk denkt dat we een fout hebben gemaakt in onze beoordeling, aarzel niet en stuur ons een mailtje naar <a href="mailto:dnscheck@iis.se">dnscheck@iis.se</a> met een link naar uw test en 
+			een uitleg over waarom u denkt dat de beoordeling foutief is.
+			</p>
+			<p>
+			DNScheck kan nog tekortkomingen hebben, in het
+			bijzonder in onderdelen waari vertrouwd wordt op
+			diensten van derden, zoals het bepalen van het
+			AS-nummer op basis van een IP-adres.
+			</p>
+			<p>
+			Mocht u van mening zijn dat de applicatie een
+			beoordelingsfout heeft gemaakt, schroom dan niet om
+			contact met ons op te nemen. Stuurt u in een e-mail
+			de link van de test in kwestie, voorzien van uw
+			toelichting.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f9">Ondersteunt DNSCheck IPv6?</h5>
+
+			<p>Uiteraard.</p>
+		
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f10">Ondersteunt DNSCheck DNSSEC?</h5>
+
+			<p>Ja.</p>
+			
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f11">Wat maakt DNSCheck anders dan andere zone controle software?</h5>
+
+			<p>Ten eerste slaat DNSCheck alle historie van eerdere testen op, wat betekent dat u terug kunt gaan naar een test die u een week geleden hebt gedaan en deze vergelijken met een test die u net heeft gedaan.<br />
+			<br />
+			DNSCheck controleert ook of de name servers die vroeger gebruikt werden voor een zone niet langer informatie over de zone die u aan het testen bent bevatten (dit geldt enkel voor .SE-domeinen die na februari 2007 gedelegeerd zijn). </p>
+			<p>DNSCheck probeert ook de foutmelding/waarschuwing die u krijgt op een goede manier uit te leggen, hoewel deze meldingen soms moeilijk zijn te begrijpen voor een niet-technisch gebruikers. De volgende versie van DNSCheck, die later dit jaar uitkomt, zal beter aansluiten voor niet-technische gebruikers.</p>
+			<p>DNSCheck zal voortdurend de .NL-zone controleren en de gezondheid in de database rapporteren.</p>
+			<p>Er is een “advanced” tab voor technici die mogelijk de DNSCheck willen gebruiken zonder de “basic” view.</p>
+			<p>Ten slotte, deze open source versie van DNSCheck is gebouwd in modulaire code wat in principe betekent dat u onderdelen kunt gebruiken in uw systemen, als u dat wilt. Het is bijvoorbeeld niet nodig dat u het complete programma gebruikt om alleen redelegations te checken.</p>
+
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f12">Werkt DNSCheck voor een niet-.nl-domein</h5>
+
+			<p>Ja, maar wel volgens het 'technische
+			eisen'-beleid van SIDN.
+			</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f13">DNSCheck en privacy</h5>
+
+                        <p>Omdat DNSCheck voor iedereen beschikbaar is,
+                        kunnen derden uw domein aan een test onderwerpen,
+                        alsmede de testgeschiedenis opvragen en raadplegen.
+                        Er is echter geen manier om te achterhalen wie een
+                        specifieke test heeft aangevraagd, aangezien alleen
+                        het tijdstip van de test wordt vastgelegd en verder
+                        niets.
+                        </p>
+                        <p><a href="#findex">Naar boven </a></p>
+
+			<h5 id="f14">Waarom kan ik mijn domein niet testen?</h5>
+
+                        <p>Los van de mogelijkheid dat u een niet bestaande
+                        domeinnaam heeft opgegeven zijn er twee opties:</p>
+
+			<p>1. Ter bescherming van de applicatie kan vanaf elk
+			IP-adress niet vaker dan 1 x per 5 minuten een test
+			gedaan worden. Probeert u het vaker, dan krijgt u
+			eerdere testresultaten te zien.
+			</p>
+
+			 <p>2. Er is iets anders aan de hand. Laat het ons aub
+			 weten, zodat wij het probleem in onderzoek kunnen
+			 nemen.
+
+			<p><a href="#findex">Naar boven </a></p>
+
+ 			<h5 id="f15">Wat voor soort vragen stelt de DNSCheck?</h5>
+
+			<p>Deze vraag is moeilijk te beantwoorden omdat DNSCheck verschillende vragen stelt afhankelijk van hoe uw name servers vragen beantwoorden. De gemakkelijkste manier om een volledig overzicht te krijgen welke vragen worden gesteld is door het “dnscheck” CLI commando te gebruiken en de vlag “--raw” aan te zetten. Hierdoor krijgt u behoorlijk uitgebreide informatie over wat er gebeurt. De output van deze CLI-tool is echter zeer technisch dus tenzij u verstand hebt van bits en bytes wilt u deze stap misschien overslaan. :)</p>
+			<p><a href="#findex">Naar boven </a></p>
+
+                        <h5 id="f16">Wat is een 'undelegated' domein test</h5>
+
+                        <p>Een 'undelegated' domein test is a test die wordt
+                        uitgevoerd op een domein dat mogelijkerwijs nog niet
+                        volledig is opgenomen in het DNS. Bijvoorbeeld omdat
+                        deze nog niet is geregistreerd, terwijl de
+                        autoritative nameservers al wel zijn voorbereid.</p>
+                        <p>Een andere scenario is wanneer een domeinnaam
+                        verhuist gaat worden van de ene registrar naar de
+                        andere. U kunt de nieuwe nameservers voorbereiden en
+                        deze controleren m.b.v. DNSCheck, voordat de
+                        verhuizing in gang gezet wordt.<p>
+                        
+                        <p><a href="#findex">Naar boven </a></p>
