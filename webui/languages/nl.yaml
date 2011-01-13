@@ -6,11 +6,11 @@ home: Home
 
 faq: FAQ
 
-a_service_from_se: Een service van SIDN (i.s.m. .SE)
+a_service_from_se: Een service van .SE
 
-test_and_find_errors: SIDN Name server check
+test_and_find_errors: Name server check
 
-enter_your_domain_name: Geef in bovenstaand veld de domeinnaam op om de bijbehorende name servers te testen. Bijvoorbeeld "sidn.nl"
+enter_your_domain_name: Geef in bovenstaand veld de domeinnaam op om de bijbehorende name servers te testen.
 
 test_now: Test nu
 
@@ -28,11 +28,11 @@ no_test_history: geen test historie gevonden
 
 page: Pagina
 
-se_tagline: SIDN presenteert DNSCheck v%s aan IP %s
+se_tagline: .SE presenteert DNSCheck v%s aan IP %s
 
 domain_doesnt_exist_header: Domein bestaat niet
 
-domain_doesnt_exist_label: Het opgegeven domein is verkeerd ingegeven of nog niet gedelegeerd. Geef uitsluitend de domeinnaam op, zoals \"sidn.nl\", niet de naam van bijvoorbeeld een webserver, zoals \"www.sidn.nl\".
+domain_doesnt_exist_label: Het opgegeven domein is verkeerd ingegeven of nog niet gedelegeerd. Geef uitsluitend de domeinnaam op, niet de naam van bijvoorbeeld een webserver.
 
 loading_header: Laden
 
@@ -109,3 +109,4 @@ load_error_label: Geen verbinding met database mogelijk, probeer het later nog e
 add_name_server: Name server toevoegen
 
 language: Taal
+

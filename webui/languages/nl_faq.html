@@ -12,7 +12,7 @@
 			<li><a href="#f9">Ondersteund DNSCheck IPv6?</a></li>
 			<li><a href="#f10">Ondersteund DNSCheck DNSSEC?</a></li>
 			<li><a href="#f11">Wat maakt DNSCheck anders dan andere zone controle software?</a></li>
-			<li><a href="#f12">Werkt DNSCheck voor een niet-.nl-domein?</a></li>
+			<li><a href="#f12">Werkt DNSCheck voor een niet-.se-domein?</a></li>
 			<li><a href="#f13">DNSCheck en privacy</a></li>
 			<li><a href="#f14">Waarom kan ik mijn domein niet testen?</a></li>
 			<li><a href="#f15">Wat voor soort vragen stelt de DNSCheck?</a></li>
@@ -44,8 +44,8 @@
 			lokaal netwerk, dat met name wordt gebruikt om voor mensen
 			betekenisvolle labels te vertalen naar
 			een binaire aanduiding geschikt voor computers. Denk
-			bijvoorbeeld aan een domeinnaam (www.sidn.nl) die
-			wordt omgezet naar een IP-adres (193.176.144.117).
+			bijvoorbeeld aan een domeinnaam (www.iis.se) die
+			wordt omgezet naar een IP-adres (212.247.7.229).
 			Het kan beschouwd worden als het &quot;telefoonboek&quot; van het Internet.
 			Kort samengevat kan gesteld worden dat een stabiel,
 			berouwbaar DNS van essentieel belang is.
@@ -54,7 +54,7 @@
 			
 			<h5 id="f3">Over www.dnscheck.se</h5>
 
-			<p>De pagina <a href="http://www.dnscheck.se">www.dnscheck.se</a> wijst naar een eerdere versie van DNSCheck die .SE ontwikkeld heeft met behulp van Patrik Fältsröm van Frobbit AB. De nieuwe versie van DNSCheck staat op <a href="http://dnscheck.iis.se">dnscheck.iis.se</a> en is ontwikkeld door Jakob Schlyter van Kirei AB.
+			<p>De pagina <a href="http://www.dnscheck.se">www.dnscheck.se</a> wijst naar een eerdere versie van DNSCheck die .SE ontwikkeld heeft met behulp van Patrik F?ltsr?m van Frobbit AB. De nieuwe versie van DNSCheck staat op <a href="http://dnscheck.iis.se">dnscheck.iis.se</a> en is ontwikkeld door Jakob Schlyter van Kirei AB.
 			</p>
 			<p><a href="#findex">Naar boven </a></p>
 
@@ -90,7 +90,7 @@
 			de melding aanklikken voor een nadere toelichting.
 		
 			<p>Stel dat een test van de domeinnaam
-			"domeinnaam.nl" de volgende fout geeft: &quot;<strong>Nameserver ns2.sidn.nl (2001:610:0:800d::5)
+			&quot;iis.se&quot; de volgende fout geeft: &quot;<strong>ns.nic.se (212.247.7.228)
 			geeft geen antwoord op queries via UDP</strong>&quot;.
 			Wat wil dat dan zeggen? Nadat we op de foutmelding geklikt hebben, kijgen we meer informatie te zien:
 			&quot;<strong>De nameserver reageerde niet op queries via UDP. Waarschijnlijk als gevolg van een configuratie fout</strong>&quot;.
@@ -146,16 +146,15 @@
 			<br />
 			DNSCheck controleert ook of de name servers die vroeger gebruikt werden voor een zone niet langer informatie over de zone die u aan het testen bent bevatten (dit geldt enkel voor .SE-domeinen die na februari 2007 gedelegeerd zijn). </p>
 			<p>DNSCheck probeert ook de foutmelding/waarschuwing die u krijgt op een goede manier uit te leggen, hoewel deze meldingen soms moeilijk zijn te begrijpen voor een niet-technisch gebruikers. De volgende versie van DNSCheck, die later dit jaar uitkomt, zal beter aansluiten voor niet-technische gebruikers.</p>
-			<p>DNSCheck zal voortdurend de .NL-zone controleren en de gezondheid in de database rapporteren.</p>
+			<p>DNSCheck zal voortdurend de .SE-zone controleren en de gezondheid in de database rapporteren.</p>
 			<p>Er is een &quot;advanced&quot; tab voor technici die mogelijk de DNSCheck willen gebruiken zonder de &quot;basic&quot; view.</p>
 			<p>Ten slotte, deze open source versie van DNSCheck is gebouwd in modulaire code wat in principe betekent dat u onderdelen kunt gebruiken in uw systemen, als u dat wilt. Het is bijvoorbeeld niet nodig dat u het complete programma gebruikt om alleen redelegations te checken.</p>
 
 			<p><a href="#findex">Naar boven </a></p>
 
-			<h5 id="f12">Werkt DNSCheck voor een niet-.nl-domein</h5>
+			<h5 id="f12">Werkt DNSCheck voor een niet-.se-domein</h5>
 
-			<p>Ja, maar wel volgens het 'technische
-			eisen'-beleid van SIDN.
+			<p>Ja. Alle checks die voor .SE-domeinen worden gedaan, worden ook op uw zone uitgevoerd. Echter, de periodieke run over de database (in principe de automatische checks) worden alleen uitgevoerd op .SE-domeinen. Voor de rest is de test identiek.
 			</p>
 			<p><a href="#findex">Naar boven </a></p>
 
@@ -190,7 +189,7 @@
 
  			<h5 id="f15">Wat voor soort vragen stelt de DNSCheck?</h5>
 
-			<p>Deze vraag is moeilijk te beantwoorden omdat DNSCheck verschillende vragen stelt afhankelijk van hoe uw name servers vragen beantwoorden. De gemakkelijkste manier om een volledig overzicht te krijgen welke vragen worden gesteld is door het &quot;dnscheck&quot; CLI commando te gebruiken en de vlag &quot;--raw&quot; aan te zetten. Hierdoor krijgt u behoorlijk uitgebreide informatie over wat er gebeurt. De output van deze CLI-tool is echter zeer technisch dus tenzij u verstand hebt van bits en bytes wilt u deze stap misschien overslaan. :)</p>
+			<p>Deze vraag is moeilijk te beantwoorden omdat DNSCheck verschillende vragen stelt afhankelijk van hoe uw name servers vragen beantwoorden. De gemakkelijkste manier om een volledig overzicht te krijgen welke vragen worden gesteld is door het ?dnscheck? CLI commando te gebruiken en de vlag ?--raw? aan te zetten. Hierdoor krijgt u behoorlijk uitgebreide informatie over wat er gebeurt. De output van deze CLI-tool is echter zeer technisch dus tenzij u verstand hebt van bits en bytes wilt u deze stap misschien overslaan. :)</p>
 			<p><a href="#findex">Naar boven </a></p>
 
                         <h5 id="f16">Wat is een 'undelegated' domein test</h5>
