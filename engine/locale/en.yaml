@@ -517,7 +517,7 @@ messages:
      format: DNSSEC signature %s matches records.
  DNSSEC:RRSIG_FAILS_VERIFY:
     args: 2
-    format: DNSSEC signature %s does not match the records it signs: %s
+    format: DNSSEC signature %s fails to validate the RR set: %s
  DNSSEC:EXTRA_PROCESSING:
      args: 1
      format: Nameserver %s does DNSSEC extra processing.

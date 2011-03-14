@@ -517,7 +517,7 @@ messages:
      format: DNSSEC-signaturen %s stämmer med innehållet.
  DNSSEC:RRSIG_FAILS_VERIFY:
     args: 2
-    format: DNSSEC-signaturen %s stämmer inte med innehållet: %s
+    format: DNSSEC-signaturen %s validerar inte RR-gruppen: %s
  DNSSEC:EXTRA_PROCESSING:
      args: 1
      format: Namnservern %s gör extrahantering för DNSSEC.
