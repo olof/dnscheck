@@ -1124,7 +1124,9 @@ sub preflight_check {
     my $packet = $resolver->recurse($name, 'NS');
 
     # Can we find an NS record?
-    if (defined($packet) and grep { $_->type eq 'NS' } $packet->answer) {
+    if (defined($packet)
+        and grep { $_->type eq 'NS' or $_->type eq 'CNAME' } $packet->answer)
+    {
 
         # Yup, return true
         return 1;
@@ -1135,7 +1137,9 @@ sub preflight_check {
     }
 
     $packet = $resolver->recurse($name, 'SOA');
-    if (defined($packet) and grep { $_->type eq 'SOA' } $packet->answer) {
+    if (defined($packet)
+        and grep { $_->type eq 'SOA' or $_->type eq 'CNAME' } $packet->answer)
+    {
         return 1;
     } elsif (!defined($packet)) {
         return 1;
