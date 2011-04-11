@@ -607,23 +607,25 @@ sub recurse {
 
 sub matches {
     my ($self, $p, $name, $type, $class) = @_;
-    
-    $name = lc($self->canonicalize_name($name));
-    $type = lc($type);
+
+    $name  = lc($self->canonicalize_name($name));
+    $type  = lc($type);
     $class = lc($class);
-    
+
     foreach my $rr ($p->answer) {
-        my $rrname = lc($self->canonicalize_name($rr->name));
-        my $rrtype = lc($rr->type);
+        my $rrname  = lc($self->canonicalize_name($rr->name));
+        my $rrtype  = lc($rr->type);
         my $rrclass = lc($rr->class);
-        
-        printf STDERR "matches: %s => %s, %s => %s, %s => %s\n", $rrname, $name, $rrtype, $type, $rrclass, $class if $self->{debug};
+
+        printf STDERR "matches: %s => %s, %s => %s, %s => %s\n", $rrname, $name,
+          $rrtype, $type, $rrclass, $class
+          if $self->{debug};
         if ($rrname eq $name and $rrtype eq $type and $rrclass eq $class) {
             print STDERR "matches: Found.\n" if $self->{debug};
             return 1;
         }
     }
-    
+
     print STDERR "matches: Not found.\n" if $self->{debug};
     return;
 }
