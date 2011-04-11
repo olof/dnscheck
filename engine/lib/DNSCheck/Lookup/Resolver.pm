@@ -270,7 +270,7 @@ sub remember {
             print STDERR "remember: NS $n ("
               . $rr->name . ") "
               . $rr->nsdname . ".\n"
-              if $self->{debug};
+              if ($self->{debug} and $self->{debug} > 1);
             $self->{cache}{ns}{$n}{ $self->canonicalize_name($rr->nsdname) } = 1
               unless $self->{fake}{ns}{$n};
         }
