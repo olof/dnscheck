@@ -543,6 +543,39 @@ sub recurse {
                 next;
             }
 
+            ### COPIED FROM BELOW
+            if ($p->header->nscount > 0) {
+                my $zname = ($p->authority)[0]->name;
+                my $m = $self->matching_labels($name, $zname);
+
+                if ($m < $level) {
+                    print STDERR
+                      "recurse: Bad referral. Skipping to next server.\n"
+                      if $self->{debug};
+                    next;    # Resolving chain redirecting up
+                }
+
+                $level = $m;
+
+                print STDERR "recurse: Got "
+                  . scalar($p->authority)
+                  . " authority records. Reloading stack.\n"
+                  if $self->{debug};
+                @stack = ();
+
+                $self->remember($p);
+                if (my @fns = $self->faked_zone($zname)) {
+                    push @stack,
+                      grep { !$seen{$_} } $self->simple_names_to_ips(@fns);
+                } else {
+                    push @stack, grep { !$seen{$_} } $self->names_to_ips(
+                        map { $_->nsdname }
+                        grep { $_->type eq 'NS' } $p->authority
+                    );
+                }
+                next;
+            }
+
             if (    $type ne 'CNAME'
                 and $p->header->ancount > 0
                 and grep { $_->type eq 'CNAME' } $p->answer)
