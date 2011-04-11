@@ -37,6 +37,8 @@ use strict;
 use DBI;
 use Carp;
 use List::Util qw[reduce max min];
+use Storable qw[thaw];
+use MIME::Base64;
 
 use DNSCheck::Config;
 use DNSCheck::Test::Common;
@@ -71,12 +73,16 @@ sub new {
         $self->{config} = $config_args->{with_config_object};
     } else {
         $self->{config} = DNSCheck::Config->new(%{$config_args});
-        $self->config->put(
-            'root_zone_data',
-            DNSCheck::Lookup::Resolver->get_preload_data(
-                $config_args->{rootsource}
-            )
-        );
+        if (my $b64root = $self->{config}->get('dns')->{rootdata}) {
+            $self->config->put('root_zone_data', thaw(decode_base64($b64root)));
+        } else {
+            $self->config->put(
+                'root_zone_data',
+                DNSCheck::Lookup::Resolver->get_preload_data(
+                    $config_args->{rootsource}
+                )
+            );
+        }
     }
 
     return $self;
