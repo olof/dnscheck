@@ -527,77 +527,10 @@ sub recurse {
           if $self->{debug};
         $seen{$ns} = 1;
         my $p = $self->get($name, $type, $class, $ns);
+
         if (!defined($p)) {
             print STDERR "recurse: No response packet.\n" if $self->{debug};
             next;
-        } elsif ($p->header->aa) {
-            print STDERR "recurse: Authoritative response.\n" if $self->{debug};
-
-            if (    $p->header->rcode ne 'NOERROR'
-                and $p->header->rcode ne 'NXDOMAIN')
-            {
-                print STDERR
-                  "recurse: ...but it's not good. Saving as candidate.\n"
-                  if $self->{debug};
-                $candidate = $p;
-                next;
-            }
-
-            ### COPIED FROM BELOW
-            if ($p->header->nscount > 0) {
-                my $zname = ($p->authority)[0]->name;
-                my $m = $self->matching_labels($name, $zname);
-
-                if ($m < $level) {
-                    print STDERR
-                      "recurse: Bad referral. Skipping to next server.\n"
-                      if $self->{debug};
-                    next;    # Resolving chain redirecting up
-                }
-
-                $level = $m;
-
-                print STDERR "recurse: Got "
-                  . scalar($p->authority)
-                  . " authority records. Reloading stack.\n"
-                  if $self->{debug};
-                @stack = ();
-
-                $self->remember($p);
-                if (my @fns = $self->faked_zone($zname)) {
-                    push @stack,
-                      grep { !$seen{$_} } $self->simple_names_to_ips(@fns);
-                } else {
-                    push @stack, grep { !$seen{$_} } $self->names_to_ips(
-                        map { $_->nsdname }
-                        grep { $_->type eq 'NS' } $p->authority
-                    );
-                }
-                next;
-            }
-
-            if (    $type ne 'CNAME'
-                and $p->header->ancount > 0
-                and grep { $_->type eq 'CNAME' } $p->answer)
-            {
-                print STDERR "recurse: Resolving CNAME.\n" if $self->{debug};
-                my $cnamerr = (grep { $_->type eq 'CNAME' } $p->answer)[0];
-                return $p if $cnames->{ $cnamerr->cname };    # Break loops
-                $cnames->{ $cnamerr->cname } = 1;
-                my $tmp =
-                  $self->recurse($cnamerr->cname, $type, $class, $cnames);
-                if ($tmp) {
-                    print STDERR "recurse: Adding CNAME to response packet.\n"
-                      if $self->{debug};
-                    $tmp->unique_push(answer => $cnamerr)
-                      unless (keys %$cnames) > 1;
-                    return $tmp;
-                } else {
-                    return $p;
-                }
-            }
-
-            return $p;
         } elsif ($p->header->rcode ne 'NOERROR') {
             print STDERR "recurse: Response code " . $p->header->rcode . "\n"
               if $self->{debug};
@@ -624,6 +557,8 @@ sub recurse {
             } else {
                 return $p;
             }
+        } elsif ($self->matches($p, $name, $type, $class)) {
+            return $p;
         } elsif ($p->header->nscount > 0) {
 
             my $zname = ($p->authority)[0]->name;
@@ -668,6 +603,29 @@ sub recurse {
     } else {
         return;
     }
+}
+
+sub matches {
+    my ($self, $p, $name, $type, $class) = @_;
+    
+    $name = lc($self->canonicalize_name($name));
+    $type = lc($type);
+    $class = lc($class);
+    
+    foreach my $rr ($p->answer) {
+        my $rrname = lc($self->canonicalize_name($rr->name));
+        my $rrtype = lc($rr->type);
+        my $rrclass = lc($rr->class);
+        
+        printf STDERR "matches: %s => %s, %s => %s, %s => %s\n", $rrname, $name, $rrtype, $type, $rrclass, $class if $self->{debug};
+        if ($rrname eq $name and $rrtype eq $type and $rrclass eq $class) {
+            print STDERR "matches: Found.\n" if $self->{debug};
+            return 1;
+        }
+    }
+    
+    print STDERR "matches: Not found.\n" if $self->{debug};
+    return;
 }
 
 sub matching_labels {
