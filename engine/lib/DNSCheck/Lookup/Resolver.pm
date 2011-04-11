@@ -172,7 +172,7 @@ sub faked_zone {
     my $self = shift;
     my $name = shift;
 
-    return unless $name; # An empty name isn't a faked zone.
+    return unless $name;    # An empty name isn't a faked zone.
 
     $name = $self->canonicalize_name($name);
 
