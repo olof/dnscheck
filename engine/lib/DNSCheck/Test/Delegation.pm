@@ -36,6 +36,7 @@ use strict;
 
 use base 'DNSCheck::Test::Common';
 use Net::IP qw[:PROC];
+use List::Util;
 
 ######################################################################
 
@@ -165,6 +166,10 @@ sub consistent_glue {
 
     # REQUIRE: check for inconsistent glue
     my @glue = _get_glue($parent, $zone);
+    
+    my $v6_glue_at_parent = !!(grep {ip_is_ipv6($_)} @glue);
+    my $v6_glue_at_child;
+    
     foreach my $g (@glue) {
         $logger->auto("DELEGATION:MATCHING_GLUE", $g->name, $g->address);
 
@@ -192,6 +197,9 @@ sub consistent_glue {
                         $logger->auto("DELEGATION:GLUE_FOUND_AT_CHILD",
                             $zone, $g->name, $g->address);
                         $found++;
+                        if (ip_is_ipv6($g->address)) {
+                            $v6_glue_at_child = 1;
+                        }
                     }
                 }
 
@@ -237,6 +245,14 @@ sub consistent_glue {
               $logger->auto("DELEGATION:GLUE_MISSING_AT_CHILD", $g->name);
             next;
         }
+    }
+    
+    if ($v6_glue_at_parent and !$v6_glue_at_child) {
+        $errors += $logger->auto("DELEGATION:IPV6_ONLY_AT_PARENT", $zone)
+    }
+    
+    if (!$v6_glue_at_parent and $v6_glue_at_child) {
+        $errors += $logger->auto("DELEGATION:IPV6_ONLY_AT_CHILD", $zone)
     }
 
     # TODO: check for loop in glue record chain (i.e. unresolvable)
