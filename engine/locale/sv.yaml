@@ -354,6 +354,12 @@ messages:
  DELEGATION:INZONE_NS_WITHOUT_GLUE:
      args: 2
      format: Namnservern %s listades för zonen %s utan att någon adressinformation gavs.
+ DELEGATION:IPV6_ONLY_AT_CHILD:
+     args: 1
+     format: Namnservrar med IPv6 listade i zonen %s, men inte hos dess förälder. 
+ DELEGATION:IPV6_ONLY_AT_PARENT:
+     args: 1
+     format: Namnservrar med IPv6 listade i föräldrazonen för %s, men inte i zonen själv.
  DELEGATION:END:
   args: 1
   format: Klar med test av delegering av %s.

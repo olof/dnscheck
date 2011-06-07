@@ -354,6 +354,12 @@ messages:
  DELEGATION:INZONE_NS_WITHOUT_GLUE:
      args: 2
      format: Nameserver %s is listed for zone %s without address information.
+ DELEGATION:IPV6_ONLY_AT_CHILD:
+     args: 1
+     format: Nameservers with IPv6 address(es) are listed in the zone %s, but not in its parent.
+ DELEGATION:IPV6_ONLY_AT_PARENT:
+     args: 1
+     format: Nameservers with IPv6 were listed in the parent zone for %s, but not in the zone itself.
  DELEGATION:END:
   args: 1
   format: Done testing delegation for %s.
