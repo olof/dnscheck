@@ -135,7 +135,7 @@ loglevels:
   MAIL:DOMAIN_NOT_FOUND: notice 
   MAIL:END: info
   MAIL:HOST_ERROR: notice 
-  MAIL:IPV6_ONLY: warning
+  MAIL:IPV6_ONLY: notice 
   MAIL:MAIL_EXCHANGER: info
   MAIL:DELIVERY_IPV4_OK: info
   MAIL:DELIVERY_IPV4_NOT_OK: warning
