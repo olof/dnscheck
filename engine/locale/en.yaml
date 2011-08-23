@@ -725,10 +725,10 @@ messages:
  CONSISTENCY:SOA_DIGEST_DIFFERENT:
   args: 1
   format: %s different SOA records found.
-  descr: The SOA record are not the same among all name servers. This is usually due to misconfiguration.
+  descr: The other fields in the SOA record are not the same among all name servers. This is usually due to misconfiguration.
  CONSISTENCY:SOA_DIGEST_CONSISTENT:
   args: 0
-  format: All SOA records are consistent among all name servers.
+  format: All other fields in the SOA record are consistent among all name servers.
  CONSISTENCY:END:
   args: 1
   format: Done testing zone consistency for %s.

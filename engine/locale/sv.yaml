@@ -725,10 +725,10 @@ messages:
  CONSISTENCY:SOA_DIGEST_DIFFERENT:
   args: 1
   format: %s olika SOA-poster hittade.
-  descr: SOA-posten är inte densamma på alla DNS-servrarna. Detta beror vanligtvis på ett konfigurationsfel.
+  descr: SOA-postens andra värden är inte lika på alla DNS-servrarna. Detta beror vanligtvis på ett konfigurationsfel.
  CONSISTENCY:SOA_DIGEST_CONSISTENT:
   args: 0
-  format: Alla SOA-poster på DNS-servrarna överenstämmer.
+  format: Alla andra fält i SOA-posten är lika på alla DNS-servrarna.
  CONSISTENCY:END:
   args: 1
   format: Klar med test av att zonen för %s är konsekvent uppsatt.
