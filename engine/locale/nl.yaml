@@ -719,10 +719,10 @@ messages:
  CONSISTENCY:SOA_DIGEST_DIFFERENT:
   args: 1
   format: %s verschillende SOA records gevonden.
-  descr: Het SOA record is niet op alle name servers gelijk. Dit duidt normaal gesproken op een configuratiefout.
+  descr: De overige velden in het SOA record zijn niet op alle name servers gelijk. Dit duidt normaal gesproken op een configuratiefout.
  CONSISTENCY:SOA_DIGEST_CONSISTENT:
   args: 0
-  format: Alle SOA records zijn consistent op alle name servers.
+  format: Alle overige velden in het SOA record zijn consistent op alle name servers.
  CONSISTENCY:END:
   args: 1
   format: Gereed met testen van de zone consistentie voor %s.
