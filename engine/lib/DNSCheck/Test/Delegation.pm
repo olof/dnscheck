@@ -299,7 +299,7 @@ sub ns_parent_child_matching {
     # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
     my @ns_at_both;
     foreach my $ns (@ns_at_parent) {
-        unless (scalar grep(/^$ns$/i, @ns_at_child)) {
+        unless (scalar grep(/^\Q$ns\E$/i, @ns_at_child)) {
             $errors += $self->logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
         } else {
             push @ns_at_both, $ns;

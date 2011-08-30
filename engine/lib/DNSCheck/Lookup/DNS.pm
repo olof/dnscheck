@@ -204,7 +204,7 @@ sub query_parent_nocache {
         } elsif (
             ($qtype eq 'A' or $qtype eq 'AAAA') and (
                 grep {
-                    /$qname/
+                    /\Q$qname\E/
                 } @ns
             )
           )
