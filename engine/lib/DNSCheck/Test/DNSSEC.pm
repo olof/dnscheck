@@ -402,6 +402,7 @@ sub _check_parent {
         # REQUIRE: the DS MUST point to a DNSKEY that is
         # signing the child's DNSKEY RRset
         if (_count_in_list($rr->keytag, $child_result->{anchors}) >= 1
+            and $child_result->{rr}{ $rr->keytag }
             and $rr->verify($child_result->{rr}{ $rr->keytag }))
         {
             ## DS refers to key signing the DNSKEY RRset
@@ -491,7 +492,7 @@ sub _check_signature ($$$$) {
         $logger->auto("DNSSEC:RRSIG_EXPIRES_AT", scalar(gmtime($expiration)));
     }
 
-    if ($rrsig->verify($rrset, $keys)) {
+    if ($keys and $rrsig->verify($rrset, $keys)) {
         $logger->auto("DNSSEC:RRSIG_VERIFIES", $message);
     } else {
         $logger->auto("DNSSEC:RRSIG_FAILS_VERIFY", $message,
