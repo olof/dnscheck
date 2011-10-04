@@ -360,6 +360,9 @@ messages:
  DELEGATION:IPV6_ONLY_AT_PARENT:
      args: 1
      format: Nameservers with IPv6 were listed in the parent zone for %s, but not in the zone itself.
+ DELEGATION:NS_IS_CNAME:
+     args: 2
+     format: In zone %s nameserver %s has a CNAME record, which is forbidden.
  DELEGATION:END:
   args: 1
   format: Done testing delegation for %s.

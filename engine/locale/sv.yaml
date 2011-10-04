@@ -360,6 +360,9 @@ messages:
  DELEGATION:IPV6_ONLY_AT_PARENT:
      args: 1
      format: Namnservrar med IPv6 listade i föräldrazonen för %s, men inte i zonen själv.
+ DELEGATION:NS_IS_CNAME:
+     args: 2
+     format: I zonen %s har namnservern %s ett CNAME, vilket är förbjudet.
  DELEGATION:END:
   args: 1
   format: Klar med test av delegering av %s.

@@ -80,6 +80,7 @@ sub test {
     $errors += $self->enough_nameservers($zone);
     $errors += $self->consistent_glue($zone);
     $errors += $self->in_zone_ns_glue($zone);
+    $errors += $self->cname_as_ns($zone);
 
     # Test old namservers if we have history
     if ($history) {
@@ -428,6 +429,32 @@ sub in_zone_ns_glue {
                 $zone);
         }
     }
+}
+
+sub cname_as_ns {
+    my ($self, $zone) = @_;
+    my $error = 0;
+
+    return unless $self->parent->config->should_run;
+
+    my @ns = $self->parent->dns->get_nameservers_at_child($zone, $self->qclass);
+
+    foreach my $ns (@ns) {
+        my $a = $self->parent->dns->query_child($zone, $ns, $self->qclass, 'A');
+        my $aaaa =
+          $self->parent->dns->query_child($zone, $ns, $self->qclass, 'AAAA');
+        foreach
+          my $rr ($a->answer, $aaaa->answer, $a->authority, $aaaa->authority)
+        {
+            next unless $rr->name eq $ns;
+            if ($rr->type eq 'CNAME') {
+                $error +=
+                  $self->logger->auto("DELEGATION:NS_IS_CNAME", $zone, $ns);
+            }
+        }
+    }
+
+    return $error;
 }
 
 1;
