@@ -450,6 +450,7 @@ sub cname_as_ns {
             if ($rr->type eq 'CNAME') {
                 $error +=
                   $self->logger->auto("DELEGATION:NS_IS_CNAME", $zone, $ns);
+                  last;
             }
         }
     }
