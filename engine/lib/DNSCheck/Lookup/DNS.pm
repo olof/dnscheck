@@ -846,11 +846,6 @@ sub find_addresses {
     my $ipv4 = $self->query_resolver($qname, $qclass, "A");
     my $ipv6 = $self->query_resolver($qname, $qclass, "AAAA");
 
-    unless ($ipv4 && $ipv6) {
-        ## FIXME: error
-        goto DONE;
-    }
-
     unless (($ipv4 && $ipv4->header->ancount)
         || ($ipv6 && $ipv6->header->ancount))
     {
@@ -859,8 +854,8 @@ sub find_addresses {
     }
 
     my @answers = ();
-    push @answers, $ipv4->answer if ($ipv4->header->ancount);
-    push @answers, $ipv6->answer if ($ipv6->header->ancount);
+    push @answers, $ipv4->answer if (defined($ipv4) && $ipv4->header->ancount);
+    push @answers, $ipv6->answer if (defined($ipv6) && $ipv6->header->ancount);
 
     foreach my $rr (@answers) {
         if (($rr->type eq "A" or $rr->type eq "AAAA") && $rr->address) {
