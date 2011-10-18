@@ -738,12 +738,11 @@ sub _find_parent_helper {
 
         $parent = $self->_find_soa($try, $qclass);
 
-        # if we get an NXDOMAIN back, we're done
-        goto DONE unless ($parent);
+        if($parent) {
+	    $self->logger->auto("DNS:FIND_PARENT_UPPER", $parent);
 
-        $self->logger->auto("DNS:FIND_PARENT_UPPER", $parent);
-
-        goto DONE if ($try eq $parent);
+	    goto DONE if ($try eq $parent);
+	}
     } while ($#labels > 0);
 
     $parent = $try;
@@ -766,7 +765,7 @@ sub _find_soa {
 
     $answer = $self->{resolver}->recurse($qname, "SOA", $qclass);
 
-    return $qname unless ($answer);
+    return undef unless ($answer);
 
 # The following check may run afoul of a bug in BIND 9.x where x is 3 or less,
 # and if so lead to a false CRITICAL error. See RFC 2136 section 7.16 and
@@ -774,8 +773,9 @@ sub _find_soa {
 
     # return undef if ($answer->header->rcode eq "NXDOMAIN");
 
-    # "Handle" CNAMEs at zone apex
     foreach my $rr ($answer->answer) {
+	return $rr->name if($rr->type eq "SOA");
+	# "Handle" CNAMEs at zone apex
         return $qname if ($rr->type eq "CNAME");
     }
 
@@ -783,7 +783,7 @@ sub _find_soa {
         return $rr->name if ($rr->type eq "SOA");
     }
 
-    return $qname;
+    return undef;
 }
 
 ######################################################################
