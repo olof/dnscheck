@@ -467,6 +467,15 @@ sub get {
     return $p;
 }
 
+sub trace {
+    my ( $self, $domain ) = @_;
+
+    $self->{trace}{$domain} = [];
+    $self->recurse( $domain, 'ANY', 'ANY' );
+
+    return reverse @{ $self->{trace}{$domain} };
+}
+
 # Recursively look up stuff.
 #
 # Resolution procedure of a name
@@ -563,6 +572,7 @@ sub recurse {
                 next;    # Resolving chain redirecting up
             }
 
+            push @{ $self->{trace}{$name} }, $zname;    # Remember the path we took, so we can use it to find parent domains.
             $level = $m;
 
             print STDERR "recurse: Got " . scalar( $p->authority ) . " authority records. Reloading stack.\n"
