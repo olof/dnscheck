@@ -6,7 +6,7 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 8;
+use Test::More tests => 9;
 
 use DNSCheck;
 
@@ -25,5 +25,6 @@ ok($dns->find_parent("narnia.pp.se", "IN") eq "se");
 ok($dns->find_parent("example.com",  "IN") eq "com");
 ok($dns->find_parent("brixtal.se",   "IN") eq "se");
 ok($dns->find_parent("tboerner.eu",  "IN") eq "eu");
+ok($dns->find_parent("0.0.f.f.8.d.6.1.1.0.0.2.ip6.arpa", "IN") eq 'f.f.8.d.6.1.1.0.0.2.ip6.arpa');
 my $diff = time() - $start;
 ok($diff < 30, "Test ran in $diff seconds");
