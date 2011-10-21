@@ -620,7 +620,7 @@ sub matches {
         printf STDERR "matches: %s => %s, %s => %s, %s => %s\n", $rrname, $name,
           $rrtype, $type, $rrclass, $class
           if $self->{debug};
-        if ($rrname eq $name and $rrtype eq $type and $rrclass eq $class) {
+        if ($rrname eq $name and ($rrtype eq $type or $type eq 'any') and ($rrclass eq $class or $class eq 'any')) {
             print STDERR "matches: Found.\n" if $self->{debug};
             return 1;
         }
@@ -652,6 +652,7 @@ sub matching_labels {
     return $count;
 }
 
+1;
 =head1 NAME
 
 DNSCheck::Lookup::Resolver - a recursive DNS resolver for DNSCheck
