@@ -53,32 +53,32 @@ sub new {
 
     $self->{parent} = $parent;
 
-    my $config = $self->config->get("dns");
-    $self->{debug} = $parent->config->get("debug");
+    my $config = $self->config->get( "dns" );
+    $self->{debug} = $parent->config->get( "debug" );
     $self->{debug} = $ENV{DNSCHECK_DEBUG} if $ENV{DNSCHECK_DEBUG};
     $self->{debug} -= 1 if $self->{debug};
 
-    $self->{cache}   = $parent->config->get('root_zone_data');
+    $self->{cache}   = $parent->config->get( 'root_zone_data' );
     $self->{current} = '';
 
     $self->{resolver} = Net::DNS::Resolver->new(
 
-   # RFC3330 reserved address. As close to guaranteed *not* to have a nameserver
-   # on it as we're likely to get (the module does not accept an empty list).
+        # RFC3330 reserved address. As close to guaranteed *not* to have a nameserver
+        # on it as we're likely to get (the module does not accept an empty list).
         nameservers => ['192.0.2.1'],
     );
-    $self->{resolver}->persistent_tcp(0);
-    $self->{resolver}->cdflag(1);
-    $self->{resolver}->recurse(0);
-    $self->{resolver}->dnssec(0);
-    $self->{resolver}->debug(1) if ($self->{debug} and $self->{debug} > 1);
-    $self->{resolver}->udp_timeout($config->{udp_timeout});
-    $self->{resolver}->tcp_timeout($config->{tcp_timeout});
-    $self->{resolver}->retry($config->{retry});
-    $self->{resolver}->retrans($config->{retrans});
+    $self->{resolver}->persistent_tcp( 0 );
+    $self->{resolver}->cdflag( 1 );
+    $self->{resolver}->recurse( 0 );
+    $self->{resolver}->dnssec( 0 );
+    $self->{resolver}->debug( 1 ) if ( $self->{debug} and $self->{debug} > 1 );
+    $self->{resolver}->udp_timeout( $config->{udp_timeout} );
+    $self->{resolver}->tcp_timeout( $config->{tcp_timeout} );
+    $self->{resolver}->retry( $config->{retry} );
+    $self->{resolver}->retrans( $config->{retrans} );
 
-    $self->{ipv6} = $parent->config->get("net")->{ipv6};
-    $self->{ipv4} = $parent->config->get("net")->{ipv4};
+    $self->{ipv6} = $parent->config->get( "net" )->{ipv6};
+    $self->{ipv4} = $parent->config->get( "net" )->{ipv4};
 
     return $self;
 }
@@ -118,25 +118,25 @@ sub times {
 sub errorstring {
     my $self = shift;
 
-    return $self->resolver->errorstring(@_);
+    return $self->resolver->errorstring( @_ );
 }
 
 sub dnssec {
     my $self = shift;
 
-    return $self->resolver->dnssec(@_);
+    return $self->resolver->dnssec( @_ );
 }
 
 sub recursion {
     my $self = shift;
 
-    return $self->resolver->recurse(@_);
+    return $self->resolver->recurse( @_ );
 }
 
 sub cdflag {
     my $self = shift;
 
-    return $self->resolver->cdflag(@_);
+    return $self->resolver->cdflag( @_ );
 }
 
 # Methods to support undelegated testing
@@ -147,10 +147,10 @@ sub add_fake_glue {
     my $nsname = shift;
     my $nsip   = shift;
 
-    return unless Net::IP->new($nsip);
+    return unless Net::IP->new( $nsip );
 
-    $nsname = $self->canonicalize_name($nsname);
-    $zone   = $self->canonicalize_name($zone);
+    $nsname = $self->canonicalize_name( $nsname );
+    $zone   = $self->canonicalize_name( $zone );
 
     $self->cache->{ns}{$zone}{$nsname}  = 1;
     $self->cache->{ips}{$nsname}{$nsip} = 1;
@@ -164,8 +164,7 @@ sub add_fake_glue {
 sub faked_zones {
     my $self = shift;
 
-    return
-      map { my $tmp = $_; $tmp =~ s/\.$//; $tmp } keys %{ $self->{fake}{ns} };
+    return map { my $tmp = $_; $tmp =~ s/\.$//; $tmp } keys %{ $self->{fake}{ns} };
 }
 
 # Return a list of NS names for a zone with fake glue
@@ -175,12 +174,13 @@ sub faked_zone {
 
     return unless $name;    # An empty name isn't a faked zone.
 
-    $name = $self->canonicalize_name($name);
+    $name = $self->canonicalize_name( $name );
 
-    if ($self->{fake}{ns}{$name}) {
+    if ( $self->{fake}{ns}{$name} ) {
         return map { my $tmp = $_; $tmp =~ s/\.$//; $tmp }
           keys %{ $self->cache->{ns}{$name} };
-    } else {
+    }
+    else {
         return;
     }
 }
@@ -192,44 +192,43 @@ sub fake_packet {
     my $name = shift;
     my $type = shift;
 
-    $name = $self->canonicalize_name($name);
+    $name = $self->canonicalize_name( $name );
 
-    my @ns  = $self->faked_zone($zone);
+    my @ns  = $self->faked_zone( $zone );
     my @ips = keys %{ $self->cache->{ips}{$name} };
     my $version;
 
-    if ($type eq 'A') {
+    if ( $type eq 'A' ) {
         $version = 4;
-    } elsif ($type eq 'AAAA') {
+    }
+    elsif ( $type eq 'AAAA' ) {
         $version = 6;
-    } elsif ($type eq 'NS') {
-        return $self->fake_ns_packet($name);
-    } else {
+    }
+    elsif ( $type eq 'NS' ) {
+        return $self->fake_ns_packet( $name );
+    }
+    else {
         return;    # Can't or won't fake that
     }
 
     @ips =
       map { $_->ip }
-      grep { defined($_) and $_->version == $version }
-      map { Net::IP->new($_) } @ips;
+      grep { defined( $_ ) and $_->version == $version }
+      map { Net::IP->new( $_ ) } @ips;
 
     my $p = Net::DNS::Packet->new;
 
-    $p->unique_push('answer', Net::DNS::RR->new("$name 4711 IN $type $_"))
-      for @ips;
+    $p->unique_push( 'answer', Net::DNS::RR->new( "$name 4711 IN $type $_" ) ) for @ips;
 
-    for my $ns (@ns) {
-        $p->unique_push('authority', Net::DNS::RR->new("$zone 4711 IN NS $ns"));
-        for my $ip (
-            keys %{ $self->cache->{ips}{ $self->canonicalize_name($ns) } })
-        {
-            my $t = (Net::IP->new($ip)->version == 4) ? 'A' : 'AAAA';
-            $p->unique_push('additional',
-                Net::DNS::RR->new("$ns 4711 IN $t $ip"));
+    for my $ns ( @ns ) {
+        $p->unique_push( 'authority', Net::DNS::RR->new( "$zone 4711 IN NS $ns" ) );
+        for my $ip ( keys %{ $self->cache->{ips}{ $self->canonicalize_name( $ns ) } } ) {
+            my $t = ( Net::IP->new( $ip )->version == 4 ) ? 'A' : 'AAAA';
+            $p->unique_push( 'additional', Net::DNS::RR->new( "$ns 4711 IN $t $ip" ) );
         }
     }
 
-    $p->header->aa(1);
+    $p->header->aa( 1 );
 
     return $p;
 }
@@ -240,12 +239,11 @@ sub fake_ns_packet {
     my @ns   = keys %{ $self->{cache}{ns}{$zone} };
 
     my $p = Net::DNS::Packet->new;
-    foreach my $n (@ns) {
-        $p->unique_push('answer', Net::DNS::RR->new("$zone 4711 IN NS $n"));
-        foreach my $ip (keys %{ $self->{cache}{ips}{$n} }) {
-            my $t = (Net::IP->new($ip)->version == 4) ? 'A' : 'AAAA';
-            $p->unique_push('additional',
-                Net::DNS::RR->new("$n 4711 IN $t $ip"));
+    foreach my $n ( @ns ) {
+        $p->unique_push( 'answer', Net::DNS::RR->new( "$zone 4711 IN NS $n" ) );
+        foreach my $ip ( keys %{ $self->{cache}{ips}{$n} } ) {
+            my $t = ( Net::IP->new( $ip )->version == 4 ) ? 'A' : 'AAAA';
+            $p->unique_push( 'additional', Net::DNS::RR->new( "$n 4711 IN $t $ip" ) );
         }
     }
 
@@ -256,22 +254,20 @@ sub fake_ns_packet {
 #
 # We cache known nameserver lists for names, and IP addresses for names.
 sub remember {
-    my ($self, $p) = @_;
+    my ( $self, $p ) = @_;
 
-    return unless defined($p);
+    return unless defined( $p );
 
-    foreach my $rr ($p->answer, $p->additional, $p->authority) {
-        my $n = $self->canonicalize_name($rr->name);
-        if ($rr->type eq 'A' or $rr->type eq 'AAAA') {
-            $self->{cache}{ips}{$n}{ Net::IP->new($rr->address)->ip } = 1
+    foreach my $rr ( $p->answer, $p->additional, $p->authority ) {
+        my $n = $self->canonicalize_name( $rr->name );
+        if ( $rr->type eq 'A' or $rr->type eq 'AAAA' ) {
+            $self->{cache}{ips}{$n}{ Net::IP->new( $rr->address )->ip } = 1
               unless $self->{fake}{ips}{$n};
         }
-        if ($rr->type eq 'NS') {
-            print STDERR "remember: NS $n ("
-              . $rr->name . ") "
-              . $rr->nsdname . ".\n"
-              if ($self->{debug} and $self->{debug} > 1);
-            $self->{cache}{ns}{$n}{ $self->canonicalize_name($rr->nsdname) } = 1
+        if ( $rr->type eq 'NS' ) {
+            print STDERR "remember: NS $n (" . $rr->name . ") " . $rr->nsdname . ".\n"
+              if ( $self->{debug} and $self->{debug} > 1 );
+            $self->{cache}{ns}{$n}{ $self->canonicalize_name( $rr->nsdname ) } = 1
               unless $self->{fake}{ns}{$n};
         }
     }
@@ -286,33 +282,33 @@ sub get_preload_data {
     my %cache;
 
     my $res = Net::DNS::Resolver->new;
-    $res->nameservers($source) if defined($source);
-    my $z = $res->send('.', 'IN', 'NS');
+    $res->nameservers( $source ) if defined( $source );
+    my $z = $res->send( '.', 'IN', 'NS' );
 
-    if (!defined($z) or $z->header->ancount == 0) {
+    if ( !defined( $z ) or $z->header->ancount == 0 ) {
         die "Failed to get root zone data";
     }
 
-    foreach my $rr ($z->answer) {
+    foreach my $rr ( $z->answer ) {
         next unless $rr->type eq 'NS';
 
-        $cache{ns}{'.'}{ $self->canonicalize_name($rr->nsdname) } = 1;
+        $cache{ns}{'.'}{ $self->canonicalize_name( $rr->nsdname ) } = 1;
     }
 
-    foreach my $nsname (keys %{ $cache{ns}{'.'} }) {
-        $nsname = $self->canonicalize_name($nsname);
+    foreach my $nsname ( keys %{ $cache{ns}{'.'} } ) {
+        $nsname = $self->canonicalize_name( $nsname );
 
-        my $a = $res->send($nsname, 'IN', 'A');
-        next if (!defined($a) or $a->header->ancount == 0);
-        foreach my $rr ($a->answer) {
+        my $a = $res->send( $nsname, 'IN', 'A' );
+        next if ( !defined( $a ) or $a->header->ancount == 0 );
+        foreach my $rr ( $a->answer ) {
             next unless $rr->type eq 'A';
 
             $cache{ips}{$nsname}{ $rr->address } = 1;
         }
 
-        my $aaaa = $res->send($nsname, 'IN', 'AAAA');
-        next if (!defined($aaaa) or $aaaa->header->ancount == 0);
-        foreach my $rr ($aaaa->answer) {
+        my $aaaa = $res->send( $nsname, 'IN', 'AAAA' );
+        next if ( !defined( $aaaa ) or $aaaa->header->ancount == 0 );
+        foreach my $rr ( $aaaa->answer ) {
             next unless $rr->type eq 'AAAA';
 
             $cache{ips}{$nsname}{ $rr->address } = 1;
@@ -327,14 +323,14 @@ sub canonicalize_name {
     my $self = shift;
     my $name = shift;
 
-    my $i = Net::IP->new($name);
-    if ($name and $name =~ m|^[0-9.:]+$| and defined($i)) {
+    my $i = Net::IP->new( $name );
+    if ( $name and $name =~ m|^[0-9.:]+$| and defined( $i ) ) {
         $name = $i->reverse_ip;
     }
 
-    $name = lc($name);
+    $name = lc( $name );
 
-    $name .= '.' unless substr($name, -1) eq '.';
+    $name .= '.' unless substr( $name, -1 ) eq '.';
 
     return $name;
 }
@@ -348,9 +344,10 @@ sub strip_label {
     my @labels = split /\./, $name;
     shift @labels;
 
-    if (@labels) {
-        return $self->canonicalize_name(join '.', @labels);
-    } else {
+    if ( @labels ) {
+        return $self->canonicalize_name( join '.', @labels );
+    }
+    else {
         return '.';
     }
 }
@@ -362,7 +359,7 @@ sub highest_known_ns {
     my $self = shift;
     my $name = shift;
 
-    $name = $self->canonicalize_name($name);
+    $name = $self->canonicalize_name( $name );
 
     # If there are more than one zone with fake glue, and one is a parent of
     # another, choose the one with the most labels in it.
@@ -371,38 +368,38 @@ sub highest_known_ns {
         grep { $name =~ /\Q$_\E$/ } $self->faked_zones
     )[0];
 
-    if ($faked) {
+    if ( $faked ) {
         return keys %{ $self->cache->{ns}{$faked} };
     }
 
     my @candidates;
-    while (1) {
-        my @tmp =
-          $self->simple_names_to_ips(keys %{ $self->{cache}{ns}{$name} })
+    while ( 1 ) {
+        my @tmp = $self->simple_names_to_ips( keys %{ $self->{cache}{ns}{$name} } )
           if $self->{cache}{ns}{$name};
         push @candidates, @tmp if @tmp;
 
-        if ($name eq '.') {
+        if ( $name eq '.' ) {
             last;
         }
 
-        $name = $self->strip_label($name);
+        $name = $self->strip_label( $name );
     }
 
-    if (!@candidates) {
+    if ( !@candidates ) {
         die "Root zone cache missing.";
-    } else {
+    }
+    else {
         return @candidates;
     }
 }
 
 sub simple_names_to_ips {
     my $self = shift;
-    my @names = map { $self->canonicalize_name($_) } @_;
+    my @names = map { $self->canonicalize_name( $_ ) } @_;
     my @ips;
 
-    foreach my $n (@names) {
-        if ($self->cache->{ips}{$n}) {
+    foreach my $n ( @names ) {
+        if ( $self->cache->{ips}{$n} ) {
             push @ips, keys %{ $self->cache->{ips}{$n} };
         }
     }
@@ -412,19 +409,20 @@ sub simple_names_to_ips {
 
 sub names_to_ips {
     my $self = shift;
-    my @names = map { $self->canonicalize_name($_) } @_;
+    my @names = map { $self->canonicalize_name( $_ ) } @_;
     my @ips;
 
-    foreach my $n (@names) {
-        if ($self->cache->{ips}{$n}) {
+    foreach my $n ( @names ) {
+        if ( $self->cache->{ips}{$n} ) {
             push @ips, keys %{ $self->cache->{ips}{$n} };
-        } else {
+        }
+        else {
             next if $self->{poison}{$n};
             $self->{poison}{$n} = 1;    # Block lookups of this name
-            my $p = $self->recurse($n, 'A');
-            $self->remember($p);
+            my $p = $self->recurse( $n, 'A' );
+            $self->remember( $p );
 
-            if ($self->cache->{ips}{$n}) {
+            if ( $self->cache->{ips}{$n} ) {
                 push @ips, keys %{ $self->cache->{ips}{$n} };
                 $self->{poison}{$n} = 0;    # Allow lookups of name
             }
@@ -442,34 +440,30 @@ sub get {
     my $class = shift || 'IN';
     my @ns    = @_;
 
-    print STDERR "get: $name $type $class @ns " . (caller(1))[3] . "\n"
+    print STDERR "get: $name $type $class @ns " . ( caller( 1 ) )[3] . "\n"
       if $self->{debug};
 
-    @ns = map { $_->ip } grep {
-             ($_->version == 4 and $self->{ipv4})
-          or ($_->version == 6 and $self->{ipv6})
-      } map {
-        Net::IP->new($_)
-      } @ns;
+    @ns =
+      map { $_->ip } grep { ( $_->version == 4 and $self->{ipv4} ) or ( $_->version == 6 and $self->{ipv6} ) } map { Net::IP->new( $_ ) } @ns;
 
     return unless @ns;
 
     my @ns_old = $self->{resolver}->nameservers;
-    $self->{resolver}->nameservers(@ns) if @ns;
+    $self->{resolver}->nameservers( @ns ) if @ns;
 
-    my $before   = [gettimeofday()];
-    my $p        = $self->{resolver}->send($name, $class, $type);
-    my $duration = tv_interval($before);
+    my $before   = [ gettimeofday() ];
+    my $p        = $self->{resolver}->send( $name, $class, $type );
+    my $duration = tv_interval( $before );
 
-    if ($p and $p->answerfrom) {
+    if ( $p and $p->answerfrom ) {
         push @{ $self->times->{ $p->answerfrom } }, $duration;
     }
 
     print STDERR "get: " . $p->string . "\n"
-      if (defined($p) and $self->{debug} and $self->{debug} > 1);
-    $self->remember($p) if defined($p);
+      if ( defined( $p ) and $self->{debug} and $self->{debug} > 1 );
+    $self->remember( $p ) if defined( $p );
 
-    $self->{resolver}->nameservers(@ns_old);
+    $self->{resolver}->nameservers( @ns_old );
     return $p;
 }
 
@@ -495,7 +489,7 @@ sub get {
 #    the chain, in which case we terminate and return undef.
 
 sub recurse {
-    my ($self, $name, $type, $class, $cnames) = @_;
+    my ( $self, $name, $type, $class, $cnames ) = @_;
     $type   ||= 'NS';
     $class  ||= 'IN';
     $cnames ||= {};
@@ -503,68 +497,67 @@ sub recurse {
     print STDERR "recurse: $name $type $class\n" if $self->{debug};
 
     # See if it should be faked
-    if (($type eq 'A' or $type eq 'AAAA')
-        and $self->{fake}{ips}{ $self->canonicalize_name($name) })
+    if ( ( $type eq 'A' or $type eq 'AAAA' )
+        and $self->{fake}{ips}{ $self->canonicalize_name( $name ) } )
     {
-        return $self->fake_packet(undef, $name, $type);
-    } elsif ($type eq 'NS'
-        and $self->{fake}{ns}{ $self->canonicalize_name($name) })
+        return $self->fake_packet( undef, $name, $type );
+    }
+    elsif ( $type eq 'NS'
+        and $self->{fake}{ns}{ $self->canonicalize_name( $name ) } )
     {
-        return $self->fake_packet(undef, $name, $type);
+        return $self->fake_packet( undef, $name, $type );
     }
 
-    my @stack = $self->highest_known_ns($name);
+    my @stack = $self->highest_known_ns( $name );
     my %seen;
     my $candidate;
 
     my $level = -1;
 
-    while (@stack) {
-        my $ns = pop(@stack);
-        print STDERR "recurse: Popped $ns (stack is "
-          . scalar(@stack)
-          . " entries deep).\n"
+    while ( @stack ) {
+        my $ns = pop( @stack );
+        print STDERR "recurse: Popped $ns (stack is " . scalar( @stack ) . " entries deep).\n"
           if $self->{debug};
         $seen{$ns} = 1;
-        my $p = $self->get($name, $type, $class, $ns);
+        my $p = $self->get( $name, $type, $class, $ns );
 
-        if (!defined($p)) {
+        if ( !defined( $p ) ) {
             print STDERR "recurse: No response packet.\n" if $self->{debug};
             next;
-        } elsif ($p->header->rcode ne 'NOERROR') {
+        }
+        elsif ( $p->header->rcode ne 'NOERROR' ) {
             print STDERR "recurse: Response code " . $p->header->rcode . "\n"
               if $self->{debug};
             $candidate = $p unless $candidate;
             next;
-        } elsif (
-            $p->header->ancount > 0 and grep {
-                $_->type eq 'CNAME'
-            } $p->answer
-          )
-        {
+        }
+        elsif ( $p->header->ancount > 0 and grep { $_->type eq 'CNAME' } $p->answer ) {
             print STDERR "recurse: Resolving non-auth CNAME.\n"
               if $self->{debug};
-            my $cnamerr = (grep { $_->type eq 'CNAME' } $p->answer)[0];
+            my $cnamerr = ( grep { $_->type eq 'CNAME' } $p->answer )[0];
             return $p if $cnames->{ $cnamerr->cname };    # Break loops
             $cnames->{ $cnamerr->cname } = 1;
-            my $tmp = $self->recurse($cnamerr->cname, $type, $class, $cnames);
-            if ($tmp) {
+            my $tmp = $self->recurse( $cnamerr->cname, $type, $class, $cnames );
+            if ( $tmp ) {
                 print STDERR "recurse: Adding CNAME to response packet.\n"
                   if $self->{debug};
-                $tmp->unique_push(answer => $cnamerr)
-                  unless (keys %$cnames) > 1;
+                $tmp->unique_push( answer => $cnamerr )
+                  unless ( keys %$cnames ) > 1;
                 return $tmp;
-            } else {
+            }
+            else {
                 return $p;
             }
-        } elsif ($self->matches($p, $name, $type, $class)) {
+        }
+        elsif ( $self->matches( $p, $name, $type, $class ) ) {
             return $p;
-        } elsif ($p->header->nscount > 0) {
+        }
+        elsif ( $p->header->nscount > 0 ) {
 
-            my $zname = ($p->authority)[0]->name;
-            my $m = $self->matching_labels($name, $zname);
+            my $zname = ( $p->authority )[0]->name;
+            my $m = $self->matching_labels( $name, $zname );
 
-            if ($m < $level) {
+            if ( $m < $level ) {
                 print STDERR "recurse: Bad referral. Skipping to next server.\n"
                   if $self->{debug};
                 next;    # Resolving chain redirecting up
@@ -572,24 +565,23 @@ sub recurse {
 
             $level = $m;
 
-            print STDERR "recurse: Got "
-              . scalar($p->authority)
-              . " authority records. Reloading stack.\n"
+            print STDERR "recurse: Got " . scalar( $p->authority ) . " authority records. Reloading stack.\n"
               if $self->{debug};
             @stack = ();
 
-            $self->remember($p);
-            if (my @fns = $self->faked_zone($zname)) {
-                push @stack,
-                  grep { !$seen{$_} } $self->simple_names_to_ips(@fns);
-            } else {
+            $self->remember( $p );
+            if ( my @fns = $self->faked_zone( $zname ) ) {
+                push @stack, grep { !$seen{$_} } $self->simple_names_to_ips( @fns );
+            }
+            else {
                 push @stack, grep { !$seen{$_} } $self->names_to_ips(
                     map { $_->nsdname }
                     grep { $_->type eq 'NS' } $p->authority
                 );
             }
             next;
-        } else {
+        }
+        else {
             print STDERR "recurse: Fell through: " . $p->print
               if $self->{debug};
         }
@@ -598,29 +590,29 @@ sub recurse {
     print STDERR "recurse: Ran out of servers.\n" if $self->{debug};
 
     # Ran out of servers before we got a good reply, return what we've got
-    if ($candidate) {
+    if ( $candidate ) {
         return $candidate;
-    } else {
+    }
+    else {
         return;
     }
 }
 
 sub matches {
-    my ($self, $p, $name, $type, $class) = @_;
+    my ( $self, $p, $name, $type, $class ) = @_;
 
-    $name  = lc($self->canonicalize_name($name));
-    $type  = lc($type);
-    $class = lc($class);
+    $name  = lc( $self->canonicalize_name( $name ) );
+    $type  = lc( $type );
+    $class = lc( $class );
 
-    foreach my $rr ($p->answer) {
-        my $rrname  = lc($self->canonicalize_name($rr->name));
-        my $rrtype  = lc($rr->type);
-        my $rrclass = lc($rr->class);
+    foreach my $rr ( $p->answer ) {
+        my $rrname  = lc( $self->canonicalize_name( $rr->name ) );
+        my $rrtype  = lc( $rr->type );
+        my $rrclass = lc( $rr->class );
 
-        printf STDERR "matches: %s => %s, %s => %s, %s => %s\n", $rrname, $name,
-          $rrtype, $type, $rrclass, $class
+        printf STDERR "matches: %s => %s, %s => %s, %s => %s\n", $rrname, $name, $rrtype, $type, $rrclass, $class
           if $self->{debug};
-        if ($rrname eq $name and ($rrtype eq $type or $type eq 'any') and ($rrclass eq $class or $class eq 'any')) {
+        if ( $rrname eq $name and ( $rrtype eq $type or $type eq 'any' ) and ( $rrclass eq $class or $class eq 'any' ) ) {
             print STDERR "matches: Found.\n" if $self->{debug};
             return 1;
         }
@@ -632,19 +624,20 @@ sub matches {
 
 sub matching_labels {
     my $self = shift;
-    my ($n1, $n2) = @_;
+    my ( $n1, $n2 ) = @_;
 
     my @n1 = reverse split /\./, $n1;
     my @n2 = reverse split /\./, $n2;
     my $count = 0;
 
-    while (@n1 and @n2) {
+    while ( @n1 and @n2 ) {
         my $i = shift @n1;
         my $j = shift @n2;
 
-        if ($i eq $j) {
+        if ( $i eq $j ) {
             $count += 1;
-        } else {
+        }
+        else {
             last;
         }
     }
@@ -653,6 +646,7 @@ sub matching_labels {
 }
 
 1;
+
 =head1 NAME
 
 DNSCheck::Lookup::Resolver - a recursive DNS resolver for DNSCheck
