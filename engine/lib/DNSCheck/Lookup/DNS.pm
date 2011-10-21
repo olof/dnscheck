@@ -717,35 +717,18 @@ sub _find_parent_helper {
 
     $self->logger->auto("DNS:FIND_PARENT_BEGIN", $qname, $qclass);
 
-    # start by finding the SOA for the qname
-    my $try = $self->_find_soa($qname, $qclass);
-
-    # if we get an NXDOMAIN back, we're done
-    unless ($try) {
-        goto DONE;
+    my ($first, $second) = $self->{resolver}->trace($qname);
+    if($first) {
+        if ($first eq $qname) {
+            $parent = $second || '';
+        } else {
+            $parent = $first;
+        }
     }
 
-    $self->logger->auto("DNS:FIND_PARENT_DOMAIN", $try);
-
-    my @labels = split(/\./, $try);
-
-    do {
-        shift @labels;
-        $try = join(".", @labels);
-        $try = "." if ($try eq "");
-
-        $self->logger->auto("DNS:FIND_PARENT_TRY", $try);
-
-        $parent = $self->_find_soa($try, $qclass);
-
-        if($parent) {
-	    $self->logger->auto("DNS:FIND_PARENT_UPPER", $parent);
-
-	    goto DONE if ($try eq $parent);
-	}
-    } while ($#labels > 0);
-
-    $parent = $try;
+    if (defined($parent) and $parent eq '') {
+        $parent = '.';
+    }
 
   DONE:
     if ($parent) {
