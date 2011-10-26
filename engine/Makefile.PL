@@ -22,7 +22,7 @@ WriteMakefile(
         IO::Socket::INET6      => 2.51,
         List::Util             => 0,
         Net::DNS               => 0.65,
-        Net::DNS::SEC          => 0.15,
+        Net::DNS::SEC          => 0.16,
         Net::IP                => 1.25,
         Net::SMTP              => 2.29,
         POSIX                  => 0,

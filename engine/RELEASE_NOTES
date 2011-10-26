@@ -1,3 +1,16 @@
+Release Notes for DNSCheck Lib v1.2.2
+=====================================
+Notable changes:
+
+* Test for NS records pointing at CNAMEs.
+
+* Test for discrepancy in IPv6 presence at parent and child.
+
+* Multiple changes of default policy levels, mostly to do with the growing importance of DNSSEC.
+
+* General fixes for bugs, stability issues and correctness.
+
+
 Release Notes for DNSCheck Lib v1.2
 ===================================
 Changes since version 1.2:
