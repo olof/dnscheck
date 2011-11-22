@@ -443,8 +443,19 @@ sub cname_as_ns {
         my $a = $self->parent->dns->query_child($zone, $ns, $self->qclass, 'A');
         my $aaaa =
           $self->parent->dns->query_child($zone, $ns, $self->qclass, 'AAAA');
-        foreach
-          my $rr ($a->answer, $aaaa->answer, $a->authority, $aaaa->authority)
+        my @rrs = ();
+
+        if ($a) {
+            push @rrs, $a->answer;
+            push @rrs, $a->authority;
+        }
+
+        if ($aaaa) {
+            push @rrs, $aaaa->answer;
+            push @rrs, $aaaa->authority;
+        }
+        
+        foreach my $rr (@rrs)
         {
             next unless $rr->name eq $ns;
             if ($rr->type eq 'CNAME') {
