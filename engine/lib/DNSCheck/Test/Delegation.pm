@@ -167,7 +167,7 @@ sub consistent_glue {
     # REQUIRE: check for inconsistent glue
     my @glue = _get_glue($parent, $zone);
 
-    my $v6_glue_at_parent = !!(grep { ip_is_ipv6($_) } @glue);
+    my $v6_glue_at_parent = !!(grep { ip_is_ipv6($_->address) } @glue);
     my $v6_glue_at_child;
 
     foreach my $g (@glue) {
