@@ -1,3 +1,13 @@
+Release Notes for DNSCheck Lib v1.2.3
+=====================================
+Notable changes:
+
+* Fix for issue #52 in Github, introduced in v1.2.2
+
+* Fix of the "Check for IPv6 NS addresses only at parent or only at child." 
+
+
+
 Release Notes for DNSCheck Lib v1.2.2
 =====================================
 Notable changes:
