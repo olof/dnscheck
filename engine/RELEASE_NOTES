@@ -1,3 +1,10 @@
+Release Notes for DNSCheck Lib v1.2.4
+=====================================
+Noteable changes:
+
+* A real fix for issue #52, i.e. reverting the code to v1.2 in Delegation.pm... 
+
+
 Release Notes for DNSCheck Lib v1.2.3
 =====================================
 Notable changes:
