@@ -380,6 +380,7 @@ sub _check_parent {
     my $logger = $parent->logger;
     my $errors = 0;
 
+    my $valid_ds_count = 0;
     my $mandatory_algorithm = 0;
 
     $logger->auto("DNSSEC:CHECKING_PARENT", $zone);
@@ -409,6 +410,7 @@ sub _check_parent {
         {
             ## DS refers to key signing the DNSKEY RRset
             $logger->auto("DNSSEC:DS_KEYREF_OK", $ds_message, $cmsg);
+            $valid_ds_count += 1;
         } else {
             ## DS refers to key not signing the DNSKEY RRset
             $logger->auto("DNSSEC:DS_KEYREF_INVALID", $ds_message, $cmsg);
@@ -424,6 +426,10 @@ sub _check_parent {
                 $logger->auto("DNSSEC:DS_TO_NONSEP", $zone, $ds_message);
             }
         }
+    }
+
+    if ($valid_ds_count == 0) {
+        $errors += $logger->auto('DNSSEC:NO_VALID_DS', $zone);
     }
 
   DONE:

@@ -490,6 +490,9 @@ messages:
   args: 2
   format: Föräldrazonens %s refererar till icke godkänd nyckel hos barnzonen: %s
   descr: DS RRset måste referera till en giltig nyckel hos barnzonen, annars bryts förtroendekedjan mellan föräldrazonen och barnzonen vilket innebär att validerande resolvrar inte kommer kunna validera svaren från barnzonen.
+ DNSSEC:NO_VALID_DS:
+    args: 1
+    format: Zonen %s har publicerade DS-poster, men ingen av dem fungerar.
  DNSSEC:DS_TO_SEP:
   args: 2
   format: Föräldrazonens DS(%s) refererar till en säker startpunkt (SEP) hos barnzonen: %s

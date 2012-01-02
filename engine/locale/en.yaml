@@ -490,6 +490,9 @@ messages:
   args: 2
   format: Parent %s refers to invalid key at child: %s
   descr: The DS RRset must refer to a valid DNSKEY at the child, or the chain of trust between the parent and the child is broken and validating resolver will not be able to validate answers from the child.
+ DNSSEC:NO_VALID_DS:
+    args: 1
+    format: The zone %s has published DS records, but none of them work.
  DNSSEC:DS_TO_SEP:
   args: 2
   format: Parent DS(%s) refers to secure entry point (SEP) at child: %s
