@@ -401,15 +401,17 @@ sub _check_parent {
 
         # REQUIRE: the DS MUST point to a DNSKEY that is
         # signing the child's DNSKEY RRset
+        my $crr = $child_result->{rr}{ $rr->keytag };
+        my $cmsg = sprintf("DNSKEY(%s/%d/%d)", $zone, $crr->algorithm, $crr->keytag);
         if (_count_in_list($rr->keytag, $child_result->{anchors}) >= 1
             and $child_result->{rr}{ $rr->keytag }
             and $rr->verify($child_result->{rr}{ $rr->keytag }))
         {
             ## DS refers to key signing the DNSKEY RRset
-            $logger->auto("DNSSEC:DS_KEYREF_OK", $zone, $ds_message);
+            $logger->auto("DNSSEC:DS_KEYREF_OK", $ds_message, $cmsg);
         } else {
             ## DS refers to key not signing the DNSKEY RRset
-            $logger->auto("DNSSEC:DS_KEYREF_INVALID", $zone, $ds_message);
+            $logger->auto("DNSSEC:DS_KEYREF_INVALID", $ds_message, $cmsg);
         }
 
         # REQUIRE: the DS MAY point to a SEP at the child

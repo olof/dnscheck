@@ -485,10 +485,10 @@ messages:
   format: Hittade DS(%s) i föräldrazonen: %s
  DNSSEC:DS_KEYREF_OK:
   args: 2
-  format: Föräldrazonens DS(%s) refererar till en godkänd nyckel för barnzonen: %s
+  format: Föräldrazonens %s refererar till en godkänd nyckel för barnzonen: %s
  DNSSEC:DS_KEYREF_INVALID:
   args: 2
-  format: Föräldrazonens DS(%s) refererar till icke godkänd nyckel hos barnzonen: %s
+  format: Föräldrazonens %s refererar till icke godkänd nyckel hos barnzonen: %s
   descr: DS RRset måste referera till en giltig nyckel hos barnzonen, annars bryts förtroendekedjan mellan föräldrazonen och barnzonen vilket innebär att validerande resolvrar inte kommer kunna validera svaren från barnzonen.
  DNSSEC:DS_TO_SEP:
   args: 2
