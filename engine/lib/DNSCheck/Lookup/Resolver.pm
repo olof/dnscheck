@@ -37,6 +37,7 @@ use strict;
 use YAML;
 use Net::IP;
 use Time::HiRes qw[gettimeofday tv_interval];
+use Net::DNS;
 
 # In order to be able to know for sure where certain information comes from,
 # and/or modify parts of resolver chains, we need to do our own recursive
@@ -59,6 +60,8 @@ sub new {
     $self->{debug} -= 1 if $self->{debug};
 
     $self->{cache}   = $parent->config->get( 'root_zone_data' );
+    my $rootds = Net::DNS::RR->new($config->{trustanchor});
+    $self->{cache}{ds}{'.'}{$rootds->keytag} = $rootds;
     $self->{current} = '';
 
     $self->{resolver} = Net::DNS::Resolver->new(
@@ -70,7 +73,7 @@ sub new {
     $self->{resolver}->persistent_tcp( 0 );
     $self->{resolver}->cdflag( 1 );
     $self->{resolver}->recurse( 0 );
-    $self->{resolver}->dnssec( 0 );
+    $self->{resolver}->dnssec( 1 );
     $self->{resolver}->debug( 1 ) if ( $self->{debug} and $self->{debug} > 1 );
     $self->{resolver}->udp_timeout( $config->{udp_timeout} );
     $self->{resolver}->tcp_timeout( $config->{tcp_timeout} );
@@ -264,11 +267,26 @@ sub remember {
             $self->{cache}{ips}{$n}{ Net::IP->new( $rr->address )->ip } = 1
               unless $self->{fake}{ips}{$n};
         }
-        if ( $rr->type eq 'NS' ) {
+        elsif ( $rr->type eq 'NS' ) {
             print STDERR "remember: NS $n (" . $rr->name . ") " . $rr->nsdname . ".\n"
               if ( $self->{debug} and $self->{debug} > 1 );
             $self->{cache}{ns}{$n}{ $self->canonicalize_name( $rr->nsdname ) } = 1
               unless $self->{fake}{ns}{$n};
+        }
+        elsif ( $rr->type eq 'DS') {
+            $self->{cache}{ds}{$n}{$rr->keytag} = $rr;
+        }
+        elsif ($rr->type eq 'DNSKEY') {
+            $self->{cache}{dnskey}{$n}{$rr->keytag} = $rr;
+        }
+        elsif ($rr->type eq 'RRSIG') {
+            $self->{cache}{rrsig}{$n}{$rr->keytag}{$rr->typecovered} = $rr;
+        }
+        elsif ($rr->type eq 'OPT') {
+            # Ignore
+        }
+        else {
+            print "Unknown type " . $rr->type . " seen for $n\n";
         }
     }
 
@@ -432,6 +450,95 @@ sub names_to_ips {
     return @ips;
 }
 
+# Do DNSSEC validation on a packet and return true or false depending on the
+# outcome
+sub validate {
+    my ($self, $p) = @_;
+    my @rrs = grep {$_->type ne 'RRSIG'} $p->answer;
+    my @sigs = grep {$_->type eq 'RRSIG'} $p->answer;
+    
+    unless (@rrs) {
+        @rrs = grep {$_->type ne 'RRSIG'} $p->authority;
+        @sigs = grep {$_->type eq 'RRSIG'} $p->authority;        
+    }
+
+    foreach my $sig (@sigs) {
+        my $key = $self->get_key_for($sig);
+        
+        unless ($key) {
+            ($key) = grep {$_->type eq 'DNSKEY' and $_->keytag eq $sig->keytag} @rrs;
+        }
+
+        if ($key->type eq 'DS') {
+            my ($rr) = grep {$_->keytag eq $key->keytag} @rrs;
+            if ($rr and $key->verify($rr)) {
+                print STDERR "Verified DS for keytag " . $key->keytag . "\n";
+                return 1;
+            }
+            else {
+                die "DS verification failed"
+            }
+        }
+        else {
+            my @rrs = grep {$_->type eq $sig->typecovered} @rrs;
+            if ($sig->verify(\@rrs, $key)) {
+                print STDERR "Verified DNSKEY for keytag " . $key->keytag . "\n";
+                return 1;
+            }
+            else {
+                die "DNSKEY verification failed for " . $key->keytag;
+            }
+        }
+    }
+    
+    die "Again, why did we get here?\n"
+}
+
+=pod
+
+Steps to get the key for an A record:
+
+* The A RRset comes with one or more RRSIG records.
+
+* The RRSIG records come with information on which name to get the DNSKEY
+  from.
+
+* That DNSKEY RRset comes with its own RRSIG set, which apparently signs
+  itself.
+
+* We recurse for a DS RRset for the DNSKEY name, and get it.
+
+* The DS RRset is accompanied by an RRSIG set signed with a DNSKEY from higher
+  in the hieararchy.
+
+* So we go back to the top point, except with a record higher in the
+  hierarchy, and repeat until we get to the externally provided root DS
+  record.
+
+=cut
+
+sub get_key_for {
+    my ($self, $sig) = @_;
+    
+    printf STDERR "Trying to get key for RRSIG %s %s keytag %s, from %s\n",
+        $sig->name, $sig->typecovered, $sig->keytag, $sig->signame;
+
+    if ($sig->name eq $sig->signame) {
+        if ($sig->name eq '' or $sig->name eq '.') {
+            return $self->{cache}{ds}{'.'}{$sig->keytag};
+        }
+        my $p = $self->recurse($sig->name, 'DS');
+        my ($res) = grep {$_->type eq 'DS' and $_->keytag eq $sig->keytag} ($p->answer, $p->authority);
+        return $res;
+    }
+    else {
+        my $p = $self->recurse($sig->signame, 'DNSKEY');
+        my ($res) = grep {$_->type eq 'DNSKEY' and $_->keytag eq $sig->keytag} ($p->answer, $p->authority);
+        
+        return $res;
+    }
+}
+
 # Send a query to a specified set of nameservers and return the result.
 sub get {
     my $self  = shift;
@@ -454,6 +561,11 @@ sub get {
     my $before   = [ gettimeofday() ];
     my $p        = $self->{resolver}->send( $name, $class, $type );
     my $duration = tv_interval( $before );
+
+    # If the packet doesn't validate, pretend it doesn't exist.
+    unless ($self->validate($p)) {
+        return;
+    }
 
     if ( $p and $p->answerfrom ) {
         push @{ $self->times->{ $p->answerfrom } }, $duration;
