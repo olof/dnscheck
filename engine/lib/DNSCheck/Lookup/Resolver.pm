@@ -286,7 +286,7 @@ sub remember {
             # Ignore
         }
         else {
-            print "Unknown type " . $rr->type . " seen for $n\n";
+            print "Unknown type " . $rr->type . " seen for $n\n" if ($self->{debug} and $self->{debug} > 1);
         }
     }
 
@@ -454,6 +454,11 @@ sub names_to_ips {
 # outcome
 sub validate {
     my ($self, $p) = @_;
+    
+    unless ($p) { # Let's call the lack of a packet inherently valid
+        return 1;
+    }
+    
     my @rrs = grep {$_->type ne 'RRSIG'} $p->answer;
     my @sigs = grep {$_->type eq 'RRSIG'} $p->answer;
     
@@ -462,17 +467,37 @@ sub validate {
         @sigs = grep {$_->type eq 'RRSIG'} $p->authority;        
     }
 
+    unless (@rrs) {
+        @rrs = grep {$_->type ne 'RRSIG'} $p->additional;
+        @sigs = grep {$_->type eq 'RRSIG'} $p->additional;        
+    }
+
+    unless (@rrs) {
+        die "No non-RRSIG records at all";
+    }
+
+    unless (@sigs) { # No signature, so let it pass.
+        return 1;
+    }
+    
     foreach my $sig (@sigs) {
         my $key = $self->get_key_for($sig);
         
         unless ($key) {
             ($key) = grep {$_->type eq 'DNSKEY' and $_->keytag eq $sig->keytag} @rrs;
+            unless ($key) {
+                print STDERR "Failed to find a DNSKEY for " . $sig->string . "\n";
+                print STDERR "RR: " . $_->string . "\n" for @rrs;
+                print STDERR "Exiting.\n";
+                exit(1);
+            }
+            
         }
 
         if ($key->type eq 'DS') {
             my ($rr) = grep {$_->keytag eq $key->keytag} @rrs;
             if ($rr and $key->verify($rr)) {
-                print STDERR "Verified DS for keytag " . $key->keytag . "\n";
+#                print STDERR "Verified DS for keytag " . $key->keytag . "\n";
                 return 1;
             }
             else {
@@ -480,9 +505,9 @@ sub validate {
             }
         }
         else {
-            my @rrs = grep {$_->type eq $sig->typecovered} @rrs;
+            my @rrs = grep {$_->type eq $sig->typecovered and $_->name eq $sig->name} @rrs;
             if ($sig->verify(\@rrs, $key)) {
-                print STDERR "Verified DNSKEY for keytag " . $key->keytag . "\n";
+#                print STDERR "Verified DNSKEY for keytag " . $key->keytag . "\n";
                 return 1;
             }
             else {
@@ -520,21 +545,26 @@ Steps to get the key for an A record:
 sub get_key_for {
     my ($self, $sig) = @_;
     
-    printf STDERR "Trying to get key for RRSIG %s %s keytag %s, from %s\n",
-        $sig->name, $sig->typecovered, $sig->keytag, $sig->signame;
+#    printf STDERR "Trying to get key for RRSIG %s %s keytag %s, from %s\n",
+#        $sig->name, $sig->typecovered, $sig->keytag, $sig->signame;
 
-    if ($sig->name eq $sig->signame) {
+    if ($sig->name eq $sig->signame and $sig->typecovered eq 'DNSKEY') {
         if ($sig->name eq '' or $sig->name eq '.') {
             return $self->{cache}{ds}{'.'}{$sig->keytag};
         }
         my $p = $self->recurse($sig->name, 'DS');
+        unless ($p) {
+            return;
+        }
+        
         my ($res) = grep {$_->type eq 'DS' and $_->keytag eq $sig->keytag} ($p->answer, $p->authority);
+
         return $res;
     }
     else {
         my $p = $self->recurse($sig->signame, 'DNSKEY');
         my ($res) = grep {$_->type eq 'DNSKEY' and $_->keytag eq $sig->keytag} ($p->answer, $p->authority);
-        
+
         return $res;
     }
 }
