@@ -63,6 +63,7 @@ sub new {
     my $rootds = Net::DNS::RR->new($config->{trustanchor});
     $self->{cache}{ds}{'.'}{$rootds->keytag} = $rootds;
     $self->{current} = '';
+    $self->{keycache} = {};
 
     $self->{resolver} = Net::DNS::Resolver->new(
 
@@ -544,6 +545,10 @@ Steps to get the key for an A record:
 
 sub get_key_for {
     my ($self, $sig) = @_;
+
+    if ($self->{keycache}{$sig->string}) {
+        return $self->{keycache}{$sig->string};
+    }
     
 #    printf STDERR "Trying to get key for RRSIG %s %s keytag %s, from %s\n",
 #        $sig->name, $sig->typecovered, $sig->keytag, $sig->signame;
@@ -559,12 +564,14 @@ sub get_key_for {
         
         my ($res) = grep {$_->type eq 'DS' and $_->keytag eq $sig->keytag} ($p->answer, $p->authority);
 
+        $self->{keycache}{$sig->string} = $res;
         return $res;
     }
     else {
         my $p = $self->recurse($sig->signame, 'DNSKEY');
         my ($res) = grep {$_->type eq 'DNSKEY' and $_->keytag eq $sig->keytag} ($p->answer, $p->authority);
 
+        $self->{keycache}{$sig->string} = $res;
         return $res;
     }
 }
