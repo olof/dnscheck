@@ -94,7 +94,7 @@ sub do_validation {
     my ($self, $on) = @_;
     
     if (defined($on)) {
-        $self->{validate} = !!$on;
+        $self->{validate} = 0 + $on;
         if ($on) {
             $self->dnssec(1);
         } else {
@@ -495,8 +495,12 @@ sub validate {
         return; # No non-RRSIG records to check, consider not valid.
     }
 
-    unless (@sigs) { # No signature, so let it pass.
-        return 1;
+    unless (@sigs) {
+        if ($self->{validate} > 1) {
+            return; # Harsh validation, unsigned content not allowed.
+        } else {
+            return 1;
+        }
     }
     
     foreach my $sig (@sigs) {
@@ -530,29 +534,7 @@ sub validate {
     }
 }
 
-=pod
-
-Steps to get the key for an A record:
-
-* The A RRset comes with one or more RRSIG records.
-
-* The RRSIG records come with information on which name to get the DNSKEY
-  from.
-
-* That DNSKEY RRset comes with its own RRSIG set, which apparently signs
-  itself.
-
-* We recurse for a DS RRset for the DNSKEY name, and get it.
-
-* The DS RRset is accompanied by an RRSIG set signed with a DNSKEY from higher
-  in the hieararchy.
-
-* So we go back to the top point, except with a record higher in the
-  hierarchy, and repeat until we get to the externally provided root DS
-  record.
-
-=cut
-
+# Find a suitable key for a certain signature.
 sub get_key_for {
     my ($self, $sig) = @_;
 
@@ -828,6 +810,27 @@ Send a DNS query to specified servers.
 =item ->recurse($name, $type, [$class])
 
 Do a recursive query. If the class is not specified, it defaults to IN.
+
+=item ->do_validation($level)
+
+Set the desired DNSSEC validation level. Available levels are:
+
+=over
+
+=item 0
+
+Don't do DNSSEC validation.
+
+=item 1
+
+Validate signed content and let unsigned content pass.
+
+=item 2
+
+Only accept correctly signed content. Note that as of this writing, this makes
+the vast majority of the Internet disappear.
+
+=back
 
 =back
 
