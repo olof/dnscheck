@@ -64,6 +64,7 @@ sub new {
     $self->{cache}{ds}{'.'}{$rootds->keytag} = $rootds;
     $self->{current} = '';
     $self->{keycache} = {};
+    $self->{validate} = 0;
 
     $self->{resolver} = Net::DNS::Resolver->new(
 
@@ -74,7 +75,7 @@ sub new {
     $self->{resolver}->persistent_tcp( 0 );
     $self->{resolver}->cdflag( 1 );
     $self->{resolver}->recurse( 0 );
-    $self->{resolver}->dnssec( 1 );
+    $self->{resolver}->dnssec( 0 );
     $self->{resolver}->debug( 1 ) if ( $self->{debug} and $self->{debug} > 1 );
     $self->{resolver}->udp_timeout( $config->{udp_timeout} );
     $self->{resolver}->tcp_timeout( $config->{tcp_timeout} );
@@ -85,6 +86,23 @@ sub new {
     $self->{ipv4} = $parent->config->get( "net" )->{ipv4};
 
     return $self;
+}
+
+# Accessor
+
+sub do_validation {
+    my ($self, $on) = @_;
+    
+    if (defined($on)) {
+        $self->{validate} = !!$on;
+        if ($on) {
+            $self->dnssec(1);
+        } else {
+            $self->dnssec(0)
+        }
+    }
+    
+    return $self->{validate};
 }
 
 # Standard utility methods
@@ -600,7 +618,7 @@ sub get {
     my $duration = tv_interval( $before );
 
     # If the packet doesn't validate, pretend it doesn't exist.
-    unless ($self->validate($p)) {
+    if ($self->do_validation and not $self->validate($p)) {
         return;
     }
 
