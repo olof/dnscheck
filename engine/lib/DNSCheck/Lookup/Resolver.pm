@@ -492,7 +492,7 @@ sub validate {
     }
 
     unless (@rrs) {
-        die "No non-RRSIG records at all";
+        return; # No non-RRSIG records to check, consider not valid.
     }
 
     unless (@sigs) { # No signature, so let it pass.
@@ -505,37 +505,29 @@ sub validate {
         unless ($key) {
             ($key) = grep {$_->type eq 'DNSKEY' and $_->keytag eq $sig->keytag} @rrs;
             unless ($key) {
-                print STDERR "Failed to find a DNSKEY for " . $sig->string . "\n";
-                print STDERR "RR: " . $_->string . "\n" for @rrs;
-                print STDERR "Exiting.\n";
-                exit(1);
+                return; # We failed to find a key, so consider validation failed.
             }
-            
         }
 
         if ($key->type eq 'DS') {
             my ($rr) = grep {$_->keytag eq $key->keytag} @rrs;
             if ($rr and $key->verify($rr)) {
-#                print STDERR "Verified DS for keytag " . $key->keytag . "\n";
                 return 1;
             }
             else {
-                die "DS verification failed"
+                return; # Verification failed, return false
             }
         }
         else {
             my @rrs = grep {$_->type eq $sig->typecovered and $_->name eq $sig->name} @rrs;
             if ($sig->verify(\@rrs, $key)) {
-#                print STDERR "Verified DNSKEY for keytag " . $key->keytag . "\n";
                 return 1;
             }
             else {
-                die "DNSKEY verification failed for " . $key->keytag;
+                return; # Verification failed, return false
             }
         }
     }
-    
-    die "Again, why did we get here?\n"
 }
 
 =pod
@@ -568,9 +560,6 @@ sub get_key_for {
         return $self->{keycache}{$sig->string};
     }
     
-#    printf STDERR "Trying to get key for RRSIG %s %s keytag %s, from %s\n",
-#        $sig->name, $sig->typecovered, $sig->keytag, $sig->signame;
-
     if ($sig->name eq $sig->signame and $sig->typecovered eq 'DNSKEY') {
         if ($sig->name eq '' or $sig->name eq '.') {
             return $self->{cache}{ds}{'.'}{$sig->keytag};
