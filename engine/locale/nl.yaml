@@ -454,7 +454,7 @@ messages:
  DNSSEC:SOA_SIGNATURE_OK:
   args: 2
   format: RRSIG(SOA %s) aangemaakt door DNSKEY (tag %s) OK.
- DNSSEC:SOA_SIGNATURE_UNPUBLISHED:
+ DNSSEC:SOA_SIGNER_UNPUBLISHED:
   args: 2
   format: RRSIG(SOA %s) gevonden die is aangemaakt door gepubliceerde sleutel (tag %s).
   descr: DNSSEC handtekeningen die aangemaakt zijn door niet gepubliceerde sleutels kunnen niet worden gevalideerd door 'validating resolvers'.  Alle sleutels die worden gebruikt om gegevens te signeren dienen te zijn gepubliceerd.
