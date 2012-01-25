@@ -349,20 +349,20 @@ messages:
   format: Een eerder gebruikte name server %s (%s) is nog steeds authoritative voor %s.
   descr: Een eerder gebruikte nameserver geeft nog steeds authoritative antwoord voor de zone.  Dit komt waarschijnlijk vanwege oude zone data die nog niet is uigeconfigureerd op de oude server.  Om dit probleem op te lossen kunt u contact opnemen met de beheerder van de name server met het verzoek de zone uit de configuratie te verwijderen.
  DELEGATION:BROKEN_UNDELEGATED:
-     args: 1
-     format: Test voor zone %s was gemarkeerd als niet-gedelegeerd, maar er is geen werkende glue opgegeven.
+  args: 1
+  format: Test voor zone %s was gemarkeerd als niet-gedelegeerd, maar er is geen werkende glue opgegeven.
  DELEGATION:INZONE_NS_WITHOUT_GLUE:
-     args: 2
-     format: Nameserver %s staat geregistreerd bij zone %s zonder adres informatie.
+  args: 2
+  format: Nameserver %s staat geregistreerd bij zone %s zonder adres informatie.
  DELEGATION:IPV6_ONLY_AT_CHILD:
-     args: 1
-     format: Nameservers met IPv6 adressen staan wel in zone %s, maar niet in de parentzone. 
+  args: 1
+  format: Nameservers met IPv6 adressen staan wel in zone %s, maar niet in de parentzone.
  DELEGATION:IPV6_ONLY_AT_PARENT:
-     args: 1
-     format: Nameservers met IPv6 staan wel genoemd in de parentzone van %s, maar niet in de zone zelf. 
+  args: 1
+  format: Nameservers met IPv6 staan wel genoemd in de parentzone van %s, maar niet in de zone zelf.
  DELEGATION:NS_IS_CNAME:
-     args: 2
-     format: In zone %s heeft nameserver %s een CNAME record, dat is niet toegestaan. 
+  args: 2
+  format: In zone %s heeft nameserver %s een CNAME record, dat is niet toegestaan.
  DELEGATION:END:
   args: 1
   format: Gereed met delegatie testen voor %s.
@@ -491,8 +491,8 @@ messages:
   format: Parent DS(%s) verwijst naar een ongeldige sleutel bij child: %s
   descr: De DS RRset moet verwijzen naar een geldige DNSKEY bij de child, anders is de 'chain of trust' tussen de parent en de child verbroken en kunnen 'validating resolver's antwoorden van de child niet valideren.
  DNSSEC:NO_VALID_DS:
-    args: 1
-    format: Zone %s bevat DS records, maar geen daarvan werkt.
+  args: 1
+  format: Zone %s bevat DS records, maar geen daarvan werkt.
  DNSSEC:DS_TO_SEP:
   args: 2
   format: Parent DS(%s) verwijst naar secure entry point (SEP) bij child: %s
