@@ -403,8 +403,12 @@ sub _check_parent {
         # REQUIRE: the DS MUST point to a DNSKEY that is
         # signing the child's DNSKEY RRset
         my $crr = $child_result->{rr}{ $rr->keytag };
-        my $cmsg =
-          sprintf("DNSKEY(%s/%d/%d)", $zone, $crr->algorithm, $crr->keytag);
+        my $cmsg;
+        if($crr) {
+            $cmsg = sprintf("DNSKEY(%s/%d/%d)", $zone, $crr->algorithm, $crr->keytag);
+        } else {
+            $cmsg = 'No key'
+        } 
         if (    _count_in_list($rr->keytag, $child_result->{anchors}) >= 1
             and $child_result->{rr}{ $rr->keytag }
             and $rr->verify($child_result->{rr}{ $rr->keytag }))
