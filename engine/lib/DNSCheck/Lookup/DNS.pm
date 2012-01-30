@@ -719,7 +719,7 @@ sub _find_parent_helper {
 
     my ($first, $second) = $self->{resolver}->trace($qname);
     if($first) {
-        if ($first eq $qname) {
+        if ($first eq $qname or $first . '.' eq $qname) {
             $parent = $second || '';
         } else {
             $parent = $first;
