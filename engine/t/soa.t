@@ -26,7 +26,7 @@ SKIP: {
     skip "Failed to get an object to test", 19 unless defined($dc);
     ok(defined($dc->soa->test("power.fine")));
     my @msg = @{ $dc->logger->{messages} };
-    ok(scalar(@msg) == 67, "Total of " . scalar(@msg) . " messages.");
+    ok(scalar(@msg) >= 60, "Total of " . scalar(@msg) . " messages.");
     %tag = map { $_->{tag}, $_ } @msg;
     foreach my $tag (
         qw[
