@@ -1,0 +1,297 @@
+{
+   "c.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "c.root-servers.net IN A 192.33.4.12"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "authority" : [
+               "root-servers.net IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
+            ]
+         }
+      }
+   },
+   "107.144.36.192.in-addr.arpa." : {
+      "PTR" : {
+         "IN" : {
+            "answer" : [
+               "107.144.36.192.in-addr.arpa IN PTR se-dns.sth.netnod.se."
+            ]
+         }
+      }
+   },
+   "a.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "a.root-servers.net IN A 198.41.0.4"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+            ]
+         }
+      }
+   },
+   "l.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "l.root-servers.net IN A 199.7.83.42"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "l.root-servers.net IN AAAA 2001:500:3:0:0:0:0:42"
+            ]
+         }
+      }
+   },
+   "d.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "d.root-servers.net IN A 128.8.10.90"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+            ]
+         }
+      }
+   },
+   "3.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.1.0.3.0.0.0.0.0.0.f.3.0.1.0.a.2.ip6.arpa." : {
+      "PTR" : {
+         "IN" : {
+            "answer" : [
+               "3.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.1.0.3.0.0.0.0.0.0.f.3.0.1.0.a.2.ip6.arpa IN PTR a.ns.se."
+            ]
+         }
+      }
+   },
+   "m.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "m.root-servers.net IN A 202.12.27.33"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "m.root-servers.net IN AAAA 2001:dc3:0:0:0:0:0:35"
+            ]
+         }
+      }
+   },
+   "h.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "h.root-servers.net IN A 128.63.2.53"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "h.root-servers.net IN AAAA 2001:500:1:0:0:0:803f:235"
+            ]
+         }
+      }
+   },
+   "j.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "j.root-servers.net IN A 192.58.128.30"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "j.root-servers.net IN AAAA 2001:503:c27:0:0:0:2:30"
+            ]
+         }
+      }
+   },
+   "." : {
+      "NS" : {
+         "IN" : {
+            "additional" : [
+               "a.root-servers.net IN A 198.41.0.4",
+               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "c.root-servers.net IN A 192.33.4.12",
+               "m.root-servers.net IN A 202.12.27.33",
+               "m.root-servers.net IN AAAA 2001:dc3:0:0:0:0:0:35",
+               "e.root-servers.net IN A 192.203.230.10",
+               "j.root-servers.net IN A 192.58.128.30",
+               "j.root-servers.net IN AAAA 2001:503:c27:0:0:0:2:30",
+               "b.root-servers.net IN A 192.228.79.201",
+               "i.root-servers.net IN A 192.36.148.17",
+               "i.root-servers.net IN AAAA 2001:7fe:0:0:0:0:0:53",
+               "l.root-servers.net IN A 199.7.83.42",
+               "l.root-servers.net IN AAAA 2001:500:3:0:0:0:0:42"
+            ],
+            "answer" : [
+               " IN NS a.root-servers.net.",
+               " IN NS c.root-servers.net.",
+               " IN NS m.root-servers.net.",
+               " IN NS e.root-servers.net.",
+               " IN NS j.root-servers.net.",
+               " IN NS b.root-servers.net.",
+               " IN NS i.root-servers.net.",
+               " IN NS l.root-servers.net.",
+               " IN NS f.root-servers.net.",
+               " IN NS d.root-servers.net.",
+               " IN NS k.root-servers.net.",
+               " IN NS h.root-servers.net.",
+               " IN NS g.root-servers.net."
+            ]
+         }
+      }
+   },
+   "se-dns.sth.netnod.se" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "se-dns.sth.netnod.se IN A 192.36.144.107"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "authority" : [
+               "netnod.se IN SOA master.autonomica.se. hostmaster.autonomica.se. (\n\t\t\t\t\t2012013106\t; Serial\n\t\t\t\t\t7200\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+            ]
+         }
+      }
+   },
+   "k.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "k.root-servers.net IN A 193.0.14.129"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "k.root-servers.net IN AAAA 2001:7fd:0:0:0:0:0:1"
+            ]
+         }
+      }
+   },
+   "e.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "e.root-servers.net IN A 192.203.230.10"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "authority" : [
+               "root-servers.net IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
+            ]
+         }
+      }
+   },
+   "i.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "i.root-servers.net IN A 192.36.148.17"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "i.root-servers.net IN AAAA 2001:7fe:0:0:0:0:0:53"
+            ]
+         }
+      }
+   },
+   "g.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "g.root-servers.net IN A 192.112.36.4"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "authority" : [
+               "root-servers.net IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
+            ]
+         }
+      }
+   },
+   "b.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "b.root-servers.net IN A 192.228.79.201"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "authority" : [
+               "root-servers.net IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
+            ]
+         }
+      }
+   },
+   "f.root-servers.net." : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "f.root-servers.net IN A 192.5.5.241"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "f.root-servers.net IN AAAA 2001:500:2f:0:0:0:0:f"
+            ]
+         }
+      }
+   },
+   "a.ns.se" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "a.ns.se IN A 192.36.144.107"
+            ]
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53"
+            ]
+         }
+      }
+   }
+}
+
