@@ -31,14 +31,15 @@ my $orig = *Net::DNS::Resolver::Base::send{CODE};
     my $p = &$orig( @_ );
 
     if ( $p ) {
+        my ($q) = $p->question;
         foreach my $section ( qw[answer authority additional] ) {
             foreach my $rr ( $p->$section ) {
                 my $tmp = sprintf( "%s %s %s %s", $rr->name, $rr->class, $rr->type, $rr->rdatastr );
-                if (!defined($data->{ $rr->name }{ $rr->type }{ $rr->class }{$section})) {
-                    $data->{ $rr->name }{ $rr->type }{ $rr->class }{$section} = [];
+                if (!defined($data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section})) {
+                    $data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section} = [];
                 }
                 
-                push_unique $data->{ $rr->name }{ $rr->type }{ $rr->class }{$section}, $tmp;
+                push_unique $data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section}, $tmp;
             }
         }
     }

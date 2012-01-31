@@ -8,6 +8,7 @@ use strict;
 
 use Test::More tests => 8;
 
+use MockResolver 'find_parent';
 use DNSCheck;
 
 ######################################################################
