@@ -91,6 +91,8 @@ sub retry {}
 
 sub retrans {}
 
+sub force_v4 {}
+
 sub errorstring {''}
 
 ###
