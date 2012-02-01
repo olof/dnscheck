@@ -17,6 +17,7 @@ sub import {
     load($test) if $test;
 }
 
+# Load mockup data.
 sub load {
     my ($test) = @_;
 
@@ -33,6 +34,10 @@ sub mockup {
     my ($name, $type, $class) = @_;
     my $d = $data->{$name}{$type}{$class};
     
+    if (!$d) {
+        return;
+    }
+    
     my $p = Net::DNS::Packet->new($name, $type, $class);
     
     foreach my $section (qw[answer additional authority]) {
@@ -44,6 +49,19 @@ sub mockup {
         }
     }
 
+    my $oh = $d->{header};
+    if ($oh) {
+        my $nh = $p->header;
+        $nh->rcode($oh->{rcode});
+        $nh->opcode($oh->{opcode});
+        $nh->qr($oh->{qr});
+        $nh->aa($oh->{aa});
+        $nh->tc($oh->{tc});
+        $nh->rd($oh->{rd});
+        $nh->cd($oh->{cd});
+        $nh->ra($oh->{ra});
+        $nh->ad($oh->{ad});
+    }
     return $p;
 }
 
@@ -77,6 +95,7 @@ sub send {
     return $p;
 }
 
+# Just stub out a bunch of methods for now.
 sub persistent_tcp {}
 
 sub cdflag {}

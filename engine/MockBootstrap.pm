@@ -17,6 +17,7 @@ sub import {
     }
 }
 
+# Add a string to an array if it's not already there.
 sub push_unique {
     my ($aref, $data) = @_;
     
@@ -26,15 +27,34 @@ sub push_unique {
 }
 
 no warnings 'redefine';
+
+# Save a reference to the original code.
 my $orig = *Net::DNS::Resolver::Base::send{CODE};
+
+# Replace it with our own.
 *Net::DNS::Resolver::Base::send = sub {
-    my $p = &$orig( @_ );
+    my $p = &$orig( @_ ); # Call the original code
 
     if ( $p ) {
         my ($q) = $p->question;
+
+        my $qh = $p->header;
+        my %sh = (
+            'opcode' => $qh->opcode,
+            'qr' => $qh->qr,
+            'aa' => $qh->aa,
+            'tc' => $qh->tc,
+            'rd' => $qh->rd,
+            'cd' => $qh->cd,
+            'ra' => $qh->ra,
+            'ad' => $qh->ad,
+            'rcode' => $qh->rcode,
+        );
+        $data->{ $q->qname }{ $q->qtype }{ $q->qclass }{ header } = \%sh;
         foreach my $section ( qw[answer authority additional] ) {
             foreach my $rr ( $p->$section ) {
-                my $tmp = sprintf( "%s %s %s %s", $rr->name, $rr->class, $rr->type, $rr->rdatastr );
+                my $name = $rr->name || '.';
+                my $tmp = sprintf( "%s %s %s %s", $name, $rr->class, $rr->type, $rr->rdatastr );
                 if (!defined($data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section})) {
                     $data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section} = [];
                 }
