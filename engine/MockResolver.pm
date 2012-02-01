@@ -62,6 +62,7 @@ sub mockup {
         $nh->ra($oh->{ra});
         $nh->ad($oh->{ad});
     }
+    
     return $p;
 }
 
@@ -89,9 +90,10 @@ sub send {
     if ($type eq 'IN' or $type eq 'CH') {
         ($class, $type) = ($type, $class);
     }
+    $name =~ s/\.$//;
     print STDERR "send: $name $type $class\n" if $verbose;
     my $p = MockResolver::mockup($name, $type, $class);
-    
+    print STDERR "No data.\n" if ($verbose and not $p);
     return $p;
 }
 
@@ -111,6 +113,12 @@ sub retry {}
 sub retrans {}
 
 sub force_v4 {}
+
+sub usevc {}
+
+sub defnames {}
+
+sub udppacketsize {}
 
 sub errorstring {''}
 

@@ -54,6 +54,11 @@ my $orig = *Net::DNS::Resolver::Base::send{CODE};
         foreach my $section ( qw[answer authority additional] ) {
             foreach my $rr ( $p->$section ) {
                 my $name = $rr->name || '.';
+
+                if ($rr->type eq 'OPT') { # OPT records are magical, don't save them
+                    next;
+                }
+                
                 my $tmp = sprintf( "%s %s %s %s", $name, $rr->class, $rr->type, $rr->rdatastr );
                 if (!defined($data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section})) {
                     $data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section} = [];
