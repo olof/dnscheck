@@ -8,6 +8,7 @@ use strict;
 
 use Test::More tests => 20;
 
+use MockResolver 'soa';
 use DNSCheck;
 
 ######################################################################
@@ -17,14 +18,14 @@ my %tag;
 
 eval {
     $dc = new DNSCheck(
-        { configfile => './config.yaml', rootsource => '212.247.18.3' });
+        { configfile => './config.yaml' });
 };
 
 ok(!$@, $@);
 
 SKIP: {
     skip "Failed to get an object to test", 19 unless defined($dc);
-    ok(defined($dc->soa->test("power.fine")));
+    ok(defined($dc->soa->test("iis.se")));
     my @msg = @{ $dc->logger->{messages} };
     ok(scalar(@msg) >= 60, "Total of " . scalar(@msg) . " messages.");
     %tag = map { $_->{tag}, $_ } @msg;
@@ -47,8 +48,8 @@ SKIP: {
     }
 
     $dc = new DNSCheck(
-        { configfile => './config.yaml', rootsource => '212.247.18.3' });
-    ok(defined($dc->soa->test("fail")));
+        { configfile => './config.yaml' });
+    ok(defined($dc->soa->test("nic.se")));
     %tag = map { $_->{tag}, $_ } @{ $dc->logger->{messages} };
     foreach my $tag (
         qw[
