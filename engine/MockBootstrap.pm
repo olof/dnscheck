@@ -59,11 +59,10 @@ my $orig = *Net::DNS::Resolver::Base::send{CODE};
                     next;
                 }
                 
-                my $tmp = sprintf( "%s %s %s %s", $name, $rr->class, $rr->type, $rr->rdatastr );
+                my $tmp = sprintf( "%s %d %s %s %s", $name, $rr->ttl, $rr->class, $rr->type, $rr->rdatastr );
                 if (!defined($data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section})) {
                     $data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section} = [];
                 }
-                
                 push_unique $data->{ $q->qname }{ $q->qtype }{ $q->qclass }{$section}, $tmp;
             }
         }
