@@ -79,6 +79,17 @@ use 5.8.9;
 # Tell Perl Net::DNS::Resolver is already loaded, so it doesn't pull in the real one later.
 $INC{'Net/DNS/Resolver.pm'} = 'mocked';
 
+# Clean out any remains, if it already was loaded.
+BEGIN {
+    foreach my $name (keys %{$::{'Net::'}{'DNS::'}{'Resolver::'}}) {
+        if ($name =~ /::$/) {
+            delete $::{'Net::'}{'DNS::'}{'Resolver::'}{$name}
+        }
+    }
+}
+
+our @ISA = ();
+
 our $AUTOLOAD;
 
 sub new {
@@ -97,31 +108,56 @@ sub send {
     return $p;
 }
 
+sub axfr_start {
+    return 1; # Pretend it's OK
+}
+
+sub axfr_next {
+    return; # Pretend we're done
+}
+
 # Just stub out a bunch of methods for now.
 sub persistent_tcp {}
-
 sub cdflag {}
-
 sub recurse {}
-
 sub udp_timeout {}
-
 sub tcp_timeout {}
-
 sub retry {}
-
 sub retrans {}
-
 sub force_v4 {}
-
 sub usevc {}
-
 sub defnames {}
-
 sub udppacketsize {}
-
+sub debug {}
 sub errorstring {''}
+sub init {}
+sub read_config_file {}
+sub read_env {}
+sub nameservers {}
+sub dnssec {}
+sub print {}
+sub yxdomain {}
+sub confess {}
+sub bgread {}
+sub carp {}
+sub bgisready {}
+sub searchlist {}
+sub query {}
+sub import {}
+sub string {}
+sub mx {}
+sub defaults {}
+sub nameserver {}
+sub croak {}
+sub nxdomain {}
+sub search {}
+sub axfr {}
+sub yxrrset {}
+sub bgsend {}
+sub nxrrset {}
+sub tsig {}
 
+## Perl-internal stuff
 sub DESTROY {
     # Det är vi, sågspånen
 }
