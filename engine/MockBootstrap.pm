@@ -4,6 +4,8 @@ use JSON::XS;
 use Net::DNS;
 use Net::DNS::Resolver;
 use Carp;
+use strict;
+use warnings;
 
 my $data = {};
 

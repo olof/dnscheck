@@ -122,16 +122,26 @@ sub udppacketsize {}
 
 sub errorstring {''}
 
-###
-### Magic
-###
-
 sub DESTROY {
     # Det är vi, sågspånen
 }
 
 sub AUTOLOAD {
     print STDERR "needs to be mocked: $AUTOLOAD\n";
+}
+
+###
+### For now, we simply block SMTP tests by having them all fail.
+###
+
+package Net::SMTP;
+$INC{'Net/SMTP.pm'} = 'mocked';
+
+our $VERSION = 4711;
+our $AUTOLOAD;
+
+sub new {
+    return;
 }
 
 1;
