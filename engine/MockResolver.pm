@@ -2,6 +2,7 @@ package MockResolver;
 
 use JSON::XS;
 use Net::DNS;
+use Net::IP;
 use File::Slurp;
 use Carp;
 
@@ -10,11 +11,14 @@ our $data;
 
 # Should we be talkative?
 our $verbose = 0;
+our $mult = undef;
 
 # Called at use() time.
 sub import {
-    my ($class, $test) = @_;
+    my ($class, $test, $flags) = @_;
     load($test) if $test;
+    
+    $mult = 1 if $flags->{multiple};
 }
 
 # Load mockup data.
@@ -31,8 +35,14 @@ sub load {
 
 # Build and return a fake packet.
 sub mockup {
-    my ($name, $type, $class) = @_;
-    my $d = $data->{$name}{$type}{$class};
+    my ($name, $type, $class, $server) = @_;
+    my $d;
+    
+    if ($mult) {
+        $d = $data->{$name}{$type}{$class}{$server};
+    } else {
+        $d = $data->{$name}{$type}{$class};
+    }
     
     if (!$d) {
         return;
@@ -103,9 +113,23 @@ sub send {
     }
     $name =~ s/\.$//;
     print STDERR "send: $name $type $class\n" if $verbose;
-    my $p = MockResolver::mockup($name, $type, $class);
+    
+    my $p = MockResolver::mockup($name, $type, $class, $self->{ns});
     print STDERR "No data.\n" if ($verbose and not $p);
     return $p;
+}
+
+sub nameservers {
+    my ($self, @servers) = @_;
+    
+    if(@servers > 0) {
+        my $raw = $servers[0];
+        if($raw) {
+            $self->{ns} = Net::IP->new($servers[0])->ip;
+        }
+    }
+    
+    return $self->{ns};
 }
 
 sub axfr_start {
@@ -133,7 +157,6 @@ sub errorstring {''}
 sub init {}
 sub read_config_file {}
 sub read_env {}
-sub nameservers {}
 sub dnssec {}
 sub print {}
 sub yxdomain {}
