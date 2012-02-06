@@ -1,7 +1,9 @@
 These are tests for DNSCheck.
 
-As of this checkin, there is as special DNS tree available for running tests
-against. This will hopefully vastly increase the possible coverage and
-stability of these tests. So far, only a very few of them work with the
-special DNS tree. Have a look at zone.t and soa.t for examples of how to have
-DNSCheck use the special tree, and one way to write some tests.
+The tests use a special module, MockResolver, to fake DNS responses from data 
+stored in JSON files. That way we can be sure that the tests get predictable 
+data, and we do not rely on an external source.
+
+There is also a helper module, MockBootstrap. It overloads the 
+Net::DNS::Resolver send() method and records the queries and responses to a 
+JSON file. It helps a lot in building initial data for a test.
