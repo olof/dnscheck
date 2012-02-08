@@ -1,4 +1,34 @@
 {
+    "_smtp" : {
+        "212.247.8.148" : [
+        "250-mx1.iis.se\n250-PIPELINING\n250-SIZE 20971520\n250-VRFY\n250-STARTTLS\n250-ENHANCEDSTATUSCODES\n250 8BITMIME",
+        "220 mx1.iis.se ESMTP Halon Mail Gateway (H/OS)",
+        2,
+        2,
+        "250 2.1.0 Ok",
+        2,
+        2,
+        "250 2.1.5 Ok",
+        2,
+        2,
+        "250 2.0.0 Ok",
+        "221 2.0.0 Bye"
+        ],
+        "2a00:801:f0:211:0:0:0:148" : [
+        "250-mx1.iis.se\n250-PIPELINING\n250-SIZE 20971520\n250-VRFY\n250-STARTTLS\n250-ENHANCEDSTATUSCODES\n250 8BITMIME",
+        "220 mx1.iis.se ESMTP Halon Mail Gateway (H/OS)",
+        2,
+        2,
+        "250 2.1.0 Ok",
+        2,
+        2,
+        "250 2.1.5 Ok",
+        2,
+        2,
+        "250 2.0.0 Ok",
+        "221 2.0.0 Bye"
+        ]
+    },
    "kista.dns.swip.net" : {
       "A" : {
          "IN" : {

@@ -194,13 +194,44 @@ sub AUTOLOAD {
 ###
 
 package Net::SMTP;
+use Carp;
 $INC{'Net/SMTP.pm'} = 'mocked';
+our @INC = ();
 
 our $VERSION = 4711;
-our $AUTOLOAD;
 
 sub new {
-    return;
+    my $class = shift;
+    my %arg = @_;
+
+    return bless {host => $arg{Host}};
 }
+
+sub message {
+    my $self = shift;
+    
+    my $msg = shift @{$data->{'_smtp'}{$self->{host}}};
+    
+    if (defined($msg)) {
+        return $msg
+    }
+    else {
+        croak $self->{host};
+    }
+}
+
+sub banner {
+    goto &message;
+}
+
+sub status {goto &message;}
+
+sub mail {;}
+
+sub recipient {;}
+
+sub reset {;}
+
+sub quit {;}
 
 1;
