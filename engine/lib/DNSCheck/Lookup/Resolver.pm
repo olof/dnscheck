@@ -37,6 +37,7 @@ use strict;
 use YAML;
 use Net::IP;
 use Time::HiRes qw[gettimeofday tv_interval];
+use Carp;
 
 # In order to be able to know for sure where certain information comes from,
 # and/or modify parts of resolver chains, we need to do our own recursive
@@ -286,7 +287,7 @@ sub get_preload_data {
     my $z = $res->send( '.', 'IN', 'NS' );
 
     if ( !defined( $z ) or $z->header->ancount == 0 ) {
-        die "Failed to get root zone data";
+        croak "Failed to get root zone data";
     }
 
     foreach my $rr ( $z->answer ) {

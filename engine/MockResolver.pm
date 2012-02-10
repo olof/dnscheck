@@ -38,7 +38,17 @@ sub mockup {
     my ($name, $type, $class, $server) = @_;
     my $d;
     
+    if (!$data->{$name}{$type}{$class}) {
+        return;
+    }
+    
     if ($mult) {
+        if (!$server) {
+            # No server given, pick one
+            my @tmp = keys %{$data->{$name}{$type}{$class}};
+            $server = $tmp[0];
+        }
+        
         $d = $data->{$name}{$type}{$class}{$server};
     } else {
         $d = $data->{$name}{$type}{$class};
@@ -58,10 +68,10 @@ sub mockup {
             }
         }
     }
+    my $nh = $p->header;
 
     my $oh = $d->{header};
     if ($oh) {
-        my $nh = $p->header;
         $nh->rcode($oh->{rcode});
         $nh->opcode($oh->{opcode});
         $nh->qr($oh->{qr});
@@ -71,6 +81,8 @@ sub mockup {
         $nh->cd($oh->{cd});
         $nh->ra($oh->{ra});
         $nh->ad($oh->{ad});
+    } else {
+        $nh->rcode('NOERROR');
     }
     
     return $p;
@@ -140,6 +152,10 @@ sub axfr_next {
     return; # Pretend we're done
 }
 
+sub errorstring { # Do this properly at some point.
+    return 'unknown error or no error';
+}
+
 # Just stub out a bunch of methods for now.
 sub persistent_tcp {}
 sub cdflag {}
@@ -153,7 +169,6 @@ sub usevc {}
 sub defnames {}
 sub udppacketsize {}
 sub debug {}
-sub errorstring {''}
 sub init {}
 sub read_config_file {}
 sub read_env {}

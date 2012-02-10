@@ -4,7 +4,8 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::More;
-use MockBootstrap 'resolver', {multiple => 1};
+use MockResolver 'resolver', {multiple => 1};
+$MockResolver::verbose = 0;
 
 use_ok('DNSCheck');
 
@@ -13,10 +14,9 @@ my $res = $dc->resolver;
 isa_ok($res, 'DNSCheck::Lookup::Resolver');
 isa_ok($res->resolver, 'Net::DNS::Resolver');
 isa_ok($res->logger, 'DNSCheck::Logger');
-is($res->dnssec,0, 'DNSSEC off');
+ok(!$res->dnssec, 'DNSSEC off');
 is($res->errorstring,'unknown error or no error');
-is($res->recursion,0, 'Recursion off');
-is($res->cdflag,1, 'DNSSEC checking disabled');
+ok(!$res->recursion, 'Recursion off');
 
 my $rootdata = DNSCheck::Lookup::Resolver->get_preload_data;
 is(ref($rootdata), 'HASH', 'We got a hasref back');
@@ -42,5 +42,5 @@ is_deeply(\@tmp,
 $p = $res->recurse('www.lysator.liu.se', 'A');
 isa_ok($p, 'Net::DNS::Packet');
 is($p->header->rcode, 'REFUSED', 'Correctly no answer');
-diag($p->string);
+
 done_testing();
