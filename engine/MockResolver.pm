@@ -85,6 +85,12 @@ sub mockup {
         $nh->rcode('NOERROR');
     }
     
+    if ($server) {
+        $p->answerfrom($server);
+    } else {
+        $p->answerfrom('127.0.0.1');
+    }
+
     return $p;
 }
 

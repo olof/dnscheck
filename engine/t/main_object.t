@@ -6,18 +6,14 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 8;
+use Test::More;
 
-use DNSCheck;
+use_ok ('DNSCheck');
 use Sys::Hostname;
 
 ######################################################################
 
-my $dc;
-
-eval { $dc = new DNSCheck({ configfile => './config.yaml' }); };
-
-ok(!$@, $@);
+my $dc = new_ok('DNSCheck' => [{ configfile => './config.yaml' }]);
 
 SKIP: {
     skip "Failed to get an object to test", 4 unless defined($dc);
@@ -28,4 +24,12 @@ SKIP: {
     ok(ref($dc->dns)                     eq 'DNSCheck::Lookup::DNS');
     ok(ref($dc->logger)                  eq 'DNSCheck::Logger');
     ok($dc->dns->parent                  eq $dc);
+    
+    my $ztest = $dc->zone;
+    ok($ztest);
+    $dc->flush;
+    my $ztest2 = $dc->zone;
+    isnt($ztest, $ztest2, 'object got properly flushed');
 }
+
+done_testing();
