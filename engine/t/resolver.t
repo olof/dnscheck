@@ -28,23 +28,19 @@ ok(scalar(grep {$_->type eq 'A' and $_->address eq '130.236.254.11'} $p->answer)
 
 $dc = DNSCheck->new;
 $res = $dc->resolver;
-$res->add_fake_glue('lysator.liu.se', 'ns-master.lysator.liu.se', '130.236.254.2');
-$res->add_fake_glue('lysator.liu.se', 'ns-slave.lysator.liu.se', '130.236.254.4');
-$res->add_fake_glue('lysator.liu.se', 'ns-slave-1.ifm.liu.se', '130.236.160.2');
-$res->add_fake_glue('lysator.liu.se', 'ns-slave-2.ifm.liu.se', '2001:6b0:17:f180::1002');
+$res->add_fake_glue('lysator.liu.se', 'ns-master.lysator.liu.se', '212.247.7.228');
+$res->add_fake_glue('lysator.liu.se', 'ns-slave.lysator.liu.se', '194.17.45.54');
+$res->add_fake_glue('lysator.liu.se', 'ns-slave-1.ifm.liu.se', '212.247.8.152');
 
 my @tmp = $res->faked_zones;
 is($tmp[0], 'lysator.liu.se', 'Zone is listed as faked');
 @tmp = $res->faked_zone('lysator.liu.se');
 is_deeply(\@tmp,
-        [qw(ns-slave-2.ifm.liu.se ns-slave.lysator.liu.se ns-slave-1.ifm.liu.se ns-master.lysator.liu.se)],
+        [qw(ns-slave.lysator.liu.se ns-slave-1.ifm.liu.se ns-master.lysator.liu.se)],
         'Faked NS list looks OK');
-
-#$p = $res->fake_packet('lysator.liu.se', 'www.lysator.liu.se', 'A');
-#isa_ok($p, 'Net::DNS::Packet');
 
 $p = $res->recurse('www.lysator.liu.se', 'A');
 isa_ok($p, 'Net::DNS::Packet');
-ok(scalar(grep {$_->type eq 'A' and $_->address eq '130.236.254.11'} $p->answer)>0, 'Got the right answer');
-
+is($p->header->rcode, 'REFUSED', 'Correctly no answer');
+diag($p->string);
 done_testing();
