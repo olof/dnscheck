@@ -27,13 +27,13 @@ my $result_count = scalar(@res);
 ok(abs($result_count - 1312) < 5,
     "Got $result_count lines from logger.");
 my $info_count = scalar(grep { $_->[2] eq 'INFO' } @res);
-ok(abs($info_count - 260) < 10, "$info_count INFO-level results.");
+ok(abs($info_count - 249) < 10, "$info_count INFO-level results.");
 ok($dc->logger->count_info == $info_count);
 my $notice_count = scalar(grep { $_->[2] eq 'NOTICE' } @res);
 ok(abs($notice_count - 10) < 3, "$notice_count NOTICE-level results.");
 ok($dc->logger->count_notice == $notice_count);
 my $warning_count = scalar(grep { $_->[2] eq 'WARNING' } @res);
-ok(abs($warning_count - 0) < 2,
+ok(abs($warning_count - 3) < 2,
     "$warning_count WARNING-level results.");
 ok($dc->logger->count_warning == $warning_count);
 my $debug_count = scalar(grep { $_->[2] eq 'DEBUG' } @res);
