@@ -127,7 +127,7 @@ sub _asn_helper {
     }
 
     my $packet = $self->parent->dns->query_resolver($rev, 'IN', 'TXT');
-    goto AGAIN unless (defined($packet) and $packet->header->ancount > 0);
+    goto AGAIN unless (defined($packet) and $packet->header->ancount >= 0);
 
     my %asn;
     foreach my $rr ($packet->answer) {
@@ -160,11 +160,24 @@ B<asn.cymru.com>.
 
 =head1 METHODS
 
-new(I<logger>, I<dns>);
+=head2 lookup($ip)
 
-flush();
+Looks up the AS annoucement information for the given IP address. IPv4 and IPv6 
+are supported. The return value is a reference to an array holding zero or more 
+integer values (that is, AS numbers).
 
-my $n = $asn->lookup(I<address>);
+=head2 flush()
+
+Discard all cached lookups.
+
+=head2 new($parent)
+
+This is not meant to be called directly. Get an object by calling the 
+L<DNSCheck::asn()> method instead;
+
+=head2 parent()
+
+Returns a reference to the current parent object.
 
 =head1 EXAMPLES
 
