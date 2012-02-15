@@ -17,5 +17,24 @@
             }
          }
       }
+   },
+   "vastralinnestaden.se" : {
+      "SOA" : {
+         "IN" : {
+            "193.13.74.204" : {
+               "header" : {
+                  "cd" : 0,
+                  "rcode" : "SERVFAIL",
+                  "tc" : 0,
+                  "opcode" : "QUERY",
+                  "ad" : 0,
+                  "ra" : 0,
+                  "qr" : 1,
+                  "aa" : 0,
+                  "rd" : 0
+               }
+            }
+         }
+      }
    }
 }

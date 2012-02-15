@@ -19,5 +19,10 @@ ok(!$dns->check_blacklist('127.0.0.1', 'iis.se', 'IN', 'SOA'), 'Blacklist proper
 
 $dns->query_explicit("vbilen.se","IN","SOA","83.168.216.5",{dnssec=>1});
 ok(scalar(grep {$_->[3] eq 'DNS:NO_EDNS'} @{$dc->logger->export})>0, 'NO_EDNS');
+$dc->logger->clear;
+
+$dns->query_explicit("vastralinnestaden.se","IN","SOA","193.13.74.204");
+ok(scalar(grep {$_->[3] eq 'DNS:SOA_SERVFAIL'} @{$dc->logger->export})>0, 'SOA_SERVFAIL');
+$dc->logger->clear;
 
 done_testing();
