@@ -44,7 +44,19 @@ my $orig = *Net::DNS::Resolver::Base::send{CODE};
     if ( $p ) {
         my ( $q ) = $p->question;
 
-        my $qname = $q->qname;
+        my ($qname, $qtype, $qclass);
+        if ($q) {
+            $qname = $q->qname;
+            $qtype = $q->qtype;
+            $qclass = $q->qclass;
+        }
+        else {
+            ($qname, $qclass, $qtype) = @_[1,2,3];
+            if ($qtype eq 'IN' or $qtype eq 'CH' or $qtype eq 'HS') {
+                ($qtype, $qclass) = ($qclass, $qtype);
+            }
+        }
+
         $qname =~ s/\\(\d+)/chr($1)/ge;
 
         my $qh = $p->header;
@@ -61,7 +73,7 @@ my $orig = *Net::DNS::Resolver::Base::send{CODE};
         );
         if ( $mult ) {
             my $ip = Net::IP->new($p->answerfrom)->ip;
-            $data->{$qname}{ $q->qtype }{ $q->qclass }{$ip}{header} = \%sh;
+            $data->{$qname}{ $qtype }{ $qclass }{$ip}{header} = \%sh;
             foreach my $section ( qw[answer authority additional] ) {
                 foreach my $rr ( $p->$section ) {
                     my $name = $rr->name || '.';
@@ -71,15 +83,15 @@ my $orig = *Net::DNS::Resolver::Base::send{CODE};
                     }
 
                     my $tmp = sprintf( "%s %d %s %s %s", $name, $rr->ttl, $rr->class, $rr->type, $rr->rdatastr );
-                    if ( !defined( $data->{$qname}{ $q->qtype }{ $q->qclass }{$ip}{$section} ) ) {
-                        $data->{$qname}{ $q->qtype }{ $q->qclass }{$ip}{$section} = [];
+                    if ( !defined( $data->{$qname}{ $qtype }{ $qclass }{$ip}{$section} ) ) {
+                        $data->{$qname}{ $qtype }{ $qclass }{$ip}{$section} = [];
                     }
-                    push_unique $data->{$qname}{ $q->qtype }{ $q->qclass }{$ip}{$section}, $tmp;
+                    push_unique $data->{$qname}{ $qtype }{ $qclass }{$ip}{$section}, $tmp;
                 }
             }
         }
         else {
-            $data->{$qname}{ $q->qtype }{ $q->qclass }{header} = \%sh;
+            $data->{$qname}{ $qtype }{ $qclass }{header} = \%sh;
             foreach my $section ( qw[answer authority additional] ) {
                 foreach my $rr ( $p->$section ) {
                     my $name = $rr->name || '.';
@@ -89,10 +101,10 @@ my $orig = *Net::DNS::Resolver::Base::send{CODE};
                     }
 
                     my $tmp = sprintf( "%s %d %s %s %s", $name, $rr->ttl, $rr->class, $rr->type, $rr->rdatastr );
-                    if ( !defined( $data->{$qname}{ $q->qtype }{ $q->qclass }{$section} ) ) {
-                        $data->{$qname}{ $q->qtype }{ $q->qclass }{$section} = [];
+                    if ( !defined( $data->{$qname}{ $qtype }{ $qclass }{$section} ) ) {
+                        $data->{$qname}{ $qtype }{ $qclass }{$section} = [];
                     }
-                    push_unique $data->{$qname}{ $q->qtype }{ $q->qclass }{$section}, $tmp;
+                    push_unique $data->{$qname}{ $qtype }{ $qclass }{$section}, $tmp;
                 }
             }
         }
