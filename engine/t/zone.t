@@ -44,4 +44,9 @@ my %tag = map {$_->[3] => 1} @{$dc->logger->export};
 
 ok($tag{'NSTIME:AVERAGE'}, 'Timing information is present');
 
+$dc->logger->clear;
+$dc->config->put('disable', {zone => {test => 1}});
+$dc->zone->test('nic.se');
+is_deeply($dc->logger->export, [], 'Test disabled');
+
 done_testing();
