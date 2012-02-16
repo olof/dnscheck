@@ -1189,6 +1189,50 @@ Send a query to the default resolver(s). This will be a L<DNSCheck::Lookup::Reso
 
 These need to be documented better.
 
+=item ->add_blacklist($addr,$name,$class,$type)
+
+Add the given quadruple to the internal blacklist.
+
+=item ->check_blacklist($addr,$name,$class,$type)
+
+Return a true value if the given quadruple is in the internal blacklist.
+
+=item ->clear_blacklist()
+
+Clear the internal blacklist.
+
+=item ->check_timeout()
+
+Check if the current error in the underlying resolver object is a timeout.
+
+=item ->find_mx($zone)
+
+Return the hostname(s) to which mail to the given zone name should be directed.
+
+=item ->logger()
+
+Return a reference to the current logger object.
+
+=item ->parent()
+
+Return a reference to the current parent object.
+
+=item ->preflight_check($name)
+
+Do a quick and dirty guess about if the given name is a zone or not.
+
+=item ->query_child_nocache()
+
+The same as L<query_child()>, but bypasses the internal cache.
+
+=item ->query_parent_nocache()
+
+The same as L<query_parent()>, but bypasses the internal cache.
+
+=item ->resolver()
+
+Returns a reference to the underlying L<DNSCheck::Lookup::Resolver> object.
+
 =back
 
 =head1 EXAMPLES

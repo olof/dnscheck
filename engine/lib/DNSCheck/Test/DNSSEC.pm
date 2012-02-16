@@ -629,6 +629,15 @@ At least one DS algorithm should be of type RSA/SHA1.
 
 =item ->rrsig_validities($zonename)
 
+=item ->algorithm_name($id)
+
+Return the name appropriate for the given algorithm ID number.
+
+=item ->check_algorithm($id)
+
+Check if the given algorithm ID number specifies an algorithm valid for use, of 
+if not what kind of wrong it is.
+
 =back
 
 =head1 EXAMPLES

@@ -434,9 +434,19 @@ Flush the internal DNS cache.
 
 Return the logger object. It is of type L<DNSCheck::Logger>.
 
+=item ->locale()
+
+Return a locale object, which can be used to translate logger messages to 
+human-readable messages. You shouldn't need to call it directly, since the 
+logger does it for you
+
 =item ->dns()
 
 Return the DNS lookup object. It is of type L<DNSCeck::Lookup::DNS>.
+
+=item ->resolver()
+
+Returns the actual recursing resolver object.
 
 =item ->asn()
 
@@ -472,6 +482,12 @@ for the name will be made. If that attempt fails, the name will be ignored.
 =item ->undelegated_test()
 
 This method returns true of any "fake" glue information has been provided.
+
+=item ->log_nameserver_times($zone)
+
+Extracts response timing data for the given zone's nameservers from the 
+resolver object and adds the information as log messages. Has to be called 
+after a test is run, since before there is obviously no data to extract.
 
 =item ->zone()
 

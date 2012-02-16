@@ -420,7 +420,7 @@ sub names_to_ips {
         else {
             next if $self->{poison}{$n};
             $self->{poison}{$n} = 1;    # Block lookups of this name
-            my $p = $self->recurse( $n, 'A' );
+            my $p = $self->recurse( $n, 'A' ); # FIXME: What about AAAA?
             $self->remember( $p );
 
             if ( $self->cache->{ips}{$n} ) {
@@ -656,7 +656,7 @@ DNSCheck::Lookup::Resolver - a recursive DNS resolver for DNSCheck
 
 This module does recursive lookups, and is heavily used by L<DNSCheck::Lookup::DNS>. 
 
-=head1 METHODS
+=head1 PUBLIC METHODS
 
 =over
 
@@ -673,6 +673,101 @@ Send a DNS query to specified servers.
 =item ->recurse($name, $type, [$class])
 
 Do a recursive query. If the class is not specified, it defaults to IN.
+
+=back
+
+=head1 INTERNAL METHODS
+
+=over
+
+=item ->get_preload_data()
+
+Class method. Does a recursive global NS lookup for the root zone, using the 
+system paramters, and returns a reference to a nested hash stucture suitable 
+for use as an object cache.
+
+=item ->add_fake_glue()
+
+Add fake glue for an undelegated test.
+
+=item ->cache()
+
+Return a reference to the object's name cache.
+
+=item ->canonicalize_name($name)
+
+Return the given name in its canonical form, with a trailing dot.
+
+=item ->resolver()
+
+Returns the underlying L<Net::DNS::Resolver> object that's used to send queries 
+to nameservers.
+
+=item ->cdflag()
+=item ->dnssec()
+=item ->recursion()
+=item ->errorstring()
+
+These four methods simply proxy to the underlying resolver object.
+
+=item ->fake_ns_packet()
+
+Create an artificial response packet to an NS query.
+
+=item ->fake_packet()
+
+Create an artificial response packet to an A, AAAA or NS query.
+
+=item ->faked_zone($zone)
+
+Return nameserver names for the given zone if fake glue has been added for it, 
+or C<undefined> if not.
+
+=item ->faked_zones()
+
+Return a list of the names of all zones we have fake glue data for.
+
+=item ->highest_known_ns()
+
+Return the nearest ancestor zone we have in cache for the given zone name.
+
+=item ->matches($packet, $name, $type, $class)
+
+Check if the given L<Net::DNS::Packet> contains any records matching the given 
+name, type and class.
+
+=item ->matching_labels($name1, $name2)
+
+Count the number of matching labels in the two given names.
+
+=item ->names_to_ips(@namelist)
+
+Return a list of IP addresses for the given names, doing recursive lookups for them.
+
+=item ->simple_names_to_ips()
+
+Return a list of IP addresses for the given names, only looking at what is 
+already in the object's cache.
+
+=item ->remember($packet)
+
+Add data from the given response packet to the object's cache.
+
+=item ->strip_label($name)
+
+Return a name that's one label shorter than the given name, except if the given 
+name is the root, in which case the root is returned.
+
+=item ->parent()
+=item ->config()
+=item ->logger()
+
+These three are the same as in all other DNSCheck classes.
+
+=item ->times()
+
+Return a reference to the nested hash structure holding nameserver response 
+time data.
 
 =back
 

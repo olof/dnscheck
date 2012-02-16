@@ -515,6 +515,15 @@ Check that there are a sufficient number of nameservers for the given zone.
 Go through the nameservers that used to be authoritative for this zone and
 check that they no longer answer authoritatively for it.
 
+=item ->cname_as_ns($zone)
+
+Checks if any of the nameserver names for the given zone return CNAME records 
+to A or AAAA queries.
+
+=item ->in_zone_ns_glue($zone)
+
+Checks that all in-zone nameserver records come with glue.
+
 =back
 
 Where nothing else is said, all methods return the total number of errors

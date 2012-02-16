@@ -299,6 +299,11 @@ calling the method.
 If the I<interactive> key is set in the system's config object, this method
 will print the log entry rather than store it internally.
 
+=item ->add(I<level>, I<tag>, I<arg1>, I<arg2>, ..., I<argN>)
+
+Add an entry to the log, hardcoding the severity level instead of having it 
+automatically looked up in the policy database. Don't do that.
+
 =item ->dump();
 
 Send a textual raw dump of the object's contents to standard error.
@@ -337,6 +342,17 @@ storage or copying possibly large arrays. See below for an example of use.
 
 Returns the number of current entries of the various severity levels. The
 level a given tag is considered to be is specified in F<policy.yaml>.
+
+=item ->count_string($string)
+
+Returns the number of current entries where the severity equals the given 
+string. This is used to implement the preceeding methods.
+
+=item ->module_stack_pop()
+
+=item ->module_stack_push()
+
+These two methods are part of the integrated communication with the PHP web GUI.
 
 =back
 

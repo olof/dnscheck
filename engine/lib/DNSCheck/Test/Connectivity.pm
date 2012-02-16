@@ -193,6 +193,14 @@ Domain name servers should live in more than one AS.
 
 =item ->test($zonename);
 
+=item ->test_v4($zonename)
+
+Test specifically for IPv4.
+
+=item ->test_v6($zonename)
+
+Test specifically for IPv6.
+
 =back
 
 =head1 EXAMPLES
