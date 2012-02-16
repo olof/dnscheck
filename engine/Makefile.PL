@@ -80,6 +80,12 @@ install_locale:
 	install -m 444 config.yaml ${DESTDIR}/${CONFIG_DIR}
 	install -d ${DESTDIR}/${LOCALE_DIR}
 	install -m 444 locale/*.yaml ${DESTDIR}/${LOCALE_DIR}
+
+coverage:
+	cover -delete
+	HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,Mock make test
+	cover
+
 #;
 
     foreach my $f (@exefiles) {
