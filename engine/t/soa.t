@@ -6,7 +6,7 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 20;
+use Test::More tests => 21;
 
 use MockResolver 'soa';
 use DNSCheck;
@@ -41,6 +41,7 @@ SKIP: {
         SOA:RETRY_OK
         SOA:EXPIRE_OK
         SOA:MINIMUM_OK
+        SOA:MNAME_PUBLIC
         ]
       )
     {
