@@ -420,7 +420,11 @@ sub names_to_ips {
         else {
             next if $self->{poison}{$n};
             $self->{poison}{$n} = 1;    # Block lookups of this name
-            my $p = $self->recurse( $n, 'A' ); # FIXME: What about AAAA?
+
+            my $p = $self->recurse( $n, 'A' );
+            $self->remember( $p );
+
+            $p = $self->recurse( $n, 'AAAA' );
             $self->remember( $p );
 
             if ( $self->cache->{ips}{$n} ) {
