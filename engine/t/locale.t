@@ -9,7 +9,7 @@ use File::Temp 'tempfile';
 my ($fh, $filename) = tempfile();
 
 use_ok('DNSCheck');
-my $dc = new_ok('DNSCheck' => [{locale => 'en'}]);
+my $dc = new_ok('DNSCheck' => [{localefile => 'locale/en.yaml'}]);
 my $loc = $dc->locale;
 isa_ok($loc, 'DNSCheck::Locale');
 
