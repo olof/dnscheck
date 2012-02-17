@@ -36,6 +36,8 @@ WriteMakefile(
         Mail::RFC822::Address  => 0,
         Text::Template         => 0,
         MIME::Lite             => 0,
+        JSON::XS => 0,
+        File::Slurp => 0,
     },
     'EXE_FILES' => \@exefiles,
     'NO_META'   => 1,
