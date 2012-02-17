@@ -8,7 +8,7 @@ use MockResolver 'soa';
 use File::Temp 'tempfile';
 
 use_ok('DNSCheck');
-my $dc = new_ok('DNSCheck' => [{ configfile => './config.yaml' }]);
+my $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
 $dc->soa->test('iis.se');
 
 my $log = $dc->logger;
@@ -17,8 +17,8 @@ is($log->count_critical,0, 'No critical errors');
 is($log->count_error,0, 'No errors');
 is($log->count_warning,0, 'No warnings');
 is($log->count_notice,0, 'No notices');
-is($log->count_info,51, '51 informational messages');
-is($log->count_debug,112, '112 debug messages');
+is($log->count_info,45, '51 informational messages');
+is($log->count_debug,118, '112 debug messages');
 
 my $msg = $log->export;
 is(scalar(@$msg), 163, 'Correct number of entries dumped');
@@ -46,7 +46,7 @@ is($count, 163, 'Iterator saw all messages');
     $log->print;
     STDOUT->flush;
     my @lines = <$fh>;
-    is(scalar(@lines),51, 'print printed correct number of lines');
+    is(scalar(@lines),45, 'print printed correct number of lines');
     close($fh);
     unlink($filename);
 }

@@ -6,7 +6,7 @@ use MockResolver 'preflight';
 
 use_ok('DNSCheck');
 
-my $dns = DNSCheck->new->dns();
+my $dns = DNSCheck->new({configfile => './t/config.yaml'})->dns();
 
 isa_ok($dns,'DNSCheck::Lookup::DNS');
 

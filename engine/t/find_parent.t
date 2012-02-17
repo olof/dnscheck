@@ -13,7 +13,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck;
+my $check = new DNSCheck({configfile => './t/config.yaml'});
 my $dns   = $check->dns;
 
 ######################################################################

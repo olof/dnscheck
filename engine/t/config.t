@@ -15,7 +15,7 @@ use Sys::Hostname;
 
 my $conf;
 
-eval { $conf = new DNSCheck::Config(configfile => './config.yaml'); };
+eval { $conf = new DNSCheck::Config(configfile => './t/config.yaml'); };
 
 ok(!$@, $@);
 

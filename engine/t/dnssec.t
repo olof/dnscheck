@@ -9,7 +9,7 @@ use MockResolver 'dnssec';
 
 BEGIN {use_ok('DNSCheck')};
 
-my $dc = DNSCheck->new;
+my $dc = DNSCheck->new({configfile => './t/config.yaml'});
 
 eval {$dc->dnssec->test('se.')};
 ok(!$@, "test run without crash");

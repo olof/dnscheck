@@ -30,7 +30,7 @@ ok(scalar(grep {$_->type eq 'A' and $_->address eq '130.236.254.11'} $p->answer)
 ### Undelegated tests
 ###
 
-$dc = DNSCheck->new;
+$dc = DNSCheck->new({configfile => './t/config.yaml'});
 $res = $dc->resolver;
 $res->add_fake_glue('lysator.liu.se', 'ns-slave.lysator.liu.se', '212.247.7.228');
 $res->add_fake_glue('lysator.liu.se', 'ns-master.lysator.liu.se', '194.17.45.54');

@@ -13,7 +13,7 @@ use Sys::Hostname;
 
 ######################################################################
 
-my $dc = new_ok('DNSCheck' => [{ configfile => './config.yaml' }]);
+my $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
 
 SKIP: {
     skip "Failed to get an object to test", 4 unless defined($dc);

@@ -13,7 +13,7 @@ use_ok 'DNSCheck';
 
 ######################################################################
 
-my $dc = new_ok('DNSCheck' => [{ configfile => './config.yaml' }]);
+my $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
 
 if (!defined($dc)) {
     done_testing();
@@ -27,7 +27,7 @@ my $result_count = scalar(@res);
 ok(abs($result_count - 1312) < 5,
     "Got $result_count lines from logger.");
 my $info_count = scalar(grep { $_->[2] eq 'INFO' } @res);
-ok(abs($info_count - 249) < 10, "$info_count INFO-level results.");
+ok(abs($info_count - 226) < 10, "$info_count INFO-level results.");
 ok($dc->logger->count_info == $info_count);
 my $notice_count = scalar(grep { $_->[2] eq 'NOTICE' } @res);
 ok(abs($notice_count - 10) < 3, "$notice_count NOTICE-level results.");
@@ -37,7 +37,7 @@ ok(abs($warning_count - 3) < 2,
     "$warning_count WARNING-level results.");
 ok($dc->logger->count_warning == $warning_count);
 my $debug_count = scalar(grep { $_->[2] eq 'DEBUG' } @res);
-ok(abs($debug_count - 1033) < 5, "$debug_count DEBUG-level results.");
+ok(abs($debug_count - 1056) < 5, "$debug_count DEBUG-level results.");
 ok($dc->logger->count_debug == $debug_count);
 
 my %tag = map {$_->[3] => 1} @{$dc->logger->export};
