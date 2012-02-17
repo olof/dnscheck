@@ -28,7 +28,7 @@ SKIP: {
     ok(defined($dc->soa->test("iis.se")));
     my @msg = @{ $dc->logger->{messages} };
     ok(scalar(@msg) >= 60, "Total of " . scalar(@msg) . " messages.");
-    %tag = map { $_->{tag}, $_ } @msg;
+    %tag = map { $_->{tag} => 1 } @msg;
     foreach my $tag (
         qw[
         SOA:MNAME_VALID
@@ -51,7 +51,7 @@ SKIP: {
     $dc = new DNSCheck(
         { configfile => './t/config.yaml' });
     ok(defined($dc->soa->test("nic.se")));
-    %tag = map { $_->{tag}, $_ } @{ $dc->logger->{messages} };
+    %tag = map { $_->{tag} => 1} @{ $dc->logger->{messages} };
     foreach my $tag (
         qw[
         SOA:RETRY_SMALL

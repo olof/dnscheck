@@ -9,6 +9,8 @@ use strict;
 use Test::More;
 
 use MockResolver 'zone';
+# use MockBootstrap 'zone';
+
 use_ok 'DNSCheck';
 
 ######################################################################
@@ -48,5 +50,40 @@ $dc->logger->clear;
 $dc->config->put('disable', {zone => {test => 1}});
 $dc->zone->test('nic.se');
 is_deeply($dc->logger->export, [], 'Test disabled');
+$dc->logger->clear;
+
+$dc->config->put('disable', {zone => {test => 0}});
+$dc->config->get("net")->{ipv4} = undef;
+$dc->config->get("net")->{ipv6} = undef;
+$dc->config->get("net")->{smtp} = undef;
+$dc->zone->test('nic.se');
+is_deeply(
+    [map {$_->[3]} @{$dc->logger->export}],
+    [
+    "ZONE:BEGIN",
+    "DELEGATION:BEGIN",
+    "DNS:GET_NS_AT_PARENT",
+    "DNS:QUERY_PARENT",
+    "DNS:QUERY_PARENT_NOCACHE",
+    "DNS:FIND_PARENT",
+    "DNS:FIND_PARENT_BEGIN",
+    "DNS:NXDOMAIN",
+    "DNS:NO_PARENT",
+    "DELEGATION:NOT_FOUND_AT_PARENT",
+    "DELEGATION:END",
+    "ZONE:FATAL_DELEGATION",
+    "ZONE:END",
+    ],
+    'IPv4, IPv6 and SMTP disabled');
+$dc->logger->clear;
+
+$dc->config->get('net')->{ipv6} = 1;
+$dc->zone->test('iis.se');
+is(scalar(@{$dc->logger->export}), 1114, 'IPv6-only tests');
+
+$dc->config->get('net')->{ipv6} = 0;
+$dc->config->get('net')->{ipv4} = 1;
+$dc->zone->test('iis.se');
+is(scalar(@{$dc->logger->export}), 2204, 'IPv4-only tests');
 
 done_testing();

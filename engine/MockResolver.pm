@@ -237,7 +237,7 @@ sub message {
         return $msg
     }
     else {
-        croak $self->{host};
+        croak 'SMTP::message ==> ' . $self->{host};
     }
 }
 
