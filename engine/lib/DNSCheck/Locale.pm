@@ -34,6 +34,8 @@ require 5.008;
 use warnings;
 use strict;
 
+use overload bool => \&_to_boolean;
+
 ######################################################################
 
 sub new {
@@ -66,6 +68,12 @@ sub expand {
     } else {
         return sprintf("[MISSING LOCALE] %s %s", $tag, join(",", @args));
     }
+}
+
+sub _to_boolean {
+    my $self = shift;
+
+    return !!$self->{lang};
 }
 
 1;
