@@ -234,7 +234,8 @@ sub message {
     my $msg = shift @{$data->{'_smtp'}{$self->{host}}};
     
     if (defined($msg)) {
-        return $msg
+        push @{$data->{'_smtp'}{$self->{host}}}, $msg;
+        return $msg;
     }
     else {
         croak 'SMTP::message ==> ' . $self->{host};
