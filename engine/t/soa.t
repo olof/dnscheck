@@ -6,7 +6,7 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 21;
+use Test::More;
 
 use MockResolver 'soa';
 use DNSCheck;
@@ -31,6 +31,7 @@ SKIP: {
     %tag = map { $_->{tag} => 1 } @msg;
     foreach my $tag (
         qw[
+        SOA:FOUND
         SOA:MNAME_VALID
         SOA:MNAME_PUBLIC
         SOA:MNAME_IS_AUTH
@@ -54,6 +55,7 @@ SKIP: {
     %tag = map { $_->{tag} => 1} @{ $dc->logger->{messages} };
     foreach my $tag (
         qw[
+        SOA:FOUND
         SOA:RETRY_SMALL
         SOA:MNAME_ERROR
         SOA:EXPIRE_SMALL
@@ -66,3 +68,5 @@ SKIP: {
         ok($tag{$tag}, "$tag found in results.");
     }
 }
+
+done_testing;
