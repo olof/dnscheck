@@ -52,10 +52,6 @@ sub new {
     $self->{interactive} = $config->get('logging')->{interactive};
     $self->{debug}       = $config->get('debug');
 
-    if ($config->get('locale')) {
-        $self->{locale} = DNSCheck::Locale->new($config->get('locale'));
-    }
-
     if ($loglevels) {
         $self->{loglevels} = $loglevels;
     } else {
@@ -64,6 +60,7 @@ sub new {
 
     $self->{logname}  = undef;
     $self->{messages} = ();
+    $self->{parent} = $parent;
 
     $self->{module_stack} = [0];
     $self->{module_id}    = 0;
@@ -71,6 +68,22 @@ sub new {
     $self->{start} = time;
 
     bless $self, $class;
+}
+
+sub parent {
+    my $self = shift;
+    
+    return $self->{parent};
+}
+
+sub locale {
+    my $self = shift;
+
+    unless (defined($self->{locale})) {
+        $self->{locale} = DNSCheck::Locale->new($self->parent->config->get("locale"));
+    }
+
+    return $self->{locale};
 }
 
 sub clear {
@@ -168,12 +181,12 @@ sub print {
         if ($e->{level} eq 'DEBUG' and !$self->{debug}) {
             next;
         }
-        if ($self->{locale}) {
+        if ($self->locale) {
             printf(
                 "%7.3f: %s%s %s\n",
                 ($e->{timestamp} - $self->{start}),
                 $context, $e->{level},
-                $self->{locale}->expand($e->{tag}, @{ $e->{arg} })
+                $self->locale->expand($e->{tag}, @{ $e->{arg} })
             );
 
         } else {
@@ -285,6 +298,10 @@ Object creation. Do not use this, use the L<DNSCheck::logger()> method.
 
 Delete all current content in the object.
 
+=item ->parent()
+
+Get a reference to the parent object.
+
 =item ->logname($name);
 
 Set the log name.
@@ -347,6 +364,12 @@ level a given tag is considered to be is specified in F<policy.yaml>.
 
 Returns the number of current entries where the severity equals the given 
 string. This is used to implement the preceeding methods.
+
+=item ->locale()
+
+Return a locale object, which can be used to translate logger messages to 
+human-readable messages. You shouldn't need to call it directly, since the 
+logger does it for you
 
 =item ->module_stack_pop()
 

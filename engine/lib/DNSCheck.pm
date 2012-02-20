@@ -194,15 +194,6 @@ sub config {
     return $self->{config};
 }
 
-sub locale {
-    my $self = shift;
-
-    unless (defined($self->{locale})) {
-        $self->{locale} = DNSCheck::Locale->new($self->config->get("locale"));
-    }
-    return $self->{locale};
-}
-
 sub dbh {
     my $self  = shift;
     my $tries = 0;
@@ -433,12 +424,6 @@ Flush the internal DNS cache.
 =item ->logger()
 
 Return the logger object. It is of type L<DNSCheck::Logger>.
-
-=item ->locale()
-
-Return a locale object, which can be used to translate logger messages to 
-human-readable messages. You shouldn't need to call it directly, since the 
-logger does it for you
 
 =item ->dns()
 
