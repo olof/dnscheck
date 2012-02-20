@@ -12,6 +12,8 @@ my $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
 $dc->soa->test('iis.se');
 
 my $log = $dc->logger;
+isa_ok($log, 'DNSCheck::Logger');
+isa_ok($log->locale, 'DNSCheck::Locale');
 
 is($log->count_critical,0, 'No critical errors');
 is($log->count_error,0, 'No errors');
