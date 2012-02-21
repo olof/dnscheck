@@ -7,8 +7,9 @@ use warnings;
 use strict;
 
 use Test::More;
+use Net::IP;
 use MockResolver 'asn';
-# use MockBootstrap;
+# use MockBootstrap 'asn';
 use DNSCheck;
 
 ######################################################################
@@ -35,5 +36,26 @@ my $asn = $check->asn;
 is($asn->parent,$check);
 $asn->flush;
 ok(!$asn->{asn}, 'Cache correctly flushed');
+
+my $tmp = $asn->_asn_helper(Net::IP->new('::1'));
+is_deeply($tmp, []);
+$tmp = $asn->_asn_helper(Net::IP->new('127.0.0.1'));
+is_deeply($tmp, []);
+
+is_deeply($check->asn->_asn_helper(Net::IP->new('2a00:801:f0:211::152')), [1257], 'IPv6 announced (direct)');
+is_deeply($check->asn->_asn_helper(Net::IP->new('192.71.220.0')), [1257], 'IPv4 announced (direct)');
+
+eval {
+    my $i = Net::IP->new('::1');
+    $i->{ipversion} = 5;
+    $tmp = $asn->_asn_helper($i);
+};
+like($@, qr|Strange IP version: |, 'strange IP version');
+
+$check->logger->clear;
+$asn->{v4roots} = [];
+$asn->{v6roots} = [];
+$asn->lookup('195.47.254.17');
+is(scalar(grep {$_->[3] eq 'ASN:LOOKUP_ERROR'} @{$check->logger->export}), 1, 'ASN:LOOKUP_ERROR');
 
 done_testing();
