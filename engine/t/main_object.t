@@ -44,4 +44,9 @@ SKIP: {
     is(scalar(grep  {$_->{tag} =~ /^FAKEGLUE:NO_ADDRESS/} @{$dc2->logger->{messages}}), 1, 'No IPs for fake nameserver');
 }
 
+eval {
+    DNSCheck::Test::Common->new;
+};
+like($@, qr|Creating test object without parent|, 'dies without parent');
+
 done_testing();
