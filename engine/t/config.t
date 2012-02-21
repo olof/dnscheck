@@ -6,23 +6,39 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 5;
+use Test::More;
 
 use DNSCheck::Config;
 use Sys::Hostname;
 
 ######################################################################
 
-my $conf;
-
-eval { $conf = new DNSCheck::Config(configfile => './t/config.yaml'); };
-
-ok(!$@, $@);
+my $conf = new_ok( 'DNSCheck::Config' => [
+    configfile => './t/config.yaml',
+    policyfile => './policy.yaml',
+    localefile => './locale/en.yaml',
+    siteconfigfile => './t/config.yaml',
+    sitepolicyfile => './policy.yaml',
+] );
 
 SKIP: {
-    skip "Failed to get an object to test", 4 unless defined($conf);
-    ok(ref($conf)                  eq "DNSCheck::Config");
-    ok(ref($conf->get("net"))      eq "HASH");
-    ok($conf->get("net")->{"smtp"} eq 1);
-    ok($conf->get("hostname")      eq hostname);
+    skip "Failed to get an object to test", 4 unless defined( $conf );
+    ok( ref( $conf )                  eq "DNSCheck::Config" );
+    ok( ref( $conf->get( "net" ) )    eq "HASH" );
+    ok( $conf->get( "net" )->{"smtp"} eq 1 );
+    ok( $conf->get( "hostname" )      eq hostname );
+    is( scalar(keys(%{$conf->{locale}{messages}})), 268, 'Messages are there');
+    is( scalar(keys(%{$conf->{loglevels}})), 200, 'Policy data is there');
 }
+
+new_ok( 'DNSCheck::Config' => [ configdir => './t', sitedir => './t' ] );
+new_ok('DNSCheck::Config');
+
+new_ok('DNSCheck::Config' => [locale => 'gurksallad', policyfile  => 'citronfromage']);
+new_ok('DNSCheck::Config' => [ extras => {debug => 1} ] );
+new_ok('DNSCheck::Config' => [ interactive => 1 ] );
+
+eval { DNSCheck::Config->new( configfile => '/arglebargle/glop/glyf' ) };
+like( $@, qr|Configuration file /arglebargle/glop/glyf not readable| );
+
+done_testing;
