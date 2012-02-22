@@ -3,40 +3,99 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "ns.cafax.se IN A 192.71.228.17"
+               "ns.cafax.se 300 IN A 192.71.228.17"
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1",
-               "ns.cafax.se IN A 192.71.228.17",
-               "ns.cafax.se IN AAAA 2a00:801:11:53:0:0:0:17",
-               "ns1.frobbit.se IN A 208.79.80.118"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.cafax.se 86400 IN A 192.71.228.17",
+               "ns.cafax.se 86400 IN AAAA 2a00:801:11:53:0:0:0:17",
+               "ns1.frobbit.se 86400 IN A 208.79.80.118",
+               "ns.cafax.se 300 IN AAAA 2a00:801:11:53:0:0:0:17",
+               "ns1.frobbit.se 3600 IN A 208.79.80.118"
             ],
             "authority" : [
-               "se IN NS i.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS j.ns.se.",
-               "cafax.se IN NS ns1.frobbit.se.",
-               "cafax.se IN NS ns.cafax.se."
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "cafax.se 86400 IN NS ns.cafax.se.",
+               "cafax.se 86400 IN NS ns1.frobbit.se.",
+               "cafax.se 300 IN NS ns1.frobbit.se.",
+               "cafax.se 300 IN NS ns.cafax.se."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns.cafax.se 300 IN AAAA 2a00:801:11:53:0:0:0:17"
+            ],
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.cafax.se 86400 IN AAAA 2a00:801:11:53:0:0:0:17",
+               "ns.cafax.se 86400 IN A 192.71.228.17",
+               "ns1.frobbit.se 86400 IN A 208.79.80.118",
+               "ns.cafax.se 300 IN A 192.71.228.17",
+               "ns1.frobbit.se 3600 IN A 208.79.80.118"
+            ],
+            "authority" : [
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "cafax.se 86400 IN NS ns1.frobbit.se.",
+               "cafax.se 86400 IN NS ns.cafax.se.",
+               "cafax.se 300 IN NS ns1.frobbit.se.",
+               "cafax.se 300 IN NS ns.cafax.se."
             ],
             "header" : {
                "cd" : 0,
@@ -52,41 +111,97 @@
          }
       }
    },
-   "" : {
-      "SOA" : {
+   "ns.paphosting.nl" : {
+      "A" : {
          "IN" : {
-            "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33"
-            ],
             "answer" : [
-               ". IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2012020100\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t86400 )\t; Minimum TTL"
+               "ns.paphosting.nl 86400 IN A 94.142.245.3"
+            ],
+            "additional" : [
+               "nl1.dnsnode.net 172800 IN A 194.146.106.42",
+               "ns1.nic.nl 172800 IN A 193.176.144.2",
+               "ns2.nic.nl 172800 IN A 213.154.241.28",
+               "ns3.nic.nl 172800 IN A 194.171.17.2",
+               "ns4.nic.nl 172800 IN A 95.142.99.212",
+               "ns-nl.nic.fr 172800 IN A 192.93.0.4",
+               "sns-pb.isc.org 172800 IN A 192.5.4.1",
+               "nl1.dnsnode.net 172800 IN AAAA 2001:67c:1010:10:0:0:0:53",
+               "ns1.nic.nl 172800 IN AAAA 2a00:d78:0:102:193:176:144:2",
+               "ns2.nic.nl 172800 IN AAAA 2001:7b8:606:0:0:0:0:28",
+               "ns3.nic.nl 172800 IN AAAA 2001:610:0:800d:0:0:0:2",
+               "ns4.nic.nl 172800 IN AAAA 2a00:1188:5:0:0:0:0:212",
+               "ns-nl.nic.fr 172800 IN AAAA 2001:660:3005:1:0:0:1:2",
+               "sns-pb.isc.org 172800 IN AAAA 2001:500:2e:0:0:0:0:1",
+               "ns.paphosting.nl 7200 IN A 94.142.245.3",
+               "ns.paphosting.nl 7200 IN AAAA 2a02:898:28:0:0:0:0:3",
+               "ns.paphosting.nl 86400 IN AAAA 2a02:898:28:0:0:0:0:3"
             ],
             "authority" : [
-               ". IN NS e.root-servers.net.",
-               ". IN NS m.root-servers.net.",
-               ". IN NS c.root-servers.net.",
-               ". IN NS d.root-servers.net.",
-               ". IN NS a.root-servers.net.",
-               ". IN NS h.root-servers.net.",
-               ". IN NS f.root-servers.net.",
-               ". IN NS g.root-servers.net.",
-               ". IN NS k.root-servers.net.",
-               ". IN NS i.root-servers.net.",
-               ". IN NS l.root-servers.net.",
-               ". IN NS b.root-servers.net.",
-               ". IN NS j.root-servers.net."
+               "nl 172800 IN NS sns-pb.isc.org.",
+               "nl 172800 IN NS ns2.nic.nl.",
+               "nl 172800 IN NS nl1.dnsnode.net.",
+               "nl 172800 IN NS ns4.nic.nl.",
+               "nl 172800 IN NS ns-nl.nic.fr.",
+               "nl 172800 IN NS ns3.nic.nl.",
+               "nl 172800 IN NS ns1.nic.nl.",
+               "paphosting.nl 7200 IN NS ns.paphosting.nl.",
+               "paphosting.nl 7200 IN NS ns.paphosting.net.",
+               "paphosting.nl 7200 IN NS ns.paphosting.eu.",
+               "paphosting.nl 86400 IN NS ns.paphosting.nl.",
+               "paphosting.nl 86400 IN NS ns.paphosting.net.",
+               "paphosting.nl 86400 IN NS ns.paphosting.eu."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns.paphosting.nl 86400 IN AAAA 2a02:898:28:0:0:0:0:3"
+            ],
+            "additional" : [
+               "nl1.dnsnode.net 172800 IN A 194.146.106.42",
+               "ns1.nic.nl 172800 IN A 193.176.144.2",
+               "ns2.nic.nl 172800 IN A 213.154.241.28",
+               "ns3.nic.nl 172800 IN A 194.171.17.2",
+               "ns4.nic.nl 172800 IN A 95.142.99.212",
+               "ns-nl.nic.fr 172800 IN A 192.93.0.4",
+               "sns-pb.isc.org 172800 IN A 192.5.4.1",
+               "nl1.dnsnode.net 172800 IN AAAA 2001:67c:1010:10:0:0:0:53",
+               "ns1.nic.nl 172800 IN AAAA 2a00:d78:0:102:193:176:144:2",
+               "ns2.nic.nl 172800 IN AAAA 2001:7b8:606:0:0:0:0:28",
+               "ns3.nic.nl 172800 IN AAAA 2001:610:0:800d:0:0:0:2",
+               "ns4.nic.nl 172800 IN AAAA 2a00:1188:5:0:0:0:0:212",
+               "ns-nl.nic.fr 172800 IN AAAA 2001:660:3005:1:0:0:1:2",
+               "sns-pb.isc.org 172800 IN AAAA 2001:500:2e:0:0:0:0:1",
+               "ns.paphosting.nl 7200 IN A 94.142.245.3",
+               "ns.paphosting.nl 7200 IN AAAA 2a02:898:28:0:0:0:0:3",
+               "ns.paphosting.nl 86400 IN A 94.142.245.3"
+            ],
+            "authority" : [
+               "nl 172800 IN NS sns-pb.isc.org.",
+               "nl 172800 IN NS nl1.dnsnode.net.",
+               "nl 172800 IN NS ns3.nic.nl.",
+               "nl 172800 IN NS ns-nl.nic.fr.",
+               "nl 172800 IN NS ns2.nic.nl.",
+               "nl 172800 IN NS ns1.nic.nl.",
+               "nl 172800 IN NS ns4.nic.nl.",
+               "paphosting.nl 7200 IN NS ns.paphosting.eu.",
+               "paphosting.nl 7200 IN NS ns.paphosting.nl.",
+               "paphosting.nl 7200 IN NS ns.paphosting.net.",
+               "paphosting.nl 86400 IN NS ns.paphosting.nl.",
+               "paphosting.nl 86400 IN NS ns.paphosting.net.",
+               "paphosting.nl 86400 IN NS ns.paphosting.eu."
             ],
             "header" : {
                "cd" : 0,
@@ -103,29 +218,274 @@
       }
    },
    "phantoms.ath.cx" : {
-      "SOA" : {
-         "IN" : {
+      "ANY" : {
+         "ANY" : {
+            "answer" : [
+               "phantoms.ath.cx 60 IN AAAA 2001:4dd0:fddc:0:0:0:0:1",
+               "phantoms.ath.cx 60 IN A 93.134.103.94"
+            ],
             "additional" : [
-               "ns.anycast.nic.cx IN A 204.61.216.16",
-               "cx1.dyntld.net IN A 208.78.70.77",
-               "cx2.dyntld.net IN A 204.13.250.77",
-               "cx3.dyntld.net IN A 208.78.71.77",
-               "cx4.dyntld.net IN A 204.13.251.77",
-               "nsa.cx.coccaregistry.net IN A 203.119.84.245"
+               "ns.anycast.nic.cx 172800 IN A 204.61.216.16",
+               "cx1.dyntld.net 172800 IN A 208.78.70.77",
+               "cx2.dyntld.net 172800 IN A 204.13.250.77",
+               "cx3.dyntld.net 172800 IN A 208.78.71.77",
+               "cx4.dyntld.net 172800 IN A 204.13.251.77",
+               "nsa.cx.coccaregistry.net 172800 IN A 203.119.84.245",
+               "ns1.dyndns.org 60 IN A 204.13.248.75",
+               "ns1.dyndns.org 60 IN AAAA 2600:2001:0:0:0:0:0:75",
+               "ns2.dyndns.org 86400 IN A 204.13.249.75",
+               "ns2.dyndns.org 86400 IN AAAA 2600:2002:0:0:0:0:0:75",
+               "ns3.dyndns.org 86400 IN A 208.78.69.75",
+               "ns3.dyndns.org 86400 IN AAAA 2600:2003:0:0:0:0:0:75",
+               "ns4.dyndns.org 86400 IN A 91.198.22.75",
+               "ns4.dyndns.org 86400 IN AAAA 2600:2004:0:0:0:0:0:75",
+               "ns5.dyndns.org 86400 IN A 203.62.195.75",
+               "ns5.dyndns.org 86400 IN AAAA 2600:2005:0:0:0:0:0:75"
             ],
             "authority" : [
-               "cx IN NS cx4.dyntld.net.",
-               "cx IN NS nsa.cx.coccaregistry.net.",
-               "cx IN NS cx1.dyntld.net.",
-               "cx IN NS cx2.dyntld.net.",
-               "cx IN NS ns.anycast.nic.cx.",
-               "cx IN NS cx3.dyntld.net.",
-               "ath.cx IN NS ns5.dyndns.org.",
-               "ath.cx IN NS ns1.dyndns.org.",
-               "ath.cx IN NS ns2.dyndns.org.",
-               "ath.cx IN NS ns4.dyndns.org.",
-               "ath.cx IN NS ns3.dyndns.org.",
-               "ath.cx IN SOA ns1.dyndns.org. hostmaster.dyndns.org. (\n\t\t\t\t\t2492779428\t; Serial\n\t\t\t\t\t600\t; Refresh\n\t\t\t\t\t300\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t600 )\t; Minimum TTL"
+               "cx 172800 IN NS ns.anycast.nic.cx.",
+               "cx 172800 IN NS cx1.dyntld.net.",
+               "cx 172800 IN NS cx2.dyntld.net.",
+               "cx 172800 IN NS cx3.dyntld.net.",
+               "cx 172800 IN NS nsa.cx.coccaregistry.net.",
+               "cx 172800 IN NS cx4.dyntld.net.",
+               "ath.cx 86400 IN NS ns1.dyndns.org.",
+               "ath.cx 86400 IN NS ns4.dyndns.org.",
+               "ath.cx 86400 IN NS ns5.dyndns.org.",
+               "ath.cx 86400 IN NS ns3.dyndns.org.",
+               "ath.cx 86400 IN NS ns2.dyndns.org."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns1.sixxs.net" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns1.sixxs.net 3600 IN A 193.1.31.74"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.paphosting.net 172800 IN AAAA 2001:7b8:3:47:20d:b9ff:fe14:70d4",
+               "ns.paphosting.net 172800 IN A 213.154.229.21"
+            ],
+            "authority" : [
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.nl.",
+               "sixxs.net 172800 IN NS ns.paphosting.eu.",
+               "sixxs.net 3600 IN NS ns.paphosting.net.",
+               "sixxs.net 3600 IN NS ns.paphosting.nl.",
+               "sixxs.net 3600 IN NS ns.paphosting.eu."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns1.sixxs.net 3600 IN AAAA 2001:770:18:8:0:0:0:4"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.paphosting.net 172800 IN AAAA 2001:7b8:3:47:20d:b9ff:fe14:70d4",
+               "ns.paphosting.net 172800 IN A 213.154.229.21"
+            ],
+            "authority" : [
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.nl.",
+               "sixxs.net 172800 IN NS ns.paphosting.eu.",
+               "sixxs.net 3600 IN NS ns.paphosting.net.",
+               "sixxs.net 3600 IN NS ns.paphosting.nl.",
+               "sixxs.net 3600 IN NS ns.paphosting.eu."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns3.nic.fr" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns3.nic.fr 172800 IN A 192.134.0.49"
+            ],
+            "additional" : [
+               "c.nic.fr 172800 IN A 192.134.0.129",
+               "d.ext.nic.fr 172800 IN A 192.5.4.2",
+               "d.nic.fr 172800 IN A 194.0.9.1",
+               "e.ext.nic.fr 172800 IN A 193.176.144.6",
+               "f.ext.nic.fr 172800 IN A 194.146.106.46",
+               "g.ext.nic.fr 172800 IN A 194.0.36.1",
+               "c.nic.fr 172800 IN AAAA 2001:660:3006:4:0:0:1:1",
+               "d.ext.nic.fr 172800 IN AAAA 2001:500:2e:0:0:0:0:2",
+               "d.nic.fr 172800 IN AAAA 2001:678:c:0:0:0:0:1",
+               "e.ext.nic.fr 172800 IN AAAA 2a00:d78:0:102:193:176:144:6",
+               "f.ext.nic.fr 172800 IN AAAA 2001:67c:1010:11:0:0:0:53",
+               "g.ext.nic.fr 172800 IN AAAA 2001:678:4c:0:0:0:0:1",
+               "ns6.ext.nic.fr 172800 IN A 130.59.211.10",
+               "ns1.nic.fr 172800 IN A 192.134.4.1",
+               "ns2.nic.fr 172800 IN A 192.93.0.4",
+               "ns3.nic.fr 172800 IN A 192.134.0.49",
+               "ns4.ext.nic.fr 172800 IN A 193.0.9.4",
+               "ns1.ext.nic.fr 172800 IN A 193.51.208.13",
+               "ns6.ext.nic.fr 172800 IN AAAA 2001:620:0:0:0:0:0:5",
+               "ns1.nic.fr 172800 IN AAAA 2001:660:3003:2:0:0:4:1",
+               "ns2.nic.fr 172800 IN AAAA 2001:660:3005:1:0:0:1:2",
+               "ns3.nic.fr 172800 IN AAAA 2001:660:3006:1:0:0:1:1",
+               "ns4.ext.nic.fr 172800 IN AAAA 2001:67c:e0:0:0:0:0:4"
+            ],
+            "authority" : [
+               "fr 172800 IN NS g.ext.nic.fr.",
+               "fr 172800 IN NS e.ext.nic.fr.",
+               "fr 172800 IN NS c.nic.fr.",
+               "fr 172800 IN NS d.ext.nic.fr.",
+               "fr 172800 IN NS f.ext.nic.fr.",
+               "fr 172800 IN NS d.nic.fr.",
+               "nic.fr 172800 IN NS ns6.ext.nic.fr.",
+               "nic.fr 172800 IN NS ns1.nic.fr.",
+               "nic.fr 172800 IN NS ns2.nic.fr.",
+               "nic.fr 172800 IN NS ns3.nic.fr.",
+               "nic.fr 172800 IN NS ns4.ext.nic.fr.",
+               "nic.fr 172800 IN NS ns1.ext.nic.fr."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns3.nic.fr 172800 IN AAAA 2001:660:3006:1:0:0:1:1"
+            ],
+            "additional" : [
+               "c.nic.fr 172800 IN A 192.134.0.129",
+               "d.ext.nic.fr 172800 IN A 192.5.4.2",
+               "d.nic.fr 172800 IN A 194.0.9.1",
+               "e.ext.nic.fr 172800 IN A 193.176.144.6",
+               "f.ext.nic.fr 172800 IN A 194.146.106.46",
+               "g.ext.nic.fr 172800 IN A 194.0.36.1",
+               "c.nic.fr 172800 IN AAAA 2001:660:3006:4:0:0:1:1",
+               "d.ext.nic.fr 172800 IN AAAA 2001:500:2e:0:0:0:0:2",
+               "d.nic.fr 172800 IN AAAA 2001:678:c:0:0:0:0:1",
+               "e.ext.nic.fr 172800 IN AAAA 2a00:d78:0:102:193:176:144:6",
+               "f.ext.nic.fr 172800 IN AAAA 2001:67c:1010:11:0:0:0:53",
+               "g.ext.nic.fr 172800 IN AAAA 2001:678:4c:0:0:0:0:1",
+               "ns3.nic.fr 172800 IN AAAA 2001:660:3006:1:0:0:1:1",
+               "ns3.nic.fr 172800 IN A 192.134.0.49",
+               "ns1.ext.nic.fr 172800 IN A 193.51.208.13",
+               "ns1.nic.fr 172800 IN A 192.134.4.1",
+               "ns1.nic.fr 172800 IN AAAA 2001:660:3003:2:0:0:4:1",
+               "ns2.nic.fr 172800 IN A 192.93.0.4",
+               "ns2.nic.fr 172800 IN AAAA 2001:660:3005:1:0:0:1:2",
+               "ns4.ext.nic.fr 172800 IN A 193.0.9.4",
+               "ns4.ext.nic.fr 172800 IN AAAA 2001:67c:e0:0:0:0:0:4",
+               "ns6.ext.nic.fr 172800 IN A 130.59.211.10",
+               "ns6.ext.nic.fr 172800 IN AAAA 2001:620:0:0:0:0:0:5"
+            ],
+            "authority" : [
+               "fr 172800 IN NS c.nic.fr.",
+               "fr 172800 IN NS f.ext.nic.fr.",
+               "fr 172800 IN NS d.ext.nic.fr.",
+               "fr 172800 IN NS d.nic.fr.",
+               "fr 172800 IN NS e.ext.nic.fr.",
+               "fr 172800 IN NS g.ext.nic.fr.",
+               "nic.fr 172800 IN NS ns3.nic.fr.",
+               "nic.fr 172800 IN NS ns4.ext.nic.fr.",
+               "nic.fr 172800 IN NS ns6.ext.nic.fr.",
+               "nic.fr 172800 IN NS ns1.ext.nic.fr.",
+               "nic.fr 172800 IN NS ns2.nic.fr.",
+               "nic.fr 172800 IN NS ns1.nic.fr."
             ],
             "header" : {
                "cd" : 0,
@@ -142,43 +502,50 @@
       }
    },
    "narnia.pp.se" : {
-      "SOA" : {
-         "IN" : {
+      "ANY" : {
+         "ANY" : {
             "answer" : [
-               "narnia.pp.se IN SOA ns.narnia.pp.se. Postmaster.narnia.pp.se. (\n\t\t\t\t\t2011093001\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t600\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600 )\t; Minimum TTL"
+               "narnia.pp.se 43200 IN SOA ns.narnia.pp.se. Postmaster.narnia.pp.se. (\n\t\t\t\t\t2011093001\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t600\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600 )\t; Minimum TTL",
+               "narnia.pp.se 3600 IN NS nic.widell.net.",
+               "narnia.pp.se 3600 IN NS zeb.regexp.se.",
+               "narnia.pp.se 3600 IN NS ns.narnia.pp.se.",
+               "narnia.pp.se 900 IN TXT \"v=spf1 ip4:81.228.8.0/22 ip4:83.227.136.82 ip4:195.54.107.0/24 a:smtp.bredband.net ~all\"",
+               "narnia.pp.se 3600 IN MX 10 mx.narnia.pp.se."
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1",
-               "ns.narnia.pp.se IN A 83.227.136.82",
-               "zeb.regexp.se IN A 46.253.202.186"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.narnia.pp.se 86400 IN A 83.227.136.82",
+               "ns.narnia.pp.se 3600 IN A 83.227.136.82",
+               "zeb.regexp.se 2400 IN A 46.253.202.186",
+               "mx.narnia.pp.se 3600 IN A 83.227.136.82"
             ],
             "authority" : [
-               "se IN NS e.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS f.ns.se.",
-               "narnia.pp.se IN NS ns.narnia.pp.se.",
-               "narnia.pp.se IN NS nic.widell.net.",
-               "narnia.pp.se IN NS zeb.regexp.se."
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "narnia.pp.se 86400 IN NS ns.narnia.pp.se.",
+               "narnia.pp.se 86400 IN NS nic.widell.net.",
+               "narnia.pp.se 86400 IN NS zeb.regexp.se."
             ],
             "header" : {
                "cd" : 0,
@@ -198,41 +565,41 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "server1-ns1.udagdns.net IN A 62.146.28.82"
+               "server1-ns1.udagdns.net 3600 IN A 62.146.28.82"
             ],
             "additional" : [
-               "a.gtld-servers.net IN A 192.5.6.30",
-               "b.gtld-servers.net IN A 192.33.14.30",
-               "c.gtld-servers.net IN A 192.26.92.30",
-               "d.gtld-servers.net IN A 192.31.80.30",
-               "e.gtld-servers.net IN A 192.12.94.30",
-               "f.gtld-servers.net IN A 192.35.51.30",
-               "g.gtld-servers.net IN A 192.42.93.30",
-               "h.gtld-servers.net IN A 192.54.112.30",
-               "i.gtld-servers.net IN A 192.43.172.30",
-               "j.gtld-servers.net IN A 192.48.79.30",
-               "k.gtld-servers.net IN A 192.52.178.30",
-               "l.gtld-servers.net IN A 192.41.162.30",
-               "m.gtld-servers.net IN A 192.55.83.30",
-               "a.gtld-servers.net IN AAAA 2001:503:a83e:0:0:0:2:30",
-               "ns.udagdns.net IN A 89.31.142.100"
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.udagdns.net 172800 IN A 89.31.142.100"
             ],
             "authority" : [
-               "net IN NS h.gtld-servers.net.",
-               "net IN NS b.gtld-servers.net.",
-               "net IN NS f.gtld-servers.net.",
-               "net IN NS l.gtld-servers.net.",
-               "net IN NS e.gtld-servers.net.",
-               "net IN NS i.gtld-servers.net.",
-               "net IN NS d.gtld-servers.net.",
-               "net IN NS j.gtld-servers.net.",
-               "net IN NS c.gtld-servers.net.",
-               "net IN NS m.gtld-servers.net.",
-               "net IN NS g.gtld-servers.net.",
-               "net IN NS k.gtld-servers.net.",
-               "net IN NS a.gtld-servers.net.",
-               "udagdns.net IN NS ns.udagdns.net.",
-               "udagdns.net IN NS ns.udagdns.de."
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.de."
             ],
             "header" : {
                "cd" : 0,
@@ -246,50 +613,43 @@
                "rd" : 0
             }
          }
-      }
-   },
-   "ns5.dyndns.org" : {
-      "A" : {
+      },
+      "AAAA" : {
          "IN" : {
-            "answer" : [
-               "ns5.dyndns.org IN A 203.62.195.75"
-            ],
             "additional" : [
-               "a0.org.afilias-nst.info IN A 199.19.56.1",
-               "a2.org.afilias-nst.info IN A 199.249.112.1",
-               "b0.org.afilias-nst.org IN A 199.19.54.1",
-               "b2.org.afilias-nst.org IN A 199.249.120.1",
-               "c0.org.afilias-nst.info IN A 199.19.53.1",
-               "d0.org.afilias-nst.org IN A 199.19.57.1",
-               "a0.org.afilias-nst.info IN AAAA 2001:500:e:0:0:0:0:1",
-               "a2.org.afilias-nst.info IN AAAA 2001:500:40:0:0:0:0:1",
-               "b0.org.afilias-nst.org IN AAAA 2001:500:c:0:0:0:0:1",
-               "b2.org.afilias-nst.org IN AAAA 2001:500:48:0:0:0:0:1",
-               "c0.org.afilias-nst.info IN AAAA 2001:500:b:0:0:0:0:1",
-               "d0.org.afilias-nst.org IN AAAA 2001:500:f:0:0:0:0:1",
-               "ns1.dyndns.org IN A 204.13.248.75",
-               "ns2.dyndns.org IN A 204.13.249.75",
-               "ns3.dyndns.org IN A 208.78.69.75",
-               "ns4.dyndns.org IN A 91.198.22.75",
-               "ns5.dyndns.org IN A 203.62.195.75",
-               "ns1.dyndns.org IN AAAA 2600:2001:0:0:0:0:0:75",
-               "ns2.dyndns.org IN AAAA 2600:2002:0:0:0:0:0:75",
-               "ns3.dyndns.org IN AAAA 2600:2003:0:0:0:0:0:75",
-               "ns4.dyndns.org IN AAAA 2600:2004:0:0:0:0:0:75",
-               "ns5.dyndns.org IN AAAA 2600:2005:0:0:0:0:0:75"
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.udagdns.net 172800 IN A 89.31.142.100"
             ],
             "authority" : [
-               "org IN NS a2.org.afilias-nst.info.",
-               "org IN NS d0.org.afilias-nst.org.",
-               "org IN NS c0.org.afilias-nst.info.",
-               "org IN NS a0.org.afilias-nst.info.",
-               "org IN NS b0.org.afilias-nst.org.",
-               "org IN NS b2.org.afilias-nst.org.",
-               "dyndns.org IN NS ns1.dyndns.org.",
-               "dyndns.org IN NS ns2.dyndns.org.",
-               "dyndns.org IN NS ns3.dyndns.org.",
-               "dyndns.org IN NS ns4.dyndns.org.",
-               "dyndns.org IN NS ns5.dyndns.org."
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.de.",
+               "udagdns.net 1048576 IN SOA server1-ns1.udagdns.net. root.udagdns.net. (\n\t\t\t\t\t1\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t3600 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -309,27 +669,63 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "ns.udagdns.de IN A 89.31.138.100"
+               "ns.udagdns.de 3600 IN A 89.31.138.100"
             ],
             "additional" : [
-               "a.nic.de IN A 194.0.0.53",
-               "f.nic.de IN A 81.91.164.5",
-               "l.de.net IN A 77.67.63.105",
-               "s.de.net IN A 195.243.137.26",
-               "z.nic.de IN A 194.246.96.1",
-               "a.nic.de IN AAAA 2001:678:2:0:0:0:0:53",
-               "f.nic.de IN AAAA 2a02:568:0:2:0:0:0:53",
-               "l.de.net IN AAAA 2001:668:1f:11:0:0:0:105",
-               "ns.udagdns.de IN A 89.31.138.100"
+               "a.nic.de 172800 IN A 194.0.0.53",
+               "f.nic.de 172800 IN A 81.91.164.5",
+               "l.de.net 172800 IN A 77.67.63.105",
+               "s.de.net 172800 IN A 195.243.137.26",
+               "z.nic.de 172800 IN A 194.246.96.1",
+               "a.nic.de 172800 IN AAAA 2001:678:2:0:0:0:0:53",
+               "f.nic.de 172800 IN AAAA 2a02:568:0:2:0:0:0:53",
+               "l.de.net 172800 IN AAAA 2001:668:1f:11:0:0:0:105",
+               "ns.udagdns.de 86400 IN A 89.31.138.100"
             ],
             "authority" : [
-               "de IN NS s.de.net.",
-               "de IN NS z.nic.de.",
-               "de IN NS l.de.net.",
-               "de IN NS a.nic.de.",
-               "de IN NS f.nic.de.",
-               "udagdns.de IN NS ns.udagdns.net.",
-               "udagdns.de IN NS ns.udagdns.de."
+               "de 172800 IN NS f.nic.de.",
+               "de 172800 IN NS s.de.net.",
+               "de 172800 IN NS a.nic.de.",
+               "de 172800 IN NS z.nic.de.",
+               "de 172800 IN NS l.de.net.",
+               "udagdns.de 86400 IN NS ns.udagdns.de.",
+               "udagdns.de 86400 IN NS ns.udagdns.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "additional" : [
+               "a.nic.de 172800 IN A 194.0.0.53",
+               "f.nic.de 172800 IN A 81.91.164.5",
+               "l.de.net 172800 IN A 77.67.63.105",
+               "s.de.net 172800 IN A 195.243.137.26",
+               "z.nic.de 172800 IN A 194.246.96.1",
+               "a.nic.de 172800 IN AAAA 2001:678:2:0:0:0:0:53",
+               "f.nic.de 172800 IN AAAA 2a02:568:0:2:0:0:0:53",
+               "l.de.net 172800 IN AAAA 2001:668:1f:11:0:0:0:105",
+               "ns.udagdns.de 86400 IN A 89.31.138.100"
+            ],
+            "authority" : [
+               "de 172800 IN NS l.de.net.",
+               "de 172800 IN NS f.nic.de.",
+               "de 172800 IN NS z.nic.de.",
+               "de 172800 IN NS s.de.net.",
+               "de 172800 IN NS a.nic.de.",
+               "udagdns.de 86400 IN NS ns.udagdns.net.",
+               "udagdns.de 86400 IN NS ns.udagdns.de.",
+               "udagdns.de 1048576 IN SOA server1-ns1.udagdns.de. hostmaster.united-domains.de. (\n\t\t\t\t\t2003111701\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t3600 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -345,37 +741,133 @@
          }
       }
    },
-   "pp.se" : {
-      "SOA" : {
+   "pri.authdns.ripe.net" : {
+      "A" : {
          "IN" : {
+            "answer" : [
+               "pri.authdns.ripe.net 3600 IN A 193.0.9.5"
+            ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "sec1.apnic.net 172800 IN AAAA 2001:dc0:2001:a:4608:0:0:59",
+               "sec1.apnic.net 172800 IN A 202.12.29.59",
+               "sec3.apnic.net 172800 IN AAAA 2001:dc0:1:0:4777:0:0:140",
+               "sec3.apnic.net 172800 IN A 202.12.28.140",
+               "tinnie.arin.net 172800 IN A 199.212.0.53",
+               "tinnie.arin.net 172800 IN AAAA 2001:500:13:0:0:0:c7d4:35",
+               "pri.authdns.ripe.net 172800 IN A 193.0.9.5",
+               "pri.authdns.ripe.net 172800 IN AAAA 2001:67c:e0:0:0:0:0:5",
+               "pri.authdns.ripe.net 3600 IN AAAA 2001:67c:e0:0:0:0:0:5"
             ],
             "authority" : [
-               "se IN NS c.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "ripe.net 172800 IN NS ns3.nic.fr.",
+               "ripe.net 172800 IN NS sec1.apnic.net.",
+               "ripe.net 172800 IN NS sec3.apnic.net.",
+               "ripe.net 172800 IN NS tinnie.arin.net.",
+               "ripe.net 172800 IN NS sns-pb.isc.org.",
+               "ripe.net 172800 IN NS pri.authdns.ripe.net.",
+               "ripe.net 3600 IN NS sec3.apnic.net.",
+               "ripe.net 3600 IN NS sec1.apnic.net.",
+               "ripe.net 3600 IN NS sns-pb.isc.org.",
+               "ripe.net 3600 IN NS pri.authdns.ripe.net.",
+               "ripe.net 3600 IN NS tinnie.arin.net.",
+               "ripe.net 3600 IN NS ns3.nic.fr."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "pri.authdns.ripe.net 3600 IN AAAA 2001:67c:e0:0:0:0:0:5"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "sec1.apnic.net 172800 IN AAAA 2001:dc0:2001:a:4608:0:0:59",
+               "sec1.apnic.net 172800 IN A 202.12.29.59",
+               "sec3.apnic.net 172800 IN AAAA 2001:dc0:1:0:4777:0:0:140",
+               "sec3.apnic.net 172800 IN A 202.12.28.140",
+               "tinnie.arin.net 172800 IN A 199.212.0.53",
+               "tinnie.arin.net 172800 IN AAAA 2001:500:13:0:0:0:c7d4:35",
+               "pri.authdns.ripe.net 172800 IN A 193.0.9.5",
+               "pri.authdns.ripe.net 172800 IN AAAA 2001:67c:e0:0:0:0:0:5",
+               "pri.authdns.ripe.net 3600 IN A 193.0.9.5"
+            ],
+            "authority" : [
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "ripe.net 172800 IN NS ns3.nic.fr.",
+               "ripe.net 172800 IN NS sec1.apnic.net.",
+               "ripe.net 172800 IN NS sec3.apnic.net.",
+               "ripe.net 172800 IN NS tinnie.arin.net.",
+               "ripe.net 172800 IN NS sns-pb.isc.org.",
+               "ripe.net 172800 IN NS pri.authdns.ripe.net.",
+               "ripe.net 3600 IN NS ns3.nic.fr.",
+               "ripe.net 3600 IN NS sec1.apnic.net.",
+               "ripe.net 3600 IN NS sns-pb.isc.org.",
+               "ripe.net 3600 IN NS pri.authdns.ripe.net.",
+               "ripe.net 3600 IN NS sec3.apnic.net.",
+               "ripe.net 3600 IN NS tinnie.arin.net."
             ],
             "header" : {
                "cd" : 0,
@@ -392,46 +884,75 @@
       }
    },
    "iis.se" : {
-      "SOA" : {
-         "IN" : {
+      "ANY" : {
+         "ANY" : {
             "answer" : [
-               "iis.se IN SOA ns.nic.se. hostmaster.iis.se. (\n\t\t\t\t\t1328022001\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t1814400\t; Expire\n\t\t\t\t\t14400 )\t; Minimum TTL"
+               "iis.se 3600 IN SOA ns.nic.se. hostmaster.iis.se. (\n\t\t\t\t\t1329828301\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t1814400\t; Expire\n\t\t\t\t\t14400 )\t; Minimum TTL",
+               "iis.se 3600 IN RRSIG DNSKEY  5  2  3600  20120302114501 (\n\t\t\t20120221114501 10577  iis.se.\n\t\t\tkqBfBl0oIq7JoBRNYdMaNID1juNMlvS/TpqkDkVZyTK0k\n\t\t\t9YhABVfQ/7aOoi+kh+daNPtOK3MQBNw9y4XHZwph0cwnn\n\t\t\tdQOGSSoqS73kk6LXfetHPqlxcqfkFnUupkRD63Tbp/gRV\n\t\t\tYK2DLxRG0vGXxYEAIyqTHf8+nExL3xYo93x4= )",
+               "iis.se 3600 IN RRSIG DNSKEY  5  2  3600  20120302114501 (\n\t\t\t20120221114501 18937  iis.se.\n\t\t\tMtjmbqKf8Jf7eScjRf+3caYUL7KHPnE+4PX79YOskkuKa\n\t\t\tEzovYwu+KZ6I+bxkRuL+JOFc8IYYowdHixhLjP3l7HBJh\n\t\t\tnA2y0LptK3/GccPVOX1SEk39ug8GlEU41KShOmvrOdVWr\n\t\t\tq2A9QEzAn9M/zchAGyv/4/ibJa9eVFlsyHISoa+YbWuPC\n\t\t\tMm1DxPIKu3yPoChFdGabM8KkG8HNTIOJIZNuIL41U4G+8\n\t\t\tTCMVeR77E63I4NkP0Z3Sn+F2+RleoJqPMYqgzprJvSBOw\n\t\t\tA+/QxuF//Y5tfh23dT1BoH09PhvcO4gb8XwK3F3dbInke\n\t\t\tYqz69YvHBhbdM+sOOlnZMdl/ZMg== )",
+               "iis.se 3600 IN DNSKEY 256  3  5 ( \n\t\t\tBQEAAAABpXNHRRIOpxB8ATZJmkcnd/43vsDH\n\t\t\tsgUFsQSxnlkGOxqTdcRGnZ2PKjo7y8zBtrPF\n\t\t\tBiJuchf6cUe8iingyGJIzyZSw4qVNBPmyuyq\n\t\t\tdgWhJzI8pNhQy2pxW35WebcZRGlxywaIqEb5\n\t\t\tflrSrBcobJSvDyJ0VazAObocIX/o7uyChuc=\n\t\t\t \n\t\t\t) ; Key ID = 10577",
+               "iis.se 3600 IN DNSKEY 257  3  5 ( \n\t\t\tAwEAAcq5u+qe5VibnyvSnGU20panweAk2Qxf\n\t\t\tlGVuVQhzQABQV4SIdAQs+LNVHF61lcxe504j\n\t\t\thPmjeQ656X6t+dHpRz1DdPO/ukcIITjIRoJH\n\t\t\tqS+XXyL6gUluZoDU+K6vpxkGJx5m5n4boRTK\n\t\t\tCTUAR/9rw2+IQRRTtb6nBwsC3pmf9IlJQjQM\n\t\t\tb1cQTb0UO7fYgXDZIYVul2LwGpKRrMJ6Ul1n\n\t\t\tepkSxTMwQ4H9iKE9FhqPeIpzU9dnXGtJ+ZCx\n\t\t\t9tWSZ9VsSLWBJtUwoE6ZfIoF1ioqqxfGl9JV\n\t\t\t1/6GkDxo3pMN2edhkp8aqoo/R+mrJYi0vE8j\n\t\t\tbXvhZ12151DywuSxbGjAlxk= \n\t\t\t) ; Key ID = 18937",
+               "iis.se 14400 IN RRSIG NSEC  5  2  14400  20120302114501 (\n\t\t\t20120221114501 10577  iis.se.\n\t\t\tNTqpn0HJzL9xCSoiMRaRaRuAVycN65WbZOLFn+NSbkCAR\n\t\t\tHvbd534FADzmBSDQcTIDXV9wXNnNwjMstV+REvYa/CsNW\n\t\t\tRWX1M7MNpvRlT6en9kNQntTTuz3eRTL3T84HUQBziRmhI\n\t\t\tAeDDdbvrCGrWqlldMWryJ+TltFOhksqDw9wA= )",
+               "iis.se 14400 IN NSEC 2010.iis.se.  A AAAA DNSKEY MX NS NSEC RRSIG SOA TXT",
+               "iis.se 60 IN RRSIG AAAA  5  2  60  20120302114501 (\n\t\t\t20120221114501 10577  iis.se.\n\t\t\tQPjWizFlG3YrumyeQma7g+7BCUVoPqgi//ny1C7ImYdLE\n\t\t\twYC9tz5vppUUg0IpS1i5715IUK+pLsCua3nEpDqW8OyTA\n\t\t\t+toiRDRDZjwGM48f7bvWipM6Zirh/nEFgLETo47xCxdSt\n\t\t\ta62DzyquiyoC+Ip0w3CwCfcpvHb86YLsO0xs= )",
+               "iis.se 60 IN AAAA 2a00:801:f0:106:0:0:0:80",
+               "iis.se 3600 IN RRSIG TXT  5  2  3600  20120302114501 (\n\t\t\t20120221114501 10577  iis.se.\n\t\t\tn+qBDOw+w7jpmx3wcZb6/+SJxFz2NVHJ4bL/jvakLkgbN\n\t\t\tazuGwRJBGfmLE+2VSu1dekAHYjYl43sYZyWKRClReP+Z8\n\t\t\t8zTyZWt6tM8Q6knzuI+8ahV3S7/5K5SI3QFGQrYaV6Ekp\n\t\t\tLhmIHszwijMJ0+JQFUmQxQzzDY7+8Jvbp0UU= )",
+               "iis.se 3600 IN TXT \"v=spf1 ip4:212.247.204.0/24 ip4:212.247.7.128/25 ip4:212.247.8.128/25 ip4:212.247.3.0/25 ip4:212.247.14.32/28 ip4:212.247.165.16/28 ip4:212.247.206.0/24 ip4:91.226.36.0/23 ip6:2a00:801:f0:211::147 ip6:2a00:801:f0:106::38 mx ~all\"",
+               "iis.se 60 IN RRSIG MX  5  2  60  20120302114501 (\n\t\t\t20120221114501 10577  iis.se.\n\t\t\tiUYuTDX62s5xlX6YeB7BRjSvZJHw4pRFb637OsWKpXeV+\n\t\t\t3c5yP2SCNaPNHtpF9qW0xz4gkQJzPW2AfvPd31y+NXP47\n\t\t\tbwZ/WAllDe7u+9qH5nFvpJl7r+cabORJ5mgU+KiMiuTyC\n\t\t\tr7qdf9vWkUnjdVEJczHBEfCrkS9je3f2lvmY= )",
+               "iis.se 60 IN MX 5 mx1.iis.se.",
+               "iis.se 60 IN MX 5 mx2.iis.se.",
+               "iis.se 60 IN RRSIG A  5  2  60  20120302114501 (\n\t\t\t20120221114501 10577  iis.se.\n\t\t\tchviiCJvODSFmjaOScD6b8doNII3KqQnCBovj0TWYHybh\n\t\t\tDk9A+0d3QaH8nzI9Et5on6aQqgq/loj5VxnlL9aO9ofGt\n\t\t\tNbPX2stMvG+A31pspzDHoWb8p5fdCU3eUSZdsBF1Ip5R9\n\t\t\tbLPUavtypqfBFFevR2ZXQDMub0f5eIeJRsTw= )",
+               "iis.se 60 IN A 91.226.36.46",
+               "iis.se 3600 IN RRSIG NS  5  2  3600  20120302114501 (\n\t\t\t20120221114501 10577  iis.se.\n\t\t\tRDx1h5lqWs24zsAY9VXyMF/TQEp1qY8voP03bnrWrxQc8\n\t\t\tWDOfET2vohmL4qO558Yo0K3W9zvLUGGHBplZUz5lXh3VC\n\t\t\tbJB5Lx4nWBopEVo8CPS0Hy9lBqX3HOCwZWbBmYJ4WTozX\n\t\t\tgUoIwUs1nLb4VZ89zJT5bJq58n3I6IdCBsCk= )",
+               "iis.se 3600 IN NS ns.nic.se.",
+               "iis.se 3600 IN NS ns3.nic.se.",
+               "iis.se 3600 IN NS ns2.nic.se.",
+               "iis.se 3600 IN RRSIG SOA  5  2  3600  20120302114501 (\n\t\t\t20120221114501 10577  iis.se.\n\t\t\tdsogla0fb4djZJKHA3H1xyvAeEU3DJoisUsHP47YrL1vp\n\t\t\tr+MG0/mwxy92f0lcMnOHyrVENEtAlBJIQGYp3bBaT3cJD\n\t\t\t6HJILGztMxwxdhBKg5so946rHyN+5BkkWrtHrUf+2qiEU\n\t\t\tiF2etoVnxG4q8jENgJx5lAumgtCfEx/cNyHs= )"
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1",
-               "ns.nic.se IN A 212.247.7.228",
-               "ns.nic.se IN AAAA 2a00:801:f0:53:0:0:0:53",
-               "ns2.nic.se IN A 194.17.45.54",
-               "ns3.nic.se IN A 212.247.8.152",
-               "ns3.nic.se IN AAAA 2a00:801:f0:211:0:0:0:152"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.nic.se 86400 IN A 212.247.7.228",
+               "ns.nic.se 86400 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns2.nic.se 86400 IN A 194.17.45.54",
+               "ns3.nic.se 86400 IN A 212.247.8.152",
+               "ns3.nic.se 86400 IN AAAA 2a00:801:f0:211:0:0:0:152",
+               "mx1.iis.se 3600 IN A 212.247.7.222",
+               "mx1.iis.se 3600 IN AAAA 2a00:801:f0:80:0:0:0:222",
+               "mx2.iis.se 3600 IN A 212.247.8.148",
+               "mx2.iis.se 3600 IN AAAA 2a00:801:f0:211:0:0:0:148",
+               "ns.nic.se 3600 IN A 212.247.7.228",
+               "ns.nic.se 3600 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns2.nic.se 3600 IN A 194.17.45.54",
+               "ns3.nic.se 60 IN A 212.247.8.152",
+               "ns3.nic.se 60 IN AAAA 2a00:801:f0:211:0:0:0:152"
             ],
             "authority" : [
-               "se IN NS b.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS a.ns.se.",
-               "iis.se IN NS ns3.nic.se.",
-               "iis.se IN NS ns.nic.se.",
-               "iis.se IN NS ns2.nic.se."
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "iis.se 86400 IN NS ns2.nic.se.",
+               "iis.se 86400 IN NS ns.nic.se.",
+               "iis.se 86400 IN NS ns3.nic.se."
             ],
             "header" : {
                "cd" : 0,
@@ -448,47 +969,65 @@
       }
    },
    "example.com" : {
-      "SOA" : {
-         "IN" : {
+      "ANY" : {
+         "ANY" : {
             "answer" : [
-               "example.com IN SOA dns1.icann.org. hostmaster.icann.org. (\n\t\t\t\t\t2011062788\t; Serial\n\t\t\t\t\t7200\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600 )\t; Minimum TTL"
+               "example.com 3600 IN SOA dns1.icann.org. hostmaster.icann.org. (\n\t\t\t\t\t2011062948\t; Serial\n\t\t\t\t\t7200\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600 )\t; Minimum TTL",
+               "example.com 172800 IN A 192.0.43.10",
+               "example.com 172800 IN RRSIG A  8  2  172800  20120228023053 (\n\t\t\t20120220232656 40569  example.com.\n\t\t\tC0xqbZNk+b+WJOfBhnsp+Qdlb3gqAu3PX+PFt5GuP3kDU\n\t\t\ttFo3Yvy1e/m+1yivzb2uC5SSlP9cts1F9z27TeZ9UubAy\n\t\t\t4st8TpYIqHu/XwZDPDwasgcjQsplnGAHPxr3MZwn36y7P\n\t\t\tWs3EEpM/RrHEWLyfYW6BZGMD6qSE5shy9IC0= )",
+               "example.com 172800 IN NS b.iana-servers.net.",
+               "example.com 172800 IN NS a.iana-servers.net.",
+               "example.com 172800 IN RRSIG NS  8  2  172800  20120228062918 (\n\t\t\t20120220232656 40569  example.com.\n\t\t\tXKeHpLtOPuSmSN1z2MCXS7Pop6xz5LRVpojx/fvWCsvUs\n\t\t\ti6G7qS3UZRsehzjFRo3uzHkagR2U976CS6SanOsvbD9Dp\n\t\t\tqDbv15KYRHCcHfPGm+hw/Kal/c3mpiXS7dSqNanC4Q1AL\n\t\t\t6AIr8MPVBW9iKRUW92Z9PtTOyTXdhhCc3eCA= )",
+               "example.com 3600 IN RRSIG SOA  8  2  3600  20120228032122 (\n\t\t\t20120220232656 40569  example.com.\n\t\t\tcp89z9UbYYA4uJwqFOrDuzEvR5ZB28qstOXVNa3dR2gDd\n\t\t\tXpMvKtnsVqjNm/aJ8KzE8VohkJCcuL0LYXlK6EMY1Zxje\n\t\t\tD1Ke0ANzG2pOvF76Y+kuCZBI984604Nr5U4jmBklAcG2V\n\t\t\tlz2eEl21ixmNSvRYTqE8z1adXTW6L1IOxlJ4= )",
+               "example.com 172800 IN AAAA 2001:500:88:200:0:0:0:10",
+               "example.com 172800 IN RRSIG AAAA  8  2  172800  20120228052047 (\n\t\t\t20120220232656 40569  example.com.\n\t\t\tHmOCeZDrk34FIhFJ3L5/Mz+7dzrYsXlo29sX+uOl47knC\n\t\t\tAS+wqr+ETlaRoJaZT1e7Y9r62t5CtJIH4//L7OBc8QsYD\n\t\t\tACQ09TluIxKgM2GVliygDHYRAYs/LAMQ+kYKfJ63YNBsz\n\t\t\tj95XZiqC9Gr64uhCYYwH8xh0dA/8R0qACExE= )",
+               "example.com 3600 IN DNSKEY 256  3  8 ( \n\t\t\tAwEAAb9neYTZSxF40UuJ7N9E8jIPZ11rxM04\n\t\t\tYMNoA62QKPzSLZZcnIOBBrBtiK9z9iJC4DJN\n\t\t\tazjSj4z50xShpfxYZyBmwTWpYFA9uKnanojq\n\t\t\teojW+GIzTH4RoCz/sAXkC7ul3oFw/IB7FUul\n\t\t\tzMneKdllqUoOS2/xpfWnkWCCQayDEO6/ \n\t\t\t) ; Key ID = 40569",
+               "example.com 3600 IN DNSKEY 257  3  8 ( \n\t\t\tAwEAAawt7HplI5M8GGAsxuyCyjF0l+QlcgVN\n\t\t\t11CRZ4vP66qbDCX0BnShZ11BGb//4zSG/8mm\n\t\t\tBHirL2FLg+mVuIIxig+iroZYjh4iTKVOhv2h\n\t\t\tZftRwyrQHK++qXvCCWN3ki51RG/e8R4kOEV7\n\t\t\t1rZ8OgQvPWx6F91qroqOPpcf7PPxippeHOn+\n\t\t\tPxnP0hpyLyo1mx1rPs/cMpL3jOMufGP+LJYh\n\t\t\t+fBU7lt0sP5i09HaJPruzyZML9BPtpv8ZAdQ\n\t\t\thwtXVG0+MnET2qT/1+TljpxZn6yeegFRCFRH\n\t\t\tBjMo6iiRJnUWra/klkrgEn2Q+BXGTOMTTKQd\n\t\t\tYz4OxYEa1z7apu3a09dYNBM= \n\t\t\t) ; Key ID = 51605",
+               "example.com 3600 IN DNSKEY 257  3  8 ( \n\t\t\tAwEAAeikvxboZpn9VCxm3YDLHo40SvA9EmRw\n\t\t\tJHHQyJ0OCzrQSRBSipojrW7yESXWiDDyzflS\n\t\t\t8rgzDs7M3fIdSduOdyNi55DmXPdkS8HYORTM\n\t\t\tNyzFsSOg+xx6tUySK2p4WAhlbsJNLz4IkQCe\n\t\t\tk59NoDBOLyQ15npsr7Tgfb/HHU7zmCMvnxh0\n\t\t\tSqO2lyhnQfk29Thc3nC4KNJNb3drjWKOuCw5\n\t\t\tmg+2GrEZYc/VqdeGvrOCQ2el8jWZpSU5cxb7\n\t\t\tEdEy4B9nEeZiBpHXaZ5XJ+ewi4vmcUK5/445\n\t\t\tmGJqV4rDeicy5/ShC/BJ81v3bIRPWebvDRJm\n\t\t\tDbjr2d9MnLXUE7yyETrQd18= \n\t\t\t) ; Key ID = 31589",
+               "example.com 3600 IN RRSIG DNSKEY  8  2  3600  20120228082206 (\n\t\t\t20120220232656 31589  example.com.\n\t\t\tWgR5iQjUICrncLtWQSTBGaZGlifWhtxmPcJ9q0aOBJzUn\n\t\t\tQcXWR+4XhEUikKtXUXFyjJsQiHeijmaiuAtuebMc2vl54\n\t\t\tMxKOa+9yhN+JVfuGGJTgBjMgTENHxY3To/IJ79juWPMA1\n\t\t\tDugRh02PKQ9e3WxbL+SgHNbIRC/a11UeHk/LkkzuxlNau\n\t\t\tr+h/QhxQj+mo4+Y+3aHaAJykE0f8lz0Rj8EVXbQhumbPF\n\t\t\tlII7jMQRqpKSVLO2y9jQEbpA1jsY5/Z6yqnAOiuX5bQ1X\n\t\t\tAtCO6g2mxCrN0KQEPHMdf6NXDlcOoA1BxnQi5blQ5yprW\n\t\t\tMURaf6wTiENKTiQqkQRIDRSaCEQ== )",
+               "example.com 3600 IN NSEC www.example.com.  A AAAA DNSKEY NS NSEC RRSIG SOA",
+               "example.com 3600 IN RRSIG NSEC  8  2  3600  20120228060054 (\n\t\t\t20120220232656 40569  example.com.\n\t\t\tADGmaBtyHVJy2toMdEg0j6zNAOt4/6Lv0HYfWoPMI/tLd\n\t\t\tFT8o5TFFo5HNAjiyHdzCRnW/Y/hSUVJBIQE38z/RL0CrB\n\t\t\tIY/nG3rvPkq6WZxD5ipe6sn0kk6hY41xYHfAyAxSJk4Q4\n\t\t\tn8JXA5d+ziAcjfZK9EyZUKA4cpmxCHDnYXSk= )"
             ],
             "additional" : [
-               "a.gtld-servers.net IN A 192.5.6.30",
-               "b.gtld-servers.net IN A 192.33.14.30",
-               "c.gtld-servers.net IN A 192.26.92.30",
-               "d.gtld-servers.net IN A 192.31.80.30",
-               "e.gtld-servers.net IN A 192.12.94.30",
-               "f.gtld-servers.net IN A 192.35.51.30",
-               "g.gtld-servers.net IN A 192.42.93.30",
-               "h.gtld-servers.net IN A 192.54.112.30",
-               "i.gtld-servers.net IN A 192.43.172.30",
-               "j.gtld-servers.net IN A 192.48.79.30",
-               "k.gtld-servers.net IN A 192.52.178.30",
-               "l.gtld-servers.net IN A 192.41.162.30",
-               "m.gtld-servers.net IN A 192.55.83.30",
-               "a.gtld-servers.net IN AAAA 2001:503:a83e:0:0:0:2:30",
-               "a.iana-servers.net IN A 199.43.132.53",
-               "a.iana-servers.net IN AAAA 2001:500:8c:0:0:0:0:53",
-               "b.iana-servers.net IN A 199.43.133.53",
-               "b.iana-servers.net IN AAAA 2001:500:8d:0:0:0:0:53"
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "a.iana-servers.net 172800 IN A 199.43.132.53",
+               "a.iana-servers.net 172800 IN AAAA 2001:500:8c:0:0:0:0:53",
+               "b.iana-servers.net 172800 IN A 199.43.133.53",
+               "b.iana-servers.net 172800 IN AAAA 2001:500:8d:0:0:0:0:53",
+               "a.iana-servers.net 1800 IN A 199.43.132.53",
+               "a.iana-servers.net 1800 IN AAAA 2001:500:8c:0:0:0:0:53",
+               "b.iana-servers.net 1800 IN A 199.43.133.53",
+               "b.iana-servers.net 1800 IN AAAA 2001:500:8d:0:0:0:0:53"
             ],
             "authority" : [
-               "com IN NS d.gtld-servers.net.",
-               "com IN NS k.gtld-servers.net.",
-               "com IN NS m.gtld-servers.net.",
-               "com IN NS h.gtld-servers.net.",
-               "com IN NS f.gtld-servers.net.",
-               "com IN NS g.gtld-servers.net.",
-               "com IN NS i.gtld-servers.net.",
-               "com IN NS c.gtld-servers.net.",
-               "com IN NS e.gtld-servers.net.",
-               "com IN NS a.gtld-servers.net.",
-               "com IN NS j.gtld-servers.net.",
-               "com IN NS l.gtld-servers.net.",
-               "com IN NS b.gtld-servers.net.",
-               "example.com IN NS a.iana-servers.net.",
-               "example.com IN NS b.iana-servers.net."
+               "com 172800 IN NS e.gtld-servers.net.",
+               "com 172800 IN NS k.gtld-servers.net.",
+               "com 172800 IN NS j.gtld-servers.net.",
+               "com 172800 IN NS l.gtld-servers.net.",
+               "com 172800 IN NS g.gtld-servers.net.",
+               "com 172800 IN NS f.gtld-servers.net.",
+               "com 172800 IN NS i.gtld-servers.net.",
+               "com 172800 IN NS d.gtld-servers.net.",
+               "com 172800 IN NS m.gtld-servers.net.",
+               "com 172800 IN NS c.gtld-servers.net.",
+               "com 172800 IN NS h.gtld-servers.net.",
+               "com 172800 IN NS a.gtld-servers.net.",
+               "com 172800 IN NS b.gtld-servers.net.",
+               "example.com 172800 IN NS a.iana-servers.net.",
+               "example.com 172800 IN NS b.iana-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -504,31 +1043,811 @@
          }
       }
    },
-   "eu" : {
-      "SOA" : {
+   "ns3.sixxs.net" : {
+      "A" : {
          "IN" : {
             "answer" : [
-               "eu IN SOA a.nic.eu. tech.eurid.eu. (\n\t\t\t\t\t1004448868\t; Serial\n\t\t\t\t\t3600\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t3600000\t; Expire\n\t\t\t\t\t600 )\t; Minimum TTL"
+               "ns3.sixxs.net 3600 IN A 38.229.76.3"
             ],
             "additional" : [
-               "a.nic.eu IN A 91.200.16.100",
-               "l.eu.dns.be IN A 193.2.221.60",
-               "l.nic.eu IN A 195.66.241.178",
-               "m.nic.eu IN A 217.29.76.13",
-               "p.nic.eu IN A 195.47.235.130",
-               "x.nic.eu IN A 194.0.1.19",
-               "y.nic.eu IN A 194.146.106.90",
-               "l.eu.dns.be IN AAAA 2001:1470:8000:100:0:0:0:1",
-               "y.nic.eu IN AAAA 2001:67c:1010:23:0:0:0:53"
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.paphosting.net 172800 IN AAAA 2001:7b8:3:47:20d:b9ff:fe14:70d4",
+               "ns.paphosting.net 172800 IN A 213.154.229.21"
             ],
             "authority" : [
-               "eu IN NS l.eu.dns.be.",
-               "eu IN NS a.nic.eu.",
-               "eu IN NS l.nic.eu.",
-               "eu IN NS y.nic.eu.",
-               "eu IN NS p.nic.eu.",
-               "eu IN NS x.nic.eu.",
-               "eu IN NS m.nic.eu."
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.nl.",
+               "sixxs.net 172800 IN NS ns.paphosting.eu.",
+               "sixxs.net 3600 IN NS ns.paphosting.net.",
+               "sixxs.net 3600 IN NS ns.paphosting.nl.",
+               "sixxs.net 3600 IN NS ns.paphosting.eu."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns3.sixxs.net 3600 IN AAAA 2620:0:6b0:a:250:56ff:fe99:78f7"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.paphosting.net 172800 IN AAAA 2001:7b8:3:47:20d:b9ff:fe14:70d4",
+               "ns.paphosting.net 172800 IN A 213.154.229.21"
+            ],
+            "authority" : [
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.nl.",
+               "sixxs.net 172800 IN NS ns.paphosting.eu.",
+               "sixxs.net 3600 IN NS ns.paphosting.net.",
+               "sixxs.net 3600 IN NS ns.paphosting.nl.",
+               "sixxs.net 3600 IN NS ns.paphosting.eu."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns2.sixxs.net" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns2.sixxs.net 3600 IN A 78.141.179.38"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.paphosting.net 172800 IN AAAA 2001:7b8:3:47:20d:b9ff:fe14:70d4",
+               "ns.paphosting.net 172800 IN A 213.154.229.21"
+            ],
+            "authority" : [
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.nl.",
+               "sixxs.net 172800 IN NS ns.paphosting.eu.",
+               "sixxs.net 3600 IN NS ns.paphosting.net.",
+               "sixxs.net 3600 IN NS ns.paphosting.nl.",
+               "sixxs.net 3600 IN NS ns.paphosting.eu."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns2.sixxs.net 3600 IN AAAA 2001:7e8:1:102:0:0:0:a"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.paphosting.net 172800 IN AAAA 2001:7b8:3:47:20d:b9ff:fe14:70d4",
+               "ns.paphosting.net 172800 IN A 213.154.229.21"
+            ],
+            "authority" : [
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.net.",
+               "sixxs.net 172800 IN NS ns.paphosting.nl.",
+               "sixxs.net 172800 IN NS ns.paphosting.eu.",
+               "sixxs.net 3600 IN NS ns.paphosting.net.",
+               "sixxs.net 3600 IN NS ns.paphosting.nl.",
+               "sixxs.net 3600 IN NS ns.paphosting.eu."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns.isc.afilias-nst.info" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns.isc.afilias-nst.info 86400 IN A 199.254.63.254"
+            ],
+            "additional" : [
+               "a0.info.afilias-nst.info 172800 IN A 199.254.31.1",
+               "a2.info.afilias-nst.info 172800 IN A 199.249.113.1",
+               "b0.info.afilias-nst.org 172800 IN A 199.254.48.1",
+               "b2.info.afilias-nst.org 172800 IN A 199.249.121.1",
+               "c0.info.afilias-nst.info 172800 IN A 199.254.49.1",
+               "d0.info.afilias-nst.org 172800 IN A 199.254.50.1",
+               "a0.info.afilias-nst.info 172800 IN AAAA 2001:500:19:0:0:0:0:1",
+               "a2.info.afilias-nst.info 172800 IN AAAA 2001:500:41:0:0:0:0:1",
+               "b0.info.afilias-nst.org 172800 IN AAAA 2001:500:1a:0:0:0:0:1",
+               "b2.info.afilias-nst.org 172800 IN AAAA 2001:500:49:0:0:0:0:1",
+               "c0.info.afilias-nst.info 172800 IN AAAA 2001:500:1b:0:0:0:0:1",
+               "d0.info.afilias-nst.org 172800 IN AAAA 2001:500:1c:0:0:0:0:1",
+               "ns1.ams1.afilias-nst.info 86400 IN A 199.19.48.79",
+               "ns1.mia1.afilias-nst.info 86400 IN A 199.19.52.79",
+               "ns1.sea1.afilias-nst.info 86400 IN A 199.19.50.79",
+               "ns1.yyz1.afilias-nst.info 86400 IN A 199.19.49.79",
+               "ns1.ams1.afilias-nst.info 86400 IN AAAA 2001:500:6:0:0:0:0:79",
+               "ns1.mia1.afilias-nst.info 86400 IN AAAA 2001:500:a:0:0:0:0:79",
+               "ns1.sea1.afilias-nst.info 86400 IN AAAA 2001:500:8:0:0:0:0:79",
+               "ns1.yyz1.afilias-nst.info 86400 IN AAAA 2001:500:7:0:0:0:0:79",
+               "ns1.ams1.afilias-nst.info 3600 IN A 199.19.48.79",
+               "ns1.ams1.afilias-nst.info 3600 IN AAAA 2001:500:6:0:0:0:0:79",
+               "ns1.hkg1.afilias-nst.info 3600 IN A 199.19.51.79",
+               "ns1.hkg1.afilias-nst.info 3600 IN AAAA 2001:500:9:0:0:0:0:79",
+               "ns1.mia1.afilias-nst.info 3600 IN A 199.19.52.79",
+               "ns1.mia1.afilias-nst.info 3600 IN AAAA 2001:500:a:0:0:0:0:79",
+               "ns1.sea1.afilias-nst.info 3600 IN A 199.19.50.79",
+               "ns1.sea1.afilias-nst.info 3600 IN AAAA 2001:500:8:0:0:0:0:79",
+               "ns1.yyz1.afilias-nst.info 3600 IN A 199.19.49.79",
+               "ns1.yyz1.afilias-nst.info 3600 IN AAAA 2001:500:7:0:0:0:0:79"
+            ],
+            "authority" : [
+               "info 172800 IN NS b0.info.afilias-nst.org.",
+               "info 172800 IN NS b2.info.afilias-nst.org.",
+               "info 172800 IN NS a0.info.afilias-nst.info.",
+               "info 172800 IN NS c0.info.afilias-nst.info.",
+               "info 172800 IN NS d0.info.afilias-nst.org.",
+               "info 172800 IN NS a2.info.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.ams1.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.mia1.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.sea1.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.yyz1.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.hkg1.afilias-nst.info."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns.isc.afilias-nst.info 86400 IN AAAA 2001:500:2c:0:0:0:0:254"
+            ],
+            "additional" : [
+               "a0.info.afilias-nst.info 172800 IN A 199.254.31.1",
+               "a2.info.afilias-nst.info 172800 IN A 199.249.113.1",
+               "b0.info.afilias-nst.org 172800 IN A 199.254.48.1",
+               "b2.info.afilias-nst.org 172800 IN A 199.249.121.1",
+               "c0.info.afilias-nst.info 172800 IN A 199.254.49.1",
+               "d0.info.afilias-nst.org 172800 IN A 199.254.50.1",
+               "a0.info.afilias-nst.info 172800 IN AAAA 2001:500:19:0:0:0:0:1",
+               "a2.info.afilias-nst.info 172800 IN AAAA 2001:500:41:0:0:0:0:1",
+               "b0.info.afilias-nst.org 172800 IN AAAA 2001:500:1a:0:0:0:0:1",
+               "b2.info.afilias-nst.org 172800 IN AAAA 2001:500:49:0:0:0:0:1",
+               "c0.info.afilias-nst.info 172800 IN AAAA 2001:500:1b:0:0:0:0:1",
+               "d0.info.afilias-nst.org 172800 IN AAAA 2001:500:1c:0:0:0:0:1",
+               "ns1.ams1.afilias-nst.info 86400 IN A 199.19.48.79",
+               "ns1.ams1.afilias-nst.info 86400 IN AAAA 2001:500:6:0:0:0:0:79",
+               "ns1.mia1.afilias-nst.info 86400 IN A 199.19.52.79",
+               "ns1.mia1.afilias-nst.info 86400 IN AAAA 2001:500:a:0:0:0:0:79",
+               "ns1.sea1.afilias-nst.info 86400 IN A 199.19.50.79",
+               "ns1.sea1.afilias-nst.info 86400 IN AAAA 2001:500:8:0:0:0:0:79",
+               "ns1.yyz1.afilias-nst.info 86400 IN A 199.19.49.79",
+               "ns1.yyz1.afilias-nst.info 86400 IN AAAA 2001:500:7:0:0:0:0:79",
+               "ns1.ams1.afilias-nst.info 3600 IN A 199.19.48.79",
+               "ns1.ams1.afilias-nst.info 3600 IN AAAA 2001:500:6:0:0:0:0:79",
+               "ns1.hkg1.afilias-nst.info 3600 IN A 199.19.51.79",
+               "ns1.hkg1.afilias-nst.info 3600 IN AAAA 2001:500:9:0:0:0:0:79",
+               "ns1.mia1.afilias-nst.info 3600 IN A 199.19.52.79",
+               "ns1.mia1.afilias-nst.info 3600 IN AAAA 2001:500:a:0:0:0:0:79",
+               "ns1.sea1.afilias-nst.info 3600 IN A 199.19.50.79",
+               "ns1.sea1.afilias-nst.info 3600 IN AAAA 2001:500:8:0:0:0:0:79",
+               "ns1.yyz1.afilias-nst.info 3600 IN A 199.19.49.79",
+               "ns1.yyz1.afilias-nst.info 3600 IN AAAA 2001:500:7:0:0:0:0:79"
+            ],
+            "authority" : [
+               "info 172800 IN NS a2.info.afilias-nst.info.",
+               "info 172800 IN NS d0.info.afilias-nst.org.",
+               "info 172800 IN NS b0.info.afilias-nst.org.",
+               "info 172800 IN NS b2.info.afilias-nst.org.",
+               "info 172800 IN NS a0.info.afilias-nst.info.",
+               "info 172800 IN NS c0.info.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.ams1.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.sea1.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.yyz1.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.mia1.afilias-nst.info.",
+               "afilias-nst.info 86400 IN NS ns1.hkg1.afilias-nst.info."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns4.q.p80.net" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns4.q.p80.net 600 IN A 83.140.98.10"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns0.phonera.net 172800 IN A 83.140.98.6",
+               "ns1.phonera.net 172800 IN A 83.140.98.10",
+               "ns2.phonera.net 172800 IN A 83.140.98.14",
+               "ns3.phonera.net 172800 IN A 83.140.98.18",
+               "ns4.phonera.net 172800 IN A 83.140.98.22"
+            ],
+            "authority" : [
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "p80.net 172800 IN NS ns0.phonera.net.",
+               "p80.net 172800 IN NS ns1.phonera.net.",
+               "p80.net 172800 IN NS ns2.phonera.net.",
+               "p80.net 172800 IN NS ns3.phonera.net.",
+               "p80.net 172800 IN NS ns4.phonera.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns4.q.p80.net 60 IN AAAA 2a01:6d0:1:0:0:0:0:4"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns0.phonera.net 172800 IN A 83.140.98.6",
+               "ns1.phonera.net 172800 IN A 83.140.98.10",
+               "ns2.phonera.net 172800 IN A 83.140.98.14",
+               "ns3.phonera.net 172800 IN A 83.140.98.18",
+               "ns4.phonera.net 172800 IN A 83.140.98.22"
+            ],
+            "authority" : [
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "p80.net 172800 IN NS ns0.phonera.net.",
+               "p80.net 172800 IN NS ns1.phonera.net.",
+               "p80.net 172800 IN NS ns2.phonera.net.",
+               "p80.net 172800 IN NS ns3.phonera.net.",
+               "p80.net 172800 IN NS ns4.phonera.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns1.dyndns.org" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns1.dyndns.org 60 IN A 204.13.248.75"
+            ],
+            "additional" : [
+               "a0.org.afilias-nst.info 172800 IN A 199.19.56.1",
+               "a2.org.afilias-nst.info 172800 IN A 199.249.112.1",
+               "b0.org.afilias-nst.org 172800 IN A 199.19.54.1",
+               "b2.org.afilias-nst.org 172800 IN A 199.249.120.1",
+               "c0.org.afilias-nst.info 172800 IN A 199.19.53.1",
+               "d0.org.afilias-nst.org 172800 IN A 199.19.57.1",
+               "a0.org.afilias-nst.info 172800 IN AAAA 2001:500:e:0:0:0:0:1",
+               "a2.org.afilias-nst.info 172800 IN AAAA 2001:500:40:0:0:0:0:1",
+               "b0.org.afilias-nst.org 172800 IN AAAA 2001:500:c:0:0:0:0:1",
+               "b2.org.afilias-nst.org 172800 IN AAAA 2001:500:48:0:0:0:0:1",
+               "c0.org.afilias-nst.info 172800 IN AAAA 2001:500:b:0:0:0:0:1",
+               "d0.org.afilias-nst.org 172800 IN AAAA 2001:500:f:0:0:0:0:1",
+               "ns1.dyndns.org 86400 IN A 204.13.248.75",
+               "ns1.dyndns.org 86400 IN AAAA 2600:2001:0:0:0:0:0:75",
+               "ns2.dyndns.org 86400 IN A 204.13.249.75",
+               "ns2.dyndns.org 86400 IN AAAA 2600:2002:0:0:0:0:0:75",
+               "ns3.dyndns.org 86400 IN A 208.78.69.75",
+               "ns3.dyndns.org 86400 IN AAAA 2600:2003:0:0:0:0:0:75",
+               "ns4.dyndns.org 86400 IN A 91.198.22.75",
+               "ns4.dyndns.org 86400 IN AAAA 2600:2004:0:0:0:0:0:75",
+               "ns5.dyndns.org 86400 IN A 203.62.195.75",
+               "ns5.dyndns.org 86400 IN AAAA 2600:2005:0:0:0:0:0:75",
+               "ns1.dyndns.org 60 IN AAAA 2600:2001:0:0:0:0:0:75"
+            ],
+            "authority" : [
+               "org 172800 IN NS a2.org.afilias-nst.info.",
+               "org 172800 IN NS b2.org.afilias-nst.org.",
+               "org 172800 IN NS a0.org.afilias-nst.info.",
+               "org 172800 IN NS c0.org.afilias-nst.info.",
+               "org 172800 IN NS b0.org.afilias-nst.org.",
+               "org 172800 IN NS d0.org.afilias-nst.org.",
+               "dyndns.org 86400 IN NS ns1.dyndns.org.",
+               "dyndns.org 86400 IN NS ns3.dyndns.org.",
+               "dyndns.org 86400 IN NS ns5.dyndns.org.",
+               "dyndns.org 86400 IN NS ns4.dyndns.org.",
+               "dyndns.org 86400 IN NS ns2.dyndns.org."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns1.dyndns.org 60 IN AAAA 2600:2001:0:0:0:0:0:75"
+            ],
+            "additional" : [
+               "a0.org.afilias-nst.info 172800 IN A 199.19.56.1",
+               "a2.org.afilias-nst.info 172800 IN A 199.249.112.1",
+               "b0.org.afilias-nst.org 172800 IN A 199.19.54.1",
+               "b2.org.afilias-nst.org 172800 IN A 199.249.120.1",
+               "c0.org.afilias-nst.info 172800 IN A 199.19.53.1",
+               "d0.org.afilias-nst.org 172800 IN A 199.19.57.1",
+               "a0.org.afilias-nst.info 172800 IN AAAA 2001:500:e:0:0:0:0:1",
+               "a2.org.afilias-nst.info 172800 IN AAAA 2001:500:40:0:0:0:0:1",
+               "b0.org.afilias-nst.org 172800 IN AAAA 2001:500:c:0:0:0:0:1",
+               "b2.org.afilias-nst.org 172800 IN AAAA 2001:500:48:0:0:0:0:1",
+               "c0.org.afilias-nst.info 172800 IN AAAA 2001:500:b:0:0:0:0:1",
+               "d0.org.afilias-nst.org 172800 IN AAAA 2001:500:f:0:0:0:0:1",
+               "ns1.dyndns.org 86400 IN AAAA 2600:2001:0:0:0:0:0:75",
+               "ns1.dyndns.org 86400 IN A 204.13.248.75",
+               "ns2.dyndns.org 86400 IN A 204.13.249.75",
+               "ns2.dyndns.org 86400 IN AAAA 2600:2002:0:0:0:0:0:75",
+               "ns3.dyndns.org 86400 IN A 208.78.69.75",
+               "ns3.dyndns.org 86400 IN AAAA 2600:2003:0:0:0:0:0:75",
+               "ns4.dyndns.org 86400 IN A 91.198.22.75",
+               "ns4.dyndns.org 86400 IN AAAA 2600:2004:0:0:0:0:0:75",
+               "ns5.dyndns.org 86400 IN A 203.62.195.75",
+               "ns5.dyndns.org 86400 IN AAAA 2600:2005:0:0:0:0:0:75",
+               "ns1.dyndns.org 60 IN A 204.13.248.75"
+            ],
+            "authority" : [
+               "org 172800 IN NS a2.org.afilias-nst.info.",
+               "org 172800 IN NS c0.org.afilias-nst.info.",
+               "org 172800 IN NS b0.org.afilias-nst.org.",
+               "org 172800 IN NS a0.org.afilias-nst.info.",
+               "org 172800 IN NS b2.org.afilias-nst.org.",
+               "org 172800 IN NS d0.org.afilias-nst.org.",
+               "dyndns.org 86400 IN NS ns4.dyndns.org.",
+               "dyndns.org 86400 IN NS ns3.dyndns.org.",
+               "dyndns.org 86400 IN NS ns2.dyndns.org.",
+               "dyndns.org 86400 IN NS ns1.dyndns.org.",
+               "dyndns.org 86400 IN NS ns5.dyndns.org."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns3.q.p80.net" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns3.q.p80.net 600 IN A 83.140.98.18"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns0.phonera.net 172800 IN A 83.140.98.6",
+               "ns1.phonera.net 172800 IN A 83.140.98.10",
+               "ns2.phonera.net 172800 IN A 83.140.98.14",
+               "ns3.phonera.net 172800 IN A 83.140.98.18",
+               "ns4.phonera.net 172800 IN A 83.140.98.22"
+            ],
+            "authority" : [
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "p80.net 172800 IN NS ns0.phonera.net.",
+               "p80.net 172800 IN NS ns1.phonera.net.",
+               "p80.net 172800 IN NS ns2.phonera.net.",
+               "p80.net 172800 IN NS ns3.phonera.net.",
+               "p80.net 172800 IN NS ns4.phonera.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns3.q.p80.net 60 IN AAAA 2a01:6d0:1:0:0:0:0:3"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns0.phonera.net 172800 IN A 83.140.98.6",
+               "ns1.phonera.net 172800 IN A 83.140.98.10",
+               "ns2.phonera.net 172800 IN A 83.140.98.14",
+               "ns3.phonera.net 172800 IN A 83.140.98.18",
+               "ns4.phonera.net 172800 IN A 83.140.98.22"
+            ],
+            "authority" : [
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "p80.net 172800 IN NS ns0.phonera.net.",
+               "p80.net 172800 IN NS ns1.phonera.net.",
+               "p80.net 172800 IN NS ns2.phonera.net.",
+               "p80.net 172800 IN NS ns3.phonera.net.",
+               "p80.net 172800 IN NS ns4.phonera.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns2.q.port80.se" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns2.q.port80.se 600 IN A 83.140.98.14"
+            ],
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns1.q.port80.se 86400 IN A 83.140.98.6",
+               "ns2.q.port80.se 86400 IN A 83.140.98.14"
+            ],
+            "authority" : [
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "port80.se 86400 IN NS ns1.q.port80.se.",
+               "port80.se 86400 IN NS ns1.phonera.net.",
+               "port80.se 86400 IN NS ns2.q.port80.se.",
+               "port80.se 86400 IN NS ns3.q.p80.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns2.q.port80.se 60 IN AAAA 2a01:6d0:1:0:0:0:0:2"
+            ],
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns1.q.port80.se 86400 IN A 83.140.98.6",
+               "ns2.q.port80.se 86400 IN A 83.140.98.14"
+            ],
+            "authority" : [
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "port80.se 86400 IN NS ns1.phonera.net.",
+               "port80.se 86400 IN NS ns1.q.port80.se.",
+               "port80.se 86400 IN NS ns3.q.p80.net.",
+               "port80.se 86400 IN NS ns2.q.port80.se."
             ],
             "header" : {
                "cd" : 0,
@@ -548,41 +1867,258 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "zeb.regexp.se IN A 46.253.202.186"
+               "zeb.regexp.se 2400 IN A 46.253.202.186"
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1",
-               "ns.narnia.pp.se IN A 83.227.136.82",
-               "ns.nordberg.se IN A 193.10.5.87",
-               "lakridstrollet.regexp.se IN A 46.253.202.186"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.narnia.pp.se 86400 IN A 83.227.136.82",
+               "ns.nordberg.se 86400 IN A 193.10.5.87",
+               "lakridstrollet.regexp.se 86400 IN A 46.253.202.186",
+               "lakridstrollet.regexp.se 2400 IN A 46.253.202.186"
             ],
             "authority" : [
-               "se IN NS d.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS i.ns.se.",
-               "regexp.se IN NS ns.narnia.pp.se.",
-               "regexp.se IN NS lakridstrollet.regexp.se.",
-               "regexp.se IN NS ns.nordberg.se."
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "regexp.se 86400 IN NS ns.nordberg.se.",
+               "regexp.se 86400 IN NS lakridstrollet.regexp.se.",
+               "regexp.se 86400 IN NS ns.narnia.pp.se.",
+               "regexp.se 2400 IN NS lakridstrollet.regexp.se.",
+               "regexp.se 2400 IN NS ns.narnia.pp.se.",
+               "regexp.se 2400 IN NS ns.nordberg.se."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.narnia.pp.se 86400 IN A 83.227.136.82",
+               "ns.nordberg.se 86400 IN A 193.10.5.87",
+               "lakridstrollet.regexp.se 86400 IN A 46.253.202.186"
+            ],
+            "authority" : [
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "regexp.se 86400 IN NS ns.narnia.pp.se.",
+               "regexp.se 86400 IN NS lakridstrollet.regexp.se.",
+               "regexp.se 86400 IN NS ns.nordberg.se.",
+               "regexp.se 2400 IN SOA lakridstrollet.regexp.se. iha.pobox.se. (\n\t\t\t\t\t2011071800\t; Serial\n\t\t\t\t\t28800\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t86400 )\t; Minimum TTL"
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "0.0.f.f.8.d.6.1.1.0.0.2.ip6.arpa" : {
+      "ANY" : {
+         "ANY" : {
+            "answer" : [
+               "0.0.f.f.8.d.6.1.1.0.0.2.ip6.arpa 604800 IN SOA localhost. hostmaster.sixxs.net. (\n\t\t\t\t\t2011042501\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t2419200\t; Expire\n\t\t\t\t\t604800 )\t; Minimum TTL",
+               "0.0.f.f.8.d.6.1.1.0.0.2.ip6.arpa 604800 IN TXT \"Autogenerated zone from the SixXS Database\"",
+               "0.0.f.f.8.d.6.1.1.0.0.2.ip6.arpa 604800 IN TXT \"See http://www.sixxs.net for more info\"",
+               "0.0.f.f.8.d.6.1.1.0.0.2.ip6.arpa 604800 IN NS ns1.sixxs.net.",
+               "0.0.f.f.8.d.6.1.1.0.0.2.ip6.arpa 604800 IN NS ns2.sixxs.net.",
+               "0.0.f.f.8.d.6.1.1.0.0.2.ip6.arpa 604800 IN NS ns3.sixxs.net."
+            ],
+            "additional" : [
+               "a.ip6-servers.arpa 172800 IN A 199.212.0.73",
+               "b.ip6-servers.arpa 172800 IN A 199.253.182.182",
+               "c.ip6-servers.arpa 172800 IN A 196.216.169.11",
+               "d.ip6-servers.arpa 172800 IN A 200.7.86.53",
+               "e.ip6-servers.arpa 172800 IN A 202.12.29.59",
+               "f.ip6-servers.arpa 172800 IN A 193.0.9.2",
+               "a.ip6-servers.arpa 172800 IN AAAA 2001:500:13:0:0:0:0:73",
+               "b.ip6-servers.arpa 172800 IN AAAA 2001:500:86:0:0:0:0:86",
+               "c.ip6-servers.arpa 172800 IN AAAA 2001:43f8:110:0:0:0:0:11",
+               "d.ip6-servers.arpa 172800 IN AAAA 2001:13c7:7012:0:0:0:0:53",
+               "e.ip6-servers.arpa 172800 IN AAAA 2001:dc0:2001:a:4608:0:0:59",
+               "f.ip6-servers.arpa 172800 IN AAAA 2001:67c:e0:0:0:0:0:2"
+            ],
+            "authority" : [
+               "ip6.arpa 172800 IN NS e.ip6-servers.arpa.",
+               "ip6.arpa 172800 IN NS a.ip6-servers.arpa.",
+               "ip6.arpa 172800 IN NS c.ip6-servers.arpa.",
+               "ip6.arpa 172800 IN NS f.ip6-servers.arpa.",
+               "ip6.arpa 172800 IN NS b.ip6-servers.arpa.",
+               "ip6.arpa 172800 IN NS d.ip6-servers.arpa.",
+               "6.1.1.0.0.2.ip6.arpa 86400 IN NS sec1.apnic.net.",
+               "6.1.1.0.0.2.ip6.arpa 86400 IN NS tinnie.arin.net.",
+               "6.1.1.0.0.2.ip6.arpa 86400 IN NS pri.authdns.ripe.net.",
+               "6.1.1.0.0.2.ip6.arpa 86400 IN NS sec3.apnic.net.",
+               "6.1.1.0.0.2.ip6.arpa 86400 IN NS ns3.nic.fr.",
+               "6.1.1.0.0.2.ip6.arpa 86400 IN NS sns-pb.isc.org.",
+               "8.d.6.1.1.0.0.2.ip6.arpa 172800 IN NS ns2.q.port80.se.",
+               "8.d.6.1.1.0.0.2.ip6.arpa 172800 IN NS ns3.q.p80.net.",
+               "8.d.6.1.1.0.0.2.ip6.arpa 172800 IN NS ns4.q.p80.net.",
+               "8.d.6.1.1.0.0.2.ip6.arpa 172800 IN NS ns1.q.port80.se."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 0,
+               "rd" : 0
+            }
+         },
+         "IN" : {
+            "authority" : [
+               "f.f.8.d.6.1.1.0.0.2.ip6.arpa 60 IN NS ns1.sixxs.net.",
+               "f.f.8.d.6.1.1.0.0.2.ip6.arpa 60 IN NS ns2.sixxs.net.",
+               "f.f.8.d.6.1.1.0.0.2.ip6.arpa 60 IN NS ns3.sixxs.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 0,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns.paphosting.eu" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns.paphosting.eu 86400 IN A 62.220.146.194"
+            ],
+            "additional" : [
+               "a.nic.eu 172800 IN A 91.200.16.100",
+               "l.eu.dns.be 172800 IN A 193.2.221.60",
+               "l.nic.eu 172800 IN A 195.66.241.178",
+               "m.nic.eu 172800 IN A 217.29.76.13",
+               "p.nic.eu 172800 IN A 195.47.235.130",
+               "x.nic.eu 172800 IN A 194.0.1.19",
+               "y.nic.eu 172800 IN A 194.146.106.90",
+               "l.eu.dns.be 172800 IN AAAA 2001:1470:8000:100:0:0:0:1",
+               "y.nic.eu 172800 IN AAAA 2001:67c:1010:23:0:0:0:53",
+               "ns.paphosting.eu 86400 IN A 62.220.146.194",
+               "ns.paphosting.eu 86400 IN AAAA 2001:788:2:117:0:0:0:2"
+            ],
+            "authority" : [
+               "eu 172800 IN NS l.nic.eu.",
+               "eu 172800 IN NS a.nic.eu.",
+               "eu 172800 IN NS l.eu.dns.be.",
+               "eu 172800 IN NS y.nic.eu.",
+               "eu 172800 IN NS p.nic.eu.",
+               "eu 172800 IN NS x.nic.eu.",
+               "eu 172800 IN NS m.nic.eu.",
+               "paphosting.eu 86400 IN NS ns.paphosting.net.",
+               "paphosting.eu 86400 IN NS ns.paphosting.eu.",
+               "paphosting.eu 86400 IN NS ns.paphosting.nl."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns.paphosting.eu 86400 IN AAAA 2001:788:2:117:0:0:0:2"
+            ],
+            "additional" : [
+               "a.nic.eu 172800 IN A 91.200.16.100",
+               "l.eu.dns.be 172800 IN A 193.2.221.60",
+               "l.nic.eu 172800 IN A 195.66.241.178",
+               "m.nic.eu 172800 IN A 217.29.76.13",
+               "p.nic.eu 172800 IN A 195.47.235.130",
+               "x.nic.eu 172800 IN A 194.0.1.19",
+               "y.nic.eu 172800 IN A 194.146.106.90",
+               "l.eu.dns.be 172800 IN AAAA 2001:1470:8000:100:0:0:0:1",
+               "y.nic.eu 172800 IN AAAA 2001:67c:1010:23:0:0:0:53",
+               "ns.paphosting.eu 86400 IN AAAA 2001:788:2:117:0:0:0:2",
+               "ns.paphosting.eu 86400 IN A 62.220.146.194"
+            ],
+            "authority" : [
+               "eu 172800 IN NS p.nic.eu.",
+               "eu 172800 IN NS l.eu.dns.be.",
+               "eu 172800 IN NS y.nic.eu.",
+               "eu 172800 IN NS m.nic.eu.",
+               "eu 172800 IN NS x.nic.eu.",
+               "eu 172800 IN NS a.nic.eu.",
+               "eu 172800 IN NS l.nic.eu.",
+               "paphosting.eu 86400 IN NS ns.paphosting.eu.",
+               "paphosting.eu 86400 IN NS ns.paphosting.net.",
+               "paphosting.eu 86400 IN NS ns.paphosting.nl."
             ],
             "header" : {
                "cd" : 0,
@@ -602,41 +2138,387 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "server1-ns3.udagdns.net IN A 62.146.33.102"
+               "server1-ns3.udagdns.net 3600 IN A 62.146.33.102"
             ],
             "additional" : [
-               "a.gtld-servers.net IN A 192.5.6.30",
-               "b.gtld-servers.net IN A 192.33.14.30",
-               "c.gtld-servers.net IN A 192.26.92.30",
-               "d.gtld-servers.net IN A 192.31.80.30",
-               "e.gtld-servers.net IN A 192.12.94.30",
-               "f.gtld-servers.net IN A 192.35.51.30",
-               "g.gtld-servers.net IN A 192.42.93.30",
-               "h.gtld-servers.net IN A 192.54.112.30",
-               "i.gtld-servers.net IN A 192.43.172.30",
-               "j.gtld-servers.net IN A 192.48.79.30",
-               "k.gtld-servers.net IN A 192.52.178.30",
-               "l.gtld-servers.net IN A 192.41.162.30",
-               "m.gtld-servers.net IN A 192.55.83.30",
-               "a.gtld-servers.net IN AAAA 2001:503:a83e:0:0:0:2:30",
-               "ns.udagdns.net IN A 89.31.142.100"
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.udagdns.net 172800 IN A 89.31.142.100"
             ],
             "authority" : [
-               "net IN NS l.gtld-servers.net.",
-               "net IN NS g.gtld-servers.net.",
-               "net IN NS a.gtld-servers.net.",
-               "net IN NS b.gtld-servers.net.",
-               "net IN NS m.gtld-servers.net.",
-               "net IN NS f.gtld-servers.net.",
-               "net IN NS i.gtld-servers.net.",
-               "net IN NS k.gtld-servers.net.",
-               "net IN NS j.gtld-servers.net.",
-               "net IN NS c.gtld-servers.net.",
-               "net IN NS d.gtld-servers.net.",
-               "net IN NS e.gtld-servers.net.",
-               "net IN NS h.gtld-servers.net.",
-               "udagdns.net IN NS ns.udagdns.net.",
-               "udagdns.net IN NS ns.udagdns.de."
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.de."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.udagdns.net 172800 IN A 89.31.142.100"
+            ],
+            "authority" : [
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.de.",
+               "udagdns.net 1048576 IN SOA server1-ns1.udagdns.net. root.udagdns.net. (\n\t\t\t\t\t1\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t3600 )\t; Minimum TTL"
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "ns1.phonera.net" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "ns1.phonera.net 432000 IN A 83.140.98.10"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns0.phonera.net 172800 IN A 83.140.98.6",
+               "ns1.phonera.net 172800 IN A 83.140.98.10",
+               "ns2.phonera.net 172800 IN A 83.140.98.14",
+               "ns3.phonera.net 172800 IN A 83.140.98.18",
+               "ns4.phonera.net 172800 IN A 83.140.98.22"
+            ],
+            "authority" : [
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "phonera.net 172800 IN NS ns0.phonera.net.",
+               "phonera.net 172800 IN NS ns1.phonera.net.",
+               "phonera.net 172800 IN NS ns2.phonera.net.",
+               "phonera.net 172800 IN NS ns3.phonera.net.",
+               "phonera.net 172800 IN NS ns4.phonera.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "ns1.phonera.net 432000 IN AAAA 2a01:6d0:1:0:0:0:0:1"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns0.phonera.net 172800 IN A 83.140.98.6",
+               "ns1.phonera.net 172800 IN A 83.140.98.10",
+               "ns2.phonera.net 172800 IN A 83.140.98.14",
+               "ns3.phonera.net 172800 IN A 83.140.98.18",
+               "ns4.phonera.net 172800 IN A 83.140.98.22"
+            ],
+            "authority" : [
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "phonera.net 172800 IN NS ns0.phonera.net.",
+               "phonera.net 172800 IN NS ns1.phonera.net.",
+               "phonera.net 172800 IN NS ns2.phonera.net.",
+               "phonera.net 172800 IN NS ns3.phonera.net.",
+               "phonera.net 172800 IN NS ns4.phonera.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "sec1.apnic.net" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "sec1.apnic.net 3600 IN A 202.12.29.59"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "tinnie.apnic.net 172800 IN A 202.12.29.60",
+               "sec1.apnic.net 172800 IN AAAA 2001:dc0:2001:a:4608:0:0:59",
+               "sec1.apnic.net 172800 IN A 202.12.29.59",
+               "tinnie.arin.net 172800 IN A 199.212.0.53",
+               "tinnie.arin.net 172800 IN AAAA 2001:500:13:0:0:0:c7d4:35",
+               "ns1.apnic.net 172800 IN AAAA 2001:dc0:2001:0:4608:0:0:25",
+               "ns1.apnic.net 172800 IN A 202.12.29.25",
+               "ns3.apnic.net 172800 IN AAAA 2001:dc0:1:0:4777:0:0:131",
+               "ns3.apnic.net 172800 IN A 202.12.28.131",
+               "ns4.apnic.net 172800 IN AAAA 2001:dc0:4001:1:0:1836:0:140",
+               "ns4.apnic.net 172800 IN A 202.12.31.140",
+               "ns4.apnic.com 172800 IN A 202.12.31.140",
+               "sec1.authdns.ripe.net 172800 IN A 193.0.9.3",
+               "ns1.apnic.net 3600 IN A 202.12.29.25",
+               "ns1.apnic.net 3600 IN AAAA 2001:dc0:2001:0:4608:0:0:25",
+               "ns3.apnic.net 3600 IN A 202.12.28.131",
+               "ns3.apnic.net 3600 IN AAAA 2001:dc0:1:0:4777:0:0:131",
+               "ns4.apnic.net 3600 IN A 202.12.31.140",
+               "ns4.apnic.net 3600 IN AAAA 2001:dc0:4001:1:0:1836:0:140",
+               "sec1.apnic.net 3600 IN AAAA 2001:dc0:2001:a:4608:0:0:59",
+               "tinnie.apnic.net 3600 IN A 202.12.29.60",
+               "tinnie.apnic.net 300 IN AAAA 2001:dc0:2001:a:4608:0:0:64"
+            ],
+            "authority" : [
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "apnic.net 172800 IN NS tinnie.apnic.net.",
+               "apnic.net 172800 IN NS sec1.apnic.net.",
+               "apnic.net 172800 IN NS tinnie.arin.net.",
+               "apnic.net 172800 IN NS ns1.apnic.net.",
+               "apnic.net 172800 IN NS ns3.apnic.net.",
+               "apnic.net 172800 IN NS ns4.apnic.net.",
+               "apnic.net 172800 IN NS ns4.apnic.com.",
+               "apnic.net 172800 IN NS sec1.authdns.ripe.net.",
+               "apnic.net 10800 IN NS sec1.apnic.net.",
+               "apnic.net 10800 IN NS ns4.apnic.net.",
+               "apnic.net 10800 IN NS tinnie.apnic.net.",
+               "apnic.net 10800 IN NS ns4.apnic.com.",
+               "apnic.net 10800 IN NS ns1.apnic.net.",
+               "apnic.net 10800 IN NS ns3.apnic.net.",
+               "apnic.net 10800 IN NS tinnie.arin.net.",
+               "apnic.net 10800 IN NS sec1.authdns.ripe.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "sec1.apnic.net 3600 IN AAAA 2001:dc0:2001:a:4608:0:0:59"
+            ],
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "tinnie.apnic.net 172800 IN A 202.12.29.60",
+               "sec1.apnic.net 172800 IN AAAA 2001:dc0:2001:a:4608:0:0:59",
+               "sec1.apnic.net 172800 IN A 202.12.29.59",
+               "tinnie.arin.net 172800 IN A 199.212.0.53",
+               "tinnie.arin.net 172800 IN AAAA 2001:500:13:0:0:0:c7d4:35",
+               "ns1.apnic.net 172800 IN AAAA 2001:dc0:2001:0:4608:0:0:25",
+               "ns1.apnic.net 172800 IN A 202.12.29.25",
+               "ns3.apnic.net 172800 IN AAAA 2001:dc0:1:0:4777:0:0:131",
+               "ns3.apnic.net 172800 IN A 202.12.28.131",
+               "ns4.apnic.net 172800 IN AAAA 2001:dc0:4001:1:0:1836:0:140",
+               "ns4.apnic.net 172800 IN A 202.12.31.140",
+               "ns4.apnic.com 172800 IN A 202.12.31.140",
+               "sec1.authdns.ripe.net 172800 IN A 193.0.9.3",
+               "ns1.apnic.net 3600 IN A 202.12.29.25",
+               "ns1.apnic.net 3600 IN AAAA 2001:dc0:2001:0:4608:0:0:25",
+               "ns3.apnic.net 3600 IN A 202.12.28.131",
+               "ns3.apnic.net 3600 IN AAAA 2001:dc0:1:0:4777:0:0:131",
+               "ns4.apnic.net 3600 IN A 202.12.31.140",
+               "ns4.apnic.net 3600 IN AAAA 2001:dc0:4001:1:0:1836:0:140",
+               "sec1.apnic.net 3600 IN A 202.12.29.59",
+               "tinnie.apnic.net 3600 IN A 202.12.29.60",
+               "tinnie.apnic.net 300 IN AAAA 2001:dc0:2001:a:4608:0:0:64"
+            ],
+            "authority" : [
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "apnic.net 172800 IN NS tinnie.apnic.net.",
+               "apnic.net 172800 IN NS sec1.apnic.net.",
+               "apnic.net 172800 IN NS tinnie.arin.net.",
+               "apnic.net 172800 IN NS ns1.apnic.net.",
+               "apnic.net 172800 IN NS ns3.apnic.net.",
+               "apnic.net 172800 IN NS ns4.apnic.net.",
+               "apnic.net 172800 IN NS ns4.apnic.com.",
+               "apnic.net 172800 IN NS sec1.authdns.ripe.net.",
+               "apnic.net 10800 IN NS ns4.apnic.net.",
+               "apnic.net 10800 IN NS sec1.authdns.ripe.net.",
+               "apnic.net 10800 IN NS ns4.apnic.com.",
+               "apnic.net 10800 IN NS sec1.apnic.net.",
+               "apnic.net 10800 IN NS ns3.apnic.net.",
+               "apnic.net 10800 IN NS tinnie.arin.net.",
+               "apnic.net 10800 IN NS ns1.apnic.net.",
+               "apnic.net 10800 IN NS tinnie.apnic.net."
             ],
             "header" : {
                "cd" : 0,
@@ -656,41 +2538,93 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "nic.widell.net IN A 194.68.48.2"
+               "nic.widell.net 120 IN A 194.68.48.2"
             ],
             "additional" : [
-               "a.gtld-servers.net IN A 192.5.6.30",
-               "b.gtld-servers.net IN A 192.33.14.30",
-               "c.gtld-servers.net IN A 192.26.92.30",
-               "d.gtld-servers.net IN A 192.31.80.30",
-               "e.gtld-servers.net IN A 192.12.94.30",
-               "f.gtld-servers.net IN A 192.35.51.30",
-               "g.gtld-servers.net IN A 192.42.93.30",
-               "h.gtld-servers.net IN A 192.54.112.30",
-               "i.gtld-servers.net IN A 192.43.172.30",
-               "j.gtld-servers.net IN A 192.48.79.30",
-               "k.gtld-servers.net IN A 192.52.178.30",
-               "l.gtld-servers.net IN A 192.41.162.30",
-               "m.gtld-servers.net IN A 192.55.83.30",
-               "a.gtld-servers.net IN AAAA 2001:503:a83e:0:0:0:2:30",
-               "nic.widell.net IN A 194.68.48.2"
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "nic.widell.net 172800 IN A 194.68.48.2"
             ],
             "authority" : [
-               "net IN NS i.gtld-servers.net.",
-               "net IN NS c.gtld-servers.net.",
-               "net IN NS k.gtld-servers.net.",
-               "net IN NS j.gtld-servers.net.",
-               "net IN NS e.gtld-servers.net.",
-               "net IN NS g.gtld-servers.net.",
-               "net IN NS m.gtld-servers.net.",
-               "net IN NS a.gtld-servers.net.",
-               "net IN NS b.gtld-servers.net.",
-               "net IN NS d.gtld-servers.net.",
-               "net IN NS l.gtld-servers.net.",
-               "net IN NS h.gtld-servers.net.",
-               "net IN NS f.gtld-servers.net.",
-               "widell.net IN NS ns.cafax.se.",
-               "widell.net IN NS nic.widell.net."
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "widell.net 172800 IN NS ns.cafax.se.",
+               "widell.net 172800 IN NS nic.widell.net.",
+               "widell.net 120 IN NS ns.cafax.se.",
+               "widell.net 120 IN NS nic.widell.net."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "nic.widell.net 172800 IN A 194.68.48.2"
+            ],
+            "authority" : [
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "widell.net 172800 IN NS ns.cafax.se.",
+               "widell.net 172800 IN NS nic.widell.net.",
+               "widell.net 120 IN SOA nic.widell.net. hostmaster.widell.net. (\n\t\t\t\t\t2012012701\t; Serial\n\t\t\t\t\t28800\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t172800\t; Expire\n\t\t\t\t\t600 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -707,38 +2641,58 @@
       }
    },
    "se" : {
-      "SOA" : {
-         "IN" : {
+      "ANY" : {
+         "ANY" : {
             "answer" : [
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+               "se 172800 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL",
+               "se 3600 IN RRSIG DNSKEY  5  1  3600  20120306033522 (\n\t\t\t20120221001001 59747  se.\n\t\t\tYR2EHiBWQVIHBZ3cU0mAyrcUSN3RgjJhOPIEranIa1Ok1\n\t\t\tA8kedJBSYoXZ/MwLpSGVm3UpPL651iOaV2LXmyzKRGJ7r\n\t\t\t+F+5fRI24B8I2SEF4E7UTrLGkqrpYrY8qMLBZEccBWXCC\n\t\t\tCVtnJAQus1/7Rdcx+cm6+uipFDeTc8jGggJfUY+Txk3A+\n\t\t\tCjNdBKhh4H9zL69atnhDJGsE/yWFiPN1OM54vWVxjY6lz\n\t\t\t1lpvnr4o5o1yrbsajMm5ekfos4vLTV8uIdd6ZPt25obd6\n\t\t\ti8yDHhiB+iEQDV1/1rCUPZLS15NUhshGX9l//BX5EydTx\n\t\t\tySUGPSLTmaa2ZB1OIqXRBqxKj7w== )",
+               "se 3600 IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAejySNQabJ7zxEM8oyV+yz2kLaZDF8Wz\n\t\t\tJgsW3h0bhg3hhHFMqSRPRNB2QXUbsYBDSGLp\n\t\t\tJgnmcMEJlsBQqzcP5riASZQNppgCqJktpJ9D\n\t\t\t1xEE4rnO3t4BWzNv8AaKT3l3Nw6U0FDViTxT\n\t\t\tz8lLft5UqZzHi6qlkCD0fHr1yuW+Q4VP \n\t\t\t) ; Key ID = 59452",
+               "se 3600 IN DNSKEY 257  3  5 ( \n\t\t\tAwEAAZYYG1hpk8XKHNHpdO/EEg+r4YmIEC4F\n\t\t\tn3x2DEsygxDuoT9d/QCiX1pz0omFGCaVfCWH\n\t\t\tvaScVvWd4xP4kNDnSDQxBzPwLEXE3l0cLseM\n\t\t\tJ2YMQeBPf3hGhLs6VSDnGFKAzNG4fhri9EBT\n\t\t\tLv9ubL8Kx8cWQKuu3A5HRVD3li7lZB+0kmUK\n\t\t\tqGiIQdERKt/Ec36BkK93lyGags5RrR2VDdrX\n\t\t\tCj9Yay90KCKITk52AbwVoMPm0OYlPbD4ViBP\n\t\t\tMk5nmh/dPeCoZoVJxgANZ/doVQxR5vDkMBYx\n\t\t\tuhrXuQk3CvZBB011NsXxk9yHtHvp/5gjUVJj\n\t\t\tvhdRvjRB6/xYR03c9owi/aM= \n\t\t\t) ; Key ID = 59747",
+               "se 3600 IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAdBHkDPTq+ZJttt0Oh3zkJUNX4CLG3kI\n\t\t\tfNFc0ytf5AW1QI3nvD6OphKcKtt6yckAy+VP\n\t\t\tSKtm/qacNKYms20wrPK+VqW0oaRFF1NXUEL/\n\t\t\t89ay39x2JAEZqRq7k4cQ3R1tXmmlCapwIxXk\n\t\t\toS/QDTRqHVrAsjin+3gMZitgHSX/c48r \n\t\t\t) ; Key ID = 40548",
+               "se 7200 IN RRSIG NSEC  5  1  7200  20120305115029 (\n\t\t\t20120221101001 59452  se.\n\t\t\thRxy/M0hkvK98Yde+zcqKbnJJSG8rRnpLt6x0FiFzsjeA\n\t\t\tvHWuPjMNlF5y4TTWGuBicEvsd3RKRgxaQcqcZaV4d4Rkb\n\t\t\tq5ZePtvltrkKkkUEn9QyL50NAybBjY2ru5JjE2X5cZ484\n\t\t\t3VLl5Sg/Jlb4qISpGbqT5zkWSC70GxNWo3Kw= )",
+               "se 7200 IN NSEC 0-0.se.  DNSKEY NS NSEC RRSIG SOA TXT",
+               "se 172800 IN RRSIG TXT  5  1  172800  20120306152149 (\n\t\t\t20120222081001 59452  se.\n\t\t\tcYQbKZQSHKaB5TLONP4J5B+UCVVVIXrOx4ciCOhxc3sWx\n\t\t\tx83eGoEJ74gA/DdpSUojohfON75XiTp8Z+3HSg5FFaf0R\n\t\t\tV4Z+zNiI3zfaVHB1Ps6sr47Xtfoju7ycJ2aF3QfBW2qfx\n\t\t\t5nZ0BHhqNVc4i1q8CcVEGSmx0ho5NM2S2VVE= )",
+               "se 172800 IN TXT \"SE zone update: 2012-02-22 09:06:53 +0000 (EPOCH 1329901613) (auto)\"",
+               "se 172800 IN RRSIG NS  5  1  172800  20120306033446 (\n\t\t\t20120221181001 59452  se.\n\t\t\tdMD9jx5RJ1JP5jEN0K55KgyEP0DGPOw1p3PnWtNf7LVEW\n\t\t\tisDCMFzh/erCTu5vMbgHlcUclpVVpO/H7KAEVBJ4OxtMo\n\t\t\tPEkRbIW4WDojDcqkw+BaWsSDVRjesoYSC0uM0P8V2RG6Q\n\t\t\tN0Mxl1KOctPdPc4T1igeM7pFYVaXlOdEAf8g= )",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN RRSIG SOA  5  1  172800  20120306040539 (\n\t\t\t20120222081001 59452  se.\n\t\t\tnJYYlX2TjthuDjNrubBOHK+kqQvd7+ODVVCrSUYnK28aV\n\t\t\ttkl59BqkENloUju3gOPQwsSFjfqqnK5U1n+Yte90Xlna8\n\t\t\tewM+A7ypxcy3jxPyvm+MQ5LxlodXiDi3gD0tAlB3euR23\n\t\t\tdgaPz5Hx3WHSXmRvTyUr+Ug8QZRz9rw+tyrk= )"
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS b.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS a.ns.se."
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS h.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -748,49 +2702,56 @@
                "ad" : 0,
                "ra" : 0,
                "qr" : 1,
-               "aa" : 1,
+               "aa" : 0,
                "rd" : 0
             }
          }
       }
    },
    "brixtal.se" : {
-      "SOA" : {
-         "IN" : {
+      "ANY" : {
+         "ANY" : {
             "answer" : [
-               "brixtal.se IN SOA ns1.loopia.se. registry.loopia.se. (\n\t\t\t\t\t1296794110\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t86400 )\t; Minimum TTL"
+               "brixtal.se 3600 IN A 94.254.84.113",
+               "brixtal.se 3600 IN MX 10 mail.brixtal.se.",
+               "brixtal.se 3600 IN AAAA 2001:9b0:107:100:0:0:0:113",
+               "brixtal.se 3600 IN NS ns1.loopia.se.",
+               "brixtal.se 3600 IN NS ns2.loopia.se.",
+               "brixtal.se 3600 IN SOA ns1.loopia.se. registry.loopia.se. (\n\t\t\t\t\t1296794110\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t86400 )\t; Minimum TTL"
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1",
-               "ns1.loopia.se IN A 93.188.0.20",
-               "ns2.loopia.se IN A 93.188.0.21"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns1.loopia.se 86400 IN A 93.188.0.20",
+               "ns2.loopia.se 86400 IN A 93.188.0.21",
+               "ns1.loopia.se 3600 IN A 93.188.0.20",
+               "ns2.loopia.se 3600 IN A 93.188.0.21"
             ],
             "authority" : [
-               "se IN NS d.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS e.ns.se.",
-               "brixtal.se IN NS ns2.loopia.se.",
-               "brixtal.se IN NS ns1.loopia.se."
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "brixtal.se 86400 IN NS ns1.loopia.se.",
+               "brixtal.se 86400 IN NS ns2.loopia.se."
             ],
             "header" : {
                "cd" : 0,
@@ -810,41 +2771,213 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "server1-ns2.udagdns.net IN A 62.146.33.101"
+               "server1-ns2.udagdns.net 3600 IN A 62.146.33.101"
             ],
             "additional" : [
-               "a.gtld-servers.net IN A 192.5.6.30",
-               "b.gtld-servers.net IN A 192.33.14.30",
-               "c.gtld-servers.net IN A 192.26.92.30",
-               "d.gtld-servers.net IN A 192.31.80.30",
-               "e.gtld-servers.net IN A 192.12.94.30",
-               "f.gtld-servers.net IN A 192.35.51.30",
-               "g.gtld-servers.net IN A 192.42.93.30",
-               "h.gtld-servers.net IN A 192.54.112.30",
-               "i.gtld-servers.net IN A 192.43.172.30",
-               "j.gtld-servers.net IN A 192.48.79.30",
-               "k.gtld-servers.net IN A 192.52.178.30",
-               "l.gtld-servers.net IN A 192.41.162.30",
-               "m.gtld-servers.net IN A 192.55.83.30",
-               "a.gtld-servers.net IN AAAA 2001:503:a83e:0:0:0:2:30",
-               "ns.udagdns.net IN A 89.31.142.100"
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.udagdns.net 172800 IN A 89.31.142.100"
             ],
             "authority" : [
-               "net IN NS f.gtld-servers.net.",
-               "net IN NS k.gtld-servers.net.",
-               "net IN NS m.gtld-servers.net.",
-               "net IN NS e.gtld-servers.net.",
-               "net IN NS h.gtld-servers.net.",
-               "net IN NS a.gtld-servers.net.",
-               "net IN NS d.gtld-servers.net.",
-               "net IN NS b.gtld-servers.net.",
-               "net IN NS c.gtld-servers.net.",
-               "net IN NS g.gtld-servers.net.",
-               "net IN NS l.gtld-servers.net.",
-               "net IN NS i.gtld-servers.net.",
-               "net IN NS j.gtld-servers.net.",
-               "udagdns.net IN NS ns.udagdns.net.",
-               "udagdns.net IN NS ns.udagdns.de."
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "net 172800 IN NS d.gtld-servers.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.de."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "additional" : [
+               "a.gtld-servers.net 172800 IN A 192.5.6.30",
+               "b.gtld-servers.net 172800 IN A 192.33.14.30",
+               "c.gtld-servers.net 172800 IN A 192.26.92.30",
+               "d.gtld-servers.net 172800 IN A 192.31.80.30",
+               "e.gtld-servers.net 172800 IN A 192.12.94.30",
+               "f.gtld-servers.net 172800 IN A 192.35.51.30",
+               "g.gtld-servers.net 172800 IN A 192.42.93.30",
+               "h.gtld-servers.net 172800 IN A 192.54.112.30",
+               "i.gtld-servers.net 172800 IN A 192.43.172.30",
+               "j.gtld-servers.net 172800 IN A 192.48.79.30",
+               "k.gtld-servers.net 172800 IN A 192.52.178.30",
+               "l.gtld-servers.net 172800 IN A 192.41.162.30",
+               "m.gtld-servers.net 172800 IN A 192.55.83.30",
+               "a.gtld-servers.net 172800 IN AAAA 2001:503:a83e:0:0:0:2:30",
+               "ns.udagdns.net 172800 IN A 89.31.142.100"
+            ],
+            "authority" : [
+               "net 172800 IN NS d.gtld-servers.net.",
+               "net 172800 IN NS j.gtld-servers.net.",
+               "net 172800 IN NS m.gtld-servers.net.",
+               "net 172800 IN NS h.gtld-servers.net.",
+               "net 172800 IN NS i.gtld-servers.net.",
+               "net 172800 IN NS f.gtld-servers.net.",
+               "net 172800 IN NS l.gtld-servers.net.",
+               "net 172800 IN NS c.gtld-servers.net.",
+               "net 172800 IN NS e.gtld-servers.net.",
+               "net 172800 IN NS b.gtld-servers.net.",
+               "net 172800 IN NS g.gtld-servers.net.",
+               "net 172800 IN NS a.gtld-servers.net.",
+               "net 172800 IN NS k.gtld-servers.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.net.",
+               "udagdns.net 172800 IN NS ns.udagdns.de.",
+               "udagdns.net 1048576 IN SOA server1-ns1.udagdns.net. root.udagdns.net. (\n\t\t\t\t\t1\t; Serial\n\t\t\t\t\t10800\t; Refresh\n\t\t\t\t\t3600\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t3600 )\t; Minimum TTL"
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "sns-pb.isc.org" : {
+      "A" : {
+         "IN" : {
+            "answer" : [
+               "sns-pb.isc.org 7200 IN A 192.5.4.1"
+            ],
+            "additional" : [
+               "a0.org.afilias-nst.info 172800 IN A 199.19.56.1",
+               "a2.org.afilias-nst.info 172800 IN A 199.249.112.1",
+               "b0.org.afilias-nst.org 172800 IN A 199.19.54.1",
+               "b2.org.afilias-nst.org 172800 IN A 199.249.120.1",
+               "c0.org.afilias-nst.info 172800 IN A 199.19.53.1",
+               "d0.org.afilias-nst.org 172800 IN A 199.19.57.1",
+               "a0.org.afilias-nst.info 172800 IN AAAA 2001:500:e:0:0:0:0:1",
+               "a2.org.afilias-nst.info 172800 IN AAAA 2001:500:40:0:0:0:0:1",
+               "b0.org.afilias-nst.org 172800 IN AAAA 2001:500:c:0:0:0:0:1",
+               "b2.org.afilias-nst.org 172800 IN AAAA 2001:500:48:0:0:0:0:1",
+               "c0.org.afilias-nst.info 172800 IN AAAA 2001:500:b:0:0:0:0:1",
+               "d0.org.afilias-nst.org 172800 IN AAAA 2001:500:f:0:0:0:0:1",
+               "ams.sns-pb.isc.org 86400 IN A 199.6.1.30",
+               "ams.sns-pb.isc.org 86400 IN AAAA 2001:500:60:0:0:0:0:30",
+               "ord.sns-pb.isc.org 86400 IN A 199.6.0.30",
+               "ord.sns-pb.isc.org 86400 IN AAAA 2001:500:71:0:0:0:0:30",
+               "sfba.sns-pb.isc.org 86400 IN A 149.20.64.3",
+               "sfba.sns-pb.isc.org 86400 IN AAAA 2001:4f8:0:2:0:0:0:19",
+               "ams.sns-pb.isc.org 7200 IN A 199.6.1.30",
+               "ams.sns-pb.isc.org 7200 IN AAAA 2001:500:60:0:0:0:0:30",
+               "ord.sns-pb.isc.org 7200 IN A 199.6.0.30",
+               "ord.sns-pb.isc.org 7200 IN AAAA 2001:500:71:0:0:0:0:30",
+               "sfba.sns-pb.isc.org 7200 IN A 149.20.64.3",
+               "sfba.sns-pb.isc.org 7200 IN AAAA 2001:4f8:0:2:0:0:0:19"
+            ],
+            "authority" : [
+               "org 172800 IN NS b0.org.afilias-nst.org.",
+               "org 172800 IN NS d0.org.afilias-nst.org.",
+               "org 172800 IN NS b2.org.afilias-nst.org.",
+               "org 172800 IN NS a2.org.afilias-nst.info.",
+               "org 172800 IN NS a0.org.afilias-nst.info.",
+               "org 172800 IN NS c0.org.afilias-nst.info.",
+               "isc.org 86400 IN NS ams.sns-pb.isc.org.",
+               "isc.org 86400 IN NS sfba.sns-pb.isc.org.",
+               "isc.org 86400 IN NS ns.isc.afilias-nst.info.",
+               "isc.org 86400 IN NS ord.sns-pb.isc.org.",
+               "isc.org 7200 IN NS ord.sns-pb.isc.org.",
+               "isc.org 7200 IN NS ns.isc.afilias-nst.info.",
+               "isc.org 7200 IN NS ams.sns-pb.isc.org.",
+               "isc.org 7200 IN NS sfba.sns-pb.isc.org."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
+      "AAAA" : {
+         "IN" : {
+            "answer" : [
+               "sns-pb.isc.org 7200 IN AAAA 2001:500:2e:0:0:0:0:1"
+            ],
+            "additional" : [
+               "a0.org.afilias-nst.info 172800 IN A 199.19.56.1",
+               "a2.org.afilias-nst.info 172800 IN A 199.249.112.1",
+               "b0.org.afilias-nst.org 172800 IN A 199.19.54.1",
+               "b2.org.afilias-nst.org 172800 IN A 199.249.120.1",
+               "c0.org.afilias-nst.info 172800 IN A 199.19.53.1",
+               "d0.org.afilias-nst.org 172800 IN A 199.19.57.1",
+               "a0.org.afilias-nst.info 172800 IN AAAA 2001:500:e:0:0:0:0:1",
+               "a2.org.afilias-nst.info 172800 IN AAAA 2001:500:40:0:0:0:0:1",
+               "b0.org.afilias-nst.org 172800 IN AAAA 2001:500:c:0:0:0:0:1",
+               "b2.org.afilias-nst.org 172800 IN AAAA 2001:500:48:0:0:0:0:1",
+               "c0.org.afilias-nst.info 172800 IN AAAA 2001:500:b:0:0:0:0:1",
+               "d0.org.afilias-nst.org 172800 IN AAAA 2001:500:f:0:0:0:0:1",
+               "ams.sns-pb.isc.org 86400 IN A 199.6.1.30",
+               "ord.sns-pb.isc.org 86400 IN A 199.6.0.30",
+               "sfba.sns-pb.isc.org 86400 IN A 149.20.64.3",
+               "ams.sns-pb.isc.org 86400 IN AAAA 2001:500:60:0:0:0:0:30",
+               "ord.sns-pb.isc.org 86400 IN AAAA 2001:500:71:0:0:0:0:30",
+               "sfba.sns-pb.isc.org 86400 IN AAAA 2001:4f8:0:2:0:0:0:19",
+               "ams.sns-pb.isc.org 7200 IN A 199.6.1.30",
+               "ams.sns-pb.isc.org 7200 IN AAAA 2001:500:60:0:0:0:0:30",
+               "ord.sns-pb.isc.org 7200 IN A 199.6.0.30",
+               "ord.sns-pb.isc.org 7200 IN AAAA 2001:500:71:0:0:0:0:30",
+               "sfba.sns-pb.isc.org 7200 IN A 149.20.64.3",
+               "sfba.sns-pb.isc.org 7200 IN AAAA 2001:4f8:0:2:0:0:0:19"
+            ],
+            "authority" : [
+               "org 172800 IN NS d0.org.afilias-nst.org.",
+               "org 172800 IN NS b2.org.afilias-nst.org.",
+               "org 172800 IN NS b0.org.afilias-nst.org.",
+               "org 172800 IN NS a0.org.afilias-nst.info.",
+               "org 172800 IN NS a2.org.afilias-nst.info.",
+               "org 172800 IN NS c0.org.afilias-nst.info.",
+               "isc.org 86400 IN NS ns.isc.afilias-nst.info.",
+               "isc.org 86400 IN NS ams.sns-pb.isc.org.",
+               "isc.org 86400 IN NS ord.sns-pb.isc.org.",
+               "isc.org 86400 IN NS sfba.sns-pb.isc.org.",
+               "isc.org 7200 IN NS ns.isc.afilias-nst.info.",
+               "isc.org 7200 IN NS ams.sns-pb.isc.org.",
+               "isc.org 7200 IN NS ord.sns-pb.isc.org.",
+               "isc.org 7200 IN NS sfba.sns-pb.isc.org."
             ],
             "header" : {
                "cd" : 0,
@@ -861,10 +2994,10 @@
       }
    },
    "6f3899904701b0ce2835d82493c0212babf875c7" : {
-      "SOA" : {
-         "IN" : {
+      "ANY" : {
+         "ANY" : {
             "authority" : [
-               ". IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2012020100\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t86400 )\t; Minimum TTL"
+               ". 86400 IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2012022200\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t86400 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -881,59 +3014,30 @@
       }
    },
    "tboerner.eu" : {
-      "SOA" : {
-         "IN" : {
-            "answer" : [
-               "tboerner.eu IN CNAME phantoms.ath.cx."
-            ],
+      "ANY" : {
+         "ANY" : {
             "additional" : [
-               "a.nic.eu IN A 91.200.16.100",
-               "l.eu.dns.be IN A 193.2.221.60",
-               "l.nic.eu IN A 195.66.241.178",
-               "m.nic.eu IN A 217.29.76.13",
-               "p.nic.eu IN A 195.47.235.130",
-               "x.nic.eu IN A 194.0.1.19",
-               "y.nic.eu IN A 194.146.106.90",
-               "l.eu.dns.be IN AAAA 2001:1470:8000:100:0:0:0:1",
-               "y.nic.eu IN AAAA 2001:67c:1010:23:0:0:0:53",
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 198.32.64.12",
-               "m.root-servers.net IN A 202.12.27.33"
+               "a.nic.eu 172800 IN A 91.200.16.100",
+               "l.eu.dns.be 172800 IN A 193.2.221.60",
+               "l.nic.eu 172800 IN A 195.66.241.178",
+               "m.nic.eu 172800 IN A 217.29.76.13",
+               "p.nic.eu 172800 IN A 195.47.235.130",
+               "x.nic.eu 172800 IN A 194.0.1.19",
+               "y.nic.eu 172800 IN A 194.146.106.90",
+               "l.eu.dns.be 172800 IN AAAA 2001:1470:8000:100:0:0:0:1",
+               "y.nic.eu 172800 IN AAAA 2001:67c:1010:23:0:0:0:53"
             ],
             "authority" : [
-               "eu IN NS y.nic.eu.",
-               "eu IN NS a.nic.eu.",
-               "eu IN NS m.nic.eu.",
-               "eu IN NS p.nic.eu.",
-               "eu IN NS x.nic.eu.",
-               "eu IN NS l.eu.dns.be.",
-               "eu IN NS l.nic.eu.",
-               "tboerner.eu IN NS server1-ns2.udagdns.net.",
-               "tboerner.eu IN NS server1-ns1.udagdns.net.",
-               "tboerner.eu IN NS server1-ns3.udagdns.net.",
-               ". IN NS a.root-servers.net.",
-               ". IN NS b.root-servers.net.",
-               ". IN NS c.root-servers.net.",
-               ". IN NS d.root-servers.net.",
-               ". IN NS e.root-servers.net.",
-               ". IN NS f.root-servers.net.",
-               ". IN NS g.root-servers.net.",
-               ". IN NS h.root-servers.net.",
-               ". IN NS i.root-servers.net.",
-               ". IN NS j.root-servers.net.",
-               ". IN NS k.root-servers.net.",
-               ". IN NS l.root-servers.net.",
-               ". IN NS m.root-servers.net."
+               "eu 172800 IN NS x.nic.eu.",
+               "eu 172800 IN NS l.nic.eu.",
+               "eu 172800 IN NS p.nic.eu.",
+               "eu 172800 IN NS l.eu.dns.be.",
+               "eu 172800 IN NS a.nic.eu.",
+               "eu 172800 IN NS m.nic.eu.",
+               "eu 172800 IN NS y.nic.eu.",
+               "tboerner.eu 86400 IN NS server1-ns2.udagdns.net.",
+               "tboerner.eu 86400 IN NS server1-ns1.udagdns.net.",
+               "tboerner.eu 86400 IN NS server1-ns3.udagdns.net."
             ],
             "header" : {
                "cd" : 0,
@@ -943,49 +3047,43 @@
                "ad" : 0,
                "ra" : 0,
                "qr" : 1,
-               "aa" : 1,
+               "aa" : 0,
                "rd" : 0
             }
-         }
-      }
-   },
-   "com" : {
-      "SOA" : {
+         },
          "IN" : {
-            "answer" : [
-               "com IN SOA a.gtld-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t1328089799\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t86400 )\t; Minimum TTL"
-            ],
             "additional" : [
-               "a.gtld-servers.net IN A 192.5.6.30",
-               "b.gtld-servers.net IN A 192.33.14.30",
-               "c.gtld-servers.net IN A 192.26.92.30",
-               "d.gtld-servers.net IN A 192.31.80.30",
-               "e.gtld-servers.net IN A 192.12.94.30",
-               "f.gtld-servers.net IN A 192.35.51.30",
-               "g.gtld-servers.net IN A 192.42.93.30",
-               "h.gtld-servers.net IN A 192.54.112.30",
-               "i.gtld-servers.net IN A 192.43.172.30",
-               "j.gtld-servers.net IN A 192.48.79.30",
-               "k.gtld-servers.net IN A 192.52.178.30",
-               "l.gtld-servers.net IN A 192.41.162.30",
-               "m.gtld-servers.net IN A 192.55.83.30",
-               "a.gtld-servers.net IN AAAA 2001:503:a83e:0:0:0:2:30",
-               "b.gtld-servers.net IN AAAA 2001:503:231d:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 198.32.64.12",
+               "m.root-servers.net 3600000 IN A 202.12.27.33"
+            ],
+            "answer" : [
+               "tboerner.eu 3600 IN CNAME phantoms.ath.cx."
             ],
             "authority" : [
-               "com IN NS i.gtld-servers.net.",
-               "com IN NS j.gtld-servers.net.",
-               "com IN NS g.gtld-servers.net.",
-               "com IN NS a.gtld-servers.net.",
-               "com IN NS h.gtld-servers.net.",
-               "com IN NS b.gtld-servers.net.",
-               "com IN NS d.gtld-servers.net.",
-               "com IN NS e.gtld-servers.net.",
-               "com IN NS c.gtld-servers.net.",
-               "com IN NS l.gtld-servers.net.",
-               "com IN NS k.gtld-servers.net.",
-               "com IN NS m.gtld-servers.net.",
-               "com IN NS f.gtld-servers.net."
+               ". 518400 IN NS a.root-servers.net.",
+               ". 518400 IN NS b.root-servers.net.",
+               ". 518400 IN NS c.root-servers.net.",
+               ". 518400 IN NS d.root-servers.net.",
+               ". 518400 IN NS e.root-servers.net.",
+               ". 518400 IN NS f.root-servers.net.",
+               ". 518400 IN NS g.root-servers.net.",
+               ". 518400 IN NS h.root-servers.net.",
+               ". 518400 IN NS i.root-servers.net.",
+               ". 518400 IN NS j.root-servers.net.",
+               ". 518400 IN NS k.root-servers.net.",
+               ". 518400 IN NS l.root-servers.net.",
+               ". 518400 IN NS m.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -995,7 +3093,7 @@
                "ad" : 0,
                "ra" : 0,
                "qr" : 1,
-               "aa" : 1,
+               "aa" : 0,
                "rd" : 0
             }
          }

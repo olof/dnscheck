@@ -3,38 +3,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "m.root-servers.net IN A 202.12.27.33"
+               "m.root-servers.net 3600000 IN A 202.12.27.33"
             ],
             "authority" : [
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net."
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -52,38 +52,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "answer" : [
-               "m.root-servers.net IN AAAA 2001:dc3:0:0:0:0:0:35"
+               "m.root-servers.net 3600000 IN AAAA 2001:dc3:0:0:0:0:0:35"
             ],
             "authority" : [
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net."
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -103,38 +103,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "k.root-servers.net IN A 193.0.14.129"
+               "k.root-servers.net 3600000 IN A 193.0.14.129"
             ],
             "authority" : [
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net."
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -152,38 +152,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "answer" : [
-               "k.root-servers.net IN AAAA 2001:7fd:0:0:0:0:0:1"
+               "k.root-servers.net 3600000 IN AAAA 2001:7fd:0:0:0:0:0:1"
             ],
             "authority" : [
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net."
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -203,84 +203,36 @@
       "NS" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               ". IN NS e.root-servers.net.",
-               ". IN NS a.root-servers.net.",
-               ". IN NS i.root-servers.net.",
-               ". IN NS j.root-servers.net.",
-               ". IN NS l.root-servers.net.",
-               ". IN NS g.root-servers.net.",
-               ". IN NS f.root-servers.net.",
-               ". IN NS d.root-servers.net.",
-               ". IN NS c.root-servers.net.",
-               ". IN NS m.root-servers.net.",
-               ". IN NS k.root-servers.net.",
-               ". IN NS b.root-servers.net.",
-               ". IN NS h.root-servers.net."
-            ],
-            "header" : {
-               "cd" : 0,
-               "rcode" : "NOERROR",
-               "tc" : 0,
-               "opcode" : "QUERY",
-               "ad" : 0,
-               "ra" : 0,
-               "qr" : 1,
-               "aa" : 1,
-               "rd" : 0
-            }
-         }
-      },
-      "SOA" : {
-         "IN" : {
-            "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33"
-            ],
-            "answer" : [
-               ". IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2012020100\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t604800\t; Expire\n\t\t\t\t\t86400 )\t; Minimum TTL"
-            ],
-            "authority" : [
-               ". IN NS j.root-servers.net.",
-               ". IN NS l.root-servers.net.",
-               ". IN NS h.root-servers.net.",
-               ". IN NS f.root-servers.net.",
-               ". IN NS g.root-servers.net.",
-               ". IN NS m.root-servers.net.",
-               ". IN NS k.root-servers.net.",
-               ". IN NS e.root-servers.net.",
-               ". IN NS a.root-servers.net.",
-               ". IN NS c.root-servers.net.",
-               ". IN NS b.root-servers.net.",
-               ". IN NS i.root-servers.net.",
-               ". IN NS d.root-servers.net."
+               ". 518400 IN NS j.root-servers.net.",
+               ". 518400 IN NS c.root-servers.net.",
+               ". 518400 IN NS l.root-servers.net.",
+               ". 518400 IN NS f.root-servers.net.",
+               ". 518400 IN NS k.root-servers.net.",
+               ". 518400 IN NS g.root-servers.net.",
+               ". 518400 IN NS a.root-servers.net.",
+               ". 518400 IN NS b.root-servers.net.",
+               ". 518400 IN NS i.root-servers.net.",
+               ". 518400 IN NS e.root-servers.net.",
+               ". 518400 IN NS m.root-servers.net.",
+               ". 518400 IN NS h.root-servers.net.",
+               ". 518400 IN NS d.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -300,35 +252,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "i.ns.se IN A 194.146.106.22"
+               "i.ns.se 172800 IN A 194.146.106.22"
             ],
             "additional" : [
-               "i.ns.se IN A 194.146.106.22",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "j.ns.se IN A 199.254.63.1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS a.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS j.ns.se."
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS h.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -346,35 +298,35 @@
       "AAAA" : {
          "IN" : {
             "answer" : [
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53"
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53"
             ],
             "additional" : [
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "i.ns.se IN A 194.146.106.22",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS i.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS f.ns.se."
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS e.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -394,38 +346,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "g.root-servers.net IN A 192.112.36.4"
+               "g.root-servers.net 3600000 IN A 192.112.36.4"
             ],
             "authority" : [
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net."
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -443,7 +395,7 @@
       "AAAA" : {
          "IN" : {
             "authority" : [
-               "root-servers.net IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
+               "root-servers.net 3600000 IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -463,38 +415,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "a.root-servers.net IN A 198.41.0.4"
+               "a.root-servers.net 3600000 IN A 198.41.0.4"
             ],
             "authority" : [
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net."
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -512,38 +464,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "authority" : [
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net."
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -563,35 +515,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "g.ns.se IN A 130.239.5.114"
+               "g.ns.se 172800 IN A 130.239.5.114"
             ],
             "additional" : [
-               "g.ns.se IN A 130.239.5.114",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS c.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS a.ns.se."
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS f.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -609,35 +561,35 @@
       "AAAA" : {
          "IN" : {
             "answer" : [
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1"
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1"
             ],
             "additional" : [
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "g.ns.se IN A 130.239.5.114",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS d.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS e.ns.se."
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS f.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -657,38 +609,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "f.root-servers.net IN A 192.5.5.241"
+               "f.root-servers.net 3600000 IN A 192.5.5.241"
             ],
             "authority" : [
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net."
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -706,38 +658,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "answer" : [
-               "f.root-servers.net IN AAAA 2001:500:2f:0:0:0:0:f"
+               "f.root-servers.net 3600000 IN AAAA 2001:500:2f:0:0:0:0:f"
             ],
             "authority" : [
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net."
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -757,35 +709,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "h.ns.se IN A 199.7.49.30"
+               "h.ns.se 172800 IN A 199.7.49.30"
             ],
             "additional" : [
-               "h.ns.se IN A 199.7.49.30",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS h.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS i.ns.se."
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS e.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -803,33 +755,33 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS i.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 7200 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -849,35 +801,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "e.ns.se IN A 81.228.10.57"
+               "e.ns.se 172800 IN A 81.228.10.57"
             ],
             "additional" : [
-               "e.ns.se IN A 81.228.10.57",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS c.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS h.ns.se."
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS c.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -895,33 +847,33 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS g.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 7200 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -941,35 +893,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "j.ns.se IN A 199.254.63.1"
+               "j.ns.se 172800 IN A 199.254.63.1"
             ],
             "additional" : [
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53"
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53"
             ],
             "authority" : [
-               "se IN NS b.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS h.ns.se."
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS i.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -987,35 +939,35 @@
       "AAAA" : {
          "IN" : {
             "answer" : [
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "additional" : [
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53"
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53"
             ],
             "authority" : [
-               "se IN NS i.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS f.ns.se."
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS f.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -1035,38 +987,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "j.root-servers.net IN A 192.58.128.30"
+               "j.root-servers.net 3600000 IN A 192.58.128.30"
             ],
             "authority" : [
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net."
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -1084,38 +1036,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "answer" : [
-               "j.root-servers.net IN AAAA 2001:503:c27:0:0:0:2:30"
+               "j.root-servers.net 3600000 IN AAAA 2001:503:c27:0:0:0:2:30"
             ],
             "authority" : [
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net."
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -1135,38 +1087,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "c.root-servers.net IN A 192.33.4.12"
+               "c.root-servers.net 3600000 IN A 192.33.4.12"
             ],
             "authority" : [
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net."
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -1184,7 +1136,7 @@
       "AAAA" : {
          "IN" : {
             "authority" : [
-               "root-servers.net IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
+               "root-servers.net 3600000 IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -1204,35 +1156,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "b.ns.se IN A 192.36.133.107"
+               "b.ns.se 172800 IN A 192.36.133.107"
             ],
             "additional" : [
-               "b.ns.se IN A 192.36.133.107",
-               "a.ns.se IN A 192.36.144.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS j.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS c.ns.se."
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS g.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -1250,33 +1202,33 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS j.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 7200 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -1296,35 +1248,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "d.ns.se IN A 81.228.8.16"
+               "d.ns.se 172800 IN A 81.228.8.16"
             ],
             "additional" : [
-               "d.ns.se IN A 81.228.8.16",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS a.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS i.ns.se."
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS b.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -1342,33 +1294,33 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS g.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 7200 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -1388,38 +1340,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "b.root-servers.net IN A 192.228.79.201"
+               "b.root-servers.net 3600000 IN A 192.228.79.201"
             ],
             "authority" : [
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net."
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -1437,7 +1389,7 @@
       "AAAA" : {
          "IN" : {
             "authority" : [
-               "root-servers.net IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
+               "root-servers.net 3600000 IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -1457,35 +1409,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "f.ns.se IN A 192.71.53.53"
+               "f.ns.se 172800 IN A 192.71.53.53"
             ],
             "additional" : [
-               "f.ns.se IN A 192.71.53.53",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS e.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS f.ns.se."
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS e.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -1503,33 +1455,33 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS c.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 7200 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -1549,35 +1501,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "c.ns.se IN A 192.36.135.107"
+               "c.ns.se 172800 IN A 192.36.135.107"
             ],
             "additional" : [
-               "c.ns.se IN A 192.36.135.107",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS j.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS e.ns.se."
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS e.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -1595,33 +1547,33 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS g.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 7200 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -1641,38 +1593,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "h.root-servers.net IN A 128.63.2.53"
+               "h.root-servers.net 3600000 IN A 128.63.2.53"
             ],
             "authority" : [
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net."
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -1690,38 +1642,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "answer" : [
-               "h.root-servers.net IN AAAA 2001:500:1:0:0:0:803f:235"
+               "h.root-servers.net 3600000 IN AAAA 2001:500:1:0:0:0:803f:235"
             ],
             "authority" : [
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net."
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -1741,38 +1693,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "d.root-servers.net IN A 128.8.10.90"
+               "d.root-servers.net 3600000 IN A 128.8.10.90"
             ],
             "authority" : [
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net."
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -1790,38 +1742,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "answer" : [
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "authority" : [
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net."
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -1841,11 +1793,10 @@
       "DNSKEY" : {
          "IN" : {
             "answer" : [
-               "se IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAejySNQabJ7zxEM8oyV+yz2kLaZDF8Wz\n\t\t\tJgsW3h0bhg3hhHFMqSRPRNB2QXUbsYBDSGLp\n\t\t\tJgnmcMEJlsBQqzcP5riASZQNppgCqJktpJ9D\n\t\t\t1xEE4rnO3t4BWzNv8AaKT3l3Nw6U0FDViTxT\n\t\t\tz8lLft5UqZzHi6qlkCD0fHr1yuW+Q4VP \n\t\t\t) ; Key ID = 59452",
-               "se IN DNSKEY 257  3  5 ( \n\t\t\tAwEAAZYYG1hpk8XKHNHpdO/EEg+r4YmIEC4F\n\t\t\tn3x2DEsygxDuoT9d/QCiX1pz0omFGCaVfCWH\n\t\t\tvaScVvWd4xP4kNDnSDQxBzPwLEXE3l0cLseM\n\t\t\tJ2YMQeBPf3hGhLs6VSDnGFKAzNG4fhri9EBT\n\t\t\tLv9ubL8Kx8cWQKuu3A5HRVD3li7lZB+0kmUK\n\t\t\tqGiIQdERKt/Ec36BkK93lyGags5RrR2VDdrX\n\t\t\tCj9Yay90KCKITk52AbwVoMPm0OYlPbD4ViBP\n\t\t\tMk5nmh/dPeCoZoVJxgANZ/doVQxR5vDkMBYx\n\t\t\tuhrXuQk3CvZBB011NsXxk9yHtHvp/5gjUVJj\n\t\t\tvhdRvjRB6/xYR03c9owi/aM= \n\t\t\t) ; Key ID = 59747",
-               "se IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAZ+1HAXQMcu+baENP+OoO9gWzGipBB2u\n\t\t\t3+fEgehSFJ9z7k8P3dFkf4qNAy/E2jwAqVCd\n\t\t\t1GyEvV7jM4/4HoexdUytGOTSn5p1A0sQrYOS\n\t\t\tXRawSt+yhjtG4FaGPrmbBBNFow4eycSmgbH/\n\t\t\tpnwnfTtc6n9vZ6jl6fleQImIRzlG1o9T \n\t\t\t) ; Key ID = 46408",
-               "se IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAc5ca3EMkyz71scuIns26hacGSULYWbJ\n\t\t\treMZv55fG4j2wD+AY/eF7G6tTblaNUcnF3xL\n\t\t\tu6K3DKwD8RUExOWJ6+kCorfUUy1f4XT+AMxE\n\t\t\tDIzkcAXLtrJJB0JveRvf5nk+zR0PbqB1abF3\n\t\t\t7+R3b99e9t3NBRRS6MCK+ijVQG5ZS/OR \n\t\t\t) ; Key ID = 64263",
-               "se IN RRSIG DNSKEY  5  1  3600  20120213113139 (\n\t\t\t20120130101001 59747  se.\n\t\t\tivkiCSMJ/McBD5SgZyJKAnmDe7g9fv3yRWsY8ZKDp0uAN\n\t\t\t8v2p2TS8oa+RPHq8WE6cyoZRFYzOTBI39PHEKOknNKzNr\n\t\t\t4SOcJ0bEZVQTgISSr4kaAOjOgqcHui1HxbIp+uJWie4zO\n\t\t\tkDd5TRu775+f1AZattPhH4xylwtSOiPhUMkba1kElx1bK\n\t\t\tS4Nqh3Bfxhcu9izhaMVgQ3B7EBdxFFaAWrC7Jz1eFc1nB\n\t\t\t2/HgWFd0ZlcheXs/USgeo/BoP/dKt6C9dGiwi1djxUJfb\n\t\t\tEq1AisKe2coWz1NQgXQJu0zLxd9fq8Ly6jl6CVPKx5z2g\n\t\t\tlmy0dw9EQmGgs3ulP6iyvjGSUbQ== )"
+               "se 3600 IN DNSKEY 257  3  5 ( \n\t\t\tAwEAAZYYG1hpk8XKHNHpdO/EEg+r4YmIEC4F\n\t\t\tn3x2DEsygxDuoT9d/QCiX1pz0omFGCaVfCWH\n\t\t\tvaScVvWd4xP4kNDnSDQxBzPwLEXE3l0cLseM\n\t\t\tJ2YMQeBPf3hGhLs6VSDnGFKAzNG4fhri9EBT\n\t\t\tLv9ubL8Kx8cWQKuu3A5HRVD3li7lZB+0kmUK\n\t\t\tqGiIQdERKt/Ec36BkK93lyGags5RrR2VDdrX\n\t\t\tCj9Yay90KCKITk52AbwVoMPm0OYlPbD4ViBP\n\t\t\tMk5nmh/dPeCoZoVJxgANZ/doVQxR5vDkMBYx\n\t\t\tuhrXuQk3CvZBB011NsXxk9yHtHvp/5gjUVJj\n\t\t\tvhdRvjRB6/xYR03c9owi/aM= \n\t\t\t) ; Key ID = 59747",
+               "se 3600 IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAdBHkDPTq+ZJttt0Oh3zkJUNX4CLG3kI\n\t\t\tfNFc0ytf5AW1QI3nvD6OphKcKtt6yckAy+VP\n\t\t\tSKtm/qacNKYms20wrPK+VqW0oaRFF1NXUEL/\n\t\t\t89ay39x2JAEZqRq7k4cQ3R1tXmmlCapwIxXk\n\t\t\toS/QDTRqHVrAsjin+3gMZitgHSX/c48r \n\t\t\t) ; Key ID = 40548",
+               "se 3600 IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAejySNQabJ7zxEM8oyV+yz2kLaZDF8Wz\n\t\t\tJgsW3h0bhg3hhHFMqSRPRNB2QXUbsYBDSGLp\n\t\t\tJgnmcMEJlsBQqzcP5riASZQNppgCqJktpJ9D\n\t\t\t1xEE4rnO3t4BWzNv8AaKT3l3Nw6U0FDViTxT\n\t\t\tz8lLft5UqZzHi6qlkCD0fHr1yuW+Q4VP \n\t\t\t) ; Key ID = 59452",
+               "se 3600 IN RRSIG DNSKEY  5  1  3600  20120306033522 (\n\t\t\t20120221001001 59747  se.\n\t\t\tYR2EHiBWQVIHBZ3cU0mAyrcUSN3RgjJhOPIEranIa1Ok1\n\t\t\tA8kedJBSYoXZ/MwLpSGVm3UpPL651iOaV2LXmyzKRGJ7r\n\t\t\t+F+5fRI24B8I2SEF4E7UTrLGkqrpYrY8qMLBZEccBWXCC\n\t\t\tCVtnJAQus1/7Rdcx+cm6+uipFDeTc8jGggJfUY+Txk3A+\n\t\t\tCjNdBKhh4H9zL69atnhDJGsE/yWFiPN1OM54vWVxjY6lz\n\t\t\t1lpvnr4o5o1yrbsajMm5ekfos4vLTV8uIdd6ZPt25obd6\n\t\t\ti8yDHhiB+iEQDV1/1rCUPZLS15NUhshGX9l//BX5EydTx\n\t\t\tySUGPSLTmaa2ZB1OIqXRBqxKj7w== )"
             ],
             "header" : {
                "cd" : 0,
@@ -1860,47 +1811,109 @@
             }
          }
       },
+      "SOA" : {
+         "IN" : {
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "a.ns.se 172800 IN RRSIG A  5  3  172800  20120305131835 (\n\t\t\t20120220101001 59452  se.\n\t\t\t1HynBkdBbwquPr2GYgUuV9XWjmp6SkXILwuVaJhCD8ABJ\n\t\t\tP09dqRlTdZ8NEgf+xoFCs0JVjsQbfk3XIy7f7zXSpiLPf\n\t\t\tIC/YQhhln60LGAJJBphtuRN2JYsshcTo7uoGguxWq4n1h\n\t\t\tQmbJEtt6EEabNUajlJzK2GeMI9WhIy+ooFKo= )",
+               "a.ns.se 172800 IN RRSIG AAAA  5  3  172800  20120305121538 (\n\t\t\t20120220161001 59452  se.\n\t\t\twUQcx6xg19k5g8v8mGSfUYGNiXP+1RCPh7kdo/fksgn8g\n\t\t\t4tQ9KoZUb1+BRbP4kNkqZEKati1D2i1Oq+iP3TsgsrQgE\n\t\t\tlmbaBmN+F41eThYhm+prswsnLmocowZS8X2qbTR66hL4I\n\t\t\trusTkPfbLVvuzjTbdR8Rb8nywA0KNKzcUXBI= )",
+               "b.ns.se 172800 IN RRSIG A  5  3  172800  20120305225738 (\n\t\t\t20120221081001 59452  se.\n\t\t\tY0V3/43b4g5DDKYK6ArwNUjsZf+nKam2ma7dz1b89nQc2\n\t\t\t0qVOa6VMhRsPWRSj4LnEFW+gWHA8MAG85m2XQmQE/EeBD\n\t\t\t8bWSm0euWlkVLTaAMA2v6H4nOb6X5p/vuae6CgN7IhDgO\n\t\t\t5hH8yT4hj5G6YQj9TFWUYHCAG6f3ka2sdj1o= )",
+               "c.ns.se 172800 IN RRSIG A  5  3  172800  20120303193213 (\n\t\t\t20120218221001 59452  se.\n\t\t\tG/aQ54wfilt+AyPixnHusaQ94BtiBTNivl9tJ8sTP35Vm\n\t\t\t1nt59wlBguw0+RRFUe0hsPZS5r/uLcG2I9sbRFUYgxea/\n\t\t\tU0fUHUaBfAI8NScFcBWMHL97cdppDuu1GlZ3C9K8NxfEq\n\t\t\tP5D51DT2m6kEg0fgtnRRbUQqtQDQAiMS7FNI= )",
+               "d.ns.se 172800 IN RRSIG A  5  3  172800  20120304153409 (\n\t\t\t20120220221001 59452  se.\n\t\t\t1HmqpVHykoC9KE6G83JsGb0puFnySCYO3NBGtWydsYW1Q\n\t\t\twmX0/onylkF8P38s7giJgxjYDRS5lxxi1lwTd64ScZbop\n\t\t\taZuxXZXzxMHppL7Oe1gH22K5/k2UZQ3TYk50Y2qwEB55h\n\t\t\tegaatVEO5yS+2/ak6iWZZqD81Oqf43yZOe8Q= )",
+               "e.ns.se 172800 IN RRSIG A  5  3  172800  20120305183410 (\n\t\t\t20120222001002 59452  se.\n\t\t\triYLnJVMFOmQ5ycj4Sc1d7XnDBBeMWS4O1kNhVGXVDtfH\n\t\t\ts/u/2x0E2tEX3q7DpX9Vx5RXDf0L4NIAdoVZIW53a3D4N\n\t\t\tR0Tt561vhOXtZH5/QeXUlz775dTlcYenLLPl1z3RagV3+\n\t\t\t2aQuIe1F+LSwe1BFFEn0Hle+ISReSpYiPzbo= )",
+               "f.ns.se 172800 IN RRSIG A  5  3  172800  20120304054802 (\n\t\t\t20120219021002 59452  se.\n\t\t\txo2+fp6mTphl1ZpaeMWBsEvOf2kQCYZaZdVgWfE3rI5RY\n\t\t\tKDJO+ZxcikLFI+wVdRkQuQvvr5e5lblQI2oPox/eE3bQt\n\t\t\tS3b6HT7P/N5lj/XIAgcNXs4PKuszBRncOAtHDQHlX3jq2\n\t\t\tKho32qTnx2lE87cORR58REP+f/m+Q4VDy1zI= )",
+               "g.ns.se 172800 IN RRSIG A  5  3  172800  20120306075711 (\n\t\t\t20120221061001 59452  se.\n\t\t\tQ1EdflYoL9+7Xw3Stvgs2PWjDapIHL9FQ4bsXv+6YjGcO\n\t\t\tTPWfkFOKZAmyzv0hoFWWRXmaRppslR6OcpD6gyIrAiuds\n\t\t\tSbr9S+d2smBfDG6awU+hIRBJkV52rnbb3sDno7IXA3Y9n\n\t\t\tWk9ERdMK3pJPfud+D61SvS24W2quNccoyGBg= )",
+               "g.ns.se 172800 IN RRSIG AAAA  5  3  172800  20120305125716 (\n\t\t\t20120222061001 59452  se.\n\t\t\t4aCFYI0ia1Z9fb8c0up0IU7Q6rTlv9vdnpGC3ChC9EUwX\n\t\t\tcMVbajbkkkZYhFRJCNPP80qintZO27vJfK4em3W6r029O\n\t\t\tnVmqdxbACf929MPZo+mDGp8EChla7XTQDAmmqlfMt/qS/\n\t\t\tfWk4bvL5zojdtFq94DxrUALcsOSiML+ud74g= )",
+               "h.ns.se 172800 IN RRSIG A  5  3  172800  20120304142631 (\n\t\t\t20120219121001 59452  se.\n\t\t\trZJJWfKqxwzyrEK1z+kysiWU75Pj07WqRwJppvVL2sscL\n\t\t\tiWokNJkWlM2K2gZis2fYx7pg+S5OLzSPRlzSqnHXGw3Fs\n\t\t\tJ590aP6Dp0XXoW7Suh8IbjsfGHMwjTXvGw114PWRSU9HZ\n\t\t\tiFu9JKgqgtPLRBchhAm38x0Jot8jtCUzj6e8= )",
+               "i.ns.se 172800 IN RRSIG A  5  3  172800  20120303214537 (\n\t\t\t20120219021002 59452  se.\n\t\t\tHJ4ehluVyA/VBiYOOnnzY/i0+ao4nhh71J8u98q+WPyFk\n\t\t\txxtoung/aN+Jrk7ngXKE57UDjtRNBK2nqts7KFOchuSyU\n\t\t\twvM/ZDdnb8N/eqSQd/QAvZ+I+7xsKchgnSC8k7/Tf87g2\n\t\t\tlk6d9w9df8dFYsgrkrvjC8QZa/AjYUqHnkmI= )",
+               "i.ns.se 172800 IN RRSIG AAAA  5  3  172800  20120305080225 (\n\t\t\t20120221121001 59452  se.\n\t\t\t0zzurNHPWGqHJe+VbWKNfOfHg2teWyei+iSRBsNNQ+mSV\n\t\t\tnM6GViBj7oL90CHdK0QBm977Vi34NWvL/EnuXHZtKm1DO\n\t\t\tmshxIHe0YzIl/UzYEewhPliDhmnwmvrieMLyphKUCCSbm\n\t\t\tVN1Vet9MYt2mE5l1fq8AKXS62KAlQT08B60g= )",
+               "j.ns.se 172800 IN RRSIG A  5  3  172800  20120305133728 (\n\t\t\t20120221041101 59452  se.\n\t\t\t4wA7bFl3/KeIurfCASgYMFOlzC1opUrO071BCkuSxr5vV\n\t\t\tMTFlI5Bs6IJ4zln+Dv9ErHbBxXovHxzCYQNFzD99TIeof\n\t\t\t9V/Zw6d10XH4v8I3WSep3Je0pUA3V1nB0g+lCfLsnGuBc\n\t\t\tRA1sKLb8rRYxGG34tjjhrPHvxN/48bQNII04= )",
+               "j.ns.se 172800 IN RRSIG AAAA  5  3  172800  20120305110601 (\n\t\t\t20120220081002 59452  se.\n\t\t\tmKCV9yiy//TE8/syFHYTQmSg18mXCv7lcuisX59+QXqI8\n\t\t\tqJKO4pS/a0zI0zpFpofuSXa86GJTyFp2ygL6opYfrFcdm\n\t\t\ttvGO/vr2H7ebtEyYha5BD/KM6+QDkdl+1KYI9MMGV/81F\n\t\t\tXdt5pc5YXkJjZgwdfSN4Ts4l5qfDF/waexvQ= )"
+            ],
+            "answer" : [
+               "se 172800 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL",
+               "se 172800 IN RRSIG SOA  5  1  172800  20120306040539 (\n\t\t\t20120222081001 59452  se.\n\t\t\tnJYYlX2TjthuDjNrubBOHK+kqQvd7+ODVVCrSUYnK28aV\n\t\t\ttkl59BqkENloUju3gOPQwsSFjfqqnK5U1n+Yte90Xlna8\n\t\t\tewM+A7ypxcy3jxPyvm+MQ5LxlodXiDi3gD0tAlB3euR23\n\t\t\tdgaPz5Hx3WHSXmRvTyUr+Ug8QZRz9rw+tyrk= )"
+            ],
+            "authority" : [
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN RRSIG NS  5  1  172800  20120306033446 (\n\t\t\t20120221181001 59452  se.\n\t\t\tdMD9jx5RJ1JP5jEN0K55KgyEP0DGPOw1p3PnWtNf7LVEW\n\t\t\tisDCMFzh/erCTu5vMbgHlcUclpVVpO/H7KAEVBJ4OxtMo\n\t\t\tPEkRbIW4WDojDcqkw+BaWsSDVRjesoYSC0uM0P8V2RG6Q\n\t\t\tN0Mxl1KOctPdPc4T1igeM7pFYVaXlOdEAf8g= )"
+            ],
+            "header" : {
+               "cd" : 1,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      },
       "NS" : {
          "IN" : {
             "answer" : [
-               "se IN NS g.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS e.ns.se."
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS j.ns.se."
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS h.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS e.ns.se."
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS f.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -1918,10 +1931,8 @@
       "DS" : {
          "IN" : {
             "answer" : [
-               "se IN DS 7649  5  2  ee7c340d6636ca50db126dbbf69ce4a79a76d3df830f4a6ba207caefda32f443 ; xuril-setyb-tynaf-kydoh-bekac-darer-ratin-sanop-lukel-koget-zubab-zedak-romab-lodov-zakaf-dutog-fuxyx",
-               "se IN DS 39547  5  2  57d1927113224d7fbb9fc2f68394a717263ddae5f883ee461aaf8f4ed4f39e23 ; xihot-cogel-cagid-dafyl-zovan-zabuz-keban-ganec-lanif-takiv-hovem-furag-kekap-zufyg-vahyz-fulyd-fyxix",
-               "se IN DS 59747  5  2  44388b3de9a22cafa8a12883f60a0f984472d0dfef0f63ed59a29be018658b28 ; xicaf-mydif-tipip-darip-zypap-cipom-futob-pofon-mocol-doget-ziryb-zumuv-tukep-dukuv-bykik-hidid-myxex",
-               "se IN RRSIG DS  8  1  86400  20120208000000 (\n\t\t\t20120131230000 51201  .\n\t\t\thgH4PcUqAvF67Pu4Esi7k5hcGsrr25z+rw9kGwSzS8eTp\n\t\t\tVY45aI94bdNroGoLjGbJb2zUeCGj0//X5wwBvMOKFJ6Bj\n\t\t\tgCqSsPc1SAmWRWzSQzb3me9LCBQMwk15Vmo5pVDwZ0YYz\n\t\t\tUw3DPdu3k01URghIxaxVT6I8ugMwWllPdbI4= )"
+               "se 86400 IN DS 59747  5  2  44388b3de9a22cafa8a12883f60a0f984472d0dfef0f63ed59a29be018658b28 ; xicaf-mydif-tipip-darip-zypap-cipom-futob-pofon-mocol-doget-ziryb-zumuv-tukep-dukuv-bykik-hidid-myxex",
+               "se 86400 IN RRSIG DS  8  1  86400  20120229000000 (\n\t\t\t20120221230000 51201  .\n\t\t\thiHZ8RNoVD6Y7A1yuvSsWZq2dT7zdGk1N8DpZV9epUTkc\n\t\t\tlEn3CiZIhBCD/LRhVy8W91svD+CRbiL1JQqxShSm7uT2j\n\t\t\tRIsvjCGUqThpOUA7LOMGhGypgy9UY3G3Tu+41DAcHkr9v\n\t\t\t5DVFvP88vco2NDBYH17MscheJMxWnhpv2Qjo= )"
             ],
             "header" : {
                "cd" : 0,
@@ -1936,57 +1947,61 @@
             }
          }
       },
-      "SOA" : {
-         "IN" : {
+      "ANY" : {
+         "ANY" : {
             "answer" : [
-               "se IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012020104\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL",
-               "se IN RRSIG SOA  5  1  172800  20120213150610 (\n\t\t\t20120201081002 59452  se.\n\t\t\tSdywK/2BtfKKzkm20GYuzRyZwRmEFg0kkrK68VNwwJNdz\n\t\t\t1xdIxgL0axHDJ37kBexsGiRWc7yO+ILTLgALLituSxe8i\n\t\t\tPP+JZN3b0NeScBOVZ0TE1DyezvqU89frbKORtOxlzeMH8\n\t\t\tHkexe8fD4RSyM5OBNQuhFChTsAiV6pIgAH8k= )"
+               "se 172800 IN SOA catcher-in-the-rye.nic.se. registry-default.nic.se. (\n\t\t\t\t\t2012022204\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t1800\t; Retry\n\t\t\t\t\t864000\t; Expire\n\t\t\t\t\t7200 )\t; Minimum TTL",
+               "se 172800 IN RRSIG SOA  5  1  172800  20120306040539 (\n\t\t\t20120222081001 59452  se.\n\t\t\tnJYYlX2TjthuDjNrubBOHK+kqQvd7+ODVVCrSUYnK28aV\n\t\t\ttkl59BqkENloUju3gOPQwsSFjfqqnK5U1n+Yte90Xlna8\n\t\t\tewM+A7ypxcy3jxPyvm+MQ5LxlodXiDi3gD0tAlB3euR23\n\t\t\tdgaPz5Hx3WHSXmRvTyUr+Ug8QZRz9rw+tyrk= )",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN RRSIG NS  5  1  172800  20120306033446 (\n\t\t\t20120221181001 59452  se.\n\t\t\tdMD9jx5RJ1JP5jEN0K55KgyEP0DGPOw1p3PnWtNf7LVEW\n\t\t\tisDCMFzh/erCTu5vMbgHlcUclpVVpO/H7KAEVBJ4OxtMo\n\t\t\tPEkRbIW4WDojDcqkw+BaWsSDVRjesoYSC0uM0P8V2RG6Q\n\t\t\tN0Mxl1KOctPdPc4T1igeM7pFYVaXlOdEAf8g= )",
+               "se 172800 IN TXT \"SE zone update: 2012-02-22 09:06:53 +0000 (EPOCH 1329901613) (auto)\"",
+               "se 172800 IN RRSIG TXT  5  1  172800  20120306152149 (\n\t\t\t20120222081001 59452  se.\n\t\t\tcYQbKZQSHKaB5TLONP4J5B+UCVVVIXrOx4ciCOhxc3sWx\n\t\t\tx83eGoEJ74gA/DdpSUojohfON75XiTp8Z+3HSg5FFaf0R\n\t\t\tV4Z+zNiI3zfaVHB1Ps6sr47Xtfoju7ycJ2aF3QfBW2qfx\n\t\t\t5nZ0BHhqNVc4i1q8CcVEGSmx0ho5NM2S2VVE= )",
+               "se 7200 IN NSEC 0-0.se.  DNSKEY NS NSEC RRSIG SOA TXT",
+               "se 7200 IN RRSIG NSEC  5  1  7200  20120305115029 (\n\t\t\t20120221101001 59452  se.\n\t\t\thRxy/M0hkvK98Yde+zcqKbnJJSG8rRnpLt6x0FiFzsjeA\n\t\t\tvHWuPjMNlF5y4TTWGuBicEvsd3RKRgxaQcqcZaV4d4Rkb\n\t\t\tq5ZePtvltrkKkkUEn9QyL50NAybBjY2ru5JjE2X5cZ484\n\t\t\t3VLl5Sg/Jlb4qISpGbqT5zkWSC70GxNWo3Kw= )",
+               "se 3600 IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAdBHkDPTq+ZJttt0Oh3zkJUNX4CLG3kI\n\t\t\tfNFc0ytf5AW1QI3nvD6OphKcKtt6yckAy+VP\n\t\t\tSKtm/qacNKYms20wrPK+VqW0oaRFF1NXUEL/\n\t\t\t89ay39x2JAEZqRq7k4cQ3R1tXmmlCapwIxXk\n\t\t\toS/QDTRqHVrAsjin+3gMZitgHSX/c48r \n\t\t\t) ; Key ID = 40548",
+               "se 3600 IN DNSKEY 256  3  5 ( \n\t\t\tAwEAAejySNQabJ7zxEM8oyV+yz2kLaZDF8Wz\n\t\t\tJgsW3h0bhg3hhHFMqSRPRNB2QXUbsYBDSGLp\n\t\t\tJgnmcMEJlsBQqzcP5riASZQNppgCqJktpJ9D\n\t\t\t1xEE4rnO3t4BWzNv8AaKT3l3Nw6U0FDViTxT\n\t\t\tz8lLft5UqZzHi6qlkCD0fHr1yuW+Q4VP \n\t\t\t) ; Key ID = 59452",
+               "se 3600 IN DNSKEY 257  3  5 ( \n\t\t\tAwEAAZYYG1hpk8XKHNHpdO/EEg+r4YmIEC4F\n\t\t\tn3x2DEsygxDuoT9d/QCiX1pz0omFGCaVfCWH\n\t\t\tvaScVvWd4xP4kNDnSDQxBzPwLEXE3l0cLseM\n\t\t\tJ2YMQeBPf3hGhLs6VSDnGFKAzNG4fhri9EBT\n\t\t\tLv9ubL8Kx8cWQKuu3A5HRVD3li7lZB+0kmUK\n\t\t\tqGiIQdERKt/Ec36BkK93lyGags5RrR2VDdrX\n\t\t\tCj9Yay90KCKITk52AbwVoMPm0OYlPbD4ViBP\n\t\t\tMk5nmh/dPeCoZoVJxgANZ/doVQxR5vDkMBYx\n\t\t\tuhrXuQk3CvZBB011NsXxk9yHtHvp/5gjUVJj\n\t\t\tvhdRvjRB6/xYR03c9owi/aM= \n\t\t\t) ; Key ID = 59747",
+               "se 3600 IN RRSIG DNSKEY  5  1  3600  20120306033522 (\n\t\t\t20120221001001 59747  se.\n\t\t\tYR2EHiBWQVIHBZ3cU0mAyrcUSN3RgjJhOPIEranIa1Ok1\n\t\t\tA8kedJBSYoXZ/MwLpSGVm3UpPL651iOaV2LXmyzKRGJ7r\n\t\t\t+F+5fRI24B8I2SEF4E7UTrLGkqrpYrY8qMLBZEccBWXCC\n\t\t\tCVtnJAQus1/7Rdcx+cm6+uipFDeTc8jGggJfUY+Txk3A+\n\t\t\tCjNdBKhh4H9zL69atnhDJGsE/yWFiPN1OM54vWVxjY6lz\n\t\t\t1lpvnr4o5o1yrbsajMm5ekfos4vLTV8uIdd6ZPt25obd6\n\t\t\ti8yDHhiB+iEQDV1/1rCUPZLS15NUhshGX9l//BX5EydTx\n\t\t\tySUGPSLTmaa2ZB1OIqXRBqxKj7w== )"
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1",
-               "a.ns.se IN RRSIG A  5  3  172800  20120213065106 (\n\t\t\t20120130081001 59452  se.\n\t\t\tQjzrmW17rCSdXAFTw4Q4IGl0rgFOBvmbxX8klpJ5gl7YF\n\t\t\tfdYh5Dd/IqAfsBd1T0cx83v7uSZEKAwRbyJ0OGIquC2+m\n\t\t\tZ156wNxW/5sYH4MEuFD3EVGNeOo815xB6CIPy6YUVnfsh\n\t\t\tt9uslTnVkPTufDCy/4rD4LtUpt4OR9o+ZuU4= )",
-               "a.ns.se IN RRSIG AAAA  5  3  172800  20120212184249 (\n\t\t\t20120130201001 59452  se.\n\t\t\tHIqahxgfxiVR0/Ro7qcsZ4hsFLV5KwQ6ci3CkaIjeQscV\n\t\t\t3Tnr2keQn+XuVtEoFUlu3dAoGhqXTXsI9VZZJhln8k0qk\n\t\t\tKXlO9rJrh1n3a2vGDM+/ZTdTfMPi6kjA4U0g+PndgDspT\n\t\t\tZcdeS71oIr3OPxBmT/whIHlnRki+PlmKxkAg= )",
-               "b.ns.se IN RRSIG A  5  3  172800  20120212003140 (\n\t\t\t20120130121001 59452  se.\n\t\t\tOLgXY6jcmBi57T4OWeDGtKtECv34oqWFlblxcyhjEwQiQ\n\t\t\ttocAvP+jaHHrkICd78M+jGRevMuK9/c+sfYxfDzC7vRs0\n\t\t\t9c58A6UMRa7NDJYTJs5HnGkZEdOK6QirjZi+dWUsejc6N\n\t\t\tyzOB90hJnzNRRuDA2BcaG5yQPbZATJINE+PA= )",
-               "c.ns.se IN RRSIG A  5  3  172800  20120212083734 (\n\t\t\t20120130221002 59452  se.\n\t\t\tKMK/HCh2WrUTZbPKUwNngAbkC+i2o52j+0sNbIGX3e6S4\n\t\t\t50yVI5YkQKae8M8eFYAE3hfPnRMRDyBUCKsK1WCySyvUA\n\t\t\t6yXs3Kd5VOZeS4dA+onCJTeOBORRvtiqeCSfSlqrf1iaS\n\t\t\tR36q1ye1RmN4VcInfKfQ2Ik66JFuC507DK44= )",
-               "d.ns.se IN RRSIG A  5  3  172800  20120213143534 (\n\t\t\t20120131121002 59452  se.\n\t\t\td5LWhxDG+M/5WjiLeTj2YVN6EKnDxNgDPyCe4m/+yFTl+\n\t\t\tDAPkB1LVTCJ+v1JEqENNuVDJJAJYN5EXVyg51nSUdK0/f\n\t\t\tcIVw4zR56iz9Z6+FJx4hgn80EUw2fcc5beYRAPvf1hLMx\n\t\t\tYeyuOOrcMSUJ/ZIkq5sOuH0iO4vNV7j0m1tg= )",
-               "e.ns.se IN RRSIG A  5  3  172800  20120212214426 (\n\t\t\t20120130001002 59452  se.\n\t\t\tNlqOm4VBI59c8FKo6arOQg5jW6Imeimr73U9apJRMbTVM\n\t\t\tlmAy18aqBCB4i03p+azK0PBpBuCrv72zAw8lIiNmTqdxA\n\t\t\tBYRgtWLpwXMiwR0Fr/euMr9M9ORwwf1wc0RIcxcPOBS1T\n\t\t\t9i227OBzxTptQ03n7Obu7el247Drs6gWEKlo= )",
-               "f.ns.se IN RRSIG A  5  3  172800  20120212094953 (\n\t\t\t20120129061001 59452  se.\n\t\t\tD5D9V32QwWNn7GR7cWJ8Y6Xuf691yeXnFUHGGiCf0Psfy\n\t\t\tZqjUg6agz111kQeygnOzEKhyAXBR1iKAhiWpgK9O1IAlY\n\t\t\tno3EAZUiJeq9HqSxVRDp8DPzLDwBz8k6HFKSUdIk+kaSm\n\t\t\tQzGGTx7Mp0i/pWgEBYBHMiQSJ8rJ9xQv8zqs= )",
-               "g.ns.se IN RRSIG A  5  3  172800  20120213150356 (\n\t\t\t20120131081001 59452  se.\n\t\t\tpe5HxEuJuUjJL/rK8eNrRjyJnAToTmMgc5VTgrc8ZK+1s\n\t\t\tLwzq2wFrsHTYirtqIjZJSpmTjgd4lcLAV3V6KHL4M6oUP\n\t\t\taaZRYAvxPgMOX9eOBHrztSKt/4wMggJ6mZQ6Hvgb8ARSD\n\t\t\tk4Gti+OaGQfDcSW7G5x0A3TpDzaU+9pkESbY= )",
-               "g.ns.se IN RRSIG AAAA  5  3  172800  20120212073558 (\n\t\t\t20120129221001 59452  se.\n\t\t\tZvYnUtIuFrNiCqiCxm2yfLvfOmEBiaMXOSyiiJVlQb/fq\n\t\t\t/o7SHlRWcGqAbIclFwt2MBpsfiBmvOdloFsLSvtpikaIT\n\t\t\tcwtA9u/eOqSS02IeNkrsiuAvROt2td+EmdJCkIDglaXo+\n\t\t\t5RBbMOT9TzKbPS6SG9DCeCLMthpmmeDkcCsA= )",
-               "h.ns.se IN RRSIG A  5  3  172800  20120212072729 (\n\t\t\t20120130081001 59452  se.\n\t\t\tUI/+bAzFMbsAqnW5/coe2lxDBPoumiVv94/aAc0dol1xE\n\t\t\tfpMdQrdu4HfKl4TLHQTv4kNFfGfleYRz794EzxPphKzpS\n\t\t\t4krt57Jyw+pwP2MHlPRm6Tdy25u2KEmFFsSeMCeL16NPq\n\t\t\tnnJ/awd+Yk2wa64E0iwx+53K1SiNpUyiWKY4= )",
-               "i.ns.se IN RRSIG A  5  3  172800  20120211195250 (\n\t\t\t20120130041101 59452  se.\n\t\t\tR8wCDIjZIR99+iO8KH2JZvFkbgbNC1e6xxfTkjsHQWzTM\n\t\t\tLrw42mdgjhseZfvKdxQ06oklXPKfMw9W8l7QRG6lTKf5k\n\t\t\t0668IW18ENzR94WNogXmUNbNcgo0HXQNThn19HkGdnAd2\n\t\t\tzXSR3HqYEYbhJO3+GDAksQIdSZoGSlA5sJ3s= )",
-               "i.ns.se IN RRSIG AAAA  5  3  172800  20120212203915 (\n\t\t\t20120130121001 59452  se.\n\t\t\tv4TCPKOXcpFCPx8d+U1r9/8rBfUrfuUJX/rEG+J5rAzXZ\n\t\t\t/rgGar5gbSsAXv+8D3LirAgG8ajVYD78UummffREruWb7\n\t\t\tEV9qw4U/Q0eCtRAdQba6jCCks8ekwAwlOxs7zrImr4Ial\n\t\t\tuSRcL1ftHVGcbRl4CuP74q0VNmOSZVjmONeU= )",
-               "j.ns.se IN RRSIG A  5  3  172800  20120215012933 (\n\t\t\t20120201041001 59452  se.\n\t\t\tLMF+Waj6pDax8W+aWcA6T8rLxeFQfniRVfzX1U2ePSi2g\n\t\t\tc9w5aseCGzm6l6WeHtAdskXaIb96wdDk3b1YLi/43nahE\n\t\t\tSjgUx8BzQ47kmYzJ7q5PpArmsoqJJxkeZnPIWVI9hg7/R\n\t\t\tAf6psWT+TKob2VapNtL+z7Ckljsgmd+/jjqw= )",
-               "j.ns.se IN RRSIG AAAA  5  3  172800  20120213084728 (\n\t\t\t20120131221001 59452  se.\n\t\t\tLKWdKFiEzVLkoGZdVSmzuzTapGLYRe2/I78iEr6Lmf0hh\n\t\t\tQv5zSnXBfQe4L01o44OD2v3V3zBvk57D0mo3u35hUpPv7\n\t\t\tjPYhGUdm15Ohr5i7x/Duu0tZBBKQWnS3dP4KncR9+ifl/\n\t\t\t14nUJHGtPoiIVITOPvKbnW1M+MLA2t3M2KIs= )"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS d.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN RRSIG NS  5  1  172800  20120211192506 (\n\t\t\t20120130101001 59452  se.\n\t\t\tP/XG16rBJUzjwJnZ159je11xixw87Sul4k1VQQfPp0NDA\n\t\t\thK6/3Wjvl5pg8LvI5olYPYv4bUbI6duZIU1F8HrQpJTgg\n\t\t\t4uM3y8BBMmogEOi3LFosbbkW5FgbWz35H2kuLhQcOpOMw\n\t\t\tF3RwiPZbYFiiXmclrWnULoFcVfGUhEn2080Y= )"
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS a.ns.se."
             ],
             "header" : {
-               "cd" : 1,
+               "cd" : 0,
                "rcode" : "NOERROR",
                "tc" : 0,
                "opcode" : "QUERY",
@@ -2003,38 +2018,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "e.root-servers.net IN A 192.203.230.10"
+               "e.root-servers.net 3600000 IN A 192.203.230.10"
             ],
             "authority" : [
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net."
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -2052,7 +2067,7 @@
       "AAAA" : {
          "IN" : {
             "authority" : [
-               "root-servers.net IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
+               "root-servers.net 3600000 IN SOA a.root-servers.net. nstld.verisign-grs.com. (\n\t\t\t\t\t2011060800\t; Serial\n\t\t\t\t\t14400\t; Refresh\n\t\t\t\t\t7200\t; Retry\n\t\t\t\t\t1209600\t; Expire\n\t\t\t\t\t3600000 )\t; Minimum TTL"
             ],
             "header" : {
                "cd" : 0,
@@ -2072,38 +2087,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "i.root-servers.net IN A 192.36.148.17"
+               "i.root-servers.net 3600000 IN A 192.36.148.17"
             ],
             "authority" : [
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net."
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -2121,38 +2136,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "answer" : [
-               "i.root-servers.net IN AAAA 2001:7fe:0:0:0:0:0:53"
+               "i.root-servers.net 3600000 IN AAAA 2001:7fe:0:0:0:0:0:53"
             ],
             "authority" : [
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net."
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -2172,38 +2187,38 @@
       "A" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30",
-               "d.root-servers.net IN AAAA 2001:500:2d:0:0:0:0:d"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30",
+               "d.root-servers.net 3600000 IN AAAA 2001:500:2d:0:0:0:0:d"
             ],
             "answer" : [
-               "l.root-servers.net IN A 199.7.83.42"
+               "l.root-servers.net 3600000 IN A 199.7.83.42"
             ],
             "authority" : [
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net.",
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net."
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -2221,38 +2236,38 @@
       "AAAA" : {
          "IN" : {
             "additional" : [
-               "a.root-servers.net IN A 198.41.0.4",
-               "b.root-servers.net IN A 192.228.79.201",
-               "c.root-servers.net IN A 192.33.4.12",
-               "d.root-servers.net IN A 128.8.10.90",
-               "e.root-servers.net IN A 192.203.230.10",
-               "f.root-servers.net IN A 192.5.5.241",
-               "g.root-servers.net IN A 192.112.36.4",
-               "h.root-servers.net IN A 128.63.2.53",
-               "i.root-servers.net IN A 192.36.148.17",
-               "j.root-servers.net IN A 192.58.128.30",
-               "k.root-servers.net IN A 193.0.14.129",
-               "l.root-servers.net IN A 199.7.83.42",
-               "m.root-servers.net IN A 202.12.27.33",
-               "a.root-servers.net IN AAAA 2001:503:ba3e:0:0:0:2:30"
+               "a.root-servers.net 3600000 IN A 198.41.0.4",
+               "b.root-servers.net 3600000 IN A 192.228.79.201",
+               "c.root-servers.net 3600000 IN A 192.33.4.12",
+               "d.root-servers.net 3600000 IN A 128.8.10.90",
+               "e.root-servers.net 3600000 IN A 192.203.230.10",
+               "f.root-servers.net 3600000 IN A 192.5.5.241",
+               "g.root-servers.net 3600000 IN A 192.112.36.4",
+               "h.root-servers.net 3600000 IN A 128.63.2.53",
+               "i.root-servers.net 3600000 IN A 192.36.148.17",
+               "j.root-servers.net 3600000 IN A 192.58.128.30",
+               "k.root-servers.net 3600000 IN A 193.0.14.129",
+               "l.root-servers.net 3600000 IN A 199.7.83.42",
+               "m.root-servers.net 3600000 IN A 202.12.27.33",
+               "a.root-servers.net 3600000 IN AAAA 2001:503:ba3e:0:0:0:2:30"
             ],
             "answer" : [
-               "l.root-servers.net IN AAAA 2001:500:3:0:0:0:0:42"
+               "l.root-servers.net 3600000 IN AAAA 2001:500:3:0:0:0:0:42"
             ],
             "authority" : [
-               "root-servers.net IN NS j.root-servers.net.",
-               "root-servers.net IN NS c.root-servers.net.",
-               "root-servers.net IN NS m.root-servers.net.",
-               "root-servers.net IN NS h.root-servers.net.",
-               "root-servers.net IN NS d.root-servers.net.",
-               "root-servers.net IN NS f.root-servers.net.",
-               "root-servers.net IN NS a.root-servers.net.",
-               "root-servers.net IN NS i.root-servers.net.",
-               "root-servers.net IN NS l.root-servers.net.",
-               "root-servers.net IN NS b.root-servers.net.",
-               "root-servers.net IN NS g.root-servers.net.",
-               "root-servers.net IN NS e.root-servers.net.",
-               "root-servers.net IN NS k.root-servers.net."
+               "root-servers.net 3600000 IN NS h.root-servers.net.",
+               "root-servers.net 3600000 IN NS f.root-servers.net.",
+               "root-servers.net 3600000 IN NS a.root-servers.net.",
+               "root-servers.net 3600000 IN NS g.root-servers.net.",
+               "root-servers.net 3600000 IN NS e.root-servers.net.",
+               "root-servers.net 3600000 IN NS l.root-servers.net.",
+               "root-servers.net 3600000 IN NS d.root-servers.net.",
+               "root-servers.net 3600000 IN NS k.root-servers.net.",
+               "root-servers.net 3600000 IN NS i.root-servers.net.",
+               "root-servers.net 3600000 IN NS b.root-servers.net.",
+               "root-servers.net 3600000 IN NS m.root-servers.net.",
+               "root-servers.net 3600000 IN NS c.root-servers.net.",
+               "root-servers.net 3600000 IN NS j.root-servers.net."
             ],
             "header" : {
                "cd" : 0,
@@ -2272,35 +2287,35 @@
       "A" : {
          "IN" : {
             "answer" : [
-               "a.ns.se IN A 192.36.144.107"
+               "a.ns.se 172800 IN A 192.36.144.107"
             ],
             "additional" : [
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS c.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS f.ns.se.",
-               "se IN NS a.ns.se.",
-               "se IN NS b.ns.se."
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS a.ns.se."
             ],
             "header" : {
                "cd" : 0,
@@ -2318,35 +2333,35 @@
       "AAAA" : {
          "IN" : {
             "answer" : [
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53"
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53"
             ],
             "additional" : [
-               "a.ns.se IN AAAA 2a01:3f0:0:301:0:0:0:53",
-               "a.ns.se IN A 192.36.144.107",
-               "b.ns.se IN A 192.36.133.107",
-               "c.ns.se IN A 192.36.135.107",
-               "d.ns.se IN A 81.228.8.16",
-               "e.ns.se IN A 81.228.10.57",
-               "f.ns.se IN A 192.71.53.53",
-               "g.ns.se IN A 130.239.5.114",
-               "h.ns.se IN A 199.7.49.30",
-               "i.ns.se IN A 194.146.106.22",
-               "j.ns.se IN A 199.254.63.1",
-               "g.ns.se IN AAAA 2001:6b0:e:3:0:0:0:1",
-               "i.ns.se IN AAAA 2001:67c:1010:5:0:0:0:53",
-               "j.ns.se IN AAAA 2001:500:2c:0:0:0:0:1"
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1"
             ],
             "authority" : [
-               "se IN NS f.ns.se.",
-               "se IN NS e.ns.se.",
-               "se IN NS d.ns.se.",
-               "se IN NS g.ns.se.",
-               "se IN NS h.ns.se.",
-               "se IN NS b.ns.se.",
-               "se IN NS i.ns.se.",
-               "se IN NS c.ns.se.",
-               "se IN NS j.ns.se.",
-               "se IN NS a.ns.se."
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS h.ns.se."
             ],
             "header" : {
                "cd" : 0,
