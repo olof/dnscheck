@@ -78,9 +78,6 @@ sub new {
     $self->{resolver}->retry( $config->{retry} );
     $self->{resolver}->retrans( $config->{retrans} );
 
-    $self->{ipv6} = $parent->config->get( "net" )->{ipv6};
-    $self->{ipv4} = $parent->config->get( "net" )->{ipv4};
-
     return $self;
 }
 
@@ -449,7 +446,13 @@ sub get {
       if $self->{debug};
 
     @ns =
-      map { $_->ip } grep { ( $_->version == 4 and $self->{ipv4} ) or ( $_->version == 6 and $self->{ipv6} ) } map { Net::IP->new( $_ ) } @ns;
+      map { $_->ip }
+          grep {
+              ( $_->version == 4 and $self->config->get('net')->{ipv4} )
+              or
+              ( $_->version == 6 and $self->config->get('net')->{ipv6} )
+              } 
+              map { Net::IP->new( $_ ) } @ns;
 
     return unless @ns;
 
