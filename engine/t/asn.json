@@ -1,0 +1,424 @@
+{
+   "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.origin6.asnlookup.iis.se" : {
+      "TXT" : {
+         "IN" : {
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "ns.nic.se 86400 IN A 212.247.7.228",
+               "ns2.nic.se 86400 IN A 194.17.45.54",
+               "ns3.nic.se 86400 IN A 212.247.8.152",
+               "ns.nic.se 86400 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns3.nic.se 86400 IN AAAA 2a00:801:f0:211:0:0:0:152",
+               "ns1.asnlookup.iis.se 3600 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 3600 IN A 212.247.7.213"
+            ],
+            "authority" : [
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "iis.se 86400 IN NS ns.nic.se.",
+               "iis.se 86400 IN NS ns2.nic.se.",
+               "iis.se 86400 IN NS ns3.nic.se.",
+               "asnlookup.iis.se 3600 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 3600 IN NS ns2.asnlookup.iis.se.",
+               "asnlookup.iis.se 900 IN SOA ns1.asnlookup.iis.se. admin.asnlookup.iis.se. (\n\t\t\t\t\t1329807552\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t86400\t; Expire\n\t\t\t\t\t900 )\t; Minimum TTL",
+               "asnlookup.iis.se 900 IN SOA ns1.asnlookup.iis.se. admin.asnlookup.iis.se. (\n\t\t\t\t\t1329807219\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t86400\t; Expire\n\t\t\t\t\t900 )\t; Minimum TTL"
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NXDOMAIN",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "12.12.168.192.origin.asnlookup.iis.se" : {
+      "TXT" : {
+         "IN" : {
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.nic.se 86400 IN A 212.247.7.228",
+               "ns.nic.se 86400 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns2.nic.se 86400 IN A 194.17.45.54",
+               "ns3.nic.se 86400 IN A 212.247.8.152",
+               "ns3.nic.se 86400 IN AAAA 2a00:801:f0:211:0:0:0:152",
+               "ns1.asnlookup.iis.se 3600 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 3600 IN A 212.247.7.213"
+            ],
+            "authority" : [
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "iis.se 86400 IN NS ns3.nic.se.",
+               "iis.se 86400 IN NS ns.nic.se.",
+               "iis.se 86400 IN NS ns2.nic.se.",
+               "asnlookup.iis.se 3600 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 3600 IN NS ns2.asnlookup.iis.se.",
+               "asnlookup.iis.se 900 IN SOA ns1.asnlookup.iis.se. admin.asnlookup.iis.se. (\n\t\t\t\t\t1329807552\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t86400\t; Expire\n\t\t\t\t\t900 )\t; Minimum TTL",
+               "asnlookup.iis.se 900 IN SOA ns1.asnlookup.iis.se. admin.asnlookup.iis.se. (\n\t\t\t\t\t1329807219\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t86400\t; Expire\n\t\t\t\t\t900 )\t; Minimum TTL"
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NXDOMAIN",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "2.5.1.0.0.0.0.0.0.0.0.0.0.0.0.0.1.1.2.0.0.f.0.0.1.0.8.0.0.0.a.3.origin6.asnlookup.iis.se" : {
+      "TXT" : {
+         "IN" : {
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "ns.nic.se 86400 IN A 212.247.7.228",
+               "ns.nic.se 86400 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns2.nic.se 86400 IN A 194.17.45.54",
+               "ns3.nic.se 86400 IN A 212.247.8.152",
+               "ns3.nic.se 86400 IN AAAA 2a00:801:f0:211:0:0:0:152",
+               "ns1.asnlookup.iis.se 3600 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 3600 IN A 212.247.7.213"
+            ],
+            "authority" : [
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "iis.se 86400 IN NS ns3.nic.se.",
+               "iis.se 86400 IN NS ns.nic.se.",
+               "iis.se 86400 IN NS ns2.nic.se.",
+               "asnlookup.iis.se 3600 IN NS ns2.asnlookup.iis.se.",
+               "asnlookup.iis.se 3600 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 900 IN SOA ns1.asnlookup.iis.se. admin.asnlookup.iis.se. (\n\t\t\t\t\t1329807219\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t86400\t; Expire\n\t\t\t\t\t900 )\t; Minimum TTL",
+               "asnlookup.iis.se 900 IN SOA ns1.asnlookup.iis.se. admin.asnlookup.iis.se. (\n\t\t\t\t\t1329807552\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t86400\t; Expire\n\t\t\t\t\t900 )\t; Minimum TTL"
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NXDOMAIN",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "254.47.195.origin.asnlookup.iis.se" : {
+      "TXT" : {
+         "IN" : {
+            "answer" : [
+               "254.47.195.origin.asnlookup.iis.se 14400 IN TXT \"47698 | 195.47.254.0/24 | SE | ripencc | 2003-05-26\""
+            ],
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.nic.se 86400 IN A 212.247.7.228",
+               "ns.nic.se 86400 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns2.nic.se 86400 IN A 194.17.45.54",
+               "ns3.nic.se 86400 IN A 212.247.8.152",
+               "ns3.nic.se 86400 IN AAAA 2a00:801:f0:211:0:0:0:152",
+               "ns1.asnlookup.iis.se 3600 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 3600 IN A 212.247.7.213",
+               "ns1.asnlookup.iis.se 86400 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 86400 IN A 212.247.7.213"
+            ],
+            "authority" : [
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "iis.se 86400 IN NS ns2.nic.se.",
+               "iis.se 86400 IN NS ns3.nic.se.",
+               "iis.se 86400 IN NS ns.nic.se.",
+               "asnlookup.iis.se 3600 IN NS ns2.asnlookup.iis.se.",
+               "asnlookup.iis.se 3600 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 86400 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 86400 IN NS ns2.asnlookup.iis.se."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "1.0.0.127.origin.asnlookup.iis.se" : {
+      "TXT" : {
+         "IN" : {
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.nic.se 86400 IN A 212.247.7.228",
+               "ns.nic.se 86400 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns2.nic.se 86400 IN A 194.17.45.54",
+               "ns3.nic.se 86400 IN A 212.247.8.152",
+               "ns3.nic.se 86400 IN AAAA 2a00:801:f0:211:0:0:0:152",
+               "ns1.asnlookup.iis.se 3600 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 3600 IN A 212.247.7.213"
+            ],
+            "authority" : [
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "iis.se 86400 IN NS ns3.nic.se.",
+               "iis.se 86400 IN NS ns.nic.se.",
+               "iis.se 86400 IN NS ns2.nic.se.",
+               "asnlookup.iis.se 3600 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 3600 IN NS ns2.asnlookup.iis.se.",
+               "asnlookup.iis.se 900 IN SOA ns1.asnlookup.iis.se. admin.asnlookup.iis.se. (\n\t\t\t\t\t1329807552\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t86400\t; Expire\n\t\t\t\t\t900 )\t; Minimum TTL",
+               "asnlookup.iis.se 900 IN SOA ns1.asnlookup.iis.se. admin.asnlookup.iis.se. (\n\t\t\t\t\t1329807219\t; Serial\n\t\t\t\t\t1800\t; Refresh\n\t\t\t\t\t900\t; Retry\n\t\t\t\t\t86400\t; Expire\n\t\t\t\t\t900 )\t; Minimum TTL"
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NXDOMAIN",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "2.5.1.0.0.0.0.0.0.0.0.0.0.0.0.0.1.1.2.0.0.f.0.0.1.0.8.0.0.0.a.2.origin6.asnlookup.iis.se" : {
+      "TXT" : {
+         "IN" : {
+            "answer" : [
+               "2.5.1.0.0.0.0.0.0.0.0.0.0.0.0.0.1.1.2.0.0.f.0.0.1.0.8.0.0.0.a.2.origin6.asnlookup.iis.se 14400 IN TXT \"1257 | 2a00:800::/25 | SE | ripencc | 2008-01-28\""
+            ],
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "ns.nic.se 86400 IN A 212.247.7.228",
+               "ns.nic.se 86400 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns2.nic.se 86400 IN A 194.17.45.54",
+               "ns3.nic.se 86400 IN A 212.247.8.152",
+               "ns3.nic.se 86400 IN AAAA 2a00:801:f0:211:0:0:0:152",
+               "ns1.asnlookup.iis.se 3600 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 3600 IN A 212.247.7.213",
+               "ns1.asnlookup.iis.se 86400 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 86400 IN A 212.247.7.213"
+            ],
+            "authority" : [
+               "se 172800 IN NS d.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "iis.se 86400 IN NS ns2.nic.se.",
+               "iis.se 86400 IN NS ns3.nic.se.",
+               "iis.se 86400 IN NS ns.nic.se.",
+               "asnlookup.iis.se 3600 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 3600 IN NS ns2.asnlookup.iis.se.",
+               "asnlookup.iis.se 86400 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 86400 IN NS ns2.asnlookup.iis.se."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   },
+   "220.71.192.origin.asnlookup.iis.se" : {
+      "TXT" : {
+         "IN" : {
+            "answer" : [
+               "220.71.192.origin.asnlookup.iis.se 14400 IN TXT \"1257 | 192.71.220.0/24 | SE | ripencc | 2000-03-17\""
+            ],
+            "additional" : [
+               "a.ns.se 172800 IN A 192.36.144.107",
+               "b.ns.se 172800 IN A 192.36.133.107",
+               "c.ns.se 172800 IN A 192.36.135.107",
+               "d.ns.se 172800 IN A 81.228.8.16",
+               "e.ns.se 172800 IN A 81.228.10.57",
+               "f.ns.se 172800 IN A 192.71.53.53",
+               "g.ns.se 172800 IN A 130.239.5.114",
+               "h.ns.se 172800 IN A 199.7.49.30",
+               "i.ns.se 172800 IN A 194.146.106.22",
+               "j.ns.se 172800 IN A 199.254.63.1",
+               "a.ns.se 172800 IN AAAA 2a01:3f0:0:301:0:0:0:53",
+               "g.ns.se 172800 IN AAAA 2001:6b0:e:3:0:0:0:1",
+               "i.ns.se 172800 IN AAAA 2001:67c:1010:5:0:0:0:53",
+               "j.ns.se 172800 IN AAAA 2001:500:2c:0:0:0:0:1",
+               "ns.nic.se 86400 IN A 212.247.7.228",
+               "ns.nic.se 86400 IN AAAA 2a00:801:f0:53:0:0:0:53",
+               "ns2.nic.se 86400 IN A 194.17.45.54",
+               "ns3.nic.se 86400 IN A 212.247.8.152",
+               "ns3.nic.se 86400 IN AAAA 2a00:801:f0:211:0:0:0:152",
+               "ns1.asnlookup.iis.se 3600 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 3600 IN A 212.247.7.213",
+               "ns1.asnlookup.iis.se 86400 IN A 212.247.18.2",
+               "ns2.asnlookup.iis.se 86400 IN A 212.247.7.213"
+            ],
+            "authority" : [
+               "se 172800 IN NS b.ns.se.",
+               "se 172800 IN NS a.ns.se.",
+               "se 172800 IN NS e.ns.se.",
+               "se 172800 IN NS i.ns.se.",
+               "se 172800 IN NS g.ns.se.",
+               "se 172800 IN NS f.ns.se.",
+               "se 172800 IN NS h.ns.se.",
+               "se 172800 IN NS j.ns.se.",
+               "se 172800 IN NS c.ns.se.",
+               "se 172800 IN NS d.ns.se.",
+               "iis.se 86400 IN NS ns.nic.se.",
+               "iis.se 86400 IN NS ns3.nic.se.",
+               "iis.se 86400 IN NS ns2.nic.se.",
+               "asnlookup.iis.se 3600 IN NS ns1.asnlookup.iis.se.",
+               "asnlookup.iis.se 3600 IN NS ns2.asnlookup.iis.se.",
+               "asnlookup.iis.se 86400 IN NS ns2.asnlookup.iis.se.",
+               "asnlookup.iis.se 86400 IN NS ns1.asnlookup.iis.se."
+            ],
+            "header" : {
+               "cd" : 0,
+               "rcode" : "NOERROR",
+               "tc" : 0,
+               "opcode" : "QUERY",
+               "ad" : 0,
+               "ra" : 0,
+               "qr" : 1,
+               "aa" : 1,
+               "rd" : 0
+            }
+         }
+      }
+   }
+}

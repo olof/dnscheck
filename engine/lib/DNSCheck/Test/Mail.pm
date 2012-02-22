@@ -175,7 +175,7 @@ Mail for the email address must be deliverable via SMTP.
 
 =head1 METHODS
 
-test(I<emailaddress>, [I<zone>]);
+=head2 test(I<emailaddress>, [I<zone>]);
 
 =head1 EXAMPLES
 

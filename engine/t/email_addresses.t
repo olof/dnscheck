@@ -7,12 +7,12 @@ use warnings;
 use strict;
 
 use Test::More tests => 2;
-
+use MockResolver 'email_addresses';
 use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck();
+my $check = new DNSCheck({configfile => './t/config.yaml'});
 
 ######################################################################
 

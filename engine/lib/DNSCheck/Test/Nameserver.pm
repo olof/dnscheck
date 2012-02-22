@@ -397,6 +397,10 @@ For this test, a lookup on the nameserver name will be made and all tests run
 on all addresses found (obeying global settings for use of IPv4 and IPv6, of
 course).
 
+=item ->test_by_ip($zone, $ip)
+
+Run as many tests as make sense on the nameserver at the given IP address.
+
 =item ->zone($zone)
 
 Get or set the default zone for this object.

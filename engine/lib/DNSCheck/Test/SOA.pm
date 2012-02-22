@@ -400,6 +400,10 @@ Runs the RNAME-related tests.
 
 Runs the tests checking the values in the given SOA record.
 
+=item ->mname_is_ns(@nslist)
+
+Internal utility method.
+
 =back
 
 =head1 SEE ALSO

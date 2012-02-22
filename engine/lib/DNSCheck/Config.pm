@@ -98,7 +98,7 @@ sub new {
     $lfdata = LoadFile($localefile)
       if (defined($localefile) and -r $localefile);
 
-    _hashrefcopy($self, $cfdata)  if defined($cfdata);
+    _hashrefcopy($self, $cfdata);
     _hashrefcopy($self, $scfdata) if defined($scfdata);
     _hashrefcopy($self, $pfdata)  if defined($pfdata);
     _hashrefcopy($self, $spfdata) if defined($pfdata);
@@ -292,6 +292,15 @@ A hashref with random stuff that'll be copied to the Config object.
 
 Simply returns whatever got read from the configuration or policy files under
 the given key.
+
+=item ->put($key, $value)
+
+Stores the given value for the given key.
+
+=item ->should_run()
+
+Returns true or false depending on if the calling method is disabled in the 
+configuration or not. The default is to let it run.
 
 =back
 

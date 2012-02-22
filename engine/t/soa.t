@@ -6,8 +6,9 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 20;
+use Test::More;
 
+use MockResolver 'soa';
 use DNSCheck;
 
 ######################################################################
@@ -17,29 +18,31 @@ my %tag;
 
 eval {
     $dc = new DNSCheck(
-        { configfile => './config.yaml', rootsource => '212.247.18.3' });
+        { configfile => './t/config.yaml' });
 };
 
 ok(!$@, $@);
 
 SKIP: {
     skip "Failed to get an object to test", 19 unless defined($dc);
-    ok(defined($dc->soa->test("power.fine")));
+    ok(defined($dc->soa->test("iis.se")));
     my @msg = @{ $dc->logger->{messages} };
     ok(scalar(@msg) >= 60, "Total of " . scalar(@msg) . " messages.");
-    %tag = map { $_->{tag}, $_ } @msg;
+    %tag = map { $_->{tag} => 1 } @msg;
     foreach my $tag (
         qw[
+        SOA:FOUND
         SOA:MNAME_VALID
         SOA:MNAME_PUBLIC
         SOA:MNAME_IS_AUTH
-        MAIL:DELIVERY_IPV4_NOT_OK
-        SOA:RNAME_UNDELIVERABLE
+        MAIL:DELIVERY_IPV4_OK
+        SOA:RNAME_DELIVERABLE
         SOA:TTL_OK
         SOA:REFRESH_OK
         SOA:RETRY_OK
         SOA:EXPIRE_OK
         SOA:MINIMUM_OK
+        SOA:MNAME_PUBLIC
         ]
       )
     {
@@ -47,11 +50,12 @@ SKIP: {
     }
 
     $dc = new DNSCheck(
-        { configfile => './config.yaml', rootsource => '212.247.18.3' });
-    ok(defined($dc->soa->test("fail")));
-    %tag = map { $_->{tag}, $_ } @{ $dc->logger->{messages} };
+        { configfile => './t/config.yaml' });
+    ok(defined($dc->soa->test("nic.se")));
+    %tag = map { $_->{tag} => 1} @{ $dc->logger->{messages} };
     foreach my $tag (
         qw[
+        SOA:FOUND
         SOA:RETRY_SMALL
         SOA:MNAME_ERROR
         SOA:EXPIRE_SMALL
@@ -64,3 +68,5 @@ SKIP: {
         ok($tag{$tag}, "$tag found in results.");
     }
 }
+
+done_testing;

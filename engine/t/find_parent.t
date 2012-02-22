@@ -8,11 +8,12 @@ use strict;
 
 use Test::More tests => 9;
 
+use MockResolver 'find_parent';
 use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck;
+my $check = new DNSCheck({configfile => './t/config.yaml'});
 my $dns   = $check->dns;
 
 ######################################################################

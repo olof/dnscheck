@@ -194,15 +194,6 @@ sub config {
     return $self->{config};
 }
 
-sub locale {
-    my $self = shift;
-
-    unless (defined($self->{locale})) {
-        $self->{locale} = DNSCheck::Locale->new($self->config->get("locale"));
-    }
-    return $self->{locale};
-}
-
 sub dbh {
     my $self  = shift;
     my $tries = 0;
@@ -438,6 +429,10 @@ Return the logger object. It is of type L<DNSCheck::Logger>.
 
 Return the DNS lookup object. It is of type L<DNSCeck::Lookup::DNS>.
 
+=item ->resolver()
+
+Returns the actual recursing resolver object.
+
 =item ->asn()
 
 Return the ASN lookup object. It is of type L<DNSCheck::Lookup::ASN>.
@@ -472,6 +467,12 @@ for the name will be made. If that attempt fails, the name will be ignored.
 =item ->undelegated_test()
 
 This method returns true of any "fake" glue information has been provided.
+
+=item ->log_nameserver_times($zone)
+
+Extracts response timing data for the given zone's nameservers from the 
+resolver object and adds the information as log messages. Has to be called 
+after a test is run, since before there is obviously no data to extract.
 
 =item ->zone()
 

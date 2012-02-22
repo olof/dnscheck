@@ -36,6 +36,8 @@ WriteMakefile(
         Mail::RFC822::Address  => 0,
         Text::Template         => 0,
         MIME::Lite             => 0,
+        JSON::XS => 0,
+        File::Slurp => 0,
     },
     'EXE_FILES' => \@exefiles,
     'NO_META'   => 1,
@@ -80,6 +82,12 @@ install_locale:
 	install -m 444 config.yaml ${DESTDIR}/${CONFIG_DIR}
 	install -d ${DESTDIR}/${LOCALE_DIR}
 	install -m 444 locale/*.yaml ${DESTDIR}/${LOCALE_DIR}
+
+coverage:
+	cover -delete
+	HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,Mock make test
+	cover
+
 #;
 
     foreach my $f (@exefiles) {

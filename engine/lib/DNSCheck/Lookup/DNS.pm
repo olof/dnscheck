@@ -92,10 +92,6 @@ sub new {
     return $self;
 }
 
-sub DESTROY {
-
-}
-
 ######################################################################
 
 sub flush {
@@ -669,28 +665,6 @@ sub _init_nameservers_helper {
     $self->logger->auto("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
 }
 
-sub prep_fake_glue {
-    my $self = shift;
-    my $zone = shift;
-
-    unless ($self->{nameservers}{$zone} and $self->{nameservers}{$zone}{'IN'}) {
-        $self->{nameservers}{$zone}{'IN'} = {};
-    }
-
-    my $cache = $self->{nameservers}{$zone}{'IN'};
-    push @{ $cache->{'ns'} }, $self->parent->fake_glue_names;
-    foreach my $ip ($self->parent->fake_glue_ips) {
-        my $i = Net::IP->new($ip);
-        if (!defined($i)) {
-            $self->parent->logger->auto("DNS:MALFORMED_FAKE_IP ($ip)");
-        } elsif ($i->version == 4) {
-            push @{ $cache->{'ipv4'} }, $ip;
-        } else {
-            push @{ $cache->{'ipv6'} }, $ip;
-        }
-    }
-}
-
 ######################################################################
 
 sub find_parent {
@@ -961,6 +935,8 @@ sub check_axfr {
 
 ######################################################################
 
+=pod
+
 sub query_nsid {
     my $self    = shift;
     my $address = shift;
@@ -1002,6 +978,8 @@ sub query_nsid {
 
     return;
 }
+
+=cut
 
 ######################################################################
 
@@ -1193,6 +1171,50 @@ Send a query to the default resolver(s). This will be a L<DNSCheck::Lookup::Reso
 =item my $string = $dns->query_nsid(I<address>, I<qname>, I<qclass>, I<qtype>);
 
 These need to be documented better.
+
+=item ->add_blacklist($addr,$name,$class,$type)
+
+Add the given quadruple to the internal blacklist.
+
+=item ->check_blacklist($addr,$name,$class,$type)
+
+Return a true value if the given quadruple is in the internal blacklist.
+
+=item ->clear_blacklist()
+
+Clear the internal blacklist.
+
+=item ->check_timeout()
+
+Check if the current error in the underlying resolver object is a timeout.
+
+=item ->find_mx($zone)
+
+Return the hostname(s) to which mail to the given zone name should be directed.
+
+=item ->logger()
+
+Return a reference to the current logger object.
+
+=item ->parent()
+
+Return a reference to the current parent object.
+
+=item ->preflight_check($name)
+
+Do a quick and dirty guess about if the given name is a zone or not.
+
+=item ->query_child_nocache()
+
+The same as L<query_child()>, but bypasses the internal cache.
+
+=item ->query_parent_nocache()
+
+The same as L<query_parent()>, but bypasses the internal cache.
+
+=item ->resolver()
+
+Returns a reference to the underlying L<DNSCheck::Lookup::Resolver> object.
 
 =back
 
