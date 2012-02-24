@@ -39,7 +39,7 @@ ok(defined($dc->zone->test("iis.se")));
 $dc->log_nameserver_times('iis.se');
 my @res          = @{ $dc->logger->export };
 my $result_count = scalar(@res);
-ok(abs($result_count - 1339) < 5,
+ok(abs($result_count - 1281) < 5,
     "Got $result_count lines from logger.");
 my $info_count = scalar(grep { $_->[2] eq 'INFO' } @res);
 ok(abs($info_count - 243) < 10, "$info_count INFO-level results.");
@@ -52,7 +52,7 @@ ok(abs($warning_count - 0) < 2,
     "$warning_count WARNING-level results.");
 ok($dc->logger->count_warning == $warning_count);
 my $debug_count = scalar(grep { $_->[2] eq 'DEBUG' } @res);
-ok(abs($debug_count - 1072) < 5, "$debug_count DEBUG-level results.");
+ok(abs($debug_count - 1015) < 5, "$debug_count DEBUG-level results.");
 ok($dc->logger->count_debug == $debug_count);
 
 my %tag = map {$_->[3] => 1} @{$dc->logger->export};
@@ -94,11 +94,11 @@ is_deeply(
 $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
 set_flags($dc, undef, 1, undef);
 $dc->zone->test('iis.se');
-is(scalar(@{$dc->logger->export}), 923, 'IPv6-only tests');
+is(scalar(@{$dc->logger->export}), 865, 'IPv6-only tests');
 
 $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
 set_flags($dc, 1, undef, undef);
 $dc->zone->test('iis.se');
-is(scalar(@{$dc->logger->export}), 1043, 'IPv4-only tests');
+is(scalar(@{$dc->logger->export}), 985, 'IPv4-only tests');
 
 done_testing();

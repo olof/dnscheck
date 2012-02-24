@@ -48,30 +48,6 @@ daemon:
 # for the various programs about which keys they use, and what they
 # mean. Some info is in DNSCheck::Overview.
 
-dbi:
-    host: 127.0.0.1
-    port: 3306
-    database: dnscheckng
-    user: root
-    password: HurSv4rtKanDetBli
-
-couchdb:
-   url: http://127.0.0.1:5984/
-   username: ~
-   password: ~
-
-#couchdb:
-#   url: http://willow.faerywicca.se:5984/
-#   username: calle
-#   password: foobar
-
-# reggie:
-#     host: 127.0.0.1
-#     port: 13317
-#     database: reggie
-#     user: reggieuser
-#     password: not_given_here
-
 12hour:
     smtphost: smtp.example.com
     from: unknown@example.com
