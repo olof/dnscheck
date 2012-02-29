@@ -30,7 +30,7 @@ ok( !$testable, 'Zone is not testable');
 
 %tags = map {$_->[3] => 1} @{$dc->logger->export};
 
-foreach my $m (qw[NS_AT_PARENT NOT_FOUND_AT_CHILD ]) {
+foreach my $m (qw[NS_AT_PARENT NOT_FOUND_AT_CHILD BROKEN_BUT_FUNCTIONAL]) {
     ok($tags{"DELEGATION:$m"}, "DELEGATION:$m");
 }
 $dc->logger->clear;

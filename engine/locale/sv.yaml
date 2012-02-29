@@ -363,6 +363,9 @@ messages:
  DELEGATION:NS_IS_CNAME:
      args: 2
      format: I zonen %s har namnservern %s ett CNAME, vilket är förbjudet.
+ DELEGATION:BROKEN_BUT_FUNCTIONAL:
+     args: 1
+     format: Otillräcklig namnserverinformation hittades för att testa zonen %s, men det gick ändå att slå upp en IP-adress.
  DELEGATION:END:
   args: 1
   format: Klar med test av delegering av %s.

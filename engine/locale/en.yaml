@@ -363,6 +363,9 @@ messages:
  DELEGATION:NS_IS_CNAME:
      args: 2
      format: In zone %s nameserver %s has a CNAME record, which is forbidden.
+ DELEGATION:BROKEN_BUT_FUNCTIONAL:
+     args: 1
+     format: Not enough nameserver information was found to test the zone %s, but an IP address lookup succeeded in spite of that.
  DELEGATION:END:
   args: 1
   format: Done testing delegation for %s.

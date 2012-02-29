@@ -75,6 +75,15 @@ sub test {
     my $packet;
 
     ($errors, $testable) = $self->ns_parent_child_matching($zone);
+
+    if (!$testable) {
+        my $p_a = $self->parent->dns->query_resolver($zone, 'IN', 'A');
+        my $p_www = $self->parent->dns->query_resolver('www.' . $zone, 'IN', 'A');
+        if (($p_a and $p_a->header->ancount > 0) or ($p_www and $p_www->header->ancount > 0)) {
+            $self->logger->auto('DELEGATION:BROKEN_BUT_FUNCTIONAL', $zone);
+        }
+    }
+
     goto DONE unless $testable;
 
     $errors += $self->enough_nameservers($zone);
