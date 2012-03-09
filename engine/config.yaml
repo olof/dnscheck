@@ -1,0 +1,91 @@
+# $Id$
+
+dns:
+  class: IN
+  debug: 0
+  ipv4: 1
+  ipv6: 1
+  retrans: 2
+  retry: 3
+  tcp_timeout: 5
+  udp_timeout: 5
+
+logging:
+  interactive: 0
+  locale: ~
+
+smtp:
+  enable: 1
+  hostname: ~
+  timeout: 20
+
+net:
+    ipv4: 1
+    ipv6: 0
+    smtp: 1
+    # The following two records should be lists of DNS suffixes pointing to
+    # cymru-style servers for looking up AS numbers for IP addresses. 
+    v4root: 
+        - origin.asn.cymru.com
+    v6root: 
+        - origin6.asn.cymru.com
+
+syslog:
+    ident: dnscheck
+    facility: local2
+
+daemon:
+    pidfile: /var/run/dnscheck_dispatcher.pid
+    errorlog: /var/log/dnscheck_errors.log
+    maxchild: 10
+    savelevel: INFO
+    # The following two setting are used and required when the dispatcher is started as root
+    user: nobody
+    group: nogroup
+
+# This information is expected to be overridden in site_config.yaml
+# Not all keys will be useful for all setups. See the documentation
+# for the various programs about which keys they use, and what they
+# mean. Some info is in DNSCheck::Overview.
+#
+#dbi:
+#    host: 127.0.0.1
+#    port: 13317
+#    database: dnscheckng
+#    user: dnscheckng
+#    password: not_given_here
+#
+#reggie:
+#    host: 127.0.0.1
+#    port: 13317
+#    database: reggie
+#    user: reggieuser
+#    password: not_given_here
+
+12hour:
+    smtphost: smtp.example.com
+    from: unknown@example.com
+    subject: Problem(s) in your domain(s)
+    timespan: 24:00:00
+    debug: 1
+    sourcestring: 12-hour-check
+    fallback: unknown@example.com
+    activekey: dnscheck.subscribe
+    addresskey: dnscheck.email
+    # If the following key exists, it will be used as a BCC recipient of all mails.
+    # archive: arkiv@example.org
+
+zonediff:
+    datafile: /var/tmp/zone_data.store
+    servers:
+      - ns1.example.com
+      - ns2.example.com
+      - ns3.example.com
+    domain: example.com.
+    tsig: test.key TSIG WW91IGFjdHVhbGx5IGJvdGhlcmVkIHRvIGRlY29kZSB0aGlzPw==
+    sourcestring: 12-hour-check
+    flagdomain:
+        - 000000000000.example.com
+        - zzzzzzzzzzzz.example.com
+    dig: /usr/bin/dig
+
