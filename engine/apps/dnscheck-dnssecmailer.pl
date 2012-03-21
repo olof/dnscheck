@@ -48,7 +48,7 @@ my $registrartemplate;
 my $active_rp_id;
 my $address_rp_id;
 
-my $debug = 1;
+my $debug = undef;
 
 sub setup {
     $dc = DNSCheck->new({ locale => "en" });
@@ -248,14 +248,23 @@ EOF
 
 setup();
 
-# Fulhack
-$dc->{'config'}{'12hour'}{'timespan'} = '96:00:00';
-
 my %data = aggregate_registrar_info(domains_tested_last_day());
 
 my $mailtext = build_mail_from(\%data);
 
-print $mailtext;
+my $mail = MIME::Lite->new(
+    Type => 'text/html',
+    Subject => 'DNSSEC Failures Report',
+    From => $dc->config->get("12hour")->{from},
+    To => $dc->config->get("12hour")->{dnssec_to},
+    Data => $mailtext
+);
+
+if ($debug or $dc->config->get("12hour")->{debug}) {
+    $mail->print;
+} else {
+    $mail->send('smtp', $dc->config->get("12hour")->{smtphost});
+}
 
 =head1 NAME
 
@@ -265,8 +274,8 @@ dnscheck-dnssecmailer - email the registry about domains with DNSSEC problems
 
 This script will look through the C<tests> table in the L<DNSCheck> database,
 pick out the ones that resulted in problems classified at level C<CRITICAL> or
-C<ERROR>, group the domains thus found by registrar and send each registrar an
-email listing the problematic zones and some basic information on the problems.
+C<ERROR> coming from the DNSSEC section, summarize them in a table and mail it 
+to a pre-determined address.
 
 The registrar data is taken from the REGGIE database for the C<.se> domain,
 and thus the script will probably be of limited use to other organisations as
@@ -296,9 +305,9 @@ The full name of the SMTP server to use for sending emails.
 
 The string to put in the C<From> line of the sent emails.
 
-=item subject
+=item dnssec_to
 
-The string to put in the C<subject> line of the sent emails.
+The address to send the report to.
 
 =item timespan
 
