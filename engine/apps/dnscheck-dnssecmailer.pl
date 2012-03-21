@@ -51,36 +51,28 @@ my $address_rp_id;
 my $debug = undef;
 
 sub setup {
-    $dc = DNSCheck->new({ locale => "en" });
-    $reggie = get_reggie_dbh($dc->config->get("reggie"));
+    $dc = DNSCheck->new( { locale => "en" } );
+    $reggie = get_reggie_dbh( $dc->config->get( "reggie" ) );
 
-    my $activekey  = $dc->config->get("12hour")->{activekey};
-    my $addresskey = $dc->config->get("12hour")->{addresskey};
+    my $activekey  = $dc->config->get( "12hour" )->{activekey};
+    my $addresskey = $dc->config->get( "12hour" )->{addresskey};
 
-    ($active_rp_id) = $reggie->selectrow_array(
-        q[select RP_ID from REGISTRAR_PROPERTIES where PROP_KEY = ?],
-        undef, $activekey);
-    ($address_rp_id) = $reggie->selectrow_array(
-        q[select RP_ID from REGISTRAR_PROPERTIES where PROP_KEY = ?],
-        undef, $addresskey);
+    ( $active_rp_id )  = $reggie->selectrow_array( q[select RP_ID from REGISTRAR_PROPERTIES where PROP_KEY = ?], undef, $activekey );
+    ( $address_rp_id ) = $reggie->selectrow_array( q[select RP_ID from REGISTRAR_PROPERTIES where PROP_KEY = ?], undef, $addresskey );
 
-    my $source_name = $dc->config->get("12hour")->{sourcestring};
-    ($source_id) =
-      $dc->dbh->selectrow_array(q[SELECT id FROM source WHERE name = ?],
-        undef, $source_name);
-    die "No source information in database.\n" unless defined($source_id);
+    my $source_name = $dc->config->get( "12hour" )->{sourcestring};
+    ( $source_id ) = $dc->dbh->selectrow_array( q[SELECT id FROM source WHERE name = ?], undef, $source_name );
+    die "No source information in database.\n" unless defined( $source_id );
 
-    $templatedir = $dc->config->get("12hour")->{templatedir};
-    $domaintemplate =
-      Text::Template->new(SOURCE => catfile($templatedir, 'domain.template'))
+    $templatedir = $dc->config->get( "12hour" )->{templatedir};
+    $domaintemplate = Text::Template->new( SOURCE => catfile( $templatedir, 'domain.template' ) )
       or die "Failed to construct domain template: $Text::Template::ERROR";
-    $registrartemplate =
-      Text::Template->new(SOURCE => catfile($templatedir, 'registrar.template'))
+    $registrartemplate = Text::Template->new( SOURCE => catfile( $templatedir, 'registrar.template' ) )
       or die "Failed to construct registrar tempalte: $Text::Template::ERROR";
 }
 
 sub tests_for_domain {
-    my $tref   = shift;
+    my $tref = shift;
 
     my $rref = $dc->dbh->selectall_arrayref(
         q[
@@ -95,19 +87,16 @@ sub tests_for_domain {
         ], undef, $tref->{id}
     );
 
-    return [map {$_->[3]} @$rref];
+    return [ map { $_->[3] } @$rref ];
 }
 
 sub get_reggie_dbh {
     my $conf = shift;
 
-    my $dsn = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
-        $conf->{"database"}, $conf->{"host"}, $conf->{"port"});
+    my $dsn = sprintf( "DBI:mysql:database=%s;hostname=%s;port=%s", $conf->{"database"}, $conf->{"host"}, $conf->{"port"} );
 
-    my $dbh =
-      DBI->connect($dsn, $conf->{"user"}, $conf->{"password"},
-        { RaiseError => 1, AutoCommit => 1 });
-    die "Failed to connect to Reggie: " . $DBI::errstr unless defined($dbh);
+    my $dbh = DBI->connect( $dsn, $conf->{"user"}, $conf->{"password"}, { RaiseError => 1, AutoCommit => 1 } );
+    die "Failed to connect to Reggie: " . $DBI::errstr unless defined( $dbh );
 
     return $dbh;
 
@@ -116,7 +105,7 @@ sub get_reggie_dbh {
 sub get_registrar_info {
     my $domain = shift;
 
-    my ($email3, $display_name, $registrar_id) = $reggie->selectrow_array(
+    my ( $email3, $display_name, $registrar_id ) = $reggie->selectrow_array(
         q[
         select EMAIL3, DISPLAY_NAME, REGISTRAR_ID
         from REGISTRARS, USERS, DOMAINS
@@ -131,34 +120,34 @@ sub get_registrar_info {
         where RP_ID = ? and REGISTRAR_ID = ?]
     );
 
-    $propquery->execute($active_rp_id, $registrar_id);
-    my ($mail_active) = $propquery->fetchrow_array;
+    $propquery->execute( $active_rp_id, $registrar_id );
+    my ( $mail_active ) = $propquery->fetchrow_array;
 
-    $propquery->execute($address_rp_id, $registrar_id);
-    my ($mail_address) = $propquery->fetchrow_array;
+    $propquery->execute( $address_rp_id, $registrar_id );
+    my ( $mail_address ) = $propquery->fetchrow_array;
 
-    $email3 = $mail_address if ($mail_address and $mail_active);
+    $email3 = $mail_address if ( $mail_address and $mail_active );
 
-    return ($email3, $display_name, $registrar_id);
+    return ( $email3, $display_name, $registrar_id );
 }
 
 sub aggregate_registrar_info {
     my @domains = @_;
     my %res;
 
-    my $no_registrar_address = $dc->config->get("12hour")->{fallback}
+    my $no_registrar_address = $dc->config->get( "12hour" )->{fallback}
       || 'failure@example.com';
 
-    foreach my $d (@domains) {
-        my ($mail, $name, $registrar_id) = get_registrar_info($d);
+    foreach my $d ( @domains ) {
+        my ( $mail, $name, $registrar_id ) = get_registrar_info( $d );
 
-        my $r = get_test_results($d);
-        if ($r->{count_critical} + $r->{count_error} == 0) {
+        my $r = get_test_results( $d );
+        if ( $r->{count_critical} + $r->{count_error} == 0 ) {
             next;    # A later test was clean
         }
-        $r->{messages} = tests_for_domain($r);
-        $mail = $no_registrar_address unless defined($mail);
-        $name = "Unknown registrar"   unless defined($name);
+        $r->{messages} = tests_for_domain( $r );
+        $mail = $no_registrar_address unless defined( $mail );
+        $name = "Unknown registrar"   unless defined( $name );
         $res{$name}{mail} = $mail;
         $res{$name}{domains}{$d} = $r;
     }
@@ -175,7 +164,7 @@ sub domains_tested_last_day {
             AND source_id = ?
             AND message LIKE 'DNSSEC:%'
             AND level = 'ERROR'
-        ], undef, $dc->config->get("12hour")->{timespan}, $source_id
+        ], undef, $dc->config->get( "12hour" )->{timespan}, $source_id
     );
     return map { $_->[0] } @$aref;
 }
@@ -194,16 +183,16 @@ sub get_test_results {
 
 sub build_mail_from {
     my $ref = shift;
-    my %ll = %{$dc->config->{'loglevels'}};
+    my %ll  = %{ $dc->config->{'loglevels'} };
     my $out = '';
 
     my @msgs =
-        sort {$a cmp $b}
-        grep {/^DNSSEC:/}
-        grep {$ll{$_} eq 'error' or $ll{$_} eq 'critical'}
-        keys %ll;
+      sort { $a cmp $b }
+      grep { /^DNSSEC:/ }
+      grep { $ll{$_} eq 'error' or $ll{$_} eq 'critical' }
+      keys %ll;
 
-    $out .=<<EOF;
+    $out .= <<EOF;
 <HTML>
     <HEAD>
         <TITLE>DNSSEC Problem Report</TITLE>
@@ -213,31 +202,32 @@ EOF
 
     $out .= '<TABLE border="1">';
     $out .= "<tr> <th>Registry</th> <th>Domain</th> ";
-    $out .= "<th>$_</th> " for map {my $f = $_; $f =~ s/:/: /g; $f =~ s/_/_ /g;$f} @msgs;
+    $out .= "<th>$_</th> " for map { my $f = $_; $f =~ s/:/: /g; $f =~ s/_/_ /g; $f } @msgs;
     $out .= "</tr>\n";
 
-    foreach my $registry (keys %$ref) {
-        foreach my $domain (keys %{$ref->{$registry}{domains}}) {
+    foreach my $registry ( keys %$ref ) {
+        foreach my $domain ( keys %{ $ref->{$registry}{domains} } ) {
             my $dhash = $ref->{$registry}{'domains'}{$domain};
-            my $url = sprintf('http://dnscheck.iis.se/?time=%d&id=%d&view=basic&lang=', $dhash->{time_t}, $dhash->{id});
+            my $url = sprintf( 'http://dnscheck.iis.se/?time=%d&id=%d&view=basic&lang=', $dhash->{time_t}, $dhash->{id} );
             $out .= '<tr>';
             $out .= "<td>$registry</td>";
             $out .= "<td><a href='$url'>$domain</a></td>";
-            my %tmp = map {$_ => 1} @{$dhash->{'messages'}};
-            foreach my $msg (@msgs) {
+            my %tmp = map { $_ => 1 } @{ $dhash->{'messages'} };
+            foreach my $msg ( @msgs ) {
                 $out .= '<td>';
-                if ($tmp{$msg}) {
-                    $out .= 'X'
-                } else {
-                    $out .= '&nbsp;'
+                if ( $tmp{$msg} ) {
+                    $out .= 'X';
+                }
+                else {
+                    $out .= '&nbsp;';
                 }
                 $out .= '</td> ';
             }
             $out .= "</tr>\n";
         }
     }
-    
-    $out .=<<EOF;
+
+    $out .= <<EOF;
         </TABLE>
     </BODY>
 </HTML>
@@ -248,22 +238,23 @@ EOF
 
 setup();
 
-my %data = aggregate_registrar_info(domains_tested_last_day());
+my %data = aggregate_registrar_info( domains_tested_last_day() );
 
-my $mailtext = build_mail_from(\%data);
+my $mailtext = build_mail_from( \%data );
 
 my $mail = MIME::Lite->new(
-    Type => 'text/html',
+    Type    => 'text/html',
     Subject => 'DNSSEC Failures Report',
-    From => $dc->config->get("12hour")->{from},
-    To => $dc->config->get("12hour")->{dnssec_to},
-    Data => $mailtext
+    From    => $dc->config->get( "12hour" )->{from},
+    To      => $dc->config->get( "12hour" )->{dnssec_to},
+    Data    => $mailtext
 );
 
-if ($debug or $dc->config->get("12hour")->{debug}) {
+if ( $debug or $dc->config->get( "12hour" )->{debug} ) {
     $mail->print;
-} else {
-    $mail->send('smtp', $dc->config->get("12hour")->{smtphost});
+}
+else {
+    $mail->send( 'smtp', $dc->config->get( "12hour" )->{smtphost} );
 }
 
 =head1 NAME
