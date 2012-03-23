@@ -1,3 +1,13 @@
+Release Notes for DNSCheck Lib v1.2.6
+=====================================
+Notable changes:
+
+* Fixes one crash bug in v1.2.5
+
+* Completely re-works unit tests, making them more reliable and more 
+  comprehensive.
+
+
 Release Notes for DNSCheck Lib v1.2.4
 =====================================
 Noteable changes:
