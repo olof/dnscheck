@@ -1,0 +1,10 @@
+<VirtualHost *:80>
+    ServerName dnscheck.iis.se
+    DocumentRoot "/usr/share/dnscheck-webui"
+
+    <Location />
+        Order allow,deny
+	Allow from all
+    </Location>
+</VirtualHost>
+
