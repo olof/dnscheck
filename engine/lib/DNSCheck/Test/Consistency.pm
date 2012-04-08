@@ -37,7 +37,7 @@ use strict;
 use base 'DNSCheck::Test::Common';
 
 use Net::IP 1.25;
-use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
+use Digest::SHA qw(sha1 sha1_hex sha1_base64);
 
 ######################################################################
 

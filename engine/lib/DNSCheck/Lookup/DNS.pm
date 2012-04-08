@@ -42,7 +42,7 @@ use Net::DNS 0.59;
 use Net::IP 1.25;
 
 use Crypt::OpenSSL::Random qw(random_bytes);
-use Digest::SHA1 qw(sha1);
+use Digest::SHA qw(sha1);
 use Digest::BubbleBabble qw(bubblebabble);
 
 ######################################################################
