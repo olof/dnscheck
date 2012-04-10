@@ -16,7 +16,7 @@ WriteMakefile(
         Date::Format           => 0,
         Date::Parse            => 0,
         Digest::BubbleBabble   => 0,
-        Digest::SHA1           => 0,
+        Digest::SHA            => 0,
         File::Basename         => 0,
         IO::Socket             => 0,
         IO::Socket::INET6      => 2.51,
