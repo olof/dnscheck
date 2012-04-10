@@ -8,7 +8,7 @@ use MockResolver 'nameserver', {multiple => 1};
 # use MockBootstrap 'nameserver', {multiple => 1};
 
 use_ok('DNSCheck');
-my $dc = new_ok('DNSCheck' => [{configfile => './t/config.yaml'}]);
+my $dc = new_ok('DNSCheck' => [{configdir => './t/config'}]);
 my $ns = $dc->nameserver;
 isa_ok($ns, 'DNSCheck::Test::Nameserver');
 

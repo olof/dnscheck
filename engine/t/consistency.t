@@ -7,7 +7,7 @@ use MockResolver ('consistency', {multiple => 1});
 
 use_ok('DNSCheck');
 
-my $dc = DNSCheck->new({configfile => './t/config.yaml'});
+my $dc = DNSCheck->new({configdir => './t/config'});
 $dc->consistency->test('iis.se');
 
 my %tags = map {$_->[3] => 1} @{$dc->logger->export};

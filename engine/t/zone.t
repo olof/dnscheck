@@ -27,7 +27,7 @@ sub set_flags {
     $obj->config->put('net', $net);
 }
 
-my $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
+my $dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 
 if (!defined($dc)) {
     done_testing();
@@ -59,13 +59,13 @@ my %tag = map {$_->[3] => 1} @{$dc->logger->export};
 ok($tag{'NSTIME:AVERAGE'}, 'Timing information is present');
 
 # Test the test-disabling function
-$dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 $dc->config->put('disable', {zone => {test => 1}});
 $dc->zone->test('nic.se');
 is_deeply($dc->logger->export, [], 'Test disabled');
 
 # Test disabling IP versions
-$dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 set_flags($dc, undef, undef, undef);
 is($dc->config->get("net")->{ipv4}, undef, 'IPv4 flag set correctly');
 is($dc->config->get("net")->{ipv6}, undef, 'IPv6 flag set correctly');
@@ -93,12 +93,12 @@ is_deeply(
     ],
     'IPv4, IPv6 and SMTP disabled');
 
-$dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 set_flags($dc, undef, 1, undef);
 $dc->zone->test('iis.se');
 is(scalar(@{$dc->logger->export}), 859, 'IPv6-only tests');
 
-$dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 set_flags($dc, 1, undef, undef);
 $dc->zone->test('iis.se');
 is(scalar(@{$dc->logger->export}), 979, 'IPv4-only tests');
