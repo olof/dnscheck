@@ -9,7 +9,7 @@ $MockResolver::verbose = 0;
 
 use_ok('DNSCheck');
 
-my $dc = new_ok('DNSCheck');
+my $dc = new_ok('DNSCheck' => [{configdir => './t/config'}]);
 my $res = $dc->resolver;
 isa_ok($res, 'DNSCheck::Lookup::Resolver');
 isa_ok($res->resolver, 'Net::DNS::Resolver');
@@ -30,7 +30,7 @@ ok(scalar(grep {$_->type eq 'A' and $_->address eq '130.236.254.11'} $p->answer)
 ### Undelegated tests
 ###
 
-$dc = DNSCheck->new({configfile => './t/config.yaml'});
+$dc = DNSCheck->new({configdir => './t/config'});
 $res = $dc->resolver;
 $res->add_fake_glue('lysator.liu.se', 'ns-slave.lysator.liu.se', '212.247.7.228');
 $res->add_fake_glue('lysator.liu.se', 'ns-master.lysator.liu.se', '194.17.45.54');

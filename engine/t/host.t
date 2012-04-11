@@ -14,7 +14,7 @@ use DNSCheck;
 
 my $ht;
 
-eval { $ht = new DNSCheck({ configfile => './t/config.yaml' })->host; };
+eval { $ht = new DNSCheck({ configdir => './t/config' })->host; };
 
 ok(!$@, "Have an object $@");
 

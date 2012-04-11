@@ -7,7 +7,7 @@ use MockResolver ('delegation', {multiple => 1});
 
 use_ok('DNSCheck');
 
-my $dc = DNSCheck->new({configfile => './t/config.yaml'});
+my $dc = DNSCheck->new({configdir => './t/config'});
 
 # Good zone
 my ($errors, $testable) = $dc->delegation->test('iis.se');

@@ -1,10 +1,12 @@
 apps/dnscheck-12hourmailer.pl
 apps/dnscheck-dispatcher.pl
+apps/dnscheck-dnssecmailer.pl
 apps/dnscheck-hostsyntax.pl
 apps/dnscheck-preflight.pl
 apps/dnscheck-zonediff.pl
 apps/dnscheck.pl
 build/preprocessor.pl
+config.yaml
 contrib/dnscheck-daemon.pl
 contrib/dnscheck-dispatcher.sh
 contrib/README
@@ -73,7 +75,7 @@ locale/en.yaml
 locale/nl.yaml
 locale/sv.yaml
 Makefile.PL
-MANIFEST
+MANIFEST			This list of files
 MockBootstrap.pm
 MockResolver.pm
 policy.yaml
@@ -85,7 +87,9 @@ t/asn.json
 t/asn.t
 t/bugs.t
 t/config.t
-t/config.yaml
+t/config/config.yaml
+t/connectivity.json
+t/connectivity.t
 t/consistency.json
 t/consistency.t
 t/delegation.json
@@ -101,6 +105,7 @@ t/find_parent.t
 t/host.t
 t/locale.t
 t/logger.t
+t/main_object.json
 t/main_object.t
 t/nameserver.json
 t/nameserver.t
