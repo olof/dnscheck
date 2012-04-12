@@ -4,12 +4,14 @@ Priority: extra
 Maintainer: Calle Dybedahl <calle@init.se>
 Build-Depends: debhelper (>= 7.0.50~)
 Standards-Version: 3.8.4
-Homepage: <insert the upstream URL, if relevant>
-#Vcs-Git: git://git.debian.org/collab-maint/dnscheck-webui.git
-#Vcs-Browser: http://git.debian.org/?p=collab-maint/dnscheck-webui.git;a=summary
+Homepage: https://github.com/dotse/dnscheck
+Vcs-Git: git://github.com/dotse/dnscheck.git
 
 Package: dnscheck-webui
 Architecture: all
-Depends: ${misc:Depends},libapache2-mod-php5
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: ${misc:Depends},libapache2-mod-php5,php5-mysql
+Description: Web interface to the DNSCheck system
+ This is an Apache/PHP application through which users
+ can enter domain names to be run through DNSCheck and
+ the results presented back to them in an accessible 
+ format.
