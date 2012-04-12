@@ -2,19 +2,13 @@ This work was packaged for Debian by:
 
     Calle Dybedahl <calle@init.se> on Wed, 04 Apr 2012 11:05:00 +0200
 
-It was downloaded from:
-
-    <url://example.com>
-
 Upstream Author(s):
 
-    <put author's name and email here>
-    <likewise for another author>
+    Stiftelsen för Internetinfrastruktur
 
 Copyright:
 
-    <Copyright (C) YYYY Firstname Lastname>
-    <likewise for another author>
+    Copyright (C) 2008-2012 Stiftelsen för Internetinfrastruktur
 
 License:
 
@@ -38,16 +32,6 @@ found in "/usr/share/common-licenses/BSD".
 
 The Debian packaging is:
 
-    Copyright (C) 2012 Calle Dybedahl <calle@init.se>
+    Copyright (C) 2012 Stiftelsen för Internetinfrastruktur
 
-# Please chose a license for your packaging work. If the program you package
-# uses a mainstream license, using the same license is the safest choice.
-# Please avoid to pick license terms that are more restrictive than the
-# packaged work, as it may make Debian's contributions unacceptable upstream.
-# If you just want it to be GPL version 3, leave the following lines in.
-
-and is licensed under the GPL version 3,
-see "/usr/share/common-licenses/GPL-3".
-
-# Please also look if there are files or directories which have a
-# different copyright/license attached and list them here.
+and is licensed under the BSD License (see above).
