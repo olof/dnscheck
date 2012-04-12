@@ -11,7 +11,7 @@ use MockResolver 'connectivity';
 
 use_ok('DNSCheck');
 
-my $dc = new_ok('DNSCheck' => [{configfile => './t/config.yaml'}]);
+my $dc = new_ok('DNSCheck' => [{configdir => './t/config'}]);
 my $log = $dc->logger;
 my $c = $dc->connectivity;
 

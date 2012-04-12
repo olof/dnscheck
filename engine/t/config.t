@@ -14,10 +14,10 @@ use Sys::Hostname;
 ######################################################################
 
 my $conf = new_ok( 'DNSCheck::Config' => [
-    configfile => './t/config.yaml',
+    configfile => './t/config/config.yaml',
     policyfile => './policy.yaml',
     localefile => './locale/en.yaml',
-    siteconfigfile => './t/config.yaml',
+    siteconfigfile => './t/config/config.yaml',
     sitepolicyfile => './policy.yaml',
 ] );
 
@@ -31,7 +31,7 @@ SKIP: {
     is( scalar(keys(%{$conf->{loglevels}})), 201, 'Policy data is there');
 }
 
-new_ok( 'DNSCheck::Config' => [ configdir => './t', sitedir => './t' ] );
+new_ok( 'DNSCheck::Config' => [ configdir => './t/config', sitedir => './t/config' ] );
 new_ok('DNSCheck::Config');
 
 new_ok('DNSCheck::Config' => [locale => 'gurksallad', policyfile  => 'citronfromage']);

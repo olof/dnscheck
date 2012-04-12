@@ -18,7 +18,7 @@ my %tag;
 
 eval {
     $dc = new DNSCheck(
-        { configfile => './t/config.yaml' });
+        { configdir => './t/config' });
 };
 
 ok(!$@, $@);
@@ -50,7 +50,7 @@ SKIP: {
     }
 
     $dc = new DNSCheck(
-        { configfile => './t/config.yaml' });
+        { configdir => './t/config' });
     ok(defined($dc->soa->test("nic.se")));
     %tag = map { $_->{tag} => 1} @{ $dc->logger->{messages} };
     foreach my $tag (
