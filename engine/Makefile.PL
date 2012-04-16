@@ -1,9 +1,14 @@
 # $Id: Makefile.PL,v 1.4 2005/03/04 14:17:46 jakob Exp $
 
 use ExtUtils::MakeMaker;
+use File::ShareDir::Install;
 
 my @exefiles = ('apps/dnscheck', 'apps/dnscheck-preflight', 'apps/dnscheck-dispatcher', 
-                'apps/dnscheck-zonediff', 'apps/dnscheck-12hourmailer', 'apps/dnscheck-hostsyntax');
+                'apps/dnscheck-zonediff', 'apps/dnscheck-12hourmailer', 'apps/dnscheck-hostsyntax',
+                'apps/dnscheck-dnssecmailer',);
+
+install_share dist => 'locale';
+install_share dist => 'config';
 
 WriteMakefile(
     'NAME'         => 'DNSCheck',
@@ -38,65 +43,26 @@ WriteMakefile(
         MIME::Lite             => 0,
         JSON::XS => 0,
         File::Slurp => 0,
+        File::ShareDir::Install => 0,
+        File::ShareDir => 0,
     },
     'EXE_FILES' => \@exefiles,
     'NO_META'   => 1,
     'SIGN'      => 0,
-    clean       => { FILES => "*~ apps/dnscheck apps/dnscheck-preflight apps/dnscheck-dispatcher apps/dnscheck-zonediff apps/dnscheck-12hourmailer apps/dnscheck-hostsyntax" },
 );
-
-sub MY::install {
-
-    package MY;
-    my $self      = shift;
-    my $inherited = $self->SUPER::install(@_);
-
-    $inherited =~ s/^(install :: .*)$/$1 install_locale/gm;
-    $inherited;
-}
 
 sub MY::postamble {
 
     package MY;
     my $self = shift;
 
-    my $instprefix = $self->{SITEPREFIX};
-
     my $tmp = qq#
-
-CONFIG_DIR = $instprefix/share/dnscheck
-POLICY_DIR = $instprefix/share/dnscheck
-LOCALE_DIR = $instprefix/share/dnscheck/locale
-
-# . q#
-
-FIXVARS = \
-	-Mvars \
-	-DCONFIG_DIR="$(CONFIG_DIR)" \
-	-DPOLICY_DIR="$(POLICY_DIR)" \
-	-DLOCALE_DIR="$(LOCALE_DIR)"
-
-install_locale:
-	install -d ${DESTDIR}/${POLICY_DIR}
-	install -m 444 policy.yaml ${DESTDIR}/${POLICY_DIR}
-	install -m 444 config.yaml ${DESTDIR}/${CONFIG_DIR}
-	install -d ${DESTDIR}/${LOCALE_DIR}
-	install -m 444 locale/*.yaml ${DESTDIR}/${LOCALE_DIR}
-
 coverage:
 	cover -delete
 	HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,Mock make test
 	cover
 
 #;
-
-    foreach my $f (@exefiles) {
-        $tmp .= qq[
-$f: $f.pl
-	\$(PERL) build/preprocessor.pl \$(FIXVARS) -Msharpbang <\$? >\$@
-
-        ]
-    }
     
     return $tmp;
 }
