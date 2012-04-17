@@ -45,6 +45,7 @@ sub MY::postamble {
 
     package MY;
     my $self = shift;
+    my @ret = File::ShareDir::Install::postamble( $self );
 
     my $tmp = qq#
 coverage:
@@ -53,6 +54,7 @@ coverage:
 	cover
 
 #;
+    push @ret, $tmp;
 
-    return $tmp;
+    return join "\n", @ret;
 }
