@@ -1,929 +1,913 @@
-# $Id$
-
-locale_name: Svenska
+---
 locale_id: sv
-
+locale_name: Svenska
 messages:
-
- ENGINE:CRASH:
-  args: 0
-  format: DNSCheck-motorn kraschade.
-
- ASN:LOOKUP:
-  args: 1
-  format: SlÃ¥r upp AS-nummer fÃ¶r %s.
- ASN:INVALID_ADDRESS:
-  args: 1
-  format: %s Ã¤r en ogiltig IP-adress.
- ASN:ANNOUNCE_BY:
-  args: 2
-  format: %s annonserad av AS %s.
- ASN:NOT_ANNOUNCE:
-  args: 1
-  format: %s Ã¤r inte annonserad.
- ASN:LOOKUP_ERROR:
-  args: 1
-  format: Lyckades inte slÃ¥ upp AS-numret fÃ¶r %s.
-
- DNS:QUERY_EXPLICIT:
-  args: 4
-  format: Anropa %s fÃ¶r %s/%s/%s.
-  descr: ~
- DNS:QUERY_RESOLVER:
-  args: 3
-  format: DNS-anrop fÃ¶r %s/%s/%s.
- DNS:RESOLVER_QUERY_TIMEOUT:
-  args: 3 
-  format: Timeout fÃ¶r DNS-uppslagning av %s/%s/%s.
-  descr: ~
- DNS:QUERY_PARENT:
-  args: 4
-  format: Anropar fÃ¶rÃ¤lder till %s fÃ¶r %s/%s/%s.
- DNS:QUERY_PARENT_NOCACHE:
-  args: 4
-  format: Anropar fÃ¶rÃ¤lder (utan cache) till %s fÃ¶r %s/%s/%s.
- DNS:FAKE_PACKET:
-     args: 3
-     format: Konstruerar paket i zon %s fÃ¶r %s/%s.
- DNS:FIND_PARENT:
-  args: 2
-  format: SÃ¶ker fÃ¶rÃ¤lder till %s/%s.
- DNS:NO_PARENT:
-  args: 2
-  format: Lyckades inte hitta fÃ¶rÃ¤ldern till %s/%s.
-  descr: DNSCheck lyckades inte hitta fÃ¶rÃ¤ldern.
- DNS:PARENT_OF:
-  args: 3
-  format: Hittade %s som fÃ¶rÃ¤lder till %s/%s.
- DNS:EXPLICIT_RESPONSE:
-  args: 1
-  format: DNS-server svar: %s
- DNS:PARENT_RESPONSE:
-  args: 1
-  format: DNS-svar frÃ¥n fÃ¶rÃ¤ldern: %s
- DNS:CHILD_RESPONSE:
-  args: 1
-  format: DNS-svar frÃ¥n barnet: %s
- DNS:RESOLVER_RESPONSE:
-  args: 1
-  format: DNS-svar frÃ¥n resolver: %s
- DNS:NO_PARENT_NS:
-  args: 3
-  format: Lyckades inte hitta DNS-server fÃ¶r %s (fÃ¶rÃ¤lder till %s/%s).
-  descr: ~
- DNS:QUERY_TIMEOUT:
-  args: 4
-  format: DNS-servern %s anvÃ¤nde fÃ¶r lÃ¥ng tid fÃ¶r uppslagning av %s/%s/%s (time-out).
-  descr: ~
- DNS:QUERY_CHILD:
-  args: 4
-  format: Anropa godtycklig DNS-server fÃ¶r %s om %s/%s/%s.
- DNS:QUERY_CHILD_NOCACHE:
-  args: 4
-  format: Anropa godtycklig DNS-server (utan cache) fÃ¶r %s om %s/%s/%s.
- DNS:NO_CHILD_NS:
-  args: 2
-  format: Lyckades inte hitta DNS-servrar fÃ¶r %s/%s.
-  descr: ~
- DNS:ADDRESS_BLACKLIST_ADD:
-  args: 4
-  format: LÃ¤gger till DNS-servern %s i svartlista.
- DNS:ADDRESS_BLACKLISTED:
-  args: 4
-  format: DNS-servern %s svartlistad.
- DNS:LOOKUP_ERROR:
-  args: 1
-  format: Fel i DNS-uppslagning (%s).
-  descr: ~
- DNS:NO_EDNS:
-  args: 1
-  format: %s stÃ¶der inte EDNS.
-  descr: EDNS Ã¤r ett tillÃ¤gg i DNS-protokollet. Den huvudsakliga fÃ¶rÃ¤ndringen Ã¤r att storleksgrÃ¤nsen pÃ¥ 512 byte fÃ¶r anropspaketen har tagits bort, vilket gÃ¶r att mer information kan sÃ¤ndas. EDNS Ã¤r nÃ¶dvÃ¤ndigt fÃ¶r nyare protokoll och tekniker som behÃ¶ver stÃ¶rre paket-storlek sÃ¥ som DNSSEC och IPv6.
- DNS:NO_ANSWER:
-  args: 4
-  format: Inget svar frÃ¥n %s fÃ¶r uppslagning av %s/%s/%s.
-  descr: ~
- DNS:NOT_AUTH:
-  args: 4
-  format: DNS-servern %s Ã¤r inte auktoritativ fÃ¶r %s/%s/%s.
- DNS:SOA_SERVFAIL:
-  args: 1
-  format: DNS SERVFAIL under anrop av %s fÃ¶r SOA.
- DNS:ANSWER_DUMP:
-  args: 1
-  format: Resultat av DNS-uppslagning: %s
- DNS:SETUP_RESOLVER:
-  args: 0
-  format: DNS-resolver konfigurerad.
- DNS:SET_BUFSIZE:
-  args: 1
-  format: DNS-resolverns EDNS buffert-storlek satt till %s.
- DNS:TRANSPORT_TCP:
-  args: 0
-  format: DNS-resolverns kommunikationsmetod satt till TCP.
- DNS:TRANSPORT_UDP:
-  args: 0
-  format: DNS-resolverns kommunikationsmetod satt till UDP.
- DNS:RECURSION_DESIRED:
-  args: 0
-  format: Rekursion Ã¶nskvÃ¤rd pÃ¥ DNS-resolver.
- DNS:RECURSION_DISABLED:
-  args: 0
-  format: Rekursion inte aktiverad pÃ¥ DNS-resolver.
- DNS:DNSSEC_DESIRED:
-  args: 0
-  format: DNSSEC Ã¶nskvÃ¤rt pÃ¥ DNS-resolver.
- DNS:DNSSEC_DISABLED:
-  args: 0
-  format: DNSSEC ej aktiverat pÃ¥ DNS-resolver.
- DNS:GET_NS_AT_PARENT:
-  args: 2
-  format: DNS-uppslagning av NS fÃ¶r %s/%s hos fÃ¶rÃ¤lder.
- DNS:GET_NS_AT_CHILD:
-  args: 2
-  format: DNS-uppslagning av NS fÃ¶r %s/%s hos barnet.
- DNS:INITIALIZING_NAMESERVERS:
-  args: 2
-  format: Initialiserar DNS-servrar fÃ¶r %s/%s.
- DNS:NAMESERVERS_INITIALIZED:
-  args: 2
-  format: DNS-servrar fÃ¶r %s/%s initialiserade.
- DNS:NAMESERVER_FOUND:
-  args: 4
-  format: Hittade DNS-server fÃ¶r %s/%s: %s (%s)
- DNS:FIND_PARENT_BEGIN:
-  args: 2
-  format: FÃ¶rsÃ¶ker hitta fÃ¶rÃ¤ldern till %s/%s
- DNS:NXDOMAIN:
-  args: 2
-  format: DomÃ¤nen %s/%s finns inte.
-  descr: ~
- DNS:FIND_PARENT_DOMAIN:
-  args: 1
-  format: AnvÃ¤nder %s som utgÃ¥ngpunkt fÃ¶r att hitta fÃ¶rÃ¤ldrazonen.
- DNS:FIND_PARENT_TRY:
-  args: 1
-  format: Testar %s som fÃ¶rÃ¤ldrazon.
- DNS:FIND_PARENT_UPPER:
-  args: 1
-  format: FÃ¶rÃ¤ldrazonen kan vara %s.
- DNS:FIND_PARENT_RESULT:
-  args: 3
-  format: Slog upp %s som fÃ¶rÃ¤lder till %s/%s.
- DNS:FIND_MX_BEGIN:
-  args: 1
-  format: SlÃ¥ upp MX-pekare fÃ¶r %s.
- DNS:FIND_MX_RESULT:
-  args: 2
-  format: Hittade MX-pekare fÃ¶r %s: %s
- DNS:FIND_ADDRESSES:
-  args: 2
-  format: Hittade adresser fÃ¶r %s/%s
- DNS:FIND_ADDRESSES_RESULT:
-  args: 3
-  format: Adresser fÃ¶r %s/%s: %s
- DNS:UNQUERIBLE_ADDRESS:
-  args: 1
-  format: Lyckades inte skicka anrop till %s.
-
- ADDRESS:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa adressen %s.
- ADDRESS:INVALID:
-  args: 1
-  format: Adressen %s Ã¤r ogiltig eller inkorrekt.
-  descr: ~
- ADDRESS:PRIVATE_IPV4:
-  args: 1
-  format: %s Ã¤r en privat IPv4-adress.
-  descr: En privat IP-adress ska normalt inte vara synlig i den publika DNS:en eftersom den inte gÃ¥r att nÃ¥ frÃ¥n Internet.
- ADDRESS:RESERVED_IPV4:
-  args: 1
-  format: %s Ã¤r en reserverad IPv4-adress.
-  descr: Reserverade IPv4-adresser bÃ¶r inte anvÃ¤ndas pÃ¥ det publika Internet.
- ADDRESS:RESERVED_IPV6:
-  args: 1
-  format: %s Ã¤r en reserverad IPv6-adress.
-  descr: Reserverade IPv6-adresser bÃ¶r inte anvÃ¤ndas pÃ¥ det publika Internet.
- ADDRESS:PTR_NOT_FOUND:
-  args: 2
-  format: Kunde inte hitta baklÃ¤ngesadress fÃ¶r %s (%s).
-  descr: Kunde inte hitta PTR-post(er) fÃ¶r adressen i .arpa-zonen. (ip6.arpa. fÃ¶r IPv6 och in-addr.arpa. fÃ¶r IPv4).
- ADDRESS:PTR_HOSTNAME_NOT_FOUND:
-  args: 2
-  format: BaklÃ¤ngespekare fÃ¶r %s pekar till ett okÃ¤nt vÃ¤rdnamn (%s).
-  descr: PTR-posten fÃ¶r adressen pekar till ett okÃ¤nt vÃ¤rdnamn.
- ADDRESS:END:
-  args: 1
-  format: Klar med test av adressen %s.
-
- CONNECTIVITY:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa nÃ¥barhet fÃ¶r %s.
- CONNECTIVITY:ANNOUNCED_BY_ASN:
-  args: 2
-  format: DNS-servern %s annonserad av: %s
-  descr: IP-adressen Ã¤r annonserad av ett autonomt system (AS).
- CONNECTIVITY:MULTIPLE_ASN:
-  args: 1
-  format: DNS-servern %s Ã¤r annonserad av flera AS.
-  descr: DNS-servern Ã¤r annonserad av fler Ã¤n ett autonomt system (AS).
- CONNECTIVITY:NOT_ANNOUNCED:
-  args: 1
-  format: DNS-servern %s Ã¤r inte annonserad av nÃ¥got AS.
-  descr: IP-adressen Ã¤r inte annonserad av nÃ¥got autonomt system och Ã¤r troligtvis inte nÃ¥bar pÃ¥ Internet.
- CONNECTIVITY:ASN_LIST:
-  args: 1
-  format: Zon annonserad av IPv4 ASN: %s
- CONNECTIVITY:TOO_FEW_ASN:
-  args: 1
-  format: Zon annonserad av mindre Ã¤n 2 IPv4 ASN (%s).
-  descr: Samtliga DNS-servrar fÃ¶r zonen finns inom samma, (eller inget), autonoma system.
- CONNECTIVITY:ASN_COUNT_OK:
-  args: 1
-  format: Zon annonserad av fler Ã¤n ett ASN (%s).
-  descr: Zonens DNS-servrar Ã¤r spridda Ã¶ver mer Ã¤n ett autonomt system.
- CONNECTIVITY:V6_ANNOUNCED_BY_ASN:
-   args: 2
-   format: DNS-servern %s annonserad Ã¶ver IPv6 av: %s
-   descr: IP-adressen Ã¤r annonserad av ett autonomt system (AS).
- CONNECTIVITY:V6_MULTIPLE_ASN:
-   args: 1
-   format: DNS-servern %s Ã¤r annonserad av flera IPv6 AS.
-   descr: DNS-servern Ã¤r annonserad av fler Ã¤n ett IPv6 autonomt system (AS).
- CONNECTIVITY:V6_NOT_ANNOUNCED:
-   args: 1
-   format: DNS-servern %s Ã¤r inte annonserad av nÃ¥got IPv6 AS.
-   descr: IP-adressen Ã¤r inte annonserad av nÃ¥got autonomt system och Ã¤r troligtvis inte nÃ¥bar pÃ¥ Internet.
- CONNECTIVITY:V6_ASN_LIST:
-   args: 1
-   format: Zon annonserad av IPv6 ASN: %s
- CONNECTIVITY:V6_TOO_FEW_ASN:
-   args: 1
-   format: Zon annonserad av mindre Ã¤n 2 IPv6 ASN (%s).
-   descr: Samtliga DNS-servrar fÃ¶r zonen finns inom samma, (eller inget), autonoma system.
- CONNECTIVITY:V6_ASN_COUNT_OK:
-   args: 1
-   format: Zon annonserad av fler Ã¤n ett IPv6 ASN (%s).
-   descr: Zonens DNS-servrar Ã¤r spridda Ã¶ver mer Ã¤n ett autonomt system.
- CONNECTIVITY:END:
-  args: 1
-  format: Klar med test av nÃ¥barhet fÃ¶r %s.
-
- DELEGATION:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa delegering av %s.
- DELEGATION:NS_AT_PARENT:
-  args: 1
-  format: DNS-servrar listade i fÃ¶rÃ¤ldrazonen: %s
-  descr: Detta Ã¤r listan med DNS-servrar som finns i fÃ¶rÃ¤ldrazonen. Den borde innehÃ¥lla samtliga DNS-servrar som Ã¤r listade i barnzonen.
- DELEGATION:NOT_FOUND_AT_PARENT:
-  args: 0
-  format: Delegering ej hittad hos fÃ¶rÃ¤ldern.
-  descr: Ingen delegering hittades i fÃ¶rÃ¤ldrazonen, vilket gÃ¶r att zonen inte Ã¤r nÃ¥bar frÃ¥n Internet.
- DELEGATION:NS_AT_CHILD:
-  args: 1
-  format: DNS-servrar listade i barnzonen: %s
-  descr: Detta Ã¤r listan med DNS-servrar som Ã¤r listade i barnzonen. Den mÃ¥ste innehÃ¥lla samtliga DNS-servrar som Ã¤r listade i fÃ¶rÃ¤ldrazonen.
- DELEGATION:NOT_FOUND_AT_CHILD:
-  args: 0
-  format: Inga DNS-servrar hittades hos barnet.
-  descr: Inga DNS-servrar hittades hos barnet. Det hÃ¤r betyder vanligtvis att barnet inte Ã¤r konfigurerat att svara pÃ¥ frÃ¥gor om zonen.
- DELEGATION:EXTRA_NS_PARENT:
-  args: 1
-  format: Extra DNS-server listad hos fÃ¶rÃ¤lder: %s
-  descr: En DNS-server finns listad i fÃ¶rÃ¤ldrazonen men inte i barnzonen. Det hÃ¤r Ã¤r troligtvis ett administrationsfel. Du borde uppdatera fÃ¶rÃ¤ldrazonen sÃ¥ att den listar samma DNS-servrar som hos barnzonen sÃ¥ snart som mÃ¶jligt.
- DELEGATION:EXTRA_NS_CHILD:
-  args: 1
-  format: Extra DNS-server listad hos barnet: %s
-  descr: En DNS-server finns listad i barnzonen men inte i fÃ¶rÃ¤ldrazonen. Det beror troligtvis pÃ¥ ett konfigurationsfel, men det kan ibland finnas skÃ¤l fÃ¶r att konfigurera en zon pÃ¥ det hÃ¤r sÃ¤ttet.
- DELEGATION:TOO_FEW_NS:
-  args: 1
-  format: FÃ¶r fÃ¥ DNS-servrar (%s).
-  descr: Endast en DNS-server hittades fÃ¶r zonen. Det bÃ¶r alltid finnas minst tvÃ¥ DNS-servrar fÃ¶r en zon fÃ¶r att kunna hantera tillfÃ¤lliga problem med fÃ¶rbindelserna.
- DELEGATION:TOO_FEW_NS_IPV4:
-  args: 1
-  format: FÃ¶r fÃ¥ IPv4 DNS-servrar (%s).
-  descr: Endast en IPv4 DNS-server hittades fÃ¶r zonen. Det bÃ¶r alltid finnas tvÃ¥ IPv4 DNS-servrar fÃ¶r en zon fÃ¶r att kunna hantera tillfÃ¤lliga problem med fÃ¶rbindelserna.
- DELEGATION:TOO_FEW_NS_IPV6:
-  args: 1
-  format: FÃ¶r fÃ¥ IPv6 DNS-servrar (%s).
-  descr: Endast en IPv6 DNS-server hittades fÃ¶r zonen. Det bÃ¶r alltid finnas tvÃ¥ IPv6 DNS-servrar fÃ¶r en zon fÃ¶r att kunna hantera tillfÃ¤lliga problem med fÃ¶rbindelserna.
- DELEGATION:NO_NS_IPV4:
-  args: 0
-  format: Inga IPv4 DNS-servrar hittades.
- DELEGATION:NO_NS_IPV6:
-  args: 0
-  format: Inga IPv6 DNS-servrar hittades.
- DELEGATION:NO_COMMON_NS_NAMES:
-  args: 2
-  format: Ingen likhet mellan fÃ¶rÃ¤lderns och barnets glue.
-  descr: FÃ¶rÃ¤ldern listar namnservrar som barnet inte vet om, se detaljer i den avancerade vyn. Denna konfiguration kan fungera men gÃ¥r sÃ¶nder vÃ¤ldigt enkelt om nÃ¥gon av dessa zoner Ã¤ndras.
- DELEGATION:MATCHING_GLUE:
-  args: 2
-  format: Kontrollerar glue fÃ¶r %s (%s).
- DELEGATION:GLUE_SKIPPED:
-  args: 2
-  format: Hoppade Ã¶ver glue fÃ¶r %s (%s).
- DELEGATION:GLUE_FOUND_AT_PARENT:
-  args: 3
-  format: Glue i fÃ¶rÃ¤ldrazonen fÃ¶r %s hittad: %s (%s)
-  descr: IP-adressen fÃ¶r DNS-servern hittades i fÃ¶rÃ¤ldrazonen.
- DELEGATION:GLUE_FOUND_AT_CHILD:
-  args: 3
-  format: Glue i barnzonen fÃ¶r %s hittad: %s (%s)
-  descr: IP-adressen fÃ¶r DNS-servern hittades hos barnet.
- DELEGATION:INCONSISTENT_GLUE:
-  args: 1
-  format: Ej Ã¶verensstÃ¤mmande glue fÃ¶r DNS-servern %s.
-  descr: Adressen fÃ¶r en DNS-server skiljer sig mellan barnzonen och fÃ¶rÃ¤ldrazonen. Detta Ã¤r ett konfigurationsfel och bÃ¶r korrigeras sÃ¥ snart som mÃ¶jligt.
- DELEGATION:GLUE_MISSING_AT_CHILD:
-  args: 1
-  format: Glue saknas hos barnet: %s
-  descr: DNS-serverns IP-adress hittades ej hos barnet. Detta Ã¤r ett konfigurationsfel och bÃ¶r korrigeras sÃ¥ snart som mÃ¶jligt.
- DELEGATION:NS_HISTORY:
-  args: 2
-  format: Tidigare anvÃ¤nda DNS-servrar fÃ¶r %s: %s
- DELEGATION:STILL_AUTH:
-  args: 3
-  format: Den tidigare anvÃ¤nda DNS-servern %s (%s) Ã¤r fortfarande auktoritativ fÃ¶r %s.
-  descr: En tidigare anvÃ¤nd DNS-server svarar fortfarande auktoritativt fÃ¶r zonen. Detta beror troligtvis pÃ¥ att den har kvar gammal zon-data. FÃ¶r att korrigera problemet, kontakta administratÃ¶ren av den DNS-servern och be dem ta bort zonen ur deras konfiguration.
- DELEGATION:BROKEN_UNDELEGATED:
-     args: 1
-     format: Test av domÃ¤n %s markerades som odelegerat, men ingen fungerande delegeringsinformation gavs.
- DELEGATION:INZONE_NS_WITHOUT_GLUE:
-     args: 2
-     format: Namnservern %s listades fÃ¶r zonen %s utan att nÃ¥gon adressinformation gavs.
- DELEGATION:IPV6_ONLY_AT_CHILD:
-     args: 1
-     format: Namnservrar med IPv6 listade i zonen %s, men inte hos dess fÃ¶rÃ¤lder. 
- DELEGATION:IPV6_ONLY_AT_PARENT:
-     args: 1
-     format: Namnservrar med IPv6 listade i fÃ¶rÃ¤ldrazonen fÃ¶r %s, men inte i zonen sjÃ¤lv.
- DELEGATION:NS_IS_CNAME:
-     args: 2
-     format: I zonen %s har namnservern %s ett CNAME, vilket Ã¤r fÃ¶rbjudet.
- DELEGATION:BROKEN_BUT_FUNCTIONAL:
-     args: 1
-     format: OtillrÃ¤cklig namnserverinformation hittades fÃ¶r att testa zonen %s, men det gick Ã¤ndÃ¥ att slÃ¥ upp en IP-adress.
- DELEGATION:END:
-  args: 1
-  format: Klar med test av delegering av %s.
-
- DNSSEC:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa DNSSEC fÃ¶r %s.
- DNSSEC:CHECKING_DS_AT_PARENT:
-  args: 1
-  format: Kollar DS-poster fÃ¶r %s i fÃ¶rÃ¤ldrazonen.
- DNSSEC:DS_FOUND:
-  args: 1
-  format: Hittade DS-post fÃ¶r %s i fÃ¶rÃ¤ldrazonen.
-  descr: En DS (delegation signer) RRset hittades i fÃ¶rÃ¤ldrazonen. Det hÃ¤r indikerar en sÃ¤ker delegering, d.v.s. barnzonen mÃ¥ste vara signerad.
- DNSSEC:NO_DS_FOUND:
-  args: 1
-  format: Hittade inte DS-pekare fÃ¶r %s i fÃ¶rÃ¤ldrazonen.
-  descr: Ingen DS (delegation signer) RRset hittades i fÃ¶rÃ¤ldrazonen. Det hÃ¤r indikerar en icke-sÃ¤ker delegering, d.v.s. barnzonen behÃ¶ver inte vara signerad.
- DNSSEC:CHECKING_DNSKEY_AT_CHILD:
-  args: 1
-  format: Kollar DNSKEY-poster fÃ¶r %s i barnzonen.
- DNSSEC:DNSKEY_FOUND:
-  args: 1
-  format: Hittade en DNSKEY-post fÃ¶r %s i barnzonen.
-  descr: En DNSKEY RRset hittades i barnzonen, vilket indikerar att den troligtvis anvÃ¤nder DNSSEC.
- DNSSEC:DNSKEY_NOT_FOUND:
-  args: 1
-  format: Hittade ingen DNSKEY-post fÃ¶r %s i barnzonen.
-  descr: Inget DNSKEY RRset hittades i barnzonen, vilket indikerar att barnzonen troligtvis inte anvÃ¤nder DNSSEC.
- DNSSEC:DETERMINE_SECURITY_STATUS:
-  args: 1
-  format: AvgÃ¶r sÃ¤kerhetsstatus fÃ¶r %s.
- DNSSEC:INCONSISTENT_SECURITY:
-  args: 1
-  format: Inkonsekvent sÃ¤kerhet fÃ¶r %s - DS hittad i fÃ¶rÃ¤ldrazonen, men ingen DNSKEY hittad i barnzonen.
-  descr: FÃ¶rÃ¤ldrazonen har en sÃ¤ker delegering till barnzonen (indikerad av DS RRset i fÃ¶rÃ¤ldrazonen), men barnzonen har ingen DNSKEY. Detta beror troligtvis pÃ¥ att en f.d. signerad zon blev osignerad utan att begÃ¤ra att fÃ¶rÃ¤ldrazonen skulle ta bort den sÃ¤krade delegeringen.
- DNSSEC:CONSISTENT_SECURITY:
-  args: 1
-  format: Konsekvent sÃ¤kerhet fÃ¶r %s.
- DNSSEC:SKIPPED_NO_KEYS:
-  args: 1
-  format: Inga DNSKEY(s) hittade i barnzonen. Andra test hoppades Ã¶ver.
- DNSSEC:MISSING_DS:
-  args: 1
-  format: Bruten fÃ¶rtroendekedja fÃ¶r %s - DNSKEY hittad i barnzonen, men ingen DS hittad i fÃ¶rÃ¤ldrazonen.
-  descr: Barnzonen verkar anvÃ¤nda DNSSEC, men fÃ¶rÃ¤ldrazonen har ingen sÃ¤ker delegering. PÃ¥ grund av detta Ã¤r fÃ¶rtroendekedjan mellan fÃ¶rÃ¤ldrazonen och barnzonen bruten och validerande resolvrar kommer inte kunna validera svar frÃ¥n barnzonen.
- DNSSEC:CHECKING_CHILD:
-  args: 1
-  format: Kollar DNSSEC i barnzonen (%s).
- DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
-  args: 3
-  format: DNSKEY %s (tag %s) anvÃ¤nder en icke-rekommenderad algoritm: %s
-  descr: En DNSKEY some anvÃ¤nder en icke-rekommenderad algoritm hittades - du borde Ã¶vervÃ¤ga att sluta anvÃ¤nda icke-rekommenderade algoritmer om du inte har vÃ¤ldigt goda skÃ¤l fÃ¶r att anvÃ¤nda dem.
- DNSSEC:DNSKEY_SKIP_PROTOCOL:
-  args: 3
-  format: DNSKEY %s (tag %s) Ã¤r inte en DNSSEC-nyckel (protokoll=%s).
-  descr: DNSKEY mÃ¥ste anvÃ¤nda protokollvÃ¤rdet fÃ¶r DNSSEC (3).
- DNSSEC:DNSKEY_SKIP_TYPE:
-  args: 2
-  format: DNSKEY %s (tag %s) Ã¤r inte en zonsigneringsnyckel.
-  descr: DNSKEY mÃ¥ste vara en zonsigneringsnyckel.
- DNSSEC:DNSKEY_SEP:
-  args: 2
-  format: DNSKEY %s (tag %s) Ã¤r markerad som en sÃ¤ker startpunkt (SEP).
-  descr: En sÃ¤ker startpunkt (Secure Entry Point - SEP) Ã¤r en del av fÃ¶rtroendekedjan mellan fÃ¶rÃ¤ldrazonen och barnzonen.
- DNSSEC:DNSKEY_MANDATORY_FOUND:
-  args: 1
-  format: Minst en obligatorisk algoritm hittad fÃ¶r DNSKEY %s.
- DNSSEC:DNSKEY_MANDATORY_NOT_FOUND:
-  args: 1
-  format: Ingen obligatorisk algoritm hittad fÃ¶r DNSKEY %s.
-  descr: Minst en DNSKEY bÃ¶r vara av typen RSA/SHA1.
- DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
-  args: 2
-  format: Ytterligare DNSSEC-bearbetning ej mÃ¶jlig fÃ¶r %s (server: %s).
-  descr: Inga DNSSEC-signaturer fanns inkluderade i svaren frÃ¥n DNS-servern. Detta beror troligtvis pÃ¥ en felkonfiguration hos DNS-servern.
- DNSSEC:NO_SIGNATURES:
-  args: 1
-  format: Inga signaturer hittade fÃ¶r %s.
-  descr: Inga DNSSEC-signaturer hittades nÃ¤r zonen kontrollerades. Zonen kanske inte Ã¤r signerad?
- DNSSEC:CHILD_CHECK_ABORTED:
-  args: 1
-  format: AvbrÃ¶t DNSSEC-tester av barnzonen fÃ¶r %s.
- DNSSEC:DNSKEY_SIGNATURE_OK:
-  args: 2
-  format: Hittade RRSIG(DNSKEY %s) skapad av publik nyckel (tag %s).
- DNSSEC:DNSKEY_SIGNER_UNPUBLISHED:
-  args: 2
-  format: Hittade RRSIG(DNSKEY %s) skapad av privat nyckel (tag %s).
-  descr: DNSSEC-signaturer skapade av privata nycklar kan inte kontrolleras genom att kontrollera resolvrar. Alla nycklar som anvÃ¤nds fÃ¶r att signera data mÃ¥ste vara publika.
- DNSSEC:DNSKEY_VALID_SIGNATURES:
-  args: 1
-  format: TillrÃ¤ckligt med godkÃ¤nda signaturer hittade fÃ¶r %s.
- DNSSEC:DNSKEY_NO_VALID_SIGNATURES:
-  args: 1
-  format: Hittade ej tillrÃ¤ckligt med godkÃ¤nda signaturer hittade fÃ¶r %s.
-  descr: Inga godkÃ¤nda signaturer fÃ¶r DNSKEY RRset fÃ¶r zonen hittades - kontrollera att zonen Ã¤r signerad med en godkÃ¤nd, publik nyckel.
- DNSSEC:SOA_SIGNATURE_OK:
-  args: 2
-  format: RRSIG(SOA %s) skapad av DNSKEY (tag %s) OK.
- DNSSEC:SOA_SIGNER_UNPUBLISHED:
-  args: 2
-  format: Hittade RRSIG(SOA %s) skapad av publik nyckel (tag %s).
-  descr: DNSSEC-signaturer skapade av privata nycklar kan inte kontrolleras av validerande resolvrar. Alla nycklar som anvÃ¤nds fÃ¶r att signera data mÃ¥ste vara publika.
- DNSSEC:SOA_VALID_SIGNATURES:
-  args: 1
-  format: TillrÃ¤ckligt med godkÃ¤nda signaturer Ã¶ver SOA RRset hittade fÃ¶r %s.
- DNSSEC:SOA_NO_VALID_SIGNATURES:
-  args: 1
-  format: Hittade ej tillrÃ¤ckligt med godkÃ¤nda signaturer Ã¶ver SOA RRset hittade fÃ¶r %s.
-  descr: Hittade inga godkÃ¤nda signaturer fÃ¶r SOA
- DNSSEC:CHILD_CHECKED:
-  args: 1
-  format: Klar med DNSSEC-tester av barnzonen fÃ¶r %s.
- DNSSEC:CHECKING_PARENT:
-  args: 1
-  format: Kontrollerar DNSSEC fÃ¶r fÃ¶rÃ¤ldrazonen till %s.
- DNSSEC:PARENT_DS:
-  args: 2
-  format: Hittade DS(%s) i fÃ¶rÃ¤ldrazonen: %s
- DNSSEC:DS_KEYREF_OK:
-  args: 2
-  format: FÃ¶rÃ¤ldrazonens %s refererar till en godkÃ¤nd nyckel fÃ¶r barnzonen: %s
- DNSSEC:DS_KEYREF_INVALID:
-  args: 2
-  format: FÃ¶rÃ¤ldrazonens %s refererar till icke godkÃ¤nd nyckel hos barnzonen: %s
-  descr: DS RRset mÃ¥ste referera till en giltig nyckel hos barnzonen, annars bryts fÃ¶rtroendekedjan mellan fÃ¶rÃ¤ldrazonen och barnzonen vilket innebÃ¤r att validerande resolvrar inte kommer kunna validera svaren frÃ¥n barnzonen.
- DNSSEC:NO_VALID_DS:
+  ADDRESS:BEGIN:
     args: 1
-    format: Zonen %s har publicerade DS-poster, men ingen av dem fungerar.
- DNSSEC:DS_TO_SEP:
-  args: 2
-  format: FÃ¶rÃ¤ldrazonens DS(%s) refererar till en sÃ¤ker startpunkt (SEP) hos barnzonen: %s
- DNSSEC:DS_TO_NONSEP:
-  args: 2
-  format: FÃ¶rÃ¤ldrazonens DS(%s) refererar inte till en sÃ¤ker startpunkt (SEP) hos barnzonen: %s
-  descr: DS RRset refererar till en DNSKEY hos barnzonen men nyckeln Ã¤r inte markerad som en sÃ¤ker startpunkt.
- DNSSEC:DS_MANDATORY_FOUND:
-  args: 1
-  format: Minst en obligatorisk DS-algoritm hittad fÃ¶r %s.
- DNSSEC:DS_MANDATORY_NOT_FOUND:
-  args: 1
-  format: Ingen obligatorisk DS-algoritm hittad fÃ¶r %s.
-  descr: Eftersom ingen av hash-algoritmerna publicerade i DS RRset Ã¤r obligatoriska, kommer vissa validerande resolvers att inte kunna fÃ¶lja fÃ¶rtroendekedjan frÃ¥n fÃ¶rÃ¤ldrazonen till barnzonen.
- DNSSEC:PARENT_CHECKED:
-  args: 1
-  format: Klar med DNSSEC-tester av fÃ¶rÃ¤ldrazonen fÃ¶r %s.
- DNSSEC:RRSIG_NOT_YET_VALID:
-  args: 1
-  format: DNSSEC-signatur ej godkÃ¤nd Ã¤n: %s
-  descr: Ã„nnu ej godkÃ¤nda signaturer kommer ignoreras av en validerande resolver.
- DNSSEC:RRSIG_EXPIRED:
-  args: 1
-  format: Ogiltig DNSSEC-signatur: %s
-  descr: DNSSEC-signaturen Ã¤r ogiltig dÃ¥ den gÃ¥tt ut och kommer sÃ¥ledes ignoreras av validerande resolvers.
- DNSSEC:RRSIG_VALID:
-  args: 1
-  format: DNSSEC-signatur godkÃ¤nd: %s
- DNSSEC:RRSIG_EXPIRES_AT:
-     args: 1
-     format: DNSSEC-signaturen gÃ¥r ut: %s
- DNSSEC:RRSIG_VERIFIES:
-     args: 1
-     format: DNSSEC-signaturen %s stÃ¤mmer med innehÃ¥llet.
- DNSSEC:RRSIG_FAILS_VERIFY:
+    format: Börjar testa adressen %s.
+  ADDRESS:END:
+    args: 1
+    format: Klar med test av adressen %s.
+  ADDRESS:INVALID:
+    args: 1
+    descr: ~
+    format: Adressen %s är ogiltig eller inkorrekt.
+  ADDRESS:PRIVATE_IPV4:
+    args: 1
+    descr: En privat IP-adress ska normalt inte vara synlig i den publika DNS:en eftersom den inte går att nå från Internet.
+    format: '%s är en privat IPv4-adress.'
+  ADDRESS:PTR_HOSTNAME_NOT_FOUND:
     args: 2
-    format: DNSSEC-signaturen %s validerar inte RR-gruppen: %s
- DNSSEC:EXTRA_PROCESSING:
-     args: 1
-     format: Namnservern %s gÃ¶r extrahantering fÃ¶r DNSSEC.
- DNSSEC:NO_EXTRA_PROCESSING:
+    descr: PTR-posten för adressen pekar till ett okänt värdnamn.
+    format: Baklängespekare för %s pekar till ett okänt värdnamn (%s).
+  ADDRESS:PTR_NOT_FOUND:
+    args: 2
+    descr: Kunde inte hitta PTR-post(er) för adressen i .arpa-zonen. (ip6.arpa. för IPv6 och in-addr.arpa. för IPv4).
+    format: Kunde inte hitta baklängesadress för %s (%s).
+  ADDRESS:RESERVED_IPV4:
     args: 1
-    format: Namnservern %s gÃ¶r inte extra hantering fÃ¶r DNSSEC.
- DNSSEC:CONSISTENT_EXTRA_PROCESSING:
-     args: 1
-     format: Servrarna fÃ¶r %s Ã¤r Ã¶verens om extra hantering fÃ¶r DNSSEC.
- DNSSEC:INCONSISTENT_EXTRA_PROCESSING:
-     args: 1
-     format: Servrarna fÃ¶r %s Ã¤r inte Ã¶verens om extra hantering fÃ¶r DNSSEC.
- DNSSEC:DNSKEY_ALGORITHM:
+    descr: Reserverade IPv4-adresser bör inte användas på det publika Internet.
+    format: '%s är en reserverad IPv4-adress.'
+  ADDRESS:RESERVED_IPV6:
+    args: 1
+    descr: Reserverade IPv6-adresser bör inte användas på det publika Internet.
+    format: '%s är en reserverad IPv6-adress.'
+  ASN:ANNOUNCE_BY:
+    args: 2
+    format: '%s annonserad av AS %s.'
+  ASN:INVALID_ADDRESS:
+    args: 1
+    format: '%s är en ogiltig IP-adress.'
+  ASN:LOOKUP:
+    args: 1
+    format: Slår upp AS-nummer för %s.
+  ASN:LOOKUP_ERROR:
+    args: 1
+    format: Lyckades inte slå upp AS-numret för %s.
+  ASN:NOT_ANNOUNCE:
+    args: 1
+    format: '%s är inte annonserad.'
+  CONNECTIVITY:ANNOUNCED_BY_ASN:
+    args: 2
+    descr: IP-adressen är annonserad av ett autonomt system (AS).
+    format: 'DNS-servern %s annonserad av: %s'
+  CONNECTIVITY:ASN_COUNT_OK:
+    args: 1
+    descr: Zonens DNS-servrar är spridda över mer än ett autonomt system.
+    format: Zon annonserad av fler än ett ASN (%s).
+  CONNECTIVITY:ASN_LIST:
+    args: 1
+    format: 'Zon annonserad av IPv4 ASN: %s'
+  CONNECTIVITY:BEGIN:
+    args: 1
+    format: Börjar testa nåbarhet för %s.
+  CONNECTIVITY:END:
+    args: 1
+    format: Klar med test av nåbarhet för %s.
+  CONNECTIVITY:MULTIPLE_ASN:
+    args: 1
+    descr: DNS-servern är annonserad av fler än ett autonomt system (AS).
+    format: DNS-servern %s är annonserad av flera AS.
+  CONNECTIVITY:NOT_ANNOUNCED:
+    args: 1
+    descr: IP-adressen är inte annonserad av något autonomt system och är troligtvis inte nåbar på Internet.
+    format: DNS-servern %s är inte annonserad av något AS.
+  CONNECTIVITY:TOO_FEW_ASN:
+    args: 1
+    descr: 'Samtliga DNS-servrar för zonen finns inom samma, (eller inget), autonoma system.'
+    format: Zon annonserad av mindre än 2 IPv4 ASN (%s).
+  CONNECTIVITY:V6_ANNOUNCED_BY_ASN:
+    args: 2
+    descr: IP-adressen är annonserad av ett autonomt system (AS).
+    format: 'DNS-servern %s annonserad över IPv6 av: %s'
+  CONNECTIVITY:V6_ASN_COUNT_OK:
+    args: 1
+    descr: Zonens DNS-servrar är spridda över mer än ett autonomt system.
+    format: Zon annonserad av fler än ett IPv6 ASN (%s).
+  CONNECTIVITY:V6_ASN_LIST:
+    args: 1
+    format: 'Zon annonserad av IPv6 ASN: %s'
+  CONNECTIVITY:V6_MULTIPLE_ASN:
+    args: 1
+    descr: DNS-servern är annonserad av fler än ett IPv6 autonomt system (AS).
+    format: DNS-servern %s är annonserad av flera IPv6 AS.
+  CONNECTIVITY:V6_NOT_ANNOUNCED:
+    args: 1
+    descr: IP-adressen är inte annonserad av något autonomt system och är troligtvis inte nåbar på Internet.
+    format: DNS-servern %s är inte annonserad av något IPv6 AS.
+  CONNECTIVITY:V6_TOO_FEW_ASN:
+    args: 1
+    descr: 'Samtliga DNS-servrar för zonen finns inom samma, (eller inget), autonoma system.'
+    format: Zon annonserad av mindre än 2 IPv6 ASN (%s).
+  CONSISTENCY:BEGIN:
+    args: 1
+    format: Börjar testa att zonen är konsekvent uppsatt för %s.
+  CONSISTENCY:END:
+    args: 1
+    format: Klar med test av att zonen för %s är konsekvent uppsatt.
+  CONSISTENCY:SOA_DIGEST_AT_ADDRESS:
+    args: 2
+    format: SOA på adressen %s har digest %s.
+  CONSISTENCY:SOA_DIGEST_CONSISTENT:
+    args: 0
+    format: Alla andra fält i SOA-posten är lika på alla DNS-servrarna.
+  CONSISTENCY:SOA_DIGEST_DIFFERENT:
+    args: 1
+    descr: SOA-postens andra värden är inte lika på alla DNS-servrarna. Detta beror vanligtvis på ett konfigurationsfel.
+    format: '%s olika SOA-poster hittade.'
+  CONSISTENCY:SOA_SERIAL_AT_ADDRESS:
+    args: 2
+    format: SOA på adressen %s har serienumret %s.
+  CONSISTENCY:SOA_SERIAL_CONSISTENT:
+    args: 0
+    format: Alla SOA-poster har överenstämmande serienummer.
+  CONSISTENCY:SOA_SERIAL_DIFFERENT:
+    args: 1
+    descr: 'SOA-serienumret är inte detsamma på alla DNS-servrar. Detta beror vanligtvis på en felkonfiguration, men kan ibland bero på långsam spridning av zonen till sekundära DNS-servrar.'
+    format: '%s olika serienummer hittade.'
+  DELEGATION:BEGIN:
+    args: 1
+    format: Börjar testa delegering av %s.
+  DELEGATION:BROKEN_BUT_FUNCTIONAL:
+    args: 1
+    format: 'Otillräcklig namnserverinformation hittades för att testa zonen %s, men det gick ändå att slå upp en IP-adress.'
+  DELEGATION:BROKEN_UNDELEGATED:
+    args: 1
+    format: 'Test av domän %s markerades som odelegerat, men ingen fungerande delegeringsinformation gavs.'
+  DELEGATION:END:
+    args: 1
+    format: Klar med test av delegering av %s.
+  DELEGATION:EXTRA_NS_CHILD:
+    args: 1
+    descr: 'En DNS-server finns listad i barnzonen men inte i föräldrazonen. Det beror troligtvis på ett konfigurationsfel, men det kan ibland finnas skäl för att konfigurera en zon på det här sättet.'
+    format: 'Extra DNS-server listad hos barnet: %s'
+  DELEGATION:EXTRA_NS_PARENT:
+    args: 1
+    descr: En DNS-server finns listad i föräldrazonen men inte i barnzonen. Det här är troligtvis ett administrationsfel. Du borde uppdatera föräldrazonen så att den listar samma DNS-servrar som hos barnzonen så snart som möjligt.
+    format: 'Extra DNS-server listad hos förälder: %s'
+  DELEGATION:GLUE_FOUND_AT_CHILD:
+    args: 3
+    descr: IP-adressen för DNS-servern hittades hos barnet.
+    format: 'Glue i barnzonen för %s hittad: %s (%s)'
+  DELEGATION:GLUE_FOUND_AT_PARENT:
+    args: 3
+    descr: IP-adressen för DNS-servern hittades i föräldrazonen.
+    format: 'Glue i föräldrazonen för %s hittad: %s (%s)'
+  DELEGATION:GLUE_MISSING_AT_CHILD:
+    args: 1
+    descr: DNS-serverns IP-adress hittades ej hos barnet. Detta är ett konfigurationsfel och bör korrigeras så snart som möjligt.
+    format: 'Glue saknas hos barnet: %s'
+  DELEGATION:GLUE_SKIPPED:
+    args: 2
+    format: Hoppade över glue för %s (%s).
+  DELEGATION:INCONSISTENT_GLUE:
+    args: 1
+    descr: Adressen för en DNS-server skiljer sig mellan barnzonen och föräldrazonen. Detta är ett konfigurationsfel och bör korrigeras så snart som möjligt.
+    format: Ej överensstämmande glue för DNS-servern %s.
+  DELEGATION:INZONE_NS_WITHOUT_GLUE:
+    args: 2
+    format: Namnservern %s listades för zonen %s utan att någon adressinformation gavs.
+  DELEGATION:IPV6_ONLY_AT_CHILD:
+    args: 1
+    format: 'Namnservrar med IPv6 listade i zonen %s, men inte hos dess förälder.'
+  DELEGATION:IPV6_ONLY_AT_PARENT:
+    args: 1
+    format: 'Namnservrar med IPv6 listade i föräldrazonen för %s, men inte i zonen själv.'
+  DELEGATION:MATCHING_GLUE:
+    args: 2
+    format: Kontrollerar glue för %s (%s).
+  DELEGATION:NOT_FOUND_AT_CHILD:
+    args: 0
+    descr: Inga DNS-servrar hittades hos barnet. Det här betyder vanligtvis att barnet inte är konfigurerat att svara på frågor om zonen.
+    format: Inga DNS-servrar hittades hos barnet.
+  DELEGATION:NOT_FOUND_AT_PARENT:
+    args: 0
+    descr: 'Ingen delegering hittades i föräldrazonen, vilket gör att zonen inte är nåbar från Internet.'
+    format: Delegering ej hittad hos föräldern.
+  DELEGATION:NO_COMMON_NS_NAMES:
+    args: 2
+    descr: 'Föräldern listar namnservrar som barnet inte vet om, se detaljer i den avancerade vyn. Denna konfiguration kan fungera men går sönder väldigt enkelt om någon av dessa zoner ändras.'
+    format: Ingen likhet mellan förälderns och barnets glue.
+  DELEGATION:NO_NS_IPV4:
+    args: 0
+    format: Inga IPv4 DNS-servrar hittades.
+  DELEGATION:NO_NS_IPV6:
+    args: 0
+    format: Inga IPv6 DNS-servrar hittades.
+  DELEGATION:NS_AT_CHILD:
+    args: 1
+    descr: Detta är listan med DNS-servrar som är listade i barnzonen. Den måste innehålla samtliga DNS-servrar som är listade i föräldrazonen.
+    format: 'DNS-servrar listade i barnzonen: %s'
+  DELEGATION:NS_AT_PARENT:
+    args: 1
+    descr: Detta är listan med DNS-servrar som finns i föräldrazonen. Den borde innehålla samtliga DNS-servrar som är listade i barnzonen.
+    format: 'DNS-servrar listade i föräldrazonen: %s'
+  DELEGATION:NS_HISTORY:
+    args: 2
+    format: 'Tidigare använda DNS-servrar för %s: %s'
+  DELEGATION:NS_IS_CNAME:
+    args: 2
+    format: 'I zonen %s har namnservern %s ett CNAME, vilket är förbjudet.'
+  DELEGATION:STILL_AUTH:
+    args: 3
+    descr: 'En tidigare använd DNS-server svarar fortfarande auktoritativt för zonen. Detta beror troligtvis på att den har kvar gammal zon-data. För att korrigera problemet, kontakta administratören av den DNS-servern och be dem ta bort zonen ur deras konfiguration.'
+    format: Den tidigare använda DNS-servern %s (%s) är fortfarande auktoritativ för %s.
+  DELEGATION:TOO_FEW_NS:
+    args: 1
+    descr: Endast en DNS-server hittades för zonen. Det bör alltid finnas minst två DNS-servrar för en zon för att kunna hantera tillfälliga problem med förbindelserna.
+    format: För få DNS-servrar (%s).
+  DELEGATION:TOO_FEW_NS_IPV4:
+    args: 1
+    descr: Endast en IPv4 DNS-server hittades för zonen. Det bör alltid finnas två IPv4 DNS-servrar för en zon för att kunna hantera tillfälliga problem med förbindelserna.
+    format: För få IPv4 DNS-servrar (%s).
+  DELEGATION:TOO_FEW_NS_IPV6:
+    args: 1
+    descr: Endast en IPv6 DNS-server hittades för zonen. Det bör alltid finnas två IPv6 DNS-servrar för en zon för att kunna hantera tillfälliga problem med förbindelserna.
+    format: För få IPv6 DNS-servrar (%s).
+  DNS:ADDRESS_BLACKLISTED:
     args: 4
-    format: %s nyckel med tag %s anvÃ¤nder algorithm nummer %s (%s).
- DNSSEC:DS_ALGORITHM:
+    format: DNS-servern %s svartlistad.
+  DNS:ADDRESS_BLACKLIST_ADD:
     args: 4
-    format: %s nyckel med tag %s anvÃ¤nder algorithm nummer %s (%s).
- DNSSEC:ALGORITHM_RESERVED:
-   args: 1
-   format: Algoritm nummer %s Ã¤r reserverad.
- DNSSEC:ALGORITHM_UNASSIGNED:
-   args: 1
-   format: Algoritm nummer %s Ã¤r inte tilldelad.
- DNSSEC:ALGORITHM_PRIVATE:
-   args: 1
-   format: Algoritm nummer %s Ã¤r privat.
- DNSSEC:ALGORITHM_OK:
-   args: 1
-   format: Algoritm nummer %s Ã¤r OK.
- DNSSEC:END:
-  args: 1
-  format: Klar med test av DNSSEC fÃ¶r %s.
-
- HOST:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa vÃ¤rdnamn %s.
- HOST:ILLEGAL_NAME:
-  args: 2
-  format: VÃ¤rdnamnet %s innehÃ¥ller fel (syntax-fel pÃ¥ %s)
-  descr: VÃ¤rdnamnet Ã¤r inte syntaktiskt korrekt enligt RFC 952. Ett vanligt fel Ã¤r att bÃ¶rja ett vÃ¤rdnamn med nÃ¥got annat Ã¤n en bokstav (a-z) eller anvÃ¤nda otillÃ¥tna tecken i namnet (endast a-z, 0-9 samt - Ã¤r tillÃ¥tna).
- HOST:NOT_FOUND:
-  args: 1
-  format: Hittar ingen adress fÃ¶r %s.
-  descr: Ingen IPv4- eller IPv6-adress hittades fÃ¶r vÃ¤rdnamnet.
- HOST:CNAME_FOUND:
-  args: 1
-  format: VÃ¤rdnamnet %s hÃ¤nvisar till ett CNAME.
-  descr: VÃ¤rdnamnet Ã¤r ett alias (CNAME), vilket inte Ã¤r tillÃ¥tet. VÃ¤rdnamn mÃ¥ste publiceras med en A- eller AAAA-pekare.
- HOST:END:
-  args: 1
-  format: Klar med test av vÃ¤rdnamnet %s.
-
- MAIL:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa e-postadressen %s.
- MAIL:ADDRESS_SYNTAX:
-  args: 1
-  format: %s Ã¤r inte en korrekt e-postadress.
- MAIL:MAIL_EXCHANGER:
-  args: 2
-  format: Epost-servrar fÃ¶r %s hittade %s.
- MAIL:DOMAIN_NOT_FOUND:
-  args: 1
-  format: Inga MX-pekare hittade fÃ¶r domÃ¤nen %s.
-  descr: Inga MX-pekare hittades fÃ¶r domÃ¤nen. Detta gÃ¶r det omÃ¶jligt att leverera e-post till mottagare inom den domÃ¤nen.
- MAIL:HOST_ERROR:
-  args: 1
-  format: Ogiltigt vÃ¤rdnamn fÃ¶r MX-pekaren %s.
-  descr: VÃ¤rdnamnet fÃ¶r MX-pekaren Ã¤r ogiltigt. Ett vanligt fel Ã¤r att peka MX-pekaren till ett alias (CNAME) eller direkt till en IP-adress.
- MAIL:IPV6_ONLY:
-  args: 1
-  format: E-postservern %s Ã¤r endast nÃ¥bar via IPv6.
-  descr: Denna e-postserver Ã¤r endast nÃ¥bar via IPv6, vilket gÃ¶r det omÃ¶jligt fÃ¶r de flesta att skicka epost till den. Om mer Ã¤n en MX finns och minst en gÃ¥r att nÃ¥ via IPv4 kan detta ignoreras. 
- MAIL:DELIVERY_IPV4_OK:
-  args: 1
-  format: Leverans Ã¶ver IPv4 till %s fungerade.
- MAIL:DELIVERY_IPV6_OK:
-  args: 1
-  format: Leverans Ã¶ver IPv6 till %s fungerade.
- MAIL:DELIVERY_IPV4_NOT_OK:
-  args: 1
-  format: Leverans Ã¶ver IPv4 till %s fungerade inte.
- MAIL:DELIVERY_IPV6_NOT_OK:
-  args: 1
-  format: Leverans Ã¶ver IPv6 till %s fungerade inte.
- MAIL:ALL_MX_IN_ZONE:
-     args: 2
-     format: Alla mailservrar fÃ¶r %s finns i zonen %s.
- MAIL:END:
-  args: 1
-  format: Klar med test av e-postadressen %s.
-
- NAMESERVER:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa DNS-servern %s.
- NAMESERVER:HOST_ERROR:
-  args: 1
-  format: Fel pÃ¥ vÃ¤rdnamnet eller adressen fÃ¶r %s.
-  descr: Det specificerade vÃ¤rdnamnet Ã¤r inte ett giltigt vÃ¤rdnamn eller sÃ¥ pekar det till en ogiltig IP-adress, m.a.o. en privat eller reserverad IP-adress.
- NAMESERVER:CHECKING_RECURSION:
-  args: 2
-  format: Testar rekursion fÃ¶r %s pÃ¥ adressen %s.
- NAMESERVER:RECURSIVE:
-  args: 2
-  format: DNS-servern %s (%s) Ã¤r rekursiv.
-  descr: DNS-servern svarar pÃ¥ rekursiva anrop frÃ¥n tredje part (sÃ¥ som DNSCheck). Genom rekursiva anrop till en DNS-server som tillhandahÃ¥ller rekursion kan en angripare fÃ¥ DNS-servern att slÃ¥ upp och cacha information som finns i zoner som kontrolleras av dem. SÃ¥ledes kan DNS-servern tvingas anropa angriparens skadliga DNS-servrar vilket resulterar i att den angripna DNS-servern cachar och presenterar falsk data.
- NAMESERVER:NOT_RECURSIVE:
-  args: 2
-  format: DNS-servern %s (%s) Ã¤r inte rekursiv.
- NAMESERVER:CHECKING_AUTH:
-  args: 2
-  format: Testar auktoritet fÃ¶r %s (%s).
- NAMESERVER:NOT_AUTH:
-  args: 3
-  format: DNS-servern %s (%s) Ã¤r inte auktoritativ fÃ¶r %s.
-  descr: DNS-servern svarar inte auktoritativt pÃ¥ anrop fÃ¶r den testade domÃ¤nen. Det beror troligtvis pÃ¥ en felkonfigurering, vanligtvis sÃ¥ har DNS-servern inte stÃ¤llts in fÃ¶r att agera server fÃ¶r den testade domÃ¤nen.
- NAMESERVER:AUTH:
-  args: 3
-  format: DNS-servern %s (%s) Ã¤r auktoritativ fÃ¶r %s.
- NAMESERVER:TESTING_UDP:
-  args: 2
-  format: Testar UDP-anrop till DNS-servern %s pÃ¥ adressen %s.
- NAMESERVER:UDP_OK:
-  args: 3
-  format: DNS-servern %s (%s) svarar pÃ¥ anrop via UDP.
- NAMESERVER:NO_UDP:
-  args: 3
-  format: DNS-servern %s (%s) svarar inte pÃ¥ anrop via UDP.
-  descr: DNS-servern svarade inte pÃ¥ anrop via UDP. Detta beror troligtvis pÃ¥ att DNS-servern inte Ã¤r korrekt uppsatt eller en felaktigt konfigurerad brandvÃ¤gg.
- NAMESERVER:TESTING_TCP:
-  args: 2
-  format: Testar TCP-anrop till DNS-servern %s pÃ¥ adressen %s.
- NAMESERVER:TCP_OK:
-  args: 3
-  format: DNS-servern %s (%s) svarar pÃ¥ anrop via TCP.
- NAMESERVER:NO_TCP:
-  args: 3
-  format: DNS-servern %s (%s) svarar inte pÃ¥ anrop via TCP.
-  descr: DNS-servern svarade inte pÃ¥ anrop via TCP. Detta beror troligtvis pÃ¥ att DNS-servern inte Ã¤r korrekt uppsatt eller en felaktigt konfigurerad brandvÃ¤gg. Det Ã¤r en ganska vanlig missuppfattning att DNS inte behÃ¶ver TCP om den inte tillhandahÃ¥ller zonÃ¶verfÃ¶ringar - kanske Ã¤r inte DNS-serverns administratÃ¶r medveten om att TCP vanligtvis Ã¤r ett krav.
- NAMESERVER:TESTING_AXFR:
-  args: 2
-  format: Testar zonÃ¶verfÃ¶ring fÃ¶r DNS-servern %s (%s).
- NAMESERVER:AXFR_SKIP:
-  args: 3
-  format: DNS-servern %s (%s) inte testad fÃ¶r zonÃ¶verfÃ¶ring av %s.
-  descr: ZonÃ¶verfÃ¶ring testades inte pÃ¥ DNS-servern eftersom den inte svarar pÃ¥ anrop Ã¶ver TCP.
- NAMESERVER:AXFR_OPEN:
-  args: 3
-  format: DNS-servern %s (%s) Ã¶ppen fÃ¶r zonÃ¶verfÃ¶ring av %s.
-  descr: DNS-servern accepterar zonÃ¶verfÃ¶rings-anrop frÃ¥n vem som helst.
- NAMESERVER:AXFR_CLOSED:
-  args: 3
-  format: DNS-servern %s (%s) tillÃ¥ter inte zonÃ¶verfÃ¶ring av %s.
- NAMESERVER:CHECKING_LEGACY_ID:
-  args: 2
-  format: Kollar efter legacy NSID fÃ¶r %s (%s).
- NAMESERVER:LEGACY_ID_SKIP:
-  args: 2
-  format: Legacy NSID inte kollad pÃ¥ DNS-servern %s (%s).
- NAMESERVER:LEGACY_ID:
-  args: 4
-  format: Legacy NSID fÃ¶r %s (%s): %s = %s
- NAMESERVER:CHECKING_NSID:
-  args: 2
-  format: Kollar efter NSID fÃ¶r %s (%s).
- NAMESERVER:NSID_SKIP:
-  args: 2
-  format: NSID inte inte kollad pÃ¥ DNS-servern %s (%s).
- NAMESERVER:NSID:
-  args: 3
-  format: Legacy NSID fÃ¶r %s (%s): %s
- NAMESERVER:SKIPPED_IPV4:
-  args: 1
-  format: IPv4 avaktiverad - kommer inte testa DNS-servern pÃ¥ %s
- NAMESERVER:SKIPPED_IPV6:
-  args: 1
-  format: IPv6 avaktiverad - kommer inte testa DNS-servern pÃ¥ %s
- NAMESERVER:END:
-  args: 1
-  format: Klar med test av DNS-servern %s.
-
- CONSISTENCY:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa att zonen Ã¤r konsekvent uppsatt fÃ¶r %s.
- CONSISTENCY:SOA_SERIAL_AT_ADDRESS:
-  args: 2
-  format: SOA pÃ¥ adressen %s har serienumret %s.
- CONSISTENCY:SOA_SERIAL_DIFFERENT:
-  args: 1
-  format: %s olika serienummer hittade.
-  descr: SOA-serienumret Ã¤r inte detsamma pÃ¥ alla DNS-servrar. Detta beror vanligtvis pÃ¥ en felkonfiguration, men kan ibland bero pÃ¥ lÃ¥ngsam spridning av zonen till sekundÃ¤ra DNS-servrar.
- CONSISTENCY:SOA_SERIAL_CONSISTENT:
-  args: 0
-  format: Alla SOA-poster har Ã¶verenstÃ¤mmande serienummer.
- CONSISTENCY:SOA_DIGEST_AT_ADDRESS:
-  args: 2
-  format: SOA pÃ¥ adressen %s har digest %s.
- CONSISTENCY:SOA_DIGEST_DIFFERENT:
-  args: 1
-  format: %s olika SOA-poster hittade.
-  descr: SOA-postens andra vÃ¤rden Ã¤r inte lika pÃ¥ alla DNS-servrarna. Detta beror vanligtvis pÃ¥ ett konfigurationsfel.
- CONSISTENCY:SOA_DIGEST_CONSISTENT:
-  args: 0
-  format: Alla andra fÃ¤lt i SOA-posten Ã¤r lika pÃ¥ alla DNS-servrarna.
- CONSISTENCY:END:
-  args: 1
-  format: Klar med test av att zonen fÃ¶r %s Ã¤r konsekvent uppsatt.
-
- SMTP:BEGIN:
-  args: 3
-  format: BÃ¶rjar testa e-postservern %s (%s) med %s.
- SMTP:CONNECT_FAILED:
-  args: 2
-  format: Lyckades inte kontakta %s (%s).
-  descr: DNSCheck lyckades inte kontakta e-postservern. Servern kan vara nere eller vara onÃ¥bar pÃ¥ grund av felkonfigurerad routing och/eller filtrering.
- SMTP:BANNER:
-  args: 2
-  format: SMTP banner: %s
- SMTP:HELLO_FAILED:
-  args: 1
-  format: SMTP HELO misslyckades nÃ¤r vi talade med %s.
-  descr: E-postservern accepterade inte vÃ¥r artiga hÃ¤lsning. Detta beror troligtvis pÃ¥ en felkonfiguration.
- SMTP:MAIL_FROM:
-  args: 1
-  format: AnvÃ¤nder %s som SMTP from (MAIL_FROM).
- SMTP:RAW:
-  args: 1
-  format: SMTP-svar: %s
- SMTP:MAIL_FROM_REJECTED:
-  args: 1
-  format: E-postservern accepterade inte %s som SMTP-destination.
-  descr: E-postservern accepterade inte vÃ¥r avsÃ¤ndaradress. DNSCheck anvÃ¤nder en standard null avsÃ¤ndaradress som mÃ¥ste accepteras av e-postservrar.
- SMTP:RCPT_TO:
-  args: 1
-  format: AnvÃ¤nder %s som SMTP-mottagare (RCPT_TO).
- SMTP:RECIPIENT_REJECTED:
-  args: 1
-  format: E-postservern accepterade inte %s som SMTP-mottagare.
-  descr: E-postservern accepterade inte e-post till mottagaradressen. Detta beror troligtvis pÃ¥ att det Ã¤r en okÃ¤nd adress.
- SMTP:RSET:
-  args: 0
-  format: SÃ¤nder SMTP reset (RSET).
- SMTP:TIMEOUT:
-  args: 0
-  format: E-postservern anvÃ¤nde fÃ¶r lÃ¥ng tid fÃ¶r att svara pÃ¥ kommando.
- SMTP:QUIT:
-  args: 0
-  format: SÃ¤nder SMTP quit (QUIT).
- SMTP:OK:
-  args: 3
-  format: SMTP-test av %s (%s) med %s lyckades utan fel.
- SMTP:END:
-  args: 3
-  format: Klar med test av e-postservern %s (%s) med %s.
-
- SOA:BEGIN:
-  args: 1
-  format: BÃ¶rjar testa SOA-parametrar fÃ¶r %s.
- SOA:NOT_FOUND:
-  args: 1
-  format: Hittade ingen SOA-post fÃ¶r %s.
-  descr: Ingen SOA-post (Start Of Authority) hittades nÃ¤r DNS-servern anropades. Detta beror troligtvis pÃ¥ en felkonfiguration av DNS-servern - en zon mÃ¥ste ha en SOA-post. 
- SOA:FOUND:
-  args: 1
-  format: Hittade SOA-post fÃ¶r %s.
- SOA:MULTIPLE_SOA:
-  args: 1
-  format: Flera olika SOA-poster hittades fÃ¶r %s.
-  descr: Flera olika SOA-poster hittades nÃ¤r DNS-servrern anropades. Detta Ã¤r ett allvarligt fel och beror definitivt pÃ¥ en felkonfigurering.
- SOA:MNAME_ERROR:
-  args: 2
-  format: Fel nÃ¤r SOA MNAME testades fÃ¶r %s (%s).
-  descr: SOA MNAME innehÃ¶ll inte ett giltigt vÃ¤rdnamn.
- SOA:MNAME_VALID:
-  args: 2
-  format: SOA MNAME fÃ¶r %s giltig (%s).
- SOA:NS_NOT_FOUND:
-  args: 1
-  format: Ingen NS-post hittad fÃ¶r %s.
-  descr: Inga NS-poster hittades fÃ¶r zonen. Detta Ã¤r ett allvarligt fel och beror pÃ¥ en felkonfigurering.
- SOA:MNAME_STEALTH:
-  args: 2
-  format: SOA MNAME fÃ¶r %s (%s) Ã¤r inte listad som NS.
-  descr: DNS-servern listad som SOA MNAME Ã¤r inte listad som en DNS-server.
- SOA:MNAME_PUBLIC:
-  args: 2
-  format: SOA MNAME fÃ¶r %s (%s) listad som NS.
-  descr: DNS-servern listad som SOA MNAME Ã¤r listad som en DNS-server.
- SOA:MNAME_NOT_AUTH:
-  args: 2
-  format: SOA MNAME fÃ¶r %s (%s) Ã¤r inte auktoritativ.
-  descr: DNS-servern listad som den primÃ¤ra kÃ¤llan fÃ¶r data fÃ¶r denna zon svarar inte auktoritativt. Detta beror troligtvis pÃ¥ en felkonfigurering - kanske Ã¤r SOA MNAME inte uppsatt som DNS-server fÃ¶r zonen.
- SOA:MNAME_IS_AUTH:
-  args: 2
-  format: SOA MNAME fÃ¶r %s (%s) Ã¤r auktoritativ.
- SOA:MNAME_IS_CNAME:
-  args: 2
-  format: SOA MNAME %s pekar pÃ¥ ett CNAME (%s).
- SOA:RNAME_UNDELIVERABLE:
-  args: 3
-  format: Lyckades inte skicka e-post till SOA RNAME fÃ¶r %s (%s) med %s.
-  descr: DNSCheck lyckades inte skicka e-post till den epostadress som Ã¤r listad som ansvarig fÃ¶r zonen.
- SOA:RNAME_DELIVERABLE:
-  args: 3
-  format: Lyckat fÃ¶rsÃ¶k att skicka e-post till SOA RNAME fÃ¶r %s (%s) med %s.
- SOA:RNAME_SYNTAX:
-  args: 2
-  format: Ogiltig SOA RNAME-syntax fÃ¶r %s: %s
-  descr: E-postadressen i SOA RNAME Ã¤r felaktigt specificerad. Ett vanligt fel Ã¤r att anvÃ¤nda @ i adress-fÃ¤ltet -  en adress from hostmaster@example.com mÃ¥ste specificeras som hostmaster.example.com.
- SOA:TTL_SMALL:
-  args: 3
-  format: SOA TTL fÃ¶r %s fÃ¶r lÃ¥gt (%s) - rekommenderat >= %s.
-  descr: Ju lÃ¤gre SOA TTL-vÃ¤rdet Ã¤r, ju oftare behÃ¶ver resolvrar Ã¥teranropa efter SOA record.
- SOA:TTL_OK:
-  args: 3
-  format: SOA TTL fÃ¶r %s OK (%s) - rekommenderat >= %s.
- SOA:REFRESH_SMALL:
-  args: 3
-  format: SOA refresh fÃ¶r %s fÃ¶r lÃ¥gt (%s) - rekommenderat >= %s.
-  descr: SOA refresh avgÃ¶r hur ofta en sekundÃ¤r DNS-server ska kontakta den primÃ¤ra DNS-servern fÃ¶r zon-uppdateringar.
- SOA:REFRESH_OK:
-  args: 3
-  format: SOA refresh fÃ¶r %s OK (%s) - rekommenderat >= %s.
- SOA:RETRY_VS_REFRESH:
-  args: 3
-  format: SOA refresh fÃ¶r %s lÃ¤gre Ã¤n retry (%s vs %s).
-  descr: Retry-vÃ¤rdet Ã¤r tiden som den sekundÃ¤ra DNS-servern kommer vÃ¤nta innan den kontaktar den primÃ¤ra DNS-servern igen om det senaste fÃ¶rsÃ¶ket misslyckades. Om refresh-vÃ¤rdet Ã¤r lÃ¤gre Ã¤n retry-vÃ¤rdet blir det meningslÃ¶st.
- SOA:RETRY_SMALL:
-  args: 3
-  format: SOA retry fÃ¶r %s fÃ¶r lÃ¥gt (%s) - rekommenderat >= %s.
-  descr: Retry-vÃ¤rdet Ã¤r tiden som den sekundÃ¤ra DNS-servern kommer vÃ¤nta innan den kontaktar den primÃ¤ra DNS-servern igen om det senaste fÃ¶rsÃ¶ket misslyckades. Om retry-vÃ¤rdet Ã¤r fÃ¶r lÃ¥gt kommer den sekundÃ¤ra DNS-servern att fÃ¶rsÃ¶ka fÃ¶r ofta.
- SOA:RETRY_OK:
-  args: 3
-  format: SOA retry fÃ¶r %s OK (%s) - rekommenderat >= %s.
- SOA:EXPIRE_SMALL:
-  args: 3
-  format: SOA expire fÃ¶r %s fÃ¶r lÃ¥gt (%s) - rekommenderat >= %s.
-  descr: VÃ¤rdet fÃ¶r SOA expire definierar hur lÃ¤nge en sekundÃ¤r DNS-server ska vÃ¤nta innan den anser att DNS-data fÃ¶r en zon Ã¤r fÃ¶r gammalt ifall den inte lyckas nÃ¥ den primÃ¤ra DNS-servern.
- SOA:EXPIRE_OK:
-  args: 3
-  format: SOA expire fÃ¶r %s OK (%s) - rekommenderat >= %s.
- SOA:EXPIRE_VS_REFRESH:
-  args: 1
-  format: SOA expire fÃ¶r %s Ã¤r lÃ¤gre Ã¤n refresh.
-  descr: VÃ¤rdet fÃ¶r SOA expire bÃ¶r vara minst 7 gÃ¥nger stÃ¶rre Ã¤n vÃ¤rdet fÃ¶r SOA refresh. Detta fÃ¶r att ge sekundÃ¤ra DNS-servrar en chans att hinna uppdatera sin kopia av zonen innan datat anses fÃ¶r gammalt.
- SOA:MINIMUM_SMALL:
-  args: 3
-  format: SOA minimum fÃ¶r %s fÃ¶r lÃ¥gt (%s) - rekommenderat >= %s.
-  descr: SOA minimum anvÃ¤nds fÃ¶r att cachande resolvrar ska veta hur lÃ¤nge de kan cacha negativa svar. Om vÃ¤rdet Ã¤r fÃ¶r litet kommer negativa cachningen inte att fungera och resolvrar kommer att Ã¥teranropa ofta.
- SOA:MINIMUM_LARGE:
-  args: 3
-  format: SOA minimum fÃ¶r %s Ã¤r fÃ¶r stort (%s) - rekommenderat <= %s.
-  descr: SOA minimum anvÃ¤nds fÃ¶r att cachande resolvrar ska veta hur lÃ¤nge de kan cacha negativa svar. Om vÃ¤rdet Ã¤r fÃ¶r stort blir den negativa cachningen fÃ¶r agressiv.
- SOA:MINIMUM_OK:
-  args: 4
-  format: SOA minimum fÃ¶r %s OK (%s) - mellan %s och %s rekommenderas.
- SOA:SKIPPED_IPV4:
-  args: 1
-  format: IPv4 avaktiverad - kommer inte slÃ¥ upp SOA MNAME hos %s.
- SOA:SKIPPED_IPV6:
-  args: 1
-  format: IPv6 avaktiverad - kommer inte slÃ¥ upp SOA MNAME hos %s.
- SOA:SERIAL_IS_ZERO:
-     args: 1
-     format: Serienumret fÃ¶r SOA-posten fÃ¶r zonen %s bÃ¶r inte vara noll.
- SOA:END:
-  args: 1
-  format: Klar med test av SOA-parametrar fÃ¶r %s.
-
- ZONE:BEGIN:
-  args: 2
-  format: BÃ¶rjar testa zonen %s med version %s.
- ZONE:VERSIONS:
-     args: 1
-     format: Modulversioner: %s.
- ZONE:FATAL_DELEGATION:
-  args: 1
-  format: Kritiskt fel i delegering av zonen %s.
-  descr: Inga DNS-servrar hittade hos barn- eller fÃ¶rÃ¤ldrazonen. Ytterligare tester kan ej utfÃ¶ras.
- ZONE:FATAL_NO_CHILD_NS:
-  args: 1
-  format: Kritiskt fel - inga DNS-servrar i barnzonen fÃ¶r %s.
-  descr: Inga DNS-servrar fÃ¶r barnzonen hittades. Ytterligare tester kan ej utfÃ¶ras.
- ZONE:END:
-  args: 1
-  format: Klar med test av zonen %s.
- ZONE:INVALID_NAME:
-   args: 1
-   format: %s Ã¤r inte ett giltigt namn pÃ¥ en zon.
- NSTIME:AVERAGE:
-     args: 6
-     format: Zon %s, server %s: %s anrop, %sms medel, %sms min, %sms max, %sms standardavvikelse.
+    format: Lägger till DNS-servern %s i svartlista.
+  DNS:ANSWER_DUMP:
+    args: 1
+    format: 'Resultat av DNS-uppslagning: %s'
+  DNS:CHILD_RESPONSE:
+    args: 1
+    format: 'DNS-svar från barnet: %s'
+  DNS:DNSSEC_DESIRED:
+    args: 0
+    format: DNSSEC önskvärt på DNS-resolver.
+  DNS:DNSSEC_DISABLED:
+    args: 0
+    format: DNSSEC ej aktiverat på DNS-resolver.
+  DNS:EXPLICIT_RESPONSE:
+    args: 1
+    format: 'DNS-server svar: %s'
+  DNS:FAKE_PACKET:
+    args: 3
+    format: Konstruerar paket i zon %s för %s/%s.
+  DNS:FIND_ADDRESSES:
+    args: 2
+    format: Hittade adresser för %s/%s
+  DNS:FIND_ADDRESSES_RESULT:
+    args: 3
+    format: 'Adresser för %s/%s: %s'
+  DNS:FIND_MX_BEGIN:
+    args: 1
+    format: Slå upp MX-pekare för %s.
+  DNS:FIND_MX_RESULT:
+    args: 2
+    format: 'Hittade MX-pekare för %s: %s'
+  DNS:FIND_PARENT:
+    args: 2
+    format: Söker förälder till %s/%s.
+  DNS:FIND_PARENT_BEGIN:
+    args: 2
+    format: Försöker hitta föräldern till %s/%s
+  DNS:FIND_PARENT_DOMAIN:
+    args: 1
+    format: Använder %s som utgångpunkt för att hitta föräldrazonen.
+  DNS:FIND_PARENT_RESULT:
+    args: 3
+    format: Slog upp %s som förälder till %s/%s.
+  DNS:FIND_PARENT_TRY:
+    args: 1
+    format: Testar %s som föräldrazon.
+  DNS:FIND_PARENT_UPPER:
+    args: 1
+    format: Föräldrazonen kan vara %s.
+  DNS:GET_NS_AT_CHILD:
+    args: 2
+    format: DNS-uppslagning av NS för %s/%s hos barnet.
+  DNS:GET_NS_AT_PARENT:
+    args: 2
+    format: DNS-uppslagning av NS för %s/%s hos förälder.
+  DNS:INITIALIZING_NAMESERVERS:
+    args: 2
+    format: Initialiserar DNS-servrar för %s/%s.
+  DNS:LOOKUP_ERROR:
+    args: 1
+    descr: ~
+    format: Fel i DNS-uppslagning (%s).
+  DNS:NAMESERVERS_INITIALIZED:
+    args: 2
+    format: DNS-servrar för %s/%s initialiserade.
+  DNS:NAMESERVER_FOUND:
+    args: 4
+    format: 'Hittade DNS-server för %s/%s: %s (%s)'
+  DNS:NOT_AUTH:
+    args: 4
+    format: DNS-servern %s är inte auktoritativ för %s/%s/%s.
+  DNS:NO_ANSWER:
+    args: 4
+    descr: ~
+    format: Inget svar från %s för uppslagning av %s/%s/%s.
+  DNS:NO_CHILD_NS:
+    args: 2
+    descr: ~
+    format: Lyckades inte hitta DNS-servrar för %s/%s.
+  DNS:NO_EDNS:
+    args: 1
+    descr: 'EDNS är ett tillägg i DNS-protokollet. Den huvudsakliga förändringen är att storleksgränsen på 512 byte för anropspaketen har tagits bort, vilket gör att mer information kan sändas. EDNS är nödvändigt för nyare protokoll och tekniker som behöver större paket-storlek så som DNSSEC och IPv6.'
+    format: '%s stöder inte EDNS.'
+  DNS:NO_PARENT:
+    args: 2
+    descr: DNSCheck lyckades inte hitta föräldern.
+    format: Lyckades inte hitta föräldern till %s/%s.
+  DNS:NO_PARENT_NS:
+    args: 3
+    descr: ~
+    format: Lyckades inte hitta DNS-server för %s (förälder till %s/%s).
+  DNS:NXDOMAIN:
+    args: 2
+    descr: ~
+    format: Domänen %s/%s finns inte.
+  DNS:PARENT_OF:
+    args: 3
+    format: Hittade %s som förälder till %s/%s.
+  DNS:PARENT_RESPONSE:
+    args: 1
+    format: 'DNS-svar från föräldern: %s'
+  DNS:QUERY_CHILD:
+    args: 4
+    format: Anropa godtycklig DNS-server för %s om %s/%s/%s.
+  DNS:QUERY_CHILD_NOCACHE:
+    args: 4
+    format: Anropa godtycklig DNS-server (utan cache) för %s om %s/%s/%s.
+  DNS:QUERY_EXPLICIT:
+    args: 4
+    descr: ~
+    format: Anropa %s för %s/%s/%s.
+  DNS:QUERY_PARENT:
+    args: 4
+    format: Anropar förälder till %s för %s/%s/%s.
+  DNS:QUERY_PARENT_NOCACHE:
+    args: 4
+    format: Anropar förälder (utan cache) till %s för %s/%s/%s.
+  DNS:QUERY_RESOLVER:
+    args: 3
+    format: DNS-anrop för %s/%s/%s.
+  DNS:QUERY_TIMEOUT:
+    args: 4
+    descr: ~
+    format: DNS-servern %s använde för lång tid för uppslagning av %s/%s/%s (time-out).
+  DNS:RECURSION_DESIRED:
+    args: 0
+    format: Rekursion önskvärd på DNS-resolver.
+  DNS:RECURSION_DISABLED:
+    args: 0
+    format: Rekursion inte aktiverad på DNS-resolver.
+  DNS:RESOLVER_QUERY_TIMEOUT:
+    args: 3
+    descr: ~
+    format: Timeout för DNS-uppslagning av %s/%s/%s.
+  DNS:RESOLVER_RESPONSE:
+    args: 1
+    format: 'DNS-svar från resolver: %s'
+  DNS:SETUP_RESOLVER:
+    args: 0
+    format: DNS-resolver konfigurerad.
+  DNS:SET_BUFSIZE:
+    args: 1
+    format: DNS-resolverns EDNS buffert-storlek satt till %s.
+  DNS:SOA_SERVFAIL:
+    args: 1
+    format: DNS SERVFAIL under anrop av %s för SOA.
+  DNS:TRANSPORT_TCP:
+    args: 0
+    format: DNS-resolverns kommunikationsmetod satt till TCP.
+  DNS:TRANSPORT_UDP:
+    args: 0
+    format: DNS-resolverns kommunikationsmetod satt till UDP.
+  DNS:UNQUERIBLE_ADDRESS:
+    args: 1
+    format: Lyckades inte skicka anrop till %s.
+  DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
+    args: 2
+    descr: Inga DNSSEC-signaturer fanns inkluderade i svaren från DNS-servern. Detta beror troligtvis på en felkonfiguration hos DNS-servern.
+    format: 'Ytterligare DNSSEC-bearbetning ej möjlig för %s (server: %s).'
+  DNSSEC:ALGORITHM_OK:
+    args: 1
+    format: Algoritm nummer %s är OK.
+  DNSSEC:ALGORITHM_PRIVATE:
+    args: 1
+    format: Algoritm nummer %s är privat.
+  DNSSEC:ALGORITHM_RESERVED:
+    args: 1
+    format: Algoritm nummer %s är reserverad.
+  DNSSEC:ALGORITHM_UNASSIGNED:
+    args: 1
+    format: Algoritm nummer %s är inte tilldelad.
+  DNSSEC:BEGIN:
+    args: 1
+    format: Börjar testa DNSSEC för %s.
+  DNSSEC:CHECKING_CHILD:
+    args: 1
+    format: Kollar DNSSEC i barnzonen (%s).
+  DNSSEC:CHECKING_DNSKEY_AT_CHILD:
+    args: 1
+    format: Kollar DNSKEY-poster för %s i barnzonen.
+  DNSSEC:CHECKING_DS_AT_PARENT:
+    args: 1
+    format: Kollar DS-poster för %s i föräldrazonen.
+  DNSSEC:CHECKING_PARENT:
+    args: 1
+    format: Kontrollerar DNSSEC för föräldrazonen till %s.
+  DNSSEC:CHILD_CHECKED:
+    args: 1
+    format: Klar med DNSSEC-tester av barnzonen för %s.
+  DNSSEC:CHILD_CHECK_ABORTED:
+    args: 1
+    format: Avbröt DNSSEC-tester av barnzonen för %s.
+  DNSSEC:CONSISTENT_EXTRA_PROCESSING:
+    args: 1
+    format: Servrarna för %s är överens om extra hantering för DNSSEC.
+  DNSSEC:CONSISTENT_SECURITY:
+    args: 1
+    format: Konsekvent säkerhet för %s.
+  DNSSEC:DETERMINE_SECURITY_STATUS:
+    args: 1
+    format: Avgör säkerhetsstatus för %s.
+  DNSSEC:DNSKEY_ALGORITHM:
+    args: 4
+    format: '%s nyckel med tag %s använder algorithm nummer %s (%s).'
+  DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
+    args: 3
+    descr: 'En DNSKEY some använder en icke-rekommenderad algoritm hittades - du borde överväga att sluta använda icke-rekommenderade algoritmer om du inte har väldigt goda skäl för att använda dem.'
+    format: 'DNSKEY %s (tag %s) använder en icke-rekommenderad algoritm: %s'
+  DNSSEC:DNSKEY_FOUND:
+    args: 1
+    descr: 'En DNSKEY RRset hittades i barnzonen, vilket indikerar att den troligtvis använder DNSSEC.'
+    format: Hittade en DNSKEY-post för %s i barnzonen.
+  DNSSEC:DNSKEY_MANDATORY_FOUND:
+    args: 1
+    format: Minst en obligatorisk algoritm hittad för DNSKEY %s.
+  DNSSEC:DNSKEY_MANDATORY_NOT_FOUND:
+    args: 1
+    descr: Minst en DNSKEY bör vara av typen RSA/SHA1.
+    format: Ingen obligatorisk algoritm hittad för DNSKEY %s.
+  DNSSEC:DNSKEY_NOT_FOUND:
+    args: 1
+    descr: 'Inget DNSKEY RRset hittades i barnzonen, vilket indikerar att barnzonen troligtvis inte använder DNSSEC.'
+    format: Hittade ingen DNSKEY-post för %s i barnzonen.
+  DNSSEC:DNSKEY_NO_VALID_SIGNATURES:
+    args: 1
+    descr: 'Inga godkända signaturer för DNSKEY RRset för zonen hittades - kontrollera att zonen är signerad med en godkänd, publik nyckel.'
+    format: Hittade ej tillräckligt med godkända signaturer hittade för %s.
+  DNSSEC:DNSKEY_SEP:
+    args: 2
+    descr: 'En säker startpunkt (Secure Entry Point - SEP) är en del av förtroendekedjan mellan föräldrazonen och barnzonen.'
+    format: DNSKEY %s (tag %s) är markerad som en säker startpunkt (SEP).
+  DNSSEC:DNSKEY_SIGNATURE_OK:
+    args: 2
+    format: Hittade RRSIG(DNSKEY %s) skapad av publik nyckel (tag %s).
+  DNSSEC:DNSKEY_SIGNER_UNPUBLISHED:
+    args: 2
+    descr: DNSSEC-signaturer skapade av privata nycklar kan inte kontrolleras genom att kontrollera resolvrar. Alla nycklar som används för att signera data måste vara publika.
+    format: Hittade RRSIG(DNSKEY %s) skapad av privat nyckel (tag %s).
+  DNSSEC:DNSKEY_SKIP_PROTOCOL:
+    args: 3
+    descr: DNSKEY måste använda protokollvärdet för DNSSEC (3).
+    format: DNSKEY %s (tag %s) är inte en DNSSEC-nyckel (protokoll=%s).
+  DNSSEC:DNSKEY_SKIP_TYPE:
+    args: 2
+    descr: DNSKEY måste vara en zonsigneringsnyckel.
+    format: DNSKEY %s (tag %s) är inte en zonsigneringsnyckel.
+  DNSSEC:DNSKEY_VALID_SIGNATURES:
+    args: 1
+    format: Tillräckligt med godkända signaturer hittade för %s.
+  DNSSEC:DS_ALGORITHM:
+    args: 4
+    format: '%s nyckel med tag %s använder algorithm nummer %s (%s).'
+  DNSSEC:DS_FOUND:
+    args: 1
+    descr: 'En DS (delegation signer) RRset hittades i föräldrazonen. Det här indikerar en säker delegering, d.v.s. barnzonen måste vara signerad.'
+    format: Hittade DS-post för %s i föräldrazonen.
+  DNSSEC:DS_KEYREF_INVALID:
+    args: 2
+    descr: 'DS RRset måste referera till en giltig nyckel hos barnzonen, annars bryts förtroendekedjan mellan föräldrazonen och barnzonen vilket innebär att validerande resolvrar inte kommer kunna validera svaren från barnzonen.'
+    format: 'Föräldrazonens %s refererar till icke godkänd nyckel hos barnzonen: %s'
+  DNSSEC:DS_KEYREF_OK:
+    args: 2
+    format: 'Föräldrazonens %s refererar till en godkänd nyckel för barnzonen: %s'
+  DNSSEC:DS_MANDATORY_FOUND:
+    args: 1
+    format: Minst en obligatorisk DS-algoritm hittad för %s.
+  DNSSEC:DS_MANDATORY_NOT_FOUND:
+    args: 1
+    descr: 'Eftersom ingen av hash-algoritmerna publicerade i DS RRset är obligatoriska, kommer vissa validerande resolvers att inte kunna följa förtroendekedjan från föräldrazonen till barnzonen.'
+    format: Ingen obligatorisk DS-algoritm hittad för %s.
+  DNSSEC:DS_TO_NONSEP:
+    args: 2
+    descr: DS RRset refererar till en DNSKEY hos barnzonen men nyckeln är inte markerad som en säker startpunkt.
+    format: 'Föräldrazonens DS(%s) refererar inte till en säker startpunkt (SEP) hos barnzonen: %s'
+  DNSSEC:DS_TO_SEP:
+    args: 2
+    format: 'Föräldrazonens DS(%s) refererar till en säker startpunkt (SEP) hos barnzonen: %s'
+  DNSSEC:END:
+    args: 1
+    format: Klar med test av DNSSEC för %s.
+  DNSSEC:EXTRA_PROCESSING:
+    args: 1
+    format: Namnservern %s gör extrahantering för DNSSEC.
+  DNSSEC:INCONSISTENT_EXTRA_PROCESSING:
+    args: 1
+    format: Servrarna för %s är inte överens om extra hantering för DNSSEC.
+  DNSSEC:INCONSISTENT_SECURITY:
+    args: 1
+    descr: 'Föräldrazonen har en säker delegering till barnzonen (indikerad av DS RRset i föräldrazonen), men barnzonen har ingen DNSKEY. Detta beror troligtvis på att en f.d. signerad zon blev osignerad utan att begära att föräldrazonen skulle ta bort den säkrade delegeringen.'
+    format: 'Inkonsekvent säkerhet för %s - DS hittad i föräldrazonen, men ingen DNSKEY hittad i barnzonen.'
+  DNSSEC:MISSING_DS:
+    args: 1
+    descr: 'Barnzonen verkar använda DNSSEC, men föräldrazonen har ingen säker delegering. På grund av detta är förtroendekedjan mellan föräldrazonen och barnzonen bruten och validerande resolvrar kommer inte kunna validera svar från barnzonen.'
+    format: 'Bruten förtroendekedja för %s - DNSKEY hittad i barnzonen, men ingen DS hittad i föräldrazonen.'
+  DNSSEC:NO_DS_FOUND:
+    args: 1
+    descr: 'Ingen DS (delegation signer) RRset hittades i föräldrazonen. Det här indikerar en icke-säker delegering, d.v.s. barnzonen behöver inte vara signerad.'
+    format: Hittade inte DS-pekare för %s i föräldrazonen.
+  DNSSEC:NO_EXTRA_PROCESSING:
+    args: 1
+    format: Namnservern %s gör inte extra hantering för DNSSEC.
+  DNSSEC:NO_SIGNATURES:
+    args: 1
+    descr: Inga DNSSEC-signaturer hittades när zonen kontrollerades. Zonen kanske inte är signerad?
+    format: Inga signaturer hittade för %s.
+  DNSSEC:NO_VALID_DS:
+    args: 1
+    format: 'Zonen %s har publicerade DS-poster, men ingen av dem fungerar.'
+  DNSSEC:PARENT_CHECKED:
+    args: 1
+    format: Klar med DNSSEC-tester av föräldrazonen för %s.
+  DNSSEC:PARENT_DS:
+    args: 2
+    format: 'Hittade DS(%s) i föräldrazonen: %s'
+  DNSSEC:RRSIG_EXPIRED:
+    args: 1
+    descr: DNSSEC-signaturen är ogiltig då den gått ut och kommer således ignoreras av validerande resolvers.
+    format: 'Ogiltig DNSSEC-signatur: %s'
+  DNSSEC:RRSIG_EXPIRES_AT:
+    args: 1
+    format: 'DNSSEC-signaturen går ut: %s'
+  DNSSEC:RRSIG_FAILS_VERIFY:
+    args: 2
+    format: 'DNSSEC-signaturen %s validerar inte RR-gruppen: %s'
+  DNSSEC:RRSIG_NOT_YET_VALID:
+    args: 1
+    descr: Ännu ej godkända signaturer kommer ignoreras av en validerande resolver.
+    format: 'DNSSEC-signatur ej godkänd än: %s'
+  DNSSEC:RRSIG_VALID:
+    args: 1
+    format: 'DNSSEC-signatur godkänd: %s'
+  DNSSEC:RRSIG_VERIFIES:
+    args: 1
+    format: DNSSEC-signaturen %s stämmer med innehållet.
+  DNSSEC:SKIPPED_NO_KEYS:
+    args: 1
+    format: Inga DNSKEY(s) hittade i barnzonen. Andra test hoppades över.
+  DNSSEC:SOA_NO_VALID_SIGNATURES:
+    args: 1
+    descr: Hittade inga godkända signaturer för SOA
+    format: Hittade ej tillräckligt med godkända signaturer över SOA RRset hittade för %s.
+  DNSSEC:SOA_SIGNATURE_OK:
+    args: 2
+    format: RRSIG(SOA %s) skapad av DNSKEY (tag %s) OK.
+  DNSSEC:SOA_SIGNER_UNPUBLISHED:
+    args: 2
+    descr: DNSSEC-signaturer skapade av privata nycklar kan inte kontrolleras av validerande resolvrar. Alla nycklar som används för att signera data måste vara publika.
+    format: Hittade RRSIG(SOA %s) skapad av publik nyckel (tag %s).
+  DNSSEC:SOA_VALID_SIGNATURES:
+    args: 1
+    format: Tillräckligt med godkända signaturer över SOA RRset hittade för %s.
+  ENGINE:CRASH:
+    args: 0
+    format: DNSCheck-motorn kraschade.
+  HOST:BEGIN:
+    args: 1
+    format: Börjar testa värdnamn %s.
+  HOST:CNAME_FOUND:
+    args: 1
+    descr: 'Värdnamnet är ett alias (CNAME), vilket inte är tillåtet. Värdnamn måste publiceras med en A- eller AAAA-pekare.'
+    format: Värdnamnet %s hänvisar till ett CNAME.
+  HOST:END:
+    args: 1
+    format: Klar med test av värdnamnet %s.
+  HOST:ILLEGAL_NAME:
+    args: 2
+    descr: 'Värdnamnet är inte syntaktiskt korrekt enligt RFC 952. Ett vanligt fel är att börja ett värdnamn med något annat än en bokstav (a-z) eller använda otillåtna tecken i namnet (endast a-z, 0-9 samt - är tillåtna).'
+    format: Värdnamnet %s innehåller fel (syntax-fel på %s)
+  HOST:NOT_FOUND:
+    args: 1
+    descr: 'Ingen IPv4- eller IPv6-adress hittades för värdnamnet.'
+    format: Hittar ingen adress för %s.
+  MAIL:ADDRESS_SYNTAX:
+    args: 1
+    format: '%s är inte en korrekt e-postadress.'
+  MAIL:ALL_MX_IN_ZONE:
+    args: 2
+    format: Alla mailservrar för %s finns i zonen %s.
+  MAIL:BEGIN:
+    args: 1
+    format: Börjar testa e-postadressen %s.
+  MAIL:DELIVERY_IPV4_NOT_OK:
+    args: 1
+    format: Leverans över IPv4 till %s fungerade inte.
+  MAIL:DELIVERY_IPV4_OK:
+    args: 1
+    format: Leverans över IPv4 till %s fungerade.
+  MAIL:DELIVERY_IPV6_NOT_OK:
+    args: 1
+    format: Leverans över IPv6 till %s fungerade inte.
+  MAIL:DELIVERY_IPV6_OK:
+    args: 1
+    format: Leverans över IPv6 till %s fungerade.
+  MAIL:DOMAIN_NOT_FOUND:
+    args: 1
+    descr: Inga MX-pekare hittades för domänen. Detta gör det omöjligt att leverera e-post till mottagare inom den domänen.
+    format: Inga MX-pekare hittade för domänen %s.
+  MAIL:END:
+    args: 1
+    format: Klar med test av e-postadressen %s.
+  MAIL:HOST_ERROR:
+    args: 1
+    descr: Värdnamnet för MX-pekaren är ogiltigt. Ett vanligt fel är att peka MX-pekaren till ett alias (CNAME) eller direkt till en IP-adress.
+    format: Ogiltigt värdnamn för MX-pekaren %s.
+  MAIL:IPV6_ONLY:
+    args: 1
+    descr: 'Denna e-postserver är endast nåbar via IPv6, vilket gör det omöjligt för de flesta att skicka epost till den. Om mer än en MX finns och minst en går att nå via IPv4 kan detta ignoreras.'
+    format: E-postservern %s är endast nåbar via IPv6.
+  MAIL:MAIL_EXCHANGER:
+    args: 2
+    format: Epost-servrar för %s hittade %s.
+  NAMESERVER:AUTH:
+    args: 3
+    format: DNS-servern %s (%s) är auktoritativ för %s.
+  NAMESERVER:AXFR_CLOSED:
+    args: 3
+    format: DNS-servern %s (%s) tillåter inte zonöverföring av %s.
+  NAMESERVER:AXFR_OPEN:
+    args: 3
+    descr: DNS-servern accepterar zonöverförings-anrop från vem som helst.
+    format: DNS-servern %s (%s) öppen för zonöverföring av %s.
+  NAMESERVER:AXFR_SKIP:
+    args: 3
+    descr: Zonöverföring testades inte på DNS-servern eftersom den inte svarar på anrop över TCP.
+    format: DNS-servern %s (%s) inte testad för zonöverföring av %s.
+  NAMESERVER:BEGIN:
+    args: 1
+    format: Börjar testa DNS-servern %s.
+  NAMESERVER:CHECKING_AUTH:
+    args: 2
+    format: Testar auktoritet för %s (%s).
+  NAMESERVER:CHECKING_LEGACY_ID:
+    args: 2
+    format: Kollar efter legacy NSID för %s (%s).
+  NAMESERVER:CHECKING_NSID:
+    args: 2
+    format: Kollar efter NSID för %s (%s).
+  NAMESERVER:CHECKING_RECURSION:
+    args: 2
+    format: Testar rekursion för %s på adressen %s.
+  NAMESERVER:END:
+    args: 1
+    format: Klar med test av DNS-servern %s.
+  NAMESERVER:HOST_ERROR:
+    args: 1
+    descr: 'Det specificerade värdnamnet är inte ett giltigt värdnamn eller så pekar det till en ogiltig IP-adress, m.a.o. en privat eller reserverad IP-adress.'
+    format: Fel på värdnamnet eller adressen för %s.
+  NAMESERVER:LEGACY_ID:
+    args: 4
+    format: 'Legacy NSID för %s (%s): %s = %s'
+  NAMESERVER:LEGACY_ID_SKIP:
+    args: 2
+    format: Legacy NSID inte kollad på DNS-servern %s (%s).
+  NAMESERVER:NOT_AUTH:
+    args: 3
+    descr: 'DNS-servern svarar inte auktoritativt på anrop för den testade domänen. Det beror troligtvis på en felkonfigurering, vanligtvis så har DNS-servern inte ställts in för att agera server för den testade domänen.'
+    format: DNS-servern %s (%s) är inte auktoritativ för %s.
+  NAMESERVER:NOT_RECURSIVE:
+    args: 2
+    format: DNS-servern %s (%s) är inte rekursiv.
+  NAMESERVER:NO_TCP:
+    args: 3
+    descr: 'DNS-servern svarade inte på anrop via TCP. Detta beror troligtvis på att DNS-servern inte är korrekt uppsatt eller en felaktigt konfigurerad brandvägg. Det är en ganska vanlig missuppfattning att DNS inte behöver TCP om den inte tillhandahåller zonöverföringar - kanske är inte DNS-serverns administratör medveten om att TCP vanligtvis är ett krav.'
+    format: DNS-servern %s (%s) svarar inte på anrop via TCP.
+  NAMESERVER:NO_UDP:
+    args: 3
+    descr: DNS-servern svarade inte på anrop via UDP. Detta beror troligtvis på att DNS-servern inte är korrekt uppsatt eller en felaktigt konfigurerad brandvägg.
+    format: DNS-servern %s (%s) svarar inte på anrop via UDP.
+  NAMESERVER:NSID:
+    args: 3
+    format: 'Legacy NSID för %s (%s): %s'
+  NAMESERVER:NSID_SKIP:
+    args: 2
+    format: NSID inte inte kollad på DNS-servern %s (%s).
+  NAMESERVER:RECURSIVE:
+    args: 2
+    descr: DNS-servern svarar på rekursiva anrop från tredje part (så som DNSCheck). Genom rekursiva anrop till en DNS-server som tillhandahåller rekursion kan en angripare få DNS-servern att slå upp och cacha information som finns i zoner som kontrolleras av dem. Således kan DNS-servern tvingas anropa angriparens skadliga DNS-servrar vilket resulterar i att den angripna DNS-servern cachar och presenterar falsk data.
+    format: DNS-servern %s (%s) är rekursiv.
+  NAMESERVER:SKIPPED_IPV4:
+    args: 1
+    format: 'IPv4 avaktiverad - kommer inte testa DNS-servern på %s'
+  NAMESERVER:SKIPPED_IPV6:
+    args: 1
+    format: 'IPv6 avaktiverad - kommer inte testa DNS-servern på %s'
+  NAMESERVER:TCP_OK:
+    args: 3
+    format: DNS-servern %s (%s) svarar på anrop via TCP.
+  NAMESERVER:TESTING_AXFR:
+    args: 2
+    format: Testar zonöverföring för DNS-servern %s (%s).
+  NAMESERVER:TESTING_TCP:
+    args: 2
+    format: Testar TCP-anrop till DNS-servern %s på adressen %s.
+  NAMESERVER:TESTING_UDP:
+    args: 2
+    format: Testar UDP-anrop till DNS-servern %s på adressen %s.
+  NAMESERVER:UDP_OK:
+    args: 3
+    format: DNS-servern %s (%s) svarar på anrop via UDP.
+  NSTIME:AVERAGE:
+    args: 6
+    format: 'Zon %s, server %s: %s anrop, %sms medel, %sms min, %sms max, %sms standardavvikelse.'
+  SMTP:BANNER:
+    args: 2
+    format: 'SMTP banner: %s'
+  SMTP:BEGIN:
+    args: 3
+    format: Börjar testa e-postservern %s (%s) med %s.
+  SMTP:CONNECT_FAILED:
+    args: 2
+    descr: DNSCheck lyckades inte kontakta e-postservern. Servern kan vara nere eller vara onåbar på grund av felkonfigurerad routing och/eller filtrering.
+    format: Lyckades inte kontakta %s (%s).
+  SMTP:END:
+    args: 3
+    format: Klar med test av e-postservern %s (%s) med %s.
+  SMTP:HELLO_FAILED:
+    args: 1
+    descr: E-postservern accepterade inte vår artiga hälsning. Detta beror troligtvis på en felkonfiguration.
+    format: SMTP HELO misslyckades när vi talade med %s.
+  SMTP:MAIL_FROM:
+    args: 1
+    format: Använder %s som SMTP from (MAIL_FROM).
+  SMTP:MAIL_FROM_REJECTED:
+    args: 1
+    descr: E-postservern accepterade inte vår avsändaradress. DNSCheck använder en standard null avsändaradress som måste accepteras av e-postservrar.
+    format: E-postservern accepterade inte %s som SMTP-destination.
+  SMTP:OK:
+    args: 3
+    format: SMTP-test av %s (%s) med %s lyckades utan fel.
+  SMTP:QUIT:
+    args: 0
+    format: Sänder SMTP quit (QUIT).
+  SMTP:RAW:
+    args: 1
+    format: 'SMTP-svar: %s'
+  SMTP:RCPT_TO:
+    args: 1
+    format: Använder %s som SMTP-mottagare (RCPT_TO).
+  SMTP:RECIPIENT_REJECTED:
+    args: 1
+    descr: E-postservern accepterade inte e-post till mottagaradressen. Detta beror troligtvis på att det är en okänd adress.
+    format: E-postservern accepterade inte %s som SMTP-mottagare.
+  SMTP:RSET:
+    args: 0
+    format: Sänder SMTP reset (RSET).
+  SMTP:TIMEOUT:
+    args: 0
+    format: E-postservern använde för lång tid för att svara på kommando.
+  SOA:BEGIN:
+    args: 1
+    format: Börjar testa SOA-parametrar för %s.
+  SOA:END:
+    args: 1
+    format: Klar med test av SOA-parametrar för %s.
+  SOA:EXPIRE_OK:
+    args: 3
+    format: 'SOA expire för %s OK (%s) - rekommenderat >= %s.'
+  SOA:EXPIRE_SMALL:
+    args: 3
+    descr: Värdet för SOA expire definierar hur länge en sekundär DNS-server ska vänta innan den anser att DNS-data för en zon är för gammalt ifall den inte lyckas nå den primära DNS-servern.
+    format: 'SOA expire för %s för lågt (%s) - rekommenderat >= %s.'
+  SOA:EXPIRE_VS_REFRESH:
+    args: 1
+    descr: Värdet för SOA expire bör vara minst 7 gånger större än värdet för SOA refresh. Detta för att ge sekundära DNS-servrar en chans att hinna uppdatera sin kopia av zonen innan datat anses för gammalt.
+    format: SOA expire för %s är lägre än refresh.
+  SOA:FOUND:
+    args: 1
+    format: Hittade SOA-post för %s.
+  SOA:MINIMUM_LARGE:
+    args: 3
+    descr: SOA minimum används för att cachande resolvrar ska veta hur länge de kan cacha negativa svar. Om värdet är för stort blir den negativa cachningen för agressiv.
+    format: 'SOA minimum för %s är för stort (%s) - rekommenderat <= %s.'
+  SOA:MINIMUM_OK:
+    args: 4
+    format: 'SOA minimum för %s OK (%s) - mellan %s och %s rekommenderas.'
+  SOA:MINIMUM_SMALL:
+    args: 3
+    descr: SOA minimum används för att cachande resolvrar ska veta hur länge de kan cacha negativa svar. Om värdet är för litet kommer negativa cachningen inte att fungera och resolvrar kommer att återanropa ofta.
+    format: 'SOA minimum för %s för lågt (%s) - rekommenderat >= %s.'
+  SOA:MNAME_ERROR:
+    args: 2
+    descr: SOA MNAME innehöll inte ett giltigt värdnamn.
+    format: Fel när SOA MNAME testades för %s (%s).
+  SOA:MNAME_IS_AUTH:
+    args: 2
+    format: SOA MNAME för %s (%s) är auktoritativ.
+  SOA:MNAME_IS_CNAME:
+    args: 2
+    format: SOA MNAME %s pekar på ett CNAME (%s).
+  SOA:MNAME_NOT_AUTH:
+    args: 2
+    descr: 'DNS-servern listad som den primära källan för data för denna zon svarar inte auktoritativt. Detta beror troligtvis på en felkonfigurering - kanske är SOA MNAME inte uppsatt som DNS-server för zonen.'
+    format: SOA MNAME för %s (%s) är inte auktoritativ.
+  SOA:MNAME_PUBLIC:
+    args: 2
+    descr: DNS-servern listad som SOA MNAME är listad som en DNS-server.
+    format: SOA MNAME för %s (%s) listad som NS.
+  SOA:MNAME_STEALTH:
+    args: 2
+    descr: DNS-servern listad som SOA MNAME är inte listad som en DNS-server.
+    format: SOA MNAME för %s (%s) är inte listad som NS.
+  SOA:MNAME_VALID:
+    args: 2
+    format: SOA MNAME för %s giltig (%s).
+  SOA:MULTIPLE_SOA:
+    args: 1
+    descr: Flera olika SOA-poster hittades när DNS-servrern anropades. Detta är ett allvarligt fel och beror definitivt på en felkonfigurering.
+    format: Flera olika SOA-poster hittades för %s.
+  SOA:NOT_FOUND:
+    args: 1
+    descr: 'Ingen SOA-post (Start Of Authority) hittades när DNS-servern anropades. Detta beror troligtvis på en felkonfiguration av DNS-servern - en zon måste ha en SOA-post.'
+    format: Hittade ingen SOA-post för %s.
+  SOA:NS_NOT_FOUND:
+    args: 1
+    descr: Inga NS-poster hittades för zonen. Detta är ett allvarligt fel och beror på en felkonfigurering.
+    format: Ingen NS-post hittad för %s.
+  SOA:REFRESH_OK:
+    args: 3
+    format: 'SOA refresh för %s OK (%s) - rekommenderat >= %s.'
+  SOA:REFRESH_SMALL:
+    args: 3
+    descr: SOA refresh avgör hur ofta en sekundär DNS-server ska kontakta den primära DNS-servern för zon-uppdateringar.
+    format: 'SOA refresh för %s för lågt (%s) - rekommenderat >= %s.'
+  SOA:RETRY_OK:
+    args: 3
+    format: 'SOA retry för %s OK (%s) - rekommenderat >= %s.'
+  SOA:RETRY_SMALL:
+    args: 3
+    descr: Retry-värdet är tiden som den sekundära DNS-servern kommer vänta innan den kontaktar den primära DNS-servern igen om det senaste försöket misslyckades. Om retry-värdet är för lågt kommer den sekundära DNS-servern att försöka för ofta.
+    format: 'SOA retry för %s för lågt (%s) - rekommenderat >= %s.'
+  SOA:RETRY_VS_REFRESH:
+    args: 3
+    descr: Retry-värdet är tiden som den sekundära DNS-servern kommer vänta innan den kontaktar den primära DNS-servern igen om det senaste försöket misslyckades. Om refresh-värdet är lägre än retry-värdet blir det meningslöst.
+    format: SOA refresh för %s lägre än retry (%s vs %s).
+  SOA:RNAME_DELIVERABLE:
+    args: 3
+    format: Lyckat försök att skicka e-post till SOA RNAME för %s (%s) med %s.
+  SOA:RNAME_SYNTAX:
+    args: 2
+    descr: 'E-postadressen i SOA RNAME är felaktigt specificerad. Ett vanligt fel är att använda @ i adress-fältet -  en adress from hostmaster@example.com måste specificeras som hostmaster.example.com.'
+    format: 'Ogiltig SOA RNAME-syntax för %s: %s'
+  SOA:RNAME_UNDELIVERABLE:
+    args: 3
+    descr: DNSCheck lyckades inte skicka e-post till den epostadress som är listad som ansvarig för zonen.
+    format: Lyckades inte skicka e-post till SOA RNAME för %s (%s) med %s.
+  SOA:SERIAL_IS_ZERO:
+    args: 1
+    format: Serienumret för SOA-posten för zonen %s bör inte vara noll.
+  SOA:SKIPPED_IPV4:
+    args: 1
+    format: 'IPv4 avaktiverad - kommer inte slå upp SOA MNAME hos %s.'
+  SOA:SKIPPED_IPV6:
+    args: 1
+    format: 'IPv6 avaktiverad - kommer inte slå upp SOA MNAME hos %s.'
+  SOA:TTL_OK:
+    args: 3
+    format: 'SOA TTL för %s OK (%s) - rekommenderat >= %s.'
+  SOA:TTL_SMALL:
+    args: 3
+    descr: 'Ju lägre SOA TTL-värdet är, ju oftare behöver resolvrar återanropa efter SOA record.'
+    format: 'SOA TTL för %s för lågt (%s) - rekommenderat >= %s.'
+  ZONE:BEGIN:
+    args: 2
+    format: Börjar testa zonen %s med version %s.
+  ZONE:END:
+    args: 1
+    format: Klar med test av zonen %s.
+  ZONE:FATAL_DELEGATION:
+    args: 1
+    descr: 'Inga DNS-servrar hittade hos barn- eller föräldrazonen. Ytterligare tester kan ej utföras.'
+    format: Kritiskt fel i delegering av zonen %s.
+  ZONE:FATAL_NO_CHILD_NS:
+    args: 1
+    descr: Inga DNS-servrar för barnzonen hittades. Ytterligare tester kan ej utföras.
+    format: 'Kritiskt fel - inga DNS-servrar i barnzonen för %s.'
+  ZONE:INVALID_NAME:
+    args: 1
+    format: '%s är inte ett giltigt namn på en zon.'
+  ZONE:VERSIONS:
+    args: 1
+    format: 'Modulversioner: %s.'
 
