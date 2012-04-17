@@ -77,9 +77,8 @@ sub new {
     my $locale;
     if ($arg{'localefile'}) {
         $locale = _get_with_path($arg{'localefile'});
-    } else {
-        my $l = $arg{'locale'} || 'en';
-        $locale = _get_with_path(_catfile(dist_dir('DNSCheck'), $l . '.yaml'));
+    } elsif ($arg{'locale'}) {
+        $locale = _get_with_path(_catfile(dist_dir('DNSCheck'), $arg{'locale'} . '.yaml'));
     }
     
     _hashrefcopy($self, $default_config);
