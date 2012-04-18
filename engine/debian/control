@@ -1,30 +1,27 @@
 Source: libdnscheck-perl
 Section: perl
 Priority: optional
-Build-Depends: debhelper (>= 5.0.0)
-Build-Depends-Indep: perl (>= 5.8.8-12ubuntu0.4),libyaml-perl,
-		     libnet-ip-perl (>= 1.25),libtimedate-perl,
-		     libmail-rfc822-address-perl,libdbi-perl,
-		     libcrypt-openssl-random-perl,libnet-dns-sec-perl (>= 0.16),
-		     libdigest-sha1-perl,libsocket6-perl (>= 0.19),
-		     libnet-dns-perl (>= 0.65),libdigest-bubblebabble-perl,
-		     libio-socket-inet6-perl (>= 2.51),libdbd-mysql-perl,libtext-template-perl,libmime-lite-perl,
-		     libmime-base32-perl
-Maintainer: Einar Lönn <einar.lonn@iis.se>
+Build-Depends: debhelper (>= 7)
+Build-Depends-Indep: libcrypt-openssl-random-perl, libdbd-mysql-perl,
+ libdbi-perl, libdigest-bubblebabble-perl, libdigest-sha1-perl,
+ libio-socket-inet6-perl (>= 2.51), libmail-rfc822-address-perl,
+ libmime-base32-perl, libmime-lite-perl, libnet-dns-perl (>= 0.65),
+ libnet-dns-sec-perl (>= 0.16), libnet-ip-perl (>= 1.25),
+ libsocket6-perl (>= 0.19), libtext-template-perl, libtimedate-perl,
+ libyaml-libyaml-perl, perl (>= 5.8.8-12ubuntu0.4),libconfig-any-perl,libfile-sharedir-perl,libfile-sharedir-install-perl
+Maintainer: Calle Dybedahl <calle@init.se>
 Standards-Version: 3.7.2
 Homepage: https://github.com/dotse/dnscheck
 
 Package: libdnscheck-perl
 Architecture: all
-Depends: ${perl:Depends}, ${misc:Depends},libyaml-perl,
-		     libnet-ip-perl (>= 1.25),libtimedate-perl,
-		     libmail-rfc822-address-perl,libdbi-perl,
-		     libcrypt-openssl-random-perl,libnet-dns-sec-perl (>= 0.16),
-		     libdigest-sha1-perl,libsocket6-perl (>= 0.19),
-		     libnet-dns-perl (>= 0.65),libdigest-bubblebabble-perl,
-		     libio-socket-inet6-perl (>= 2.51),libdbd-mysql-perl,libtext-template-perl,libmime-lite-perl,
-		     libmime-base32-perl
-Description:  DNS Check Tools
+Depends: ${misc:Depends}, ${perl:Depends}, libcrypt-openssl-random-perl,
+ libdbd-mysql-perl, libdbi-perl, libdigest-bubblebabble-perl,
+ libdigest-sha1-perl, libio-socket-inet6-perl (>= 2.51),
+ libmail-rfc822-address-perl, libmime-base32-perl, libmime-lite-perl,
+ libnet-dns-perl (>= 0.65), libnet-dns-sec-perl (>= 0.16),
+ libnet-ip-perl (>= 1.25), libsocket6-perl (>= 0.19), libtext-template-perl,
+ libtimedate-perl, libyaml-libyaml-perl,libconfig-any-perl,libfile-sharedir-perl
+Description: DNS Check Tools
  This module includes the Perl parts of the DNSCheck system.
  .
-
