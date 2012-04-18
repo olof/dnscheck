@@ -197,19 +197,9 @@ By default, C<DNSCheck::Config> will load a default configuration and policy,
 which comes with the module. It will then look for an load local configuration 
 and policy that can, if they exist, override the default setup. The local 
 information will be looked for in the files F</etc/dnscheck/config.yaml> and 
-F</etc/dnscheck/policy.yaml>.
-
-
-These four files will be looked for in a number of places: a config directory,
-the current working directory (as determined by the Cwd module) and the
-directory where the running script file is stored (as determined by the
-FindBin module). By default, the config directory is F<share/dnscheck> under
-the root directory for the Perl installation. This can be changed via the
-C<configdir> (for F<config.yaml> and F<policy.yaml>) and C<sitedir> (for
-F<site_config.yalm> and F<site_policy.yaml>) parameters.
-
-The default lookup of a file is disregarded if the parameter giving the full
-path to that file is used.
+F</etc/dnscheck/policy.yaml>. If that's not what you want, you can use the 
+C<configdir>, C<policydir>, C<configfile> and/or C<policyfile> keys when 
+creating the L<DNSCheck> object to read config and policy from somewhere else.
 
 There is no protection against having the same keys in the configuration and
 policy files. The configuration/policy distinction is entirely for human use,
@@ -234,25 +224,13 @@ The available parameters are these:
 The path to the directory in which the module should look for configuration
 and policy files.
 
-=item sitedir
-
-The path to the directory where the site configuration files are. By default the same as F<configdir>.
-
 =item configfile
 
 The full path to the configuration file.
 
-=item siteconfigfile
-
-The full path to the site configuration file.
-
 =item policyfile
 
 The full path to the policy file.
-
-=item sitepolicyfile
-
-The full path to the site policy file.
 
 =item locale
 
