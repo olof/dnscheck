@@ -193,12 +193,12 @@ and such. In addition to this there is I<policy>, which specifies things about
 the tests that get run. Most importantly, the policy information specifies the
 reported severity level of various test failures.
 
-By default, C<DNSCheck::Config> will look for four different files:
-F<policy.yaml>, F<config.yaml>, F<site_policy.yaml> and F<site_config.yaml>.
-Only the first two exist by default. If the second two exist, they will
-override values in their respective non-site file. Local changes should go in
-the site files, since the default files will get overwritten when a new
-DNSCheck version is installed.
+By default, C<DNSCheck::Config> will load a default configuration and policy, 
+which comes with the module. It will then look for an load local configuration 
+and policy that can, if they exist, override the default setup. The local 
+information will be looked for in the files F</etc/dnscheck/config.yaml> and 
+F</etc/dnscheck/policy.yaml>.
+
 
 These four files will be looked for in a number of places: a config directory,
 the current working directory (as determined by the Cwd module) and the
