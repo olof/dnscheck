@@ -1,3 +1,19 @@
+Release Notes for DNSCheck Lib v1.3.0
+=====================================
+Notable changes:
+
+* The configuration file layout has changed completely!
+
+  Instead of the old, complicated variant, default configuration, default 
+  policy and language files are now installed in the proper place in the Perl 
+  module tree. The user should never need to care exactly where that is. Local 
+  changes to the configuration now lives in /etc/dnscheck/config.yaml and 
+  /etc/dnscheck/policy.yaml
+
+  You have to manually move and rename your old site_config.yaml and 
+  site_policy.yaml, if you have them!
+
+
 Release Notes for DNSCheck Lib v1.2.6
 =====================================
 Notable changes:
