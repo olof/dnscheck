@@ -1,12 +1,12 @@
-apps/dnscheck-12hourmailer.pl
-apps/dnscheck-dispatcher.pl
-apps/dnscheck-dnssecmailer.pl
-apps/dnscheck-hostsyntax.pl
-apps/dnscheck-preflight.pl
-apps/dnscheck-zonediff.pl
-apps/dnscheck.pl
-build/preprocessor.pl
-config.yaml
+apps/dnscheck
+apps/dnscheck-12hourmailer
+apps/dnscheck-dispatcher
+apps/dnscheck-dnssecmailer
+apps/dnscheck-hostsyntax
+apps/dnscheck-preflight
+apps/dnscheck-zonediff
+config/config.yaml
+config/policy.yaml
 contrib/dnscheck-daemon.pl
 contrib/dnscheck-dispatcher.sh
 contrib/README
@@ -18,6 +18,9 @@ debian/changelog
 debian/compat
 debian/control
 debian/copyright
+debian/dirs
+debian/dnscheck-dispatcher.sh
+debian/install
 debian/rules
 doc/call-flow.png
 doc/data-flow-batch.png
@@ -36,6 +39,7 @@ examples/dnscheck_dispatcher.sh
 examples/dnscheck_nagios_plugin.pl
 examples/dnssec.pl
 examples/domain.template
+examples/dump_config.pl
 examples/host.pl
 examples/locale.pl
 examples/logger.pl
@@ -78,7 +82,6 @@ Makefile.PL
 MANIFEST			This list of files
 MockBootstrap.pm
 MockResolver.pm
-policy.yaml
 README
 RELEASE_NOTES
 t/address.json
