@@ -125,11 +125,23 @@ sub slog {
     }
 }
 
+sub do_kill {
+    my ($pidfile, $signal) = @_;
+    $signal = 15 unless defined($signal);
+
+    open my $fh, '<', $pidfile or die "Failed to open $pidfile: $!\n";
+    my ($pid) = <$fh>;
+    
+    kill $signal, $pid;
+}
+
 sub setup {
     my $errfile = $check->config->get("daemon")->{errorlog};
     my $pidfile = $check->config->get("daemon")->{pidfile};
     my $uid;
     my $gid;
+
+    my $kill = 0;
 
     if ($< == 0 and !defined($user)) {
         die "Started as root, but no user to run as specified. Exiting.\n";
@@ -143,7 +155,17 @@ sub setup {
     }
 
     @saved_argv = @ARGV;    # We'll use this if we're asked to restart ourselves
-    GetOptions('debug' => \$debug, 'verbose' => \$verbose);
+    GetOptions(
+        'debug' => \$debug,
+        'verbose' => \$verbose,
+        'kill+' => \$kill,
+    );
+    
+    if ($kill) {
+        do_kill($pidfile, ($kill>1)?9:15);
+        exit(0);
+    }
+    
     openlog($check->config->get("syslog")->{ident},
         'pid', $check->config->get("syslog")->{facility});
     slog 'info', "$0 starting with %d maximum children.",
