@@ -29,8 +29,8 @@
 	define('DEFAULT_LANGUAGE_ID', getDefaultLanguage());
     
     /* Provide a place where settings can be overridden, to make Debian packaging easier. */
-    if (is_readable('/etc/dnscheck.php')) {
-        require_once('/etc/dnscheck.php');
+    if (is_readable('/etc/dnscheck/webui_config.php')) {
+        require_once('/etc/dnscheck/webui_config.php');
     }
 
 ?>
