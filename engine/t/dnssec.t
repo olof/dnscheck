@@ -1,4 +1,5 @@
 use Test::More;
+use lib "t/lib";
 
 use warnings;
 use strict;

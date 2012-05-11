@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use Test::More;
+use lib "t/lib";
 
 # use MockBootstrap ('delegation', {multiple => 1});
 use MockResolver ('delegation', {multiple => 1});

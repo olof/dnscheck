@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use lib "t/lib";
 
 use MockResolver 'connectivity';
 # use MockBootstrap 'connectivity';

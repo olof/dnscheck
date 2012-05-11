@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use lib "t/lib";
 use MockResolver 'dns', {multiple => 1};
 # use MockBootstrap 'dns', {multiple => 1};
 

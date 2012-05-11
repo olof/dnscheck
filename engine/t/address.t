@@ -7,6 +7,7 @@ use warnings;
 use strict;
 
 use Test::More;
+use lib "t/lib";
 
 use MockResolver 'address';
 

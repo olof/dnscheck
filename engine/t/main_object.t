@@ -10,6 +10,7 @@ use strict;
 use MockResolver 'main_object';
 
 use Test::More;
+use lib "t/lib";
 
 use_ok ('DNSCheck');
 use Sys::Hostname;

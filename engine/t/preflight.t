@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use Test::More;
+use lib "t/lib";
 use MockResolver 'preflight';
 # $MockResolver::verbose = 1;
 

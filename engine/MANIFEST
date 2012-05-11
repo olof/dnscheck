@@ -80,8 +80,8 @@ locale/nl.yaml
 locale/sv.yaml
 Makefile.PL
 MANIFEST			This list of files
-MockBootstrap.pm
-MockResolver.pm
+t/lib/MockBootstrap.pm
+t/lib/MockResolver.pm
 README
 RELEASE_NOTES
 t/address.json

@@ -4,6 +4,7 @@ use strict;
 use warnings FATAL => 'all';
 
 use Test::More;
+use lib "t/lib";
 use MockResolver 'resolver', {multiple => 1};
 $MockResolver::verbose = 0;
 

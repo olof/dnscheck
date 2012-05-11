@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use Test::More;
+use lib "t/lib";
 
 # use MockBootstrap ('consistency', {multiple => 1});
 use MockResolver ('consistency', {multiple => 1});
