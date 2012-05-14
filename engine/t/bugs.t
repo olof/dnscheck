@@ -12,7 +12,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck;
+my $check = new DNSCheck({configdir => './t/config'});
 ok(defined($check));
 eval {    # Test for the bug fixed in r769
     $check->add_fake_glue('*.foo.test', 'ns.foo.test', '10.11.12.13');
@@ -20,7 +20,7 @@ eval {    # Test for the bug fixed in r769
 };
 ok(!$@, "$@");
 
-$check = DNSCheck->new;
+$check = new DNSCheck({configdir => './t/config'});
 ok(defined($check));
 eval {    # Test for the bug fixed in r739
     $check->add_fake_glue('iis.se', 'ns.nic.se', 'gurkmos');

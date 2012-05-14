@@ -13,6 +13,9 @@
 			case 'SE':
 				return 'sv';
 				break;
+			case 'NL':
+				return 'nl';
+				break;
 			default:
 				return 'en';
 				break;	

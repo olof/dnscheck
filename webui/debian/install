@@ -1,0 +1,8 @@
+*.php usr/share/dnscheck-webui
+*.inc usr/share/dnscheck-webui
+*.dat usr/share/dnscheck-webui
+README usr/share/dnscheck-webui
+languages usr/share/dnscheck-webui
+lib usr/share/dnscheck-webui
+public_html usr/share/dnscheck-webui
+debian/dnscheck etc/apache2/sites-available

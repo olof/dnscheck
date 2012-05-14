@@ -91,15 +91,6 @@ sub test {
         my $ipv4 = $parent->dns->query_resolver($hostname, "IN", "A");
         my $ipv6 = $parent->dns->query_resolver($hostname, "IN", "AAAA");
 
-        unless ($ipv4 && $ipv6) {
-            ## (FIXME: error)? Is it still? What was the problem?
-            ## Is there actually a reason to skip all subsequent
-            ## addresses if one gets a lookup error?
-
-            # One or both of the lookups got an error, skip to next address.
-            next;
-        }
-
         # REQUIRE: Warn if a mail exchanger is reachable by IPv6 only
         if (   ($ipv4 && $ipv4->header->ancount == 0)
             && ($ipv6 && $ipv6->header->ancount > 0))
@@ -184,7 +175,7 @@ Mail for the email address must be deliverable via SMTP.
 
 =head1 METHODS
 
-test(I<emailaddress>, [I<zone>]);
+=head2 test(I<emailaddress>, [I<zone>]);
 
 =head1 EXAMPLES
 

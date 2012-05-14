@@ -1,0 +1,40 @@
+{
+   "vbilen.se" : {
+      "SOA" : {
+         "IN" : {
+            "83.168.216.5" : {
+               "header" : {
+                  "cd" : 1,
+                  "rcode" : "FORMERR",
+                  "tc" : 0,
+                  "opcode" : "QUERY",
+                  "ad" : 1,
+                  "ra" : 1,
+                  "qr" : 1,
+                  "aa" : 0,
+                  "rd" : 0
+               }
+            }
+         }
+      }
+   },
+   "vastralinnestaden.se" : {
+      "SOA" : {
+         "IN" : {
+            "193.13.74.204" : {
+               "header" : {
+                  "cd" : 0,
+                  "rcode" : "SERVFAIL",
+                  "tc" : 0,
+                  "opcode" : "QUERY",
+                  "ad" : 0,
+                  "ra" : 0,
+                  "qr" : 1,
+                  "aa" : 0,
+                  "rd" : 0
+               }
+            }
+         }
+      }
+   }
+}

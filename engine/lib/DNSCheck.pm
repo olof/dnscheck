@@ -38,6 +38,8 @@ use DBI;
 use Carp;
 use List::Util qw[reduce max min];
 use Net::DNS;
+use Storable qw[thaw];
+use MIME::Base64;
 
 use DNSCheck::Config;
 use DNSCheck::Test::Common;
@@ -57,7 +59,7 @@ use DNSCheck::Lookup::Resolver;
 use DNSCheck::Lookup::ASN;
 use DNSCheck::Logger;
 
-our $VERSION = "1.2.1";
+our $VERSION = "1.3.0";
 
 ######################################################################
 
@@ -72,12 +74,16 @@ sub new {
         $self->{config} = $config_args->{with_config_object};
     } else {
         $self->{config} = DNSCheck::Config->new(%{$config_args});
-        $self->config->put(
-            'root_zone_data',
-            DNSCheck::Lookup::Resolver->get_preload_data(
-                $config_args->{rootsource}
-            )
-        );
+        if (my $b64root = $self->{config}->get('dns')->{rootdata}) {
+            $self->config->put('root_zone_data', thaw(decode_base64($b64root)));
+        } else {
+            $self->config->put(
+                'root_zone_data',
+                DNSCheck::Lookup::Resolver->get_preload_data(
+                    $config_args->{rootsource}
+                )
+            );
+        }
     }
 
     return $self;
@@ -202,15 +208,6 @@ sub asn {
 sub config {
     my $self = shift;
     return $self->{config};
-}
-
-sub locale {
-    my $self = shift;
-
-    unless (defined($self->{locale})) {
-        $self->{locale} = DNSCheck::Locale->new($self->config->get("locale"));
-    }
-    return $self->{locale};
 }
 
 sub dbh {
@@ -448,6 +445,10 @@ Return the logger object. It is of type L<DNSCheck::Logger>.
 
 Return the DNS lookup object. It is of type L<DNSCeck::Lookup::DNS>.
 
+=item ->resolver()
+
+Returns the actual recursing resolver object.
+
 =item ->asn()
 
 Return the ASN lookup object. It is of type L<DNSCheck::Lookup::ASN>.
@@ -482,6 +483,12 @@ for the name will be made. If that attempt fails, the name will be ignored.
 =item ->undelegated_test()
 
 This method returns true of any "fake" glue information has been provided.
+
+=item ->log_nameserver_times($zone)
+
+Extracts response timing data for the given zone's nameservers from the 
+resolver object and adds the information as log messages. Has to be called 
+after a test is run, since before there is obviously no data to extract.
 
 =item ->zone()
 

@@ -201,7 +201,7 @@ The hostname(s) pointed to by the PTR record(s) should exist.
 
 =head1 METHODS
 
-test(I<parent>, I<address>);
+=head2 test(I<parent>, I<address>);
 
 =head1 EXAMPLES
 

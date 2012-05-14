@@ -34,6 +34,8 @@ require 5.008;
 use warnings;
 use strict;
 
+use overload bool => \&_to_boolean;
+
 ######################################################################
 
 sub new {
@@ -68,6 +70,39 @@ sub expand {
     }
 }
 
+sub _to_boolean {
+    my $self = shift;
+
+    return !!$self->{lang};
+}
+
 1;
 
 __END__
+
+=head1 NAME
+
+DNSCheck::Locale - Translation of message tags to human-readable strings
+
+=head1 DESCRIPTION
+
+Module to take internal message tags used by DNSCheck and convert them into 
+human-readable text messages in any of the supported languages.
+
+=head1 METHODS
+
+=head2 new()
+
+For internal use only. To get an object, use L<DNSCheck::locale()>.
+
+=head2 expand($tag, @args)
+
+Convert the given tag using the given arguments. If the C<@args> list doesn't 
+have exactly the same number of elements as the translation for the tag 
+requires, a warning message will be issued on STDERR. If the tag can't be found 
+in the currently configured language environment, a fallback message will be 
+generated.
+
+=head1 SEE ALSO
+
+L<DNSCheck>

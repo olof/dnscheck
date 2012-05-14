@@ -42,7 +42,7 @@ use Net::DNS 0.59;
 use Net::IP 1.25;
 
 use Crypt::OpenSSL::Random qw(random_bytes);
-use Digest::SHA1 qw(sha1);
+use Digest::SHA qw(sha1);
 use Digest::BubbleBabble qw(bubblebabble);
 
 ######################################################################
@@ -90,10 +90,6 @@ sub new {
     $self->{resolver} = $parent->resolver;
 
     return $self;
-}
-
-sub DESTROY {
-
 }
 
 ######################################################################
@@ -204,7 +200,7 @@ sub query_parent_nocache {
         } elsif (
             ($qtype eq 'A' or $qtype eq 'AAAA') and (
                 grep {
-                    /$qname/
+                    /\Q$qname\E/
                 } @ns
             )
           )
@@ -669,28 +665,6 @@ sub _init_nameservers_helper {
     $self->logger->auto("DNS:NAMESERVERS_INITIALIZED", $qname, $qclass);
 }
 
-sub prep_fake_glue {
-    my $self = shift;
-    my $zone = shift;
-
-    unless ($self->{nameservers}{$zone} and $self->{nameservers}{$zone}{'IN'}) {
-        $self->{nameservers}{$zone}{'IN'} = {};
-    }
-
-    my $cache = $self->{nameservers}{$zone}{'IN'};
-    push @{ $cache->{'ns'} }, $self->parent->fake_glue_names;
-    foreach my $ip ($self->parent->fake_glue_ips) {
-        my $i = Net::IP->new($ip);
-        if (!defined($i)) {
-            $self->parent->logger->auto("DNS:MALFORMED_FAKE_IP ($ip)");
-        } elsif ($i->version == 4) {
-            push @{ $cache->{'ipv4'} }, $ip;
-        } else {
-            push @{ $cache->{'ipv6'} }, $ip;
-        }
-    }
-}
-
 ######################################################################
 
 sub find_parent {
@@ -738,12 +712,11 @@ sub _find_parent_helper {
 
         $parent = $self->_find_soa($try, $qclass);
 
-        # if we get an NXDOMAIN back, we're done
-        goto DONE unless ($parent);
+        if($parent) {
+	    $self->logger->auto("DNS:FIND_PARENT_UPPER", $parent);
 
-        $self->logger->auto("DNS:FIND_PARENT_UPPER", $parent);
-
-        goto DONE if ($try eq $parent);
+	    goto DONE if ($try eq $parent);
+	}
     } while ($#labels > 0);
 
     $parent = $try;
@@ -766,7 +739,7 @@ sub _find_soa {
 
     $answer = $self->{resolver}->recurse($qname, "SOA", $qclass);
 
-    return $qname unless ($answer);
+    return undef unless ($answer);
 
 # The following check may run afoul of a bug in BIND 9.x where x is 3 or less,
 # and if so lead to a false CRITICAL error. See RFC 2136 section 7.16 and
@@ -774,8 +747,9 @@ sub _find_soa {
 
     # return undef if ($answer->header->rcode eq "NXDOMAIN");
 
-    # "Handle" CNAMEs at zone apex
     foreach my $rr ($answer->answer) {
+	return $rr->name if($rr->type eq "SOA");
+	# "Handle" CNAMEs at zone apex
         return $qname if ($rr->type eq "CNAME");
     }
 
@@ -783,7 +757,7 @@ sub _find_soa {
         return $rr->name if ($rr->type eq "SOA");
     }
 
-    return $qname;
+    return undef;
 }
 
 ######################################################################
@@ -846,11 +820,6 @@ sub find_addresses {
     my $ipv4 = $self->query_resolver($qname, $qclass, "A");
     my $ipv6 = $self->query_resolver($qname, $qclass, "AAAA");
 
-    unless ($ipv4 && $ipv6) {
-        ## FIXME: error
-        goto DONE;
-    }
-
     unless (($ipv4 && $ipv4->header->ancount)
         || ($ipv6 && $ipv6->header->ancount))
     {
@@ -859,8 +828,8 @@ sub find_addresses {
     }
 
     my @answers = ();
-    push @answers, $ipv4->answer if ($ipv4->header->ancount);
-    push @answers, $ipv6->answer if ($ipv6->header->ancount);
+    push @answers, $ipv4->answer if (defined($ipv4) && $ipv4->header->ancount);
+    push @answers, $ipv6->answer if (defined($ipv6) && $ipv6->header->ancount);
 
     foreach my $rr (@answers) {
         if (($rr->type eq "A" or $rr->type eq "AAAA") && $rr->address) {
@@ -983,6 +952,8 @@ sub check_axfr {
 
 ######################################################################
 
+=pod
+
 sub query_nsid {
     my $self    = shift;
     my $address = shift;
@@ -1024,6 +995,8 @@ sub query_nsid {
 
     return;
 }
+
+=cut
 
 ######################################################################
 
@@ -1124,7 +1097,9 @@ sub preflight_check {
     my $packet = $resolver->recurse($name, 'NS');
 
     # Can we find an NS record?
-    if (defined($packet) and grep { $_->type eq 'NS' } $packet->answer) {
+    if (defined($packet)
+        and grep { $_->type eq 'NS' or $_->type eq 'CNAME' } $packet->answer)
+    {
 
         # Yup, return true
         return 1;
@@ -1135,7 +1110,9 @@ sub preflight_check {
     }
 
     $packet = $resolver->recurse($name, 'SOA');
-    if (defined($packet) and grep { $_->type eq 'SOA' } $packet->answer) {
+    if (defined($packet)
+        and grep { $_->type eq 'SOA' or $_->type eq 'CNAME' } $packet->answer)
+    {
         return 1;
     } elsif (!defined($packet)) {
         return 1;
@@ -1211,6 +1188,50 @@ Send a query to the default resolver(s). This will be a L<DNSCheck::Lookup::Reso
 =item my $string = $dns->query_nsid(I<address>, I<qname>, I<qclass>, I<qtype>);
 
 These need to be documented better.
+
+=item ->add_blacklist($addr,$name,$class,$type)
+
+Add the given quadruple to the internal blacklist.
+
+=item ->check_blacklist($addr,$name,$class,$type)
+
+Return a true value if the given quadruple is in the internal blacklist.
+
+=item ->clear_blacklist()
+
+Clear the internal blacklist.
+
+=item ->check_timeout()
+
+Check if the current error in the underlying resolver object is a timeout.
+
+=item ->find_mx($zone)
+
+Return the hostname(s) to which mail to the given zone name should be directed.
+
+=item ->logger()
+
+Return a reference to the current logger object.
+
+=item ->parent()
+
+Return a reference to the current parent object.
+
+=item ->preflight_check($name)
+
+Do a quick and dirty guess about if the given name is a zone or not.
+
+=item ->query_child_nocache()
+
+The same as L<query_child()>, but bypasses the internal cache.
+
+=item ->query_parent_nocache()
+
+The same as L<query_parent()>, but bypasses the internal cache.
+
+=item ->resolver()
+
+Returns a reference to the underlying L<DNSCheck::Lookup::Resolver> object.
 
 =back
 

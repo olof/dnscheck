@@ -1,9 +1,6 @@
 Makefile
-apps/dnscheck
-apps/dnscheck-12hourmailer
-apps/dnscheck-dispatcher
-apps/dnscheck-hostsyntax
-apps/dnscheck-preflight
-apps/dnscheck-zonediff
 blib/
 pm_to_blib
+Makefile.old
+cover_db
+MYMETA.*

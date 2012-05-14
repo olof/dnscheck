@@ -174,9 +174,9 @@ All host addresses (IPv4 and IPv6) must be valid.
 
 =head1 METHODS
 
-test(I<parent>, I<hostname>);
+=head2 test(I<hostname>);
 
-host_syntax(I<hostname>);
+=head2 host_syntax(I<hostname>);
 
 =head1 EXAMPLES
 

@@ -75,11 +75,21 @@ sub test {
     my $packet;
 
     ($errors, $testable) = $self->ns_parent_child_matching($zone);
+
+    if (!$testable) {
+        my $p_a = $self->parent->dns->query_resolver($zone, 'IN', 'A');
+        my $p_www = $self->parent->dns->query_resolver('www.' . $zone, 'IN', 'A');
+        if (($p_a and $p_a->header->ancount > 0) or ($p_www and $p_www->header->ancount > 0)) {
+            $self->logger->auto('DELEGATION:BROKEN_BUT_FUNCTIONAL', $zone);
+        }
+    }
+
     goto DONE unless $testable;
 
     $errors += $self->enough_nameservers($zone);
     $errors += $self->consistent_glue($zone);
     $errors += $self->in_zone_ns_glue($zone);
+    $errors += $self->cname_as_ns($zone);
 
     # Test old namservers if we have history
     if ($history) {
@@ -165,6 +175,7 @@ sub consistent_glue {
 
     # REQUIRE: check for inconsistent glue
     my @glue = _get_glue($parent, $zone);
+
     foreach my $g (@glue) {
         $logger->auto("DELEGATION:MATCHING_GLUE", $g->name, $g->address);
 
@@ -284,7 +295,7 @@ sub ns_parent_child_matching {
     # REQUIRE: all NS at parent must exist at child [IIS.KVSE.001.01/r2]
     my @ns_at_both;
     foreach my $ns (@ns_at_parent) {
-        unless (scalar grep(/^$ns$/i, @ns_at_child)) {
+        unless (scalar grep(/^\Q$ns\E$/i, @ns_at_child)) {
             $errors += $self->logger->auto("DELEGATION:EXTRA_NS_PARENT", $ns);
         } else {
             push @ns_at_both, $ns;
@@ -415,6 +426,44 @@ sub in_zone_ns_glue {
     }
 }
 
+sub cname_as_ns {
+    my ($self, $zone) = @_;
+    my $error = 0;
+
+    return unless $self->parent->config->should_run;
+
+    my @ns = $self->parent->dns->get_nameservers_at_child($zone, $self->qclass);
+
+    foreach my $ns (@ns) {
+        my $a = $self->parent->dns->query_child($zone, $ns, $self->qclass, 'A');
+        my $aaaa =
+          $self->parent->dns->query_child($zone, $ns, $self->qclass, 'AAAA');
+        my @rrs = ();
+
+        if ($a) {
+            push @rrs, $a->answer;
+            push @rrs, $a->authority;
+        }
+
+        if ($aaaa) {
+            push @rrs, $aaaa->answer;
+            push @rrs, $aaaa->authority;
+        }
+        
+        foreach my $rr (@rrs)
+        {
+            next unless $rr->name eq $ns;
+            if ($rr->type eq 'CNAME') {
+                $error +=
+                  $self->logger->auto("DELEGATION:NS_IS_CNAME", $zone, $ns);
+                  last;
+            }
+        }
+    }
+
+    return $error;
+}
+
 1;
 
 __END__
@@ -474,6 +523,15 @@ Check that there are a sufficient number of nameservers for the given zone.
 
 Go through the nameservers that used to be authoritative for this zone and
 check that they no longer answer authoritatively for it.
+
+=item ->cname_as_ns($zone)
+
+Checks if any of the nameserver names for the given zone return CNAME records 
+to A or AAAA queries.
+
+=item ->in_zone_ns_glue($zone)
+
+Checks that all in-zone nameserver records come with glue.
 
 =back
 
