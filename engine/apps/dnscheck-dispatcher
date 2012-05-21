@@ -586,16 +586,21 @@ specifies the name the daemon will use when talking to syslogd, and
 C<facility>, which specifies the syslog facility to use.
 
 The second one is C<daemon>. It has the subkeys C<pidfile>, C<errorlog>,
-C<maxchild> and C<savelevel>. They specify, in order, the file where the
-daemon will write its PID after it has detached, the file it will redirect its
-standard error to, the maximum number of concurrent child processes it may
-have and the minumum log level to save to the database. Make sure to set the
-pathnames to values where the user the daemon is running under has write
-permission, since it will terminated if they are specified but can't be
-written to. Additionally, running with a maxchild value of n means that at
+C<maxchild>, C<user>, C<group> and C<savelevel>. They specify, in order, the 
+file where the daemon will write its PID after it has detached, the file it 
+will redirect its standard error to, the maximum number of concurrent child 
+processes it may have and the minumum log level to save to the database. Make 
+sure to set the pathnames to values where the user the daemon is running under 
+has write permission, since it will terminated if they are specified but can't 
+be written to. Additionally, running with a maxchild value of n means that at
 least n+1 simultaneous connections to the database will be opened. Make sure
 that the database can actually handle that, or everything will die with more
-or less understandable error messages.
+or less understandable error messages. The "user" and "group" keys specify the 
+user and group that the dispatcher will change too after opening the pid and 
+errorlog files, if it is started as the root user. Note that if only the root 
+user can open the PID and error files, restarting the dispatcher by sending it 
+a HUP signal will fail.
+
 
 If everything works as intended nothing should ever be written to the
 errorlog. All normal log outout goes to syslog (and, with the debug flag,
