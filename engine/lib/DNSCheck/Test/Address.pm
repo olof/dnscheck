@@ -82,7 +82,7 @@ sub test {
     my $parent  = $self->parent;
     my $address = shift;
 
-    return unless $parent->config->should_run;
+    return 0 unless $parent->config->should_run;
 
     my $qclass = $self->qclass;
     my $logger = $parent->logger;

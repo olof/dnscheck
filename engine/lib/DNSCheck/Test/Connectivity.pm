@@ -47,7 +47,7 @@ sub test {
     my $qclass = $self->qclass;
     my $logger = $self->logger;
 
-    return unless $parent->config->should_run;
+    return 0 unless $parent->config->should_run;
 
     $logger->module_stack_push();
     $logger->auto("CONNECTIVITY:BEGIN", $zone);

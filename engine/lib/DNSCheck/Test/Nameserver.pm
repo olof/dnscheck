@@ -46,7 +46,7 @@ sub test {
     my $zone       = shift || $self->zone;
     my $nameserver = shift || $self->ns;
 
-    return unless $parent->config->should_run;
+    return 0 unless $parent->config->should_run;
 
     my $logger = $parent->logger;
     my $errors = 0;
@@ -213,7 +213,7 @@ sub ns_check_id {
     my $address    = shift;
     my $nameserver = shift || $self->ns;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     my $logger = $self->logger;
 
@@ -246,7 +246,7 @@ sub ns_recursive {
     my $address    = shift;
     my $nameserver = shift || $self->ns;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     # REQUIRE: Nameserver should not be recursive
     $self->logger->auto("NAMESERVER:CHECKING_RECURSION", $nameserver, $address);
@@ -265,7 +265,7 @@ sub ns_authoritative {
     my $nameserver = shift || $self->ns;
     my $zone       = shift || $self->zone;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     # REQUIRE: Nameserver must be authoritative for the zone
     #          [IIS.KVSE.001.01/r3,IIS.KVSE.001.01/r6]
@@ -290,7 +290,7 @@ sub ns_udp {
     my $nameserver = shift || $self->ns;
     my $zone       = shift || $self->zone;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     $self->logger->auto("NAMESERVER:TESTING_UDP", $nameserver, $address);
     my $packet =
@@ -311,7 +311,7 @@ sub ns_tcp {
     my $nameserver = shift || $self->ns;
     my $zone       = shift || $self->zone;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     $self->logger->auto("NAMESERVER:TESTING_TCP", $nameserver, $address);
     my $packet =
@@ -332,7 +332,7 @@ sub ns_axfr {
     my $nameserver = shift || $self->ns;
     my $zone       = shift || $self->zone;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     $self->logger->auto("NAMESERVER:TESTING_AXFR", $nameserver, $address);
     if ($self->parent->dns->check_axfr($address, $zone, $self->qclass)) {

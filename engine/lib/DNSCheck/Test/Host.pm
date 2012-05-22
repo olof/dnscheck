@@ -43,7 +43,7 @@ sub test {
     my $parent   = $self->parent;
     my $hostname = shift;
 
-    return unless $parent->config->should_run;
+    return 0 unless $parent->config->should_run;
 
     my $qclass = $self->qclass;
     my $logger = $parent->logger;
@@ -99,7 +99,7 @@ sub host_syntax {
     my $self     = shift;
     my $hostname = shift;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     my @labels = split(/\./, $hostname, -1);
 

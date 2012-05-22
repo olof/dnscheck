@@ -47,7 +47,7 @@ sub test {
     my $qclass = $self->qclass;
     my $logger = $parent->logger;
 
-    return unless $parent->config->should_run;
+    return 0 unless $parent->config->should_run;
 
     $logger->logname($zone);
 
