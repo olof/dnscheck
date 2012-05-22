@@ -927,6 +927,10 @@ sub check_axfr {
     my $address = shift;
     my $qname   = shift;
     my $qclass  = shift;
+    my $timeout;
+
+    eval {$timeout = $self->parent->config->get('dns')->{tcp_timeout}};
+    $timeout ||= 60;
 
     unless ($self->_querible($address)) {
         return 0;
@@ -939,6 +943,7 @@ sub check_axfr {
     $resolver->dnssec(0);
     $resolver->usevc(0);
     $resolver->defnames(0);
+    $resolver->tcp_timeout($timeout);
 
     $resolver->nameservers($address);
     $resolver->axfr_start($qname, $qclass);
