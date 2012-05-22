@@ -5,6 +5,7 @@
 require 5.008;
 use warnings;
 use strict;
+use lib "t/lib";
 
 # use MockBootstrap 'main_object';
 use MockResolver 'main_object';
