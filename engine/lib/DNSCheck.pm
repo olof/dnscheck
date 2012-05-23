@@ -205,6 +205,9 @@ sub dbh {
 
     unless (defined($self->{"dbh"}) && $self->{"dbh"}->ping) {
         until (defined($dbh) or ($tries > 5)) {
+            # We don't care if config variables are unset. Just try to
+            # connect using what we were given and see if it works.
+            no warnings 'uninitialized';
             $tries += 1;
             my $conf = $self->config->get("dbi");
             my $dsn  = sprintf("DBI:mysql:database=%s;hostname=%s;port=%s",
