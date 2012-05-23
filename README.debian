@@ -1,0 +1,34 @@
+How to install a full DNSCheck system on a Debian-based server
+==============================================================
+
+1) Build packages for libdnscheck-perl and dnscheck-webui. Simply running 
+   dpkg-buildpackage in the engine and webui directories should be enough
+   to do that, given that all the necessary prerequisites are in place.
+
+2) Install the packages built in step 1.
+
+   The packages do not depend on each other, since they don't have to be
+   installed on the same machine. It's enough that they're both configured
+   to use the same database.
+
+3) Add local configuration for DNSCheck lib. It goes in /etc/dnscheck/config.yaml
+   or /etc/dnscheck/policy.yaml depending on what kind of config it is. The
+   most important part here is putting the correct database access information
+   in config.yaml. If you have an old site_config.yaml from a previous 
+   installation, simply copy it over to /etc/dnscheck/config.yaml. It's the 
+   same file, it just got moved and renamed (the same goes for site_policy).
+
+4) Configure the web GUI. This is done in /etc/dnscheck/webui_config.php.
+   Again, the most important thing to set up is database connection
+   information. You also need to add the GUI to the Apache configuration.
+   The package drops an example vhost configuration file in 
+   /etc/apache2/sites-available/dnscheck. Link it in with the rest of your 
+   Apache config in a suitable fashion.
+
+
+5) A start script for the dispatcher daemon will have been installed in 
+   /etc/init.d/dnscheck-dispatcher.sh. Link this to the suitable rc?.d 
+   directories to have it started and stopped at appropriate times.
+
+6) Given that you had a suitably set up database and a working DNSCheck
+   configuration, the system should now be running.
