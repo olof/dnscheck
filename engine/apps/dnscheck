@@ -47,7 +47,7 @@ sub main {
     my (
         $configdir,  $sitedir,        $configfile, $siteconfigfile,
         $policyfile, $sitepolicyfile, $localefile, @nameservers,
-        $what_test,  $rootsource,     $history,
+        $what_test,  $rootsource,     $history,    @dsdata,
     );
 
     GetOptions(
@@ -66,6 +66,7 @@ sub main {
         'test=s'           => \$what_test,
         'rootsource=s'     => \$rootsource,
         'history=s'        => \$history,
+        'dsdata=s'         => \@dsdata,
     ) or pod2usage(2);
     pod2usage(1) if ($help);
 
@@ -100,6 +101,10 @@ sub main {
         } else {
             $check->add_fake_glue($zone, $name);
         }
+    }
+
+    foreach my $ds (@dsdata) {
+        $check->add_fake_ds($ds);
     }
 
     my $href;
@@ -164,6 +169,8 @@ Options:
  --test=<test>         Specify which of the whole-zone tests to run. Currently
                        available are: zone, connectivity, consistency,
                        dnssec, delegation and soa.
+ --dsdata              specify fake DS data for undelegeated testing. It
+                       should be formatted like in a BIND zone file.
 
  More specific options override less specific ones. If you, for example, give
  both C<--configdir> and C<--sitepolicyfile> all config will be read from files

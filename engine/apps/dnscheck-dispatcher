@@ -382,7 +382,12 @@ sub running_in_child {
         my @ns = split(/\s+/, $fake_glue);
         foreach my $n (@ns) {
             my ($name, $ip) = split(m|/|, $n);
-            $dc->add_fake_glue($domain, $name, $ip);
+            if ($name =~ /^ds:/) {
+                $ip =~ s/_/ /g;
+                $dc->add_fake_ds($ip);    # Not actually IP in this case.
+            } else {
+                $dc->add_fake_glue($domain, $name, $ip);
+            }
         }
     }
 
@@ -561,6 +566,27 @@ active child processes has been reached, it sleeps 0.25 seconds and then tries
 again. It keeps doing this until it is terminated by a SIGTERM. At that point,
 it will wait until all children have died and cleanups been performed before it
 removes its PID file and then exits.
+
+=head3 Undelegated tests
+
+In order to run undelegated tests, extra data can be put in the
+C<fake_parent_glue> field in the queue table in the database. This data needs
+to be formatted in a particular way in order to be useful. Overall, it
+consists of a number of entries separated by whitespace. Each entry represents
+either one NS record or one DS record. 
+
+NS record entries are simple. They consist of either a single name (in which
+case the corresponding IP number(s) will be looked up in the live DNS tree),
+or a name followed by a slash (/) and an IP address. For example, an entry
+might look like C<ns.example.org/192.168.2.2> (and give an error message
+during testing for being in a reserved IP range).
+
+DS records are a bit more complicated. They should start with the exact string
+C<ds:/> in order to mark them as not NS records. The rest of the record should
+be a DS record in BIND zone file format, but with all whitespace replaced with
+underscores (_). The dispatcher will replace back the underscores with spaces,
+and then try to create a Net::DNS::RR::DS object from the resulting string. If
+that fails, it will currently die.
 
 =head2 OPTIONS
 

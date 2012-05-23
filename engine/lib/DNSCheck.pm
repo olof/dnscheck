@@ -37,6 +37,7 @@ use strict;
 use DBI;
 use Carp;
 use List::Util qw[reduce max min];
+use Net::DNS;
 use Storable qw[thaw];
 use MIME::Base64;
 
@@ -136,6 +137,21 @@ sub add_fake_glue {
         }
     }
 
+    $self->{faked} = 1;
+
+    return 1;
+}
+
+sub add_fake_ds {
+    my $self = shift;
+    my $data = shift;
+
+    my $ds = Net::DNS::RR->new($data);
+    unless ($ds and $ds->type eq 'DS') {
+        croak "Malformed DS data: $data";
+    }
+
+    $self->resolver->add_fake_ds($ds);
     $self->{faked} = 1;
 
     return 1;
