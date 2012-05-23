@@ -148,7 +148,8 @@ sub add_fake_ds {
 
     my $ds = Net::DNS::RR->new($data);
     unless ($ds and $ds->type eq 'DS') {
-        croak "Malformed DS data: $data";
+        carp "Malformed DS data (no fake record added): $data";
+        return;
     }
 
     $self->resolver->add_fake_ds($ds);
