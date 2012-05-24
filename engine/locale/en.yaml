@@ -583,6 +583,9 @@ messages:
   ENGINE:CRASH:
     args: 0
     format: DNSCheck engine crashed
+  FAKEGLUE:MALFORMED_DS:
+      args: 1
+      format: 'The provided DS record could not be parsed: %s'
   HOST:BEGIN:
     args: 1
     format: Begin testing host %s.

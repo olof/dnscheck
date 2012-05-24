@@ -148,7 +148,7 @@ sub add_fake_ds {
 
     my $ds = Net::DNS::RR->new($data);
     unless ($ds and $ds->type eq 'DS') {
-        carp "Malformed DS data (no fake record added): $data";
+        $self->logger->auto('FAKEGLUE:MALFORMED_DS', $data);
         return;
     }
 

@@ -583,6 +583,9 @@ messages:
   ENGINE:CRASH:
     args: 0
     format: DNSCheck-motorn kraschade.
+  FAKEGLUE:MALFORMED_DS:
+      args: 1
+      format: 'Den givna DS-posten kunde inte tolkas: %s'
   HOST:BEGIN:
     args: 1
     format: Börjar testa värdnamn %s.
