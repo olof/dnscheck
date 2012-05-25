@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__) . '/../constants.php');
+require_once(dirname(__FILE__) . '/../config.php');
 require_once(dirname(__FILE__) . '/../common.php');
 require_once(dirname(__FILE__) . '/../idna_convert.class.php');
 require_once(dirname(__FILE__) . '/../stripslashes.php');

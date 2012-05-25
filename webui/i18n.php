@@ -1,6 +1,6 @@
 <?php
 
-require_once("constants.php");
+require_once("config.php");
 
 // Autoloader for autoload classes (PHP5 standard)
 function autoloader($class) {
