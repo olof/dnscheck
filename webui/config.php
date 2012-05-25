@@ -6,7 +6,7 @@
 	    'db_port' => 3306,
 	    'db_name' => 'dnscheck',
 	    'db_user' => 'dnscheck_webui',
-	    'db_pass' => 'n5k4nbfnfn',
+	    'db_pass' => 'demo_pwd',
 	);
 
 	define('STATUS_OK', 'OK');
