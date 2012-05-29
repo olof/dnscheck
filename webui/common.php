@@ -81,6 +81,7 @@
 				return true;
 			}
 
+			global $conf;
 			$link = @mysql_connect($conf['db_server'] . ':' . $conf['db_port'], $conf['db_user'], $conf['db_pass']);
 			if (false === $link)
 			{
