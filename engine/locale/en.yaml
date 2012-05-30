@@ -11,7 +11,7 @@ messages:
   ADDRESS:INVALID:
     args: 1
     descr: ~
-    format: Adress %s is invalid or incorrect
+    format: Adress %s is invalid or incorrect.
   ADDRESS:PRIVATE_IPV4:
     args: 1
     descr: "A private IP address should normally not be exposed in the public DNS, since it's not reachable from the Internet."
@@ -53,7 +53,7 @@ messages:
     format: 'Name server %s announced by: %s'
   CONNECTIVITY:ASN_COUNT_OK:
     args: 1
-    descr: The zone's name serves are located within more than one autonomous system.
+    descr: The zone's name servers are located within more than one autonomous system.
     format: Zone announced by more than one ASN (%s).
   CONNECTIVITY:ASN_LIST:
     args: 1
@@ -66,7 +66,7 @@ messages:
     format: Done testing connectivity for %s.
   CONNECTIVITY:MULTIPLE_ASN:
     args: 1
-    descr: The name server is announced my more than one autonomous system (AS).
+    descr: The name server is announced by more than one autonomous system (AS).
     format: Name server %s announced by multiple AS.
   CONNECTIVITY:NOT_ANNOUNCED:
     args: 1
@@ -74,22 +74,22 @@ messages:
     format: Name server %s not announced by any AS.
   CONNECTIVITY:TOO_FEW_ASN:
     args: 1
-    descr: "The zone's name servers are all located within the same, (or none), autonomous system."
-    format: Zone announced by less than two IPv4 ASN (%s).
+    descr: "The zone's name servers are all located within the same, (or no), autonomous system."
+    format: Zone announced by fewer than two IPv4 ASN (%s).
   CONNECTIVITY:V6_ANNOUNCED_BY_ASN:
     args: 2
     descr: The IP address is announced by an autonomous system (AS).
     format: 'Name server %s announced over IPv6 by: %s'
   CONNECTIVITY:V6_ASN_COUNT_OK:
     args: 1
-    descr: The zone's name serves are located within more than one autonomous system.
+    descr: The zone's name servers are located within more than one autonomous system.
     format: Zone announced by more than one IPv6 ASN (%s).
   CONNECTIVITY:V6_ASN_LIST:
     args: 1
     format: 'Zone announced by IPv6 ASN: %s'
   CONNECTIVITY:V6_MULTIPLE_ASN:
     args: 1
-    descr: The name server is announced my more than one IPv6 autonomous system (AS).
+    descr: The name server is announced by more than one IPv6 autonomous system (AS).
     format: Name server %s announced by multiple IPv6 AS.
   CONNECTIVITY:V6_NOT_ANNOUNCED:
     args: 1
@@ -97,8 +97,8 @@ messages:
     format: Name server %s not announced by any IPv6 AS.
   CONNECTIVITY:V6_TOO_FEW_ASN:
     args: 1
-    descr: "The zone's name servers are all located within the same, (or none), autonomous system."
-    format: Zone announced by less than two IPv6 ASN (%s).
+    descr: "The zone's name servers are all located within the same, (or no), autonomous system."
+    format: Zone announced by fewer than two IPv6 ASN (%s).
   CONSISTENCY:BEGIN:
     args: 1
     format: Begin testing zone consistency for %s.
@@ -155,14 +155,14 @@ messages:
     format: 'Parent glue for %s found: %s (%s)'
   DELEGATION:GLUE_MISSING_AT_CHILD:
     args: 1
-    descr: The IP address of the name servers was not found at the child. This is a configuration error and should be corrected as soon as possible.
+    descr: The IP address of the name server was not found at the child. This is a configuration error and should be corrected as soon as possible.
     format: 'Missing glue at child: %s'
   DELEGATION:GLUE_SKIPPED:
     args: 2
     format: Skipped glue for %s (%s).
   DELEGATION:INCONSISTENT_GLUE:
     args: 1
-    descr: The address of a name server differed from the child and the parent.  This is a configuration error and should be corrected as soon as possible.
+    descr: The address of a name server differed between the child and the parent.  This is a configuration error and should be corrected as soon as possible.
     format: Inconsistent glue for name server %s.
   DELEGATION:INZONE_NS_WITHOUT_GLUE:
     args: 2
@@ -182,11 +182,11 @@ messages:
     format: No name servers found at child.
   DELEGATION:NOT_FOUND_AT_PARENT:
     args: 0
-    descr: 'No delegation could be found at the parent, making your zone unreachable from the Internet.'
+    descr: 'No delegation could be found at the parent, making the zone unreachable from the Internet.'
     format: Delegation not found at parent.
   DELEGATION:NO_COMMON_NS_NAMES:
     args: 2
-    descr: 'The parent lists name servers that the child doesnt know about, see details in advanced. This configuration could actually work but breaks very easily if one of these zones change slightly.'
+    descr: "The parent lists name servers that the child doesn't know about; see details in advanced. This configuration could actually work but breaks very easily if one of these zones changes slightly."
     format: Total parent/child glue mismatch.
   DELEGATION:NO_NS_IPV4:
     args: 0
@@ -196,7 +196,7 @@ messages:
     format: No IPv6 name servers found.
   DELEGATION:NS_AT_CHILD:
     args: 1
-    descr: This is the list of name servers that are listed at the child . It must include all name servers listed at the parent.
+    descr: This is the list of name servers that are listed at the child. It must include all name servers listed at the parent.
     format: 'Name servers listed at child: %s'
   DELEGATION:NS_AT_PARENT:
     args: 1
@@ -210,7 +210,7 @@ messages:
     format: 'In zone %s nameserver %s has a CNAME record, which is forbidden.'
   DELEGATION:STILL_AUTH:
     args: 3
-    descr: 'A previously used name server is still answering authoritative for the zone.  This is probably due to old zone data still being served by a no longer used server.  To correct this problem, contact the administrator of the name server and have them remove the zone in their configuration.'
+    descr: 'A previously used name server is still answering authoritatively for the zone.  This is probably due to old zone data still being served by a server no longer in use.  Contact the administrator of the name server and have them remove the zone from their configuration.'
     format: Previously used name server %s (%s) is still authoritative for %s.
   DELEGATION:TOO_FEW_NS:
     args: 1
@@ -310,7 +310,7 @@ messages:
     format: Failed to find name servers of %s/%s.
   DNS:NO_EDNS:
     args: 1
-    descr: 'EDNS is an extension to the DNS protocol. The major change is that the 512 byte size limit of the query/answer packet has been removed, which allows more information to be provided.  EDNS is essential for newer protocols and technologies that requires larger packet size like DNSSEC and IPv6.'
+    descr: 'EDNS is an extension to the DNS protocol. The major change is that the 512-byte size limit of the query/answer packet has been removed, which allows more information to be provided.  EDNS is essential for newer protocols and technologies (such as DNSSEC and IPv6) that requires larger packet sizes.'
     format: EDNS not supported by %s.
   DNS:NO_PARENT:
     args: 2
@@ -435,7 +435,7 @@ messages:
     format: "%s's key with tag %s uses algorithm number %s (%s)."
   DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
     args: 3
-    descr: 'A DNSKEY using a not recommended algorithm was found - you should consider stop using not recommended algorithms unless you have a very good reason for using them.'
+    descr: 'A DNSKEY using a unrecommended algorithm was found - you should probably not use unrecommended algorithms unless you have a very good reason for using them.'
     format: 'DNSKEY %s (tag %s) is using a not recommended algorithm: %s'
   DNSSEC:DNSKEY_FOUND:
     args: 1
@@ -450,7 +450,7 @@ messages:
     format: No mandatory algorithm found for DNSKEY %s.
   DNSSEC:DNSKEY_NOT_FOUND:
     args: 1
-    descr: 'A DNSKEY RRset could not be found at the child, indicating that the child probably not uses DNSSEC.'
+    descr: 'A DNSKEY RRset could not be found at the child, indicating that the child probably does not use DNSSEC.'
     format: Did not find DNSKEY record for %s at child.
   DNSSEC:DNSKEY_NO_VALID_SIGNATURES:
     args: 1
@@ -487,7 +487,7 @@ messages:
     format: Found DS record for %s at parent.
   DNSSEC:DS_KEYREF_INVALID:
     args: 2
-    descr: 'The DS RRset must refer to a valid DNSKEY at the child, or the chain of trust between the parent and the child is broken and validating resolver will not be able to validate answers from the child.'
+    descr: 'The DS RRset must refer to a valid DNSKEY at the child, or the chain of trust between the parent and the child will be broken and validating resolver will not be able to validate answers from the child.'
     format: 'Parent %s refers to invalid key at child: %s'
   DNSSEC:DS_KEYREF_OK:
     args: 2
@@ -517,11 +517,11 @@ messages:
     format: Not all servers for %s has DNSSEC extra processing turned on.
   DNSSEC:INCONSISTENT_SECURITY:
     args: 1
-    descr: 'The parent has a secure delegation to the child (indicated by DS RRset at the parent), but the child has no DNSKEY.  This is probably due to a previously signed zone that became unsigned without requesting the parent to remove the secure delegation.'
+    descr: 'The parent has a secure delegation to the child (indicated by DS RRset at the parent), but the child has no DNSKEY records.  This is probably due to a previously signed zone that became unsigned without requesting the parent to remove the secure delegation.'
     format: 'Inconsistent security for %s - DS found at parent, but no DNSKEY found at child.'
   DNSSEC:MISSING_DS:
     args: 1
-    descr: 'The child seems to use DNSSEC, but the parent has no secure delegation.  Because of this, the chain of trust between the parent and the child is broken and validating resolvers will not be able to validate answers from the child.'
+    descr: 'The child seems to use DNSSEC, but the parent has no secure delegation.  The chain of trust between the parent and the child is broken and validating resolvers will not be able to validate answers from the child.'
     format: 'Broken chain of trust for %s - DNSKEY found at child, but no DS was found at parent.'
   DNSSEC:NO_DS_FOUND:
     args: 1
@@ -532,7 +532,7 @@ messages:
     format: Nameserver %s does not do DNSSEC extra processing.
   DNSSEC:NO_SIGNATURES:
     args: 1
-    descr: No DNSSEC signatures was found when querying the zone. Perhaps the zone isn't signed?
+    descr: No DNSSEC signatures were found when querying the zone. Perhaps the zone isn't signed?
     format: No signatures found for %s.
   DNSSEC:NO_VALID_DS:
     args: 1
@@ -555,7 +555,7 @@ messages:
     format: 'DNSSEC signature %s fails to validate the RR set: %s'
   DNSSEC:RRSIG_NOT_YET_VALID:
     args: 1
-    descr: Not yet valid signatures will be ignored by validating resolvers.
+    descr: Signatures with an inception date in the future will be ignored by validating resolvers.
     format: 'DNSSEC signature not yet valid: %s'
   DNSSEC:RRSIG_VALID:
     args: 1
@@ -585,7 +585,7 @@ messages:
     format: DNSCheck engine crashed
   FAKEGLUE:MALFORMED_DS:
       args: 1
-      format: 'The provided DS record could not be parsed: %s'
+      format: 'The given DS record could not be parsed: %s'
   HOST:BEGIN:
     args: 1
     format: Begin testing host %s.
@@ -687,7 +687,7 @@ messages:
     format: Name server %s (%s) not checked for legacy name server ID.
   NAMESERVER:NOT_AUTH:
     args: 3
-    descr: 'The name server does not answer authoritatively to queries for the tested domain.  This is probably due to misconfiguration, usually the name server is not set up to serve the tested domain.'
+    descr: 'The name server does not answer authoritatively to queries for the tested domain.  This is probably due to misconfiguration where the name server is not set up to serve the tested domain.'
     format: Name server %s (%s) not authoritative for %s.
   NAMESERVER:NOT_RECURSIVE:
     args: 2
@@ -708,7 +708,7 @@ messages:
     format: Name server %s (%s) not checked for name server ID.
   NAMESERVER:RECURSIVE:
     args: 2
-    descr: 'The name server answers recursive queries for 3rd parties (such as DNSCheck). By making a recursive query to a name server that provides recursion, an attacker can cause a name server to look up and cache information contained in zones under their control. Thus the victim name server is made to query the attackers malicious name servers, resulting in the victim caching and serving bogus data.'
+    descr: "The name server answers recursive queries for 3rd parties (such as DNSCheck). By making a recursive query to a name server that provides recursion, an attacker can cause a name server to look up and cache information contained in zones under their control. Thus the victim name server is made to query the attacker's malicious name servers, resulting in the victim caching and serving bogus data."
     format: Name server %s (%s) is recursive.
   NAMESERVER:SKIPPED_IPV4:
     args: 1
@@ -791,7 +791,7 @@ messages:
     format: 'SOA expire for %s OK (%s) - recommended >= %s.'
   SOA:EXPIRE_SMALL:
     args: 3
-    descr: The SOA expire value defines how long a secondary name server will wait before considering DNS data for a zone to be too old to serve in case it failed to reach the primary name server.
+    descr: The SOA expire value defines how long a secondary name server will wait before considering DNS data for a zone to be too old to serve in case it fails to reach the primary name server.
     format: 'SOA expire for %s too small (%s) - recommended >= %s.'
   SOA:EXPIRE_VS_REFRESH:
     args: 1
@@ -813,7 +813,7 @@ messages:
     format: 'SOA minimum for %s too small (%s) - recommended >= %s.'
   SOA:MNAME_ERROR:
     args: 2
-    descr: The SOA MNAME was not a valid host name.
+    descr: The SOA MNAME is not a valid host name.
     format: Error while checking SOA MNAME for %s (%s).
   SOA:MNAME_IS_AUTH:
     args: 2
@@ -823,7 +823,7 @@ messages:
     format: SOA MNAME %s points to a CNAME (%s).
   SOA:MNAME_NOT_AUTH:
     args: 2
-    descr: 'The name server listed as the original or primary source of data for this zone does not answer authoriative.  This is probably due to a misconfiguration - perhaps the SOA MNAME is not set up as name server for the zone.'
+    descr: 'The name server listed as the original or primary source of data for this zone does not answer authoriatively.  This is probably due to misconfiguration; perhaps the SOA MNAME is not set up as a name server for the zone.'
     format: SOA MNAME for %s (%s) is not authoritative.
   SOA:MNAME_PUBLIC:
     args: 2
@@ -838,15 +838,15 @@ messages:
     format: SOA MNAME for %s valid (%s).
   SOA:MULTIPLE_SOA:
     args: 1
-    descr: Multiple SOA records found when querying the name servers. This is a serious error and definitely due to a misconfiguration.
+    descr: Multiple SOA records found when querying the name servers. This is a serious error and definitely due to misconfiguration.
     format: Multiple SOA records found for %s.
   SOA:NOT_FOUND:
     args: 1
-    descr: 'No SOA record was found when querying the name server.  This is most probably due to a misconfiguration at the name server - a zone must have a SOA record.'
+    descr: 'No SOA record was found when querying the name server.  This is most probably due to misconfiguration at the name server - a zone must have a SOA record.'
     format: No SOA record found for %s.
   SOA:NS_NOT_FOUND:
     args: 1
-    descr: No name server records was fould for the zone. This is a serious error and definitely due to a misconfiguration.
+    descr: No name server records were found for the zone. This is a serious error and definitely due to misconfiguration.
     format: No NS record(s) found for %s.
   SOA:REFRESH_OK:
     args: 3
@@ -860,11 +860,11 @@ messages:
     format: 'SOA retry for %s OK (%s) - recommended >= %s.'
   SOA:RETRY_SMALL:
     args: 3
-    descr: 'The retry value is the amount of time your secondary name servers will wait to contact the primary name server again if the last attempt failed. If the retry value is too small, the secondary name server will retry too frequently.'
+    descr: 'The retry value is the amount of time secondary name servers will wait before contacting the primary name server again if the last attempt failed. If the retry value is too small, secondary name servers will retry too frequently.'
     format: 'SOA retry for %s too small (%s) - recommended >= %s.'
   SOA:RETRY_VS_REFRESH:
     args: 3
-    descr: "The retry value is the amount of time your secondary name servers will wait to contact the primary name server again if the last attempt failed.  If the refresh value is lower than the retry value, it's useless."
+    descr: "The retry value is the amount of time secondary name servers will wait before contacting the primary name server again if the last attempt failed.  If the refresh value is lower than the retry value, it's useless."
     format: SOA refresh for %s lower than retry (%s vs %s).
   SOA:RNAME_DELIVERABLE:
     args: 3
@@ -891,7 +891,7 @@ messages:
     format: 'SOA TTL for %s OK (%s) - recommended >= %s.'
   SOA:TTL_SMALL:
     args: 3
-    descr: 'The smaller the SOA TTL value, the more often resolver need to requery for SOA record.'
+    descr: 'The smaller the SOA TTL value, the more often resolvers need to requery for SOA record.'
     format: 'SOA TTL for %s too small (%s) - recommended >= %s.'
   ZONE:BEGIN:
     args: 2
