@@ -542,7 +542,7 @@ sub get_nameservers_at_parent {
 
     $self->logger->auto("DNS:GET_NS_AT_PARENT", $qname, $qclass);
 
-    if ($self->resolver->faked_zone($qname)) {
+    if ($self->parent->undelegated_test or $self->resolver->faked_zone($qname)) {
         return sort $self->resolver->faked_zone($qname);
     }
 
