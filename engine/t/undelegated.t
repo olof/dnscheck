@@ -18,9 +18,9 @@ sub has {
     $dc->logger->clear;
 }
 
-ok $dc->add_fake_ds('nic.se.	3600	IN	DS	16696  5  2  40079ddf8d09e7f10bb248a69b6630478a28ef969dde399f95bc3b39f8cbacd7');
-ok $dc->add_fake_ds('nic.se.	3600	IN	DS	16696  5  1  ef5d421412a5eaf1230071affd4f585e3b2b1a60');
-ok !$dc->add_fake_ds('gurksallad');
+ok $dc->add_fake_ds('nic.se.	3600	IN	DS	16696  5  2  40079ddf8d09e7f10bb248a69b6630478a28ef969dde399f95bc3b39f8cbacd7'), 'DS added';
+ok $dc->add_fake_ds('nic.se.	3600	IN	DS	16696  5  1  ef5d421412a5eaf1230071affd4f585e3b2b1a60'), 'DS added';
+ok !$dc->add_fake_ds('gurksallad'), 'Broken DS not added';
 
 $dc->add_fake_glue('nic.se', 'ns.nic.se');
 $dc->add_fake_glue('nic.se', 'ns2.nic.se');
@@ -32,5 +32,10 @@ $dc->zone->test('nic.se');
 
 has(qw[DNSSEC:DS_FOUND DNSSEC:DS_ALGORITHM DNSSEC:DS_TO_SEP FAKEGLUE:MALFORMED_DS]);
 
+my $dc2 = new_ok('DNSCheck' => [{configdir => './t/config'}]);
+ok !$dc2->add_fake_glue('nic.se', 'ns17.nic.se'), 'Nonexistant NS not added';
+ok !$dc2->add_fake_glue('nic.se', 'ns23.nic.se'), 'Nonexistant NS not added';
+
+is_deeply([$dc2->dns->get_nameservers_at_parent('nic.se', 'IN')], [], 'Parent NS list is empty');
 
 done_testing();
