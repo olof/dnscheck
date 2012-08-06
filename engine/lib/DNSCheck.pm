@@ -128,14 +128,14 @@ sub add_fake_glue {
     unless (defined($ns_ip)) {
         my @ip = $self->dns->find_addresses($ns_name, 'IN');
         if (@ip == 0) {
-            $self->logger->auto("FAKEGLUE:NO_ADDRESS");
+            $self->logger->auto("FAKEGLUE:NO_ADDRESS", $ns_name);
             return;
         } else {
             $self->resolver->add_fake_glue($zone, $ns_name, $_) for @ip;
         }
     } else {
         unless ($self->resolver->add_fake_glue($zone, $ns_name, $ns_ip)) {
-            $self->logger->auto('FAKEGLUE:BROKEN_INFO', $ns_name, $ns_ip);
+            $self->logger->auto('FAKEGLUE:BROKEN_INFO', $ns_ip, $ns_name);
         }
     }
 
