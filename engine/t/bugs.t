@@ -6,7 +6,7 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 4;
+use Test::More;
 
 use DNSCheck;
 
@@ -27,3 +27,7 @@ eval {    # Test for the bug fixed in r739
     $check->zone->test('iis.se');
 };
 ok(!$@, "$@");
+
+is($check->config->get('smtp')->{hostname}, 'gurksallad', 'Right SMTP name from config');
+
+done_testing;

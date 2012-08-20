@@ -74,7 +74,7 @@ sub test {
 
     my $smtp = Net::SMTP->new(
         Host    => $address,
-        Hello   => $parent->config->get("hostname"),
+        Hello   => $parent->config->get("smtp")->{hostname},
         Timeout => $parent->config->get("smtp")->{timeout},
     );
 

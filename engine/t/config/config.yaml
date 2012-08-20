@@ -18,7 +18,7 @@ logging:
 
 smtp:
   enable: 1
-  hostname: ~
+  hostname: gurksallad
   timeout: 20
 
 net:
