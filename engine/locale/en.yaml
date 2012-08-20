@@ -588,7 +588,7 @@ messages:
     format: 'The IP address %s (given for name server %s) is malformed.'
   FAKEGLUE:MALFORMED_DS:
     args: 1
-    format: The given DS record could not be parsed: %s
+    format: "The given DS record could not be parsed: %s"
   FAKEGLUE:NO_ADDRESS:
     args: 1
     format: The name server %s has no A or AAAA address records.
