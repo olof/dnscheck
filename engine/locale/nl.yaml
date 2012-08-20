@@ -577,6 +577,15 @@ messages:
   DNSSEC:SOA_VALID_SIGNATURES:
     args: 1
     format: Voldoende geldige DNSSEC handtekeningen van SOA RRset gevonden voor %s.
+  FAKEGLUE:BROKEN_INFO:
+    args: 2
+    format: 'Het IP address %s (gegeven voor hostnaam %s) is niet geldig.'
+  FAKEGLUE:MALFORMED_DS:
+    args: 1
+    format: Het opgegeven DS record is niet geldig: %s
+  FAKEGLUE:NO_ADDRESS:
+    args: 1
+    format: Het hostnaam %s heeft geen A of AAAA records.
   ENGINE:CRASH:
     args: 0
     format: DNSCheck engine gecrashed

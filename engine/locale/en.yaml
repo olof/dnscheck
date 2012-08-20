@@ -583,9 +583,15 @@ messages:
   ENGINE:CRASH:
     args: 0
     format: DNSCheck engine crashed
+  FAKEGLUE:BROKEN_INFO:
+    args: 2
+    format: 'The IP address %s (given for name server %s) is malformed.'
   FAKEGLUE:MALFORMED_DS:
-      args: 1
-      format: 'The given DS record could not be parsed: %s'
+    args: 1
+    format: The given DS record could not be parsed: %s
+  FAKEGLUE:NO_ADDRESS:
+    args: 1
+    format: The name server %s has no A or AAAA address records.
   HOST:BEGIN:
     args: 1
     format: Begin testing host %s.
