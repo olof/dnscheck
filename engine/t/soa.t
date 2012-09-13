@@ -26,6 +26,7 @@ ok(!$@, $@);
 
 SKIP: {
     skip "Failed to get an object to test", 19 unless defined($dc);
+    $dc->config->{disable}{mail}{test} = 0;
     ok(defined($dc->soa->test("iis.se")));
     my @msg = @{ $dc->logger->{messages} };
     ok(scalar(@msg) >= 60, "Total of " . scalar(@msg) . " messages.");
@@ -52,6 +53,7 @@ SKIP: {
 
     $dc = new DNSCheck(
         { configdir => './t/config' });
+        $dc->config->{disable}{mail}{test} = 0;
     ok(defined($dc->soa->test("nic.se")));
     %tag = map { $_->{tag} => 1} @{ $dc->logger->{messages} };
     foreach my $tag (

@@ -95,3 +95,7 @@ zonestat:
 
 zone:
     datafile: /var/tmp/se.zone
+
+disable:
+    mail:
+        test: 1

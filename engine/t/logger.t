@@ -10,6 +10,7 @@ use File::Temp 'tempfile';
 
 use_ok('DNSCheck');
 my $dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
+$dc->config->{disable}{mail}{test} = 0;
 $dc->soa->test('iis.se');
 
 my $log = $dc->logger;
@@ -64,7 +65,7 @@ $dc->soa->test('iis.se');
     $dc->logger->print;
     STDOUT->flush;
     my @lines = <$fh>;
-    is(scalar(@lines),53, 'print printed correct number of lines');
+    is(scalar(@lines),19, 'print printed correct number of lines');
     is($lines[0], "  0.000: gurksallad INFO Begin testing SOA parameters for iis.se.\n", 'String translated OK');
     close($fh);
     unlink($filename);
@@ -81,7 +82,7 @@ $dc->soa->test('iis.se');
     $dc->logger->dump;
     STDERR->flush;
     my @lines = <$fh>;
-    is(scalar(@lines),163, 'dump printed correct number of lines');
+    is(scalar(@lines),77, 'dump printed correct number of lines');
     like($lines[0], qr/gurksallad/, 'logname correct');
     close($fh);
     unlink($filename);
@@ -98,7 +99,7 @@ $dc->soa->test('iis.se');
     $dc->soa->test('iis.se');
     STDOUT->flush;
     my @lines = <$fh>;
-    is(scalar(@lines),53, 'interactive print printed correct number of lines');
+    is(scalar(@lines),19, 'interactive print printed correct number of lines');
     like($lines[0], qr/  0.(\d+): citronfromage INFO B.rjar testa SOA-parametrar f.r iis.se./, 'String translated OK');
     
     close($fh);

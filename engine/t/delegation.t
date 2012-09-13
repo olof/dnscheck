@@ -13,7 +13,7 @@ my $dc = DNSCheck->new({configdir => './t/config'});
 # Good zone
 my ($errors, $testable) = $dc->delegation->test('iis.se');
 
-ok( $errors == 0, 'No errors');
+is( $errors, 0, 'No errors');
 ok( $testable, 'Zone is testable');
 
 my %tags = map {$_->[3] => 1} @{$dc->logger->export};
@@ -24,9 +24,9 @@ foreach my $m (qw[GLUE_FOUND_AT_PARENT MATCHING_GLUE ]) {
 $dc->logger->clear;
 
 # Not good zone
-($errors, $testable) = $dc->delegation->test('vasamuseet.se');
+($errors, $testable) = $dc->delegation->test('aflac.se');
 
-ok( $errors == 1, "$errors error(s)");
+is( $errors, 1, "$errors error(s)");
 ok( !$testable, 'Zone is not testable');
 
 %tags = map {$_->[3] => 1} @{$dc->logger->export};
