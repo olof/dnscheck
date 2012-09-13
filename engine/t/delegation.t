@@ -1,13 +1,14 @@
 #!/usr/bin/perl
 
 use Test::More;
+use lib "t/lib";
 
 # use MockBootstrap ('delegation', {multiple => 1});
 use MockResolver ('delegation', {multiple => 1});
 
 use_ok('DNSCheck');
 
-my $dc = DNSCheck->new({configfile => './t/config.yaml'});
+my $dc = DNSCheck->new({configdir => './t/config'});
 
 # Good zone
 my ($errors, $testable) = $dc->delegation->test('iis.se');
@@ -30,7 +31,7 @@ ok( !$testable, 'Zone is not testable');
 
 %tags = map {$_->[3] => 1} @{$dc->logger->export};
 
-foreach my $m (qw[NS_AT_PARENT NOT_FOUND_AT_CHILD ]) {
+foreach my $m (qw[NS_AT_PARENT NOT_FOUND_AT_CHILD BROKEN_BUT_FUNCTIONAL]) {
     ok($tags{"DELEGATION:$m"}, "DELEGATION:$m");
 }
 $dc->logger->clear;

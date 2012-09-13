@@ -5,6 +5,7 @@
 require 5.008;
 use warnings;
 use strict;
+use lib "t/lib";
 
 use Test::More tests => 9;
 
@@ -13,7 +14,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck({configfile => './t/config.yaml'});
+my $check = new DNSCheck({configdir => './t/config'});
 my $dns   = $check->dns;
 
 ######################################################################

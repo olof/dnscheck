@@ -1,12 +1,13 @@
 #!/usr/bin/perl
 
 use Test::More;
+use lib "t/lib";
 use MockResolver 'preflight';
 # $MockResolver::verbose = 1;
 
 use_ok('DNSCheck');
 
-my $dns = DNSCheck->new({configfile => './t/config.yaml'})->dns();
+my $dns = DNSCheck->new({configdir => './t/config'})->dns();
 
 isa_ok($dns,'DNSCheck::Lookup::DNS');
 

@@ -33,15 +33,14 @@ require 5.008;
 use strict;
 use warnings;
 
-use Config;
 use File::Spec::Functions;
 use Sys::Hostname;
-use YAML 'LoadFile';
 use Carp;
 use Cwd;
-use FindBin;
 use List::Util qw(first);
 use Storable qw(dclone);
+use File::ShareDir 'dist_dir';
+use Config::Any;
 
 sub new {
     my $proto = shift;
@@ -50,60 +49,44 @@ sub new {
     bless $self, $proto;
 
     my %arg = @_;
-
-    $self->{configdir} = catfile($Config{'siteprefix'}, 'share/dnscheck');
-    $self->{configdir} = $arg{'configdir'} if defined($arg{'configdir'});
-
-    $self->{sitedir} = $self->{configdir};
-    $self->{sitedir} = $arg{'sitedir'} if defined($arg{'sitedir'});
-
-    my $configfile = _findfile('config.yaml', $self->{configdir});
-    $configfile = $arg{'configfile'} if defined($arg{'configfile'});
-
-    unless (-r $configfile) {
-        croak "Configuration file $configfile not readable.";
+    
+    my $default_config = _get_with_path(
+        _catfile(dist_dir('DNSCheck'), 'config.yaml')
+    );
+    
+    if ($arg{'configfile'} and not -r $arg{'configfile'}) {
+        croak 'Configuration file ' . $arg{'configfile'} . ' not readable';
     }
-
-    my $policyfile = _findfile('policy.yaml', $self->{configdir});
-    $policyfile = $arg{'policyfile'} if defined($arg{'policyfile'});
-
-    my $siteconfigfile = _findfile('site_config.yaml', $self->{sitedir});
-    $siteconfigfile = $arg{'siteconfigfile'} if defined($arg{'siteconfigfile'});
-
-    my $sitepolicyfile = _findfile('site_policy.yaml', $self->{sitedir});
-    $sitepolicyfile = $arg{'sitepolicyfile'} if defined($arg{'sitepolicyfile'});
-
-    my $localefile;
-    $localefile = $arg{'localefile'} if defined($arg{'localefile'});
-    if (defined($arg{'locale'}) && !defined($localefile)) {
-        $localefile = _findfile($arg{'locale'} . '.yaml',
-            catfile($self->{configdir}, 'locale'));
+    
+    my $config = _get_with_path(
+        $arg{'configfile'},
+        _catfile($arg{'configdir'}, 'config.yaml'),
+        '/etc/dnscheck/config.yaml',
+    );
+    
+    my $default_policy = _get_with_path(
+        _catfile(dist_dir('DNSCheck'), 'policy.yaml')
+    );
+    
+    my $policy = _get_with_path(
+        $arg{'policyfile'},
+        _catfile($arg{'policydir'}, 'policy.yaml'),
+        '/etc/dnscheck/policy.yaml',
+    );
+    
+    my $locale;
+    if ($arg{'localefile'}) {
+        $locale = _get_with_path($arg{'localefile'});
+    } elsif ($arg{'locale'}) {
+        $locale = _get_with_path(_catfile(dist_dir('DNSCheck'), $arg{'locale'} . '.yaml'));
     }
+    
+    _hashrefcopy($self, $default_config);
+    _hashrefcopy($self, $config) if defined($config);
+    _hashrefcopy($self, $default_policy);
+    _hashrefcopy($self, $policy) if defined($policy);
 
-    $self->{'configfile'}     = $configfile;
-    $self->{'policyfile'}     = $policyfile;
-    $self->{'siteconfigfile'} = $siteconfigfile;
-    $self->{'sitepolicyfile'} = $sitepolicyfile;
-    $self->{'localefile'}     = $localefile;
-
-    my $cfdata = LoadFile($configfile);
-    my $pfdata;
-    $pfdata = LoadFile($policyfile) if -r $policyfile;
-    my $scfdata;
-    $scfdata = LoadFile($siteconfigfile) if -r $siteconfigfile;
-    my $spfdata;
-    $spfdata = LoadFile($sitepolicyfile) if -r $sitepolicyfile;
-
-    my $lfdata;
-    $lfdata = LoadFile($localefile)
-      if (defined($localefile) and -r $localefile);
-
-    _hashrefcopy($self, $cfdata);
-    _hashrefcopy($self, $scfdata) if defined($scfdata);
-    _hashrefcopy($self, $pfdata)  if defined($pfdata);
-    _hashrefcopy($self, $spfdata) if defined($pfdata);
-
-    $self->{locale} = $lfdata;
+    $self->{locale} = $locale;
 
     _hashrefcopy($self, $arg{extras})
       if (defined($arg{extras}) && (ref($arg{extras}) eq 'HASH'));
@@ -154,18 +137,22 @@ sub should_run {
 ### Non-public functions below here
 ###
 
-sub _findfile {
-    my ($file, $prio) = @_;
+sub _catfile {
+    my @tmp = grep {$_} @_;
+    
+    return catfile(@tmp);
+}
 
-    my $path = first { -e $_ }
-    map { catfile($_, $file) } ($prio, getcwd(), $FindBin::Bin);
+sub _get_with_path {
+    my @files = grep {$_} @_;
 
-    if (defined($path)) {
-        return $path;
-    } else {
-        return $file;
-    }
+    my $cfg = Config::Any->load_files({
+        files => \@files,
+        use_ext => 1,
+    });
 
+    my ($c) = values %{$cfg->[0]};
+    return $c;
 }
 
 sub _hashrefcopy {
@@ -206,23 +193,13 @@ and such. In addition to this there is I<policy>, which specifies things about
 the tests that get run. Most importantly, the policy information specifies the
 reported severity level of various test failures.
 
-By default, C<DNSCheck::Config> will look for four different files:
-F<policy.yaml>, F<config.yaml>, F<site_policy.yaml> and F<site_config.yaml>.
-Only the first two exist by default. If the second two exist, they will
-override values in their respective non-site file. Local changes should go in
-the site files, since the default files will get overwritten when a new
-DNSCheck version is installed.
-
-These four files will be looked for in a number of places: a config directory,
-the current working directory (as determined by the Cwd module) and the
-directory where the running script file is stored (as determined by the
-FindBin module). By default, the config directory is F<share/dnscheck> under
-the root directory for the Perl installation. This can be changed via the
-C<configdir> (for F<config.yaml> and F<policy.yaml>) and C<sitedir> (for
-F<site_config.yalm> and F<site_policy.yaml>) parameters.
-
-The default lookup of a file is disregarded if the parameter giving the full
-path to that file is used.
+By default, C<DNSCheck::Config> will load a default configuration and policy, 
+which comes with the module. It will then look for an load local configuration 
+and policy that can, if they exist, override the default setup. The local 
+information will be looked for in the files F</etc/dnscheck/config.yaml> and 
+F</etc/dnscheck/policy.yaml>. If that's not what you want, you can use the 
+C<configdir>, C<policydir>, C<configfile> and/or C<policyfile> keys when 
+creating the L<DNSCheck> object to read config and policy from somewhere else.
 
 There is no protection against having the same keys in the configuration and
 policy files. The configuration/policy distinction is entirely for human use,
@@ -247,25 +224,13 @@ The available parameters are these:
 The path to the directory in which the module should look for configuration
 and policy files.
 
-=item sitedir
-
-The path to the directory where the site configuration files are. By default the same as F<configdir>.
-
 =item configfile
 
 The full path to the configuration file.
 
-=item siteconfigfile
-
-The full path to the site configuration file.
-
 =item policyfile
 
 The full path to the policy file.
-
-=item sitepolicyfile
-
-The full path to the site policy file.
 
 =item locale
 

@@ -1,926 +1,919 @@
-# $Id$
-
-locale_name: Nederlands
+---
 locale_id: nl
-
+locale_name: Nederlands
 messages:
-
- ENGINE:CRASH:
-  args: 0
-  format: DNSCheck engine gecrashed
-
- ASN:LOOKUP:
-  args: 1
-  format: AS nummer opzoeken voor %s.
- ASN:INVALID_ADDRESS:
-  args: 1
-  format: %s is een ongeldig IP adres.
- ASN:ANNOUNCE_BY:
-  args: 2
-  format: %s geannonceerd door AS %s.
- ASN:NOT_ANNOUNCE:
-  args: 1
-  format: %s niet geannonceerd.
- ASN:LOOKUP_ERROR:
-  args: 1
-  format: Fout bij opzoeken van AS nummer voor %s.
-
- DNS:QUERY_EXPLICIT:
-  args: 4
-  format: Query %s voor %s/%s/%s.
-  descr: ~
- DNS:QUERY_RESOLVER:
-  args: 3
-  format: DNS query voor %s/%s/%s.
- DNS:RESOLVER_QUERY_TIMEOUT:
-  args: 3 
-  format: DNS resolver time out in query voor %s/%s/%s.
-  descr: ~
- DNS:QUERY_PARENT:
-  args: 4
-  format: Query parent van %s voor %s/%s/%s.
- DNS:FAKE_PACKET:
-    args: 3
-    format:  Nabootsen van antwoord in zone %s voor %s/%s.
- DNS:QUERY_PARENT_NOCACHE:
-  args: 4
-  format: Query parent (zonder cache) van %s voor %s/%s/%s.
- DNS:FIND_PARENT:
-  args: 2
-  format: Parent zoeken van %s/%s.
- DNS:NO_PARENT:
-  args: 2
-  format: Parent zoeken van %s/%s mislukt.
-  descr: DNSCheck kon de parent van de zone niet vinden.
- DNS:PARENT_OF:
-  args: 3
-  format: %s gevonden als parent van %s/%s.
- DNS:EXPLICIT_RESPONSE:
-  args: 1
-  format: Name server antwoord: %s
- DNS:PARENT_RESPONSE:
-  args: 1
-  format: DNS antwoord van parent: %s
- DNS:CHILD_RESPONSE:
-  args: 1
-  format: DNS antwoord van child: %s
- DNS:RESOLVER_RESPONSE:
-  args: 1
-  format: DNS antwoord van resolver: %s
- DNS:NO_PARENT_NS:
-  args: 3
-  format: Name servers voor %s (parent van %s/%s) niet gevonden. 
-  descr: ~
- DNS:QUERY_TIMEOUT:
-  args: 4
-  format: Name server %s timeout bij query voor %s/%s/%s.
-  descr: ~
- DNS:QUERY_CHILD:
-  args: 4
-  format: Query elke name server van %s voor %s/%s/%s.
- DNS:QUERY_CHILD_NOCACHE:
-  args: 4
-  format: Query elke name server (zonder cache) van %s voor %s/%s/%s.
- DNS:NO_CHILD_NS:
-  args: 2
-  format: Name servers van %s/%s niet gevonden.
-  descr: ~
- DNS:ADDRESS_BLACKLIST_ADD:
-  args: 4
-  format: Name server %s toevoegen aan blacklist.
- DNS:ADDRESS_BLACKLISTED:
-  args: 4
-  format: Name server %s geblacklist.
- DNS:LOOKUP_ERROR:
-  args: 1
-  format: DNS lookup fout (%s).
-  descr: ~
- DNS:NO_EDNS:
-  args: 1
-  format: EDNS niet ondersteund door %s.
-  descr: EDNS is een uitbreiding op het DNS protocol. De belangrijkste wijziging is dat de 512 byte grootte beperking van het query/answer packet niet meer bestaat, grotere DNS antwoorden mogelijk zijn (er past meer informatie in).  EDNS is essentieel voor nieuwe protocollen en technologieen zoals DNSSEC and IPv6.
- DNS:NO_ANSWER:
-  args: 4
-  format: Geen antwoord ontvangen van %s tijdens query voor %s/%s/%s.
-  descr: ~
- DNS:NOT_AUTH:
-  args: 4
-  format: Name server %s niet authoritative voor %s/%s/%s.
- DNS:SOA_SERVFAIL:
-  args: 1
-  format: DNS SERVFAIL tijdens SOA-query aan %s.
- DNS:ANSWER_DUMP:
-  args: 1
-  format: DNS query gaf: %s
- DNS:SETUP_RESOLVER:
-  args: 0
-  format: DNS resolver initialisatie.
- DNS:SET_BUFSIZE:
-  args: 1
-  format: DNS resolver EDNS buffer size op %s gezet.
- DNS:TRANSPORT_TCP:
-  args: 0
-  format: DNS resolver transport op TCP gezet.
- DNS:TRANSPORT_UDP:
-  args: 0
-  format: DNS resolver transport op UDP gezet.
- DNS:RECURSION_DESIRED:
-  args: 0
-  format: DNS resolver recursie gewenst.
- DNS:RECURSION_DISABLED:
-  args: 0
-  format: DNS resolver recursie uitgeschakeld.
- DNS:DNSSEC_DESIRED:
-  args: 0
-  format: DNS resolver DNSSEC gewenst.
- DNS:DNSSEC_DISABLED:
-  args: 0
-  format: DNS resolver DNSSEC uitgeschakeld.
- DNS:GET_NS_AT_PARENT:
-  args: 2
-  format: DNS query voor NS van %s/%s aan parent.
- DNS:GET_NS_AT_CHILD:
-  args: 2
-  format: DNS query voor NS van %s/%s aan child.
- DNS:INITIALIZING_NAMESERVERS:
-  args: 2
-  format: Initialisatie van name servers voor %s/%s.
- DNS:NAMESERVERS_INITIALIZED:
-  args: 2
-  format: Name servers voor %s/%s geinitialiseerd.
- DNS:NAMESERVER_FOUND:
-  args: 4
-  format: Name server voor %s/%s: %s (%s) gevonden.
- DNS:FIND_PARENT_BEGIN:
-  args: 2
-  format: Proberen om parent van %s/%s te vinden.
- DNS:NXDOMAIN:
-  args: 2
-  format: Domein %s/%s bestaat niet.
-  descr: ~
- DNS:FIND_PARENT_DOMAIN:
-  args: 1
-  format: %s als start gebruiken voor parent tracering.
- DNS:FIND_PARENT_TRY:
-  args: 1
-  format: Controleren van %s als parent domein.
- DNS:FIND_PARENT_UPPER:
-  args: 1
-  format: Parent zou %s kunnen zijn.
- DNS:FIND_PARENT_RESULT:
-  args: 3
-  format: Resolved %s als parent van %s/%s.
- DNS:FIND_MX_BEGIN:
-  args: 1
-  format: Mail exchanger voor %s opzoeken.
- DNS:FIND_MX_RESULT:
-  args: 2
-  format: Mail exchanger voor %s gevonden: %s
- DNS:FIND_ADDRESSES:
-  args: 2
-  format: Adres van %s/%s gevonden.
- DNS:FIND_ADDRESSES_RESULT:
-  args: 3
-  format: Adressen van %s/%s: %s
- DNS:UNQUERIBLE_ADDRESS:
-  args: 1
-  format: Queries sturen naar %s niet gelukt.
-
- ADDRESS:BEGIN:
-  args: 1
-  format: Begin testen adres %s.
- ADDRESS:INVALID:
-  args: 1
-  format: Adres %s is ongeldig of onjuist
-  descr: ~
- ADDRESS:PRIVATE_IPV4:
-  args: 1
-  format: %s is een private IPv4 adres.
-  descr: Een private IP adres (RFC1918) zou normaal gesproken niet voor moeten komen in het publieke DNS, omdat het niet bereikbaar is vanaf het Internet.
- ADDRESS:RESERVED_IPV4:
-  args: 1
-  format: %s is een gereserveerd IPv4 adres.
-  descr: Gereserveerde IPv4 adressen moeten niet worden gebruikt op het publieke Internet.
- ADDRESS:RESERVED_IPV6:
-  args: 1
-  format: %s is een gereserveerd IPv6 adres.
-  descr: Gereserveerde IPv6 adressen moeten niet worden gebruikt op het publieke Internet.
- ADDRESS:PTR_NOT_FOUND:
-  args: 2
-  format: Reverse adres voor %s (%s) niet aangetroffen.
-  descr: PTR record(s) voor het adres konden niet worden gevonden in de .arpa-zone. (ip6.arpa. voor IPv6 adressen en in-addr.arpa. voor IPv4).
- ADDRESS:PTR_HOSTNAME_NOT_FOUND:
-  args: 2
-  format: Reverse voor %s verwijst naar een onbekende host naam (%s).
-  descr: Het PTR record voor dit adres verwijst naar een onbekende host naam.
- ADDRESS:END:
-  args: 1
-  format: Gereed met testen van adres %s.
-
- CONNECTIVITY:BEGIN:
-  args: 1
-  format: Begin connectiviteits test voor %s.
- CONNECTIVITY:ANNOUNCED_BY_ASN:
-  args: 2
-  format: Name server %s geannonceerd door: %s
-  descr: Het IP adres wordt geannonceerd door een autonomous system (AS).
- CONNECTIVITY:MULTIPLE_ASN:
-  args: 1
-  format: Name server %s geanonnceerd door meerdere AS-en.
-  descr: De name server wordt geannonceerd door meer dan een autonomous system (AS).
- CONNECTIVITY:NOT_ANNOUNCED:
-  args: 1
-  format: Name server %s niet geannonceerd door enig AS.
-  descr: Het IP adres wordt niet geannonceerd door enig autonomous system en is hoogstwaarschijnlijk niet bereikbaar op het Internet.
- CONNECTIVITY:ASN_LIST:
-  args: 1
-  format: Zone geannonceerd door IPv4 ASN: %s
- CONNECTIVITY:TOO_FEW_ASN:
-  args: 1
-  format: Zone geannonceerd door minder dan twee IPv4 ASN (%s).
-  descr: De name servers van deze zone bevinden zich allen in hetzelfde (of geen) autonomous system (AS).
- CONNECTIVITY:ASN_COUNT_OK:
-  args: 1
-  format: Zone geannonceerd door meer dan een ASN (%s).
-  descr: De name servers van deze zone bevinden zich in meerdere autonomous systems (AS).
- CONNECTIVITY:V6_ANNOUNCED_BY_ASN:
-   args: 2
-   format: Name server %s geannonceerd via IPv6 door: %s
-   descr: Het IP adres wordt geannonceerd door een autonomous system (AS).
- CONNECTIVITY:V6_MULTIPLE_ASN:
-   args: 1
-   format: Name server %s geannonceerd door meerdere IPv6 AS.
-   descr: De name server wordt geannonceerd door meer dan een autonomous system (AS).
- CONNECTIVITY:V6_NOT_ANNOUNCED:
-   args: 1
-   format: Name server %s niet geannonceerd door enig IPv6 AS.
-   descr: Het IP adres wordt niet geannonceerd door enig autonomous system en is hoogstwaarschijnlijk niet bereikbaar op het Internet.
- CONNECTIVITY:V6_ASN_LIST:
-   args: 1
-   format: Zone geannonceerd door IPv6 ASN: %s
- CONNECTIVITY:V6_TOO_FEW_ASN:
-   args: 1
-   format: Zone geannonceerd door slechts een IPv6 ASN (%s).
-   descr: De name servers van deze zone bevinden zich allen in hetzelfde autonomous system.
- CONNECTIVITY:V6_ASN_COUNT_OK:
-   args: 1
-   format: Zone geannonceerd door meer dan een IPv6 ASN (%s).
-   descr: De name servers van deze zone bevinden zich in meerdere autonomous systems.
- CONNECTIVITY:END:
-  args: 1
-  format: Gereed met testen van connectiviteit %s.
-
- DELEGATION:BEGIN:
-  args: 1
-  format: Begin delegatie tests voor %s.
- DELEGATION:NS_AT_PARENT:
-  args: 1
-  format: Name servers opgegeven bij parent: %s
-  descr: Dit is de lijst met name servers die zijn opgegeven bij de parent. Het moet alle name servers bevatten die zijn geconfigureerd bij de child.
- DELEGATION:NOT_FOUND_AT_PARENT:
-  args: 0
-  format: Delegatie niet aangetroffen bij parent.
-  descr: Er kon geen delegatie worden gevonden bij de parent, waarmee deze zone effectief onbereikbaar is vanaf het Internet.
- DELEGATION:NS_AT_CHILD:
-  args: 1
-  format: Name servers opgegeven bij child: %s
-  descr: Dit is de lijst met name servers die zijn opgegeven bij de child . Het moet alle name servers bevatten die zijn geconfigureerd bij de parent.
- DELEGATION:NOT_FOUND_AT_CHILD:
-  args: 0
-  format: Geen name servers gevonden bij child.
-  descr: Er konden geen name servers worden gevonden bij de child. Dit betekent doorgaans dat de name server niet is geconfigureerd om antwoorden te geven met betrekking tot deze zone.
- DELEGATION:EXTRA_NS_PARENT:
-  args: 1
-  format: Overbodige name server opgegeven bij parent: %s
-  descr: Er is een name server aangetroffen die wel is opgegeven bij de parent, maar niet bij de child. Dit duidt op een administratieve fout. U dient zo snel mogelijk de parent bij te werken zodat die overeenkomt met de child.
- DELEGATION:EXTRA_NS_CHILD:
-  args: 1
-  format: Extra nameserver opgegeven bij child: %s
-  descr: Er is bij de child een nameserver aangetroffen die niet bekend is bij de parent. Dit kan duiden op een configuratiefout.
- DELEGATION:TOO_FEW_NS:
-  args: 1
-  format: Te weinig name servers (%s).
-  descr: Er is voor de zone slechts een nameserver aangetroffen. U moet altijd minimaal twee name servers voor een zone hebben om redenen van redundantie.
- DELEGATION:TOO_FEW_NS_IPV4:
-  args: 1
-  format: Te weinig IPv4 name servers (%s).
-  descr: Er is slechts een IPv4 name server aangetroffen voor de zone. U moet altijd minimaal twee IPv4 name servers voor een zone hebben om redenen van redundantie.
- DELEGATION:TOO_FEW_NS_IPV6:
-  args: 1
-  format: Te weinig IPv6 name servers (%s).
-  descr: Er is slechts een IPv6 name server aangetroffen voor de zone. U moet altijd minimaal twee IPv6 name servers voor een zone hebben om redenen van redundantie.
- DELEGATION:NO_NS_IPV4:
-  args: 0
-  format: Geen IPv4 name servers gevonden.
- DELEGATION:NO_NS_IPV6:
-  args: 0
-  format: Geen IPv6 name servers gevonden.
- DELEGATION:NO_COMMON_NS_NAMES:
-  args: 2
-  format: Parent/child glue stemt niet overeen.
-  descr: De parent heeft name servers die bij de child ontbreken, zie details bij geavanceerde resultaten. Deze configuratie zou kunnen werken maar kan al na een kleine wijziging defect gaan.
- DELEGATION:MATCHING_GLUE:
-  args: 2
-  format: Glue controleren voor %s (%s).
- DELEGATION:GLUE_SKIPPED:
-  args: 2
-  format: Glue overslaan voor %s (%s).
- DELEGATION:GLUE_FOUND_AT_PARENT:
-  args: 3
-  format: Parent glue voor %s aangetroffen: %s (%s)
-  descr: Het IP address van de name server is gevonden bij de parent.
- DELEGATION:GLUE_FOUND_AT_CHILD:
-  args: 3
-  format: Child glue voor %s aangetroffen: %s (%s)
-  descr: Het IP address van de name server is gevonden bij de child.
- DELEGATION:INCONSISTENT_GLUE:
-  args: 1
-  format: Inconsistente glue voor name server %s.
-  descr: Het IP adres van een name server week af tussen child en parent.  Dit is een fout in de configuratie die zo snel mogelijk moet worden hersteld.
- DELEGATION:GLUE_MISSING_AT_CHILD:
-  args: 1
-  format: Ontbrekende glue bij child: %s
-  descr: Het IP adres van name server werd niet gevonden bij de child. Dit is een fout in de configuratie die zo snel mogelijk moet worden hersteld.
- DELEGATION:NS_HISTORY:
-  args: 2
-  format: Eerder gebruikte name servers voor %s: %s
- DELEGATION:STILL_AUTH:
-  args: 3
-  format: Een eerder gebruikte name server %s (%s) is nog steeds authoritative voor %s.
-  descr: Een eerder gebruikte nameserver geeft nog steeds authoritative antwoord voor de zone.  Dit komt waarschijnlijk vanwege oude zone data die nog niet is uigeconfigureerd op de oude server.  Om dit probleem op te lossen kunt u contact opnemen met de beheerder van de name server met het verzoek de zone uit de configuratie te verwijderen.
- DELEGATION:BROKEN_UNDELEGATED:
-  args: 1
-  format: Test voor zone %s was gemarkeerd als niet-gedelegeerd, maar er is geen werkende glue opgegeven.
- DELEGATION:INZONE_NS_WITHOUT_GLUE:
-  args: 2
-  format: Nameserver %s staat geregistreerd bij zone %s zonder adres informatie.
- DELEGATION:IPV6_ONLY_AT_CHILD:
-  args: 1
-  format: Nameservers met IPv6 adressen staan wel in zone %s, maar niet in de parentzone.
- DELEGATION:IPV6_ONLY_AT_PARENT:
-  args: 1
-  format: Nameservers met IPv6 staan wel genoemd in de parentzone van %s, maar niet in de zone zelf.
- DELEGATION:NS_IS_CNAME:
-  args: 2
-  format: In zone %s heeft nameserver %s een CNAME record, dat is niet toegestaan.
- DELEGATION:END:
-  args: 1
-  format: Gereed met delegatie testen voor %s.
-
- DNSSEC:BEGIN:
-  args: 1
-  format: Begin van DNSSEC testen voor %s.
- DNSSEC:CHECKING_DS_AT_PARENT:
-  args: 1
-  format: Controle DS records voor %s bij parent.
- DNSSEC:DS_FOUND:
-  args: 1
-  format: DS record aangetroffen voor %s bij parent.
-  descr: Een DS (delegation signer) RRset werd gevonden bij de parent.  Dit wijst op een DNSSEC delegatie, m.a.w. de child moet zijn gesigneerd.
- DNSSEC:NO_DS_FOUND:
-  args: 1
-  format: Geen DS record voor %s bij parent gevonden.
-  descr: Een DS (delegation signer) RRset kon niet worden gevonden bij de parent.  Dit wijst op een delegatie zonder DNSSEC, m.a.w. de child hoeft niet te worden gesigneerd.
- DNSSEC:CHECKING_DNSKEY_AT_CHILD:
-  args: 1
-  format: DNSKEY records controleren voor %s bij child.
- DNSSEC:DNSKEY_FOUND:
-  args: 1
-  format: DNSKEY record voor %s bij child aangetroffen.
-  descr: Een DNSKEY RRset is aangetroffen bij de child, dat geeft aan dat de child waarschijnlijk DNSSEC gebruikt.
- DNSSEC:DNSKEY_NOT_FOUND:
-  args: 1
-  format: Geen DNSKEY record gevonden voor %s bij child.
-  descr: Een DNSKEY RRset is niet gevonden bij de child, wat er op wijst dat de child waarschijnlijk geen DNSSEC gebruikt.
- DNSSEC:DETERMINE_SECURITY_STATUS:
-  args: 1
-  format: DNSSEC status voor %s bepalen.
- DNSSEC:INCONSISTENT_SECURITY:
-  args: 1
-  format: Inconsistente beveiliging voor %s - DS record aangetroffen bij parent, maar geen DNSKEY gevonden bij child.
-  descr: De parent heeft een veilige delegation naar de child (aangegeven door de DS RRset op de parent), maar de child heeft geen DNSKEY.  Dit is waarschijnlijk als gevolg van een eerder gesigneerde zone die ongesigneerd is geraakt zonder daarbij op de parent de delegatie op basis van DNSSEC ongedaan te maken.
- DNSSEC:CONSISTENT_SECURITY:
-  args: 1
-  format: Consistente DNSSEC beveiliging voor %s.
- DNSSEC:SKIPPED_NO_KEYS:
-  args: 1
-  format: Geen DNSKEY(s) gevonden bij child, overige testen overgeslagen.
- DNSSEC:MISSING_DS:
-  args: 1
-  format: De Chain of trust voor %s is niet in orde - Er is een DNSKEY aangetroffen bij de child, maar DS record bij de parent.
-  descr: De child gebruikt zo te zien DNSSEC, maar de parent heeft geen veilige delegation op basis van DNSSEC.  Hierdoor is de 'chain of trust' tussen de parent en de child verbroken en 'validating resolvers', die op DNSSEC-juistheid controleren, zullen niet in staat zijn om de antwoorden van de child te valideren.
- DNSSEC:CHECKING_CHILD:
-  args: 1
-  format: DNSSEC controles bij child (%s).
- DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
-  args: 3
-  format: DNSKEY %s (tag %s) gebruikt een niet aanbevolen algoritme: %s
-  descr: Een DNSKEY die een niet aanbevolen algoritme gebruikt werd aangetroffen - tenzij u hiervoor een hele goede reden heeft, wordt u geadviseerd het gebruik hiervan te staken.
- DNSSEC:DNSKEY_SKIP_PROTOCOL:
-  args: 3
-  format: DNSKEY %s (tag %s) is geen DNSSEC sleutel (protocol=%s).
-  descr: DNSKEYs moeten een DNSSEC protocol waarde hebben (3).
- DNSSEC:DNSKEY_SKIP_TYPE:
-  args: 2
-  format: DNSKEY %s (tag %s) is geen zone key.
-  descr: DNSKEYs moet een zone key zijn.
- DNSSEC:DNSKEY_SEP:
-  args: 2
-  format: DNSKEY %s (tag %s) is gemarkeerd als een secure entry point (SEP).
-  descr: Een 'secure entry point' (SEP) is onderdeel van de 'chain of trust' die loopt van de parent naar de child.
- DNSSEC:DNSKEY_MANDATORY_FOUND:
-  args: 1
-  format: Minstens een vereist algoritme aangetroffen voor DNSKEY %s.
- DNSSEC:DNSKEY_MANDATORY_NOT_FOUND:
-  args: 1
-  format: Geen enkele van de vereiste algoritmes aangetroffen voor DNSKEY %s.
-  descr: Minimaal een DNSKEY moet van het type RSA/SHA1 zijn.
- DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
-  args: 2
-  format: DNSSEC verdere verwerking voor %s niet mogelijk (server: %s).
-  descr: Er zijn geen DNSSEC signatures opgenomen in antwoorden van de name server.  Dit is waarschijnlijk als gevolg van een onjuiste configuratie van de name server.
- DNSSEC:NO_SIGNATURES:
-  args: 1
-  format: Geen digitale handtekening (signatures) gevonden voor %s.
-  descr: bij het bevragen van de zone werden geen DNSSEC signatures aangetroffen. Mogelijk is de zone helemaal niet gesigneerd?
- DNSSEC:CHILD_CHECK_ABORTED:
-  args: 1
-  format: DNSSEC child controles afgebroken voor %s.
- DNSSEC:DNSKEY_SIGNATURE_OK:
-  args: 2
-  format: RRSIG(DNSKEY %s) aangetroffen, aangemaakt door gepubliceerde sleutel (tag %s).
- DNSSEC:DNSKEY_SIGNER_UNPUBLISHED:
-  args: 2
-  format: RRSIG(DNSKEY %s) aangetroffen die is aangemaakt door ongepubliceerde sleutel (tag %s).
-  descr: DNSSEC signatures die door niet-gepubliceerde sleutels zijn aangemaakt, kunnen niet worden gevalideerd door 'validating resolvers'.  Alle sleutels die worden gebruikt om gegevens te signeren dienen te zijn gepubliceerd.
- DNSSEC:DNSKEY_VALID_SIGNATURES:
-  args: 1
-  format: Voldoende valide digitale handtekeningen aangetroffen voor %s.
- DNSSEC:DNSKEY_NO_VALID_SIGNATURES:
-  args: 1
-  format: Onvoldoende valide digitale handtekeingen aangetroffen voor %s.
-  descr: Er werden geen geldige handtekeningen voor de DNSKEY RRset van de zone aangetroffen - verifieer of de zone is gesigneerd met een geldige en gepubliceerde sleutel.
- DNSSEC:SOA_SIGNATURE_OK:
-  args: 2
-  format: RRSIG(SOA %s) aangemaakt door DNSKEY (tag %s) OK.
- DNSSEC:SOA_SIGNER_UNPUBLISHED:
-  args: 2
-  format: RRSIG(SOA %s) gevonden die is aangemaakt door gepubliceerde sleutel (tag %s).
-  descr: DNSSEC handtekeningen die aangemaakt zijn door niet gepubliceerde sleutels kunnen niet worden gevalideerd door 'validating resolvers'.  Alle sleutels die worden gebruikt om gegevens te signeren dienen te zijn gepubliceerd.
- DNSSEC:SOA_VALID_SIGNATURES:
-  args: 1
-  format: Voldoende geldige DNSSEC handtekeningen van SOA RRset gevonden voor %s.
- DNSSEC:SOA_NO_VALID_SIGNATURES:
-  args: 1
-  format: Onoldoende geldige DNSSEC handtekeningen van SOA RRset gevonden voor %s.
-  descr: Er werden geen geldige handtekeningen voor de SOA RRset van de zone aangetroffen - verifieer of de zone is gesigneerd met een geldige en gepubliceerde sleutel.
- DNSSEC:CHILD_CHECKED:
-  args: 1
-  format: DNSSEC child controles voor %s compleet.
- DNSSEC:CHECKING_PARENT:
-  args: 1
-  format: Controle op DNSSEC bij parent van %s.
- DNSSEC:PARENT_DS:
-  args: 2
-  format: DS(%s) gevonden bij parent: %s
- DNSSEC:DS_KEYREF_OK:
-  args: 2
-  format: Parent DS(%s) verwijst naar een geldige sleutel bij child: %s
- DNSSEC:DS_KEYREF_INVALID:
-  args: 2
-  format: Parent DS(%s) verwijst naar een ongeldige sleutel bij child: %s
-  descr: De DS RRset moet verwijzen naar een geldige DNSKEY bij de child, anders is de 'chain of trust' tussen de parent en de child verbroken en kunnen 'validating resolver's antwoorden van de child niet valideren.
- DNSSEC:NO_VALID_DS:
-  args: 1
-  format: Zone %s bevat DS records, maar geen daarvan werkt.
- DNSSEC:DS_TO_SEP:
-  args: 2
-  format: Parent DS(%s) verwijst naar secure entry point (SEP) bij child: %s
- DNSSEC:DS_TO_NONSEP:
-  args: 2
-  format: Parent DS(%s) verwijst niet naar secure entry point (SEP) bij child: %s
-  descr: De DS RRset verwijst naar een DNSKEY bij de child, maar de sleutel is niet gemarkeerd als een secure entry point (SEP).
- DNSSEC:DS_MANDATORY_FOUND:
-  args: 1
-  format: Minstens een vereist DS algoritme gevonden voor %s.
- DNSSEC:DS_MANDATORY_NOT_FOUND:
-  args: 1
-  format: Geen van de verseiste DS algoritmes aangetroffen voor %s.
-  descr: Omdat geen van de in de DS RRset gepubliceerde hash algoritmes verplichte algoritmes zijn, zullen sommige validating resolvers wellicht niet in staat zijn de chain of trust van de parent naar de child te volgen.
- DNSSEC:PARENT_CHECKED:
-  args: 1
-  format: DNSSEC parent controles voor %s compleet.
- DNSSEC:RRSIG_NOT_YET_VALID:
-  args: 1
-  format: DNSSEC digitale handtekening nog niet geldig: %s
-  descr: Digitale handtekeningen die nog niet geldig zijn, zullen worden genegeerd door validating resolvers.
- DNSSEC:RRSIG_EXPIRED:
-  args: 1
-  format: DNSSEC digitale handtekening verlopen: %s
-  descr: Verlopen digitale handtekeningen zullen worden genegeerd door validating resolvers.
- DNSSEC:RRSIG_VALID:
-  args: 1
-  format: DNSSEC digitale handtekening geldig: %s
- DNSSEC:RRSIG_EXPIRES_AT:
-     args: 1
-     format: DNSSEC digitale handtekening verloopt op: %s
- DNSSEC:RRSIG_VERIFIES:
-     args: 1
-     format: DNSSEC digitale handtekening %s matcht records.
- DNSSEC:RRSIG_FAILS_VERIFY:
-    args: 2
-    format: DNSSEC digitale handtekening %s matcht niet met de records die het ondertekend: %s
- DNSSEC:EXTRA_PROCESSING:
-     args: 1
-     format: Name server %s doet DNSSEC extra verwerking.
- DNSSEC:NO_EXTRA_PROCESSING:
+  ADDRESS:BEGIN:
     args: 1
-    format: Name server %s doet geen DNSSEC extra verwerking.
- DNSSEC:CONSISTENT_EXTRA_PROCESSING:
-     args: 1
-     format: Servers voor %s hebben een consistente extra verwerking status.
- DNSSEC:INCONSISTENT_EXTRA_PROCESSING:
-     args: 1
-     format: Niet alle servers voor %s hebben DNSSEC extra verwerking geactiveerd.
- DNSSEC:DNSKEY_ALGORITHM:
+    format: Begin testen adres %s.
+  ADDRESS:END:
+    args: 1
+    format: Gereed met testen van adres %s.
+  ADDRESS:INVALID:
+    args: 1
+    descr: ~
+    format: Adres %s is ongeldig of onjuist
+  ADDRESS:PRIVATE_IPV4:
+    args: 1
+    descr: 'Een private IP adres (RFC1918) zou normaal gesproken niet voor moeten komen in het publieke DNS, omdat het niet bereikbaar is vanaf het Internet.'
+    format: '%s is een private IPv4 adres.'
+  ADDRESS:PTR_HOSTNAME_NOT_FOUND:
+    args: 2
+    descr: Het PTR record voor dit adres verwijst naar een onbekende host naam.
+    format: Reverse voor %s verwijst naar een onbekende host naam (%s).
+  ADDRESS:PTR_NOT_FOUND:
+    args: 2
+    descr: PTR record(s) voor het adres konden niet worden gevonden in de .arpa-zone. (ip6.arpa. voor IPv6 adressen en in-addr.arpa. voor IPv4).
+    format: Reverse adres voor %s (%s) niet aangetroffen.
+  ADDRESS:RESERVED_IPV4:
+    args: 1
+    descr: Gereserveerde IPv4 adressen moeten niet worden gebruikt op het publieke Internet.
+    format: '%s is een gereserveerd IPv4 adres.'
+  ADDRESS:RESERVED_IPV6:
+    args: 1
+    descr: Gereserveerde IPv6 adressen moeten niet worden gebruikt op het publieke Internet.
+    format: '%s is een gereserveerd IPv6 adres.'
+  ASN:ANNOUNCE_BY:
+    args: 2
+    format: '%s geannonceerd door AS %s.'
+  ASN:INVALID_ADDRESS:
+    args: 1
+    format: '%s is een ongeldig IP adres.'
+  ASN:LOOKUP:
+    args: 1
+    format: AS nummer opzoeken voor %s.
+  ASN:LOOKUP_ERROR:
+    args: 1
+    format: Fout bij opzoeken van AS nummer voor %s.
+  ASN:NOT_ANNOUNCE:
+    args: 1
+    format: '%s niet geannonceerd.'
+  CONNECTIVITY:ANNOUNCED_BY_ASN:
+    args: 2
+    descr: Het IP adres wordt geannonceerd door een autonomous system (AS).
+    format: 'Name server %s geannonceerd door: %s'
+  CONNECTIVITY:ASN_COUNT_OK:
+    args: 1
+    descr: De name servers van deze zone bevinden zich in meerdere autonomous systems (AS).
+    format: Zone geannonceerd door meer dan een ASN (%s).
+  CONNECTIVITY:ASN_LIST:
+    args: 1
+    format: 'Zone geannonceerd door IPv4 ASN: %s'
+  CONNECTIVITY:BEGIN:
+    args: 1
+    format: Begin connectiviteits test voor %s.
+  CONNECTIVITY:END:
+    args: 1
+    format: Gereed met testen van connectiviteit %s.
+  CONNECTIVITY:MULTIPLE_ASN:
+    args: 1
+    descr: De name server wordt geannonceerd door meer dan een autonomous system (AS).
+    format: Name server %s geanonnceerd door meerdere AS-en.
+  CONNECTIVITY:NOT_ANNOUNCED:
+    args: 1
+    descr: Het IP adres wordt niet geannonceerd door enig autonomous system en is hoogstwaarschijnlijk niet bereikbaar op het Internet.
+    format: Name server %s niet geannonceerd door enig AS.
+  CONNECTIVITY:TOO_FEW_ASN:
+    args: 1
+    descr: De name servers van deze zone bevinden zich allen in hetzelfde (of geen) autonomous system (AS).
+    format: Zone geannonceerd door minder dan twee IPv4 ASN (%s).
+  CONNECTIVITY:V6_ANNOUNCED_BY_ASN:
+    args: 2
+    descr: Het IP adres wordt geannonceerd door een autonomous system (AS).
+    format: 'Name server %s geannonceerd via IPv6 door: %s'
+  CONNECTIVITY:V6_ASN_COUNT_OK:
+    args: 1
+    descr: De name servers van deze zone bevinden zich in meerdere autonomous systems.
+    format: Zone geannonceerd door meer dan een IPv6 ASN (%s).
+  CONNECTIVITY:V6_ASN_LIST:
+    args: 1
+    format: 'Zone geannonceerd door IPv6 ASN: %s'
+  CONNECTIVITY:V6_MULTIPLE_ASN:
+    args: 1
+    descr: De name server wordt geannonceerd door meer dan een autonomous system (AS).
+    format: Name server %s geannonceerd door meerdere IPv6 AS.
+  CONNECTIVITY:V6_NOT_ANNOUNCED:
+    args: 1
+    descr: Het IP adres wordt niet geannonceerd door enig autonomous system en is hoogstwaarschijnlijk niet bereikbaar op het Internet.
+    format: Name server %s niet geannonceerd door enig IPv6 AS.
+  CONNECTIVITY:V6_TOO_FEW_ASN:
+    args: 1
+    descr: De name servers van deze zone bevinden zich allen in hetzelfde autonomous system.
+    format: Zone geannonceerd door slechts een IPv6 ASN (%s).
+  CONSISTENCY:BEGIN:
+    args: 1
+    format: Begin zone consistentie test voor %s.
+  CONSISTENCY:END:
+    args: 1
+    format: Gereed met testen van de zone consistentie voor %s.
+  CONSISTENCY:SOA_DIGEST_AT_ADDRESS:
+    args: 2
+    format: SOA op adres %s heeft digitale vingerafdruk %s.
+  CONSISTENCY:SOA_DIGEST_CONSISTENT:
+    args: 0
+    format: Alle overige velden in het SOA record zijn consistent op alle name servers.
+  CONSISTENCY:SOA_DIGEST_DIFFERENT:
+    args: 1
+    descr: De overige velden in het SOA record zijn niet op alle name servers gelijk. Dit duidt normaal gesproken op een configuratiefout.
+    format: '%s verschillende SOA records gevonden.'
+  CONSISTENCY:SOA_SERIAL_AT_ADDRESS:
+    args: 2
+    format: SOA op adres %s heeft volgnummer %s.
+  CONSISTENCY:SOA_SERIAL_CONSISTENT:
+    args: 0
+    format: Alle SOA records hebben een consistent volgnummer.
+  CONSISTENCY:SOA_SERIAL_DIFFERENT:
+    args: 1
+    descr: 'Het SOA volgnummer (de serial)is niet op alle name servers gelijk. Dit kan duiden op een configuratiefout, maar kan ook het gevolg zijn van het traag propageren van mutaties naar de secondary name servers.'
+    format: '%s verschillende volgnummers (serials) gevonden.'
+  DELEGATION:BEGIN:
+    args: 1
+    format: Begin delegatie tests voor %s.
+  DELEGATION:BROKEN_UNDELEGATED:
+    args: 1
+    format: 'Test voor zone %s was gemarkeerd als niet-gedelegeerd, maar er is geen werkende glue opgegeven.'
+  DELEGATION:END:
+    args: 1
+    format: Gereed met delegatie testen voor %s.
+  DELEGATION:EXTRA_NS_CHILD:
+    args: 1
+    descr: Er is bij de child een nameserver aangetroffen die niet bekend is bij de parent. Dit kan duiden op een configuratiefout.
+    format: 'Extra nameserver opgegeven bij child: %s'
+  DELEGATION:EXTRA_NS_PARENT:
+    args: 1
+    descr: 'Er is een name server aangetroffen die wel is opgegeven bij de parent, maar niet bij de child. Dit duidt op een administratieve fout. U dient zo snel mogelijk de parent bij te werken zodat die overeenkomt met de child.'
+    format: 'Overbodige name server opgegeven bij parent: %s'
+  DELEGATION:GLUE_FOUND_AT_CHILD:
+    args: 3
+    descr: Het IP address van de name server is gevonden bij de child.
+    format: 'Child glue voor %s aangetroffen: %s (%s)'
+  DELEGATION:GLUE_FOUND_AT_PARENT:
+    args: 3
+    descr: Het IP address van de name server is gevonden bij de parent.
+    format: 'Parent glue voor %s aangetroffen: %s (%s)'
+  DELEGATION:GLUE_MISSING_AT_CHILD:
+    args: 1
+    descr: Het IP adres van name server werd niet gevonden bij de child. Dit is een fout in de configuratie die zo snel mogelijk moet worden hersteld.
+    format: 'Ontbrekende glue bij child: %s'
+  DELEGATION:GLUE_SKIPPED:
+    args: 2
+    format: Glue overslaan voor %s (%s).
+  DELEGATION:INCONSISTENT_GLUE:
+    args: 1
+    descr: Het IP adres van een name server week af tussen child en parent.  Dit is een fout in de configuratie die zo snel mogelijk moet worden hersteld.
+    format: Inconsistente glue voor name server %s.
+  DELEGATION:INZONE_NS_WITHOUT_GLUE:
+    args: 2
+    format: Nameserver %s staat geregistreerd bij zone %s zonder adres informatie.
+  DELEGATION:IPV6_ONLY_AT_CHILD:
+    args: 1
+    format: 'Nameservers met IPv6 adressen staan wel in zone %s, maar niet in de parentzone.'
+  DELEGATION:IPV6_ONLY_AT_PARENT:
+    args: 1
+    format: 'Nameservers met IPv6 staan wel genoemd in de parentzone van %s, maar niet in de zone zelf.'
+  DELEGATION:MATCHING_GLUE:
+    args: 2
+    format: Glue controleren voor %s (%s).
+  DELEGATION:NOT_FOUND_AT_CHILD:
+    args: 0
+    descr: Er konden geen name servers worden gevonden bij de child. Dit betekent doorgaans dat de name server niet is geconfigureerd om antwoorden te geven met betrekking tot deze zone.
+    format: Geen name servers gevonden bij child.
+  DELEGATION:NOT_FOUND_AT_PARENT:
+    args: 0
+    descr: 'Er kon geen delegatie worden gevonden bij de parent, waarmee deze zone effectief onbereikbaar is vanaf het Internet.'
+    format: Delegatie niet aangetroffen bij parent.
+  DELEGATION:NO_COMMON_NS_NAMES:
+    args: 2
+    descr: 'De parent heeft name servers die bij de child ontbreken, zie details bij geavanceerde resultaten. Deze configuratie zou kunnen werken maar kan al na een kleine wijziging defect gaan.'
+    format: Parent/child glue stemt niet overeen.
+  DELEGATION:NO_NS_IPV4:
+    args: 0
+    format: Geen IPv4 name servers gevonden.
+  DELEGATION:NO_NS_IPV6:
+    args: 0
+    format: Geen IPv6 name servers gevonden.
+  DELEGATION:NS_AT_CHILD:
+    args: 1
+    descr: Dit is de lijst met name servers die zijn opgegeven bij de child . Het moet alle name servers bevatten die zijn geconfigureerd bij de parent.
+    format: 'Name servers opgegeven bij child: %s'
+  DELEGATION:NS_AT_PARENT:
+    args: 1
+    descr: Dit is de lijst met name servers die zijn opgegeven bij de parent. Het moet alle name servers bevatten die zijn geconfigureerd bij de child.
+    format: 'Name servers opgegeven bij parent: %s'
+  DELEGATION:NS_HISTORY:
+    args: 2
+    format: 'Eerder gebruikte name servers voor %s: %s'
+  DELEGATION:NS_IS_CNAME:
+    args: 2
+    format: 'In zone %s heeft nameserver %s een CNAME record, dat is niet toegestaan.'
+  DELEGATION:STILL_AUTH:
+    args: 3
+    descr: Een eerder gebruikte nameserver geeft nog steeds authoritative antwoord voor de zone.  Dit komt waarschijnlijk vanwege oude zone data die nog niet is uigeconfigureerd op de oude server.  Om dit probleem op te lossen kunt u contact opnemen met de beheerder van de name server met het verzoek de zone uit de configuratie te verwijderen.
+    format: Een eerder gebruikte name server %s (%s) is nog steeds authoritative voor %s.
+  DELEGATION:TOO_FEW_NS:
+    args: 1
+    descr: Er is voor de zone slechts een nameserver aangetroffen. U moet altijd minimaal twee name servers voor een zone hebben om redenen van redundantie.
+    format: Te weinig name servers (%s).
+  DELEGATION:TOO_FEW_NS_IPV4:
+    args: 1
+    descr: Er is slechts een IPv4 name server aangetroffen voor de zone. U moet altijd minimaal twee IPv4 name servers voor een zone hebben om redenen van redundantie.
+    format: Te weinig IPv4 name servers (%s).
+  DELEGATION:TOO_FEW_NS_IPV6:
+    args: 1
+    descr: Er is slechts een IPv6 name server aangetroffen voor de zone. U moet altijd minimaal twee IPv6 name servers voor een zone hebben om redenen van redundantie.
+    format: Te weinig IPv6 name servers (%s).
+  DNS:ADDRESS_BLACKLISTED:
+    args: 4
+    format: Name server %s geblacklist.
+  DNS:ADDRESS_BLACKLIST_ADD:
+    args: 4
+    format: Name server %s toevoegen aan blacklist.
+  DNS:ANSWER_DUMP:
+    args: 1
+    format: 'DNS query gaf: %s'
+  DNS:CHILD_RESPONSE:
+    args: 1
+    format: 'DNS antwoord van child: %s'
+  DNS:DNSSEC_DESIRED:
+    args: 0
+    format: DNS resolver DNSSEC gewenst.
+  DNS:DNSSEC_DISABLED:
+    args: 0
+    format: DNS resolver DNSSEC uitgeschakeld.
+  DNS:EXPLICIT_RESPONSE:
+    args: 1
+    format: 'Name server antwoord: %s'
+  DNS:FAKE_PACKET:
+    args: 3
+    format: Nabootsen van antwoord in zone %s voor %s/%s.
+  DNS:FIND_ADDRESSES:
+    args: 2
+    format: Adres van %s/%s gevonden.
+  DNS:FIND_ADDRESSES_RESULT:
+    args: 3
+    format: 'Adressen van %s/%s: %s'
+  DNS:FIND_MX_BEGIN:
+    args: 1
+    format: Mail exchanger voor %s opzoeken.
+  DNS:FIND_MX_RESULT:
+    args: 2
+    format: 'Mail exchanger voor %s gevonden: %s'
+  DNS:FIND_PARENT:
+    args: 2
+    format: Parent zoeken van %s/%s.
+  DNS:FIND_PARENT_BEGIN:
+    args: 2
+    format: Proberen om parent van %s/%s te vinden.
+  DNS:FIND_PARENT_DOMAIN:
+    args: 1
+    format: '%s als start gebruiken voor parent tracering.'
+  DNS:FIND_PARENT_RESULT:
+    args: 3
+    format: Resolved %s als parent van %s/%s.
+  DNS:FIND_PARENT_TRY:
+    args: 1
+    format: Controleren van %s als parent domein.
+  DNS:FIND_PARENT_UPPER:
+    args: 1
+    format: Parent zou %s kunnen zijn.
+  DNS:GET_NS_AT_CHILD:
+    args: 2
+    format: DNS query voor NS van %s/%s aan child.
+  DNS:GET_NS_AT_PARENT:
+    args: 2
+    format: DNS query voor NS van %s/%s aan parent.
+  DNS:INITIALIZING_NAMESERVERS:
+    args: 2
+    format: Initialisatie van name servers voor %s/%s.
+  DNS:LOOKUP_ERROR:
+    args: 1
+    descr: ~
+    format: DNS lookup fout (%s).
+  DNS:NAMESERVERS_INITIALIZED:
+    args: 2
+    format: Name servers voor %s/%s geinitialiseerd.
+  DNS:NAMESERVER_FOUND:
+    args: 4
+    format: 'Name server voor %s/%s: %s (%s) gevonden.'
+  DNS:NOT_AUTH:
+    args: 4
+    format: Name server %s niet authoritative voor %s/%s/%s.
+  DNS:NO_ANSWER:
+    args: 4
+    descr: ~
+    format: Geen antwoord ontvangen van %s tijdens query voor %s/%s/%s.
+  DNS:NO_CHILD_NS:
+    args: 2
+    descr: ~
+    format: Name servers van %s/%s niet gevonden.
+  DNS:NO_EDNS:
+    args: 1
+    descr: 'EDNS is een uitbreiding op het DNS protocol. De belangrijkste wijziging is dat de 512 byte grootte beperking van het query/answer packet niet meer bestaat, grotere DNS antwoorden mogelijk zijn (er past meer informatie in).  EDNS is essentieel voor nieuwe protocollen en technologieen zoals DNSSEC and IPv6.'
+    format: EDNS niet ondersteund door %s.
+  DNS:NO_PARENT:
+    args: 2
+    descr: DNSCheck kon de parent van de zone niet vinden.
+    format: Parent zoeken van %s/%s mislukt.
+  DNS:NO_PARENT_NS:
+    args: 3
+    descr: ~
+    format: Name servers voor %s (parent van %s/%s) niet gevonden.
+  DNS:NXDOMAIN:
+    args: 2
+    descr: ~
+    format: Domein %s/%s bestaat niet.
+  DNS:PARENT_OF:
+    args: 3
+    format: '%s gevonden als parent van %s/%s.'
+  DNS:PARENT_RESPONSE:
+    args: 1
+    format: 'DNS antwoord van parent: %s'
+  DNS:QUERY_CHILD:
+    args: 4
+    format: Query elke name server van %s voor %s/%s/%s.
+  DNS:QUERY_CHILD_NOCACHE:
+    args: 4
+    format: Query elke name server (zonder cache) van %s voor %s/%s/%s.
+  DNS:QUERY_EXPLICIT:
+    args: 4
+    descr: ~
+    format: Query %s voor %s/%s/%s.
+  DNS:QUERY_PARENT:
+    args: 4
+    format: Query parent van %s voor %s/%s/%s.
+  DNS:QUERY_PARENT_NOCACHE:
+    args: 4
+    format: Query parent (zonder cache) van %s voor %s/%s/%s.
+  DNS:QUERY_RESOLVER:
+    args: 3
+    format: DNS query voor %s/%s/%s.
+  DNS:QUERY_TIMEOUT:
+    args: 4
+    descr: ~
+    format: Name server %s timeout bij query voor %s/%s/%s.
+  DNS:RECURSION_DESIRED:
+    args: 0
+    format: DNS resolver recursie gewenst.
+  DNS:RECURSION_DISABLED:
+    args: 0
+    format: DNS resolver recursie uitgeschakeld.
+  DNS:RESOLVER_QUERY_TIMEOUT:
+    args: 3
+    descr: ~
+    format: DNS resolver time out in query voor %s/%s/%s.
+  DNS:RESOLVER_RESPONSE:
+    args: 1
+    format: 'DNS antwoord van resolver: %s'
+  DNS:SETUP_RESOLVER:
+    args: 0
+    format: DNS resolver initialisatie.
+  DNS:SET_BUFSIZE:
+    args: 1
+    format: DNS resolver EDNS buffer size op %s gezet.
+  DNS:SOA_SERVFAIL:
+    args: 1
+    format: DNS SERVFAIL tijdens SOA-query aan %s.
+  DNS:TRANSPORT_TCP:
+    args: 0
+    format: DNS resolver transport op TCP gezet.
+  DNS:TRANSPORT_UDP:
+    args: 0
+    format: DNS resolver transport op UDP gezet.
+  DNS:UNQUERIBLE_ADDRESS:
+    args: 1
+    format: Queries sturen naar %s niet gelukt.
+  DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
+    args: 2
+    descr: Er zijn geen DNSSEC signatures opgenomen in antwoorden van de name server.  Dit is waarschijnlijk als gevolg van een onjuiste configuratie van de name server.
+    format: 'DNSSEC verdere verwerking voor %s niet mogelijk (server: %s).'
+  DNSSEC:ALGORITHM_OK:
+    args: 1
+    format: Algoritme nummer %s is OK.
+  DNSSEC:ALGORITHM_PRIVATE:
+    args: 1
+    format: Algoritme nummer %s is private.
+  DNSSEC:ALGORITHM_RESERVED:
+    args: 1
+    format: Algoritme nummer %s is gereserveerd.
+  DNSSEC:ALGORITHM_UNASSIGNED:
+    args: 1
+    format: Algoritme nummer %s is niet toegekend.
+  DNSSEC:BEGIN:
+    args: 1
+    format: Begin van DNSSEC testen voor %s.
+  DNSSEC:CHECKING_CHILD:
+    args: 1
+    format: DNSSEC controles bij child (%s).
+  DNSSEC:CHECKING_DNSKEY_AT_CHILD:
+    args: 1
+    format: DNSKEY records controleren voor %s bij child.
+  DNSSEC:CHECKING_DS_AT_PARENT:
+    args: 1
+    format: Controle DS records voor %s bij parent.
+  DNSSEC:CHECKING_PARENT:
+    args: 1
+    format: Controle op DNSSEC bij parent van %s.
+  DNSSEC:CHILD_CHECKED:
+    args: 1
+    format: DNSSEC child controles voor %s compleet.
+  DNSSEC:CHILD_CHECK_ABORTED:
+    args: 1
+    format: DNSSEC child controles afgebroken voor %s.
+  DNSSEC:CONSISTENT_EXTRA_PROCESSING:
+    args: 1
+    format: Servers voor %s hebben een consistente extra verwerking status.
+  DNSSEC:CONSISTENT_SECURITY:
+    args: 1
+    format: Consistente DNSSEC beveiliging voor %s.
+  DNSSEC:DETERMINE_SECURITY_STATUS:
+    args: 1
+    format: DNSSEC status voor %s bepalen.
+  DNSSEC:DNSKEY_ALGORITHM:
     args: 4
     format: Sleutel van %s' met tag %s gebruikt algoritme number %s (%s).
- DNSSEC:DS_ALGORITHM:
+  DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
+    args: 3
+    descr: 'Een DNSKEY die een niet aanbevolen algoritme gebruikt werd aangetroffen - tenzij u hiervoor een hele goede reden heeft, wordt u geadviseerd het gebruik hiervan te staken.'
+    format: 'DNSKEY %s (tag %s) gebruikt een niet aanbevolen algoritme: %s'
+  DNSSEC:DNSKEY_FOUND:
+    args: 1
+    descr: 'Een DNSKEY RRset is aangetroffen bij de child, dat geeft aan dat de child waarschijnlijk DNSSEC gebruikt.'
+    format: DNSKEY record voor %s bij child aangetroffen.
+  DNSSEC:DNSKEY_MANDATORY_FOUND:
+    args: 1
+    format: Minstens een vereist algoritme aangetroffen voor DNSKEY %s.
+  DNSSEC:DNSKEY_MANDATORY_NOT_FOUND:
+    args: 1
+    descr: Minimaal een DNSKEY moet van het type RSA/SHA1 zijn.
+    format: Geen enkele van de vereiste algoritmes aangetroffen voor DNSKEY %s.
+  DNSSEC:DNSKEY_NOT_FOUND:
+    args: 1
+    descr: 'Een DNSKEY RRset is niet gevonden bij de child, wat er op wijst dat de child waarschijnlijk geen DNSSEC gebruikt.'
+    format: Geen DNSKEY record gevonden voor %s bij child.
+  DNSSEC:DNSKEY_NO_VALID_SIGNATURES:
+    args: 1
+    descr: 'Er werden geen geldige handtekeningen voor de DNSKEY RRset van de zone aangetroffen - verifieer of de zone is gesigneerd met een geldige en gepubliceerde sleutel.'
+    format: Onvoldoende valide digitale handtekeingen aangetroffen voor %s.
+  DNSSEC:DNSKEY_SEP:
+    args: 2
+    descr: Een 'secure entry point' (SEP) is onderdeel van de 'chain of trust' die loopt van de parent naar de child.
+    format: DNSKEY %s (tag %s) is gemarkeerd als een secure entry point (SEP).
+  DNSSEC:DNSKEY_SIGNATURE_OK:
+    args: 2
+    format: 'RRSIG(DNSKEY %s) aangetroffen, aangemaakt door gepubliceerde sleutel (tag %s).'
+  DNSSEC:DNSKEY_SIGNER_UNPUBLISHED:
+    args: 2
+    descr: "DNSSEC signatures die door niet-gepubliceerde sleutels zijn aangemaakt, kunnen niet worden gevalideerd door 'validating resolvers'.  Alle sleutels die worden gebruikt om gegevens te signeren dienen te zijn gepubliceerd."
+    format: RRSIG(DNSKEY %s) aangetroffen die is aangemaakt door ongepubliceerde sleutel (tag %s).
+  DNSSEC:DNSKEY_SKIP_PROTOCOL:
+    args: 3
+    descr: DNSKEYs moeten een DNSSEC protocol waarde hebben (3).
+    format: DNSKEY %s (tag %s) is geen DNSSEC sleutel (protocol=%s).
+  DNSSEC:DNSKEY_SKIP_TYPE:
+    args: 2
+    descr: DNSKEYs moet een zone key zijn.
+    format: DNSKEY %s (tag %s) is geen zone key.
+  DNSSEC:DNSKEY_VALID_SIGNATURES:
+    args: 1
+    format: Voldoende valide digitale handtekeningen aangetroffen voor %s.
+  DNSSEC:DS_ALGORITHM:
     args: 4
     format: Sleutel %s' met tag %s gebruikt algoritme number %s (%s).
- DNSSEC:ALGORITHM_RESERVED:
-   args: 1
-   format: Algoritme nummer %s is gereserveerd.
- DNSSEC:ALGORITHM_UNASSIGNED:
-   args: 1
-   format: Algoritme nummer %s is niet toegekend.
- DNSSEC:ALGORITHM_PRIVATE:
-   args: 1
-   format: Algoritme nummer %s is private.
- DNSSEC:ALGORITHM_OK:
-   args: 1
-   format: Algoritme nummer %s is OK.
- DNSSEC:END:
-  args: 1
-  format: Gereed met DNSSEC tests voor %s.
-
- HOST:BEGIN:
-  args: 1
-  format: Begin testen van host %s.
- HOST:ILLEGAL_NAME:
-  args: 2
-  format: Hostnaam %s is ongeldig (syntax fout in het engels: %s)
-  descr: De hostnaam is syntactisch incorrect volgens RFC 952.  Een veel voorkomende fout is de hostnaam niet met een letter (a-z) te beginnen of ongeldige tekens te gebruiken (alleen a-z, 0-9 en - zijn toegestaan).
- HOST:NOT_FOUND:
-  args: 1
-  format: Geen adres gevonden voor %s.
-  descr: Geen IPv4 of IPv6 adres gevonden voor de hostnaam.
- HOST:CNAME_FOUND:
-  args: 1
-  format: Hostnaam %s verwijst naar een CNAME.
-  descr: De hostnaam is een alias (CNAME), hetgeen niet is toegestaan.  Hostnamen moeten een A of AAAA record hebben.
- HOST:END:
-  args: 1
-  format: Gereed met testen van host %s.
-
- MAIL:BEGIN:
-  args: 1
-  format: Begin testen van email adres %s.
- MAIL:ADDRESS_SYNTAX:
-  args: 1
-  format: %s is geen geldig email adres.
- MAIL:MAIL_EXCHANGER:
-  args: 2
-  format: Mail exchangers voor %s gevonden %s.
- MAIL:DOMAIN_NOT_FOUND:
-  args: 1
-  format: Geen mail exchanger gevonden voor domeinnaam %s.
-  descr: Geen mail exchanger gevonden voor de domeinnaam.  Hierdoor is het onmogelijk om email te sturen aan geadresseerden binnen dit domein.
- MAIL:HOST_ERROR:
-  args: 1
-  format: Ongeldige hostnaam voor mail exchanger %s.
-  descr: De hostnaam voor de mail exchanger is ongeldig.  Een veel voorkomende fout error is de mail exchanger te verwijzen naar een alias (CNAME) of directly naar een IP adres.
- MAIL:IPV6_ONLY:
-  args: 1
-  format: Mail exchanger %s is alleen via IPv6 bereikbaar.
-  descr: Deze mail exchanger is uitsluitend bereikbaar via IPv6, waardoor het voor veel hosts op het Internet onmogelijk is om er emails op te bezorgen. Indien meerdere MX records aanwezig zijn, waarvan minstens 1 bereikbaar via IPv4, dan kan deze melding worden genegeerd.
- MAIL:DELIVERY_IPV4_OK:
-     args: 1
-     format: Mail bezorgen over IPv4 aan %s ok.
- MAIL:DELIVERY_IPV6_OK:
-     args: 1
-     format: Mail bezorgen over IPv6 aan %s ok.
- MAIL:DELIVERY_IPV4_NOT_OK:
-     args: 1
-     format: Mail bezorgen over IPv4 aan %s mislukt.
- MAIL:DELIVERY_IPV6_NOT_OK:
-     args: 1
-     format: Mail bezorgen over IPv6 aan %s mislukt.
- MAIL:ALL_MX_IN_ZONE:
-     args: 2
-     format: Alle mail servers voor %s zitten in zone %s.
- MAIL:END:
-  args: 1
-  format: Gereed met testen van email address %s.
-
- NAMESERVER:BEGIN:
-  args: 1
-  format: Begin testen van nameserver %s.
- NAMESERVER:HOST_ERROR:
-  args: 1
-  format: Hostnaam of adres fout voor %s.
-  descr: De opgegeven hostnaam is ongeldig of verwijst naar een ongeldig IP adres, zoals een RFC1918 of gereserveerd IP adres.
- NAMESERVER:CHECKING_RECURSION:
-  args: 2
-  format: Controleren op recursie voor %s op adres %s.
- NAMESERVER:RECURSIVE:
-  args: 2
-  format: Nameserver %s (%s) is recursief.
-  descr: De nameserver beantwoordt recursieve queries van derden (zoals DNSCheck). Kwaadwillenden kunnen hier misbruik van maken. 
- NAMESERVER:NOT_RECURSIVE:
-  args: 2
-  format: Nameserver %s (%s) is niet recursief.
- NAMESERVER:CHECKING_AUTH:
-  args: 2
-  format: Controleren van authority voor %s (%s).
- NAMESERVER:NOT_AUTH:
-  args: 3
-  format: Nameserver %s (%s) niet authoritative voor %s.
-  descr: De nameserver geeft geen authoritative antwoorden op queries over het te testen domein.  Waarschijnlijk het gevolg van een verkeerde configuratie. 
- NAMESERVER:AUTH:
-  args: 3
-  format: Nameserver %s (%s) authoritative voor %s.
- NAMESERVER:TESTING_UDP:
-  args: 2
-  format: Testen van UDP queries naar nameserver %s op adres %s.
- NAMESERVER:UDP_OK:
-  args: 3
-  format: Nameserver %s (%s) geeft antwoord op queries via UDP.
- NAMESERVER:NO_UDP:
-  args: 3
-  format: Nameserver %s (%s) geeft geen antwoord op queries via UDP.
-  descr: De nameserver reageerde niet op queries via UDP.  Waarschijnlijk als gevolg van een configuratie fout.
- NAMESERVER:TESTING_TCP:
-  args: 2
-  format: Testen van TCP queries naar nameserver %s op adres %s.
- NAMESERVER:TCP_OK:
-  args: 3
-  format: Nameserver %s (%s) geeft antwoord op queries via TCP.
- NAMESERVER:NO_TCP:
-  args: 3
-  format: Nameserver %s (%s) geeft geen antwoord op queries via TCP.
-  descr: De nameserver reageerde niet op queres via TCP.  Waarschijnlijk als gevolg van een configuratie fout of filtering in een firewall. 
- NAMESERVER:TESTING_AXFR:
-  args: 2
-  format: Testen van zone transfer voor nameserver %s (%s).
- NAMESERVER:AXFR_SKIP:
-  args: 3
-  format: Nameserver %s (%s) niet gecontroleerd op zone transfer van %s.
-  descr: De zone transfer test is niet uitgevoerd omdat de nameserver niet op TCP queries reageert.
- NAMESERVER:AXFR_OPEN:
-  args: 3
-  format: Nameserver %s (%s) staat open voor een zone transfer van %s.
-  descr: Deze nameserver accepteert zone transfer verzoeken van iedereen.
- NAMESERVER:AXFR_CLOSED:
-  args: 3
-  format: Nameserver %s (%s) staat geen zone transfer toe van %s.
- NAMESERVER:CHECKING_LEGACY_ID:
-  args: 2
-  format: Controleren van historische name server ID van %s (%s).
- NAMESERVER:LEGACY_ID_SKIP:
-  args: 2
-  format: Name server %s (%s) niet gecontroleerd op historische server ID.
- NAMESERVER:LEGACY_ID:
-  args: 4
-  format: Historische name server ID voor %s (%s): %s = %s
- NAMESERVER:CHECKING_NSID:
-  args: 2
-  format: Controleren name server ID van %s (%s).
- NAMESERVER:NSID_SKIP:
-  args: 2
-  format: Name server %s (%s) niet gecontroleerd op name server ID.
- NAMESERVER:NSID:
-  args: 3
-  format: Name server ID voor %s (%s): %s
- NAMESERVER:SKIPPED_IPV4:
-  args: 1
-  format: IPv4 uitgeschakeld - name server op %s niet getest
- NAMESERVER:SKIPPED_IPV6:
-  args: 1
-  format: IPv6 uitgeschakeld - name server op %s niet getest
- NAMESERVER:END:
-  args: 1
-  format: Gereed met het testen van name server %s.
-
- CONSISTENCY:BEGIN:
-  args: 1
-  format: Begin zone consistentie test voor %s.
- CONSISTENCY:SOA_SERIAL_AT_ADDRESS:
-  args: 2
-  format: SOA op adres %s heeft volgnummer %s.
- CONSISTENCY:SOA_SERIAL_DIFFERENT:
-  args: 1
-  format: %s verschillende volgnummers (serials) gevonden.
-  descr: Het SOA volgnummer (de serial)is niet op alle name servers gelijk. Dit kan duiden op een configuratiefout, maar kan ook het gevolg zijn van het traag propageren van mutaties naar de secondary name servers.
- CONSISTENCY:SOA_SERIAL_CONSISTENT:
-  args: 0
-  format: Alle SOA records hebben een consistent volgnummer.
- CONSISTENCY:SOA_DIGEST_AT_ADDRESS:
-  args: 2
-  format: SOA op adres %s heeft digitale vingerafdruk %s.
- CONSISTENCY:SOA_DIGEST_DIFFERENT:
-  args: 1
-  format: %s verschillende SOA records gevonden.
-  descr: De overige velden in het SOA record zijn niet op alle name servers gelijk. Dit duidt normaal gesproken op een configuratiefout.
- CONSISTENCY:SOA_DIGEST_CONSISTENT:
-  args: 0
-  format: Alle overige velden in het SOA record zijn consistent op alle name servers.
- CONSISTENCY:END:
-  args: 1
-  format: Gereed met testen van de zone consistentie voor %s.
-
- SMTP:BEGIN:
-  args: 3
-  format: Begin met testen van mail server %s (%s) met %s.
- SMTP:CONNECT_FAILED:
-  args: 2
-  format: Verbinden met %s (%s) mislukt.
-  descr: DNSCheck kon geen connectie krijgen met de mail server.  De server kan down  zijn of onbereikbaar als gevolg van verkeerd geconfigureerde routing en/of filtering.
- SMTP:BANNER:
-  args: 2
-  format: SMTP banner: %s
- SMTP:HELLO_FAILED:
-  args: 1
-  format: SMTP HELO mislukt tijdens communicatie met %s.
-  descr: De mail server weigerde ons SMTP startbericht.  Vermoedelijk als gevolg van een configuratiefout.
- SMTP:MAIL_FROM:
-  args: 1
-  format: %s gebruiken als SMTP from (MAIL_FROM).
- SMTP:RAW:
-  args: 1
-  format: SMTP antwoord: %s
- SMTP:MAIL_FROM_REJECTED:
-  args: 1
-  format: Host weigerde %s als SMTP bestemming.
-  descr: De mail server weigerde ons afzenderadres.  DNSCheck gebruikt een standaard null afzenderadresdie door mail servers geaccepteerd zou moeten worden.
- SMTP:RCPT_TO:
-  args: 1
-  format: %s gebruiken als SMTP ontvanger (RCPT_TO).
- SMTP:RECIPIENT_REJECTED:
-  args: 1
-  format: Host weigerde %s als SMTP ontvanger.
-  descr: De mail server weigerde mail aan het ontvanger adres.  Vermoedelijk omdat dit adres onbekend is.
- SMTP:RSET:
-  args: 0
-  format: SMTP reset (RSET) sturen.
- SMTP:TIMEOUT:
-  args: 0
-  format: De mail server had een timeout tijdens de SMTP dialoog.
- SMTP:QUIT:
-  args: 0
-  format: SMTP quit (QUIT) sturen.
- SMTP:OK:
-  args: 3
-  format: SMTP test van %s (%s) met %s zonder fouten verlopen.
- SMTP:END:
-  args: 3
-  format: Gereed met testen van mail server %s (%s) met %s.
-
- SOA:BEGIN:
-  args: 1
-  format: Begin van testen SOA parameters voor %s.
- SOA:NOT_FOUND:
-  args: 1
-  format: Geen SOA record gevonden voor %s.
-  descr: Er werd geen SOA record gevonden tijdens het bevragen van de name server. Dat is hoogstwaarschijnlijk een configuratiefout - elke zone moet over een SOA record beschikken.
- SOA:FOUND:
-  args: 1
-  format: SOA record gevonden voor %s.
- SOA:MULTIPLE_SOA:
-  args: 1
-  format: Meerdere SOA records gevonden voor %s.
-  descr: Er werden meerdere SOA records gevonden tijdens het bevragen van de name servers. Dat is een ernstige onregelmatigheid die onmiskenbaar het gevolg is van een configuratiefout.
- SOA:MNAME_ERROR:
-  args: 2
-  format: Fout gedurende het controleren van de SOA MNAME voor %s (%s).
-  descr: De SOA MNAME bevat geen valide host naam.
- SOA:MNAME_VALID:
-  args: 2
-  format: SOA MNAME voor %s is valide (%s).
- SOA:NS_NOT_FOUND:
-  args: 1
-  format: Geen NS record(s) gevonden voor %s.
-  descr: Er werden geen name server records gevonden voor de betreffende zone. Dat is een ernstige onregelmatigheid die onmiskenbaar het gevolg is van een configuratiefout.
- SOA:MNAME_STEALTH:
-  args: 2
-  format: SOA MNAME voor %s (%s) komt niet voor als NS.
-  descr: De name server die staat genoemd als de SOA MNAME komt niet voor als name server.
- SOA:MNAME_PUBLIC:
-  args: 2
-  format: SOA MNAME voor %s (%s) komt voor als NS.
-  descr: De name server die staat genoemd als de SOA MNAME komt voor als een name server.
- SOA:MNAME_NOT_AUTH:
-  args: 2
-  format: SOA MNAME voor %s (%s) is niet authoritative.
-  descr: De name server die staat genoemd als de primaire bron van data voor deze zone geeft geen authoritative antwoorden.  Dat duidt op een configuratieprobleem - wellicht is de SOA MNAME niet geconfigureerd als name server voor de zone.
- SOA:MNAME_IS_AUTH:
-  args: 2
-  format: SOA MNAME voor %s (%s) is authoritative.
- SOA:MNAME_IS_CNAME:
-     args: 2
-     format: SOA MNAME %s wijst naar een CNAME (%s).
- SOA:RNAME_UNDELIVERABLE:
-  args: 3
-  format: Email bezorging voor SOA RNAME van %s (%s) mislukt bij test met %s. 
-  descr: DNSCheck kon geen email bezorgen op het email adres dat staat opgenomen als de zone verantwoordelijke in het SOA RNAME veld.
- SOA:RNAME_DELIVERABLE:
-  args: 3
-  format: Geslaagde poging om email voor het SOA RNAME veld van %s (%s) te bezorgen bij test met %s. 
- SOA:RNAME_SYNTAX:
-  args: 2
-  format: Ongeldige SOA RNAME syntax voor %s: %s
-  descr: Het in het SOA RNAME veld genoemde emailadres is onjuist gespecificeerd.  Een veelgemaakte fout is om het @-symbool te gebruiken - een adres zoals hostmaster@example.com moet gespecifieerd worden als hostmaster.example.com.
- SOA:TTL_SMALL:
-  args: 3
-  format: SOA TTL voor %s te klein (%s) - aanbevolen is >= %s.
-  descr: Hoe kleiner de SOA TTL waarde, des te vaker moet de resolver om het SOA record vragen.
- SOA:TTL_OK:
-  args: 3
-  format: SOA TTL voor %s OK (%s) - aanbevolen is >= %s.
- SOA:REFRESH_SMALL:
-  args: 3
-  format: SOA refresh waarde voor %s te klein (%s) - aanbevolen is >= %s.
-  descr: De SOA refresh waarde bepaald hoe vaak de secondary name server bij de primary name server controleert op zone mutaties.
- SOA:REFRESH_OK:
-  args: 3
-  format: SOA refresh waarde voor %s OK (%s) - aanbevolen is >= %s.
- SOA:RETRY_VS_REFRESH:
-  args: 3
-  format: SOA refresh waarde voor %s is lager dan de retry waarde (%s vs %s).
-  descr: De retry waarde betreft het aantal seconden dat de secondary name servers zullen wachten met het opnieuw contacteren van de primary name server als een eerdere poging is mislukt.  Als de refresh waarde lager is dan de retry waarde, is deze nutteloos.
- SOA:RETRY_SMALL:
-  args: 3
-  format: SOA retry waarde voor %s te klein (%s) - aanbevolen is >= %s.
-  descr: De retry waarde  betreft het aantal seconden dat de secondary name servers zullen wachten met het opnieuw contacteren van de primary name server als een eerdere poging is mislukt. Als de retry waarde te laag is, zal de secondary name server het te vaak blijven proberen.
- SOA:RETRY_OK:
-  args: 3
-  format: SOA retry waarde voor %s OK (%s) - aanbevolen is >= %s.
- SOA:EXPIRE_SMALL:
-  args: 3
-  format: SOA expire waarde voor %s te klein (%s) - aanbevolen is >= %s.
-  descr: De SOA expire waarde definieert hoeveel seconden een secondary name server zal antwoord zal blijven geven over een zone voordat deze als verouderd wordt beschouwd indien er in de tussentijd geen contact meer is geweest met de primary name server.
- SOA:EXPIRE_OK:
-  args: 3
-  format: SOA expire waarde voor %s OK (%s) - aanbevolen is >= %s.
- SOA:EXPIRE_VS_REFRESH:
-  args: 1
-  format: SOA expire waarde voor %s is lager dan de refresh waarde.
-  descr: De SOA expire waarde moet minstens 7 keer de SOA refresh waarde zijn, om zodoende de secondary name servers een eerlijke kans te geven hun kopie van de zone te verversen voordat de data als verouderd wordt beschouwd.
- SOA:MINIMUM_SMALL:
-  args: 3
-  format: SOA minimum waarde voor %s te klein (%s) - aanbevolen is >= %s.
-  descr: De SOA minimum waarde wordt gebruikt om alle caching resolvers te vertellen hoe lang ze ontkennende antwoorden mogen cachen. Als deze waarde te laag is zal negative caching niet goed werken en zullen resolvers de betreffende DNS vraag te vaak herhalen.
- SOA:MINIMUM_LARGE:
-  args: 3
-  format: SOA minimum waarde voor %s te hoog (%s) - aanbevolen is <= %s.
-  descr: De SOA minimum waarde wordt gebruikt om alle caching resolvers te vertellen hoe lang ze ontkennende antwoorden mogen cachen. Als deze waarde te laag is zal negative caching onvoordelig uit kunnen pakken.
- SOA:MINIMUM_OK:
-  args: 4
-  format: SOA minimum waarde voor %s OK (%s) - aanbevolen is tussen %s en %s.
- SOA:SKIPPED_IPV4:
-  args: 1
-  format: IPv4 uitgeschakeld - SOA MNAME vraag op %s overgeslagen
- SOA:SKIPPED_IPV6:
-  args: 1
-  format: IPv6 uitgeschakeld - SOA MNAME vraag op %s overgeslagen
- SOA:SERIAL_IS_ZERO:
-     args: 1
-     format: Het volgnummer (de serial) in SOA record voor zone %s mag niet nul zijn.
- SOA:END:
-  args: 1
-  format: Klaar met testen van de SOA parameters voor %s.
-
- ZONE:BEGIN:
-  args: 2
-  format: Begin van testen %s zone met versie %s.
- ZONE:VERSIONS:
-     args: 1
-     format: Module versies: %s.
- ZONE:FATAL_DELEGATION:
-  args: 1
-  format: Fatale fout in delegatie voor zone %s. 
-  descr: Geen name servers gevonden bij de child noch de parent. Verder testen onmogelijk.
- ZONE:FATAL_NO_CHILD_NS:
-  args: 1
-  format: Fatale fout - geen child name servers voor zone %s. 
-  descr: Geen name servers gevonden bij de child. Verder testen onmogelijk.
- ZONE:END:
-  args: 1
-  format: Test gereed voor zone %s.
- ZONE:INVALID_NAME: 
-  args: 1 
-  format: %s is niet een geldige naam voor een zone. 
- NSTIME:AVERAGE:
-  args: 6
-  format: Zone %s, server %s: %s aanroepen, %sms gemiddeld, %sms min, %sms max, %sms stddev.
+  DNSSEC:DS_FOUND:
+    args: 1
+    descr: 'Een DS (delegation signer) RRset werd gevonden bij de parent.  Dit wijst op een DNSSEC delegatie, m.a.w. de child moet zijn gesigneerd.'
+    format: DS record aangetroffen voor %s bij parent.
+  DNSSEC:DS_KEYREF_INVALID:
+    args: 2
+    descr: "De DS RRset moet verwijzen naar een geldige DNSKEY bij de child, anders is de 'chain of trust' tussen de parent en de child verbroken en kunnen 'validating resolver's antwoorden van de child niet valideren."
+    format: 'Parent DS(%s) verwijst naar een ongeldige sleutel bij child: %s'
+  DNSSEC:DS_KEYREF_OK:
+    args: 2
+    format: 'Parent DS(%s) verwijst naar een geldige sleutel bij child: %s'
+  DNSSEC:DS_MANDATORY_FOUND:
+    args: 1
+    format: Minstens een vereist DS algoritme gevonden voor %s.
+  DNSSEC:DS_MANDATORY_NOT_FOUND:
+    args: 1
+    descr: 'Omdat geen van de in de DS RRset gepubliceerde hash algoritmes verplichte algoritmes zijn, zullen sommige validating resolvers wellicht niet in staat zijn de chain of trust van de parent naar de child te volgen.'
+    format: Geen van de verseiste DS algoritmes aangetroffen voor %s.
+  DNSSEC:DS_TO_NONSEP:
+    args: 2
+    descr: 'De DS RRset verwijst naar een DNSKEY bij de child, maar de sleutel is niet gemarkeerd als een secure entry point (SEP).'
+    format: 'Parent DS(%s) verwijst niet naar secure entry point (SEP) bij child: %s'
+  DNSSEC:DS_TO_SEP:
+    args: 2
+    format: 'Parent DS(%s) verwijst naar secure entry point (SEP) bij child: %s'
+  DNSSEC:END:
+    args: 1
+    format: Gereed met DNSSEC tests voor %s.
+  DNSSEC:EXTRA_PROCESSING:
+    args: 1
+    format: Name server %s doet DNSSEC extra verwerking.
+  DNSSEC:INCONSISTENT_EXTRA_PROCESSING:
+    args: 1
+    format: Niet alle servers voor %s hebben DNSSEC extra verwerking geactiveerd.
+  DNSSEC:INCONSISTENT_SECURITY:
+    args: 1
+    descr: 'De parent heeft een veilige delegation naar de child (aangegeven door de DS RRset op de parent), maar de child heeft geen DNSKEY.  Dit is waarschijnlijk als gevolg van een eerder gesigneerde zone die ongesigneerd is geraakt zonder daarbij op de parent de delegatie op basis van DNSSEC ongedaan te maken.'
+    format: 'Inconsistente beveiliging voor %s - DS record aangetroffen bij parent, maar geen DNSKEY gevonden bij child.'
+  DNSSEC:MISSING_DS:
+    args: 1
+    descr: "De child gebruikt zo te zien DNSSEC, maar de parent heeft geen veilige delegation op basis van DNSSEC.  Hierdoor is de 'chain of trust' tussen de parent en de child verbroken en 'validating resolvers', die op DNSSEC-juistheid controleren, zullen niet in staat zijn om de antwoorden van de child te valideren."
+    format: 'De Chain of trust voor %s is niet in orde - Er is een DNSKEY aangetroffen bij de child, maar DS record bij de parent.'
+  DNSSEC:NO_DS_FOUND:
+    args: 1
+    descr: 'Een DS (delegation signer) RRset kon niet worden gevonden bij de parent.  Dit wijst op een delegatie zonder DNSSEC, m.a.w. de child hoeft niet te worden gesigneerd.'
+    format: Geen DS record voor %s bij parent gevonden.
+  DNSSEC:NO_EXTRA_PROCESSING:
+    args: 1
+    format: Name server %s doet geen DNSSEC extra verwerking.
+  DNSSEC:NO_SIGNATURES:
+    args: 1
+    descr: bij het bevragen van de zone werden geen DNSSEC signatures aangetroffen. Mogelijk is de zone helemaal niet gesigneerd?
+    format: Geen digitale handtekening (signatures) gevonden voor %s.
+  DNSSEC:NO_VALID_DS:
+    args: 1
+    format: 'Zone %s bevat DS records, maar geen daarvan werkt.'
+  DNSSEC:PARENT_CHECKED:
+    args: 1
+    format: DNSSEC parent controles voor %s compleet.
+  DNSSEC:PARENT_DS:
+    args: 2
+    format: 'DS(%s) gevonden bij parent: %s'
+  DNSSEC:RRSIG_EXPIRED:
+    args: 1
+    descr: Verlopen digitale handtekeningen zullen worden genegeerd door validating resolvers.
+    format: 'DNSSEC digitale handtekening verlopen: %s'
+  DNSSEC:RRSIG_EXPIRES_AT:
+    args: 1
+    format: 'DNSSEC digitale handtekening verloopt op: %s'
+  DNSSEC:RRSIG_FAILS_VERIFY:
+    args: 2
+    format: 'DNSSEC digitale handtekening %s matcht niet met de records die het ondertekend: %s'
+  DNSSEC:RRSIG_NOT_YET_VALID:
+    args: 1
+    descr: 'Digitale handtekeningen die nog niet geldig zijn, zullen worden genegeerd door validating resolvers.'
+    format: 'DNSSEC digitale handtekening nog niet geldig: %s'
+  DNSSEC:RRSIG_VALID:
+    args: 1
+    format: 'DNSSEC digitale handtekening geldig: %s'
+  DNSSEC:RRSIG_VERIFIES:
+    args: 1
+    format: DNSSEC digitale handtekening %s matcht records.
+  DNSSEC:SKIPPED_NO_KEYS:
+    args: 1
+    format: 'Geen DNSKEY(s) gevonden bij child, overige testen overgeslagen.'
+  DNSSEC:SOA_NO_VALID_SIGNATURES:
+    args: 1
+    descr: 'Er werden geen geldige handtekeningen voor de SOA RRset van de zone aangetroffen - verifieer of de zone is gesigneerd met een geldige en gepubliceerde sleutel.'
+    format: Onoldoende geldige DNSSEC handtekeningen van SOA RRset gevonden voor %s.
+  DNSSEC:SOA_SIGNATURE_OK:
+    args: 2
+    format: RRSIG(SOA %s) aangemaakt door DNSKEY (tag %s) OK.
+  DNSSEC:SOA_SIGNER_UNPUBLISHED:
+    args: 2
+    descr: DNSSEC handtekeningen die aangemaakt zijn door niet gepubliceerde sleutels kunnen niet worden gevalideerd door 'validating resolvers'.  Alle sleutels die worden gebruikt om gegevens te signeren dienen te zijn gepubliceerd.
+    format: RRSIG(SOA %s) gevonden die is aangemaakt door gepubliceerde sleutel (tag %s).
+  DNSSEC:SOA_VALID_SIGNATURES:
+    args: 1
+    format: Voldoende geldige DNSSEC handtekeningen van SOA RRset gevonden voor %s.
+  FAKEGLUE:BROKEN_INFO:
+    args: 2
+    format: 'Het IP address %s (gegeven voor hostnaam %s) is niet geldig.'
+  FAKEGLUE:MALFORMED_DS:
+    args: 1
+    format: Het opgegeven DS record is niet geldig: %s
+  FAKEGLUE:NO_ADDRESS:
+    args: 1
+    format: Het hostnaam %s heeft geen A of AAAA records.
+  ENGINE:CRASH:
+    args: 0
+    format: DNSCheck engine gecrashed
+  HOST:BEGIN:
+    args: 1
+    format: Begin testen van host %s.
+  HOST:CNAME_FOUND:
+    args: 1
+    descr: 'De hostnaam is een alias (CNAME), hetgeen niet is toegestaan.  Hostnamen moeten een A of AAAA record hebben.'
+    format: Hostnaam %s verwijst naar een CNAME.
+  HOST:END:
+    args: 1
+    format: Gereed met testen van host %s.
+  HOST:ILLEGAL_NAME:
+    args: 2
+    descr: 'De hostnaam is syntactisch incorrect volgens RFC 952.  Een veel voorkomende fout is de hostnaam niet met een letter (a-z) te beginnen of ongeldige tekens te gebruiken (alleen a-z, 0-9 en - zijn toegestaan).'
+    format: 'Hostnaam %s is ongeldig (syntax fout in het engels: %s)'
+  HOST:NOT_FOUND:
+    args: 1
+    descr: Geen IPv4 of IPv6 adres gevonden voor de hostnaam.
+    format: Geen adres gevonden voor %s.
+  MAIL:ADDRESS_SYNTAX:
+    args: 1
+    format: '%s is geen geldig email adres.'
+  MAIL:ALL_MX_IN_ZONE:
+    args: 2
+    format: Alle mail servers voor %s zitten in zone %s.
+  MAIL:BEGIN:
+    args: 1
+    format: Begin testen van email adres %s.
+  MAIL:DELIVERY_IPV4_NOT_OK:
+    args: 1
+    format: Mail bezorgen over IPv4 aan %s mislukt.
+  MAIL:DELIVERY_IPV4_OK:
+    args: 1
+    format: Mail bezorgen over IPv4 aan %s ok.
+  MAIL:DELIVERY_IPV6_NOT_OK:
+    args: 1
+    format: Mail bezorgen over IPv6 aan %s mislukt.
+  MAIL:DELIVERY_IPV6_OK:
+    args: 1
+    format: Mail bezorgen over IPv6 aan %s ok.
+  MAIL:DOMAIN_NOT_FOUND:
+    args: 1
+    descr: Geen mail exchanger gevonden voor de domeinnaam.  Hierdoor is het onmogelijk om email te sturen aan geadresseerden binnen dit domein.
+    format: Geen mail exchanger gevonden voor domeinnaam %s.
+  MAIL:END:
+    args: 1
+    format: Gereed met testen van email address %s.
+  MAIL:HOST_ERROR:
+    args: 1
+    descr: De hostnaam voor de mail exchanger is ongeldig.  Een veel voorkomende fout error is de mail exchanger te verwijzen naar een alias (CNAME) of directly naar een IP adres.
+    format: Ongeldige hostnaam voor mail exchanger %s.
+  MAIL:IPV6_ONLY:
+    args: 1
+    descr: 'Deze mail exchanger is uitsluitend bereikbaar via IPv6, waardoor het voor veel hosts op het Internet onmogelijk is om er emails op te bezorgen. Indien meerdere MX records aanwezig zijn, waarvan minstens 1 bereikbaar via IPv4, dan kan deze melding worden genegeerd.'
+    format: Mail exchanger %s is alleen via IPv6 bereikbaar.
+  MAIL:MAIL_EXCHANGER:
+    args: 2
+    format: Mail exchangers voor %s gevonden %s.
+  NAMESERVER:AUTH:
+    args: 3
+    format: Nameserver %s (%s) authoritative voor %s.
+  NAMESERVER:AXFR_CLOSED:
+    args: 3
+    format: Nameserver %s (%s) staat geen zone transfer toe van %s.
+  NAMESERVER:AXFR_OPEN:
+    args: 3
+    descr: Deze nameserver accepteert zone transfer verzoeken van iedereen.
+    format: Nameserver %s (%s) staat open voor een zone transfer van %s.
+  NAMESERVER:AXFR_SKIP:
+    args: 3
+    descr: De zone transfer test is niet uitgevoerd omdat de nameserver niet op TCP queries reageert.
+    format: Nameserver %s (%s) niet gecontroleerd op zone transfer van %s.
+  NAMESERVER:BEGIN:
+    args: 1
+    format: Begin testen van nameserver %s.
+  NAMESERVER:CHECKING_AUTH:
+    args: 2
+    format: Controleren van authority voor %s (%s).
+  NAMESERVER:CHECKING_LEGACY_ID:
+    args: 2
+    format: Controleren van historische name server ID van %s (%s).
+  NAMESERVER:CHECKING_NSID:
+    args: 2
+    format: Controleren name server ID van %s (%s).
+  NAMESERVER:CHECKING_RECURSION:
+    args: 2
+    format: Controleren op recursie voor %s op adres %s.
+  NAMESERVER:END:
+    args: 1
+    format: Gereed met het testen van name server %s.
+  NAMESERVER:HOST_ERROR:
+    args: 1
+    descr: 'De opgegeven hostnaam is ongeldig of verwijst naar een ongeldig IP adres, zoals een RFC1918 of gereserveerd IP adres.'
+    format: Hostnaam of adres fout voor %s.
+  NAMESERVER:LEGACY_ID:
+    args: 4
+    format: 'Historische name server ID voor %s (%s): %s = %s'
+  NAMESERVER:LEGACY_ID_SKIP:
+    args: 2
+    format: Name server %s (%s) niet gecontroleerd op historische server ID.
+  NAMESERVER:NOT_AUTH:
+    args: 3
+    descr: De nameserver geeft geen authoritative antwoorden op queries over het te testen domein.  Waarschijnlijk het gevolg van een verkeerde configuratie.
+    format: Nameserver %s (%s) niet authoritative voor %s.
+  NAMESERVER:NOT_RECURSIVE:
+    args: 2
+    format: Nameserver %s (%s) is niet recursief.
+  NAMESERVER:NO_TCP:
+    args: 3
+    descr: De nameserver reageerde niet op queres via TCP.  Waarschijnlijk als gevolg van een configuratie fout of filtering in een firewall.
+    format: Nameserver %s (%s) geeft geen antwoord op queries via TCP.
+  NAMESERVER:NO_UDP:
+    args: 3
+    descr: De nameserver reageerde niet op queries via UDP.  Waarschijnlijk als gevolg van een configuratie fout.
+    format: Nameserver %s (%s) geeft geen antwoord op queries via UDP.
+  NAMESERVER:NSID:
+    args: 3
+    format: 'Name server ID voor %s (%s): %s'
+  NAMESERVER:NSID_SKIP:
+    args: 2
+    format: Name server %s (%s) niet gecontroleerd op name server ID.
+  NAMESERVER:RECURSIVE:
+    args: 2
+    descr: De nameserver beantwoordt recursieve queries van derden (zoals DNSCheck). Kwaadwillenden kunnen hier misbruik van maken.
+    format: Nameserver %s (%s) is recursief.
+  NAMESERVER:SKIPPED_IPV4:
+    args: 1
+    format: 'IPv4 uitgeschakeld - name server op %s niet getest'
+  NAMESERVER:SKIPPED_IPV6:
+    args: 1
+    format: 'IPv6 uitgeschakeld - name server op %s niet getest'
+  NAMESERVER:TCP_OK:
+    args: 3
+    format: Nameserver %s (%s) geeft antwoord op queries via TCP.
+  NAMESERVER:TESTING_AXFR:
+    args: 2
+    format: Testen van zone transfer voor nameserver %s (%s).
+  NAMESERVER:TESTING_TCP:
+    args: 2
+    format: Testen van TCP queries naar nameserver %s op adres %s.
+  NAMESERVER:TESTING_UDP:
+    args: 2
+    format: Testen van UDP queries naar nameserver %s op adres %s.
+  NAMESERVER:UDP_OK:
+    args: 3
+    format: Nameserver %s (%s) geeft antwoord op queries via UDP.
+  NSTIME:AVERAGE:
+    args: 6
+    format: 'Zone %s, server %s: %s aanroepen, %sms gemiddeld, %sms min, %sms max, %sms stddev.'
+  SMTP:BANNER:
+    args: 2
+    format: 'SMTP banner: %s'
+  SMTP:BEGIN:
+    args: 3
+    format: Begin met testen van mail server %s (%s) met %s.
+  SMTP:CONNECT_FAILED:
+    args: 2
+    descr: DNSCheck kon geen connectie krijgen met de mail server.  De server kan down  zijn of onbereikbaar als gevolg van verkeerd geconfigureerde routing en/of filtering.
+    format: Verbinden met %s (%s) mislukt.
+  SMTP:END:
+    args: 3
+    format: Gereed met testen van mail server %s (%s) met %s.
+  SMTP:HELLO_FAILED:
+    args: 1
+    descr: De mail server weigerde ons SMTP startbericht.  Vermoedelijk als gevolg van een configuratiefout.
+    format: SMTP HELO mislukt tijdens communicatie met %s.
+  SMTP:MAIL_FROM:
+    args: 1
+    format: '%s gebruiken als SMTP from (MAIL_FROM).'
+  SMTP:MAIL_FROM_REJECTED:
+    args: 1
+    descr: De mail server weigerde ons afzenderadres.  DNSCheck gebruikt een standaard null afzenderadresdie door mail servers geaccepteerd zou moeten worden.
+    format: Host weigerde %s als SMTP bestemming.
+  SMTP:OK:
+    args: 3
+    format: SMTP test van %s (%s) met %s zonder fouten verlopen.
+  SMTP:QUIT:
+    args: 0
+    format: SMTP quit (QUIT) sturen.
+  SMTP:RAW:
+    args: 1
+    format: 'SMTP antwoord: %s'
+  SMTP:RCPT_TO:
+    args: 1
+    format: '%s gebruiken als SMTP ontvanger (RCPT_TO).'
+  SMTP:RECIPIENT_REJECTED:
+    args: 1
+    descr: De mail server weigerde mail aan het ontvanger adres.  Vermoedelijk omdat dit adres onbekend is.
+    format: Host weigerde %s als SMTP ontvanger.
+  SMTP:RSET:
+    args: 0
+    format: SMTP reset (RSET) sturen.
+  SMTP:TIMEOUT:
+    args: 0
+    format: De mail server had een timeout tijdens de SMTP dialoog.
+  SOA:BEGIN:
+    args: 1
+    format: Begin van testen SOA parameters voor %s.
+  SOA:END:
+    args: 1
+    format: Klaar met testen van de SOA parameters voor %s.
+  SOA:EXPIRE_OK:
+    args: 3
+    format: 'SOA expire waarde voor %s OK (%s) - aanbevolen is >= %s.'
+  SOA:EXPIRE_SMALL:
+    args: 3
+    descr: De SOA expire waarde definieert hoeveel seconden een secondary name server zal antwoord zal blijven geven over een zone voordat deze als verouderd wordt beschouwd indien er in de tussentijd geen contact meer is geweest met de primary name server.
+    format: 'SOA expire waarde voor %s te klein (%s) - aanbevolen is >= %s.'
+  SOA:EXPIRE_VS_REFRESH:
+    args: 1
+    descr: 'De SOA expire waarde moet minstens 7 keer de SOA refresh waarde zijn, om zodoende de secondary name servers een eerlijke kans te geven hun kopie van de zone te verversen voordat de data als verouderd wordt beschouwd.'
+    format: SOA expire waarde voor %s is lager dan de refresh waarde.
+  SOA:FOUND:
+    args: 1
+    format: SOA record gevonden voor %s.
+  SOA:MINIMUM_LARGE:
+    args: 3
+    descr: De SOA minimum waarde wordt gebruikt om alle caching resolvers te vertellen hoe lang ze ontkennende antwoorden mogen cachen. Als deze waarde te laag is zal negative caching onvoordelig uit kunnen pakken.
+    format: 'SOA minimum waarde voor %s te hoog (%s) - aanbevolen is <= %s.'
+  SOA:MINIMUM_OK:
+    args: 4
+    format: 'SOA minimum waarde voor %s OK (%s) - aanbevolen is tussen %s en %s.'
+  SOA:MINIMUM_SMALL:
+    args: 3
+    descr: De SOA minimum waarde wordt gebruikt om alle caching resolvers te vertellen hoe lang ze ontkennende antwoorden mogen cachen. Als deze waarde te laag is zal negative caching niet goed werken en zullen resolvers de betreffende DNS vraag te vaak herhalen.
+    format: 'SOA minimum waarde voor %s te klein (%s) - aanbevolen is >= %s.'
+  SOA:MNAME_ERROR:
+    args: 2
+    descr: De SOA MNAME bevat geen valide host naam.
+    format: Fout gedurende het controleren van de SOA MNAME voor %s (%s).
+  SOA:MNAME_IS_AUTH:
+    args: 2
+    format: SOA MNAME voor %s (%s) is authoritative.
+  SOA:MNAME_IS_CNAME:
+    args: 2
+    format: SOA MNAME %s wijst naar een CNAME (%s).
+  SOA:MNAME_NOT_AUTH:
+    args: 2
+    descr: 'De name server die staat genoemd als de primaire bron van data voor deze zone geeft geen authoritative antwoorden.  Dat duidt op een configuratieprobleem - wellicht is de SOA MNAME niet geconfigureerd als name server voor de zone.'
+    format: SOA MNAME voor %s (%s) is niet authoritative.
+  SOA:MNAME_PUBLIC:
+    args: 2
+    descr: De name server die staat genoemd als de SOA MNAME komt voor als een name server.
+    format: SOA MNAME voor %s (%s) komt voor als NS.
+  SOA:MNAME_STEALTH:
+    args: 2
+    descr: De name server die staat genoemd als de SOA MNAME komt niet voor als name server.
+    format: SOA MNAME voor %s (%s) komt niet voor als NS.
+  SOA:MNAME_VALID:
+    args: 2
+    format: SOA MNAME voor %s is valide (%s).
+  SOA:MULTIPLE_SOA:
+    args: 1
+    descr: Er werden meerdere SOA records gevonden tijdens het bevragen van de name servers. Dat is een ernstige onregelmatigheid die onmiskenbaar het gevolg is van een configuratiefout.
+    format: Meerdere SOA records gevonden voor %s.
+  SOA:NOT_FOUND:
+    args: 1
+    descr: 'Er werd geen SOA record gevonden tijdens het bevragen van de name server. Dat is hoogstwaarschijnlijk een configuratiefout - elke zone moet over een SOA record beschikken.'
+    format: Geen SOA record gevonden voor %s.
+  SOA:NS_NOT_FOUND:
+    args: 1
+    descr: Er werden geen name server records gevonden voor de betreffende zone. Dat is een ernstige onregelmatigheid die onmiskenbaar het gevolg is van een configuratiefout.
+    format: Geen NS record(s) gevonden voor %s.
+  SOA:REFRESH_OK:
+    args: 3
+    format: 'SOA refresh waarde voor %s OK (%s) - aanbevolen is >= %s.'
+  SOA:REFRESH_SMALL:
+    args: 3
+    descr: De SOA refresh waarde bepaald hoe vaak de secondary name server bij de primary name server controleert op zone mutaties.
+    format: 'SOA refresh waarde voor %s te klein (%s) - aanbevolen is >= %s.'
+  SOA:RETRY_OK:
+    args: 3
+    format: 'SOA retry waarde voor %s OK (%s) - aanbevolen is >= %s.'
+  SOA:RETRY_SMALL:
+    args: 3
+    descr: 'De retry waarde  betreft het aantal seconden dat de secondary name servers zullen wachten met het opnieuw contacteren van de primary name server als een eerdere poging is mislukt. Als de retry waarde te laag is, zal de secondary name server het te vaak blijven proberen.'
+    format: 'SOA retry waarde voor %s te klein (%s) - aanbevolen is >= %s.'
+  SOA:RETRY_VS_REFRESH:
+    args: 3
+    descr: 'De retry waarde betreft het aantal seconden dat de secondary name servers zullen wachten met het opnieuw contacteren van de primary name server als een eerdere poging is mislukt.  Als de refresh waarde lager is dan de retry waarde, is deze nutteloos.'
+    format: SOA refresh waarde voor %s is lager dan de retry waarde (%s vs %s).
+  SOA:RNAME_DELIVERABLE:
+    args: 3
+    format: Geslaagde poging om email voor het SOA RNAME veld van %s (%s) te bezorgen bij test met %s.
+  SOA:RNAME_SYNTAX:
+    args: 2
+    descr: 'Het in het SOA RNAME veld genoemde emailadres is onjuist gespecificeerd.  Een veelgemaakte fout is om het @-symbool te gebruiken - een adres zoals hostmaster@example.com moet gespecifieerd worden als hostmaster.example.com.'
+    format: 'Ongeldige SOA RNAME syntax voor %s: %s'
+  SOA:RNAME_UNDELIVERABLE:
+    args: 3
+    descr: DNSCheck kon geen email bezorgen op het email adres dat staat opgenomen als de zone verantwoordelijke in het SOA RNAME veld.
+    format: Email bezorging voor SOA RNAME van %s (%s) mislukt bij test met %s.
+  SOA:SERIAL_IS_ZERO:
+    args: 1
+    format: Het volgnummer (de serial) in SOA record voor zone %s mag niet nul zijn.
+  SOA:SKIPPED_IPV4:
+    args: 1
+    format: 'IPv4 uitgeschakeld - SOA MNAME vraag op %s overgeslagen'
+  SOA:SKIPPED_IPV6:
+    args: 1
+    format: 'IPv6 uitgeschakeld - SOA MNAME vraag op %s overgeslagen'
+  SOA:TTL_OK:
+    args: 3
+    format: 'SOA TTL voor %s OK (%s) - aanbevolen is >= %s.'
+  SOA:TTL_SMALL:
+    args: 3
+    descr: 'Hoe kleiner de SOA TTL waarde, des te vaker moet de resolver om het SOA record vragen.'
+    format: 'SOA TTL voor %s te klein (%s) - aanbevolen is >= %s.'
+  ZONE:BEGIN:
+    args: 2
+    format: Begin van testen %s zone met versie %s.
+  ZONE:END:
+    args: 1
+    format: Test gereed voor zone %s.
+  ZONE:FATAL_DELEGATION:
+    args: 1
+    descr: Geen name servers gevonden bij de child noch de parent. Verder testen onmogelijk.
+    format: Fatale fout in delegatie voor zone %s.
+  ZONE:FATAL_NO_CHILD_NS:
+    args: 1
+    descr: Geen name servers gevonden bij de child. Verder testen onmogelijk.
+    format: 'Fatale fout - geen child name servers voor zone %s.'
+  ZONE:INVALID_NAME:
+    args: 1
+    format: '%s is niet een geldige naam voor een zone.'
+  ZONE:VERSIONS:
+    args: 1
+    format: 'Module versies: %s.'
 

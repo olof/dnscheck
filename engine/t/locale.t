@@ -4,12 +4,13 @@ use strict;
 use warnings;
 
 use Test::More;
+use lib "t/lib";
 use File::Temp 'tempfile';
 
 my ($fh, $filename) = tempfile();
 
 use_ok('DNSCheck');
-my $dc = new_ok('DNSCheck' => [{localefile => 'locale/en.yaml'}]);
+my $dc = new_ok('DNSCheck' => [{configdir => './t/config', localefile => 'locale/en.yaml'}]);
 my $loc = $dc->logger->locale;
 isa_ok($loc, 'DNSCheck::Locale');
 

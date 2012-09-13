@@ -5,18 +5,20 @@
 require 5.008;
 use warnings;
 use strict;
+use lib "t/lib";
 
 # use MockBootstrap 'main_object';
 use MockResolver 'main_object';
 
 use Test::More;
+use lib "t/lib";
 
 use_ok ('DNSCheck');
 use Sys::Hostname;
 
 ######################################################################
 
-my $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
+my $dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 
 SKIP: {
     skip "Failed to get an object to test", 4 unless defined($dc);

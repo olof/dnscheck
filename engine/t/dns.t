@@ -4,11 +4,12 @@ use strict;
 use warnings;
 
 use Test::More;
+use lib "t/lib";
 use MockResolver 'dns', {multiple => 1};
 # use MockBootstrap 'dns', {multiple => 1};
 
 use_ok('DNSCheck');
-my $dc = new_ok('DNSCheck' => [{configfile => './t/config.yaml'}]);
+my $dc = new_ok('DNSCheck' => [{configdir => './t/config'}]);
 my $dns = $dc->dns;
 isa_ok($dns, 'DNSCheck::Lookup::DNS');
 

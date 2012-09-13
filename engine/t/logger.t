@@ -4,11 +4,12 @@ use strict;
 use warnings;
 
 use Test::More;
+use lib "t/lib";
 use MockResolver 'soa';
 use File::Temp 'tempfile';
 
 use_ok('DNSCheck');
-my $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
+my $dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 $dc->soa->test('iis.se');
 
 my $log = $dc->logger;
@@ -53,7 +54,7 @@ is($count, 163, 'Iterator saw all messages');
     unlink($filename);
 }
 
-$dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml', localefile => 'locale/en.yaml' }]);
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config', localefile => 'locale/en.yaml' }]);
 $dc->soa->test('iis.se');
 {
     local *STDOUT;
@@ -69,7 +70,7 @@ $dc->soa->test('iis.se');
     unlink($filename);
 }
 
-$dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml', localefile => 'locale/en.yaml' }]);
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config', localefile => 'locale/en.yaml' }]);
 $dc->config->put('loglevels', undef);
 $dc->logger->logname('gurksallad');
 $dc->soa->test('iis.se');
@@ -90,7 +91,7 @@ $dc->soa->test('iis.se');
     local *STDOUT;
     my ($fh, $filename) = tempfile();
     open STDOUT, '>', $filename or die $!;
-    $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml', localefile => 'locale/sv.yaml' }]);
+    $dc = new_ok('DNSCheck' => [{ configdir => './t/config', localefile => 'locale/sv.yaml' }]);
     $dc->logger->logname('citronfromage');
     is($dc->logger->logname, 'citronfromage');
     $dc->logger->{interactive} = 1;

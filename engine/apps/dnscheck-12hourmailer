@@ -81,7 +81,7 @@ sub setup {
 
 sub tests_for_domain {
     my $tref   = shift;
-    my $locale = $dc->locale();
+    my $locale = $dc->logger->locale();
 
     my $rref = $dc->dbh->selectall_hashref(
         q[

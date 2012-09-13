@@ -42,7 +42,7 @@ use Net::DNS 0.59;
 use Net::IP 1.25;
 
 use Crypt::OpenSSL::Random qw(random_bytes);
-use Digest::SHA1 qw(sha1);
+use Digest::SHA qw(sha1);
 use Digest::BubbleBabble qw(bubblebabble);
 
 ######################################################################
@@ -208,7 +208,7 @@ sub query_parent_nocache {
             my $p = $self->parent->resolver->fake_packet($zone, $qname, $qtype);
             return $p if defined($p);
         } elsif ($qtype eq 'DS') {
-            return Net::DNS::Packet->new;
+            return $self->parent->resolver->fake_ds_packet($zone);
         }
     }
 
@@ -542,7 +542,7 @@ sub get_nameservers_at_parent {
 
     $self->logger->auto("DNS:GET_NS_AT_PARENT", $qname, $qclass);
 
-    if ($self->resolver->faked_zone($qname)) {
+    if ($self->parent->undelegated_test or $self->resolver->faked_zone($qname)) {
         return sort $self->resolver->faked_zone($qname);
     }
 
@@ -910,6 +910,10 @@ sub check_axfr {
     my $address = shift;
     my $qname   = shift;
     my $qclass  = shift;
+    my $timeout;
+
+    eval {$timeout = $self->parent->config->get('dns')->{tcp_timeout}};
+    $timeout ||= 60;
 
     unless ($self->_querible($address)) {
         return 0;
@@ -922,6 +926,7 @@ sub check_axfr {
     $resolver->dnssec(0);
     $resolver->usevc(0);
     $resolver->defnames(0);
+    $resolver->tcp_timeout($timeout);
 
     $resolver->nameservers($address);
     $resolver->axfr_start($qname, $qclass);

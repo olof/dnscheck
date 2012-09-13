@@ -37,7 +37,7 @@ use strict;
 use base 'DNSCheck::Test::Common';
 
 use Net::IP 1.25;
-use Digest::SHA1 qw(sha1 sha1_hex sha1_base64);
+use Digest::SHA qw(sha1 sha1_hex sha1_base64);
 
 ######################################################################
 
@@ -50,7 +50,7 @@ sub test {
     my $logger = $self->logger;
     my $errors = 0;
 
-    return unless $parent->config->should_run;
+    return 0 unless $parent->config->should_run;
 
     $logger->module_stack_push();
     $logger->auto("CONSISTENCY:BEGIN", $zone);

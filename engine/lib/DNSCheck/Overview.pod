@@ -228,7 +228,7 @@ In practice, the easiest reasonably secure setup is to give the web GUI one
 user with very limited permissions (INSERT, UPDATE, SELECT on C<sources> and
 INSERT on C<queue>), and one user with full rights on all tables for the rest
 of the system. Indeed, since all of the programs use the database connection
-info given in the L<site_config.yaml> file, you will need to point out a
+info given in the L<config.yaml> file, you will need to point out a
 different such file to any programs you want to use different connection
 information.
 
@@ -236,16 +236,13 @@ information.
 
 The system uses a number of files.
 
-=head3 config.yaml and site_config.yaml
+=head3 /etc/dnscheck/config.yaml
 
-These contain configuration information in YAML format. The C<config.yaml>
-file is installed with DNSCheck, and should not be modified (if you do modify
-it, your changes will be overwritten when you upgrade DNSCheck).
-C<site_config.yaml> overrides what is in C<config.yaml>, and is where local
-changes (such as database access information and TSIG keys) should be entered.
-It will not be touched by the installation process.
+This contains configuration information in YAML format. It overrides what is in 
+the default configuration, and is where local changes (such as database access 
+information and TSIG keys) should be entered.
 
-One key that is usually not in either of these files but that can be added if
+One key that is usually not in the configuration but that can be added if
 needed is the "disable" key. It has two levels under it, being the name a test
 module (converted to lowercase) and the name of a method in that module. If
 the value for the method is true, that method will not be run. Note that no
@@ -260,17 +257,8 @@ you're doing. As an example, the following would disable all DNSSEC tests:
 All test methods mentioned in the documentation for the respective modules are
 possible to disable this way.
 
-=head3 policy.yaml and site_policy.yaml
+=head3 policy.yaml
 
-C<policy.yaml> specifies the severity of various problems. As distributed, it
-represents .SE's view on best practices for DNS. If you want to change
-anything, do so in C<site_policy.yaml>, or your changes will be overwritten on
-the next install.
-
-=head3 locale/en.yaml and locale/sv.yaml
-
-These files contain information on how to transform the raw test log entries
-into human-readable messages. If you want to do your own translation, you need
-to know that the "format" key is a L<sprintf()> format string, and "args" the
-number of arguments after the format. If the latter number does not match the
-Perl code, a warning will be printed at runtime.
+C<policy.yaml> specifies the severity of various problems. The default values
+represent .SE's view on best practices for DNS. If you want to change
+anything, do so in C</etc/dnscheck/policy.yaml>.

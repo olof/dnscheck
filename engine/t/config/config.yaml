@@ -1,0 +1,97 @@
+# $Id$
+
+dns:
+  class: IN
+  debug: 0
+  ipv4: 1
+  ipv6: 1
+  retrans: 2
+  retry: 3
+  tcp_timeout: 5
+  udp_timeout: 5
+# perl -MMIME::Base64 -MStorable=nfreeze -MDNSCheck -le '$tmp=encode_base64(nfreeze(DNSCheck->new->resolver->get_preload_data));$tmp=~s/\n//g;print $tmp;'
+  rootdata: BQgDAAAAAgQDAAAAAQQDAAAADQiBAAAAE2Mucm9vdC1zZXJ2ZXJzLm5ldC4IgQAAABNrLnJvb3Qtc2VydmVycy5uZXQuCIEAAAATZS5yb290LXNlcnZlcnMubmV0LgiBAAAAE2kucm9vdC1zZXJ2ZXJzLm5ldC4IgQAAABNhLnJvb3Qtc2VydmVycy5uZXQuCIEAAAATZC5yb290LXNlcnZlcnMubmV0LgiBAAAAE2wucm9vdC1zZXJ2ZXJzLm5ldC4IgQAAABNtLnJvb3Qtc2VydmVycy5uZXQuCIEAAAATaC5yb290LXNlcnZlcnMubmV0LgiBAAAAE2oucm9vdC1zZXJ2ZXJzLm5ldC4IgQAAABNnLnJvb3Qtc2VydmVycy5uZXQuCIEAAAATYi5yb290LXNlcnZlcnMubmV0LgiBAAAAE2Yucm9vdC1zZXJ2ZXJzLm5ldC4AAAABLgAAAAJucwQDAAAADQQDAAAAAQiBAAAACzE5Mi4zMy40LjEyAAAAE2Mucm9vdC1zZXJ2ZXJzLm5ldC4EAwAAAAIIgQAAAAwxOTMuMC4xNC4xMjkIgQAAABQyMDAxOjdmZDowOjA6MDowOjA6MQAAABNrLnJvb3Qtc2VydmVycy5uZXQuBAMAAAACCIEAAAAVMjAwMTo3ZmU6MDowOjA6MDowOjUzCIEAAAANMTkyLjM2LjE0OC4xNwAAABNpLnJvb3Qtc2VydmVycy5uZXQuBAMAAAABCIEAAAAOMTkyLjIwMy4yMzAuMTAAAAATZS5yb290LXNlcnZlcnMubmV0LgQDAAAAAgiBAAAACjE5OC40MS4wLjQIgQAAABgyMDAxOjUwMzpiYTNlOjA6MDowOjI6MzAAAAATYS5yb290LXNlcnZlcnMubmV0LgQDAAAAAgiBAAAACzE5OS43LjgzLjQyCIEAAAAVMjAwMTo1MDA6MzowOjA6MDowOjQyAAAAE2wucm9vdC1zZXJ2ZXJzLm5ldC4EAwAAAAIIgQAAAAsxMjguOC4xMC45MAiBAAAAFTIwMDE6NTAwOjJkOjA6MDowOjA6ZAAAABNkLnJvb3Qtc2VydmVycy5uZXQuBAMAAAACCIEAAAAVMjAwMTpkYzM6MDowOjA6MDowOjM1CIEAAAAMMjAyLjEyLjI3LjMzAAAAE20ucm9vdC1zZXJ2ZXJzLm5ldC4EAwAAAAIIgQAAABkyMDAxOjUwMDoxOjA6MDowOjgwM2Y6MjM1CIEAAAALMTI4LjYzLjIuNTMAAAATaC5yb290LXNlcnZlcnMubmV0LgQDAAAAAgiBAAAADTE5Mi41OC4xMjguMzAIgQAAABcyMDAxOjUwMzpjMjc6MDowOjA6MjozMAAAABNqLnJvb3Qtc2VydmVycy5uZXQuBAMAAAABCIEAAAAMMTkyLjExMi4zNi40AAAAE2cucm9vdC1zZXJ2ZXJzLm5ldC4EAwAAAAEIgQAAAA4xOTIuMjI4Ljc5LjIwMQAAABNiLnJvb3Qtc2VydmVycy5uZXQuBAMAAAACCIEAAAAVMjAwMTo1MDA6MmY6MDowOjA6MDpmCIEAAAALMTkyLjUuNS4yNDEAAAATZi5yb290LXNlcnZlcnMubmV0LgAAAANpcHM=
+
+logging:
+  interactive: 0
+  locale: ~
+
+smtp:
+  enable: 1
+  hostname: gurksallad
+  timeout: 20
+
+net:
+    ipv4: 1
+    ipv6: 1
+    smtp: 1
+    v4root: 
+        - origin.asnlookup.iis.se
+        - origin.asn.cymru.com
+    v6root: 
+        - origin6.asnlookup.iis.se
+        - origin6.asn.cymru.com
+
+syslog:
+    ident: dnscheck
+    facility: local2
+
+daemon:
+    pidfile: /var/tmp/dnscheck_dispatcher.pid
+    errorlog: /var/tmp/dnscheck_errors.log
+    maxchild: 20
+    geoip: /opt/local/share/GeoIP/GeoLiteCity.dat
+    user: called
+
+# This information is expected to be overridden in site_config.yaml
+# Not all keys will be useful for all setups. See the documentation
+# for the various programs about which keys they use, and what they
+# mean. Some info is in DNSCheck::Overview.
+
+12hour:
+    smtphost: smtp.example.com
+    from: unknown@example.com
+    subject: Problem(s) in your domain(s)
+    timespan: 24:00:00
+    debug: 1
+    sourcestring: 12-hour-check
+
+zonediff:
+    datafile: /tmp/zone_hashes.txt
+    servers:
+      - ns1.example.com
+      - ns2.example.com
+      - ns3.example.com
+    domain: example.com.
+    tsig: test.key TSIG WW91IGFjdHVhbGx5IGJvdGhlcmVkIHRvIGRlY29kZSB0aGlzPw==
+    sourcestring: 12-hour-check
+    flagdomain:
+        - 000000000000.example.com
+        - zzzzzzzzzzzz.example.com
+
+nsdiff:
+    datafile: /tmp/zone_ns.txt
+    servers:
+      - ns1.example.com
+      - ns2.example.com
+      - ns3.example.com
+    domain: example.com.
+    tsig: test.key TSIG WW91IGFjdHVhbGx5IGJvdGhlcmVkIHRvIGRlY29kZSB0aGlzPw==
+    flagdomain:
+        - 000000000000.example.com
+        - zzzzzzzzzzzz.example.com
+
+twitterbot:
+        datafile: /var/tmp/twitterbot.db
+        username: dnscheck
+        password: foobar
+
+zonestat:
+        pageanalyzer: /Users/called/Clients/IIS/pageanalyzer
+        python: /opt/local/bin/python
+        sslscan: /Users/called/Clients/IIS/sslscan-win/sslscan
+        openssl: /opt/local/bin/openssl
+        cacertfile: /opt/local/share/dnscheck/cacerts.pem
+
+zone:
+    datafile: /var/tmp/se.zone

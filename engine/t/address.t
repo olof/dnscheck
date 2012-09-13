@@ -7,6 +7,7 @@ use warnings;
 use strict;
 
 use Test::More;
+use lib "t/lib";
 
 use MockResolver 'address';
 
@@ -14,7 +15,7 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck({configfile => './t/config.yaml'});
+my $check = new DNSCheck({configdir => './t/config'});
 
 ######################################################################
 

@@ -1,5 +1,5 @@
 <?php
-	require_once('constants.php');
+	require_once('config.php');
 
 	function checkIfDomainExists($domain, $testType)
 	{
@@ -81,13 +81,14 @@
 				return true;
 			}
 
-			$link = @mysql_connect(DB_SERVER . ':' . DB_PORT, DB_USER, DB_PASS);
+			global $conf;
+			$link = @mysql_connect($conf['db_server'] . ':' . $conf['db_port'], $conf['db_user'], $conf['db_pass']);
 			if (false === $link)
 			{
 				return false;
 			}
 
-			$status = @mysql_select_db(DB_NAME, $link);
+			$status = @mysql_select_db($conf['db_name'], $link);
 			if (false === $status)
 			{
 				return false;

@@ -78,9 +78,6 @@ sub new {
     $self->{resolver}->retry( $config->{retry} );
     $self->{resolver}->retrans( $config->{retrans} );
 
-    $self->{ipv6} = $parent->config->get( "net" )->{ipv6};
-    $self->{ipv4} = $parent->config->get( "net" )->{ipv4};
-
     return $self;
 }
 
@@ -157,6 +154,15 @@ sub add_fake_glue {
     $self->cache->{ips}{$nsname}{$nsip} = 1;
     $self->{fake}{ns}{$zone}            = 1;
     $self->{fake}{ips}{$nsname}         = 1;
+
+    return $self;
+}
+
+sub add_fake_ds {
+    my $self = shift;
+    my $ds   = shift;
+
+    push @{ $self->{fake}{ds}{ $ds->name } }, $ds;
 
     return $self;
 }
@@ -246,6 +252,18 @@ sub fake_ns_packet {
             my $t = ( Net::IP->new( $ip )->version == 4 ) ? 'A' : 'AAAA';
             $p->unique_push( 'additional', Net::DNS::RR->new( "$n 4711 IN $t $ip" ) );
         }
+    }
+
+    return $p;
+}
+
+sub fake_ds_packet {
+    my $self = shift;
+    my $zone = shift;
+
+    my $p = Net::DNS::Packet->new;
+    foreach my $rr (@{ $self->{fake}{ds}{$zone} }) {
+        $p->unique_push('answer', $rr);
     }
 
     return $p;
@@ -449,7 +467,13 @@ sub get {
       if $self->{debug};
 
     @ns =
-      map { $_->ip } grep { ( $_->version == 4 and $self->{ipv4} ) or ( $_->version == 6 and $self->{ipv6} ) } map { Net::IP->new( $_ ) } @ns;
+      map { $_->ip }
+          grep {
+              ( $_->version == 4 and $self->config->get('net')->{ipv4} )
+              or
+              ( $_->version == 6 and $self->config->get('net')->{ipv6} )
+              } 
+              map { Net::IP->new( $_ ) } @ns;
 
     return unless @ns;
 

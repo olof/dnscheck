@@ -172,11 +172,11 @@
          }
       }
    },
-   "254.47.195.origin.asnlookup.iis.se" : {
+   "1.254.47.195.origin.asnlookup.iis.se" : {
       "TXT" : {
          "IN" : {
             "answer" : [
-               "254.47.195.origin.asnlookup.iis.se 14400 IN TXT \"47698 | 195.47.254.0/24 | SE | ripencc | 2003-05-26\""
+               "1.254.47.195.origin.asnlookup.iis.se 14400 IN TXT \"47698 | 195.47.254.0/24 | SE | ripencc | 2003-05-26\""
             ],
             "additional" : [
                "a.ns.se 172800 IN A 192.36.144.107",
@@ -357,11 +357,11 @@
          }
       }
    },
-   "220.71.192.origin.asnlookup.iis.se" : {
+   "1.220.71.192.origin.asnlookup.iis.se" : {
       "TXT" : {
          "IN" : {
             "answer" : [
-               "220.71.192.origin.asnlookup.iis.se 14400 IN TXT \"1257 | 192.71.220.0/24 | SE | ripencc | 2000-03-17\""
+               "1.220.71.192.origin.asnlookup.iis.se 14400 IN TXT \"1257 | 192.71.220.0/24 | SE | ripencc | 2000-03-17\""
             ],
             "additional" : [
                "a.ns.se 172800 IN A 192.36.144.107",

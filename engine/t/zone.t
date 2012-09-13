@@ -7,6 +7,7 @@ use warnings;
 use strict;
 
 use Test::More;
+use lib "t/lib";
 
 use MockResolver 'zone';
 # use MockBootstrap 'zone';
@@ -15,48 +16,63 @@ use_ok 'DNSCheck';
 
 ######################################################################
 
-my $dc = new_ok('DNSCheck' => [{ configfile => './t/config.yaml' }]);
+sub set_flags {
+    my ($obj, $v4, $v6, $smtp) = @_;
+    
+    my $net = $obj->config->get("net");
+
+    $net->{ipv4} = $v4;
+    $net->{ipv6} = $v6;
+    $net->{smtp} = $smtp;
+
+    $obj->config->put('net', $net);
+}
+
+my $dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 
 if (!defined($dc)) {
     done_testing();
     exit;
 }
 
+# Not very good tests.
 ok(defined($dc->zone->test("iis.se")));
 $dc->log_nameserver_times('iis.se');
 my @res          = @{ $dc->logger->export };
 my $result_count = scalar(@res);
-ok(abs($result_count - 896) < 5,
+ok(abs($result_count - 1275) < 5,
     "Got $result_count lines from logger.");
 my $info_count = scalar(grep { $_->[2] eq 'INFO' } @res);
-ok(abs($info_count - 181) < 10, "$info_count INFO-level results.");
+ok(abs($info_count - 231) < 10, "$info_count INFO-level results.");
 ok($dc->logger->count_info == $info_count);
 my $notice_count = scalar(grep { $_->[2] eq 'NOTICE' } @res);
-ok(abs($notice_count - 7) < 3, "$notice_count NOTICE-level results.");
+ok(abs($notice_count - 12) < 3, "$notice_count NOTICE-level results.");
 ok($dc->logger->count_notice == $notice_count);
 my $warning_count = scalar(grep { $_->[2] eq 'WARNING' } @res);
-ok(abs($warning_count - 0) < 2,
+ok(abs($warning_count - 3) < 2,
     "$warning_count WARNING-level results.");
 ok($dc->logger->count_warning == $warning_count);
 my $debug_count = scalar(grep { $_->[2] eq 'DEBUG' } @res);
-ok(abs($debug_count - 708) < 5, "$debug_count DEBUG-level results.");
+ok(abs($debug_count - 1015) < 5, "$debug_count DEBUG-level results.");
 ok($dc->logger->count_debug == $debug_count);
 
 my %tag = map {$_->[3] => 1} @{$dc->logger->export};
-
 ok($tag{'NSTIME:AVERAGE'}, 'Timing information is present');
 
-$dc->logger->clear;
+# Test the test-disabling function
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 $dc->config->put('disable', {zone => {test => 1}});
 $dc->zone->test('nic.se');
 is_deeply($dc->logger->export, [], 'Test disabled');
-$dc->logger->clear;
 
-$dc->config->put('disable', {zone => {test => 0}});
-$dc->config->get("net")->{ipv4} = undef;
-$dc->config->get("net")->{ipv6} = undef;
-$dc->config->get("net")->{smtp} = undef;
+# Test disabling IP versions
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
+set_flags($dc, undef, undef, undef);
+is($dc->config->get("net")->{ipv4}, undef, 'IPv4 flag set correctly');
+is($dc->config->get("net")->{ipv6}, undef, 'IPv6 flag set correctly');
+is($dc->config->get("net")->{smtp}, undef, 'SMTP flag set correctly');
 $dc->zone->test('nic.se');
+
 is_deeply(
     [map {$_->[3]} @{$dc->logger->export}],
     [
@@ -70,20 +86,22 @@ is_deeply(
     "DNS:NXDOMAIN",
     "DNS:NO_PARENT",
     "DELEGATION:NOT_FOUND_AT_PARENT",
+    'DNS:QUERY_RESOLVER',
+    'DNS:QUERY_RESOLVER',
     "DELEGATION:END",
     "ZONE:FATAL_DELEGATION",
     "ZONE:END",
     ],
     'IPv4, IPv6 and SMTP disabled');
-$dc->logger->clear;
 
-$dc->config->get('net')->{ipv6} = 1;
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
+set_flags($dc, undef, 1, undef);
 $dc->zone->test('iis.se');
-is(scalar(@{$dc->logger->export}), 1114, 'IPv6-only tests');
+is(scalar(@{$dc->logger->export}), 859, 'IPv6-only tests');
 
-$dc->config->get('net')->{ipv6} = 0;
-$dc->config->get('net')->{ipv4} = 1;
+$dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
+set_flags($dc, 1, undef, undef);
 $dc->zone->test('iis.se');
-is(scalar(@{$dc->logger->export}), 2204, 'IPv4-only tests');
+is(scalar(@{$dc->logger->export}), 979, 'IPv4-only tests');
 
 done_testing();

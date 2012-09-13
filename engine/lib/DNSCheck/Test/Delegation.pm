@@ -46,7 +46,7 @@ sub test {
 
     my $parent = $self->parent;
 
-    return unless $parent->config->should_run;
+    return (0,0) unless $parent->config->should_run;
 
     if (!defined($history) && $parent->dbh) {
         $history = $parent->dbh->selectcol_arrayref(
@@ -75,6 +75,15 @@ sub test {
     my $packet;
 
     ($errors, $testable) = $self->ns_parent_child_matching($zone);
+
+    if (!$testable) {
+        my $p_a = $self->parent->dns->query_resolver($zone, 'IN', 'A');
+        my $p_www = $self->parent->dns->query_resolver('www.' . $zone, 'IN', 'A');
+        if (($p_a and $p_a->header->ancount > 0) or ($p_www and $p_www->header->ancount > 0)) {
+            $self->logger->auto('DELEGATION:BROKEN_BUT_FUNCTIONAL', $zone);
+        }
+    }
+
     goto DONE unless $testable;
 
     $errors += $self->enough_nameservers($zone);
@@ -160,7 +169,7 @@ sub consistent_glue {
     my $logger = $self->logger;
     my $qclass = $self->qclass;
 
-    return unless $parent->config->should_run;
+    return 0 unless $parent->config->should_run;
 
     my $errors = 0;
 
@@ -255,7 +264,7 @@ sub ns_parent_child_matching {
     my $errors = 0;
     my $testable;
 
-    return unless $self->parent->config->should_run;
+    return (0,0) unless $self->parent->config->should_run;
 
     my @ns_at_parent =
       $self->parent->dns->get_nameservers_at_parent($zone, $self->qclass);
@@ -322,7 +331,7 @@ sub enough_nameservers {
     my $zone   = shift;
     my $errors = 0;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     # REQUIRE: at least two IPv4 nameservers must be found
     my $ipv4_ns =
@@ -421,7 +430,7 @@ sub cname_as_ns {
     my ($self, $zone) = @_;
     my $error = 0;
 
-    return unless $self->parent->config->should_run;
+    return 0 unless $self->parent->config->should_run;
 
     my @ns = $self->parent->dns->get_nameservers_at_child($zone, $self->qclass);
 

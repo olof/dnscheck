@@ -46,7 +46,7 @@ sub test {
     my $email  = shift;
     my $zone   = shift;
 
-    return unless $parent->config->should_run;
+    return 0 unless $parent->config->should_run;
 
     my $logger              = $parent->logger;
     my $errors              = 0;

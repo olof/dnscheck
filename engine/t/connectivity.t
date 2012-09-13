@@ -5,13 +5,14 @@ use strict;
 use warnings;
 
 use Test::More;
+use lib "t/lib";
 
 use MockResolver 'connectivity';
 # use MockBootstrap 'connectivity';
 
 use_ok('DNSCheck');
 
-my $dc = new_ok('DNSCheck' => [{configfile => './t/config.yaml'}]);
+my $dc = new_ok('DNSCheck' => [{configdir => './t/config'}]);
 my $log = $dc->logger;
 my $c = $dc->connectivity;
 

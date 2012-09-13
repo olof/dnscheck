@@ -125,11 +125,23 @@ sub slog {
     }
 }
 
+sub do_kill {
+    my ($pidfile, $signal) = @_;
+    $signal = 15 unless defined($signal);
+
+    open my $fh, '<', $pidfile or die "Failed to open $pidfile: $!\n";
+    my ($pid) = <$fh>;
+    
+    kill $signal, $pid;
+}
+
 sub setup {
     my $errfile = $check->config->get("daemon")->{errorlog};
     my $pidfile = $check->config->get("daemon")->{pidfile};
     my $uid;
     my $gid;
+
+    my $kill = 0;
 
     if ($< == 0 and !defined($user)) {
         die "Started as root, but no user to run as specified. Exiting.\n";
@@ -143,7 +155,17 @@ sub setup {
     }
 
     @saved_argv = @ARGV;    # We'll use this if we're asked to restart ourselves
-    GetOptions('debug' => \$debug, 'verbose' => \$verbose);
+    GetOptions(
+        'debug' => \$debug,
+        'verbose' => \$verbose,
+        'kill+' => \$kill,
+    );
+    
+    if ($kill) {
+        do_kill($pidfile, ($kill>1)?9:15);
+        exit(0);
+    }
+    
     openlog($check->config->get("syslog")->{ident},
         'pid', $check->config->get("syslog")->{facility});
     slog 'info', "$0 starting with %d maximum children.",
@@ -154,8 +176,6 @@ sub setup {
     slog 'info', 'Logging as %s to facility %s.',
       $check->config->get("syslog")->{ident},
       $check->config->get("syslog")->{facility};
-    slog 'info', 'Reading config from %s and %s.',
-      $check->config->get("configfile"), $check->config->get("siteconfigfile");
 
     unless ($check->dbh) {
         die "Failed to connect to database. Exiting.\n";
@@ -362,7 +382,12 @@ sub running_in_child {
         my @ns = split(/\s+/, $fake_glue);
         foreach my $n (@ns) {
             my ($name, $ip) = split(m|/|, $n);
-            $dc->add_fake_glue($domain, $name, $ip);
+            if ($name =~ /^ds:/) {
+                $ip =~ s/_/ /g;
+                $dc->add_fake_ds($ip);    # Not actually IP in this case.
+            } else {
+                $dc->add_fake_glue($domain, $name, $ip);
+            }
         }
     }
 
@@ -542,6 +567,27 @@ again. It keeps doing this until it is terminated by a SIGTERM. At that point,
 it will wait until all children have died and cleanups been performed before it
 removes its PID file and then exits.
 
+=head3 Undelegated tests
+
+In order to run undelegated tests, extra data can be put in the
+C<fake_parent_glue> field in the queue table in the database. This data needs
+to be formatted in a particular way in order to be useful. Overall, it
+consists of a number of entries separated by whitespace. Each entry represents
+either one NS record or one DS record. 
+
+NS record entries are simple. They consist of either a single name (in which
+case the corresponding IP number(s) will be looked up in the live DNS tree),
+or a name followed by a slash (/) and an IP address. For example, an entry
+might look like C<ns.example.org/192.168.2.2> (and give an error message
+during testing for being in a reserved IP range).
+
+DS records are a bit more complicated. They should start with the exact string
+C<ds:/> in order to mark them as not NS records. The rest of the record should
+be a DS record in BIND zone file format, but with all whitespace replaced with
+underscores (_). The dispatcher will replace back the underscores with spaces,
+and then try to create a Net::DNS::RR::DS object from the resulting string. If
+that fails, it will currently die.
+
 =head2 OPTIONS
 
 =over
@@ -566,16 +612,21 @@ specifies the name the daemon will use when talking to syslogd, and
 C<facility>, which specifies the syslog facility to use.
 
 The second one is C<daemon>. It has the subkeys C<pidfile>, C<errorlog>,
-C<maxchild> and C<savelevel>. They specify, in order, the file where the
-daemon will write its PID after it has detached, the file it will redirect its
-standard error to, the maximum number of concurrent child processes it may
-have and the minumum log level to save to the database. Make sure to set the
-pathnames to values where the user the daemon is running under has write
-permission, since it will terminated if they are specified but can't be
-written to. Additionally, running with a maxchild value of n means that at
+C<maxchild>, C<user>, C<group> and C<savelevel>. They specify, in order, the 
+file where the daemon will write its PID after it has detached, the file it 
+will redirect its standard error to, the maximum number of concurrent child 
+processes it may have and the minumum log level to save to the database. Make 
+sure to set the pathnames to values where the user the daemon is running under 
+has write permission, since it will terminated if they are specified but can't 
+be written to. Additionally, running with a maxchild value of n means that at
 least n+1 simultaneous connections to the database will be opened. Make sure
 that the database can actually handle that, or everything will die with more
-or less understandable error messages.
+or less understandable error messages. The "user" and "group" keys specify the 
+user and group that the dispatcher will change too after opening the pid and 
+errorlog files, if it is started as the root user. Note that if only the root 
+user can open the PID and error files, restarting the dispatcher by sending it 
+a HUP signal will fail.
+
 
 If everything works as intended nothing should ever be written to the
 errorlog. All normal log outout goes to syslog (and, with the debug flag,

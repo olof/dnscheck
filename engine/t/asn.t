@@ -7,6 +7,7 @@ use warnings;
 use strict;
 
 use Test::More;
+use lib "t/lib";
 use Net::IP;
 use MockResolver 'asn';
 # use MockBootstrap 'asn';
@@ -14,12 +15,12 @@ use DNSCheck;
 
 ######################################################################
 
-my $check = new DNSCheck({configfile => './t/config.yaml'});
+my $check = new DNSCheck({configdir => './t/config'});
 
 ######################################################################
 
-ok(join(",", @{ $check->asn->lookup("195.47.254.0") }) eq "47698");
-ok(join(",", @{ $check->asn->lookup("192.71.220.0") }) eq "1257");
+is_deeply($check->asn->lookup("195.47.254.1"),["47698"]);
+is_deeply($check->asn->lookup("192.71.220.1"),["1257"]);
 ok(!$check->asn->lookup('gurksallad'), 'No response for bogus IP');
 is_deeply($check->asn->lookup('192.168.12.12'), [], 'IPv4 not announced');
 is_deeply($check->asn->lookup('2a00:801:f0:211::152'), [1257], 'IPv6 announced');
@@ -43,7 +44,7 @@ $tmp = $asn->_asn_helper(Net::IP->new('127.0.0.1'));
 is_deeply($tmp, []);
 
 is_deeply($check->asn->_asn_helper(Net::IP->new('2a00:801:f0:211::152')), [1257], 'IPv6 announced (direct)');
-is_deeply($check->asn->_asn_helper(Net::IP->new('192.71.220.0')), [1257], 'IPv4 announced (direct)');
+is_deeply($check->asn->_asn_helper(Net::IP->new('192.71.220.1')), [1257], 'IPv4 announced (direct)');
 
 eval {
     my $i = Net::IP->new('::1');

@@ -7,6 +7,7 @@ use warnings;
 use strict;
 
 use Test::More;
+use lib "t/lib";
 
 use DNSCheck::Config;
 use Sys::Hostname;
@@ -14,10 +15,10 @@ use Sys::Hostname;
 ######################################################################
 
 my $conf = new_ok( 'DNSCheck::Config' => [
-    configfile => './t/config.yaml',
+    configfile => './t/config/config.yaml',
     policyfile => './policy.yaml',
     localefile => './locale/en.yaml',
-    siteconfigfile => './t/config.yaml',
+    siteconfigfile => './t/config/config.yaml',
     sitepolicyfile => './policy.yaml',
 ] );
 
@@ -27,11 +28,11 @@ SKIP: {
     ok( ref( $conf->get( "net" ) )    eq "HASH" );
     ok( $conf->get( "net" )->{"smtp"} eq 1 );
     ok( $conf->get( "hostname" )      eq hostname );
-    is( scalar(keys(%{$conf->{locale}{messages}})), 268, 'Messages are there');
-    is( scalar(keys(%{$conf->{loglevels}})), 200, 'Policy data is there');
+    is( scalar(keys(%{$conf->{locale}{messages}})), 272, 'Messages are there');
+    is( scalar(keys(%{$conf->{loglevels}})), 204, 'Policy data is there');
 }
 
-new_ok( 'DNSCheck::Config' => [ configdir => './t', sitedir => './t' ] );
+new_ok( 'DNSCheck::Config' => [ configdir => './t/config', sitedir => './t/config' ] );
 new_ok('DNSCheck::Config');
 
 new_ok('DNSCheck::Config' => [locale => 'gurksallad', policyfile  => 'citronfromage']);
