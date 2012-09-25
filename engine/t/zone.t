@@ -40,20 +40,20 @@ ok(defined($dc->zone->test("iis.se")));
 $dc->log_nameserver_times('iis.se');
 my @res          = @{ $dc->logger->export };
 my $result_count = scalar(@res);
-ok(abs($result_count - 760) < 5,
+ok(abs($result_count - 760) < 50,
     "Got $result_count lines from logger.");
 my $info_count = scalar(grep { $_->[2] eq 'INFO' } @res);
-ok(abs($info_count - 144) < 10, "$info_count INFO-level results.");
+ok(abs($info_count - 144) < 40, "$info_count INFO-level results.");
 ok($dc->logger->count_info == $info_count);
 my $notice_count = scalar(grep { $_->[2] eq 'NOTICE' } @res);
-ok(abs($notice_count - 12) < 3, "$notice_count NOTICE-level results.");
+ok(abs($notice_count - 12) < 5, "$notice_count NOTICE-level results.");
 ok($dc->logger->count_notice == $notice_count);
 my $warning_count = scalar(grep { $_->[2] eq 'WARNING' } @res);
-ok(abs($warning_count - 5) < 2,
+ok(abs($warning_count - 5) < 5,
     "$warning_count WARNING-level results.");
 ok($dc->logger->count_warning == $warning_count);
 my $debug_count = scalar(grep { $_->[2] eq 'DEBUG' } @res);
-ok(abs($debug_count - 597) < 5, "$debug_count DEBUG-level results.");
+ok(abs($debug_count - 597) < 25, "$debug_count DEBUG-level results.");
 ok($dc->logger->count_debug == $debug_count);
 
 my %tag = map {$_->[3] => 1} @{$dc->logger->export};
