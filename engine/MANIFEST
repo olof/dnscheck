@@ -80,8 +80,6 @@ locale/nl.yaml
 locale/sv.yaml
 Makefile.PL
 MANIFEST			This list of files
-t/lib/MockBootstrap.pm
-t/lib/MockResolver.pm
 README
 RELEASE_NOTES
 t/address.json
@@ -106,6 +104,8 @@ t/email_addresses.t
 t/find_parent.json
 t/find_parent.t
 t/host.t
+t/lib/MockBootstrap.pm
+t/lib/MockResolver.pm
 t/locale.t
 t/logger.t
 t/main_object.json
@@ -119,10 +119,13 @@ t/resolver.json
 t/resolver.t
 t/soa.json
 t/soa.t
+t/undelegated.json
+t/undelegated.t
 t/zone.json
 t/zone.t
 UPGRADE
 util/dumpyaml.pl
+util/load_locales.pl
 util/locale2sql.pl
 util/localecompare.pl
 util/perltidyrc

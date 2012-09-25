@@ -35,6 +35,7 @@ WriteMakefile(
         'File::Slurp'             => 0,
         'File::ShareDir::Install' => 0,
         'File::ShareDir'          => 0,
+        'Config::Any'             => 0,
     },
     'EXE_FILES' => \@exefiles,
     'NO_META'   => 1,
