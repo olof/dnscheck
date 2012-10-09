@@ -582,7 +582,7 @@ messages:
     format: 'Het IP address %s (gegeven voor hostnaam %s) is niet geldig.'
   FAKEGLUE:MALFORMED_DS:
     args: 1
-    format: Het opgegeven DS record is niet geldig: %s
+    format: 'Het opgegeven DS record is niet geldig: %s'
   FAKEGLUE:NO_ADDRESS:
     args: 1
     format: Het hostnaam %s heeft geen A of AAAA records.
