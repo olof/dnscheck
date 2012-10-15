@@ -326,7 +326,7 @@ sub _check_child {
                 $zone, $sig->keytag);
         }
     }
-    if ($valid_dnskey_signatures > 0) {
+    if ($valid_dnskey_signatures >= @{$dnskey->{DNSKEY}}) {
         ## Enough valid signatures over DNSKEY RRset
         $logger->auto("DNSSEC:DNSKEY_VALID_SIGNATURES", $zone);
     } else {
