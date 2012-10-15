@@ -6,14 +6,14 @@ use strict;
 
 use 5.8.9;
 
-use MockResolver 'dnssec', {multiple => 1};
-# use MockBootstrap 'dnssec', {multiple => 1};
-
 BEGIN{
     *CORE::GLOBAL::time = sub {
         return 1347539258;
     };
 };
+
+use MockResolver 'dnssec', {multiple => 1};
+# use MockBootstrap 'dnssec', {multiple => 1};
 
 BEGIN {use_ok('DNSCheck')};
 
