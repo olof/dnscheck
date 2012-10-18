@@ -6,14 +6,14 @@ use strict;
 
 use 5.8.9;
 
-use MockResolver 'dnssec', {multiple => 1};
-# use MockBootstrap 'dnssec', {multiple => 1};
-
-BEGIN{
+BEGIN {
     *CORE::GLOBAL::time = sub {
         return 1347539258;
     };
 };
+
+use MockResolver 'dnssec', {multiple => 1};
+# use MockBootstrap 'dnssec', {multiple => 1};
 
 BEGIN {use_ok('DNSCheck')};
 
@@ -28,7 +28,7 @@ my @check_for = qw[
     NO_DS_FOUND
     CONSISTENT_EXTRA_PROCESSING
     DNSKEY_SIGNATURE_OK
-    DNSKEY_NO_VALID_SIGNATURES
+    DNSKEY_VALID_SIGNATURES
     SOA_SIGNATURE_OK
     SOA_VALID_SIGNATURES
 ];
