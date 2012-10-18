@@ -36,51 +36,53 @@ use strict;
 
 use Time::HiRes qw(time);
 use DNSCheck::Locale;
-use Data::Dumper;
 
 ######################################################################
 
 sub new {
     my $proto = shift;
-    my $class = ref($proto) || $proto;
+    my $class = ref( $proto ) || $proto;
     my $self  = {};
 
     my $parent    = shift;
     my $config    = $parent->config;
-    my $loglevels = $config->get('loglevels');
+    my $loglevels = $config->get( 'loglevels' );
 
-    $self->{interactive} = $config->get('logging')->{interactive};
-    $self->{debug}       = $config->get('debug');
+    $self->{interactive} = $config->get( 'logging' )->{interactive};
+    $self->{debug}       = $config->get( 'debug' );
 
-    if ($loglevels) {
+    if ( $loglevels ) {
         $self->{loglevels} = $loglevels;
-    } else {
+    }
+    else {
         $self->{loglevels} = undef;
     }
 
     $self->{logname}  = undef;
     $self->{messages} = ();
-    $self->{parent} = $parent;
+    $self->{parent}   = $parent;
 
     $self->{module_stack} = [0];
     $self->{module_id}    = 0;
 
     $self->{start} = time;
 
+    $self->{filters} = ( $config->get( 'filters' ) ) || {};
+
     bless $self, $class;
 }
 
 sub parent {
     my $self = shift;
-    
+
     return $self->{parent};
 }
 
 sub locale {
     my $self = shift;
 
-    unless (defined($self->{locale})) {
-        $self->{locale} = DNSCheck::Locale->new($self->parent->config->get("locale"));
+    unless ( defined( $self->{locale} ) ) {
+        $self->{locale} = DNSCheck::Locale->new( $self->parent->config->get( "locale" ) );
     }
 
     return $self->{locale};
@@ -97,40 +99,78 @@ sub logname {
     my $self = shift;
     my $arg  = shift;
 
-    if ($arg) {
+    if ( $arg ) {
         $self->{logname} = $arg;
     }
 
     return $self->{logname};
 }
 
+sub set_filter {
+    my ( $self, $tag, $argref, $force_level ) = @_;
+
+    push @{ $self->{filters}{$tag} }, { args => $argref, level => $force_level };
+
+    return;
+}
+
+sub remove_filters_for {
+    my ( $self, $tag ) = @_;
+
+    delete $self->{filters}{$tag};
+}
+
 sub add {
-    my $self = shift;
+    my ( $self, $level, $tag, @args ) = @_;
 
     my @module_stack     = @{ $self->{module_stack} };
     my $module_id        = -1;
     my $parent_module_id = -1;
 
-    if ($#module_stack > 0) {
+    if ( $#module_stack > 0 ) {
         $module_id        = $module_stack[$#module_stack];
-        $parent_module_id = $module_stack[$#module_stack - 1];
+        $parent_module_id = $module_stack[ $#module_stack - 1 ];
     }
 
+    $level = $self->check_filters( $level, $tag, @args );
+
     my $entry;
-    $entry->{timestamp} = time;
-    $entry->{level}     = shift;
-    $entry->{tag}       = shift;
-    $entry->{module_id} = $module_id;    # Id of module that logged entry
-    $entry->{parent_module_id} =
-      $parent_module_id;                 # Id of module that called current one
-    $entry->{arg} = [@_];
+    $entry->{timestamp}        = time;
+    $entry->{level}            = $level;
+    $entry->{tag}              = $tag;
+    $entry->{module_id}        = $module_id;           # Id of module that logged entry
+    $entry->{parent_module_id} = $parent_module_id;    # Id of module that called current one
+    $entry->{arg}              = [@args];
 
     push @{ $self->{messages} }, $entry;
 
-    if ($self->{interactive}) {
+    if ( $self->{interactive} ) {
         $self->print();
         $self->{messages} = ();
     }
+}
+
+sub check_filters {
+    my ( $self, $normal_level, $tag, @args ) = @_;
+
+    if ( $self->{filters}{$tag} ) {
+        foreach my $f_data ( @{ $self->{filters}{$tag} } ) {
+
+            my @f_args = @{ $f_data->{args} };
+            my @s_args = splice( @args, 0, scalar( @f_args ) );
+
+            while ( @f_args ) {
+                my $f = shift( @f_args );
+                my $s = shift( @s_args );
+                if ( $f ne $s ) {
+                    return $normal_level;
+                }
+            }
+            return $f_data->{level};
+        }
+    }
+
+    return $normal_level;
 }
 
 sub auto {
@@ -139,18 +179,20 @@ sub auto {
     my $tag   = shift;
     my $level = undef;
 
-    if ($self->{loglevels}->{$tag}) {
-        $level = uc($self->{loglevels}->{$tag});
-    } else {
+    if ( $self->{loglevels}->{$tag} ) {
+        $level = uc( $self->{loglevels}->{$tag} );
+    }
+    else {
         $level = "DEBUG";
     }
 
-    $self->add($level, $tag, @_);
+    $self->add( $level, $tag, @_ );
 
     # return 1 for ERROR or CRITICAL
-    if ($level eq "ERROR" or $level eq "CRITICAL") {
+    if ( $level eq "ERROR" or $level eq "CRITICAL" ) {
         return 1;
-    } else {
+    }
+    else {
         return 0;
     }
 }
@@ -158,14 +200,10 @@ sub auto {
 sub dump {
     my $self = shift;
 
-    my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
+    my $context = $self->{logname} ? sprintf( "%s ", $self->{logname} ) : "";
 
-    foreach my $e (@{ $self->{messages} }) {
-        printf STDERR (
-            "%s:%s%s [%s] %s\n",
-            $e->{timestamp}, $context, $e->{level}, $e->{tag},
-            join(";", @{ $e->{arg} })
-        );
+    foreach my $e ( @{ $self->{messages} } ) {
+        printf STDERR ( "%s:%s%s [%s] %s\n", $e->{timestamp}, $context, $e->{level}, $e->{tag}, join( ";", @{ $e->{arg} } ) );
     }
 }
 
@@ -173,28 +211,20 @@ sub print {
     my $self   = shift;
     my $locale = shift;
 
-    STDOUT->autoflush(1);
+    STDOUT->autoflush( 1 );
 
-    my $context = $self->{logname} ? sprintf("%s ", $self->{logname}) : "";
+    my $context = $self->{logname} ? sprintf( "%s ", $self->{logname} ) : "";
 
-    foreach my $e (@{ $self->{messages} }) {
-        if ($e->{level} eq 'DEBUG' and !$self->{debug}) {
+    foreach my $e ( @{ $self->{messages} } ) {
+        if ( $e->{level} eq 'DEBUG' and !$self->{debug} ) {
             next;
         }
-        if ($self->locale) {
-            printf(
-                "%7.3f: %s%s %s\n",
-                ($e->{timestamp} - $self->{start}),
-                $context, $e->{level},
-                $self->locale->expand($e->{tag}, @{ $e->{arg} })
-            );
+        if ( $self->locale ) {
+            printf( "%7.3f: %s%s %s\n", ( $e->{timestamp} - $self->{start} ), $context, $e->{level}, $self->locale->expand( $e->{tag}, @{ $e->{arg} } ) );
 
-        } else {
-            printf(
-                "%7.3f: %s%s [%s] %s\n",
-                ($e->{timestamp} - $self->{start}),
-                $context, $e->{level}, $e->{tag}, join(";", @{ $e->{arg} })
-            );
+        }
+        else {
+            printf( "%7.3f: %s%s [%s] %s\n", ( $e->{timestamp} - $self->{start} ), $context, $e->{level}, $e->{tag}, join( ";", @{ $e->{arg} } ) );
         }
     }
 }
@@ -205,12 +235,8 @@ sub export {
     my @buffer = ();
     my $context = $self->{logname} ? $self->{logname} : "";
 
-    foreach my $e (@{ $self->{messages} }) {
-        my @logentry = (
-            $e->{timestamp}, $context, $e->{level}, $e->{tag}, $e->{module_id},
-            $e->{parent_module_id},
-            @{ $e->{arg} }
-        );
+    foreach my $e ( @{ $self->{messages} } ) {
+        my @logentry = ( $e->{timestamp}, $context, $e->{level}, $e->{tag}, $e->{module_id}, $e->{parent_module_id}, @{ $e->{arg} } );
 
         push @buffer, \@logentry;
     }
@@ -225,26 +251,26 @@ sub count_string {
     return scalar grep { $_->{level} eq $string } @{ $self->{messages} };
 }
 
-sub count_debug    { my $self = shift; return $self->count_string('DEBUG'); }
-sub count_info     { my $self = shift; return $self->count_string('INFO'); }
-sub count_warning  { my $self = shift; return $self->count_string('WARNING'); }
-sub count_notice   { my $self = shift; return $self->count_string('NOTICE'); }
-sub count_error    { my $self = shift; return $self->count_string('ERROR'); }
-sub count_critical { my $self = shift; return $self->count_string('CRITICAL'); }
+sub count_debug    { my $self = shift; return $self->count_string( 'DEBUG' ); }
+sub count_info     { my $self = shift; return $self->count_string( 'INFO' ); }
+sub count_warning  { my $self = shift; return $self->count_string( 'WARNING' ); }
+sub count_notice   { my $self = shift; return $self->count_string( 'NOTICE' ); }
+sub count_error    { my $self = shift; return $self->count_string( 'ERROR' ); }
+sub count_critical { my $self = shift; return $self->count_string( 'CRITICAL' ); }
 
 sub get_next_entry {
     my $self = shift;
 
-    if (!defined($self->{_iter_index})) {
+    if ( !defined( $self->{_iter_index} ) ) {
         $self->{_iter_index} = 0;
     }
 
-    if ($self->{_iter_index} > $#{ $self->{messages} }) {
+    if ( $self->{_iter_index} > $#{ $self->{messages} } ) {
         $self->{_iter_index} = 0;
         return;
     }
 
-    my $e = $self->{messages}[$self->{_iter_index}];
+    my $e = $self->{messages}[ $self->{_iter_index} ];
     $self->{_iter_index}++;
 
     return $e;
@@ -293,6 +319,27 @@ The logger object keeps track of the results from the DNSCheck system.
 =item ->new();
 
 Object creation. Do not use this, use the L<DNSCheck::logger()> method.
+
+=item set_filter($tag, $arglistref, $new_level)
+
+Add a log entry filter. When a message with the given tag is added, the
+arguments for it are compared to the ones given with the filter. If all
+the provided arguments are stringwise equal to the ones logged, the level
+for that log entry will be set to the one given by the filter. This way,
+an expected message can be given a different level than other messages
+of the same type. This way, for example, known false positives can be
+suppressed.
+
+It is also possible to set filters via the configuration file. The format
+for that is described in L<DNSCheck::Overview> in the config file section.
+
+=item remove_filters_for($tag)
+
+Remove all filters for a given tag.
+
+=item check_filters($level, $tag, @args)
+
+Used internally to implement the filter functionality.
 
 =item ->clear();
 

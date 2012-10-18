@@ -257,6 +257,21 @@ you're doing. As an example, the following would disable all DNSSEC tests:
 All test methods mentioned in the documentation for the respective modules are
 possible to disable this way.
 
+It is also possible to set log message filters in the config file (see
+L<DNSCheck::Logger> for more about filters). The format for this is a hash of
+lists of hashes, all under the top-level key C<filters>, so the syntax gets a
+bit convoluted. Here is an example:
+
+   filters:
+       'SOA:BEGIN':
+           -
+               args:
+                   - iis.se
+               level: 'WARNING'
+
+This adds a filter that sets the log level of a SOA:BEGIN message for the C<iis.se>
+domain to WARNING. 
+
 =head3 policy.yaml
 
 C<policy.yaml> specifies the severity of various problems. The default values
