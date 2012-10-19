@@ -714,35 +714,6 @@ sub _find_parent_helper {
     return $parent;
 }
 
-sub _find_soa {
-    my $self   = shift;
-    my $qname  = shift;
-    my $qclass = shift;
-    my $answer;
-
-    $answer = $self->{resolver}->recurse($qname, "SOA", $qclass);
-
-    return undef unless ($answer);
-
-# The following check may run afoul of a bug in BIND 9.x where x is 3 or less,
-# and if so lead to a false CRITICAL error. See RFC 2136 section 7.16 and
-# http://www.ripe.net/ripe/meetings/ripe-51/presentations/pdf/ripe51-enum-e164.pdf
-
-    # return undef if ($answer->header->rcode eq "NXDOMAIN");
-
-    foreach my $rr ($answer->answer) {
-	return $rr->name if($rr->type eq "SOA");
-	# "Handle" CNAMEs at zone apex
-        return $qname if ($rr->type eq "CNAME");
-    }
-
-    foreach my $rr ($answer->authority) {
-        return $rr->name if ($rr->type eq "SOA");
-    }
-
-    return undef;
-}
-
 ######################################################################
 
 sub find_mx {
