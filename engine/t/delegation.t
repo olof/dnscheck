@@ -11,14 +11,14 @@ use_ok('DNSCheck');
 my $dc = DNSCheck->new({configdir => './t/config'});
 
 # Good zone
-my ($errors, $testable) = $dc->delegation->test('iis.se');
+my ($errors, $testable) = $dc->delegation->test('iis.se', ['ns1.google.com']);
 
 is( $errors, 0, 'No errors');
 ok( $testable, 'Zone is testable');
 
 my %tags = map {$_->[3] => 1} @{$dc->logger->export};
 
-foreach my $m (qw[GLUE_FOUND_AT_PARENT MATCHING_GLUE ]) {
+foreach my $m (qw[GLUE_FOUND_AT_PARENT MATCHING_GLUE NS_HISTORY ]) {
     ok($tags{"DELEGATION:$m"}, "DELEGATION:$m");
 }
 $dc->logger->clear;
