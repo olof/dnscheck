@@ -57,6 +57,8 @@ is( $count, 163, 'Iterator saw all messages' );
 }
 
 $dc = new_ok( 'DNSCheck' => [ { configdir => './t/config', localefile => 'locale/en.yaml' } ] );
+$dc->logger->set_filter( 'SOA:BEGIN', ['iis.se'], 'CRITICAL' );
+$dc->logger->remove_filters_for('SOA:BEGIN');
 $dc->soa->test( 'iis.se' );
 {
     local *STDOUT;
