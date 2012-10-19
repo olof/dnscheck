@@ -29,7 +29,7 @@
 ######################################################################
 package DNSCheck::Config;
 
-require 5.008;
+require 5.010001;
 use strict;
 use warnings;
 

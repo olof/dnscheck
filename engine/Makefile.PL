@@ -1,3 +1,5 @@
+require 5.010001;
+
 use ExtUtils::MakeMaker;
 use File::ShareDir::Install;
 

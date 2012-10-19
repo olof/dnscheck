@@ -30,7 +30,7 @@
 
 package DNSCheck::Test::Connectivity;
 
-require 5.008;
+require 5.010001;
 use warnings;
 use strict;
 use Net::IP;

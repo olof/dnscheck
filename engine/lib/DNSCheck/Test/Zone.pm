@@ -30,7 +30,7 @@
 
 package DNSCheck::Test::Zone;
 
-require 5.008;
+require 5.010001;
 use warnings;
 use strict;
 

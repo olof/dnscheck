@@ -32,7 +32,7 @@ package DNSCheck::Lookup::DNS;
 
 use strict;
 use warnings;
-require 5.008;
+require 5.010001;
 
 use List::Util 'shuffle';
 use Carp;

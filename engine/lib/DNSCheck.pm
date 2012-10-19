@@ -30,7 +30,7 @@
 
 package DNSCheck;
 
-require 5.008;
+require 5.010001; # 5.10.1
 use warnings;
 use strict;
 
