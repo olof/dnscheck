@@ -100,8 +100,11 @@ sub host_syntax {
     my $hostname = shift;
 
     return 0 unless $self->parent->config->should_run;
+    return 0 unless defined($hostname);
 
     my @labels = split(/\./, $hostname, -1);
+
+    return 0 unless scalar(@labels) > 0;
 
     if ($labels[-1] eq '') {
         pop @labels;    # Empty label for root zone.

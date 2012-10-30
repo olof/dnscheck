@@ -6,7 +6,7 @@ require 5.008;
 use warnings;
 use strict;
 
-use Test::More tests => 10;
+use Test::More;
 
 use DNSCheck;
 
@@ -30,4 +30,8 @@ SKIP: {
         'Top-level may not be all-numeric');
     ok($ht->host_syntax('a.bar.com') == 0, 'One-octet labels are allowed');
     ok($ht->host_syntax('foo..com') > 0,   'Label must not be empty');
+    is($ht->host_syntax(''), 0, 'There must be labels');
+    is($ht->host_syntax(undef), 0, 'Test string must be defined');
 }
+
+done_testing;
