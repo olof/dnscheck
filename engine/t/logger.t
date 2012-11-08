@@ -27,6 +27,12 @@ is( $log->count_debug,    118, 'Debug messages' );
 
 my $msg = $log->export;
 is( scalar( @$msg ), 163, 'Correct number of entries dumped' );
+for ( 0 .. $#$msg ) {
+       is(
+           ref( $msg->[$_] ), 'ARRAY',
+           "message $_ returned from export() is an array ref"
+       );
+}
 
 my $count = 0;
 $count++ while ( $log->get_next_entry );
