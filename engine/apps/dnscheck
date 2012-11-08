@@ -76,6 +76,9 @@ sub main {
         pod2usage(2);
     }
 
+    # remove trailing '.' unless it's the only thing in $zone
+    $zone =~ s/(?<=.)\.$//;
+
     my $extras = {};
     $extras->{logging}->{interactive} = 1;
     $extras->{debug} = $debug;
