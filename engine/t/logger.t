@@ -26,12 +26,31 @@ is( $log->count_info,     44,  'Informational messages' );
 is( $log->count_debug,    118, 'Debug messages' );
 
 my $msg = $log->export;
-is( scalar( @$msg ), 163, 'Correct number of entries dumped' );
+my $msg_hash = $log->export_hash;
+is( scalar( @$msg ), 163, 'Correct number of entries dumped from export' );
+is(
+    int( @$msg_hash ), int( @$msg ),
+    'Correct number of entries dumped from export_hash'
+);
+
 for ( 0 .. $#$msg ) {
        is(
            ref( $msg->[$_] ), 'ARRAY',
            "message $_ returned from export() is an array ref"
        );
+       is(
+           ref( $msg_hash->[$_] ), 'HASH',
+           "message $_ returned from export_hash() is a hash ref"
+       );
+
+       # test that each expected key is exported
+       for my $key (qw( timestamp level tag module_id
+                        parent_module_id arg logname )) {
+           ok(
+               defined $msg_hash->[$_]->{$key},
+               "export_hash exports $key for message $_"
+           );
+       }
 }
 
 my $count = 0;

@@ -244,6 +244,21 @@ sub export {
     return \@buffer;
 }
 
+sub export_hash {
+    my $self = shift;
+
+    my @buffer = ();
+    my $context = $self->{logname} ? $self->{logname} : "";
+
+    foreach my $e ( @{ $self->{messages} } ) {
+        my $entry = { logname => $context };
+        $entry->{$_} = $e->{$_} for keys %$e;
+        push @buffer, $entry;
+    }
+
+    return \@buffer;
+}
+
 sub count_string {
     my $self   = shift;
     my $string = shift;
