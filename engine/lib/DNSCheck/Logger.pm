@@ -395,7 +395,39 @@ messages.
 
 =item ->export();
 
-Return a list with all messages currently in the object.
+Return a list with all messages currently in the object. Each message is an
+array ref with the following values:
+
+=over
+
+=item 0 - timestamp
+
+=item 1 - logname
+
+=item 2 - level
+
+=item 3 - tag
+
+=item 4 - module_id
+
+=item 5 - parent_module_id
+
+=item Above 5 - arguemnts
+
+=back
+
+See L</"LOG ENTRIES"> for an explanation of these.
+
+=item ->export_hash();
+
+Like export(), but returns a list of hashes, each with keys corresponding
+to those described in L</"LOG ENTRIES">, with the following addition:
+
+=over
+
+=item * logname - the logname attribute, or the empty string if not set.
+
+=back
 
 =item ->get_next_entry()
 
@@ -443,7 +475,7 @@ These two methods are part of the integrated communication with the PHP web GUI.
 
 =head1 LOG ENTRIES
 
-Each entry in the log is a hash. The L<export()> and L<get_next_entry()>
+Each entry in the log is a hash. The L<export_hash()> and L<get_next_entry()>
 methods return them, as a list or one at a time. There are a bunch of keys in
 the hashes:
 
