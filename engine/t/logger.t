@@ -29,28 +29,21 @@ my $msg = $log->export;
 my $msg_hash = $log->export_hash;
 is( scalar( @$msg ), 163, 'Correct number of entries dumped from export' );
 is(
-    int( @$msg_hash ), int( @$msg ),
-    'Correct number of entries dumped from export_hash'
+    scalar( @$msg_hash ), scalar( @$msg ),
+    'Same number of entries dumped from export_hash and export'
 );
 
-for ( 0 .. $#$msg ) {
-       is(
-           ref( $msg->[$_] ), 'ARRAY',
-           "message $_ returned from export() is an array ref"
-       );
-       is(
-           ref( $msg_hash->[$_] ), 'HASH',
-           "message $_ returned from export_hash() is a hash ref"
-       );
+foreach my $obj (@$msg) {
+    isa_ok($obj, 'ARRAY');
+}
 
-       # test that each expected key is exported
-       for my $key (qw( timestamp level tag module_id
-                        parent_module_id arg logname )) {
-           ok(
-               defined $msg_hash->[$_]->{$key},
-               "export_hash exports $key for message $_"
-           );
-       }
+foreach my $obj (@$msg_hash) {
+    isa_ok($obj, 'HASH');
+    is_deeply(
+        [sort keys %$obj],
+        [sort qw( timestamp level tag module_id parent_module_id arg logname )],
+        'Correct key list in exported hash'
+    );
 }
 
 my $count = 0;
