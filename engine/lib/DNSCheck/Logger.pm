@@ -253,7 +253,7 @@ sub export_hash {
     foreach my $e ( @{ $self->{messages} } ) {
         my $entry = { logname => $context };
         my @keys = keys %$e;
-        @{$entry}{@keys} = $e->{@keys};
+        @{$entry}{@keys} = @{$e}{@keys};
         push @buffer, $entry;
     }
 

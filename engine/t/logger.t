@@ -44,6 +44,7 @@ foreach my $obj (@$msg_hash) {
         [sort qw( timestamp level tag module_id parent_module_id arg logname )],
         'Correct key list in exported hash'
     );
+    ok($obj->{tag}, 'Message has a tag');
 }
 
 my $count = 0;
