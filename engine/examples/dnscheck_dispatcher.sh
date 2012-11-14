@@ -7,7 +7,7 @@ PIDFILE=dnscheck_dispatcher.pid
 
 check_running () {
 	PID=`ps ax|grep dnscheck-disp|grep -v grep|awk '{print $1}'`
-	if [ "X${PID}" == "X" ];then
+	if [ "X${PID}" = "X" ];then
 		return 0	
 	fi
 
