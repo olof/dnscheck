@@ -1,0 +1,97 @@
+<h5 id="findex">Index</h5>
+			<ol>
+
+				<li><a href="#f1">Co je to DNSCheck?</a></li>
+				<li><a href="#f2">Co je to DNS?</a></li>
+				<li><a href="#f3">Co je to www.dnscheck.se?</a></li>
+				<li><a href="#f4">Proč nový DNSCheck?</a></li>
+				<li><a href="#f5">Jak DNSCheck funguje?</a></li>
+				<li><a href="#f6">Jak mi může DNSCheck pomoci?</a></li>
+				<li><a href="#f7">DNSCheck vyhodnotí moji doménu jako ”Chyba”/”Varování”, co to znamená?</a></li>
+				<li><a href="#f8">Jak se DNSCheck rozhoduje, co je v pořádku a co je chyba?</a></li>
+				<li><a href="#f9">Dokáže si DNSCheck poradit s IPv6?</a></li>
+				<li><a href="#f10">Dokáže si DNSCheck poradit s DNSSEC?</a></li>
+				<li><a href="#f11">Čím se DNSCheck liší od ostatního softwaru na kontrolu zón?</a></li>
+				<li><a href="#f12">Funguje DNSCheck i na jiné domény než ".se"?</a></li>
+				<li><a href="#f13">DNSCheck a soukromí</a></li>
+				<li><a href="#f14">Proč si nemohu otestovat svoji doménu?</a></li>
+				<li><a href="#f15">Jaké druhy dotazů DNSCheck generuje?</a></li>
+				<li><a href="#f16">Co znamená test nedelegované domény?</a></li>
+
+			</ol>
+			<div class="divider"></div>
+
+			<h5 id="f1">Co je to DNSCheck?</h5>
+            <p>DNSCheck je nástroj, který byl navržen, aby pomohl lidem kontrolovat, měřit a doufejme, že i také pochopit fungování systému doménových jmen, DNS. Po přidání domény (zóny), DNSCheck prověří, zda je nastavena v pořádku, procházením DNS od kořene (.), přes TLD (Top Level Domain, jako např.: ".se") až nakonec na jmenný server, který si drží informace o zadané doméně (jako např.: "iis.se"). Budou provedeny také některé další testy, jako například kontrola připojení hostitele, platnost IP adres a kontrola DNSSEC podpisů.</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f2">Co je to DNS?</h5>
+            <p>Systém doménových jmen (zkráceně DNS) si můžeme představit, jako "telefonní seznam" internetu. Obsahuje například mapování, z čitelné formy názvu webu (jako je např.: "www.iis.se") na, pro člověka mírně nepřehlednou, formu IP adresy, kterou potřebuje počítač pro zahájení síťové komunikace (v tomto případě 212.247.7.229 ).
+            <br/>Právě díky DNS můžete během surfování na internetu zadávat přímo názvy webových stránek do webového prohlížeče namísto IP adres. Kromě toho se DNS také postará o to, aby si vaše e-maily našli správnou cestu k cíli. Stručně řečeno, stabilní DNS je životně důležitý nástroj pro většinu společností, aby si udrželi fungující a efektivní provoz.</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f3">Co je to www.dnscheck.se?</h5>
+            <p>Webová stránka <a href="http://www.dnscheck.se">www.dnscheck.se</a> odkazuje na předchozí verzi DNSChecku, kterou .SE vyvinuto s pomocí Patrika Fältsröma z Frobbit AB. Nová verze DNSChecku se nachází na <a href="http://dnscheck.iis.se">dnscheck.iis.se</a> a byla vyvinuta Jakobem Schlyterem z Kirei AB.</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f4">Proč nový DNSCheck?</h5>
+            <p>.SE chtěl lepší kontrolu kódu a také možnost znovu použít části kódu DNSChecku v dalších projektech. Dospěli jsme k závěru, že bude nejlepší začít od nuly a vytvořit modulární řešení, do kterého bude možné přidat nová vylepšení, jako je například kontrola IPv6 a DNSSEC.</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f5">Jak DNSCheck funguje?</h5>
+            <p>Pokud vás zajímají technické informace o tom, jak DNSCheck funguje, doporučujeme navštívit wiki/trac stránky připojené k DNSCheck open source projektu, které se nachází na: <a href="https://github.com/dotse/dnscheck/wiki/Architecture">https://github.com/dotse/dnscheck/wiki/Architecture</a> . Pokud chcete méně technickou odpověď, zkuste se podívat na první FAQ otázku: "Co je to DNSCheck?".</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f6">Jak mi může DNSCheck pomoci?</h5>
+            <p>Současná verze DNSChecku je určena pro technicky znalé uživatele, nebo alespoň pro uživatele, kteří se zajímají o provoz DNS. Pokud si jen chcete zobrazit kdo má na starosti vaši doménu (technický personál poskytovatele pro váš jmenný server), kde vlastně může nastat případný problém pro vaši doménu, využijte odkaz, který se zobrazí ve spodní části stránky každého testu. Pokud jste provedli test a chcete někomu dalšímu ukázat výsledek tohoto konkrétního testu, stačí ze stránky zobrazující výsledek testu zkopírovat odkaz, který se nachází ve spodní části stránky. Například odkaz níže, odkazuje k předchozím testu pro doménu "iis.se": </p>
+            <p><a href="http://dnscheck.iis.se/?time=1220357126&id=66&view=basic">http://dnscheck.iis.se/?time=1220357126&id=66&view=basic</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f7">DNSCheck vyhodnotí moji doménu jako ”Chyba”/”Varování”, co to znamená?</h5>
+            <p>Záleží při jakém testu se chyba vyskytla. Ve většině případů můžete stisknout aktuální chybové/varovné hlášení a tím získat podrobnější informace o tom, jaký druh chyby se vyskytl.</p>
+            <p>Například, pokud otestujete doménu "iis.se" a obdržíte chybu "<strong>Jmenný server ns.nic.se (212.247.7.228) neodpovídá na dotazy přes UDP</strong>". Co to ​​znamená? Po kliknutí na chybovou hlášku se vám zobrazí podrobnější informace. Konkrétně tato: "<strong>Jmennému serveru se nepodařilo odpovědět na dotazy zaslané přes UDP. To je pravděpodobně způsobeno chybným nastavením filtrování ve firewallu na jmenném serveru.</strong>". Naštěstí to byl jen příklad, tato chyba v podstatě znamená, že jmenný server nefunguje.</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f8">Jak se DNSCheck rozhoduje, co je v pořádku a co je chyba?</h5>
+            <p>Neexistuje žádný pravomocný rozsudek o tom, zda je doména v pořádku, či nikoliv. To je velmi důležité si uvědomit. .SE a tvůrci DNSChecku netvrdí, že DNSCheck je ve všech směrech správný. Názory na posuzování se občas liší, zejména mezi zeměmi. My jsme měli to štěstí, mít tady ve Švédsku na pomoc extrémně kompetentní skupinu DNS lidí. Doufejme, že společně s jejich názory, jsme udělali dobrý kompromis mezi tím, co jsou skutečně potencionálně nebezpečné chyby a tím, co by se dalo označit, jen jako varování.</p>
+            <p>Situace ohledně DNS se každým dnem vyvíjí, to co je dnes označeno jako nepodstatné varování, se může být zítra považováno za závažnou chybu. Pokud si opravdu myslíte, že jsme udělali chybu v našem rozsudku, neváhejte se napište nám e-mail na <a href="mailto:dnscheck@iis.se">dnscheck@iis.se</a> s odkazem na provedený test a vysvětlení, proč si myslíte, že ukazuje nesprávné rozhodnutí. (Pokud nevíte, jak najít odkaz na váš test, podívejte se otázku "Jak mi může DNSCheck pomoci?", kterou naleznete v tomto FAQ).</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f9">Dokáže si DNSCheck poradit s IPv6?</h5>
+			<p>Ano, dokáže. Všechny testy přes IPv4 budou spuštěny také přes IPv6, pokud je DNSCheck takto nastaven.</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f10">Dokáže si DNSCheck poradit s DNSSEC?</h5>
+			<p>Ano, pokud je na dotazované doméně dostupný DNSSEC, automaticky se zkontroluje.</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f11">Čím se DNSCheck liší od ostatního softwaru na kontrolu zón?</h5>
+            <p>Zaprvé, DNSCheck si ukládá veškerou historii už od prvních testů, to znamená, že se můžete vrátit k výsledkům testu, který jste provedl před týdnem a porovnat.</p>
+            <p>DNSCheck se také stará o to, že dříve již použité jmenné servery zóny, již neobsahují informace o zóně, kterou právě testujete (platí pouze pro domény .se, které byly delegovány po únoru 2007).</p>
+            <p>DNSCheck se také snaží a srozumitelně vysvětlit chyby/varování, i když tyto zprávy mohou být obtížně pochopitelné, pro ne technicky zaměřené uživatele. Příští verze DNSChecku, která bude nasazena v letošním roce, bude více zaměřena, právě na tyto běžné uživatele.</p>
+            <p>DNSCheck průběžně skenuje .se-zónu a ukádá si stav do databáze.</p>
+            <p>U výsledku testu domény existuje záložka "Detailní výsledky", určena pro technicky náročné uživatele, kterým nestačí pouze "Souhrnné výsledky".</p>
+            <p>A nakonec, open source verze DNSCheck byla postavena na modulárním kódu, což v podstatě znamená, že můžete používat některé její části, v rámci svých systémů, pokud budete chtít. Je to poněkud ojedinělé, že by jste chtěli kompletní program například jen pro kontrolu delegování.</p>
+            <p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f12">Funguje DNSCheck i na jiné domény než ".se"?</h5>
+			<p>Ano. Všechny testy, které se provádí pro domény ".se" budou provedeny i pro vaši libovolně zvolenou doménu. Nicméně, k pravidelným kontrolám záznamů databáze (v podstatě automatické kontroly) dochází pouze pro domény .se.</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f13">DNSCheck a soukromí</h5>
+            <p>Vzhledem k tomu, že je DNSCheck přístupný všem, kdokoliv si může zkontrolovat libovolnou doménu, ale také si může nechat zobrazit historii již proběhlých testů. Nicméně není žádný způsob, jak zjistit, kdo konkrétně nechal spustit daný test, protože žádné další údaje, kromě času provedeného testu, se neukládají.</p>
+            <p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f14">Proč si nemohu otestovat svoji doménu?</h5>
+            <p>Pokud pomineme případ, že jste zadali doménu, která neexistuje, zbývají další dvě možná vysvětlení:</p>
+            <p>1. Abychom ochránili testovací engine před záplavou identických dotazů, tím myslíme, že ze stejné IP adresy se dotazuje na ten samý název domény opakovaně. Zavedli jsme proto prodlení 5 minut pro identické testování. Prakticky to znamená, že můžete testovat tu samou doménu jen jednou každých 5 minut, pokud by jste ji zkusili otestovat dříve, než za 5 minut, místo testu se vám zobrazí výsledky z předešlého testování.</p>
+            <p>2. DNSCheck byl vytvořen na kontrolu domén (např.: "iis.se") a nikoliv na kontrolu hostname v doméně (např.: "www.iis.se"), proto webová stránka DNSChecku zkontroluje vaši zadanou doménu, ještě před jejím odesláním na testovací engine. Pro většinu domén by to nemělo mít vliv, ale může se tak stát, protože pokud se webová stránka rozhodne, že doména neexistuje, test se neprovede. Zatím pouze jednou jsme narazili na případ, kdy všechny doménové nameservery lžou, kromě domény samotné. A to je velice závažný problém. Musíme to opravit, a proto nám prosím pošlete zprávu, pokud se vám nepodaří si zkontrolovat vaši doménu, abychom se mohli podívat co je špatně. Slibujeme, že se na to podíváme.</p>
+            <p><a href="#findex">Návrat na začátek</a></p>
+
+			<h5 id="f15">Jaké druhy dotazů DNSCheck generuje?</h5>
+            <p>Je velice obtížné zodpovědět tuto otázku, DNSCheck generuje různé dotazy v závislosti na tom, jak odpovídá váš jmený server. Nejjednodušší způsob, jak získat úplný přehled o tom, jaké dotazy a výsledky se generují, je spustit "dnscheck" příkaz CLI a přidat příznak "--raw". Tímto získáte poměrně důkladné informace o tom, co se děje. Nicméně výstup z tohoto CLI-nástroje je velice technicky odborný, takže pokud nejste geek, možná budete chtít raději tento krok přeskočit. :)</p>
+			<p><a href="#findex">Návrat na začátek</a></p>
+
+            <h5 id="f16">Co znamená test nedelegované domény?</h5>
+            <p>Test nedelegované domény je testem provedeným na doméně, která může, nebo nemusí, být plně publikovaná v DNS. To je velice užitečné, pokud se chystáte přejít od jednoho registrátora k jinému. Například chcete přemístit vaši doménu example.se ze jmenného serveru ’ns.nic.se’ na jmenný server ’ns.iis.se’. V takovém případě můžete provést test nedelegováné domény pro danou zónu (example.se) a jmenný server, který přemísťujete na (ns.iis.se) předtím, než skutečně přesunete vaši doménu. Když vám tento test ukáže zelenou, můžete si být zcela jisti, že nové umístění pro vaši doménu alespoň umí odpovídat na dotazy týkající se vaší domény. Nicméně mohou se vyskytnou ještě další problémy v samotných datech zóny, kterých si tento test není vědom.</p>
+            <p><a href="#findex">Návrat na začátek</a></p>

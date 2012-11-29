@@ -1,0 +1,111 @@
+languageId: cz
+
+languageName: Česky
+
+home: Domů
+
+faq: FAQ
+
+a_service_from_se: Službu zajišťuje .SE
+
+test_and_find_errors: Otestujte DNS-server a najděte chyby
+
+enter_your_domain_name: Vložte název domény pro otestování, například "iis.se"
+
+test_now: Testovat
+
+basic_results: Souhrnné výsledky
+
+advanced_results: Detailní výsledky
+
+test_history: Historie testů
+
+test_was_performed_with_version: Test byl proveden nástrojem DNSCheck verze
+
+error_loading_history: Chyba při nahrávání historie
+
+no_test_history: Historie testů neexistuje
+
+page: Stránka
+
+se_tagline: .SE předsavuje DNSCheck v%s pro IP %s
+
+domain_doesnt_exist_header: Doména neexistuje
+
+domain_doesnt_exist_label: Zadaná doména se nedeleguje správně, nebo jste ji chybně zadali. Zadávejte pouze název domény ve tvaru např.: \"iis.se\", nikoliv jméno subdomény, jakým je třeba \"dev.iis.se\", nebo webserveru \"www.iis.se\".
+
+loading_header: Načítám
+
+loading_label: Načítám výsledky testů 
+
+all_tests_ok: Všechny testy jsou v pořádku
+
+warning_header: V testu se vyskytují varování
+
+error_header: V testu se vyskytují chyby
+
+about_dnscheck: O nástroji DNSCheck
+
+explanation: Vysvětlení
+
+test_was_ok: Test je v pořádku
+
+test_contains_warnings: Test obsahuje varování
+
+test_contains_errors: Test obsahuje chyby
+
+test_was_not_performed: Test se neuskutečnil
+
+delegation: Delegace
+
+nameserver: DNS server
+
+consistency: Konzistence
+
+soa: SOA
+
+connectivity: Konektivita
+
+dnssec: DNSSEC
+
+link_to_this_test: Odkaz na tento test
+
+domain_test: Test domény
+
+undelegated_domain_test: Test nedelegované domény
+
+domain_name: Název domény
+
+name_servers: Jmenné servery
+
+add_one_more_nameserver: Přidat další jmenný server
+
+host: Host
+
+ip: IP
+
+nons_header: Chyba jmenného serveru
+
+nons_label: Zadejte alespoň jeden jmenný server
+
+domain_syntax_header: Syntaxe domény
+
+domain_syntax_label: Chybná syntaxe domény
+
+note: Poznámka
+
+this_test_on_undelegated: Test proběhnul na nedelegované doméně
+
+enter_your_undelegated_domain_name: Do pole výše vložte jméno nedelegované domény. Níže pak zadejte hostname a IP adresy na jmenné servery, pro které chcete testovat. Můžete zadat až 30 jmenných serverů.
+
+what_is_an_undelegated: Co znamená test nedelegované domény?
+
+remove_name_server: Odtranit jmenný server
+
+load_error_header: Chyba spojení
+
+load_error_label: Nemohu se připojit k databázi, prosím zkuste to později
+
+add_name_server: Přidat jmenný server
+
+language: Výběr jazyka

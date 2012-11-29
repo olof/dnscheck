@@ -1,0 +1,922 @@
+---
+locale_id: cz
+locale_name: Česky
+messages:
+  ADDRESS:BEGIN:
+    args: 1
+    format: Začíná testování adresy %s.
+  ADDRESS:END:
+    args: 1
+    format: Dokončeno testování adresy %s.
+  ADDRESS:INVALID:
+    args: 1
+    descr: ~
+    format: Adresa %s je chybná, nebo ve špatném formátu.
+  ADDRESS:PRIVATE_IPV4:
+    args: 1
+    descr: "Privátní IP adresa by neměla být za normálních okolností vystavena ve veřejném DNS, protože není dosažitelná z internetu."
+    format: '%s je privátní IPv4 adresa.'
+  ADDRESS:PTR_HOSTNAME_NOT_FOUND:
+    args: 2
+    descr: Reverzní záznam adresy odkazuje na neznámý host name.
+    format: Reverzní záznam pro %s odkazuje na neznámý host name (%s).
+  ADDRESS:PTR_NOT_FOUND:
+    args: 2
+    descr: Reverzní záznamy pro adresy nebyly nalezeny v .arpa-zone. (ip6.arpa. pro IPv6 adresy a in-addr.arpa. pro IPv4).
+    format: Nemohu najít reverzní adresy pro %s (%s).
+  ADDRESS:RESERVED_IPV4:
+    args: 1
+    descr: Vyhrazená IPv4 adresa by neměla být použita věřejně na internetu.
+    format: '%s je vyhrazená IPv4 adresa.'
+  ADDRESS:RESERVED_IPV6:
+    args: 1
+    descr: Vyhrazená IPv6 adresa by neměla být použita věřejně na internetu.
+    format: '%s je vyhrazená IPv6 adresa.'
+  ASN:ANNOUNCE_BY:
+    args: 2
+    format: '%s ohlášena AS %s.'
+  ASN:INVALID_ADDRESS:
+    args: 1
+    format: '%s je chybná IP adresa.'
+  ASN:LOOKUP:
+    args: 1
+    format: Vyhledávání čísla AS pro %s.
+  ASN:LOOKUP_ERROR:
+    args: 1
+    format: Chyba při vyhledávání čísla AS pro %s.
+  ASN:NOT_ANNOUNCE:
+    args: 1
+    format: '%s neohlášen.'
+  CONNECTIVITY:ANNOUNCED_BY_ASN:
+    args: 2
+    descr: IP adresa je ohlášena autonomním systémem (AS).
+    format: 'Jmenný server %s ohlášen announced by: %s'
+  CONNECTIVITY:ASN_COUNT_OK:
+    args: 1
+    descr: Jmenné servery zóny jsou umístěny ve více autonomních systémech.
+    format: Zóna ohlášena více, než jedním ASN (%s).
+  CONNECTIVITY:ASN_LIST:
+    args: 1
+    format: 'Zóná ohlášena, IPv4 ASN: %s'
+  CONNECTIVITY:BEGIN:
+    args: 1
+    format: Začíná testování spojení pro %s.
+  CONNECTIVITY:END:
+    args: 1
+    format: Dokončeno testování spojení pro %s.
+  CONNECTIVITY:MULTIPLE_ASN:
+    args: 1
+    descr: Jmenný server je ohlášen více, než jedním autonomním systémem (AS).
+    format: Jmenný server %s je ohlášen více AS.
+  CONNECTIVITY:NOT_ANNOUNCED:
+    args: 1
+    descr: IP adresa není ohlášena v žádném autonomním systému a s největší pravděpodobností je na internetu nedostupná.
+    format: Jmenný server %s není ohlášen žádným AS.
+  CONNECTIVITY:TOO_FEW_ASN:
+    args: 1
+    descr: "Jmenné servery zóny se nacházejí ve stejném (nebo žádném) autonomním systému."
+    format: Zóna je ohlášena méně, než dvěma IPv4 ASN (%s).
+  CONNECTIVITY:V6_ANNOUNCED_BY_ASN:
+    args: 2
+    descr: IP adresa je ohlášena autonomním systémem (AS).
+    format: 'Jmenný server %s je ohlášen přes IPv6 by: %s'
+  CONNECTIVITY:V6_ASN_COUNT_OK:
+    args: 1
+    descr: Jmenné servery zóny se nacházejí ve více autonomních systémech.
+    format: Zóna je ohlášena více než jedním IPv6 ASN (%s).
+  CONNECTIVITY:V6_ASN_LIST:
+    args: 1
+    format: 'Zóna ohlášena IPv6 ASN: %s'
+  CONNECTIVITY:V6_MULTIPLE_ASN:
+    args: 1
+    descr: Jmenný server je ohlášen více, než jedním IPv6 autonomním systémem (AS).
+    format: Jmenný server %s je ohlášen více IPv6 AS.
+  CONNECTIVITY:V6_NOT_ANNOUNCED:
+    args: 1
+    descr: IP adresa není ohlášena v žádném autonomním systému a s největší pravděpodobností je na internetu nedostupná.
+    format: Jmenný server %s není ohlášen žádným IPv6 AS.
+  CONNECTIVITY:V6_TOO_FEW_ASN:
+    args: 1
+    descr: "Jmenné servery zóny se nacházejí ve stejném (nebo žádném) autonomním systému."
+    format: Zóna je ohlášena méně než dvěma IPv6 ASN (%s).
+  CONSISTENCY:BEGIN:
+    args: 1
+    format: Začíná testování konzistence zóny pro %s.
+  CONSISTENCY:END:
+    args: 1
+    format: Dokončeno testování konzistence zóny pro %s.
+  CONSISTENCY:SOA_DIGEST_AT_ADDRESS:
+    args: 2
+    format: SOA na adrese %s obsahuje otisk %s.
+  CONSISTENCY:SOA_DIGEST_CONSISTENT:
+    args: 0
+    format: Všechna ostatní pole v SOA záznamu jsou konzistentní mezi všemi jmennými servery.
+  CONSISTENCY:SOA_DIGEST_DIFFERENT:
+    args: 1
+    descr: Ostatní pole v SOA záznamu nejsou konzistentní mezi všemi jmennými servery. Toto je většinou způsobeno chybným nastavením.
+    format: '%s nalezeno více SOA záznamů'
+  CONSISTENCY:SOA_SERIAL_AT_ADDRESS:
+    args: 2
+    format: SOA na adrese %s má sériové číslo %s.
+  CONSISTENCY:SOA_SERIAL_CONSISTENT:
+    args: 0
+    format: Všechny SOA záznamy mají konzistentní sériová čísla.
+  CONSISTENCY:SOA_SERIAL_DIFFERENT:
+    args: 1
+    descr: 'SOA sériové číslo není stejné na všech jmenných serverech. Toto je většinou způsobeno chybným nastavením, ale může to být také výsledek pomalé propagace zóny na sekundární jmenné servery.'
+    format: 'Nalezeno %s rozdílných sériových čísel.'
+  DELEGATION:BEGIN:
+    args: 1
+    format: Začíná testování delegace pro %s.
+  DELEGATION:BROKEN_BUT_FUNCTIONAL:
+    args: 1
+    format: 'Nebyl nalezen dostatek informací jmenného serveru, pro otestování zóny %s, ale přesto byly IP adresy vyhledány úspěšně.'
+  DELEGATION:BROKEN_UNDELEGATED:
+    args: 1
+    format: 'Test zóny %s byl označen, jako nedelegovaný, ale nebyl poskytnut fiktivní glue záznam.'
+  DELEGATION:END:
+    args: 1
+    format: Dokončeno testování delegace pro %s.
+  DELEGATION:EXTRA_NS_CHILD:
+    args: 1
+    descr: 'Jmenný server je uveden v podřízené zóně, ale není nalezen v nadřazené zóně. Jedná se s největší pravděpodobností o chybu nastavení, ale někdy existují důvody pro nastavení zóny takým to způsobem.'
+    format: 'Přídavný jmenný server uveden v podřízené zóně: %s'
+  DELEGATION:EXTRA_NS_PARENT:
+    args: 1
+    descr: 'Jmenný server je uveden v nadřazené zóně, ale není nalezen v podřízené zóně. Jedná se s největší pravděpodobností o chybu administrace. Měli byste co nejrychleji obnovit nadřazenou zónu, aby pasovala se jmennými servery v podřízené zóně.'
+    format: 'Nadbytečný jmenný server uveden v nadřazené zóně: %s'
+  DELEGATION:GLUE_FOUND_AT_CHILD:
+    args: 3
+    descr: IP adresa jmenného serveru byla nalezena v podřízené zóně.
+    format: 'Glue záznam podřízené zóny pro %s byl nalezen: %s (%s)'
+  DELEGATION:GLUE_FOUND_AT_PARENT:
+    args: 3
+    descr: IP adresa jmenného serveru byla nalezena v nadřazené zóně.
+    format: 'Glue záznam nadřazené zóny pro %s byl nalezen: %s (%s)'
+  DELEGATION:GLUE_MISSING_AT_CHILD:
+    args: 1
+    descr: IP adresa jmenného serveru nebyla nalezena v podřízené zóně. Jedná se o chybu v nastavení a měla by se co nejrychleji opravit.
+    format: 'Chybějící glue záznam v podřízené zóně: %s'
+  DELEGATION:GLUE_SKIPPED:
+    args: 2
+    format: Přeskočený glue záznam pro %s (%s).
+  DELEGATION:INCONSISTENT_GLUE:
+    args: 1
+    descr: Adresy jmenného serveru se liší mezi nadřazenou a podřízenou zónou. Jedná se o chybu v nastavení a měla by se co nejrychleji opravit.
+    format: Nekonzistentní glue záznam pro jmenný server %s.
+  DELEGATION:INZONE_NS_WITHOUT_GLUE:
+    args: 2
+    format: Jmenný server %s je uveden pro zónu %s bez adresních informací.
+  DELEGATION:IPV6_ONLY_AT_CHILD:
+    args: 1
+    format: 'Jmenné servery s IPv6 adresami jsou uvedeny v zóně %s, ale nikoliv v její nadřazené zóně.'
+  DELEGATION:IPV6_ONLY_AT_PARENT:
+    args: 1
+    format: 'Jmenné servery s IPv6 byly uvedeny v nadřazené zóně pro %s, ale nikoliv v zóně samotné.'
+  DELEGATION:MATCHING_GLUE:
+    args: 2
+    format: Kontroluji glue záznam pro %s (%s).
+  DELEGATION:NOT_FOUND_AT_CHILD:
+    args: 0
+    descr: Žádné jmenné servery nemohly být nelezeny v podřízené zóně. To většinou znamená, že podřízená zóna není nastavena pro odpovídání dotazů o zóně.
+    format: Žádné jmenné servery v podřízené zóně.
+  DELEGATION:NOT_FOUND_AT_PARENT:
+    args: 0
+    descr: 'Nebyla nalezena delegace pro nadřazenou zónu, což dělá zónu nedostupnou z internetu.'
+    format: Nebyla nelezena delegace pro nadřazenou zónu.
+  DELEGATION:NO_COMMON_NS_NAMES:
+    args: 2
+    descr: "Nadřazená zóna uvedla jmenné servery, o kterých podřízená zóna neví (zobrazte si detaily v detailních výsledcích). Takové to nastavení může fungovat, ale velmi lehce se zhroutí, pokud se jedna ze zón pozmění."
+    format: Celková neshoda glue záznamů nadřazené/podřízené zóny.
+  DELEGATION:NO_NS_IPV4:
+    args: 0
+    format: Nenalezeny žádné IPv4 jmenné servery.
+  DELEGATION:NO_NS_IPV6:
+    args: 0
+    format: Nenalezeny žádné IPv6 jmenné servery.
+  DELEGATION:NS_AT_CHILD:
+    args: 1
+    descr: Toto je seznam jmenných serverů, které jsou uvedené v podřízené zóně. Musí obsahovat všechny jmenné servery, obsažené v nadřazené zóně.
+    format: 'Jmenné servery uvedené v podřízené zóně: %s'
+  DELEGATION:NS_AT_PARENT:
+    args: 1
+    descr: Toto je seznam jmenných serverů, které jsou uvedené v nadřazené zóně. Měli by obsahovat všechny jmenné servery, obsažené v podřízené zóně.
+    format: 'Jmenné servery uvedené v nadřazené zóně: %s'
+  DELEGATION:NS_HISTORY:
+    args: 2
+    format: 'Předchozí použité jmenné servery pro %s: %s'
+  DELEGATION:NS_IS_CNAME:
+    args: 2
+    format: 'V zóně %s jmenný server %s má CNAME záznam, což není povoleno.'
+  DELEGATION:STILL_AUTH:
+    args: 3
+    descr: 'Dříve použitý jmenný server stále odpovídá autoritativně pro zónu. To je pravděpodobně způsobeno starými daty zóny ze serveru, který se už nepoužívá. Informujte administrátora jmenného serveru, o nutnosti odstranit zónu z jeho nastavení.'
+    format: Dříve použitý jmenný server %s (%s) je stále autoritativní pro %s.
+  DELEGATION:TOO_FEW_NS:
+    args: 1
+    descr: Pouze jeden jmenný server byl nalezen pro zónu. Měli byste vždy mít alespoň dva jmenné servery pro zónu, aby jste byli schopni zvládnout přechodné problémy s připojením.
+    format: Příliš málo jmenných serverů (%s).
+  DELEGATION:TOO_FEW_NS_IPV4:
+    args: 1
+    descr: Byl nalezen pouze jeden IPv4 jmenný server v zóně. Vždy byste měli mít alespoň dva IPv4 jmenné servery pro zónu, aby jste byli schopni zvládnout přechodné problémy s připojením.
+    format: Příliš málo IPv4 jmenných serverů (%s).
+  DELEGATION:TOO_FEW_NS_IPV6:
+    args: 1
+    descr: Byl nalezen pouze jeden IPv6 jmenný server v zóně. Vždy byste měli mít alespoň dva IPv6 jmenné servery pro zónu, aby jste byli schopni zvládnout přechodné problémy s připojením.
+    format: Příliš málo IPv6 jmenných serverů (%s).
+  DNS:ADDRESS_BLACKLISTED:
+    args: 4
+    format: Jmenný server %s se nachází v blacklistu.
+  DNS:ADDRESS_BLACKLIST_ADD:
+    args: 4
+    format: Přidávám jmenný server %s do blacklistu.
+  DNS:ANSWER_DUMP:
+    args: 1
+    format: 'DNS dotaz vrátil: %s'
+  DNS:CHILD_RESPONSE:
+    args: 1
+    format: 'DNS odpověď z podřízené zóny: %s'
+  DNS:DNSSEC_DESIRED:
+    args: 0
+    format: DNS resolver - DNSSEC požadován.
+  DNS:DNSSEC_DISABLED:
+    args: 0
+    format: DNS resolver - DNSSEC zakázán.
+  DNS:EXPLICIT_RESPONSE:
+    args: 1
+    format: 'Odpověď jmenného serveru: %s'
+  DNS:FAKE_PACKET:
+    args: 3
+    format: Fiktivní odpověď paketu v zóně %s pro %s/%s.
+  DNS:FIND_ADDRESSES:
+    args: 2
+    format: Nalezeny adresy pro %s/%s
+  DNS:FIND_ADDRESSES_RESULT:
+    args: 3
+    format: 'Adresy pro %s/%s: %s'
+  DNS:FIND_MX_BEGIN:
+    args: 1
+    format: Vyhledávám mail exchanger pro %s
+  DNS:FIND_MX_RESULT:
+    args: 2
+    format: 'Nalezen mail exchanger pro %s: %s'
+  DNS:FIND_PARENT:
+    args: 2
+    format: Nalezena nadřazená zóna pro %s/%s.
+  DNS:FIND_PARENT_BEGIN:
+    args: 2
+    format: Zkouším najít nadřazenou zónu pro %s/%s
+  DNS:FIND_PARENT_DOMAIN:
+    args: 1
+    format: Používám %s jako počátek pro sledování nadřazené zóny.
+  DNS:FIND_PARENT_RESULT:
+    args: 3
+    format: Vyhodnocen %s jako nadřazená zóna pro %s/%s.
+  DNS:FIND_PARENT_TRY:
+    args: 1
+    format: Kontroluji %s jako nadřazenou doménu.
+  DNS:FIND_PARENT_UPPER:
+    args: 1
+    format: Nadřazená zóna může být %s.
+  DNS:GET_NS_AT_CHILD:
+    args: 2
+    format: DNS dotaz na NS %s/%s jako podřízená zóna.
+  DNS:GET_NS_AT_PARENT:
+    args: 2
+    format: DNS dotaz na NS %s/%s jako nadřazená zóna.
+  DNS:INITIALIZING_NAMESERVERS:
+    args: 2
+    format: Inicializování jmenného serveru pro %s/%s.
+  DNS:LOOKUP_ERROR:
+    args: 1
+    descr: ~
+    format: DNS chyba vyhledávání (%s).
+  DNS:NAMESERVERS_INITIALIZED:
+    args: 2
+    format: Jmenný server pro %s/%s inicializován.
+  DNS:NAMESERVER_FOUND:
+    args: 4
+    format: 'Nalezen jmenný server pro %s/%s: %s (%s)'
+  DNS:NOT_AUTH:
+    args: 4
+    format: Jmenný server %s není autoritativní pro %s/%s/%s.
+  DNS:NO_ANSWER:
+    args: 4
+    descr: ~
+    format: Nepřišla žádná odpověď od %s při dotazování se na %s/%s/%s.
+  DNS:NO_CHILD_NS:
+    args: 2
+    descr: ~
+    format: Neúspěch při hledání jmenného serveru na %s/%s.
+  DNS:NO_EDNS:
+    args: 1
+    descr: 'EDNS je rozšíření DNS protokolu. Hlavním rozdílem odstranění limitu 512 bytové velikosti na paket dotazu/odpovědi, což umožňuje poskytování více informací. EDNS je nezbytné pro novější protokoly a technologie (jako je DNSSEC a IPv6), které vyžadují větší velikost paketů.'
+    format: EDNS není podporován %s.
+  DNS:NO_PARENT:
+    args: 2
+    descr: DNSCheck neuspěl při hledání nadřazené zóny.
+    format: Neúspěch při hledání nadřazené zóny pro %s/%s.
+  DNS:NO_PARENT_NS:
+    args: 3
+    descr: ~
+    format: Neúspěch při hledání jmenného serveru pro %s (nadřazená zóna pro %s/%s).
+  DNS:NXDOMAIN:
+    args: 2
+    descr: ~
+    format: Doména %s/%s neexistuje.
+  DNS:PARENT_OF:
+    args: 3
+    format: Nalezen %s jako nadřazená zóna pro %s/%s.
+  DNS:PARENT_RESPONSE:
+    args: 1
+    format: 'DNS odpověď od nadřazené zóny: %s'
+  DNS:QUERY_CHILD:
+    args: 4
+    format: Dotazuji libovolný jmenný server na %s pro %s/%s/%s.
+  DNS:QUERY_CHILD_NOCACHE:
+    args: 4
+    format: Dotazuji libovolný jmenný server (bez cache) na %s pro %s/%s/%s.
+  DNS:QUERY_EXPLICIT:
+    args: 4
+    descr: ~
+    format: Dotaz %s pro %s/%s/%s.
+  DNS:QUERY_PARENT:
+    args: 4
+    format: Dotaz nadřazené zóny na %s pro %s/%s/%s.
+  DNS:QUERY_PARENT_NOCACHE:
+    args: 4
+    format: Dotaz nadřazené zóny (bez cache) na %s pro %s/%s/%s.
+  DNS:QUERY_RESOLVER:
+    args: 3
+    format: DNS dotaz pro %s/%s/%s.
+  DNS:QUERY_TIMEOUT:
+    args: 4
+    descr: ~
+    format: Jmennému serveru %s vypršel čas při dotazu na %s/%s/%s.
+  DNS:RECURSION_DESIRED:
+    args: 0
+    format: DNS resolver - rekurze požadována.
+  DNS:RECURSION_DISABLED:
+    args: 0
+    format: DNS resolver - rekurze zakázána.
+  DNS:RESOLVER_QUERY_TIMEOUT:
+    args: 3
+    descr: ~
+    format: DNS resolveru vypršel čas při dotazu na %s/%s/%s.
+  DNS:RESOLVER_RESPONSE:
+    args: 1
+    format: 'DNS odpověď od resolveru: %s'
+  DNS:SETUP_RESOLVER:
+    args: 0
+    format: DNS resolver nastaven.
+  DNS:SET_BUFSIZE:
+    args: 1
+    format: DNS resolver EDNS velikost bufferu nastavena na %s.
+  DNS:SOA_SERVFAIL:
+    args: 1
+    format: DNS SERVFAIL při dotazování %s na SOA
+  DNS:TRANSPORT_TCP:
+    args: 0
+    format: DNS resolver provoz nastaven na TCP.
+  DNS:TRANSPORT_UDP:
+    args: 0
+    format: DNS resolver provoz nastaven na UDP.
+  DNS:UNQUERIBLE_ADDRESS:
+    args: 1
+    format: Nemohu odeslat dotazy na %s.
+  DNSSEC:ADDITIONAL_PROCESSING_BROKEN:
+    args: 2
+    descr: DNSSEC podpisy nebyly přiloženy v odpovědích od jmenného serveru. To je pravděpodobně způsobeno chybným nastavením jmenného serveru.
+    format: 'Další zpracování DNSSEC přerušeno pro %s (server: %s).'
+  DNSSEC:ALGORITHM_OK:
+    args: 1
+    format: Algoritmus číslo %s je v pořádku.
+  DNSSEC:ALGORITHM_PRIVATE:
+    args: 1
+    format: Algoritmus číslo %s je privátní.
+  DNSSEC:ALGORITHM_RESERVED:
+    args: 1
+    format: Algoritmus číslo %s je vyhrazený.
+  DNSSEC:ALGORITHM_UNASSIGNED:
+    args: 1
+    format: Algoritmus číslo %s je nepřiřazen.
+  DNSSEC:BEGIN:
+    args: 1
+    format: Začíná testování DNSSEC pro %s.
+  DNSSEC:CHECKING_CHILD:
+    args: 1
+    format: Kontrola DNSSEC v podřízené zóně (%s).
+  DNSSEC:CHECKING_DNSKEY_AT_CHILD:
+    args: 1
+    format: Kontrola DNSKEY záznamů pro %s v podřízené zóně.
+  DNSSEC:CHECKING_DS_AT_PARENT:
+    args: 1
+    format: Kontrola DS záznamů pro %s v nadřazené zóně.
+  DNSSEC:CHECKING_PARENT:
+    args: 1
+    format: Kontrola DNSSEC nadřazené zóny pro %s.
+  DNSSEC:CHILD_CHECKED:
+    args: 1
+    format: Kontrola DNSSEC podřízené zóny pro %s dokončena.
+  DNSSEC:CHILD_CHECK_ABORTED:
+    args: 1
+    format: Kontrola DNSSEC podřízené zóny přerušena pro %s.
+  DNSSEC:CONSISTENT_EXTRA_PROCESSING:
+    args: 1
+    format: Servery pro %s mají konzistentní extra processing status.
+  DNSSEC:CONSISTENT_SECURITY:
+    args: 1
+    format: Konzistentní zabezpečení pro %s.
+  DNSSEC:DETERMINE_SECURITY_STATUS:
+    args: 1
+    format: Určený status zabezpečení pro %s.
+  DNSSEC:DNSKEY_ALGORITHM:
+    args: 4
+    format: "%s vlastní klíč s tagem %s používá algoritmus číslo %s (%s)."
+  DNSSEC:DNSKEY_ALGORITHM_NOT_RECOMMENDED:
+    args: 3
+    descr: 'DNSKEY používá nedoporučený algoritmus - pokud nemáte dobrý důvod, neměli byste takový to algoritmus používat.'
+    format: 'DNSKEY %s (tag %s) používá nedoporučený algoritmus: %s'
+  DNSSEC:DNSKEY_FOUND:
+    args: 1
+    descr: 'DNSKEY RRset byl nalezen v podřízené zóně, což ukazuje, že podřízené zóna pravděpodobně používá DNSSEC.'
+    format: Nalezen DNSKEY záznam pro %s v podřízené zóně.
+  DNSSEC:DNSKEY_MANDATORY_FOUND:
+    args: 1
+    format: Alespoň jeden povinný algoritmus nalezen pro DNSKEY %s.
+  DNSSEC:DNSKEY_MANDATORY_NOT_FOUND:
+    args: 1
+    descr: Alespoň jeden DNSKEY by měl být typu RSA/SHA1.
+    format: Nenalezen žádný povinný algoritmus pro DNSKEY %s.
+  DNSSEC:DNSKEY_NOT_FOUND:
+    args: 1
+    descr: 'DNSKEY RRset nemohl být nalezen v podřízené zóně, což ukazuje, že podřízená zóna pravděpodobně nepoužívá DNSSEC.'
+    format: Nenalezen DNSKEY záznam pro %s v podřízené zóně.
+  DNSSEC:DNSKEY_NO_VALID_SIGNATURES:
+    args: 1
+    descr: 'Nebyly nalezeny platné podpisy pro DNSKEY RRset pro danou zónu - ujistěte se, že zóna je podepsána validním veřejným klíčem.'
+    format: Nenalezen dostatek platných podpisů pro %s.
+  DNSSEC:DNSKEY_SEP:
+    args: 2
+    descr: Secure entry point (SEP) je použit jako část řetězce důvěry z nadřazené zóny na podřízenou zónu.
+    format: DNSKEY %s (tag %s) je označen, jako secure entry point (SEP).
+  DNSSEC:DNSKEY_SIGNATURE_OK:
+    args: 2
+    format: Nalezen RRSIG(DNSKEY %s) vytvořen veřejným klíčem (tag %s).
+  DNSSEC:DNSKEY_SIGNER_UNPUBLISHED:
+    args: 2
+    descr: DNSSEC podpisy vytvořené neveřejnými klíči nemohou být validovány validačními resolvery. Všechny klíče určené k podpisu dat musí být veřejné.
+    format: Nalezen RRSIG(DNSKEY %s) vytvořený neveřejným klíčem (tag %s).
+  DNSSEC:DNSKEY_SKIP_PROTOCOL:
+    args: 3
+    descr: DNSKEY musí mít hodnotu protokolu DNSSEC (3).
+    format: DNSKEY %s (tag %s) není DNSSEC klíč (protokol=%s).
+  DNSSEC:DNSKEY_SKIP_TYPE:
+    args: 2
+    descr: DNSKEY musí být klíčem zóny.
+    format: DNSKEY %s (tag %s) není klíčem zóny.
+  DNSSEC:DNSKEY_VALID_SIGNATURES:
+    args: 1
+    format: Dostatek platných podpisů nalezeno pro %s.
+  DNSSEC:DS_ALGORITHM:
+    args: 4
+    format: "%s vlastní klíč s tagem %s používá algoritmus číslo %s (%s)."
+  DNSSEC:DS_FOUND:
+    args: 1
+    descr: 'DS (delegation signer) RRset byl nalezen v nadřazené zóně. To znamená bezpečné delegování adres, podřízená zóna musí být podepsaná.'
+    format: Nalezen DS záznam pro %s v nadřazené zóně.
+  DNSSEC:DS_KEYREF_INVALID:
+    args: 2
+    descr: 'DS RRset musí odkazovat na platný DNSKEY v podřízené zóně, nebo řetězec důvěry mezi nadřazenou zónou a podřízenou zónou bude přerušen a ověřování resolverů nebude schopné ověřit odpovědi z podřízené zóny.'
+    format: 'Nadřazená zóna %s odkazuje na neplatný klíč v podřízené zóně: %s'
+  DNSSEC:DS_KEYREF_OK:
+    args: 2
+    format: 'Nadřazená zóna %s odkazuje na platný klíč v podřízené zóně: %s'
+  DNSSEC:DS_MANDATORY_FOUND:
+    args: 1
+    format: Alespoň jeden povinný DS algoritmus nalezen pro %s.
+  DNSSEC:DS_MANDATORY_NOT_FOUND:
+    args: 1
+    descr: 'Vzhledem k tomu, že žádný z hash algoritmů zveřejněných v RRset DS není povinný, některé resolvery validity nebudou moci sledovat řetěz důvěry z nadřazené zóny do podřízené zóny.'
+    format: Nebyl nalezen žádný DS algoritmus pro %s.
+  DNSSEC:DS_TO_NONSEP:
+    args: 2
+    descr: 'DS RRset odkazuje na DNSKEY v podřízené zóně, ale klíč není označen, jako secure entry point.'
+    format: 'Nadřazený DS(%s) neodkazuje na secure entry point (SEP) v podřízené zóně: %s'
+  DNSSEC:DS_TO_SEP:
+    args: 2
+    format: 'Nadřazený DS(%s) odkazuje na secure entry point (SEP) v podřízené zóně: %s'
+  DNSSEC:END:
+    args: 1
+    format: Dokončeno testování DNSSEC pro %s.
+  DNSSEC:EXTRA_PROCESSING:
+    args: 1
+    format: Jmenný server %s vykonává DNSSEC extra processing.
+  DNSSEC:INCONSISTENT_EXTRA_PROCESSING:
+    args: 1
+    format: Ne všechny jmenné servery pro %s mají DNSSEC extra processing zapnutý.
+  DNSSEC:INCONSISTENT_SECURITY:
+    args: 1
+    descr: 'Nadřazená zóna má bezpečnou delegaci do podřízené zóny (zjištěno podle DS RRset v nadřazené zóně), ale podřízená zóna nemá DNSKEY záznamy. Jedná se zřejmě o již dříve podepsanou zónu, která se stala nepodepsanou, aniž by požádala nadřazenou zónu o odebrání bezpečné delegace.'
+    format: 'Nekonzistentní bezpečnost pro %s - DS nalezen v nadřazené zóně, ale v podřízené zóně nebyl nalezen DNSKEY.'
+  DNSSEC:MISSING_DS:
+    args: 1
+    descr: 'Podřízená zóna zřejmě používá DNSSEC, ale nadřazená zóna nemá bezpečnou delegaci. Řetězec důvěry mezi nadřazenou zónou a podřízenou zónou je přerušen a validační resolvery nejsou schopny validovat odpovědi z podřízené zóny.'
+    format: 'Porušený řetěz důvěry pro %s - DNSKEY nalezen v podřízené zóně, ale v nadřazené zóně nebyl nalezen žádný DS.'
+  DNSSEC:NO_DS_FOUND:
+    args: 1
+    descr: 'DS (delegation signer) RRset nemohl být nalezen v nadřazené zóně. Což naznačuje nezabezpečenou delegaci, podřízená zóna nemusí být podepsaná.'
+    format: Nenalezen DS záznam pro %s v nadřazené zóně.
+  DNSSEC:NO_EXTRA_PROCESSING:
+    args: 1
+    format: Jmenný server %s nevykonává DNSSEC extra processing.
+  DNSSEC:NO_SIGNATURES:
+    args: 1
+    descr: Žádný DNSSEC podpis nebyl nalezen při dotazování zóny. Možná zóna není podepsaná?
+    format: Nebyl nalezen žádný podpis pro %s.
+  DNSSEC:NO_VALID_DS:
+    args: 1
+    format: 'Zóna %s zveřejnila DS záznamy, ale žádný z nich není funkční.'
+  DNSSEC:PARENT_CHECKED:
+    args: 1
+    format: Kontrola nadřazené zóny DNSSEC pro %s dokončena.
+  DNSSEC:PARENT_DS:
+    args: 2
+    format: 'Nalezen DS(%s) v nadřazené zóně: %s'
+  DNSSEC:RRSIG_EXPIRED:
+    args: 1
+    descr: Validační resolvery budu ignorovat podpisy s vypršelou platností.
+    format: 'DNSSEC podpis vypršel: %s'
+  DNSSEC:RRSIG_EXPIRES_AT:
+    args: 1
+    format: 'DNSSEC podpis vyprší v: %s'
+  DNSSEC:RRSIG_FAILS_VERIFY:
+    args: 2
+    format: 'DNSSEC podpis %s neuspěl při validaci RRset: %s'
+  DNSSEC:RRSIG_NOT_YET_VALID:
+    args: 1
+    descr: Validační resolvery budu ignorovat podpisy s počáteční dobou platnosti v budoucnu.
+    format: 'DNSSEC podpis není zatím platný: %s'
+  DNSSEC:RRSIG_VALID:
+    args: 1
+    format: 'DNSSEC podpis platný: %s'
+  DNSSEC:RRSIG_VERIFIES:
+    args: 1
+    format: DNSSEC podpis %s souhlasí se záznamy.
+  DNSSEC:SKIPPED_NO_KEYS:
+    args: 1
+    format: 'Žádné DNSKEY nebyly nalezeny v podřízené zóně, přeskakuji další testy.'
+  DNSSEC:SOA_NO_VALID_SIGNATURES:
+    args: 1
+    descr: 'Nebyly nalezeny žádné platné podpisy pro SOA RRset - ujistěte se, že zóna je podepsána validním veřejným klíčem.'
+    format: Nenalezen dostatek platných podpisů přes SOA RRset pro %s.
+  DNSSEC:SOA_SIGNATURE_OK:
+    args: 2
+    format: RRSIG(SOA %s) vytvořený DNSKEY (tag %s) je v pořádku.
+  DNSSEC:SOA_SIGNER_UNPUBLISHED:
+    args: 2
+    descr: DNSSEC podpisy vytvořené neveřejnými klíči nemohou být validovány validačními resolvery. Všechny klíče určené k podpisu dat musí být veřejné.
+    format: Nalezen RRSIG(SOA %s) vytvořen veřejným klíčem (tag %s).
+  DNSSEC:SOA_VALID_SIGNATURES:
+    args: 1
+    format: Dostatek validních podpisů přes SOA RRset nalezeno pro %s.
+  ENGINE:CRASH:
+    args: 0
+    format: DNSCheck engine spadnul
+  FAKEGLUE:BROKEN_INFO:
+    args: 2
+    format: 'IP adresa %s (daná pro jmenný server %s) je chybná.'
+  FAKEGLUE:MALFORMED_DS:
+    args: 1
+    format: "Daný DS záznam nemohl být zpracován: %s"
+  FAKEGLUE:NO_ADDRESS:
+    args: 1
+    format: Jmenný server %s nemá žádné A nebo AAAA adresní záznamy.
+  HOST:BEGIN:
+    args: 1
+    format: Začíná testování hosta %s.
+  HOST:CNAME_FOUND:
+    args: 1
+    descr: 'Host name je alias (CNAME), což není povoleno. Host names musí být zveřejněný s A, nebo AAAA záznamem.'
+    format: Host name %s odkazuje na CNAME.
+  HOST:END:
+    args: 1
+    format: Dokončeno testování hosta %s.
+  HOST:ILLEGAL_NAME:
+    args: 2
+    descr: 'The hostname není syntakticky v pořádku podle RFC 952. Běžnou chybou je název hostnamu začínající jinak, než písmeny (a-z), nebo použití nepovolených znaků (pouze znaky a-z, 0-9 a - jsou povoleny).'
+    format: Host name %s je neplatný (syntax error na %s)
+  HOST:NOT_FOUND:
+    args: 1
+    descr: Nebyla nalezena žádná IPv4, nebo IPv6 adresa pro host name.
+    format: Nebyla nalezena žádná adresa pro %s.
+  MAIL:ADDRESS_SYNTAX:
+    args: 1
+    format: '%s není platná emailová adresa.'
+  MAIL:ALL_MX_IN_ZONE:
+    args: 2
+    format: Všechny mail servery pro %s se nachází v zóně %s.
+  MAIL:BEGIN:
+    args: 1
+    format: Začíná testování emailové adresy %s.
+  MAIL:DELIVERY_IPV4_NOT_OK:
+    args: 1
+    format: Doručení přes IPv4 na %s se nemohlo uskutečnit.
+  MAIL:DELIVERY_IPV4_OK:
+    args: 1
+    format: Doručení přes IPv4 na %s je v pořádku.
+  MAIL:DELIVERY_IPV6_NOT_OK:
+    args: 1
+    format: Doručení přes IPv6 na %s se nemohlo uskutečnit.
+  MAIL:DELIVERY_IPV6_OK:
+    args: 1
+    format: Doručení přes IPv6 na %s je v pořádku.
+  MAIL:DOMAIN_NOT_FOUND:
+    args: 1
+    descr: Nebyl nalezen žádný mail exchanger pro doménu. Což znemožňuje doručit email příjemci bez domény.
+    format: Nebyl nalezen žádný mail exchanger pro doménu %s.
+  MAIL:END:
+    args: 1
+    format: Dokončeno testování emailové adresy %s.
+  MAIL:HOST_ERROR:
+    args: 1
+    descr: Hostname pro mail exchanger je neplatný. Běžnou chybou je odkázání mail exchanger na alias (CNAME), nebo přímo na IP adresu.
+    format: Neplatný host name pro mail exchanger %s.
+  MAIL:IPV6_ONLY:
+    args: 1
+    descr: 'Tento mail exchanger je dostupný pouze po IPv6, což znemožňuje doručení mailu na něj, pro většinu počítačů na internetu. Pokud existuje víc, než jeden MX záznam a alespoň jeden je dosažitelný na IPv4, pak můžete toto ignorovat.'
+    format: Mail exchanger %s je dostupný pouze po IPv6.
+  MAIL:MAIL_EXCHANGER:
+    args: 2
+    format: Mail exchangers pro %s nalezen %s.
+  NAMESERVER:AUTH:
+    args: 3
+    format: Jmenný server %s (%s) je autoritativní pro %s.
+  NAMESERVER:AXFR_CLOSED:
+    args: 3
+    format: Jmenný server %s (%s) je uzavřen pro zónu překladu %s.
+  NAMESERVER:AXFR_OPEN:
+    args: 3
+    descr: Tento jmenný server přijímá požadavky na přenos zóny od kohokoliv.
+    format: Jmenný server %s (%s) je otevřen pro přenos zóny %s.
+  NAMESERVER:AXFR_SKIP:
+    args: 3
+    descr: 'Jmenný server nebyl testován na přenos zóny, protože neodpověděl dotazy přes TCP.'
+    format: Jmenný server %s (%s) nebyl testován na přenos zóny %s.
+  NAMESERVER:BEGIN:
+    args: 1
+    format: Začíná testování jmenného serveru %s.
+  NAMESERVER:CHECKING_AUTH:
+    args: 2
+    format: Kontrola autority pro %s (%s).
+  NAMESERVER:CHECKING_LEGACY_ID:
+    args: 2
+    format: Kontrola zděděného ID jmenného serveru na %s (%s).
+  NAMESERVER:CHECKING_NSID:
+    args: 2
+    format: Kontrola ID jmenného serveru pro %s (%s).
+  NAMESERVER:CHECKING_RECURSION:
+    args: 2
+    format: Kontrola rekurze pro %s na adrese %s.
+  NAMESERVER:END:
+    args: 1
+    format: Dokončeno testování jmenného serveru %s.
+  NAMESERVER:HOST_ERROR:
+    args: 1
+    descr: 'Uvedený host name není platný, nebo odkazuje na neplatnou IP adresu, např.: soukromé nebo vyhrazené IP adresy.'
+    format: Chyba host name, nebo adresy pro %s.
+  NAMESERVER:LEGACY_ID:
+    args: 4
+    format: 'Zděděné ID jmenného serveru pro %s (%s): %s = %s'
+  NAMESERVER:LEGACY_ID_SKIP:
+    args: 2
+    format: Jmenný server %s (%s) nekontrolován na zděděné ID jmenného serveru.
+  NAMESERVER:NOT_AUTH:
+    args: 3
+    descr: 'Jmenný server neodpovídá na autoritativní dotazy pro danou doménu. To je pravděpodobně způsobeno chybným nastavením, kde jmenný server není nastaven, aby obsloužil testovanou doménu.'
+    format: Jmenný server %s (%s) není autoritativní pro %s.
+  NAMESERVER:NOT_RECURSIVE:
+    args: 2
+    format: Jmenný server %s (%s) není rekurzivní.
+  NAMESERVER:NO_TCP:
+    args: 3
+    descr: 'Jmenný server neodpovídá na dotazy přes TCP. Pravděpodobně se jedná o chybné nastavení jmenného serveru, nebo špatné filtrování ve firewallu. Je poměrně mylná představa, že DNS nepotřebuje TCP, pouze pokud poskytuje přenosy zón - možná si administrátor jmenného serveru není vědom toho, že je TCP vyžadováno.'
+    format: Jmenný server %s (%s) neodpovídá na dotazy přes TCP.
+  NAMESERVER:NO_UDP:
+    args: 3
+    descr: Jmenný server neodpovídá na dotazy přes UDP. Pravděpodobně se jedná o chybné nastavení jmenného serveru, nebo špatné filtrování ve firewallu.
+    format: Jmenný server %s (%s) neodpovídá na dotazy přes UDP.
+  NAMESERVER:NSID:
+    args: 3
+    format: 'ID jmenného serveru pro %s (%s): %s'
+  NAMESERVER:NSID_SKIP:
+    args: 2
+    format: Jmenný server %s (%s) nezkontrolován pro ID jmenného serveru.
+  NAMESERVER:RECURSIVE:
+    args: 2
+    descr: "Jmenný server zodpovídá rekurzivní dotazy třetích stran (stejně jako DNSCheck). Vytvořením rekurzivního dotazu na jmenný server, který umožňuje rekurzi, může útočník přinutit jmenný server, aby vyhledal uložené informace obsažené v zónách, které má pod kontrolou. Pak jmenný server oběti se dotazuje zákeřného jmenného serveru útočníka, což vyústí v předkládání falešných dat."
+    format: Jmenný server %s (%s) je rekurzivní.
+  NAMESERVER:SKIPPED_IPV4:
+    args: 1
+    format: 'IPv4 nepovoleno - nebude testován jmenný server na %s'
+  NAMESERVER:SKIPPED_IPV6:
+    args: 1
+    format: 'IPv6 nepovoleno - nebude testován jmenný server na %s'
+  NAMESERVER:TCP_OK:
+    args: 3
+    format: Jmenný server %s (%s) odpovídá na dotazy přes TCP.
+  NAMESERVER:TESTING_AXFR:
+    args: 2
+    format: Testování překladu zón pro jmenný server %s (%s).
+  NAMESERVER:TESTING_TCP:
+    args: 2
+    format: Testování TCP dotazů na jmenný server %s na adrese %s.
+  NAMESERVER:TESTING_UDP:
+    args: 2
+    format: Testování UDP dotazů na jmenný server %s na adrese %s.
+  NAMESERVER:UDP_OK:
+    args: 3
+    format: Jmenný server %s (%s) odpovídá na dotazy přes UDP.
+  NSTIME:AVERAGE:
+    args: 6
+    format: 'Zóna %s, server %s: %s calls, %sms avg, %sms min, %sms max, %sms stddev.'
+  SMTP:BANNER:
+    args: 2
+    format: 'SMTP banner: %s'
+  SMTP:BEGIN:
+    args: 3
+    format: Začíná testování mail serveru %s (%s) s %s.
+  SMTP:CONNECT_FAILED:
+    args: 2
+    descr: DNSChecku se nepodařilo připojit k mail serveru. Server může být vypnutý, nebo nedostupný, kvůli chybnému nastavení směrování, či filtrování.
+    format: Nepodařilo se připojit k %s (%s).
+  SMTP:END:
+    args: 3
+    format: Dokončeno testování mail serveru %s (%s) s %s.
+  SMTP:HELLO_FAILED:
+    args: 1
+    descr: Mail server nepřijímá náš uvítací pozdrav. To je způsobeno zřejmě chybným nastavením.
+    format: SMTP HELO selhal, během komunikace s %s.
+  SMTP:MAIL_FROM:
+    args: 1
+    format: Používám %s jako SMTP pro (MAIL_FROM).
+  SMTP:MAIL_FROM_REJECTED:
+    args: 1
+    descr: Mail server nepřijímá adresu odesilatele. DNSCheck používá standardní null adresu odesílatele, jenž musí být akceptována mailovými servery.
+    format: Host nepřijímá %s jako SMTP destinaci.
+  SMTP:OK:
+    args: 3
+    format: SMTP testování %s (%s) s %s proběhlo úspěšně bez chyby.
+  SMTP:QUIT:
+    args: 0
+    format: Posílám SMTP quit (QUIT).
+  SMTP:RAW:
+    args: 1
+    format: 'SMTP Odpověď: %s'
+  SMTP:RCPT_TO:
+    args: 1
+    format: Používám %s jako SMTP příjemce (RCPT_TO).
+  SMTP:RECIPIENT_REJECTED:
+    args: 1
+    descr: Mail server nepřijmul mail na adresu příjemce. Problémem bude pravděpodobně neznámá adresa.
+    format: Host nepřijmul %s jako SMTP příjemce.
+  SMTP:RSET:
+    args: 0
+    format: Posílám SMTP reset (RSET).
+  SMTP:TIMEOUT:
+    args: 0
+    format: Mail serveru vypršel čas v SMTP dialogu.
+  SOA:BEGIN:
+    args: 1
+    format: Začíná testování SOA parametrů pro %s.
+  SOA:END:
+    args: 1
+    format: Dokončeno testování SOA parametrů pro %s.
+  SOA:EXPIRE_OK:
+    args: 3
+    format: 'SOA expire pro %s je v pořádku (%s) - doporučeno >= %s.'
+  SOA:EXPIRE_SMALL:
+    args: 3
+    descr: Hodnota SOA expire určuje, jak dlouho bude sekundární jmenný server čekat, než budou DNS data pro zónu považována za příliš stará k použití, v případě, že se nepodaří použít primární jmenný server.
+    format: 'SOA expire pro %s je příliš nízké (%s) - doporučeno >= %s.'
+  SOA:EXPIRE_VS_REFRESH:
+    args: 1
+    descr: 'Hodnota SOA expire by měla být alespoň 7 krát vyšší, něž hodnota SOA refresh, aby sekundární jmenné servery měly šanci si obnovit své kopie zóny, před tím, než budou data považována za příliš stará k použití.'
+    format: SOA expire pro %s je nižší, než refresh.
+  SOA:FOUND:
+    args: 1
+    format: Nalezen SOA záznam pro %s.
+  SOA:MINIMUM_LARGE:
+    args: 3
+    descr: 'SOA minimum je hodnota pro kešovací resolvery, jak dlouho si mohou uchovávat negativní odpovědi. Pokud je hodnota moc vysoká, negativní uchovávání bude příliš agresivní.'
+    format: 'SOA minimum pro %s je příliš vysoké (%s) - doporučeno <= %s.'
+  SOA:MINIMUM_OK:
+    args: 4
+    format: 'SOA minimum pro %s je v pořádku (%s) - doporučeno mezi %s a %s.'
+  SOA:MINIMUM_SMALL:
+    args: 3
+    descr: 'SOA minimum je hodnota pro kešovací resolvery, jak dlouho si mohou uchovávat negativní odpovědi. Pokud je hodnota moc nízká, negativní uchovávání nebude fungovat a resolvery se budou často znova dotazovat.'
+    format: 'SOA minimum pro %s je příliš nízké (%s) - doporučeno >= %s.'
+  SOA:MNAME_ERROR:
+    args: 2
+    descr: SOA MNAME není platný host name.
+    format: Chyba během kontroly SOA MNAME pro %s (%s).
+  SOA:MNAME_IS_AUTH:
+    args: 2
+    format: SOA MNAME pro %s (%s) je autoritativní.
+  SOA:MNAME_IS_CNAME:
+    args: 2
+    format: SOA MNAME %s ukazuje na CNAME (%s).
+  SOA:MNAME_NOT_AUTH:
+    args: 2
+    descr: 'Jmenný server uveden jako originální, nebo jako hlavní zdroj dat pro tuto zónu, neodpovídá autoritativně. Což je pravděpodobně způsobeno chybným nastavením; možná MNAME SOA není nastaven jako jmenný server pro zónu.'
+    format: SOA MNAME pro %s (%s) není autoritativní.
+  SOA:MNAME_PUBLIC:
+    args: 2
+    descr: Jmenný server uveden jako SOA MNAME je uveden jako jmenný server.
+    format: SOA MNAME pro %s (%s) je uveden jako NS.
+  SOA:MNAME_STEALTH:
+    args: 2
+    descr: Jmenný server uvedený jako SOA MNAME není uveden jako jmenný server.
+    format: SOA MNAME pro %s (%s) není uveden jako NS.
+  SOA:MNAME_VALID:
+    args: 2
+    format: SOA MNAME pro %s je validní (%s).
+  SOA:MULTIPLE_SOA:
+    args: 1
+    descr: Bylo nalezeno vícero SOA záznamů, při dotazování jmenných serverů. Jedná se o závažnou chybu způsobenou špatným nastavením.
+    format: Bylo nalezeno vícero SOA záznamů pro %s.
+  SOA:NOT_FOUND:
+    args: 1
+    descr: 'Nebyl nalezen žádný SOA záznam, během dotazování jmenného serveru. Jmenný server je pravděpodobně chybně nastaven - zóna musí mít SOA záznam.'
+    format: Nebyl nalezen žádný SOA záznam pro %s.
+  SOA:NS_NOT_FOUND:
+    args: 1
+    descr: Žádné záznamy jmenného serveru nebyly nalezeny pro danou zónu. Jedná se o závažnou chybu způsobenou špatným nastavením.
+    format: Nebyl nalezen žádný NS záznam pro %s.
+  SOA:REFRESH_OK:
+    args: 3
+    format: 'SOA refresh pro %s je v pořádku (%s) - doporučeno >= %s.'
+  SOA:REFRESH_SMALL:
+    args: 3
+    descr: SOA refresh určuje, jak často by měl sekundární jmenný server kontrolovat primární jmenný server na aktualizaci zóny.
+    format: 'SOA refresh pro %s je příliš nízké (%s) - doporučeno >= %s.'
+  SOA:RETRY_OK:
+    args: 3
+    format: 'SOA retry pro %s je v pořádku (%s) - doporučeno >= %s.'
+  SOA:RETRY_SMALL:
+    args: 3
+    descr: 'Retry hodnota je doba, kterou bude sekundární jmenný server čekat, než znovu začne kontakovat primární jmenný server, v případě, že poslední pokus neuspěl. Pokud je retry hodnota příliš nízká, sekundární jmenný server se bude snažit o kontakt příliš často.'
+    format: 'SOA retry pro %s je příliš nízké (%s) - doporučeno >= %s.'
+  SOA:RETRY_VS_REFRESH:
+    args: 3
+    descr: "Retry hodnota je doba, kterou bude sekundární jmenný server čekat, než znovu začne kontakovat primární jmenný server, v případě, že poslední pokus neuspěl. Pokud je refresh hodnota nižší, než hodnota retry, je to zbytečné."
+    format: SOA refresh pro %s je nižší, než retry (%s vs %s).
+  SOA:RNAME_DELIVERABLE:
+    args: 3
+    format: Úspěšně doručený email z SOA RNAME pro %s (%s) použito %s.
+  SOA:RNAME_SYNTAX:
+    args: 2
+    descr: 'Emailová adresa zadaná v SOA RNAME je zadaná chybně. Běžná chyba je použití znaku @ v poli adresy - adresy jako např.: hostmaster@example.com musí být zadány ve formátu hostmaster.example.com.'
+    format: 'Chybná SOA RNAME syntaxe pro %s: %s'
+  SOA:RNAME_UNDELIVERABLE:
+    args: 3
+    descr: DNSCheck se neúspěšně pokusil doručit email na emailovou adresu, která je uvedena, jako odpovědná, pro danou zónu.
+    format: Chyba při pokusu doručit email z SOA RNAME pro %s (%s) použito %s.
+  SOA:SERIAL_IS_ZERO:
+    args: 1
+    format: Sériové číslo v SOA záznamu pro zónu %s nesmí být nulové.
+  SOA:SKIPPED_IPV4:
+    args: 1
+    format: 'IPv4 nepovoleno - nebude dotazován SOA MNAME na %s'
+  SOA:SKIPPED_IPV6:
+    args: 1
+    format: 'IPv6 nepovoleno - nebude dotazován SOA MNAME na %s'
+  SOA:TTL_OK:
+    args: 3
+    format: 'SOA TTL pro %s je v pořádku (%s) - doporučeno >= %s.'
+  SOA:TTL_SMALL:
+    args: 3
+    descr: 'Čím je hodnnota SOA TTL nižší, tím častěji se musí rosolver dotazovat na SOA záznam.'
+    format: 'SOA TTL pro %s je příliš nízké (%s) - doporučeno >= %s.'
+  ZONE:BEGIN:
+    args: 2
+    format: Začíná testování zóny %s s verzí %s.
+  ZONE:END:
+    args: 1
+    format: Test dokončen pro zónu %s.
+  ZONE:FATAL_DELEGATION:
+    args: 1
+    descr: Nebyly nalezeny žádné jmenné servery pro podřízenou zónu, ani pro nadřazenou zónu. Nemohu pokračovat v dalším testování.
+    format: Chyba při delegování pro zónu %s.
+  ZONE:FATAL_NO_CHILD_NS:
+    args: 1
+    descr: Nebyly nalezeny žádné jmenné servery podřízené zóny. Nemohu pokračovat v dalším testování.
+    format: 'Chyba - nebyly nalezeny žádné jmenné servery podřízené zóny pro zónu %s.'
+  ZONE:INVALID_NAME:
+    args: 1
+    format: '%s je neplatný název zóny.'
+  ZONE:VERSIONS:
+    args: 1
+    format: 'Module versions: %s.'
+
