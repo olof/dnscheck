@@ -75,6 +75,10 @@ push @reserved_ipv6, new Net::IP("fc00::/7");
 push @reserved_ipv6, new Net::IP("2001:0db8::/32");
 push @reserved_ipv6, new Net::IP("2001:10::/28");
 
+# REQUIRE: Special-Use IPv4 Addresses (RFC 6598)
+
+push @reserved_ipv4, new Net::IP('100.64.0.0/10');
+
 ######################################################################
 
 sub test {
