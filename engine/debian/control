@@ -3,7 +3,7 @@ Section: perl
 Priority: optional
 Build-Depends: debhelper (>= 7.0.50~)
 Build-Depends-Indep: libcrypt-openssl-random-perl, libdbd-mysql-perl,
- libdbi-perl, libdigest-bubblebabble-perl, libdigest-sha1-perl,
+ libdbi-perl, libdigest-bubblebabble-perl, libdigest-sha-perl,
  libio-socket-inet6-perl (>= 2.51), libmail-rfc822-address-perl,
  libmime-base32-perl, libmime-lite-perl, libnet-dns-perl (>= 0.65),
  libnet-dns-sec-perl (>= 0.16), libnet-ip-perl (>= 1.25),
@@ -17,7 +17,7 @@ Package: libdnscheck-perl
 Architecture: all
 Depends: ${misc:Depends}, ${perl:Depends}, libcrypt-openssl-random-perl,
  libdbd-mysql-perl, libdbi-perl, libdigest-bubblebabble-perl,
- libdigest-sha1-perl, libio-socket-inet6-perl (>= 2.51),
+ libdigest-sha-perl, libio-socket-inet6-perl (>= 2.51),
  libmail-rfc822-address-perl, libmime-base32-perl, libmime-lite-perl,
  libnet-dns-perl (>= 0.65), libnet-dns-sec-perl (>= 0.16),
  libnet-ip-perl (>= 1.25), libsocket6-perl (>= 0.19), libtext-template-perl,
