@@ -17,13 +17,12 @@ use_ok 'DNSCheck';
 ######################################################################
 
 sub set_flags {
-    my ($obj, $v4, $v6, $smtp) = @_;
+    my ($obj, $v4, $v6) = @_;
     
     my $net = $obj->config->get("net");
 
     $net->{ipv4} = $v4;
     $net->{ipv6} = $v6;
-    $net->{smtp} = $smtp;
 
     $obj->config->put('net', $net);
 }
@@ -70,7 +69,6 @@ $dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 set_flags($dc, undef, undef, undef);
 is($dc->config->get("net")->{ipv4}, undef, 'IPv4 flag set correctly');
 is($dc->config->get("net")->{ipv6}, undef, 'IPv6 flag set correctly');
-is($dc->config->get("net")->{smtp}, undef, 'SMTP flag set correctly');
 $dc->zone->test('nic.se');
 
 is_deeply(
@@ -92,7 +90,7 @@ is_deeply(
     "ZONE:FATAL_DELEGATION",
     "ZONE:END",
     ],
-    'IPv4, IPv6 and SMTP disabled');
+    'IPv4 and IPv6 disabled');
 
 $dc = new_ok('DNSCheck' => [{ configdir => './t/config' }]);
 set_flags($dc, undef, 1, undef);

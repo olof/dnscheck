@@ -22,12 +22,12 @@ is( $log->count_critical, 1,   'Critical errors' );
 is( $log->count_error,    0,   'Errors' );
 is( $log->count_warning,  0,   'Warnings' );
 is( $log->count_notice,   0,   'Notices' );
-is( $log->count_info,     44,  'Informational messages' );
-is( $log->count_debug,    118, 'Debug messages' );
+is( $log->count_info,     34,  'Informational messages' );
+is( $log->count_debug,    102, 'Debug messages' );
 
 my $msg = $log->export;
 my $msg_hash = $log->export_hash;
-is( scalar( @$msg ), 163, 'Correct number of entries dumped from export' );
+is( scalar( @$msg ), 137, 'Correct number of entries dumped from export' );
 is(
     scalar( @$msg_hash ), scalar( @$msg ),
     'Same number of entries dumped from export_hash and export'
@@ -49,7 +49,7 @@ foreach my $obj (@$msg_hash) {
 
 my $count = 0;
 $count++ while ( $log->get_next_entry );
-is( $count, 163, 'Iterator saw all messages' );
+is( $count, 137, 'Iterator saw all messages' );
 
 {
     local *STDERR;
@@ -58,7 +58,7 @@ is( $count, 163, 'Iterator saw all messages' );
     $log->dump;
     STDERR->flush;
     my @lines = <$fh>;
-    is( scalar( @lines ), 163, 'dump printed correct number of lines' );
+    is( scalar( @lines ), 137, 'dump printed correct number of lines' );
     close( $fh );
     unlink( $filename );
 }
@@ -70,7 +70,7 @@ is( $count, 163, 'Iterator saw all messages' );
     $log->print;
     STDOUT->flush;
     my @lines = <$fh>;
-    is( scalar( @lines ), 45, 'print printed correct number of lines' );
+    is( scalar( @lines ), 35, 'print printed correct number of lines' );
     close( $fh );
     unlink( $filename );
 }

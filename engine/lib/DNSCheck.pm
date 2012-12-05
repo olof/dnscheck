@@ -53,7 +53,6 @@ use DNSCheck::Test::Delegation;
 use DNSCheck::Test::Nameserver;
 use DNSCheck::Test::DNSSEC;
 use DNSCheck::Test::Mail;
-use DNSCheck::Test::SMTP;
 use DNSCheck::Lookup::DNS;
 use DNSCheck::Lookup::Resolver;
 use DNSCheck::Lookup::ASN;
@@ -108,7 +107,6 @@ sub flush {
     $self->{test_nameserver}   = undef;
     $self->{test_dnssec}       = undef;
     $self->{test_mail}         = undef;
-    $self->{test_smtp}         = undef;
     $self->{faked}             = [];
 
     # should the ASN cache be flushed as well?
@@ -389,16 +387,6 @@ sub mail {
     }
 
     return $self->{test_mail};
-}
-
-sub smtp {
-    my $self = shift;
-
-    unless (defined($self->{test_smtp})) {
-        $self->{test_smtp} = DNSCheck::Test::SMTP->new($self);
-    }
-
-    return $self->{test_smtp};
 }
 
 ######################################################################

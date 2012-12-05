@@ -28,6 +28,4 @@ eval {    # Test for the bug fixed in r739
 };
 ok(!$@, "$@");
 
-is($check->config->get('smtp')->{hostname}, 'gurksallad', 'Right SMTP name from config');
-
 done_testing;

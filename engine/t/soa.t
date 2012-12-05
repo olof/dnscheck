@@ -19,7 +19,7 @@ my %tag;
 
 eval {
     $dc = new DNSCheck(
-        { configdir => './t/config' });
+        { configdir => './t/config', policydir => './t/config' });
 };
 
 ok(!$@, $@);
@@ -37,7 +37,6 @@ SKIP: {
         SOA:MNAME_VALID
         SOA:MNAME_PUBLIC
         SOA:MNAME_IS_AUTH
-        MAIL:DELIVERY_IPV4_OK
         SOA:RNAME_DELIVERABLE
         SOA:TTL_OK
         SOA:REFRESH_OK
@@ -64,7 +63,7 @@ SKIP: {
         SOA:EXPIRE_SMALL
         SOA:EXPIRE_VS_REFRESH
         SOA:MINIMUM_SMALL
-        SOA:RNAME_UNDELIVERABLE
+        SOA:RNAME_DELIVERABLE
         ]
       )
     {
