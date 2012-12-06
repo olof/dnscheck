@@ -10,7 +10,7 @@ Build-Depends-Indep: libcrypt-openssl-random-perl, libdbd-mysql-perl,
  libsocket6-perl (>= 0.19), libtext-template-perl, libtimedate-perl,
  libyaml-libyaml-perl, perl (>= 5.8.8-12ubuntu0.4),libconfig-any-perl,libfile-sharedir-perl,libfile-sharedir-install-perl
 Maintainer: Calle Dybedahl <calle@init.se>
-Standards-Version: 3.7.2
+Standards-Version: 3.9.3
 Homepage: https://github.com/dotse/dnscheck
 
 Package: libdnscheck-perl
