@@ -1,7 +1,7 @@
 Source: libdnscheck-perl
 Section: perl
 Priority: optional
-Build-Depends: debhelper (>= 7)
+Build-Depends: debhelper (>= 7.0.50~)
 Build-Depends-Indep: libcrypt-openssl-random-perl, libdbd-mysql-perl,
  libdbi-perl, libdigest-bubblebabble-perl, libdigest-sha1-perl,
  libio-socket-inet6-perl (>= 2.51), libmail-rfc822-address-perl,
